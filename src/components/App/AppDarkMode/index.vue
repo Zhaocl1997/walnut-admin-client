@@ -23,7 +23,7 @@
   import { useDarkMode } from './useDarkMode'
 
   export default defineComponent({
-    name: 'WDarkMode',
+    name: 'AppDarkMode',
 
     inheritAttrs: false,
 

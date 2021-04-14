@@ -1,5 +1,5 @@
 import { unref } from 'vue'
-import { useContext } from './hooks/core/useContext'
+import { useContext } from '../hooks/core/useContext'
 
 const key = Symbol('appGlobalConfig')
 

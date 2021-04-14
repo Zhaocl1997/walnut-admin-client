@@ -6,10 +6,10 @@ import { AppRouter, setupRouter } from '/@/router'
 import { setupStore } from '/@/store'
 import { setupDirectives } from '/@/directives'
 
-import { appError, appWarning } from './utils/log'
-import { isDev } from './utils/constant/vue'
+import { appError, appWarning } from '../utils/log'
+import { isDev } from '../utils/constant/vue'
 
-import './components/UI/Icon/src/utils/bundle'
+import '../components/UI/Icon/src/utils/bundle'
 
 const setupErrorhandler = (app: App) => {
   app.config.errorHandler = (err, vm, info) => {

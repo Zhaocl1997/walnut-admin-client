@@ -28,7 +28,7 @@
   import { langLists } from '/@/locales'
 
   export default defineComponent({
-    name: 'WLocalePicker',
+    name: 'AppLocalePicker',
 
     props: {
       reload: {

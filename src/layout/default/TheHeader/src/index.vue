@@ -40,9 +40,9 @@
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
   import HeaderAvatar from './avatar.vue'
-  import HeaderLocale from '/@/components/App/localePicker'
+  import HeaderLocale from '../../../../components/App/AppLocalePicker'
   import HeaderScreenfull from '/@/components/Help/Screenfull'
-  import HeaderDarkMode from '/@/components/App/darkMode'
+  import HeaderDarkMode from '../../../../components/App/AppDarkMode'
 
   export default defineComponent({
     name: 'Header',

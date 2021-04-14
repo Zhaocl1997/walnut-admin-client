@@ -1,6 +1,6 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs, watch } from 'vue'
-  import { useAppGlobalConfig } from './appConfig'
+  import { useAppGlobalConfig } from './AppConfig'
 
   export default defineComponent({
     name: 'AppProvider',

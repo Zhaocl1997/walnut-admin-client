@@ -1,5 +1,5 @@
 import { unref, watchEffect } from 'vue'
-import { useAppGlobalConfig } from '/@/appConfig'
+import { useAppGlobalConfig } from '../../../App/AppConfig'
 import { DarkModeEnum } from '/@/enums/dark'
 import { usePreferredDark } from '/@/hooks/core/usePreferredDark'
 
