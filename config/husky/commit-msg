@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# .config/husky/commit-msg
+
+# Check out the commit msg legal
+npx --no-install commitlint --config config/commitlint/.commitlintrc.js --verbose --edit $1

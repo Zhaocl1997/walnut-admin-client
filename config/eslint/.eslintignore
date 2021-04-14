@@ -1,0 +1,13 @@
+
+*.sh
+*.md
+*.woff
+*.ttf
+.vscode
+.idea
+node_modules
+public
+dist
+build
+config
+docs

@@ -1,0 +1,30 @@
+/**
+ * @description This is menu icon which got from backend.
+ */
+export default [
+  'ant-design:bars-outlined',
+  'ant-design:usergroup-add-outlined',
+  'ant-design:user-outlined',
+  'ant-design:menu-outlined',
+  'ant-design:appstore-twotone',
+  'ant-design:wallet-outlined',
+  'ant-design:bulb-outlined',
+  'ant-design:funnel-plot-outlined',
+  'ant-design:appstore-outlined',
+  'ant-design:table-outlined',
+  'ant-design:align-center-outlined',
+  'ant-design:form-outlined',
+  'ant-design:appstore-add-outlined',
+  'ant-design:down-circle-outlined',
+  'ant-design:down-square-outlined',
+  'ant-design:info-circle-outlined',
+  'ant-design:api-outlined',
+  'ant-design:unordered-list-outlined',
+  'ant-design:apartment-outlined',
+  'ant-design:select-outlined',
+  'ant-design:link-outlined',
+  'ant-design:alert-outlined',
+  'ant-design:border-outlined',
+  'ant-design:tag-outlined',
+  'ant-design:check-circle-outlined',
+]

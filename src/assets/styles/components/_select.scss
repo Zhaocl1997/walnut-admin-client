@@ -1,0 +1,44 @@
+/* ElSelect Multiple label style optimise */
+
+/* tag max-width 120px */
+.el-select__tags-text {
+  display: inline-block;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.el-select .el-tag__close.el-icon-close {
+  top: -7px;
+}
+
+/* option label max-width 400px */
+.el-select-dropdown {
+  max-width: 400px;
+}
+
+/* option label wrap  */
+.el-select-dropdown__item {
+  height: auto !important;
+  white-space: normal !important;
+}
+
+/* tag won't cause select height change */
+.el-select__tags {
+  overflow: auto !important;
+  white-space: nowrap !important;
+
+  &::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+  }
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #99a9bf;
+  }
+}
