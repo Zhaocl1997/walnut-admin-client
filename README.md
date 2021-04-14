@@ -33,6 +33,7 @@ QQ: 674351624, 如果感兴趣的人多会建群。现在项目设计思路真�
   - [推荐环境与配置](#推荐环境与配置)
   - [安装步骤](#安装步骤)
 - [开发的架构](#开发的架构)
+- [更新日志](#更新日志)
 - [部署](#部署)
 - [使用到的技术](#使用到的技术)
 - [作者](#作者)
@@ -65,7 +66,12 @@ npm i
 
 ### 开发的架构
 
-请阅读[ARCHITECTURE.md](https://github.com/shaojintian/Best_README_template/blob/master/ARCHITECTURE.md) 查阅为该项目的架构。
+请阅读[ARCHITECTURE.md](https://github.com/Zhaocl1997/walnut-admin-client/blob/main/ARCHITECTURE.md) 查阅为该项目的架构。
+
+
+### 更新日志
+
+请阅读[CHANGELOG.md](https://github.com/Zhaocl1997/walnut-admin-client/blob/main/CHANGELOG.md) 查阅为该项目的更新日志。
 
 ### 部署
 
