@@ -20,7 +20,7 @@ export const useTabsContextMenu = () => {
     } as CSSStyleDeclaration
   })
 
-  const onCtxMenu = (event: MouseEvent, name: string, index: any) => {
+  const onCtxMenu = (event: MouseEvent, name: string, index: number) => {
     // set context menu position
     position.x = event.clientX
     position.y = event.clientY
@@ -41,14 +41,13 @@ export const useTabsContextMenu = () => {
   }
 
   return {
+    ctxMenuVisible,
     currentTabName,
     currentTabIndex,
-    ctxMenuVisible,
 
     getCtxMenuStyle,
 
     onCtxMenu,
-    onOpenCtxMenu,
     onCloseCtxMenu,
   }
 }

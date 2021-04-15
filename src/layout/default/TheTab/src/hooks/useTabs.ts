@@ -28,7 +28,7 @@ export const useTabs = () => {
   /**
    * @description Computed current tab index
    */
-  const getCurrentRouteTabIndex = computed(() =>
+  const currentRouteTabIndex = computed(() =>
     getTabs.value.findIndex(
       (item: AppTab) => item.name === currentRoute.value.name
     )
@@ -41,10 +41,10 @@ export const useTabs = () => {
     // scroll by index
     nextTick(() => {
       scrollRef.value?.scrollToAdvanced({
-        index: calcIndex(getCurrentRouteTabIndex.value),
+        index: calcIndex(currentRouteTabIndex.value),
       })
     })
   })
 
-  return { scrollRef, getTabs, getCurrentRouteTabIndex }
+  return { scrollRef, getTabs, currentRouteTabIndex }
 }

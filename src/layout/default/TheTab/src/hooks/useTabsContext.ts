@@ -1,21 +1,13 @@
-import { unref } from 'vue'
+import type { TabsContext } from '../types/tabsContext'
 import { tabsKey } from '../utils/InjectionKey'
-import { useContext } from '../../../../../hooks/core/useContext'
+import { useContext } from '/@/hooks/core/useContext'
 
-export const useTabsContext = () => {
-  const { setContext, getContext } = useContext()
+const { setContext, getContext } = useContext<TabsContext>()
 
-  const setTabsContext = (value: any) => {
-    setContext(tabsKey, value)
-  }
+export const setTabsContext = (value: TabsContext) => {
+  setContext(tabsKey, value)
+}
 
-  const getTabsContext = () => {
-    const formContext: any = getContext(tabsKey)
-    return { ...unref(formContext) }
-  }
-
-  return {
-    setTabsContext,
-    getTabsContext,
-  }
+export const getTabsContext = () => {
+  return getContext(tabsKey)
 }

@@ -12,9 +12,10 @@
       class="flex flex-col flex-1 h-screen flex-nowrap w-full overflow-x-hidden overflow-y-auto"
     >
       <div
-        class="fixed z-2000 transition-width duration-500 ease-in-out"
+        class="fixed transition-width duration-500 ease-in-out"
         :style="{
           width: getCollapse ? 'calc(100vw - 4rem)' : 'calc(100vw - 14rem)',
+          zIndex: 1,
         }"
       >
         <TheHeader class="bg-primary flex-none h-12" />

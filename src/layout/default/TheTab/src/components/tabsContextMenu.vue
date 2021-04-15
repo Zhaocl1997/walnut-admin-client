@@ -1,7 +1,7 @@
 <template>
   <transition name="zoom-out" mode="out-in">
     <div
-      ref="tabContextMenu"
+      ref="tabsContextMenu"
       v-if="ctxMenuVisible"
       class="border border-solid border-gray-600 border-opacity-50 rounded bg-primary p-1"
       :style="getCtxMenuStyle"
@@ -15,7 +15,7 @@
             {
               'cursor-not-allowed text-gray-400': item.disabled,
               'hover:bg-blue-200': !item.disabled,
-              'border-b-4 border-gray-300': item.divider,
+              'border-b-1 border-gray-300': item.divider,
             },
           ]"
           @click="!item.disabled ? item.event() : emptyFunction()"
@@ -33,14 +33,14 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, nextTick, ref } from 'vue'
+  import { computed, defineComponent, ref } from 'vue'
   import { onClickOutside } from '@vueuse/core'
 
   import { emptyFunction } from '/@/utils'
   import { DeleteTabTypeEnum } from '/@/enums/tab'
   import { useRedirect } from '/@/hooks/core/useRedirect'
 
-  import { useTabsContext } from '../hooks/useTabsContext'
+  import { getTabsContext } from '../hooks/useTabsContext'
   import { useScreenfull } from '/@/components/Help/Screenfull/useScreenfull'
   import { useAppRouter } from '/@/router'
   import { useI18n } from '/@/locales'
@@ -52,19 +52,18 @@
 
     setup() {
       const { t } = useI18n()
-      const { getTabsContext } = useTabsContext()
       const { currentRoute } = useAppRouter()
 
-      const tabContextMenu = ref(null)
+      const tabsContextMenu = ref(null)
 
       const {
+        getTabs,
+        onTabRemove,
+        ctxMenuVisible,
         currentTabName,
         currentTabIndex,
-        onTabRemove,
-        getTabs,
-        ctxMenuVisible,
         getCtxMenuStyle,
-        closeContextMenu,
+        onCloseCtxMenu,
       } = getTabsContext()
 
       const getCloseDisabled = computed(() => currentTabIndex.value === 0)
@@ -81,10 +80,8 @@
         () => currentRoute.value.name !== currentTabName.value
       )
 
-      onClickOutside(tabContextMenu, () => {
-        setTimeout(() => {
-          closeContextMenu()
-        }, 100)
+      onClickOutside(tabsContextMenu, () => {
+        onCloseCtxMenu()
       })
 
       const methodLists = computed(() => {
@@ -94,6 +91,8 @@
             icon: 'ant-design:close-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_SELF)
+
+              onCloseCtxMenu()
             },
             disabled: getCloseDisabled.value,
           },
@@ -102,6 +101,8 @@
             icon: 'ant-design:vertical-right-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_LEFT)
+
+              onCloseCtxMenu()
             },
             disabled: getCloseLeftDisabled.value,
           },
@@ -110,6 +111,8 @@
             icon: 'ant-design:vertical-left-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_RIGHT)
+
+              onCloseCtxMenu()
             },
             disabled: getCloseRightDisabled.value,
           },
@@ -118,6 +121,8 @@
             icon: 'ant-design:column-width-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_OTHER)
+
+              onCloseCtxMenu()
             },
             disabled: getCloseOtherDisabled.value,
           },
@@ -126,6 +131,8 @@
             icon: 'ant-design:border-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_ALL)
+
+              onCloseCtxMenu()
             },
             divider: true,
           },
@@ -136,6 +143,8 @@
               const { redirect } = useRedirect()
 
               await redirect()
+
+              onCloseCtxMenu()
             },
             disabled: getOtherDisabled.value,
           },
@@ -148,6 +157,8 @@
               })
 
               onToggleScreenfull()
+
+              onCloseCtxMenu()
             },
             disabled: getOtherDisabled.value,
           },
@@ -155,11 +166,11 @@
       })
 
       return {
-        methodLists,
-        emptyFunction,
-        tabContextMenu,
+        tabsContextMenu,
         ctxMenuVisible,
         getCtxMenuStyle,
+        methodLists,
+        emptyFunction,
       }
     },
   })

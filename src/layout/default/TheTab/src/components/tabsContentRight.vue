@@ -1,19 +1,10 @@
 <template>
   <div class="p-1 inline-block">
-    <!-- context menu -->
-    <el-dropdown trigger="click">
-      <div>
-        <w-icon
-          height="24"
-          class="border border-solid border-blue-500 cursor-pointer my-auto mr-1"
-          icon="ant-design:down-outlined"
-        ></w-icon>
-      </div>
-
-      <template #dropdown>
-        <TabsContextMenu />
-      </template>
-    </el-dropdown>
+    <w-icon
+      height="24"
+      class="border border-solid border-blue-500 cursor-pointer my-auto mr-1"
+      icon="ant-design:sync-outlined"
+    ></w-icon>
 
     <!-- scroll to right -->
     <w-icon
@@ -28,20 +19,16 @@
 <script lang="ts">
   import { defineComponent } from 'vue'
 
-  import TabsContextMenu from './tabsContextMenu.vue'
-
-  import { useTabsContext } from '../hooks/useTabsContext'
+  import { getTabsContext } from '../hooks/useTabsContext'
 
   export default defineComponent({
     name: 'TabsRightMethods',
 
     inheritAttrs: false,
 
-    components: { TabsContextMenu },
+    components: {},
 
     setup() {
-      const { getTabsContext } = useTabsContext()
-
       const { rightMethods } = getTabsContext()
 
       return { rightMethods }

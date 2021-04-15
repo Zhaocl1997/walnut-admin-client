@@ -18,7 +18,7 @@
 <script lang="ts">
   import { defineComponent, reactive } from 'vue'
 
-  import { useTabsContext } from '../hooks/useTabsContext'
+  import { getTabsContext } from '../hooks/useTabsContext'
 
   export default defineComponent({
     name: 'TabsLeftMethods',
@@ -26,8 +26,6 @@
     inheritAttrs: false,
 
     setup() {
-      const { getTabsContext } = useTabsContext()
-
       const { leftMethods } = getTabsContext()
 
       const iconList = reactive([
