@@ -13,5 +13,5 @@ export const deepKeys = function* (t: Recordable, pre: any[] = []): Generator {
  */
 export const getMaybeI18nMsg = (field: string | undefined) => {
   const { t } = useI18n()
-  return field!.includes('.') ? t(field!) : field
+  return field && field.includes('.') ? t(field!) : field
 }
