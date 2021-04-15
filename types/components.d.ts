@@ -25,7 +25,6 @@ declare module 'vue' {
     }
 
     // Here is where we enhance typing support in template usage
-    // TODO typing enhancement, this is quite a long way to go
     'w-button': import('/@/components/UI/Button').WButtonProps
     'w-button-group': import('/@/components/UI/ButtonGroup').WButtonGroupProps
     'w-checkbox': import('/@/components/UI/Checkbox').WCheckboxProps

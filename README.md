@@ -33,6 +33,7 @@ QQ: 674351624, 如果感兴趣的人多会建群。现在项目设计思路真�
   - [推荐环境与配置](#推荐环境与配置)
   - [安装步骤](#安装步骤)
 - [开发的架构](#开发的架构)
+- [接下来的计划](#接下来的计划)
 - [更新日志](#更新日志)
 - [部署](#部署)
 - [使用到的技术](#使用到的技术)
@@ -68,6 +69,25 @@ npm i
 
 请阅读[ARCHITECTURE.md](https://github.com/Zhaocl1997/walnut-admin-client/blob/main/ARCHITECTURE.md) 查阅为该项目的架构。
 
+### 接下来的计划  
+
+- [ ] ElementPlus 国际化响应式切换，暗色主题适配  
+- [ ] ElementPlus 按需加载，还没生效
+- [ ] Layout 优化，目前只是最基本的左侧菜单布局  
+- [ ] vue-tsc 错误全部消除  
+- [ ] 虚拟滚动
+- [ ] 屏幕断点优化
+- [ ] 带有options API 的组件 统一加 valueFormat 和 valueType
+- [ ] table/form/dialog 重构优化，统一化API
+- [ ] table 自定义表头迁移优化，按钮组，操作列，自定义导出导入，打印
+- [ ] form 添加更复杂的表单用例，添加tsx语法支持
+- [ ] dialog 全屏，拖拽，弹出效果
+- [ ] drawer 可自定义固定头部尾部
+- [ ] hook抽离，尽量可脱离组件逻辑
+- [ ] clickOutSide/permission 指令深入
+- [ ] 环境变量优化，打包优化和自动化
+- [ ] 部署，自动化部署
+- [ ] easy-fns-ts 类型优化
 
 ### 更新日志
 
