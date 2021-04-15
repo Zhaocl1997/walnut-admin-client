@@ -9,9 +9,9 @@ export const deepKeys = function* (t: Recordable, pre: any[] = []): Generator {
 }
 
 /**
- * @description Dummy way to get real title.
+ * @description Dummy way to get real message.
  */
-export const getTitle = (titleField: string | undefined) => {
+export const getMaybeI18nMsg = (field: string | undefined) => {
   const { t } = useI18n()
-  return titleField!.includes('.') ? t(titleField!) : titleField
+  return field!.includes('.') ? t(field!) : field
 }

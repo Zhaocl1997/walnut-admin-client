@@ -22,7 +22,7 @@
               },
             ]"
             @click="onTabClick(tab.name)"
-            @contextmenu.prevent.native="onContextMenu($event, tab.name, index)"
+            @contextmenu.prevent.native="onCtxMenu($event, tab.name, index)"
           >
             <!-- active symbol -->
             <div v-show="$route.name === tab.name" class="inline">
@@ -35,7 +35,7 @@
             <div class="inline">
               <span
                 class="whitespace-nowrap font-sans text-sm antialiased text-primary"
-                >{{ getTitle(tab.meta.title) }}</span
+                >{{ getMaybeI18nMsg(tab.meta.title) }}</span
               >
             </div>
 
@@ -52,16 +52,7 @@
     </div>
 
     <!-- context menu -->
-    <transition name="zoom-out" mode="out-in">
-      <div
-        v-if="getContextMenuVisible"
-        class="border border-solid border-gray-600 border-opacity-50 rounded bg-gray-50 p-1"
-        :style="getContextMenuStyle"
-        v-click-outside="onCloseContextMenu"
-      >
-        <TabsContextMenu />
-      </div>
-    </transition>
+    <TabsContextMenu />
 
     <!-- right action -->
     <div class="flex flex-nowrap flex-row flex-none justify-end">
@@ -74,7 +65,7 @@
   import { defineComponent } from 'vue'
 
   import { indexName } from '/@/router/constant'
-  import { getTitle } from '/@/views/system/menu/utils'
+  import { getMaybeI18nMsg } from '/@/views/system/menu/utils'
 
   import TabsScroll from './components/tabsScroll.vue'
   import TabsLeftMethods from './components/tabsLeftMethods.vue'
@@ -107,10 +98,10 @@
       const {
         currentTabName,
         currentTabIndex,
-        getContextMenuStyle,
-        getContextMenuVisible,
-        onContextMenu,
-        onCloseContextMenu,
+        ctxMenuVisible,
+        getCtxMenuStyle,
+        onCtxMenu,
+        onCloseCtxMenu,
       } = useTabsContextMenu()
 
       const { leftMethods, rightMethods } = useTabsMethods(
@@ -120,24 +111,27 @@
 
       // set context
       setTabsContext({
-        scrollRef: scrollRef,
+        scrollRef,
 
         getTabs: getTabs,
 
-        currentTabName: currentTabName,
-        currentTabIndex: currentTabIndex,
+        ctxMenuVisible,
+        getCtxMenuStyle,
+
+        currentTabName,
+        currentTabIndex,
         onTabRemove: onTabRemove,
 
-        leftMethods: leftMethods,
-        rightMethods: rightMethods,
+        leftMethods,
+        rightMethods,
 
         closeContextMenu: () => {
-          getContextMenuVisible.value && onCloseContextMenu()
+          ctxMenuVisible.value && onCloseCtxMenu()
         },
       })
 
       return {
-        getTitle,
+        getMaybeI18nMsg,
         indexName,
 
         scrollRef,
@@ -146,10 +140,10 @@
         onTabClick,
         onTabRemove,
 
-        getContextMenuStyle,
-        getContextMenuVisible,
-        onContextMenu,
-        onCloseContextMenu,
+        ctxMenuVisible,
+        getCtxMenuStyle,
+        onCtxMenu,
+        onCloseCtxMenu,
 
         leftMethods,
         rightMethods,

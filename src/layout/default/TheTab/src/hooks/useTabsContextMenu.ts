@@ -1,7 +1,7 @@
 import { computed, reactive, ref } from 'vue'
 
 export const useTabsContextMenu = () => {
-  const contextMenuVisible = ref(false)
+  const ctxMenuVisible = ref(false)
   const currentTabName = ref('')
   const currentTabIndex = ref(0)
 
@@ -10,19 +10,17 @@ export const useTabsContextMenu = () => {
     y: 0,
   })
 
-  const getContextMenuVisible = computed(() => contextMenuVisible.value)
-
-  const getContextMenuStyle = computed<Partial<CSSStyleDeclaration>>(() => {
+  const getCtxMenuStyle = computed<any>(() => {
     return {
       position: 'fixed',
       top: position.y + 'px',
       left: position.x + 'px',
-      zIndex: '99999',
+      zIndex: '9999',
       minWidth: '150px',
-    }
+    } as CSSStyleDeclaration
   })
 
-  const onContextMenu = (event: MouseEvent, name: string, index: number) => {
+  const onCtxMenu = (event: MouseEvent, name: string, index: any) => {
     // set context menu position
     position.x = event.clientX
     position.y = event.clientY
@@ -31,26 +29,26 @@ export const useTabsContextMenu = () => {
     currentTabName.value = name
     currentTabIndex.value = index
 
-    onOpenContextMenu()
+    onOpenCtxMenu()
   }
 
-  const onOpenContextMenu = () => {
-    contextMenuVisible.value = true
+  const onOpenCtxMenu = () => {
+    ctxMenuVisible.value = true
   }
 
-  const onCloseContextMenu = () => {
-    contextMenuVisible.value = false
+  const onCloseCtxMenu = () => {
+    ctxMenuVisible.value = false
   }
 
   return {
     currentTabName,
     currentTabIndex,
+    ctxMenuVisible,
 
-    getContextMenuStyle,
-    getContextMenuVisible,
+    getCtxMenuStyle,
 
-    onContextMenu,
-    onOpenContextMenu,
-    onCloseContextMenu,
+    onCtxMenu,
+    onOpenCtxMenu,
+    onCloseCtxMenu,
   }
 }

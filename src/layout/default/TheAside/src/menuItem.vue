@@ -8,7 +8,7 @@
           height="20"
         ></w-icon>
 
-        <span>{{ getTitle(item.title) }}</span>
+        <span>{{ getMaybeI18nMsg(item.title) }}</span>
       </div>
     </template>
 
@@ -36,7 +36,7 @@
           height="20"
         ></w-icon>
 
-        <span>{{ getTitle(item.title) }}</span>
+        <span>{{ getMaybeI18nMsg(item.title) }}</span>
       </div>
     </template>
   </el-menu-item>
@@ -49,7 +49,7 @@
   import { computed, defineComponent } from 'vue'
 
   import { useRouterPush } from '/@/router'
-  import { getTitle } from '/@/views/system/menu/utils'
+  import { getMaybeI18nMsg } from '/@/views/system/menu/utils'
 
   interface MenuItem extends Menu {
     children?: any[]
@@ -86,7 +86,7 @@
         hasChildren,
         childrenLists,
         onClick,
-        getTitle,
+        getMaybeI18nMsg,
       }
     },
   })

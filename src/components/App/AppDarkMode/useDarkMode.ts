@@ -1,7 +1,7 @@
 import { unref, watchEffect } from 'vue'
 import { useAppGlobalConfig } from '../../../App/AppConfig'
 import { DarkModeEnum } from '/@/enums/dark'
-import { usePreferredDark } from '/@/hooks/core/usePreferredDark'
+import { usePreferredDark } from '@vueuse/core'
 
 export const useDarkMode = () => {
   const { getAppGlobalConfig } = useAppGlobalConfig()

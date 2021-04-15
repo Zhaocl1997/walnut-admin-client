@@ -82,7 +82,7 @@
 
   import { getMenuTableHeaders } from './headers'
   import { getMenuFormSchemas } from './schemas'
-  import { getTitle } from './utils'
+  import { getMaybeI18nMsg } from './utils'
 
   export default defineComponent({
     name: 'Menu',
@@ -94,7 +94,7 @@
       const getTreeData = computed(() => {
         return formatTree(treeData.value, {
           format: (node) => {
-            return { ...node, title: getTitle(node.title) }
+            return { ...node, title: getMaybeI18nMsg(node.title) }
           },
         })
       })

@@ -11,15 +11,3 @@ export const isInSetup = () => {
     appError('Hook can only be used in `setup` function!')
   }
 }
-
-export const tryOnMounted = (fn: Fn) => {
-  if (getCurrentInstance()) {
-    onMounted(fn)
-  }
-}
-
-export const tryOnUnMounted = (fn: Fn) => {
-  if (getCurrentInstance()) {
-    onUnmounted(fn)
-  }
-}

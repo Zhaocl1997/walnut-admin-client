@@ -1,6 +1,6 @@
 import { unref } from 'vue'
 import { tabsKey } from '../utils/InjectionKey'
-import { useContext } from '/@/hooks/core/useContext'
+import { useContext } from '../../../../../hooks/core/useContext'
 
 export const useTabsContext = () => {
   const { setContext, getContext } = useContext()

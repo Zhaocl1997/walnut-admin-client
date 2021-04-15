@@ -14,10 +14,10 @@
     components: { AppProvider },
 
     setup() {
-      const { meta } = useAppRoute()
+      const route = useAppRoute()
 
       watchEffect(() => {
-        useTitle(meta.title)
+        useTitle(route.meta.title)
       })
 
       return {}

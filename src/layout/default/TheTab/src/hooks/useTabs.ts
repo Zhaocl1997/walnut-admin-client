@@ -5,7 +5,6 @@ import { watchEffect, ref, nextTick, computed } from 'vue'
 
 import { useAppStore } from '/@/store'
 import { useAppRoute, useAppRouter } from '/@/router'
-import { useTitle } from '/@/hooks/core/useTitle'
 
 import { calcIndex, createTab } from '../utils'
 
@@ -38,8 +37,6 @@ export const useTabs = () => {
   watchEffect(() => {
     // trigger store action, build the tabs
     dispatch('tab/commitRouteChange', createTab(route))
-
-    useTitle(route.meta.title)
 
     // scroll by index
     nextTick(() => {

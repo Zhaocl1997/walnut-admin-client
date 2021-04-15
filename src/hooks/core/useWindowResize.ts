@@ -1,39 +1,27 @@
-import { easyThrottle } from 'easy-fns-ts'
 import { nextTick, onMounted, onUnmounted } from 'vue'
+import {
+  useBreakpoints,
+  breakpointsTailwind,
+  useThrottleFn,
+  useEventListener,
+} from '@vueuse/core'
 
-import { ScreenEnum } from '/@/enums/screen'
 import { useAppStore } from '/@/store'
 
 export const useWindowResize = () => {
   const { dispatch } = useAppStore()
 
+  const breakpoints = useBreakpoints(breakpointsTailwind)
+
   const changeMenuState = () => {
-    if (document.body.clientWidth < ScreenEnum.LG) {
+    if (breakpoints.isSmaller('lg')) {
       dispatch('app/commitMenuCollapse', true)
     } else {
       dispatch('app/commitMenuCollapse', false)
     }
   }
 
-  const handler = easyThrottle(changeMenuState, 500)
+  const handler = useThrottleFn(changeMenuState, 500)
 
-  const registerEventHandler = () => {
-    window.addEventListener('resize', handler, true)
-  }
-
-  const unregisterEventHandler = () => {
-    window.removeEventListener('resize', handler, true)
-  }
-
-  onMounted(() => {
-    registerEventHandler()
-
-    nextTick(() => {
-      changeMenuState()
-    })
-  })
-
-  onUnmounted(() => {
-    unregisterEventHandler()
-  })
+  useEventListener(window, 'resize', handler)
 }

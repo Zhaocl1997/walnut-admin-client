@@ -1,30 +1,40 @@
 <template>
-  <ul class="flex flex-col flex-wrap bg-primary">
-    <li
-      v-for="(item, index) in methodLists"
-      :key="index"
-      :class="[
-        'flex flex-row flex-nowrap items-center mx-1 px-0.5 my-0.5 cursor-pointer',
-        {
-          'cursor-not-allowed text-gray-400': item.disabled,
-          'hover:bg-blue-200': !item.disabled,
-          'border-b-4 border-gray-300': item.divider,
-        },
-      ]"
-      @click="!item.disabled ? item.event() : emptyFunction()"
+  <transition name="zoom-out" mode="out-in">
+    <div
+      ref="tabContextMenu"
+      v-if="ctxMenuVisible"
+      class="border border-solid border-gray-600 border-opacity-50 rounded bg-primary p-1"
+      :style="getCtxMenuStyle"
     >
-      <w-icon :icon="item.icon" height="22"></w-icon>
+      <ul class="flex flex-col flex-wrap bg-primary">
+        <li
+          v-for="(item, index) in methodLists"
+          :key="index"
+          :class="[
+            'flex flex-row flex-nowrap items-center mx-1 px-0.5 my-0.5 cursor-pointer',
+            {
+              'cursor-not-allowed text-gray-400': item.disabled,
+              'hover:bg-blue-200': !item.disabled,
+              'border-b-4 border-gray-300': item.divider,
+            },
+          ]"
+          @click="!item.disabled ? item.event() : emptyFunction()"
+        >
+          <w-icon :icon="item.icon" height="22"></w-icon>
 
-      <span
-        class="whitespace-nowrap font-sans text-base text-primary antialiased m-1 select-none"
-        >{{ item.name }}</span
-      >
-    </li>
-  </ul>
+          <span
+            class="whitespace-nowrap font-sans text-base text-primary antialiased m-1 select-none"
+            >{{ item.name }}</span
+          >
+        </li>
+      </ul>
+    </div>
+  </transition>
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent } from 'vue'
+  import { computed, defineComponent, nextTick, ref } from 'vue'
+  import { onClickOutside } from '@vueuse/core'
 
   import { emptyFunction } from '/@/utils'
   import { DeleteTabTypeEnum } from '/@/enums/tab'
@@ -45,12 +55,16 @@
       const { getTabsContext } = useTabsContext()
       const { currentRoute } = useAppRouter()
 
+      const tabContextMenu = ref(null)
+
       const {
         currentTabName,
         currentTabIndex,
         onTabRemove,
-        closeContextMenu,
         getTabs,
+        ctxMenuVisible,
+        getCtxMenuStyle,
+        closeContextMenu,
       } = getTabsContext()
 
       const getCloseDisabled = computed(() => currentTabIndex.value === 0)
@@ -67,6 +81,12 @@
         () => currentRoute.value.name !== currentTabName.value
       )
 
+      onClickOutside(tabContextMenu, () => {
+        setTimeout(() => {
+          closeContextMenu()
+        }, 100)
+      })
+
       const methodLists = computed(() => {
         return [
           {
@@ -74,8 +94,6 @@
             icon: 'ant-design:close-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_SELF)
-
-              closeContextMenu()
             },
             disabled: getCloseDisabled.value,
           },
@@ -84,8 +102,6 @@
             icon: 'ant-design:vertical-right-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_LEFT)
-
-              closeContextMenu()
             },
             disabled: getCloseLeftDisabled.value,
           },
@@ -94,8 +110,6 @@
             icon: 'ant-design:vertical-left-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_RIGHT)
-
-              closeContextMenu()
             },
             disabled: getCloseRightDisabled.value,
           },
@@ -104,8 +118,6 @@
             icon: 'ant-design:column-width-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_OTHER)
-
-              closeContextMenu()
             },
             disabled: getCloseOtherDisabled.value,
           },
@@ -114,8 +126,6 @@
             icon: 'ant-design:border-outlined',
             event: () => {
               onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_ALL)
-
-              closeContextMenu()
             },
             divider: true,
           },
@@ -126,8 +136,6 @@
               const { redirect } = useRedirect()
 
               await redirect()
-
-              closeContextMenu()
             },
             disabled: getOtherDisabled.value,
           },
@@ -140,8 +148,6 @@
               })
 
               onToggleScreenfull()
-
-              closeContextMenu()
             },
             disabled: getOtherDisabled.value,
           },
@@ -151,6 +157,9 @@
       return {
         methodLists,
         emptyFunction,
+        tabContextMenu,
+        ctxMenuVisible,
+        getCtxMenuStyle,
       }
     },
   })

@@ -6,13 +6,13 @@
         :to="{ path: getIndex.path }"
       >
         <span class="text-base text-primary">{{
-          getTitle(getIndex.meta.title)
+          getMaybeI18nMsg(getIndex.meta.title)
         }}</span>
       </el-breadcrumb-item>
 
       <el-breadcrumb-item v-for="route in getChildren" :key="route.path">
         <span class="text-base text-primary">{{
-          getTitle(route.meta.title)
+          getMaybeI18nMsg(route.meta.title)
         }}</span>
       </el-breadcrumb-item>
     </el-breadcrumb>
@@ -24,7 +24,7 @@
 
   import { useAppRoute } from '/@/router'
   import { indexName } from '/@/router/constant'
-  import { getTitle } from '/@/views/system/menu/utils'
+  import { getMaybeI18nMsg } from '/@/views/system/menu/utils'
 
   export default defineComponent({
     name: 'HeaderBreadCrumb',
@@ -42,7 +42,7 @@
         indexName,
         getIndex,
         getChildren,
-        getTitle,
+        getMaybeI18nMsg,
       }
     },
   })

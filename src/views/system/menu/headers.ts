@@ -1,6 +1,6 @@
 import type { WTableHeaderItem } from '/@/components/UI/Table'
 import { formatTime } from 'easy-fns-ts'
-import { getTitle } from './utils'
+import { getMaybeI18nMsg } from './utils'
 
 export const getMenuTableHeaders = (): WTableHeaderItem[] => {
   return [
@@ -9,7 +9,7 @@ export const getMenuTableHeaders = (): WTableHeaderItem[] => {
       prop: 'title',
       width: '200px',
       align: 'left',
-      formatter: (row) => getTitle(row.title),
+      formatter: (row) => getMaybeI18nMsg(row.title),
     },
     {
       label: 'Type',
