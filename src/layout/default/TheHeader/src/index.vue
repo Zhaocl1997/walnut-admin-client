@@ -17,11 +17,11 @@
           </div>
 
           <div class="hover:bg-warm-gray-300 px-0.5">
-            <HeaderLocale />
+            <WAppLocalePicker />
           </div>
 
           <div class="hover:bg-warm-gray-300 px-0.5">
-            <HeaderDarkMode />
+            <WAppDarkMode />
           </div>
 
           <div class="hover:bg-warm-gray-300 px-0.5">
@@ -40,9 +40,7 @@
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
   import HeaderAvatar from './avatar.vue'
-  import HeaderLocale from '../../../../components/App/AppLocalePicker'
   import HeaderScreenfull from '/@/components/Help/Screenfull'
-  import HeaderDarkMode from '../../../../components/App/AppDarkMode'
 
   export default defineComponent({
     name: 'Header',
@@ -51,9 +49,7 @@
       HeaderBreadCrumb,
       HeaderCollapse,
       HeaderAvatar,
-      HeaderLocale,
       HeaderScreenfull,
-      HeaderDarkMode,
     },
 
     setup(props: any, ctx: SetupContext) {},

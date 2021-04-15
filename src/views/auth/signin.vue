@@ -7,7 +7,7 @@
     ></w-form>
 
     <div class="float-right m-3">
-      <WLocalePicker></WLocalePicker>
+      <WAppLocalePicker></WAppLocalePicker>
     </div>
   </div>
 </template>

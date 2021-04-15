@@ -47,7 +47,7 @@ export const createComponentPlugin = (): Plugin => {
               'Screenfull',
               'Title',
             ],
-            App: ['LocalePicker', 'DarkMode'],
+            App: ['AppLocalePicker', 'AppDarkMode'],
           }
 
           let ret = ''
