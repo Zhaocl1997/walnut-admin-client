@@ -1,16 +1,16 @@
 import type { InjectionKey } from 'vue'
-import { inject, provide, unref } from 'vue'
+import { inject, provide } from 'vue'
 
 /**
  * @description Integrate entry context, expose `setContext` and `getContext` two functions
  */
-export const useContext = () => {
-  const setContext = <T>(key: InjectionKey<string | symbol>, ctx: T): void => {
+export const useContext = <T>() => {
+  const setContext = (key: InjectionKey<string | symbol>, ctx: T): void => {
     provide<T>(key, ctx)
   }
 
-  const getContext = <T>(key: InjectionKey<string | symbol>) => {
-    return unref(inject<T>(key))
+  const getContext = (key: InjectionKey<string | symbol>): T => {
+    return inject<T>(key)!
   }
 
   return {
