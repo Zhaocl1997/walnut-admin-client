@@ -26,8 +26,6 @@
 
     inheritAttrs: false,
 
-    components: {},
-
     setup() {
       const { rightMethods } = getTabsContext()
 

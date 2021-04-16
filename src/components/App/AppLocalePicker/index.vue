@@ -30,6 +30,8 @@
   export default defineComponent({
     name: 'AppLocalePicker',
 
+    inheritAttrs: false,
+
     props: {
       reload: {
         type: Boolean as PropType<boolean>,
@@ -42,7 +44,7 @@
       },
     },
 
-    setup(props: any) {
+    setup(props) {
       const lang = ref('')
 
       const { getters, dispatch } = useAppStore()
@@ -55,7 +57,7 @@
         () => langLists.find((item) => item.value === lang.value)?.label
       )
 
-      const onCommand = (val) => {
+      const onCommand = (val: string) => {
         dispatch('app/commitAppLang', val)
         props.reload && location.reload()
       }

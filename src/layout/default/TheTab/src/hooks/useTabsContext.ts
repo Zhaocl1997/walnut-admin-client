@@ -1,4 +1,4 @@
-import type { TabsContext } from '../types/tabsContext'
+import type { TabsContext } from '../types'
 import { tabsKey } from '../utils/InjectionKey'
 import { useContext } from '/@/hooks/core/useContext'
 

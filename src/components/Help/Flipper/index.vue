@@ -69,7 +69,7 @@
       },
 
       trigger: {
-        type: String as PropType<'click' | 'hover'>,
+        type: String as PropType<Extract<ComponentTrigger, 'click' | 'hover'>>,
         default: 'click',
       },
     },

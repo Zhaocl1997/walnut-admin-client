@@ -91,7 +91,7 @@
 
     emits: ['update:modelValue'],
 
-    setup(props: any, ctx: SetupContext) {
+    setup(props, ctx: SetupContext) {
       const { emit } = ctx
 
       let insideStartLoading: Fn
