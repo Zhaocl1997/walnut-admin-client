@@ -2,7 +2,7 @@
 
 - 这个文件夹用于存放和打包相关的工具
 
-- icon 文件夹这里要单独讲一下。框架使用的是`iconify`的`vue3`的组件，目前均是使用`@iconify/json`提供好的`collections`使用图标，暂时用了`antd`的和一套`emoj`i 的。之后会扩展更多 icon 使用方式。
+- icon 文件夹这里要单独讲一下。框架使用的是`iconify`的`vue3`的组件，目前均是使用`@iconify/json`提供好的`collections`使用图标，暂时用了`antd`的和一套`emoji` 的。之后会扩展更多 icon 使用方式。
 
   - `src/components/UI/Icon/src/utils`
 

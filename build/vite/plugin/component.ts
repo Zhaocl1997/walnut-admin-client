@@ -44,10 +44,9 @@ export const createComponentPlugin = (): Plugin => {
               'IconPicker',
               'Json',
               'Message',
-              'Screenfull',
               'Title',
             ],
-            App: ['AppLocalePicker', 'AppDarkMode'],
+            App: ['AppLocalePicker', 'AppDarkMode', 'AppFullScreen'],
           }
 
           let ret = ''
