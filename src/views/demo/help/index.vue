@@ -4,6 +4,10 @@
       <span>Help Components</span>
     </template>
 
+    <el-button @click="onAdd">Add</el-button>
+
+    <div v-for="i in arr">{{ i.name }}</div>
+
     <w-title show-left>Tooltip help message</w-title>
     <el-space>
       <WMessage
@@ -108,8 +112,8 @@
 
     <w-title show-left>Locale Picker</w-title>
 
-    <WLocalePicker></WLocalePicker>
-    <WLocalePicker show-text></WLocalePicker>
+    <WAppLocalePicker></WAppLocalePicker>
+    <WAppLocalePicker show-text></WAppLocalePicker>
 
     <br />
     <br />
@@ -121,22 +125,32 @@
     <br />
     <br />
 
-    <div id="screenfull-test">
-      <w-title show-left>Screen full</w-title>
+    <w-title show-left>Screen full</w-title>
 
-      <WScreenfull></WScreenfull>
-      <WScreenfull target="#screenfull-test"></WScreenfull>
-    </div>
+    <WAppFullScreen></WAppFullScreen>
   </el-card>
 </template>
 
 <script lang="ts">
+  import { genString } from 'easy-fns-ts'
   import { reactive, defineComponent, toRefs } from 'vue'
+  import { useAppGlobalConfig } from '/@/App/AppConfig'
 
   export default defineComponent({
     name: 'HelpDemo',
 
     setup() {
+      const { getAppGlobalConfig } = useAppGlobalConfig()
+
+      const { arr } = getAppGlobalConfig()
+
+      const onAdd = () => {
+        arr.value.push({
+          value: Math.random(),
+          name: genString(8),
+        })
+      }
+
       const state = reactive({
         arrow: {
           active: false,
@@ -147,6 +161,8 @@
       })
 
       return {
+        arr,
+        onAdd,
         ...toRefs(state),
       }
     },

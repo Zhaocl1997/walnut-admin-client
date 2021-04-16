@@ -9,6 +9,20 @@
       const globalState = reactive({
         isDark: false,
         darkMode: 'light',
+        arr: [
+          {
+            value: 1,
+            name: 'aaa',
+          },
+          {
+            value: 2,
+            name: 'bbb',
+          },
+          {
+            value: 3,
+            name: 'ccc',
+          },
+        ],
       })
 
       watch(
