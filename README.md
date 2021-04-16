@@ -71,8 +71,8 @@ npm i
 
 ### 接下来的计划  
 
-- [ ] ElementPlus 国际化响应式切换，暗色主题适配  
-- [ ] ElementPlus 按需加载，还没生效
+- [ ] ElementPlus 国际化响应式切换，暗色主题适配（暂时搁置）  
+- [ ] ElementPlus 按需加载未生效（暂时搁置）
 - [ ] Layout 优化，目前只是最基本的左侧菜单布局  
 - [ ] vue-tsc 错误全部消除  
 - [ ] 虚拟滚动
@@ -84,11 +84,11 @@ npm i
 - [ ] dialog 全屏，拖拽，弹出效果
 - [ ] drawer 可自定义固定头部尾部
 - [ ] hook抽离，尽量可脱离组件逻辑
-- [ ] clickOutSide/permission 指令深入
+- [ ] 前端权限
 - [ ] 环境变量优化，打包优化和自动化
 - [ ] 部署，自动化部署
-- [ ] easy-fns-ts 类型优化
 - [ ] icon 扩展 支持更多方法使用icon
+- [ ] 尝试使用AppContext的方式替代全局的状态管理
 
 ### 更新日志
 
