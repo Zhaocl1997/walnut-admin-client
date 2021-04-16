@@ -1,5 +1,5 @@
 <template>
-  <div @click="onToggleScreenfull">
+  <div @click="toggleFullScreen">
     <w-icon
       class="cursor-pointer"
       :width="width"
@@ -16,10 +16,12 @@
   import type { PropType } from 'vue'
   import { defineComponent } from 'vue'
 
-  import { useScreenfull } from './useScreenfull'
+  import { useFullScreen } from './useFullScreen'
 
   export default defineComponent({
-    name: 'WScreenfull',
+    name: 'AppFullScreen',
+
+    inheritAttrs: false,
 
     props: {
       target: {
@@ -34,7 +36,7 @@
     },
 
     setup(props) {
-      return { ...useScreenfull(props) }
+      return { ...useFullScreen(props) }
     },
   })
 </script>

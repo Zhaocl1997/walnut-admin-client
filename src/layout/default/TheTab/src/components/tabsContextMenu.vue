@@ -41,7 +41,7 @@
   import { useRedirect } from '/@/hooks/core/useRedirect'
 
   import { getTabsContext } from '../hooks/useTabsContext'
-  import { useScreenfull } from '/@/components/Help/Screenfull/useScreenfull'
+  import { useFullScreen } from '/@/components/App/AppFullScreen/useFullScreen'
   import { useAppRouter } from '/@/router'
   import { useI18n } from '/@/locales'
 
@@ -152,11 +152,11 @@
             name: t('layout.tab.screenfull'),
             icon: 'ant-design:fullscreen-outlined',
             event: () => {
-              const { onToggleScreenfull } = useScreenfull({
+              const { toggleFullScreen } = useFullScreen({
                 target: `#${currentTabName.value}`,
               })
 
-              onToggleScreenfull()
+              toggleFullScreen()
 
               onCloseCtxMenu()
             },
