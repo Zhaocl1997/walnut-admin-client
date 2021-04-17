@@ -1,5 +1,5 @@
 import type { Slots, VNodeNormalizedChildren } from 'vue'
-import { getCurrentInstance, onMounted, onUnmounted } from 'vue'
+import { getCurrentInstance } from 'vue'
 import { appError } from './log'
 
 export const getDefaultSlotText = (slots: Slots): VNodeNormalizedChildren => {

@@ -39,7 +39,7 @@
   import TheTab from './TheTab'
 
   import { useAppStore } from '/@/store'
-  import { useWindowResize } from '/@/hooks/core/useWindowResize'
+  import { useLayoutResize } from '../../hooks/core/useLayoutResize'
 
   export default defineComponent({
     name: 'DefaultLayout',
@@ -52,7 +52,7 @@
     },
 
     setup() {
-      useWindowResize()
+      useLayoutResize()
 
       const { getters } = useAppStore()
 

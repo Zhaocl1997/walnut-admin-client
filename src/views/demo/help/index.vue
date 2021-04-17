@@ -134,15 +134,13 @@
 <script lang="ts">
   import { genString } from 'easy-fns-ts'
   import { reactive, defineComponent, toRefs } from 'vue'
-  import { useAppGlobalConfig } from '/@/App/AppConfig'
+  import { getAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'HelpDemo',
 
     setup() {
-      const { getAppGlobalConfig } = useAppGlobalConfig()
-
-      const { arr } = getAppGlobalConfig()
+      const { arr } = getAppContext()
 
       const onAdd = () => {
         arr.value.push({

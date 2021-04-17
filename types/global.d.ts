@@ -14,7 +14,7 @@ declare type Nullable<T> = T | null
  * Maybe it's a ref, or not.
  *
  * ```ts
- * type MaybeRef<T> = T | Ref<T>
+ * type MaybeRef<T> = T | Ref<T> | ComputedRef<T>
  * ```
  */
 declare type MaybeRef<T> = T | Ref<T> | ComputedRef<T>
