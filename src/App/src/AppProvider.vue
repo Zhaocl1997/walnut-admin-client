@@ -1,12 +1,13 @@
 <script lang="ts">
+  import type { AppContext } from './types'
   import { defineComponent, reactive, toRefs, watch } from 'vue'
-  import { useAppGlobalConfig } from './AppConfig'
+  import { setAppContext } from './hooks/useAppContext'
 
   export default defineComponent({
     name: 'AppProvider',
 
     setup(_, { slots }) {
-      const globalState = reactive({
+      const globalState = reactive<AppContext>({
         isDark: false,
         darkMode: 'light',
         arr: [
@@ -36,9 +37,7 @@
         }
       )
 
-      const { setAppGlobalConfig } = useAppGlobalConfig()
-
-      setAppGlobalConfig(toRefs(globalState))
+      setAppContext(toRefs(globalState))
 
       return () => slots.default?.()
     },
