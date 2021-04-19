@@ -30,11 +30,11 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   // https://github.com/intlify/vite-plugin-vue-i18n
   vitePlugins.push(createI18nPlugin())
 
+  // https://github.com/anncwb/vite-plugin-style-import
+  vitePlugins.push(createStyleImportPlugin())
+
   // https://github.com/btd/rollup-plugin-visualizer
   stage && vitePlugins.push(createVisualizerPlugin())
-
-  // https://github.com/anncwb/vite-plugin-style-import
-  // vitePlugins.push(createStyleImportPlugin())
 
   // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
   prod && vitePlugins.push(legacy())

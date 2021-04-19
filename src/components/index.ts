@@ -52,7 +52,7 @@ import {
   ElMessageBox,
   ElNotification,
 } from 'element-plus'
-import 'element-plus/lib/theme-chalk/index.css'
+import 'element-plus/lib/theme-chalk/base.css'
 
 import ElementLocale from 'element-plus/lib/locale'
 import { AppI18n } from '/@/locales'

@@ -58,32 +58,29 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       brotliSize: false,
       rollupOptions: {
         output: {
+          // For 2.1.5 has `Maximum call stack size exceeded` error. See below.
+          // https://github.com/vitejs/vite/issues/2906
           // https://rollupjs.org/guide/en/#outputmanualchunks
-          manualChunks(id) {
-            if (id.includes('node_modules')) {
-              if (id.includes('@vue/')) {
-                return 'vue'
-              }
-
-              if (id.includes('element-plus')) {
-                return 'element-plus'
-              }
-
-              if (id.includes('lodash')) {
-                return 'lodash'
-              }
-
-              return 'vendor'
-            }
-
-            if (id.includes('src/components')) {
-              return 'component'
-            }
-
-            if (id.includes('src/views')) {
-              return 'view'
-            }
-          },
+          // manualChunks(id) {
+          //   if (id.includes('node_modules')) {
+          //     if (id.includes('@vue/')) {
+          //       return 'vue'
+          //     }
+          //     if (id.includes('element-plus')) {
+          //       return 'element-plus'
+          //     }
+          //     if (id.includes('lodash')) {
+          //       return 'lodash'
+          //     }
+          //     return 'vendor'
+          //   }
+          //   if (id.includes('src/components')) {
+          //     return 'component'
+          //   }
+          //   if (id.includes('src/views')) {
+          //     return 'view'
+          //   }
+          // },
         },
       },
     },

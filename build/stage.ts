@@ -23,7 +23,7 @@ const prefix = (msg, emoji) =>
   })
 
   const command =
-    'npm run prebuild && vite build --mode staging && npm run postbuild'
+    'npm run prebuild && npx vite build --mode staging && npm run postbuild'
 
   const start = new Date().getTime()
   cp.exec(command, (error, stdout, stderr) => {
