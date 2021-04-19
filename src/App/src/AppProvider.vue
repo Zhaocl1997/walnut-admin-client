@@ -10,6 +10,7 @@
       const globalState = reactive<AppContext>({
         isDark: false,
         darkMode: 'light',
+        locale: 'en',
         arr: [
           {
             value: 1,

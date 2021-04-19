@@ -1,8 +1,7 @@
 <template>
   <w-dropdown
-    v-model="lang"
+    v-model="locale"
     :options="langLists"
-    @command="onCommand"
     size="medium"
     trigger="click"
   >
@@ -22,10 +21,11 @@
 
 <script lang="ts">
   import type { PropType } from 'vue'
-  import { defineComponent, computed, ref, watchEffect } from 'vue'
+  import { defineComponent, computed, watchEffect } from 'vue'
 
-  import { useAppStore } from '/@/store'
   import { langLists } from '/@/locales'
+  import { getAppContext } from '/@/App'
+  import { useLocale } from './useLocale'
 
   export default defineComponent({
     name: 'AppLocalePicker',
@@ -45,28 +45,23 @@
     },
 
     setup(props) {
-      const lang = ref('')
-
-      const { getters, dispatch } = useAppStore()
-
-      watchEffect(() => {
-        lang.value = getters.lang
-      })
+      const { locale } = getAppContext()
 
       const getLangText = computed(
-        () => langLists.find((item) => item.value === lang.value)?.label
+        () => langLists.find((item) => item.value === locale.value)?.label
       )
 
-      const onCommand = (val: string) => {
-        dispatch('app/commitAppLang', val)
+      watchEffect(async () => {
+        const { loadLocaleMessages, setI18nLanguage } = useLocale(locale.value)
+        await loadLocaleMessages()
+        setI18nLanguage()
         props.reload && location.reload()
-      }
+      })
 
       return {
-        lang,
-        getLangText,
+        locale,
         langLists,
-        onCommand,
+        getLangText,
       }
     },
   })
