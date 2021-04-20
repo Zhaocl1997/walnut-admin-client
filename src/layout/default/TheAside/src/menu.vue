@@ -3,7 +3,7 @@
     <w-scrollbar>
       <el-menu
         :default-active="$route.name"
-        :collapse="getCollapse"
+        :collapse="app.collapse"
         :collapse-transition="false"
         unique-opened
         background-color="var(--color-bg-primary)"
@@ -24,10 +24,10 @@
 <script lang="ts">
   import type { PropType } from 'vue'
   import type { Menu } from '/@/router/types'
-  import { defineComponent, computed } from 'vue'
+  import { defineComponent } from 'vue'
 
-  import { useAppStore } from '/@/store'
   import AsideMenuItem from './menuItem.vue'
+  import { getAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'AsideMenu',
@@ -42,12 +42,10 @@
     },
 
     setup() {
-      const { getters } = useAppStore()
-
-      const getCollapse = computed(() => getters.collapse)
+      const { app } = getAppContext()
 
       return {
-        getCollapse,
+        app,
       }
     },
   })

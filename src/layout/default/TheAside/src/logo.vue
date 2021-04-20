@@ -4,7 +4,7 @@
     @click="onGoIndex"
   >
     <div
-      v-if="getCollapse"
+      v-if="app.collapse"
       class="flex flex-row flex-nowrap justify-evenly items-center"
     >
       <img
@@ -31,25 +31,23 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, computed } from 'vue'
+  import { defineComponent } from 'vue'
   import { useRouterPush } from '/@/router'
-  import { useAppStore } from '/@/store'
   import { indexName } from '/@/router/constant'
+  import { getAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'AsideLogo',
 
     setup() {
-      const { getters } = useAppStore()
-
-      const getCollapse = computed(() => getters.collapse)
+      const { app } = getAppContext()
 
       const onGoIndex = () => {
         useRouterPush({ name: indexName })
       }
 
       return {
-        getCollapse,
+        app,
         onGoIndex,
       }
     },

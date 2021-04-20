@@ -6,14 +6,14 @@
       >
         <div class="flex flex-nowrap flex-row justify-start space-x-2">
           <HeaderCollapse />
-          <HeaderBreadCrumb />
+          <HeaderBreadCrumb v-if="!app.isMobile" />
         </div>
 
         <div
           class="flex flex-nowrap flex-row justify-end space-x-2 h-full all-child:cursor-pointer all-child:flex all-child:items-center"
         >
           <div class="hover:bg-warm-gray-300 px-0.5">
-            <WAppFullScreen />
+            <WAppFullScreen v-if="!app.isMobile" />
           </div>
 
           <div class="hover:bg-warm-gray-300 px-0.5">
@@ -34,12 +34,12 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
   import { defineComponent } from 'vue'
 
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
   import HeaderAvatar from './avatar.vue'
+  import { getAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'Header',
@@ -50,7 +50,13 @@
       HeaderAvatar,
     },
 
-    setup(props: any, ctx: SetupContext) {},
+    setup() {
+      const { app } = getAppContext()
+
+      return {
+        app,
+      }
+    },
   })
 </script>
 

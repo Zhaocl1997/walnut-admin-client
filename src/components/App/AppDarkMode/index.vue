@@ -3,7 +3,7 @@
     <template #reference>
       <w-icon
         :icon="
-          isDark
+          app.isDark
             ? 'emojione:waxing-crescent-moon'
             : 'emojione:waxing-gibbous-moon'
         "
@@ -11,7 +11,7 @@
       ></w-icon>
     </template>
 
-    <WCheckTag v-model="darkMode" :options="darkModeOptions"></WCheckTag>
+    <WCheckTag v-model="app.darkMode" :options="darkModeOptions"></WCheckTag>
   </el-popover>
 </template>
 
@@ -47,11 +47,10 @@
         ]
       })
 
-      const { isDark, darkMode } = useDarkMode()
+      const { app } = useDarkMode()
 
       return {
-        isDark,
-        darkMode,
+        app,
         darkModeOptions,
       }
     },

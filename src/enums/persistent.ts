@@ -5,6 +5,8 @@ export enum PersistentKeysEnum {
 
   USER_USERNAME = 'USER__USERNAME',
   USER_PASSWORD = 'USER__PASSWORD',
+
+  APP_GLOBAL_STATE = 'APP_GLOBAL_STATE',
 }
 
 export enum StorageTypeEnum {

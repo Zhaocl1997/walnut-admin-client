@@ -1,6 +1,6 @@
 <template>
   <w-dropdown
-    v-model="locale"
+    v-model="app.locale"
     :options="langLists"
     size="medium"
     trigger="click"
@@ -45,21 +45,23 @@
     },
 
     setup(props) {
-      const { locale } = getAppContext()
+      const { app } = getAppContext()
 
       const getLangText = computed(
-        () => langLists.find((item) => item.value === locale.value)?.label
+        () => langLists.find((item) => item.value === app.value.locale)?.label
       )
 
       watchEffect(async () => {
-        const { loadLocaleMessages, setI18nLanguage } = useLocale(locale.value)
+        const { loadLocaleMessages, setI18nLanguage } = useLocale(
+          app.value.locale
+        )
         await loadLocaleMessages()
         setI18nLanguage()
         props.reload && location.reload()
       })
 
       return {
-        locale,
+        app,
         langLists,
         getLangText,
       }

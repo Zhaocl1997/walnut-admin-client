@@ -1,7 +1,7 @@
 <template>
   <w-icon
     :icon="
-      getCollapse
+      app.collapse
         ? 'ant-design:menu-fold-outlined'
         : 'ant-design:menu-unfold-outlined'
     "
@@ -12,24 +12,26 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, computed } from 'vue'
-  import { useAppStore } from '/@/store'
+  import { defineComponent } from 'vue'
+  import { getAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'HeaderCollapse',
 
     setup() {
-      const { getters, dispatch } = useAppStore()
-
-      const getCollapse = computed(() => getters.collapse)
+      const { app } = getAppContext()
 
       const onClick = () => {
-        dispatch('app/commitMenuCollapse')
+        if (app.value.isMobile) {
+          app.value.showAside = !app.value.showAside
+        }
+
+        app.value.collapse = !app.value.collapse
       }
 
       return {
         onClick,
-        getCollapse,
+        app,
       }
     },
   })

@@ -1,16 +1,50 @@
-import {
-  useBreakpoints,
-  breakpointsTailwind,
-  useThrottleFn,
-  useEventListener,
-} from '@vueuse/core'
+import { tryOnMounted } from '@vueuse/core'
 
-export const useAppResize = (fn: Fn) => {
-  const breakpoints = useBreakpoints(breakpointsTailwind)
+import { getAppContext } from '/@/App'
+import { useResize } from '/@/hooks/core/useResize'
+import { useBreakpoints } from '/@/hooks/core/useBreakpoints'
 
-  const handler = useThrottleFn(fn, 500)
+export const useAppResize = () => {
+  const { app } = getAppContext()
+  const breakpoints = useBreakpoints()
 
-  useEventListener(window, 'resize', handler)
+  const handler = () => {
+    // mobile
+    if (breakpoints.isSmaller('sm')) {
+      app.value.collapse = true
+      app.value.device = 'mobile'
+      app.value.canShowAside = false
+      app.value.isMobile = true
+    }
 
-  return { breakpoints }
+    // tablet
+    if (breakpoints.isInBetween('sm', 'lg')) {
+      app.value.collapse = true
+      app.value.device = 'tablet'
+      app.value.canShowAside = true
+      app.value.isMobile = false
+    }
+
+    // laptop
+    if (breakpoints.isInBetween('lg', 'xl')) {
+      app.value.collapse = false
+      app.value.device = 'laptop'
+      app.value.canShowAside = true
+      app.value.isMobile = false
+    }
+
+    // desktop
+    if (breakpoints.isGreater('2xl')) {
+      app.value.collapse = false
+      app.value.device = 'desktop'
+      app.value.canShowAside = true
+      app.value.isMobile = false
+    }
+  }
+
+  useResize(handler)
+
+  tryOnMounted(() => handler())
+
+  return { app }
 }

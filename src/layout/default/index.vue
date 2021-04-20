@@ -1,11 +1,24 @@
 <template>
   <div class="flex h-screen">
     <TheAside
+      v-if="app.canShowAside"
       :class="[
         'bg-gray-100 h-screen overflow-y-auto w-56 transition-width duration-500 ease-in-out',
-        { 'w-16': getCollapse },
+        { 'w-16': app.collapse },
       ]"
     />
+
+    <div
+      v-if="app.isMobile"
+      :style="{ display: app.showAside ? 'unset' : 'none' }"
+    >
+      <TheAside
+        :class="[
+          'bg-gray-100 h-screen overflow-y-auto w-56 transition-width duration-500 ease-in-out',
+          { 'w-16': app.collapse },
+        ]"
+      />
+    </div>
 
     <div
       id="w-main-layout"
@@ -14,7 +27,11 @@
       <div
         class="fixed transition-width duration-500 ease-in-out"
         :style="{
-          width: getCollapse ? 'calc(100vw - 4rem)' : 'calc(100vw - 14rem)',
+          width: !app.canShowAside
+            ? '100vw'
+            : app.collapse
+            ? 'calc(100vw - 4rem)'
+            : 'calc(100vw - 14rem)',
           zIndex: 1,
         }"
       >
@@ -31,15 +48,14 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, computed } from 'vue'
+  import { defineComponent } from 'vue'
 
   import TheAside from './TheAside'
   import TheHeader from './TheHeader'
   import TheContent from './TheContent'
   import TheTab from './TheTab'
 
-  import { useAppStore } from '/@/store'
-  import { useLayoutResize } from '../../hooks/core/useLayoutResize'
+  import { useAppResize } from '/@/App'
 
   export default defineComponent({
     name: 'DefaultLayout',
@@ -52,14 +68,10 @@
     },
 
     setup() {
-      useLayoutResize()
-
-      const { getters } = useAppStore()
-
-      const getCollapse = computed(() => getters.collapse)
+      const { app } = useAppResize()
 
       return {
-        getCollapse,
+        app,
       }
     },
   })

@@ -7,10 +7,18 @@
     name: 'AppProvider',
 
     setup(_, { slots }) {
-      const globalState = reactive<AppContext>({
-        isDark: false,
-        darkMode: 'light',
-        locale: 'en',
+      const AppContext = reactive<AppContext>({
+        app: {
+          isDark: false,
+          darkMode: 'light',
+          locale: 'en',
+          collapse: false,
+          device: 'desktop',
+          canShowAside: true,
+          isMobile: false,
+          showAside: false,
+        },
+
         arr: [
           {
             value: 1,
@@ -28,7 +36,7 @@
       })
 
       watch(
-        () => globalState,
+        () => AppContext,
         (n) => {
           console.log('App Global State Changed!', n)
         },
@@ -38,7 +46,7 @@
         }
       )
 
-      setAppContext(toRefs(globalState))
+      setAppContext(toRefs(AppContext))
 
       return () => slots.default?.()
     },

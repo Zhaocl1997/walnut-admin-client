@@ -4,7 +4,7 @@ import { DarkModeEnum } from '/@/enums/dark'
 import { usePreferredDark } from '@vueuse/core'
 
 export const useDarkMode = () => {
-  const { isDark, darkMode } = getAppContext()
+  const { app } = getAppContext()
 
   const isSystemDark = usePreferredDark()
 
@@ -14,16 +14,18 @@ export const useDarkMode = () => {
     if (dark) {
       root?.classList.add(DarkModeEnum.DARK)
       root?.classList.remove(DarkModeEnum.LIGHT)
-      isDark.value = true
+
+      app.value.isDark = true
     } else {
       root?.classList.add(DarkModeEnum.LIGHT)
       root?.classList.remove(DarkModeEnum.DARK)
-      isDark.value = false
+
+      app.value.isDark = false
     }
   }
 
   watchEffect(() => {
-    switch (darkMode.value) {
+    switch (app.value.darkMode) {
       case DarkModeEnum.LIGHT:
         setIsDark(false)
         break
@@ -42,7 +44,6 @@ export const useDarkMode = () => {
   })
 
   return {
-    isDark,
-    darkMode,
+    app,
   }
 }
