@@ -1,6 +1,7 @@
 import type { App } from 'vue'
 import type { RouteLocationRaw, RouteRecordRaw } from 'vue-router'
 
+import { done } from 'nprogress'
 import { createRouter, createWebHistory, useRoute, useRouter } from 'vue-router'
 
 import { isInSetup } from '../utils/shared'
@@ -32,7 +33,9 @@ export const useAppRouter = () => {
 }
 
 export const useRouterPush = (info: RouteLocationRaw) => {
-  return AppRouter.push(info).catch(() =>
+  return AppRouter.push(info).catch(() => {
     ElMessage({ type: 'warning', message: 'Page is under construction...' })
-  )
+    // end nprogress
+    done()
+  })
 }
