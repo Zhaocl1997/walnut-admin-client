@@ -51,7 +51,7 @@
       }
 
       watchEffect(() => {
-        wOptions.value = props.options?.map((item) => ({
+        wOptions.value = props.options?.map((item: any) => ({
           ...item,
           checked: false,
         }))

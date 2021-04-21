@@ -44,7 +44,7 @@
 
       const getUserName = computed(() => upperFirst(getters.userInfo.username))
 
-      const onCommand = async (val) => {
+      const onCommand = async (val: string) => {
         switch (val) {
           case '1':
             {

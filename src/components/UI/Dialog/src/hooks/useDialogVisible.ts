@@ -1,7 +1,7 @@
 import type { WDialogProps } from '../types'
 import { ref } from 'vue'
 
-export const useDialogVisible = (props: WDialogProps) => {
+export const useDialogVisible = (props?: WDialogProps) => {
   const visibleRef = ref(false)
 
   const onToggleVisible = (visible: boolean | undefined) => {

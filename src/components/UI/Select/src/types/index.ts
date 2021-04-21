@@ -6,7 +6,7 @@ import type { MultiTypeCompSharedPropType } from '../../../types'
 export interface ElSelectProps {
   modelValue: string | number | boolean | Recordable | any[]
   disabled: boolean
-  valuekey: string
+  valueKey: string
   size: ComponentSize
   clearable: boolean
   collapseTags: boolean

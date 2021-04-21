@@ -4,7 +4,7 @@
       <el-space>
         <span v-if="$slots.default"><slot></slot></span>
 
-        <WMessage v-if="content" v-bind="getHelpProps"></WMessage>
+        <WMessage v-if="$props.content" v-bind="getHelpProps"></WMessage>
       </el-space>
     </span>
   </div>
@@ -21,6 +21,11 @@
 
     props: {
       ...WMessage.props,
+
+      content: {
+        type: String as PropType<string>,
+        default: '',
+      },
 
       showLeft: {
         type: Boolean as PropType<boolean>,

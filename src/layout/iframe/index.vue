@@ -32,7 +32,7 @@
       onMounted(() => {
         startLoading()
         nextTick(() => {
-          iframeRef.value.onload = (e) => {
+          ;(iframeRef.value! as any).onload = () => {
             setTimeout(() => {
               endLoading()
             }, 1000)

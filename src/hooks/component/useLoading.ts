@@ -43,7 +43,7 @@ export interface ElLoadingInstance {
   $el: HTMLElement
 }
 
-export const useLoading = (options: Partial<ElLoadingOptions>) => {
+export const useLoading = (options?: Partial<ElLoadingOptions>) => {
   const { t } = useI18n()
 
   let instance: ElLoadingInstance | undefined
@@ -57,7 +57,7 @@ export const useLoading = (options: Partial<ElLoadingOptions>) => {
     return easyDeepMerge(defaultOptions, options)
   }
 
-  const startLoading = (startOptions: Partial<ElLoadingOptions>) => {
+  const startLoading = (startOptions?: Partial<ElLoadingOptions>) => {
     if (instance) {
       return
     }

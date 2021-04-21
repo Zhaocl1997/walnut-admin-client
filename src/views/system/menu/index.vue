@@ -93,7 +93,7 @@
       const treeData = ref<any[]>([])
       const getTreeData = computed(() => {
         return formatTree(treeData.value, {
-          format: (node) => {
+          format: (node: any) => {
             return { ...node, title: getMaybeI18nMsg(node.title) }
           },
         })

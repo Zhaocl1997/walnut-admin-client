@@ -12,6 +12,8 @@
 </template>
 
 <script lang="ts">
+  import type { VNode } from 'vue'
+  import type { RouteLocationNormalized } from 'vue-router'
   import { defineComponent, computed } from 'vue'
   import { useAppStore } from '/@/store'
 
@@ -25,7 +27,8 @@
 
       const getOpenKeepAlive = computed(() => true)
 
-      const getKey = (comp, route) => {
+      const getKey = (comp: VNode, route: RouteLocationNormalized) => {
+        // @ts-ignore
         return comp.type.parentView
           ? {}
           : // use name as page id to screen full

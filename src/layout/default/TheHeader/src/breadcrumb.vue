@@ -6,7 +6,7 @@
         :to="{ path: getIndex.path }"
       >
         <span class="text-base text-primary">{{
-          getMaybeI18nMsg(getIndex.meta.title)
+          getMaybeI18nMsg(getIndex.meta && getIndex.meta.title)
         }}</span>
       </el-breadcrumb-item>
 
