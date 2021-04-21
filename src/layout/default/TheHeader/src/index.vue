@@ -39,7 +39,7 @@
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
   import HeaderAvatar from './avatar.vue'
-  import { getAppContext } from '/@/App'
+  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'Header',
@@ -51,7 +51,7 @@
     },
 
     setup() {
-      const { app } = getAppContext()
+      const { app } = useAppContext()
 
       return {
         app,

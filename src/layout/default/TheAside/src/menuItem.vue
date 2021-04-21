@@ -50,7 +50,7 @@
 
   import { useRouterPush } from '/@/router'
   import { getMaybeI18nMsg } from '/@/views/system/menu/utils'
-  import { getAppContext } from '/@/App'
+  import { useAppContext } from '/@/App'
 
   interface MenuItem extends Menu {
     children?: any[]
@@ -67,7 +67,7 @@
     },
 
     setup(props) {
-      const { app } = getAppContext()
+      const { app } = useAppContext()
       const hasChildren = computed(() => {
         return props.item.children && props.item.children.length > 0
       })

@@ -13,13 +13,13 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import { getAppContext } from '/@/App'
+  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'HeaderCollapse',
 
     setup() {
-      const { app } = getAppContext()
+      const { app } = useAppContext()
 
       const onClick = () => {
         if (app.value.isMobile) {

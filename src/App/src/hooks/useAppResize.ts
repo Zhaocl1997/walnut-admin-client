@@ -1,11 +1,11 @@
 import { tryOnMounted } from '@vueuse/core'
 
-import { getAppContext } from '/@/App'
+import { useAppContext } from '/@/App'
 import { useResize } from '/@/hooks/core/useResize'
 import { useBreakpoints } from '/@/hooks/core/useBreakpoints'
 
 export const useAppResize = () => {
-  const { app } = getAppContext()
+  const { app } = useAppContext()
   const breakpoints = useBreakpoints()
 
   const handler = () => {

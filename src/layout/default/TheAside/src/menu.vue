@@ -27,7 +27,7 @@
   import { defineComponent } from 'vue'
 
   import AsideMenuItem from './menuItem.vue'
-  import { getAppContext } from '/@/App'
+  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'AsideMenu',
@@ -42,7 +42,7 @@
     },
 
     setup() {
-      const { app } = getAppContext()
+      const { app } = useAppContext()
 
       return {
         app,

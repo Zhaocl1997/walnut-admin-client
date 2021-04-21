@@ -34,13 +34,13 @@
   import { defineComponent } from 'vue'
   import { useRouterPush } from '/@/router'
   import { indexName } from '/@/router/constant'
-  import { getAppContext } from '/@/App'
+  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'AsideLogo',
 
     setup() {
-      const { app } = getAppContext()
+      const { app } = useAppContext()
 
       const onGoIndex = () => {
         useRouterPush({ name: indexName })

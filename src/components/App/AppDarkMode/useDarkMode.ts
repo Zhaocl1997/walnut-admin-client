@@ -1,10 +1,10 @@
 import { unref, watchEffect } from 'vue'
-import { getAppContext } from '/@/App'
+import { useAppContext } from '/@/App'
 import { DarkModeEnum } from '/@/enums/dark'
 import { usePreferredDark } from '@vueuse/core'
 
 export const useDarkMode = () => {
-  const { app } = getAppContext()
+  const { app } = useAppContext()
 
   const isSystemDark = usePreferredDark()
 

@@ -7,7 +7,7 @@ import { useAppStore } from '/@/store'
 import { useAppRoute, useAppRouter } from '/@/router'
 
 import { calcIndex, createTab } from '../utils'
-import { getAppContext } from '/@/App'
+import { useAppContext } from '/@/App'
 
 /**
  * @description use watchEffect to build tabs
@@ -15,7 +15,7 @@ import { getAppContext } from '/@/App'
 export const useTabs = () => {
   const scrollRef = ref<Nullable<WScrollbarRef>>(null)
 
-  const { app } = getAppContext()
+  const { app } = useAppContext()
 
   const route = useAppRoute()
 

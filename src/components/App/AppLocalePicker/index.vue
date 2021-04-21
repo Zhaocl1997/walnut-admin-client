@@ -24,7 +24,7 @@
   import { defineComponent, computed, watchEffect } from 'vue'
 
   import { langLists } from '/@/locales'
-  import { getAppContext } from '/@/App'
+  import { useAppContext } from '/@/App'
   import { useLocale } from './useLocale'
 
   export default defineComponent({
@@ -45,7 +45,7 @@
     },
 
     setup(props) {
-      const { app } = getAppContext()
+      const { app } = useAppContext()
 
       const getLangText = computed(
         () => langLists.find((item) => item.value === app.value.locale)?.label
