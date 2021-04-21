@@ -9,36 +9,46 @@ export const useAppResize = () => {
   const breakpoints = useBreakpoints()
 
   const handler = () => {
-    // mobile
     if (breakpoints.isSmaller('sm')) {
-      app.value.collapse = true
-      app.value.device = 'mobile'
-      app.value.canShowAside = false
+      // when mobile
+      // 1.isMobile => true
+      // 2.device => 'mobile'
+      // 3.no more collapse
+      // 4.show aside drawer
       app.value.isMobile = true
+      app.value.device = 'mobile'
+      app.value.collapse = false
+      app.value.showAside = true
     }
 
-    // tablet
     if (breakpoints.isInBetween('sm', 'lg')) {
-      app.value.collapse = true
+      // when tablet
+      // 1.isMobile => false
+      // 2.device => 'tablet'
+      // 3.auto collapse
+      app.value.isMobile = false
       app.value.device = 'tablet'
-      app.value.canShowAside = true
-      app.value.isMobile = false
+      app.value.collapse = true
     }
 
-    // laptop
     if (breakpoints.isInBetween('lg', 'xl')) {
-      app.value.collapse = false
-      app.value.device = 'laptop'
-      app.value.canShowAside = true
+      // when laptop
+      // 1.isMobile => false
+      // 2.device => 'laptop'
+      // 3.no collapse
       app.value.isMobile = false
+      app.value.device = 'laptop'
+      app.value.collapse = false
     }
 
-    // desktop
     if (breakpoints.isGreater('2xl')) {
-      app.value.collapse = false
-      app.value.device = 'desktop'
-      app.value.canShowAside = true
+      // when desktop
+      // 1.isMobile => false
+      // 2.device => 'desktop'
+      // 3.no collapse
       app.value.isMobile = false
+      app.value.device = 'desktop'
+      app.value.collapse = false
     }
   }
 

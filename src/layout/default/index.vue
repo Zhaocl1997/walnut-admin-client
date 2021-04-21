@@ -1,16 +1,20 @@
 <template>
   <div class="flex h-screen">
     <TheAside
-      v-if="app.canShowAside"
+      v-if="!app.isMobile"
       :class="[
         'bg-gray-100 h-screen overflow-y-auto w-56 transition-width duration-500 ease-in-out',
         { 'w-16': app.collapse },
       ]"
     />
 
-    <div
-      v-if="app.isMobile"
-      :style="{ display: app.showAside ? 'unset' : 'none' }"
+    <el-drawer
+      v-else
+      v-model="app.showAside"
+      :with-header="false"
+      :show-close="false"
+      direction="ltr"
+      size="65%"
     >
       <TheAside
         :class="[
@@ -18,7 +22,7 @@
           { 'w-16': app.collapse },
         ]"
       />
-    </div>
+    </el-drawer>
 
     <div
       id="w-main-layout"
@@ -27,7 +31,7 @@
       <div
         class="fixed transition-width duration-500 ease-in-out"
         :style="{
-          width: !app.canShowAside
+          width: app.isMobile
             ? '100vw'
             : app.collapse
             ? 'calc(100vw - 4rem)'

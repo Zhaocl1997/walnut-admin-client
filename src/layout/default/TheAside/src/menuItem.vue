@@ -50,6 +50,7 @@
 
   import { useRouterPush } from '/@/router'
   import { getMaybeI18nMsg } from '/@/views/system/menu/utils'
+  import { getAppContext } from '/@/App'
 
   interface MenuItem extends Menu {
     children?: any[]
@@ -66,6 +67,7 @@
     },
 
     setup(props) {
+      const { app } = getAppContext()
       const hasChildren = computed(() => {
         return props.item.children && props.item.children.length > 0
       })
@@ -75,6 +77,12 @@
       })
 
       const onClick = (item: Menu) => {
+        // If isMobile and showAside true, set showAside to false to close drawer
+        if (app.value.isMobile && app.value.showAside) {
+          app.value.showAside = false
+        }
+
+        // If external, open new tab and go
         if (item.external) {
           window.open(item.url, '_blank')
         } else {

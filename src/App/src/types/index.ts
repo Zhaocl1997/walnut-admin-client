@@ -7,7 +7,7 @@ export interface AppContext {
   // App Relative
   app: {
     /**
-     * @description App Is Dark
+     * @description App Is Dark, just a symbol for icon display
      */
     isDark: boolean
 
@@ -30,12 +30,6 @@ export interface AppContext {
      * @description App Device type
      */
     device: AppDevice
-
-    /**
-     * @description App Can show Aside
-     * Duplicate to isMobile need to be removed
-     */
-    canShowAside: boolean
 
     /**
      * @description App Is Mobile

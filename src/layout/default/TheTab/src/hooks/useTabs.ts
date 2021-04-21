@@ -7,12 +7,15 @@ import { useAppStore } from '/@/store'
 import { useAppRoute, useAppRouter } from '/@/router'
 
 import { calcIndex, createTab } from '../utils'
+import { getAppContext } from '/@/App'
 
 /**
  * @description use watchEffect to build tabs
  */
 export const useTabs = () => {
   const scrollRef = ref<Nullable<WScrollbarRef>>(null)
+
+  const { app } = getAppContext()
 
   const route = useAppRoute()
 
@@ -40,8 +43,12 @@ export const useTabs = () => {
 
     // scroll by index
     nextTick(() => {
+      // If is mobile, just scroll to current route tab index
+      // Others leave a room for index
       scrollRef.value?.scrollToAdvanced({
-        index: calcIndex(currentRouteTabIndex.value),
+        index: app.value.isMobile
+          ? currentRouteTabIndex.value
+          : calcIndex(currentRouteTabIndex.value),
       })
     })
   })

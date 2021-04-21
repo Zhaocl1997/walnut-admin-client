@@ -19,6 +19,7 @@ import {
   ElCheckTag,
   ElSwitch,
   ElDialog,
+  ElDrawer,
   ElForm,
   ElFormItem,
   ElTable,
@@ -77,6 +78,7 @@ const components = [
   ElSwitch,
 
   ElDialog,
+  ElDrawer,
   ElForm,
   ElFormItem,
   ElTable,

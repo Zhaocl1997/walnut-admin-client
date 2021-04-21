@@ -24,9 +24,10 @@
       const onClick = () => {
         if (app.value.isMobile) {
           app.value.showAside = !app.value.showAside
+          app.value.collapse = false
+        } else {
+          app.value.collapse = !app.value.collapse
         }
-
-        app.value.collapse = !app.value.collapse
       }
 
       return {
