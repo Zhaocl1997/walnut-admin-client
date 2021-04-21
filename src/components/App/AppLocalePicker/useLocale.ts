@@ -23,9 +23,14 @@ export const useLocale = (locale: AppLocaleType) => {
   }
 
   const loadLocaleMessages = async () => {
+    // Don't load again if has been loaded
+    if (Object.keys((AppI18n.global.messages as any).value).includes(locale)) {
+      return
+    }
+
     const messages = await import(`../../../locales/lang/${locale}.ts`)
 
-    AppI18n.global.setLocaleMessage(locale, messages.default[locale])
+    AppI18n.global.setLocaleMessage(locale, messages.default)
 
     return nextTick()
   }
