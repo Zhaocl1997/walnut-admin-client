@@ -4,10 +4,6 @@
       <span>Help Components</span>
     </template>
 
-    <el-button @click="onAdd">Add</el-button>
-
-    <div v-for="i in arr">{{ i.name }}</div>
-
     <w-title show-left>Tooltip help message</w-title>
     <el-space>
       <WMessage
@@ -134,21 +130,11 @@
 <script lang="ts">
   import { genString } from 'easy-fns-ts'
   import { reactive, defineComponent, toRefs } from 'vue'
-  import { getAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'HelpDemo',
 
     setup() {
-      const { arr } = getAppContext()
-
-      const onAdd = () => {
-        arr.value.push({
-          value: Math.random(),
-          name: genString(8),
-        })
-      }
-
       const state = reactive({
         arrow: {
           active: false,
@@ -159,8 +145,6 @@
       })
 
       return {
-        arr,
-        onAdd,
         ...toRefs(state),
       }
     },
