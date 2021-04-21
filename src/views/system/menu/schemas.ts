@@ -48,7 +48,7 @@ export const getMenuFormSchemas = (
   const getTitleList = computed(() => {
     const locale = (AppI18n.global.locale as any).value
 
-    const params = locale === LocaleEnum.EN ? enMessages.en : zhMessages.zh_CN
+    const params = locale === LocaleEnum.EN ? enMessages : zhMessages
 
     return Array.from(deepKeys(params)).filter(
       (i: any) =>
