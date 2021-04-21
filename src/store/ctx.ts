@@ -1,5 +1,6 @@
 import type { AppContext } from '/@/App'
 import { reactive } from 'vue'
+import { getToken } from '../utils/auth'
 
 /**
  * @description Here is where we initial app context.
@@ -17,22 +18,13 @@ export const AppGlobalContext = reactive<AppContext>({
     showAside: false,
   },
 
-  arr: [
-    {
-      value: 1,
-      name: 'aaa',
-    },
-    {
-      value: 2,
-      name: 'bbb',
-    },
-    {
-      value: 3,
-      name: 'ccc',
-    },
-  ],
-})
+  menu: {
+    menus: [],
+    keepAliveRouteNames: [],
+  },
 
-export const getAppContextOutsideSetup = () => {
-  return AppGlobalContext
-}
+  user: {
+    token: getToken(),
+    userInfo: {},
+  },
+})

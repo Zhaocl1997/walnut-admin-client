@@ -24,16 +24,18 @@
 
 <script lang="ts">
   import { defineComponent, computed, reactive } from 'vue'
+
   import { upperFirst } from 'easy-fns-ts'
   import { ElMessageBox } from 'element-plus'
 
-  import { useAppStore } from '/@/store'
+  import { useAppContext } from '/@/App'
+  import { userActionSignOut } from '/@/store/actions/user'
 
   export default defineComponent({
     name: 'HeaderAvatar',
 
     setup() {
-      const { getters, dispatch } = useAppStore()
+      const { user } = useAppContext()
 
       const userDropdown = reactive([
         {
@@ -42,7 +44,9 @@
         },
       ])
 
-      const getUserName = computed(() => upperFirst(getters.userInfo.username))
+      const getUserName = computed(() =>
+        upperFirst(user.value.userInfo.username!)
+      )
 
       const onCommand = async (val: string) => {
         switch (val) {
@@ -54,7 +58,7 @@
               )
 
               if (res === 'confirm') {
-                dispatch('user/SignOut')
+                userActionSignOut()
               }
             }
             break

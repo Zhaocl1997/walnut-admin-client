@@ -1,7 +1,8 @@
+import type { SigninPayloadType } from '../store/types/user'
 import { AuthEnum } from './enums'
 import { AppAxios } from '/@/utils/axios'
 
-export const signin = (params: any) => {
+export const signin = (params: SigninPayloadType) => {
   return AppAxios.request({
     method: 'POST',
     url: AuthEnum.SIGNIN,

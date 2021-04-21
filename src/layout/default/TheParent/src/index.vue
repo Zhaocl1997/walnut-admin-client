@@ -2,7 +2,7 @@
   <router-view>
     <template #default="{ Component, route }">
       <transition name="fade" mode="out-in" appear>
-        <keep-alive v-if="getOpenKeepAlive" :include="getKeepAliveInclude">
+        <keep-alive v-if="getOpenKeepAlive" :include="menu.keepAliveRouteNames">
           <component :is="Component" v-bind="getKey(Component, route)" />
         </keep-alive>
         <component :is="Component" v-else v-bind="getKey(Component, route)" />
@@ -15,16 +15,13 @@
   import type { VNode } from 'vue'
   import type { RouteLocationNormalized } from 'vue-router'
   import { defineComponent, computed } from 'vue'
-  import { useAppStore } from '/@/store'
+  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     parentView: true,
 
     setup() {
-      const { getters } = useAppStore()
-
-      const getKeepAliveInclude = computed(() => getters.keepAliveNames)
-
+      const { menu } = useAppContext()
       const getOpenKeepAlive = computed(() => true)
 
       const getKey = (comp: VNode, route: RouteLocationNormalized) => {
@@ -36,7 +33,7 @@
       }
 
       return {
-        getKeepAliveInclude,
+        menu,
         getOpenKeepAlive,
         getKey,
       }

@@ -1,10 +1,8 @@
 import type { App } from 'vue'
 
-import { createLogger, createStore, useStore } from 'vuex'
+import { createStore, useStore } from 'vuex'
 import { isDev } from '/@/utils/constant/vue'
 
-import { userModule } from './modules/user'
-import { menuModule } from './modules/menu'
 import { tabModule } from './modules/tab'
 
 import { getters } from './getters'
@@ -16,12 +14,8 @@ export const AppStore = createStore({
   getters: getters,
 
   modules: {
-    user: userModule,
-    menu: menuModule,
     tab: tabModule,
   },
-
-  // plugins: [createLogger()]
 })
 
 export const setupStore = (app: App) => {

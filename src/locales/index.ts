@@ -2,15 +2,15 @@ import type { App } from 'vue'
 import type { I18nOptions } from 'vue-i18n'
 
 import { createI18n } from 'vue-i18n'
-import { getAppContextOutsideSetup } from '../store/ctx'
 
+import { useAppContext } from '/@/App'
 import { langLists, fallbackLocale, availableLocales } from './utils'
 
 /**
  * @description Get locale from store. Lazy load locale messages
  */
 const createI18nOptions = async (): Promise<I18nOptions> => {
-  const appContext = getAppContextOutsideSetup()
+  const appContext = useAppContext<false>()
 
   const locale = appContext.app.locale
 

@@ -3,13 +3,15 @@ import { easyIsEmpty } from 'easy-fns-ts'
 
 import { authPath, rootName } from '../constant'
 import { AppRouter } from '/@/router'
-import { AppStore } from '/@/store'
+import { menuActionPermissions } from '/@/store/actions/menu'
+import { useAppContext } from '/@/App'
+import { userActionInfo } from '/@/store/actions/user'
 
 const whiteLists: string[] = [authPath]
 
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
-    const { getters, dispatch } = AppStore
+    const { user, menu } = useAppContext<false>()
     const { addRoute } = AppRouter
 
     // Paths in `whiteLists` will enter directly
@@ -18,10 +20,8 @@ export const createAuthGuard = (router: Router) => {
       return true
     }
 
-    const token = getters.token
-
     // No token, next to auth page and return
-    if (!token) {
+    if (!user.token) {
       const redirectData = {
         path: authPath,
         replace: true,
@@ -32,19 +32,19 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // Get user info
-    if (easyIsEmpty(getters.userInfo)) {
-      await dispatch('user/commitUserInfo')
+    if (easyIsEmpty(user.userInfo)) {
+      await userActionInfo()
     }
 
     // Got menus, next and return
-    if (getters.menus && getters.menus.length !== 0) {
+    if (menu.menus && menu.menus.length !== 0) {
       next()
       return true
     }
 
-    // At this step, it menus user has login but didn't got dynamic routes generated
-    // Below we dispath store method and add dynamics to router
-    const routes = await dispatch('menu/commitPermissions')
+    // At this step, user has login but didn't got dynamic routes generated
+    // Below we use menu action to get routes and add into root route
+    const routes = await menuActionPermissions()
     routes.forEach((route: any) => {
       addRoute(rootName, route)
     })

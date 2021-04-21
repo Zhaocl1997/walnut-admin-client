@@ -18,9 +18,9 @@
   import { defineComponent, reactive, ref, computed, onMounted } from 'vue'
   import { useForm } from '/@/components/UI/Form'
   import { useI18n } from '/@/locales'
-  import { useAppStore } from '/@/store'
   import { getLocal } from '/@/utils/persistent'
   import { PersistentKeysEnum } from '/@/enums/persistent'
+  import { userActionSignin } from '/@/store/actions/user'
 
   export default defineComponent({
     name: 'SignIn',
@@ -29,7 +29,6 @@
 
     setup() {
       const { t } = useI18n()
-      const { dispatch } = useAppStore()
 
       const buttonLoading = ref(false)
 
@@ -39,14 +38,15 @@
         rememberMe: true,
       })
 
-      const onSubmit = async () => {
+      const onSignin = async () => {
         const valid = await validate()
 
         if (valid) {
           buttonLoading.value = true
-          dispatch('user/SignIn', signinFormData).finally(() => {
-            buttonLoading.value = false
-          })
+
+          await userActionSignin(signinFormData)
+
+          buttonLoading.value = false
         }
       }
 
@@ -75,7 +75,7 @@
               showPassword: true,
               onKeyup: (e) => {
                 if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-                  onSubmit()
+                  onSignin()
                 }
               },
             },
@@ -104,7 +104,7 @@
               style: {
                 background: 'transparent',
               },
-              onClick: onSubmit,
+              onClick: onSignin,
             },
           },
         ]

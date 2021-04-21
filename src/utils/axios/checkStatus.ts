@@ -1,6 +1,6 @@
 import { ElNotification } from 'element-plus'
 import { useI18n } from '/@/locales'
-import { AppStore } from '/@/store'
+import { userActionSignOut } from '/@/store/actions/user'
 
 const responseError = (msg: string) => {
   ElNotification({
@@ -11,7 +11,6 @@ const responseError = (msg: string) => {
 
 export const checkReponseErrorStatus = (status?: number, msg?: string) => {
   const { t } = useI18n()
-  const { dispatch } = AppStore
 
   switch (status) {
     case 400:
@@ -21,7 +20,7 @@ export const checkReponseErrorStatus = (status?: number, msg?: string) => {
     // 401: unauthorized
     case 401:
       responseError(t('system.api.errMsg401'))
-      dispatch('user/SignOut')
+      userActionSignOut()
       break
 
     case 403:

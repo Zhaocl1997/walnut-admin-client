@@ -1,9 +1,7 @@
-export interface AppContext {
-  /**
-   * @description Test
-   */
-  arr: { value: number; name: string }[]
+import type { Menu } from '/@/router/types'
+import type { UserInfoType } from '/@/store/types/user'
 
+export interface AppContext {
   // App Relative
   app: {
     /**
@@ -40,6 +38,20 @@ export interface AppContext {
      * @description App Show Aside
      */
     showAside: boolean
+  }
+
+  // Menu & Route Relative
+  menu: {
+    menus: Menu[]
+
+    keepAliveRouteNames: string[]
+  }
+
+  // User Relative
+  user: {
+    token: string
+
+    userInfo: Partial<UserInfoType>
   }
 }
 

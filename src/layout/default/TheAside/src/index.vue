@@ -4,7 +4,7 @@
       <AsideLogo />
 
       <AsideMenu
-        :menus="getMenus"
+        :menus="menu.menus"
         :style="{ height: 'calc(100vh - 3rem)' }"
         class="h-full bg-primary text-primary"
       />
@@ -13,11 +13,11 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, computed } from 'vue'
-  import { useAppStore } from '/@/store'
+  import { defineComponent } from 'vue'
 
   import AsideMenu from './menu.vue'
   import AsideLogo from './logo.vue'
+  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'Aside',
@@ -25,11 +25,10 @@
     components: { AsideMenu, AsideLogo },
 
     setup() {
-      const { getters } = useAppStore()
-      const getMenus = computed(() => getters.menus)
+      const { menu } = useAppContext()
 
       return {
-        getMenus,
+        menu,
       }
     },
   })
