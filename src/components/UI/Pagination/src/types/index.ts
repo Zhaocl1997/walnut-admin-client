@@ -1,5 +1,5 @@
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/pagination#attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/pagination#attributes
  */
 export interface ElPaginationProps {
   small: boolean

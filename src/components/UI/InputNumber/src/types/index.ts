@@ -1,5 +1,5 @@
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/input-number#attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/input-number#attributes
  */
 export interface ElInputNumberProps {
   modelValue: number | undefined

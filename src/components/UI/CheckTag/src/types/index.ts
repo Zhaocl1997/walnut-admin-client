@@ -1,7 +1,7 @@
 import type { MultiTypeCompSharedPropType } from '../../../types'
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/tag#checktag-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/tag#checktag-attributes
  */
 export interface ElCheckTagProps {
   checked: boolean

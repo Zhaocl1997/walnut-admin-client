@@ -1,7 +1,7 @@
 import type { MultiTypeCompSharedPropType } from '../../../types'
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/dropdown#dropdown-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/dropdown#dropdown-attributes
  */
 export interface ElDropdownProps {
   type: ComponentType

@@ -1,7 +1,7 @@
 import type { MultiTypeCompSharedPropType } from '../../../types'
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/select#select-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/select#select-attributes
  */
 export interface ElSelectProps {
   modelValue: string | number | boolean | Recordable | any[]

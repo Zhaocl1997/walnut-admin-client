@@ -1,5 +1,5 @@
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/empty#empty-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/empty#empty-attributes
  */
 export interface ElEmptyProps {
   image: string

@@ -11,7 +11,7 @@ import type { WRadioProps } from '/@/components/UI/Radio'
 import type { WTreeProps } from '/@/components/UI/Tree'
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/form#form-item-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/form#form-item-attributes
  */
 export interface WFormSchemaItemProp {
   prop: string
@@ -31,7 +31,7 @@ export interface wColReponsiveProp {
 }
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/layout#col-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/layout#col-attributes
  */
 export interface WFormSchemaItemCol {
   span: number

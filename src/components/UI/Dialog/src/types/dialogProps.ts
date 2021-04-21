@@ -1,5 +1,5 @@
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/dialog#attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/dialog#attributes
  */
 export interface ElDialogProps {
   modelValue: boolean

@@ -1,5 +1,5 @@
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes
  */
 export interface ElTableColumnProps {
   type: 'selection' | 'index' | 'expand'

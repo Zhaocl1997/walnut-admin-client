@@ -1,5 +1,5 @@
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/button#attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/button#attributes
  */
 export interface ElButtonProps {
   size: ComponentSize

@@ -16,7 +16,7 @@ export type ElTableClass = (
 ) => void | string
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/table#table-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/table#table-attributes
  */
 export interface ElTableProps {
   data: MaybeRef<any[]>

@@ -1,7 +1,7 @@
 import type { WFormSchemaItem } from './formSchemas'
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/form#biao-dan-yan-zheng
+ * @link https://element-plus.gitee.io/#/zh-CN/component/form#biao-dan-yan-zheng
  */
 export interface WFormItemRule {
   type?: string
@@ -16,7 +16,7 @@ export interface WFormRule {
 }
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/form#form-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/form#form-attributes
  */
 export interface ElFormProps {
   model: Recordable

@@ -4,7 +4,7 @@ export interface ElInputTextareaResizeProp {
 }
 
 /**
- * @description see more https://element-plus.gitee.io/#/zh-CN/component/input#input-attributes
+ * @link https://element-plus.gitee.io/#/zh-CN/component/input#input-attributes
  */
 export interface ElInputProps {
   type: string
