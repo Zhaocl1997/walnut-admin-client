@@ -76,19 +76,22 @@ npm i
 - [ ] Layout 优化，目前只是最基本的左侧菜单布局  
 - [ ] vue-tsc 错误全部消除  
 - [ ] 虚拟滚动
-- [ ] 屏幕断点优化
+- [x] 屏幕断点优化
 - [ ] 带有options API 的组件 统一加 valueFormat 和 valueType
 - [ ] table/form/dialog 重构优化，统一化API
 - [ ] table 自定义表头迁移优化，按钮组，操作列，自定义导出导入，打印
 - [ ] form 添加更复杂的表单用例，添加tsx语法支持
 - [ ] dialog 全屏，拖拽，弹出效果
 - [ ] drawer 可自定义固定头部尾部
-- [ ] hook抽离，尽量可脱离组件逻辑
+- [x] hook抽离，尽量可脱离组件逻辑
 - [ ] 前端权限
 - [ ] 环境变量优化，打包优化和自动化
 - [ ] 部署，自动化部署
 - [ ] icon 扩展 支持更多方法使用icon
 - [x] 尝试使用AppContext的方式替代全局的状态管理(已有进展，正逐步替换)
+- [ ] title/message 组件优化
+- [ ] axios 类型优化
+- [ ] easy-fns-ts 类型优化
 
 ### 更新日志
 
