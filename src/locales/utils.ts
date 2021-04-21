@@ -1,6 +1,6 @@
 import { easyDeepSet } from 'easy-fns-ts'
 
-import { LocaleEnum } from './../enums/locale'
+import { LocaleEnum } from '/@/enums/locale'
 
 /**
  * @description Get locale messages include ElementPlus locale
@@ -11,17 +11,11 @@ const getModuleMessages = (module: Recordable) => {
   Object.keys(module).forEach((key) => {
     const section = module[key].default
 
-    // get langKey
-    const langKey = key.split('/')[2]
-
     // get namespace
     const namespace = key.split('/').splice(3).join('.').replace('.ts', '')
 
-    // set lang key on ret
-    easyDeepSet(ret, langKey, ret[langKey] || {})
-
-    // set namespace on each lang
-    easyDeepSet(ret[langKey], namespace, section)
+    // set namespaced locales on ret
+    easyDeepSet(ret, namespace, section)
   })
 
   return ret
