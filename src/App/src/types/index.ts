@@ -1,3 +1,4 @@
+import type { AppTab } from '/@/layout/default/TheTab'
 import type { Menu } from '/@/router/types'
 import type { UserInfoType } from '/@/store/types/user'
 
@@ -52,6 +53,15 @@ export interface AppContext {
     token: string
 
     userInfo: Partial<UserInfoType>
+  }
+
+  // Tab Relative
+  tab: {
+    tabs: AppTab[]
+
+    cachedTabs: Map<symbol, string[]>
+
+    currentTabName: string
   }
 }
 

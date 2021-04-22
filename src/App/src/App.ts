@@ -27,7 +27,7 @@ const setupErrorhandler = (app: App) => {
 export const setupApp = async (app: App) => {
   await setupI18n(app)
 
-  setupStore(app)
+  // setupStore(app)
 
   setupRouter(app)
 

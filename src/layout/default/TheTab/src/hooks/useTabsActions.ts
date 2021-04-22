@@ -1,10 +1,8 @@
 import { DeleteTabTypeEnum } from '/@/enums/tab'
 import { useRouterPush } from '/@/router'
-import { useAppStore } from '/@/store/'
+import { tabActionDelete } from '/@/store/actions/tabs'
 
 export const useTabsActions = () => {
-  const { dispatch } = useAppStore()
-
   const onTabClick = (name: string) => {
     // push by name
     useRouterPush({ name: name })
@@ -15,7 +13,7 @@ export const useTabsActions = () => {
     type: DeleteTabTypeEnum = DeleteTabTypeEnum.TAB_SELF
   ) => {
     // remove tab
-    dispatch('tab/commitDeleteTab', { name, type })
+    tabActionDelete(name, type)
   }
 
   return {

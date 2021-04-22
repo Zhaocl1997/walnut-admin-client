@@ -10,7 +10,9 @@
       watch(
         () => AppGlobalContext,
         (n) => {
-          console.log('App Global Context Changed!', n)
+          console.groupCollapsed('App Global Context Changed!')
+          console.log(n)
+          console.groupEnd()
         },
         {
           deep: true,

@@ -29,7 +29,7 @@ export const setAppContext = (initialState: ToRefs<AppContext>) => {
  */
 export function useAppContext<T extends boolean = true>(): T extends true
   ? ReturnType<typeof getContext>
-  : AppContext
+  : typeof AppGlobalContext
 export function useAppContext() {
   return getCurrentInstance() ? getContext(appKey) : AppGlobalContext
 }
