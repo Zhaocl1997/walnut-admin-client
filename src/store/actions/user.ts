@@ -7,6 +7,7 @@ import { removeToken, setToken } from '/@/utils/auth'
 import { setLocal } from '/@/utils/persistent'
 import { useRouterPush } from '/@/router'
 import { authName, indexName } from '/@/router/constant'
+import { tabActionClear } from './tabs'
 
 const setUserToken = (token: string) => {
   const { user } = useAppContext<false>()
@@ -51,7 +52,9 @@ export const userActionSignOut = () => {
 
   useRouterPush({ name: authName })
 
-  // TODO clear tab
+  setTimeout(() => {
+    tabActionClear()
+  }, 200)
 }
 
 /**
