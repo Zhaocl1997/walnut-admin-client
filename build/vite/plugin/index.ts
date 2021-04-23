@@ -1,5 +1,4 @@
 import type { Plugin } from 'vite'
-import type { ImportMetaEnv } from '../../../types/env'
 
 import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy'
