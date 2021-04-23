@@ -3,23 +3,20 @@ import { AuthEnum } from './enums'
 import { AppAxios } from '/@/utils/axios'
 
 export const signin = (params: SigninPayloadType) => {
-  return AppAxios.request({
-    method: 'POST',
+  return AppAxios.post({
     url: AuthEnum.SIGNIN,
     params,
   })
 }
 
 export const getPermissions = () => {
-  return AppAxios.request({
-    method: 'GET',
+  return AppAxios.get({
     url: AuthEnum.PERMISSION,
   })
 }
 
 export const getUserInfo = () => {
-  return AppAxios.request({
-    method: 'GET',
+  return AppAxios.get({
     url: AuthEnum.PROFILE,
   })
 }

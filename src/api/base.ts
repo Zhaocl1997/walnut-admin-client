@@ -15,49 +15,50 @@ export class BaseAPI {
   }
 
   list(data: any) {
-    return AppAxios.request({
-      method: 'POST',
+    return AppAxios.post({
       url: `${this.getModule()}/list`,
       data,
     })
   }
 
   create(data: any) {
-    return AppAxios.request({
-      method: 'POST',
-      url: `${this.getModule()}`,
-      data,
-      customOptions: {
-        demonstrate: isProd(),
+    return AppAxios.post(
+      {
+        url: `${this.getModule()}`,
+        data,
       },
-    })
+      {
+        demonstrate: isProd(),
+      }
+    )
   }
 
   read(id: string | number) {
-    return AppAxios.request({
-      method: 'GET',
+    return AppAxios.get({
       url: `${this.getModule()}/${id}`,
     })
   }
 
   update(data: any) {
-    return AppAxios.request({
-      method: 'PUT',
-      url: `${this.getModule()}`,
-      data,
-      customOptions: {
-        demonstrate: isProd(),
+    return AppAxios.put(
+      {
+        url: `${this.getModule()}`,
+        data,
       },
-    })
+      {
+        demonstrate: isProd(),
+      }
+    )
   }
 
   delete(id: string | number) {
-    return AppAxios.request({
-      method: 'DELETE',
-      url: `${this.getModule()}/${id}`,
-      customOptions: {
-        demonstrate: isProd(),
+    return AppAxios.delete(
+      {
+        url: `${this.getModule()}/${id}`,
       },
-    })
+      {
+        demonstrate: isProd(),
+      }
+    )
   }
 }
