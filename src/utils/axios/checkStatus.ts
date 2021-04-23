@@ -27,7 +27,7 @@ export const checkReponseErrorStatus = (status?: number, msg?: string) => {
       responseError(t('system.api.errMsg403'))
       break
 
-    // 404请求不存在
+    // 404 not found
     case 404:
       responseError(t('system.api.errMsg404'))
       break
