@@ -7,7 +7,7 @@ export const HelloAPI = () => {
     },
     {
       needAuth: false,
-      throttle: true,
+      cache: true,
     }
   )
 }

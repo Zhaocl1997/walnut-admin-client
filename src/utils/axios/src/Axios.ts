@@ -6,9 +6,9 @@ import type {
 } from 'axios'
 
 import type {
-  AxiosOptions,
+  AxiosRequestConfigExtend,
   AxiosTransform,
-  customRequestOptions,
+  customConfigType,
 } from './types'
 
 import axios from 'axios'
@@ -17,9 +17,9 @@ import { easyDeepMerge } from 'easy-fns-ts'
 
 export class Axios {
   private instance: AxiosInstance
-  private readonly options: AxiosOptions
+  private readonly options: AxiosRequestConfigExtend
 
-  constructor(options: AxiosOptions) {
+  constructor(options: AxiosRequestConfigExtend) {
     this.options = options
 
     this.instance = axios.create(options)
@@ -73,10 +73,10 @@ export class Axios {
    */
   request<T>(
     config: AxiosRequestConfig,
-    options?: customRequestOptions
+    options?: customConfigType
   ): Promise<AxiosResponse<T>> {
-    // Here merge default customOptions with individual customOptions
-    const mergedConfig = easyDeepMerge(config, { customOptions: options })
+    // Here merge default customConfig with individual customConfig
+    const mergedConfig = easyDeepMerge(config, { customConfig: options })
 
     return new Promise((resolve, reject) => {
       this.instance
@@ -96,28 +96,28 @@ export class Axios {
   /**
    * @description Axios Get
    */
-  get<T>(config: AxiosRequestConfig, options?: customRequestOptions) {
+  get<T>(config: AxiosRequestConfig, options?: customConfigType) {
     return this.request<T>({ ...config, method: 'GET' }, options)
   }
 
   /**
    * @description Axios Post
    */
-  post<T>(config: AxiosRequestConfig, options?: customRequestOptions) {
+  post<T>(config: AxiosRequestConfig, options?: customConfigType) {
     return this.request<T>({ ...config, method: 'POST' }, options)
   }
 
   /**
    * @description Axios Put
    */
-  put<T>(config: AxiosRequestConfig, options?: customRequestOptions) {
+  put<T>(config: AxiosRequestConfig, options?: customConfigType) {
     return this.request<T>({ ...config, method: 'PUT' }, options)
   }
 
   /**
    * @description Axios Delete
    */
-  delete<T>(config: AxiosRequestConfig, options?: customRequestOptions) {
+  delete<T>(config: AxiosRequestConfig, options?: customConfigType) {
     return this.request<T>({ ...config, method: 'DELETE' }, options)
   }
 }
