@@ -1,3 +1,4 @@
+import { DEFAULT_PERSISTENT_TIME } from './const'
 import { AppEncryption } from '/@/utils/crypto'
 
 type StorageType = typeof localStorage | typeof sessionStorage
@@ -19,14 +20,14 @@ export class Storage {
     this.encrypt = encrypt
   }
 
-  getKey(key: string) {
+  private getKey(key: string) {
     return `${this.prefixKey}__${key}__`.toLocaleUpperCase()
   }
 
-  set(key: string, value: any, expire = 60 * 60 * 24 * 7) {
+  set(key: string, value: any, expire = DEFAULT_PERSISTENT_TIME) {
     const stringifiedData = JSON.stringify({
       value,
-      expire: expire !== null ? new Date().getTime() + expire * 1000 : null,
+      expire: expire !== null ? new Date().getTime() + expire : null,
     })
     const finalValue: any = this.encrypt
       ? AppEncryption.encrypt(stringifiedData)

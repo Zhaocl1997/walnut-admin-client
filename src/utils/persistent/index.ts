@@ -1,25 +1,23 @@
-import { isProd } from './../constant/vue'
+import { isProd } from '../constant/vue'
+
 import {
   getLocalStoragePrefix,
   getSessionStoragePrefix,
   getCookiePrefix,
-} from './../constant/prefix'
-import { Storage, StorageOptions } from './src/Storage'
-import { Cookie, CookieOptions } from './src/Cookie'
+} from '../constant/prefix'
 
-const createStorage = (opt: StorageOptions) => {
-  return new Storage(opt)
-}
+import { Storage } from './src/Storage'
+import { Cookie } from './src/Cookie'
 
-const AppLocalStorage = createStorage({
+const AppLocalStorage = new Storage({
   storage: localStorage,
   prefixKey: getLocalStoragePrefix(),
   encrypt: isProd(),
 })
 
 /* local */
-export const setLocal = (key: string, value: any) => {
-  AppLocalStorage.set(key, value)
+export const setLocal = (key: string, value: any, expire?: number) => {
+  AppLocalStorage.set(key, value, expire)
 }
 
 export const getLocal = (key: string): Nullable<any> => {
@@ -34,15 +32,15 @@ export const removeLocal = (key: string) => {
   AppLocalStorage.remove(key)
 }
 
-const AppSessionStorage = createStorage({
+const AppSessionStorage = new Storage({
   storage: sessionStorage,
   prefixKey: getSessionStoragePrefix(),
   encrypt: isProd(),
 })
 
 /* session */
-export const setSession = (key: string, value: any) => {
-  AppSessionStorage.set(key, value)
+export const setSession = (key: string, value: any, expire?: number) => {
+  AppSessionStorage.set(key, value, expire)
 }
 
 export const getSession = (key: string): Nullable<any> => {
@@ -57,18 +55,14 @@ export const removeSession = (key: string) => {
   AppSessionStorage.remove(key)
 }
 
-const createCookie = (opt: CookieOptions) => {
-  return new Cookie(opt)
-}
-
-const AppCookie = createCookie({
+const AppCookie = new Cookie({
   prefixKey: getCookiePrefix(),
   encrypt: isProd(),
 })
 
 /* cookie */
-export const setCookie = (key: string, value: any) => {
-  AppCookie.set(key, value)
+export const setCookie = (key: string, value: any, expire?: number) => {
+  AppCookie.set(key, value, expire)
 }
 
 export const getCookie = (key: string): Nullable<any> => {
