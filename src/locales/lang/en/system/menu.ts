@@ -48,6 +48,7 @@ export default {
       base: 'Base Usage',
       storage: 'Storage',
       state: 'State',
+      axios: 'Axios',
     },
   },
 

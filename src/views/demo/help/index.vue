@@ -128,7 +128,6 @@
 </template>
 
 <script lang="ts">
-  import { genString } from 'easy-fns-ts'
   import { reactive, defineComponent, toRefs } from 'vue'
 
   export default defineComponent({

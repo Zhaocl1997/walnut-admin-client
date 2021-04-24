@@ -1,17 +1,10 @@
 <template>
-  <div>
-    Index
-
-    <div v-for="item in 10">
-      <TestComp></TestComp>
-    </div>
-  </div>
+  <div>Index</div>
 </template>
 
 <script lang="ts">
   import type { SetupContext } from 'vue'
   import { defineComponent } from 'vue'
-  import TestComp from './testComp.vue'
 
   export default defineComponent({
     name: 'Index',
@@ -20,7 +13,7 @@
 
     defaultView: false,
 
-    components: { TestComp },
+    components: {},
 
     props: {},
 

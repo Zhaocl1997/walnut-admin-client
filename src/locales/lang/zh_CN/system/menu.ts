@@ -48,6 +48,7 @@ export default {
       base: '基本',
       storage: '存储',
       state: '状态',
+      axios: '请求',
     },
   },
 
