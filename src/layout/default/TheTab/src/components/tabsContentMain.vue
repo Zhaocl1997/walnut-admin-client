@@ -1,6 +1,6 @@
 <template>
   <w-scrollbar ref="scrollRef" @scroll="onCloseCtxMenu" vertical>
-    <ul class="h-full flex flex-row flex-nowrap">
+    <ul class="h-8 flex flex-row flex-nowrap">
       <li
         v-for="(tab, index) in getTabs"
         :class="[
@@ -14,14 +14,12 @@
         @contextmenu.prevent.native="onCtxMenu($event, tab.name, index)"
       >
         <!-- active symbol -->
-
         <div
           v-show="$route.name === tab.name"
           class="border-8 border-solid border-blue-500 rounded-full h-4 w-4 hover:border-blue-700"
         ></div>
 
         <!-- title -->
-
         <span class="whitespace-nowrap font-sans text-sm text-primary">{{
           getMaybeI18nMsg(tab.meta.title)
         }}</span>
