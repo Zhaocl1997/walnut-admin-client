@@ -2,6 +2,8 @@ import type { AxiosRequestConfigExtend } from './src/types'
 
 import axios from 'axios'
 
+export * from './src/types'
+
 import { Axios } from './src/Axios'
 import { cacheAdapterEnhancer } from './src/adapter'
 import { transform } from './transform'

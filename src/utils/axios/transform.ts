@@ -7,6 +7,7 @@ import { checkReponseErrorStatus } from './checkStatus'
 
 // custom transform for req and res interceptors
 export const transform: AxiosTransform = {
+  // Here handler request logic
   requestInterceptors: (config) => {
     const mergedCustomOptions = config.customConfig!
 
@@ -27,10 +28,19 @@ export const transform: AxiosTransform = {
     return Promise.reject(err)
   },
 
+  // Here handle response data
   responseInterceptors: (res) => {
-    return Promise.resolve(res.data)
+    const { code, data, msg } = res.data
+
+    if (code === 200) {
+      return Promise.resolve(data)
+    } else {
+      ElNotification({ type: 'error', message: msg })
+      return Promise.reject()
+    }
   },
 
+  // Here handle response error
   responseInterceptorsCatch: (err) => {
     if (err.message === 'Demonstrate') {
       ElNotification({ type: 'warning', message: 'Demonstrate Only!' })
