@@ -90,7 +90,8 @@ npm i
 - [ ] icon 扩展 支持更多方法使用icon
 - [x] 尝试使用AppContext的方式替代全局的状态管理(已有进展，正逐步替换)
 - [ ] title/message 组件优化
-- [ ] axios 类型优化
+- [x] axios 重构，增加缓存功能
+- [x] axios 类型优化
 - [ ] easy-fns-ts 类型优化
 
 ### 更新日志
