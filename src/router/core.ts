@@ -20,13 +20,13 @@ import {
  * Here is where we request from back end to get login user permissions.
  */
 export const createMenus = async () => {
-  const res: Menu[] = (await getPermissions()) as any
+  const res = await getPermissions()
 
   // generate keep-alive route name lists
-  const keepAliveRouteNames = createKeepAliveRouteNameList(res)
+  const keepAliveRouteNames = createKeepAliveRouteNameList(res.data)
 
   // filter menus which are visible aside
-  const visibleMenus = res.filter((i) => i.show)
+  const visibleMenus = res.data.filter((i) => i.show)
 
   // build to tree
   const menuTree = arrToTree(visibleMenus, { id: '_id' })

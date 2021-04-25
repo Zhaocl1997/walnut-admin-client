@@ -26,7 +26,8 @@
     setup(props) {
       const text = ref()
       const init = async () => {
-        text.value = await HelloAPI(props.cache)
+        const res = await HelloAPI(props.cache)
+        text.value = res.text
       }
 
       init()

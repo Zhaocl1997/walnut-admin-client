@@ -66,13 +66,7 @@
   import { arrToTree, orderTree, formatTree } from 'easy-fns-ts'
   import { ElMessage } from 'element-plus'
 
-  import {
-    listMenu,
-    createMenu,
-    updateMenu,
-    readMenu,
-    deleteMenu,
-  } from '/@/api/system/menu'
+  import { menuAPI } from '/@/api/system/menu'
 
   import { generateBaseWFormRules } from '/@/utils/rules'
 
@@ -88,9 +82,9 @@
     name: 'Menu',
 
     setup() {
-      const tableData = ref<Menu[]>([])
-      const total = ref<number>(0)
-      const treeData = ref<any[]>([])
+      const tableData = ref([])
+      const total = ref(0)
+      const treeData = ref([])
       const getTreeData = computed(() => {
         return formatTree(treeData.value, {
           format: (node: any) => {
@@ -99,13 +93,14 @@
         })
       })
 
-      const menuFormData = ref<Partial<Menu & { _id?: string }>>({
+      const menuFormData = ref<Menu & { _id?: string }>({
         type: 'catalog',
         external: false,
         internal: false,
         cache: false,
         status: true,
         show: true,
+        path: '',
       })
 
       const { menuFormSchemas } = getMenuFormSchemas(
@@ -135,7 +130,8 @@
       })
 
       const onGetList = async () => {
-        const res = await listMenu()
+        const res = await menuAPI.list()
+
         const treeMenu = orderTree(arrToTree(res.data, { id: '_id' }), {
           order: 'order',
         })
@@ -162,7 +158,7 @@
       }
 
       const onUpdate = async (id: string) => {
-        const res = await readMenu(id)
+        const res = await menuAPI.read(id)
 
         menuFormData.value = res
 
@@ -178,7 +174,7 @@
       }
 
       const onDelete = async (id: string) => {
-        await deleteMenu(id)
+        await menuAPI.delete(id)
         ElMessage.success('Success')
         await onGetList()
       }
@@ -202,10 +198,10 @@
 
       const onDialogConfirm = async () => {
         if (menuFormData.value._id) {
-          await updateMenu(menuFormData.value)
+          await menuAPI.update(menuFormData.value)
           ElMessage.success('Success')
         } else {
-          await createMenu(menuFormData.value)
+          await menuAPI.create(menuFormData.value)
           ElMessage.success('Success')
         }
 

@@ -1,7 +1,8 @@
-import { isProd } from '../utils/constant/vue'
-import { AppAxios } from '../utils/axios'
+import type { BaseListResponse } from '/@/utils/axios'
+import { isProd } from '/@/utils/constant/vue'
+import { AppAxios } from '/@/utils/axios'
 
-export class BaseAPI {
+export class BaseAPI<T> {
   private readonly model: string
   private readonly section: string
 
@@ -10,18 +11,18 @@ export class BaseAPI {
     this.section = section
   }
 
-  getModule() {
+  private getModule() {
     return `/${this.model}/${this.section}`
   }
 
-  list(data: any) {
-    return AppAxios.post({
+  list(data?: any) {
+    return AppAxios.post<BaseListResponse<T>>({
       url: `${this.getModule()}/list`,
       data,
     })
   }
 
-  create(data: any) {
+  create(data: MaybeRef<T>) {
     return AppAxios.post(
       {
         url: `${this.getModule()}`,
@@ -33,14 +34,14 @@ export class BaseAPI {
     )
   }
 
-  read(id: string | number) {
-    return AppAxios.get({
+  read(id: MaybeRef<string | number>) {
+    return AppAxios.get<T>({
       url: `${this.getModule()}/${id}`,
     })
   }
 
-  update(data: any) {
-    return AppAxios.put(
+  update(data: MaybeRef<T>) {
+    return AppAxios.put<T>(
       {
         url: `${this.getModule()}`,
         data,
@@ -51,7 +52,7 @@ export class BaseAPI {
     )
   }
 
-  delete(id: string | number) {
+  delete(id: MaybeRef<string | number>) {
     return AppAxios.delete(
       {
         url: `${this.getModule()}/${id}`,
