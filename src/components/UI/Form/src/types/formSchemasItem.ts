@@ -74,6 +74,11 @@ interface SharedDomProp {
 type SharedComponentProp = Partial<SharedFormComponentEvent> &
   Partial<SharedDomProp>
 
+// TODO type support
+export interface WFormCallback {
+  formData: Recordable
+}
+
 /**
  * @description shared schema
  */
@@ -98,7 +103,7 @@ interface SharedSchema<T, P> {
    */
   colProp?: Partial<ElColProp>
 
-  visible?: boolean
+  visible?: ((cb: WFormCallback) => boolean) | boolean
 
   foldVisible?: boolean
 }

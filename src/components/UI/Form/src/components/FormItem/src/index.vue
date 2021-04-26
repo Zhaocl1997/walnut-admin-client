@@ -1,6 +1,6 @@
 <template>
   <el-col
-    v-if="item.visible === undefined || item.visible === true"
+    v-if="calcVisible(item)"
     v-bind="item.colProp || { ...item.colProp, span: span }"
   >
     <transition name="fade" mode="out-in" appear>
@@ -40,9 +40,12 @@
       modelValue: Object as PropType<any>,
     },
 
-    setup(props: any) {
-      const { component, propName, componentProps } = useFormItem(props)
+    setup(props) {
       const { getFormContext } = useFormContext()
+      const { component, propName, componentProps, calcVisible } = useFormItem(
+        props,
+        getFormContext()
+      )
       const { span } = getFormContext()
 
       return {
@@ -50,6 +53,7 @@
         component,
         propName,
         componentProps,
+        calcVisible,
       }
     },
   })

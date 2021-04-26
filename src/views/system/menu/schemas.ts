@@ -119,6 +119,7 @@ export const getMenuFormSchemas = (
           label: 'Menu Type',
         },
         componentProp: {
+          button: true,
           options: [
             {
               value: MenuTypeEnum.CATALOG,
@@ -148,7 +149,11 @@ export const getMenuFormSchemas = (
           clearable: true,
           prepend: (toRaw(pathPrefix) as unknown) as string,
         },
-        visible: getNotElement.value,
+        // visible: getNotElement.value,
+        visible: ({ formData }) => {
+          console.log(formData)
+          return formData.type !== MenuTypeEnum.ELEMENT
+        },
       },
 
       // `catelog` type is `Input`
@@ -261,6 +266,7 @@ export const getMenuFormSchemas = (
           label: 'External Menu',
         },
         componentProp: {
+          button: true,
           options: ToFOptions,
         },
         visible: !getNotMenu.value && !unref(formData).internal,
@@ -274,6 +280,7 @@ export const getMenuFormSchemas = (
           label: 'Internal Menu',
         },
         componentProp: {
+          button: true,
           options: ToFOptions,
         },
         visible: !getNotMenu.value && !unref(formData).external,
@@ -303,6 +310,7 @@ export const getMenuFormSchemas = (
           label: 'Display aside',
         },
         componentProp: {
+          button: true,
           options: [
             {
               value: true,
@@ -325,6 +333,7 @@ export const getMenuFormSchemas = (
           label: 'Keep Alive',
         },
         componentProp: {
+          button: true,
           options: [
             {
               value: true,
@@ -347,6 +356,7 @@ export const getMenuFormSchemas = (
           label: 'Menu status',
         },
         componentProp: {
+          button: true,
           options: [
             {
               value: true,
