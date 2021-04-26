@@ -8,8 +8,6 @@ export enum FORM_TYPE {
   RADIO = 'Radio',
   TREE = 'Tree',
   SELECTTREE = 'SelectTree',
-  // INPUTNUMBER = 'InputNumber',
-  // RADIO = 'Radio',
   // SLIDER = 'Slider',
   // SWITCH = 'Switch',
 }
@@ -29,3 +27,4 @@ export * from './formItem'
 export * from './formMethods'
 export * from './formProps'
 export * from './formSchemas'
+export * from './formSchemasItem'

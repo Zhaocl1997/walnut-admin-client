@@ -1,6 +1,6 @@
-import type { WButtonProps } from '../../../Button'
-import type { WFormSchemaItemEvent } from '../../../Form'
+import type { WButtonProps } from '/@/components/UI/Button'
+import type { SharedFormComponentEvent } from '/@/components/UI/Form'
 
 export interface WButtonGroupProps {
-  groups: WButtonProps & Partial<WFormSchemaItemEvent>[]
+  groups: WButtonProps & Partial<SharedFormComponentEvent>[]
 }

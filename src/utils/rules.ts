@@ -1,5 +1,5 @@
 import { computed, ComputedRef } from 'vue'
-import type { WFormItemRule, WFormSchemaItem } from '../components/UI/Form'
+import type { ElFormItemRule, WFormSchemaItem } from '../components/UI/Form'
 
 import { upperFirst } from 'easy-fns-ts'
 import { unref } from 'vue'
@@ -10,7 +10,7 @@ import { useI18n } from '/@/locales'
  */
 export const generateBaseWFormRules = (
   schemas: WFormSchemaItem[] | ComputedRef<WFormSchemaItem[]>
-): { rules: WFormItemRule[] | ComputedRef<WFormItemRule[]> } => {
+): { rules: ElFormItemRule[] | ComputedRef<ElFormItemRule[]> } => {
   const rules = computed(() => {
     const ret: any = {}
 

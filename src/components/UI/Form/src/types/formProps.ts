@@ -3,7 +3,7 @@ import type { WFormSchemaItem } from './formSchemas'
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/form#biao-dan-yan-zheng
  */
-export interface WFormItemRule {
+export interface ElFormItemRule {
   type?: string
   required?: boolean
   message?: string
@@ -12,7 +12,7 @@ export interface WFormItemRule {
 }
 
 export interface WFormRule {
-  [key: string]: WFormItemRule[]
+  [key: string]: ElFormItemRule[]
 }
 
 /**
