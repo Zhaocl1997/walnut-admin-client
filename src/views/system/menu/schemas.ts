@@ -13,6 +13,7 @@ import enMessages from '/@/locales/lang/en'
 import zhMessages from '/@/locales/lang/zh_CN'
 
 import { deepKeys } from './utils'
+import { Menu } from '/@/router/types'
 
 const ToFOptions: any = [
   {
@@ -64,8 +65,11 @@ export const getMenuFormSchemas = (
     (val: any) => {
       if (!val) return
 
-      const node = findPath(unref(tableData), (n: any) => n._id === val)
-      const ret = node.map((item: any) => item.path)
+      const node = findPath<Menu & { _id?: string }>(
+        unref(tableData),
+        (n) => n._id === val
+      )
+      const ret = node!.map((item: any) => item.path)
 
       if (ret.length === 1) {
         pathPrefix.value = '/'

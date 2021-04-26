@@ -61,6 +61,7 @@
 
 <script lang="ts">
   import type { Menu } from '/@/router/types'
+  import type { TreeNode } from 'easy-fns-ts'
 
   import { defineComponent, onMounted, ref, nextTick, computed } from 'vue'
   import { arrToTree, orderTree, formatTree } from 'easy-fns-ts'
@@ -82,25 +83,23 @@
     name: 'Menu',
 
     setup() {
-      const tableData = ref([])
+      const tableData = ref<Menu[]>([])
       const total = ref(0)
-      const treeData = ref([])
-      const getTreeData = computed(() => {
-        return formatTree(treeData.value, {
-          format: (node: any) => {
-            return { ...node, title: getMaybeI18nMsg(node.title) }
-          },
-        })
-      })
+      const treeData = ref<TreeNode<Menu>[]>([])
 
-      const menuFormData = ref<Menu & { _id?: string }>({
+      const getTreeData = computed(() =>
+        formatTree<Menu>(treeData.value, {
+          format: (node) => ({ ...node, title: getMaybeI18nMsg(node.title) }),
+        })
+      )
+
+      const menuFormData = ref<Partial<Menu> & { _id?: string }>({
         type: 'catalog',
         external: false,
         internal: false,
         cache: false,
         status: true,
         show: true,
-        path: '',
       })
 
       const { menuFormSchemas } = getMenuFormSchemas(
@@ -132,12 +131,12 @@
       const onGetList = async () => {
         const res = await menuAPI.list()
 
-        const treeMenu = orderTree(arrToTree(res.data, { id: '_id' }), {
-          order: 'order',
-        })
+        const treeMenu = orderTree<Menu>(
+          arrToTree<Menu>(res.data, { id: '_id' })
+        )
 
         treeData.value = treeMenu
-        tableData.value = treeMenu[0].children
+        tableData.value = treeMenu[0].children as Menu[]
         total.value = res.total
       }
 
