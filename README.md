@@ -78,13 +78,16 @@ npm i
 - [ ] 虚拟滚动
 - [x] 屏幕断点优化
 - [ ] 带有options API 的组件 统一加 valueFormat 和 valueType
-- [ ] table/form/dialog 重构优化，统一化API
+- [ ] table 重构优化
 - [ ] table 自定义表头迁移优化，按钮组，操作列，自定义导出导入，打印
+- [ ] form 重构优化
 - [ ] form 添加更复杂的表单用例，添加tsx语法支持
+- [ ] dialog 重构优化
 - [ ] dialog 全屏，拖拽，弹出效果
-- [ ] drawer 可自定义固定头部尾部
+- [ ] drawer 组件
+- [ ] drawer 组件，可固定头和尾
 - [x] hook抽离，尽量可脱离组件逻辑
-- [ ] 前端权限
+- [ ] 权限处理
 - [ ] 环境变量优化，打包优化和自动化
 - [ ] 部署，自动化部署
 - [ ] icon 扩展 支持更多方法使用icon
@@ -92,7 +95,7 @@ npm i
 - [ ] title/message 组件优化
 - [x] axios 重构，增加缓存功能
 - [x] axios 类型优化
-- [ ] easy-fns-ts 类型优化
+- [x] easy-fns-ts 类型优化
 
 ### 更新日志
 
