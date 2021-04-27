@@ -2,7 +2,7 @@ import type { PropType } from 'vue'
 
 export const MultiTypeCompSharedProps = {
   options: {
-    type: Array as PropType<any[]>,
+    type: Array as PropType<BaseOptions[]>,
     default: () => [],
   },
 
