@@ -1,4 +1,10 @@
-import type { UnwrapRef, VNode } from 'vue'
+import type {
+  UnwrapRef,
+  VNode,
+  AllowedComponentProps,
+  ComponentCustomProps,
+  VNodeProps,
+} from 'vue'
 import type {
   RouterLink,
   RouterView,
@@ -7,6 +13,10 @@ import type {
 } from 'vue-router'
 
 import type { WFormProps } from '/@/components/UI/Form'
+
+declare const WForm: new () => {
+  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & WFormProps
+}
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -38,7 +48,7 @@ declare module 'vue' {
     'w-empty': import('/@/components/UI/Empty').WEmptyProps
 
     // type support for slot
-    'w-form': WFormProps & {
+    'w-form': typeof WForm & {
       __VLS_slots: {
         [key: string]: WFormProps
       }
