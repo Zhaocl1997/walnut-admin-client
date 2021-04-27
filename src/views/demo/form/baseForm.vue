@@ -5,14 +5,17 @@
 
       <w-json :value="baseFormData"></w-json>
       <el-slider v-model="value1" :max="24" :min="0"></el-slider>
+      <w-form
+        v-model="baseFormConfig"
+        :schemas="baseFormConfigSchemas"
+      ></w-form>
     </template>
 
     <w-form
       ref="wFormRef"
       v-model="baseFormData"
-      :schemas="baseFormSchemas"
-      :rules="rules"
       :span="value1"
+      v-bind="baseFormConfig"
     >
       <template #baseFormSlot="{ disabled }">
         <input
@@ -27,7 +30,11 @@
 </template>
 
 <script lang="ts">
-  import type { WFormMethods, WFormSchemaItem } from '/@/components/UI/Form'
+  import type {
+    WFormProps,
+    WFormMethods,
+    WFormSchemaItem,
+  } from '/@/components/UI/Form'
   import { ref, reactive, defineComponent, computed } from 'vue'
   import { options, TreeData } from '../data'
 
@@ -38,11 +45,8 @@
 
     setup() {
       const value1 = ref(24)
+
       const wFormRef = ref<Nullable<WFormMethods>>(null)
-      const baseFormData = reactive({
-        // need to init an empty array when multiple true
-        baseFormCheckbox: [],
-      })
 
       const baseFormSchemas = computed((): WFormSchemaItem[] => {
         return [
@@ -242,12 +246,117 @@
 
       const { rules } = generateBaseWFormRules(baseFormSchemas.value)
 
+      const baseFormConfig = reactive<WFormProps>({
+        disabled: false,
+        inline: false,
+        labelPosition: 'right',
+        size: 'medium',
+        rules: rules,
+        schemas: baseFormSchemas.value,
+      })
+
+      const baseFormConfigSchemas: WFormSchemaItem[] = [
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'Disabled',
+            prop: 'disabled',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: false,
+                label: 'Normal',
+              },
+              {
+                value: true,
+                label: 'Disabled',
+              },
+            ],
+          },
+        },
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'Inline',
+            prop: 'inline',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: false,
+                label: 'Normal',
+              },
+              {
+                value: true,
+                label: 'Inline',
+              },
+            ],
+          },
+        },
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'Label Position',
+            prop: 'labelPosition',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: 'left',
+                label: 'Left',
+              },
+              {
+                value: 'right',
+                label: 'Right',
+              },
+              {
+                value: 'top',
+                label: 'Top',
+              },
+            ],
+          },
+        },
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'Size',
+            prop: 'size',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: 'medium',
+                label: 'Medium',
+              },
+              {
+                value: 'small',
+                label: 'Small',
+              },
+              {
+                value: 'mini',
+                label: 'Mini',
+              },
+            ],
+          },
+        },
+      ]
+
+      const baseFormData = reactive({
+        // need to init an empty array when multiple true
+        baseFormCheckbox: [],
+      })
+
       return {
+        baseFormConfig,
+        baseFormConfigSchemas,
         value1,
         wFormRef,
         baseFormData,
-        baseFormSchemas,
-        rules,
       }
     },
   })
