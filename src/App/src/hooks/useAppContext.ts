@@ -7,13 +7,13 @@ import { useContext } from '/@/hooks/core/useContext'
 import { appKey } from '../utils/InjectionKey'
 import { AppGlobalContext } from '/@/store/ctx'
 
-const { setContext, getContext } = useContext<ToRefs<AppContext>>()
+const { setContext, getContext } = useContext<ToRefs<AppContext>>(appKey)
 
 /**
  * @description Initial App Context
  */
 export const setAppContext = (initialState: ToRefs<AppContext>) => {
-  setContext(appKey, initialState)
+  setContext(initialState)
 }
 
 /**
@@ -31,5 +31,5 @@ export function useAppContext<T extends boolean = true>(): T extends true
   ? ReturnType<typeof getContext>
   : typeof AppGlobalContext
 export function useAppContext() {
-  return getCurrentInstance() ? getContext(appKey) : AppGlobalContext
+  return getCurrentInstance() ? getContext() : AppGlobalContext
 }

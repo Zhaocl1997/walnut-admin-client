@@ -4,12 +4,12 @@ import { inject, provide } from 'vue'
 /**
  * @description Integrate entry context, expose `setContext` and `getContext` two functions
  */
-export const useContext = <T>() => {
-  const setContext = (key: InjectionKey<string | symbol>, ctx: T): void => {
+export const useContext = <T>(key: InjectionKey<string | symbol>) => {
+  const setContext = (ctx: T): void => {
     provide<T>(key, ctx)
   }
 
-  const getContext = (key: InjectionKey<string | symbol>): T => {
+  const getContext = (): T => {
     return inject<T>(key)!
   }
 
