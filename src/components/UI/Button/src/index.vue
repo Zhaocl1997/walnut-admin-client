@@ -1,8 +1,6 @@
 <template>
   <el-button v-bind="getBindValue" :class="{ 'w-full': block }">
     <el-space size="mini">
-      <i v-if="prefixIcon" :class="prefixIcon" />
-
       <slot v-if="$slots.prefix" name="prefix"></slot>
 
       <span v-if="delayText">{{ delayText }}</span>

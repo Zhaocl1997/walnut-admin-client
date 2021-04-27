@@ -19,11 +19,6 @@ export interface ElButtonProps {
  */
 export interface WButtonProps extends Partial<ElButtonProps> {
   /**
-   * @description prefix icon
-   */
-  prefixIcon?: string
-
-  /**
    * @description suffix icon
    */
   suffixIcon?: string
