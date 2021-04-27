@@ -9,8 +9,6 @@ export const useFormItem = (props: WFormItemProp, ctx: any) => {
   const propName = item.formProp && item.formProp.prop
   const componentProps = item.componentProp || {}
 
-  console.log(ctx)
-
   const calcVisible = (item: WFormSchemaItem) => {
     const { visible } = item
 
@@ -20,7 +18,7 @@ export const useFormItem = (props: WFormItemProp, ctx: any) => {
 
     if (isFunction(visible)) {
       // @ts-ignore
-      // TODO ts error
+      // TODO ts type error
       return visible!({ formData: ctx.modelValue })
     }
 

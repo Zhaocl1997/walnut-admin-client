@@ -1,23 +1,8 @@
-import { unref } from 'vue'
+import type { WFormContext } from '../types/formContext'
 import { formKey } from '../utils/InjectionKey'
 import { useContext } from '/@/hooks/core/useContext'
 
-export const useFormContext = () => {
-  const { setContext, getContext } = useContext()
-
-  const setFormContext = (value: any) => {
-    setContext(formKey, value)
-  }
-
-  const getFormContext = () => {
-    const formContext: any = getContext(formKey)
-    return {
-      ...unref(formContext),
-    }
-  }
-
-  return {
-    setFormContext,
-    getFormContext,
-  }
-}
+export const {
+  setContext: setFormContext,
+  getContext: useFormContext,
+} = useContext<WFormContext>(formKey)

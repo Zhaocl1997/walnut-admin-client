@@ -2,30 +2,26 @@ import type { ElFormMethods, WFormMethods } from './../types/formMethods'
 import type { Ref } from 'vue'
 
 export const useFormMethods = (
-  formRef: Ref<ElFormMethods>,
+  formRef: Ref<Nullable<ElFormMethods>>,
   customMethods: any
 ) => {
   const formMethods: WFormMethods = {
     ...customMethods,
 
     validate: async () => {
-      return await formRef.value.validate()
+      return await formRef.value!.validate()
     },
 
-    validateField: (props) => {
-      return new Promise((resolve) => {
-        formRef.value.validateField(props, (msg) => {
-          resolve(msg)
-        })
-      })
+    validateField: async (props) => {
+      return await formRef.value!.validateField(props)
     },
 
-    clearValidate: (props) => {
-      return formRef.value.clearValidate(props)
+    clearValidate: async (props) => {
+      return await formRef.value!.clearValidate(props)
     },
 
-    resetFields: () => {
-      return formRef.value.resetFields()
+    resetFields: async () => {
+      return await formRef.value!.resetFields()
     },
   }
 

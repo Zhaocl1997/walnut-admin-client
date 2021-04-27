@@ -1,18 +1,15 @@
 <template>
-  <el-col
-    v-if="calcVisible(item)"
-    v-bind="item.colProp || { ...item.colProp, span: span }"
-  >
+  <el-col v-if="calcVisible(item)" v-bind="calcColProp">
     <transition name="fade" mode="out-in" appear>
       <el-form-item v-bind="item.formProp">
         <template v-if="$slots[propName]">
-          <slot :name="propName" />
+          <slot :name="propName" v-bind="formProps" />
         </template>
 
         <template v-else>
           <component
             :is="component"
-            v-model="modelValue[propName]"
+            v-model="formProps.modelValue[propName]"
             v-bind="componentProps"
           ></component>
         </template>
@@ -23,11 +20,11 @@
 
 <script lang="ts">
   import type { PropType } from 'vue'
-  import { defineComponent } from 'vue'
+  import { defineComponent, computed } from 'vue'
 
   import { useFormContext } from '../../../hooks/useFormContext'
 
-  import { WFormSchemaItem } from '../../../types'
+  import { WFormItemProp, WFormSchemaItem } from '../../../types'
   import { useFormItem } from './hooks/useFormItem'
 
   export default defineComponent({
@@ -37,23 +34,29 @@
 
     props: {
       item: Object as PropType<WFormSchemaItem>,
-      modelValue: Object as PropType<any>,
     },
 
-    setup(props) {
-      const { getFormContext } = useFormContext()
+    // @ts-ignore
+    setup(props: WFormItemProp) {
+      const { formProps } = useFormContext()
+
       const { component, propName, componentProps, calcVisible } = useFormItem(
         props,
-        getFormContext()
+        useFormContext()
       )
-      const { span } = getFormContext()
+
+      const calcColProp = computed(
+        () => props.item.colProp ?? { span: formProps.value.span }
+      )
 
       return {
-        span,
+        formProps,
+
         component,
         propName,
         componentProps,
         calcVisible,
+        calcColProp,
       }
     },
   })

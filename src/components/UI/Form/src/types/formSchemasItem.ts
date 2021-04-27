@@ -66,6 +66,7 @@ export interface SharedFormComponentEvent {
  */
 interface SharedDomProp {
   style: Partial<CSSStyleDeclaration>
+  class: string
 }
 
 /**
@@ -104,8 +105,6 @@ interface SharedSchema<T, P> {
   colProp?: Partial<ElColProp>
 
   visible?: ((cb: WFormCallback) => boolean) | boolean
-
-  foldVisible?: boolean
 }
 
 /**

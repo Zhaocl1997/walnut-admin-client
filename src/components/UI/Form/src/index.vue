@@ -1,8 +1,8 @@
 <template>
-  <el-form ref="formRef" class="w-form" v-bind="getBindValue">
+  <el-form ref="formRef" v-bind="getBindValue">
     <el-row :gutter="gutter">
       <template v-for="(item, index) in formSchemas" :key="index">
-        <WFormItem :model-value="modelValue" :item="item">
+        <w-form-item :item="item">
           <template
             #[slotName]="data"
             v-for="(slotName, slotIndex) in Object.keys($slots)"
@@ -10,7 +10,7 @@
           >
             <slot :name="slotName" v-bind="data"></slot>
           </template>
-        </WFormItem>
+        </w-form-item>
       </template>
     </el-row>
   </el-form>
@@ -18,18 +18,18 @@
 
 <script lang="ts">
   import type { SetupContext } from 'vue'
-  import type { WFormProps } from './types'
+  import type { ElFormMethods, WFormMethods, WFormProps } from './types'
 
   import { ref, unref, computed, defineComponent } from 'vue'
 
   import props from './props'
 
   import { useExpose } from '/@/hooks/core/useExpose'
-  import { useFormContext } from './hooks/useFormContext'
-  import { useFormProps } from './hooks/useFormProps'
+  import { setFormContext } from './hooks/useFormContext'
   import { useFormSchemas } from './hooks/useFormSchemas'
   import { useFormComponents } from './hooks/useFormComponents'
   import { useFormMethods } from './hooks/useFormMethods'
+  import { useProps } from '/@/hooks/core/useProps'
 
   export default defineComponent({
     name: 'WForm',
@@ -43,15 +43,13 @@
     setup(props: WFormProps, ctx: SetupContext) {
       const { attrs, emit, expose } = ctx
 
-      const formRef = ref<Nullable<any>>(null)
+      const formRef = ref<Nullable<ElFormMethods>>(null)
 
-      const { setFormContext } = useFormContext()
+      const { setProps, getProps } = useProps<WFormProps>(props)
 
-      const { setProps, getProps } = useFormProps(props)
+      const { formSchemas } = useFormSchemas(getProps)
 
-      const { formSchemas, onItemVisible } = useFormSchemas(getProps)
-
-      useFormComponents(getProps)
+      useFormComponents()
 
       const { formMethods } = useFormMethods(formRef, { setProps })
 
@@ -66,13 +64,15 @@
       })
 
       // create `WForm` context
-      setFormContext(getProps)
+      setFormContext({
+        formProps: getProps,
+      })
 
       // create `useForm` hook
       emit('hook', formMethods)
 
-      // expose
-      useExpose({
+      // expose API through ref
+      useExpose<WFormMethods>({
         apis: formMethods,
         expose,
       })
@@ -82,7 +82,6 @@
         getBindValue,
 
         formSchemas,
-        onItemVisible,
       }
     },
   })

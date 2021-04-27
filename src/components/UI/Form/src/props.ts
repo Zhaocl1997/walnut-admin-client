@@ -19,9 +19,7 @@ export default {
 
   modelValue: {
     type: Object as PropType<Recordable>,
-    default: () => {
-      return {}
-    },
+    default: () => ({}),
     required: true,
   },
 
