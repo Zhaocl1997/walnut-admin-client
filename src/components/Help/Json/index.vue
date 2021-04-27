@@ -20,7 +20,7 @@
 
       height: {
         type: String as PropType<string>,
-        default: '200px',
+        default: '100px',
       },
 
       width: {
