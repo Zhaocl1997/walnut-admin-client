@@ -36,6 +36,7 @@ import {
   ElPagination,
   ElSpace,
   ElDivider,
+  ElSlider,
   ElScrollbar,
   ElBacktop,
   ElAvatar,
@@ -97,6 +98,7 @@ const components = [
 
   ElSpace,
   ElDivider,
+  ElSlider,
   ElScrollbar,
   ElBacktop,
   ElAvatar,

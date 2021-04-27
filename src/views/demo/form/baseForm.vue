@@ -3,34 +3,41 @@
     <template #header>
       <span>Base form：</span>
 
-      <WJson :value="baseFormData"></WJson>
+      <w-json :value="baseFormData"></w-json>
+      <el-slider v-model="value1" :max="24" :min="0"></el-slider>
     </template>
 
     <w-form
       ref="wFormRef"
       v-model="baseFormData"
       :schemas="baseFormSchemas"
-      :rules="baseFormRules"
+      :rules="rules"
+      :span="value1"
     >
-      <template #baseFormSlot>
-        <span>custom slot</span>
+      <template #baseFormSlot="{ disabled }">
+        <input
+          type="text"
+          class="h-12 border-2 block"
+          @input="(e) => (baseFormData.baseFormSlot = e.target.value)"
+          :disabled="disabled"
+        />
       </template>
     </w-form>
   </el-card>
 </template>
 
 <script lang="ts">
-  import type {
-    WFormMethods,
-    WFormRule,
-    WFormSchemaItem,
-  } from '/@/components/UI/Form'
+  import type { WFormMethods, WFormSchemaItem } from '/@/components/UI/Form'
   import { ref, reactive, defineComponent, computed } from 'vue'
+  import { options, TreeData } from '../data'
+
+  import { generateBaseWFormRules } from '/@/components/UI/Form'
 
   export default defineComponent({
     name: 'BaseFormDemo',
 
     setup() {
+      const value1 = ref(24)
       const wFormRef = ref<Nullable<WFormMethods>>(null)
       const baseFormData = reactive({
         // need to init an empty array when multiple true
@@ -40,6 +47,51 @@
       const baseFormSchemas = computed((): WFormSchemaItem[] => {
         return [
           {
+            type: 'Button',
+            formProp: {
+              label: 'Button',
+            },
+            componentProp: {
+              text: 'Button',
+              icon: 'el-icon-question',
+              suffixIcon: 'el-icon-question',
+              onClick: () => {
+                console.log('Clicked Button')
+              },
+            },
+          },
+          {
+            type: 'ButtonGroup',
+            formProp: {
+              label: 'ButtonGroup',
+            },
+            componentProp: {
+              groups: [
+                {
+                  text: 'Button 1',
+                  type: 'primary',
+                  onClick: () => {
+                    console.log('Clicked Button 1')
+                  },
+                },
+                {
+                  text: 'Button 2',
+                  type: 'success',
+                  onClick: () => {
+                    console.log('Clicked Button 2')
+                  },
+                },
+                {
+                  text: 'Button 3',
+                  type: 'warning',
+                  onClick: () => {
+                    console.log('Clicked Button 3')
+                  },
+                },
+              ],
+            },
+          },
+          {
             type: 'Input',
             formProp: {
               prop: 'baseFormInput',
@@ -47,6 +99,23 @@
             },
             componentProp: {
               clearable: true,
+              helpPosition: 'suffix',
+              helpMessage: 'Some tips',
+              modelModifiers: {
+                trim: true,
+              },
+            },
+          },
+          {
+            type: 'InputNumber',
+            formProp: {
+              prop: 'baseFormInputNumber',
+              label: 'InputNumber',
+            },
+            componentProp: {
+              min: 10,
+              max: 20,
+              step: 2,
             },
           },
           {
@@ -57,20 +126,7 @@
             },
             componentProp: {
               clearable: true,
-              options: [
-                {
-                  value: '1',
-                  label: 'label-1',
-                },
-                {
-                  value: '2',
-                  label: 'label-2',
-                },
-                {
-                  value: '3',
-                  label: 'label-3',
-                },
-              ],
+              options,
             },
           },
           {
@@ -81,20 +137,53 @@
             },
             componentProp: {
               multiple: true,
-              options: [
-                {
-                  value: '1',
-                  label: 'label-1',
-                },
-                {
-                  value: '2',
-                  label: 'label-2',
-                },
-                {
-                  value: '3',
-                  label: 'label-3',
-                },
-              ],
+              options,
+            },
+          },
+          {
+            type: 'Radio',
+            formProp: {
+              prop: 'baseFormRadio',
+              label: 'Radio',
+            },
+            componentProp: {
+              button: true,
+              options,
+            },
+          },
+          {
+            type: 'Tree',
+            formProp: {
+              prop: 'baseFormTree',
+              label: 'Tree',
+            },
+            componentProp: {
+              data: TreeData,
+              defaultExpandAll: true,
+              props: {
+                id: '_id',
+                disabled: '_disabled',
+              },
+              class: 'border-2',
+              style: {
+                height: '200px',
+                overflowY: 'scroll',
+              },
+            },
+          },
+          {
+            type: 'SelectTree',
+            formProp: {
+              prop: 'baseFormSelectTree',
+              label: 'SelectTree',
+            },
+            componentProp: {
+              clearable: true,
+              data: TreeData,
+              props: {
+                id: '_id',
+                disabled: '_disabled',
+              },
             },
           },
           {
@@ -107,7 +196,6 @@
           {
             type: 'ButtonGroup',
             formProp: {
-              prop: 'baseFormMethods',
               label: 'Methods',
             },
             componentProp: {
@@ -130,14 +218,14 @@
                 },
                 {
                   text: 'ClearValidate',
-                  onClick: () => {
-                    wFormRef.value?.clearValidate()
+                  onClick: async () => {
+                    await wFormRef.value?.clearValidate()
                   },
                 },
                 {
                   text: 'ClearValidate(Input)',
-                  onClick: () => {
-                    wFormRef.value?.clearValidate('baseFormInput')
+                  onClick: async () => {
+                    await wFormRef.value?.clearValidate('baseFormInput')
                   },
                 },
                 {
@@ -152,35 +240,14 @@
         ]
       })
 
-      const baseFormRules: WFormRule = {
-        baseFormInput: [
-          {
-            required: true,
-            message: 'Please input something!',
-            trigger: 'blur',
-          },
-        ],
-        baseFormSelect: [
-          {
-            required: true,
-            message: 'Please select One!',
-            trigger: 'change',
-          },
-        ],
-        baseFormCheckbox: [
-          {
-            required: true,
-            message: 'Please choose one or more!',
-            trigger: 'change',
-          },
-        ],
-      }
+      const { rules } = generateBaseWFormRules(baseFormSchemas.value)
 
       return {
+        value1,
         wFormRef,
         baseFormData,
         baseFormSchemas,
-        baseFormRules,
+        rules,
       }
     },
   })

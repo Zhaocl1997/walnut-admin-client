@@ -69,11 +69,9 @@
 
   import { menuAPI } from '/@/api/system/menu'
 
-  import { generateBaseWFormRules } from '/@/utils/rules'
-
   import { useTable } from '/@/components/UI/Table'
   import { useDialog } from '/@/components/UI/Dialog'
-  import { useForm } from '/@/components/UI/Form'
+  import { useForm, generateBaseWFormRules } from '/@/components/UI/Form'
 
   import { getMenuTableHeaders } from './headers'
   import { getMenuFormSchemas } from './schemas'
