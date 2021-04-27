@@ -6,6 +6,8 @@ import type {
   RouteLocationNormalized,
 } from 'vue-router'
 
+import type { WFormProps } from '/@/components/UI/Form'
+
 declare module 'vue' {
   export interface GlobalComponents {
     // https://github.com/johnsoncodehk/volar
@@ -25,6 +27,8 @@ declare module 'vue' {
     }
 
     // Here is where we enhance typing support in template usage
+    // Components below are not actually global components
+    // Usage of `vite-plugin-components` make these seem like global comps
     'w-button': import('/@/components/UI/Button').WButtonProps
     'w-button-group': import('/@/components/UI/ButtonGroup').WButtonGroupProps
     'w-checkbox': import('/@/components/UI/Checkbox').WCheckboxProps
@@ -32,7 +36,14 @@ declare module 'vue' {
     'w-dialog': import('/@/components/UI/Dialog').WDialogProps
     'w-dropdown': import('/@/components/UI/Dropdown').WDropdownProps
     'w-empty': import('/@/components/UI/Empty').WEmptyProps
-    'w-form': import('/@/components/UI/Form').WFormProps
+
+    // type support for slot
+    'w-form': WFormProps & {
+      __VLS_slots: {
+        [key: string]: WFormProps
+      }
+    }
+
     'w-icon': import('/@/components/UI/Icon').WIconProps
     'w-input': import('/@/components/UI/Input').WInputProps
     'w-input-number': import('/@/components/UI/InputNumber').WInputNumberProps
