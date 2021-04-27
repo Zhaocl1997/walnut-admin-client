@@ -44,11 +44,12 @@ export const transform: AxiosTransform = {
   responseInterceptorsCatch: (err) => {
     if (err.message === 'Demonstrate') {
       ElNotification({ type: 'warning', message: 'Demonstrate Only!' })
-      return Promise.reject(err)
     } else {
       const statusCode = err.response!.data.statusCode
       const msg = err.response!.data.detail.message
       checkReponseErrorStatus(statusCode, msg)
     }
+
+    return Promise.reject(err)
   },
 }
