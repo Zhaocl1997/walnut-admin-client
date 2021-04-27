@@ -1,7 +1,6 @@
 import { ComputedRef } from 'vue'
 import type { ElFormItemRule, WFormSchemaItem } from '../types'
 
-import { upperFirst } from 'easy-fns-ts'
 import { unref, computed } from 'vue'
 import { useI18n } from '/@/locales'
 
@@ -16,14 +15,21 @@ export const generateBaseWFormRules = (
 
     const { t } = useI18n()
 
-    const propKeys = unref(schemas).map((item) => item.formProp?.prop)
+    const formProps = unref(schemas).map((item) => ({
+      ...item.formProp,
+      type: item.type,
+    }))
 
-    propKeys.map((key: string | undefined) => {
-      if (key) {
-        ret[key] = [
+    formProps.map(({ prop, label, type }) => {
+      if (prop) {
+        const actionType = ['Input', 'InputNumber'].includes(type)
+          ? t('common.inputAction')
+          : t('common.chooseAction')
+
+        ret[prop] = [
           {
             required: true,
-            message: t('common.rule', { prop: upperFirst(key) }),
+            message: t('common.rule', { label: label, type: actionType }),
           },
         ]
       }

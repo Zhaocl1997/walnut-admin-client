@@ -1,4 +1,6 @@
 export default {
   base: '基本',
-  rule: '{prop} 是必填字段！',
+  inputAction: '输入',
+  chooseAction: '选择',
+  rule: '请{type}{label}！',
 }

@@ -1,4 +1,6 @@
 export default {
   base: 'Base',
-  rule: '{prop} is required!',
+  inputAction: 'Input',
+  chooseAction: 'Choose',
+  rule: 'Please {type} {label}!',
 }
