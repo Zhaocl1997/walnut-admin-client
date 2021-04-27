@@ -1,4 +1,5 @@
 import type { MultiTypeCompSharedPropType } from '../../../types'
+import type { MaybeRef } from '/~/utils'
 
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/checkbox#checkbox-group-attributes

@@ -1,3 +1,5 @@
+import type { MaybeRef } from '/~/utils'
+
 export interface ElInputTextareaResizeProp {
   minRows?: number
   maxRows?: number

@@ -1,4 +1,5 @@
 import type { WFormSchemaItem } from './formSchemas'
+import type { MaybeRef } from '/~/utils'
 
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/form#biao-dan-yan-zheng
@@ -49,7 +50,7 @@ export interface WFormProps extends Partial<ElFormProps> {
    * @description v-model value for form
    * @type {Object}
    */
-  modelValue: Recordable
+  modelValue?: Recordable
 
   /**
    * @description Form model to render relevant component

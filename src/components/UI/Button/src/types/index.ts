@@ -1,3 +1,5 @@
+import type { MaybeRef } from '/~/utils'
+
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/button#attributes
  */

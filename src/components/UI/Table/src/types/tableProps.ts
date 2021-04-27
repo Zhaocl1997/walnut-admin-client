@@ -1,4 +1,5 @@
 import type { WTableHeaderItem } from './tableHeaders'
+import type { MaybeRef } from '/~/utils'
 
 export interface ElTableStyleAndClassParams {
   row: any

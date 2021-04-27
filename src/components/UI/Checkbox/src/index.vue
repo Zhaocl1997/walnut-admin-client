@@ -8,7 +8,6 @@
 
   <template v-else>
     <el-checkbox-group v-bind="getBindValue">
-      <!-- TODO -->
       <el-checkbox
         v-for="item in options"
         :key="item[optionValue]"

@@ -1,4 +1,6 @@
 import type { BaseListResponse } from '/@/utils/axios'
+import type { MaybeRef } from '/~/utils'
+
 import { isProd } from '/@/utils/constant/vue'
 import { AppAxios } from '/@/utils/axios'
 
