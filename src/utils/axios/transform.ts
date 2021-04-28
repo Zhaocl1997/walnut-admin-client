@@ -4,6 +4,7 @@ import { ElNotification } from 'element-plus'
 
 import { getToken } from '../auth'
 import { checkReponseErrorStatus } from './checkStatus'
+import { useRouterPush } from '/@/router'
 
 // custom transform for req and res interceptors
 export const transform: AxiosTransform = {
@@ -42,11 +43,16 @@ export const transform: AxiosTransform = {
 
   // Here handle response error
   responseInterceptorsCatch: (err) => {
+    if (err.message === 'Network Error') {
+      useRouterPush({ name: '500' })
+      return
+    }
+
     if (err.message === 'Demonstrate') {
       ElNotification({ type: 'warning', message: 'Demonstrate Only!' })
     } else {
-      const statusCode = err.response!.data.statusCode
-      const msg = err.response!.data.detail.message
+      const statusCode = err.response?.data.statusCode
+      const msg = err.response?.data.detail.message
       checkReponseErrorStatus(statusCode, msg)
     }
 
