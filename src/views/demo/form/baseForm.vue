@@ -8,33 +8,31 @@
       <w-form
         v-model="baseFormConfig"
         :schemas="baseFormConfigSchemas"
+        :span="8"
       ></w-form>
     </template>
 
     <w-form
       ref="wFormRef"
       v-model="baseFormData"
+      :schemas="baseFormSchemas"
+      :rules="rules"
       :span="value1"
       v-bind="baseFormConfig"
     >
       <template #baseFormSlot="{ disabled }">
-        <input
-          type="text"
-          class="h-12 border-2 block"
-          @input="(e) => (baseFormData.baseFormSlot = e.target.value)"
+        <el-input
+          v-model="baseFormData.baseFormSlot"
           :disabled="disabled"
-        />
+          placeholder="Slot render El-input"
+        ></el-input>
       </template>
     </w-form>
   </el-card>
 </template>
 
-<script lang="ts">
-  import type {
-    WFormProps,
-    WFormMethods,
-    WFormSchemaItem,
-  } from '/@/components/UI/Form'
+<script lang="tsx">
+  import type { WFormMethods, WFormSchemaItem } from '/@/components/UI/Form'
   import { ref, reactive, defineComponent, computed } from 'vue'
   import { options, TreeData } from '../data'
 
@@ -47,6 +45,152 @@
       const value1 = ref(24)
 
       const wFormRef = ref<Nullable<WFormMethods>>(null)
+
+      const baseFormConfig = reactive({
+        disabled: false,
+        inline: false,
+        labelPosition: 'right',
+        size: 'medium',
+        vIf: true,
+        vShow: true,
+        labelWidth: '120px',
+      })
+
+      const baseFormConfigSchemas: WFormSchemaItem[] = [
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'Disabled',
+            prop: 'disabled',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: false,
+                label: 'Normal',
+              },
+              {
+                value: true,
+                label: 'Disabled',
+              },
+            ],
+          },
+        },
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'Inline',
+            prop: 'inline',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: false,
+                label: 'Normal',
+              },
+              {
+                value: true,
+                label: 'Inline',
+              },
+            ],
+          },
+        },
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'Label Position',
+            prop: 'labelPosition',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: 'left',
+                label: 'Left',
+              },
+              {
+                value: 'right',
+                label: 'Right',
+              },
+              {
+                value: 'top',
+                label: 'Top',
+              },
+            ],
+          },
+        },
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'Size',
+            prop: 'size',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: 'medium',
+                label: 'Medium',
+              },
+              {
+                value: 'small',
+                label: 'Small',
+              },
+              {
+                value: 'mini',
+                label: 'Mini',
+              },
+            ],
+          },
+        },
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'v-if',
+            prop: 'vIf',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: true,
+                label: 'Display',
+              },
+              {
+                value: false,
+                label: 'Invisible',
+              },
+            ],
+          },
+        },
+        {
+          type: 'Radio',
+          formProp: {
+            label: 'v-show',
+            prop: 'vShow',
+          },
+          componentProp: {
+            button: true,
+            options: [
+              {
+                value: true,
+                label: 'Display',
+              },
+              {
+                value: false,
+                label: 'Invisible',
+              },
+            ],
+          },
+        },
+      ]
+
+      const baseFormData = reactive({
+        // need to init an empty array when multiple true
+        baseFormCheckbox: [],
+      })
 
       const baseFormSchemas = computed((): WFormSchemaItem[] => {
         return [
@@ -63,6 +207,8 @@
                 console.log('Clicked Button')
               },
             },
+            vIf: computed(() => baseFormConfig.vIf),
+            vShow: computed(() => baseFormConfig.vShow),
           },
           {
             type: 'ButtonGroup',
@@ -93,6 +239,12 @@
                   },
                 },
               ],
+            },
+            vIf: ({ formData }) => {
+              return formData.baseFormInput
+            },
+            vShow: ({ formData }) => {
+              return formData.baseFormInputNumber
             },
           },
           {
@@ -191,13 +343,6 @@
             },
           },
           {
-            type: 'Input',
-            formProp: {
-              prop: 'baseFormSlot',
-              label: 'Slot',
-            },
-          },
-          {
             type: 'ButtonGroup',
             formProp: {
               label: 'Methods',
@@ -241,115 +386,34 @@
               ],
             },
           },
+          {
+            type: 'Slot',
+            formProp: {
+              label: 'Slot render',
+              prop: 'baseFormSlot',
+            },
+          },
+          {
+            type: 'Render',
+
+            formProp: {
+              label: 'JSX render',
+              prop: 'baseFormJSX',
+            },
+
+            render: ({ formData }) => {
+              return (
+                <el-input
+                  v-model={formData.baseFormJSX}
+                  placeholder="JSX render El-input"
+                ></el-input>
+              )
+            },
+          },
         ]
       })
 
       const { rules } = generateBaseWFormRules(baseFormSchemas.value)
-
-      const baseFormConfig = reactive<WFormProps>({
-        disabled: false,
-        inline: false,
-        labelPosition: 'right',
-        size: 'medium',
-        rules: rules,
-        schemas: baseFormSchemas.value,
-      })
-
-      const baseFormConfigSchemas: WFormSchemaItem[] = [
-        {
-          type: 'Radio',
-          formProp: {
-            label: 'Disabled',
-            prop: 'disabled',
-          },
-          componentProp: {
-            button: true,
-            options: [
-              {
-                value: false,
-                label: 'Normal',
-              },
-              {
-                value: true,
-                label: 'Disabled',
-              },
-            ],
-          },
-        },
-        {
-          type: 'Radio',
-          formProp: {
-            label: 'Inline',
-            prop: 'inline',
-          },
-          componentProp: {
-            button: true,
-            options: [
-              {
-                value: false,
-                label: 'Normal',
-              },
-              {
-                value: true,
-                label: 'Inline',
-              },
-            ],
-          },
-        },
-        {
-          type: 'Radio',
-          formProp: {
-            label: 'Label Position',
-            prop: 'labelPosition',
-          },
-          componentProp: {
-            button: true,
-            options: [
-              {
-                value: 'left',
-                label: 'Left',
-              },
-              {
-                value: 'right',
-                label: 'Right',
-              },
-              {
-                value: 'top',
-                label: 'Top',
-              },
-            ],
-          },
-        },
-        {
-          type: 'Radio',
-          formProp: {
-            label: 'Size',
-            prop: 'size',
-          },
-          componentProp: {
-            button: true,
-            options: [
-              {
-                value: 'medium',
-                label: 'Medium',
-              },
-              {
-                value: 'small',
-                label: 'Small',
-              },
-              {
-                value: 'mini',
-                label: 'Mini',
-              },
-            ],
-          },
-        },
-      ]
-
-      const baseFormData = reactive({
-        // need to init an empty array when multiple true
-        baseFormCheckbox: [],
-      })
 
       return {
         baseFormConfig,
@@ -357,6 +421,8 @@
         value1,
         wFormRef,
         baseFormData,
+        baseFormSchemas,
+        rules,
       }
     },
   })
