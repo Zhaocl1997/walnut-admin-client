@@ -4,6 +4,22 @@ import type { ElFormItemRule, WFormSchemaItem } from '../types'
 import { unref, computed } from 'vue'
 import { useI18n } from '/@/locales'
 
+const { t } = useI18n()
+
+/**
+ * @description Get rule message
+ */
+const getMessage = (type: string, label: string) => {
+  const getType = ['Input', 'InputNumber'].includes(type)
+    ? t('common.inputAction')
+    : t('common.chooseAction')
+
+  return t('common.rule', {
+    type: getType,
+    label,
+  })
+}
+
 /**
  * @description Generate a default rules based on WFormSchema
  */
@@ -13,8 +29,6 @@ export const generateBaseWFormRules = (
   const rules = computed(() => {
     const ret: { [key: string]: ElFormItemRule[] } = {}
 
-    const { t } = useI18n()
-
     const formProps = unref(schemas).map((item) => ({
       ...item.formProp,
       type: item.type,
@@ -22,14 +36,10 @@ export const generateBaseWFormRules = (
 
     formProps.map(({ prop, label, type }) => {
       if (prop) {
-        const actionType = ['Input', 'InputNumber'].includes(type)
-          ? t('common.inputAction')
-          : t('common.chooseAction')
-
         ret[prop] = [
           {
             required: true,
-            message: t('common.rule', { label: label, type: actionType }),
+            message: getMessage(type, label!),
           },
         ]
       }

@@ -8,7 +8,7 @@ export interface ElFormMethods {
   validateField: (
     props?: string | string[],
     callback?: (errMessage?: string) => void
-  ) => Promise<void>
+  ) => Promise<boolean>
   resetFields: () => Promise<void>
   clearValidate: (props?: string | string[]) => Promise<void>
 }

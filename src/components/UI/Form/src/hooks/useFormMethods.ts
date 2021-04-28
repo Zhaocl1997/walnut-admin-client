@@ -8,12 +8,25 @@ export const useFormMethods = (
   const formMethods: WFormMethods = {
     ...customMethods,
 
-    validate: async () => {
-      return await formRef.value!.validate()
+    validate: () => {
+      return new Promise((res) => {
+        formRef
+          .value!.validate()
+          .then(() => {
+            res(true)
+          })
+          .catch((err) => {
+            res(false)
+          })
+      })
     },
 
-    validateField: async (props) => {
-      return await formRef.value!.validateField(props)
+    validateField: (props) => {
+      return new Promise((res) => {
+        formRef.value!.validateField(props, (msg) => {
+          msg ? res(false) : res(true)
+        })
+      })
     },
 
     clearValidate: async (props) => {
