@@ -1,4 +1,6 @@
 import type {
+  RenderSchema,
+  SlotSchema,
   ButtonSchema,
   ButtonGroupSchema,
   InputSchema,
@@ -14,6 +16,8 @@ import type {
  * @description Form schema item interface
  */
 export type WFormSchemaItem =
+  | RenderSchema // JSX
+  | SlotSchema // Slot
   | ButtonSchema
   | ButtonGroupSchema
   | InputSchema

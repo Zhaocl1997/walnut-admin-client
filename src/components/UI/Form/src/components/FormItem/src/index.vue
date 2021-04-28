@@ -1,31 +1,12 @@
-<template>
-  <el-col v-if="calcVisible(item)" v-bind="calcColProp">
-    <transition name="fade" mode="out-in" appear>
-      <el-form-item v-bind="item.formProp">
-        <template v-if="$slots[propName]">
-          <slot :name="propName" v-bind="formProps" />
-        </template>
-
-        <template v-else>
-          <component
-            :is="component"
-            v-model="formProps.modelValue[propName]"
-            v-bind="componentProps"
-          ></component>
-        </template>
-      </el-form-item>
-    </transition>
-  </el-col>
-</template>
-
-<script lang="ts">
+<script lang="tsx">
   import type { PropType } from 'vue'
-  import { defineComponent, computed } from 'vue'
+  import type { WFormSchemaItem } from '/@/components/UI/Form'
 
-  import { useFormContext } from '../../../hooks/useFormContext'
+  import { defineComponent, computed, Transition, unref } from 'vue'
+  import { isBoolean, isFunction, isUndefined } from 'easy-fns-ts'
 
-  import { WFormItemProp, WFormSchemaItem } from '../../../types'
-  import { useFormItem } from './hooks/useFormItem'
+  import { useFormContext } from '/@/components/UI/Form/src/hooks/useFormContext'
+  import { componentMap } from './componentMap'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -36,30 +17,116 @@
       item: Object as PropType<WFormSchemaItem>,
     },
 
-    // @ts-ignore
-    setup(props: WFormItemProp) {
+    setup(props, ctx) {
+      const { item } = props
+      const { slots } = ctx
+
       const { formProps } = useFormContext()
 
-      const { component, propName, componentProps, calcVisible } = useFormItem(
-        props,
-        useFormContext()
-      )
+      // get v-if value
+      const getVIf = () => {
+        const { vIf } = item!
 
-      const calcColProp = computed(
-        () => props.item.colProp ?? { span: formProps.value.span }
-      )
+        if (isUndefined(vIf)) {
+          return true
+        }
 
-      return {
-        formProps,
+        if (isBoolean(vIf)) {
+          return vIf
+        }
 
-        component,
-        propName,
-        componentProps,
-        calcVisible,
-        calcColProp,
+        if (typeof vIf === 'function') {
+          return vIf({ formData: formProps.value.modelValue! })
+        }
+      }
+
+      // get v-show value
+      const getVShow = () => {
+        const { vShow } = item!
+
+        if (isUndefined(vShow)) {
+          return true
+        }
+
+        if (isBoolean(vShow)) {
+          return vShow
+        }
+
+        if (typeof vShow === 'function') {
+          return vShow({ formData: formProps.value.modelValue! })
+        }
+      }
+
+      // render base components like input/select
+      const renderBaseComponents = () => {
+        const component = componentMap.get(item?.type)
+
+        return (
+          component && (
+            <component
+              is={component}
+              v-model={formProps.value.modelValue![item!.formProp?.prop!]}
+              {...item?.componentProp}
+            ></component>
+          )
+        )
+      }
+
+      // render custom JSX component
+      const renderJSXComponent = () => {
+        return item?.type === 'Render' && isFunction(item.render)
+          ? item.render!({ formData: formProps.value.modelValue! })
+          : renderBaseComponents()
+      }
+
+      // render slot component
+      const renderSlotComponent = () => {
+        return item?.type === 'Slot' &&
+          Object.keys(slots).includes(item.formProp?.prop!)
+          ? slots[item.formProp?.prop!]!()
+          : renderBaseComponents()
+      }
+
+      // render component
+      const renderComponent = () => {
+        return item?.type === 'Render'
+          ? renderJSXComponent()
+          : item?.type === 'Slot'
+          ? renderSlotComponent()
+          : renderBaseComponents()
+      }
+
+      // render transition wrap
+      const renderTransition = () => {
+        const vShow = getVShow()
+
+        return (
+          <Transition name="fade" mode="out-in" appear>
+            <el-form-item v-show={vShow} {...(item!.formProp ?? {})}>
+              {renderComponent()}
+            </el-form-item>
+          </Transition>
+        )
+      }
+
+      // render el-col wrap
+      const renderContent = () => {
+        const getColProp = computed(
+          () => item!.colProp ?? { span: formProps.value.span }
+        )
+
+        return formProps.value.inline ? (
+          renderTransition()
+        ) : (
+          <el-col {...unref(getColProp)}>{renderTransition()}</el-col>
+        )
+      }
+
+      return () => {
+        const vIf = getVIf()
+
+        return vIf && renderContent()
       }
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

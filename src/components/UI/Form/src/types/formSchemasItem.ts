@@ -1,3 +1,4 @@
+import type { VNode } from 'vue'
 import type { ElFormItemRule } from './formProps'
 
 import type { WButtonProps } from '/@/components/UI/Button'
@@ -9,6 +10,7 @@ import type { WCheckboxProps } from '/@/components/UI/Checkbox'
 import type { WRadioProps } from '/@/components/UI/Radio'
 import type { WTreeProps } from '/@/components/UI/Tree'
 import type { WSelectTreeProp } from '/@/components/UI/SelectTree'
+import { MaybeRef } from '/~/utils'
 
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/form#form-item-attributes
@@ -104,8 +106,33 @@ interface SharedSchema<T, P> {
    */
   colProp?: Partial<ElColProp>
 
+  /**
+   * @description v-if control visible
+   */
+  vIf?: ((cb: WFormCallback) => boolean) | MaybeRef<boolean>
+
+  /**
+   * @description v-show control visible
+   */
+  vShow?: ((cb: WFormCallback) => boolean) | MaybeRef<boolean>
+
   visible?: ((cb: WFormCallback) => boolean) | boolean
 }
+
+/**
+ * @description JSX Render Schema
+ */
+export type RenderSchema = SharedSchema<'Render', any> & {
+  /**
+   * @description JSX render function
+   */
+  render?: (cb: WFormCallback) => VNode | VNode[] | string
+}
+
+/**
+ * @description Slot Schema
+ */
+export type SlotSchema = SharedSchema<'Slot', any>
 
 /**
  * @description Button Schema

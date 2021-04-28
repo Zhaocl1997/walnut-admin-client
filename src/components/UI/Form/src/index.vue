@@ -22,14 +22,14 @@
 
   import { ref, unref, computed, defineComponent } from 'vue'
 
-  import props from './props'
-
   import { useExpose } from '/@/hooks/core/useExpose'
+  import { useProps } from '/@/hooks/core/useProps'
   import { setFormContext } from './hooks/useFormContext'
   import { useFormSchemas } from './hooks/useFormSchemas'
   import { useFormComponents } from './hooks/useFormComponents'
   import { useFormMethods } from './hooks/useFormMethods'
-  import { useProps } from '/@/hooks/core/useProps'
+
+  import props from './props'
 
   export default defineComponent({
     name: 'WForm',

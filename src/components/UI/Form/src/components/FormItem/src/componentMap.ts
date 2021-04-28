@@ -12,8 +12,7 @@ const getAllComponents = (type: typeof FORM_TYPE) => {
   Object.entries(type).map(([key, value]) => {
     // Below for prod, no alias and must point to index.vue but not index.ts
     ret[value] = createAsyncComponent(
-      () =>
-        import(`../../../../../../../../components/UI/${value}/src/index.vue`)
+      () => import(`../../../../../../../components/UI/${value}/src/index.vue`)
     )
   })
   return ret

@@ -13,6 +13,8 @@ export enum FORM_TYPE {
 }
 
 export type WFormSchemaItemType =
+  | 'Render' // JSX render type
+  | 'Slot' // Slot type
   | 'Button'
   | 'ButtonGroup'
   | 'Input'
