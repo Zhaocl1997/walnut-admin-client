@@ -1,6 +1,12 @@
 {
   /* prettier */
   "prettier.configPath": "config/prettier/.prettierrc.js",
+  "prettier.ignorePath": "config/prettier/.prettierignore",
+  "prettier.jsxBracketSameLine": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.useEditorConfig": false,
 
   /* eslint */
   "eslint.options": {
@@ -22,14 +28,16 @@
 
   /* ts */
   "typescript.tsdk": "node_modules\\typescript\\lib",
-
+  
   /* volar */
   "volar.tsPlugin": true,
-  "volar.tsPluginStatus": false,
+  "volar.codeLens.pugTools": false,
 
   /* vscode format default */
   "[vue]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[ts]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[js]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[scss]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
