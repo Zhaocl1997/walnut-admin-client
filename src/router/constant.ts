@@ -16,6 +16,9 @@ export const redirectName = 'Redirect'
 export const notFoundPath = '/:path(.*)*'
 export const notFoundName = '404'
 
+export const networkErrorPath = '/500'
+export const networkErrorName = '500'
+
 export const AuthRoute: RouteRecordRaw = {
   name: authName,
   path: authPath,
@@ -52,4 +55,10 @@ export const notFoundRoute: RouteRecordRaw = {
   name: notFoundName,
   path: notFoundPath,
   component: () => import('../views/error/404/index.vue'),
+}
+
+export const NetworkErrorRoute: RouteRecordRaw = {
+  name: networkErrorName,
+  path: networkErrorPath,
+  component: () => import('../views/error/500/index.vue'),
 }

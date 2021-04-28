@@ -5,11 +5,21 @@ import { done } from 'nprogress'
 import { createRouter, createWebHistory, useRoute, useRouter } from 'vue-router'
 
 import { isInSetup } from '../utils/shared'
-import { AuthRoute, RootRoute, redirectRoute } from './constant'
+import {
+  AuthRoute,
+  RootRoute,
+  redirectRoute,
+  NetworkErrorRoute,
+} from './constant'
 import { createRouterGuard } from './guard'
 import { ElMessage } from 'element-plus'
 
-const routes: RouteRecordRaw[] = [AuthRoute, RootRoute, redirectRoute]
+const routes: RouteRecordRaw[] = [
+  AuthRoute,
+  RootRoute,
+  redirectRoute,
+  NetworkErrorRoute,
+]
 
 export const AppRouter = createRouter({
   history: createWebHistory(),
