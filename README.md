@@ -80,8 +80,8 @@ npm i
 - [ ] 带有options API 的组件 统一加 valueFormat 和 valueType
 - [ ] table 重构优化
 - [ ] table 自定义表头迁移优化，按钮组，操作列，自定义导出导入，打印
-- [ ] form 重构优化
-- [ ] form 添加更复杂的表单用例，添加tsx语法支持
+- [ ] form 重构优化(WIP)
+- [ ] form 添加更复杂的表单用例，添加tsx语法支持(WIP)
 - [ ] dialog 重构优化
 - [ ] dialog 全屏，拖拽，弹出效果
 - [ ] drawer 组件
@@ -96,6 +96,8 @@ npm i
 - [x] axios 重构，增加缓存功能
 - [x] axios 类型优化
 - [x] easy-fns-ts 类型优化
+- [ ] 组件类型partial和MaybeRef优化
+- [ ] 组件内内部getBindValue时Omit掉自定义的prop，要不然自定义的那些prop会在html节点上被看见
 
 ### 更新日志
 
