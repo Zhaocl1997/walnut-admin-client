@@ -1,26 +1,14 @@
-<template>
-  <el-form ref="formRef" v-bind="getBindValue">
-    <el-row :gutter="gutter">
-      <template v-for="(item, index) in formSchemas" :key="index">
-        <w-form-item :item="item">
-          <template
-            #[slotName]="data"
-            v-for="(slotName, slotIndex) in Object.keys($slots)"
-            :key="slotIndex"
-          >
-            <slot :name="slotName" v-bind="data"></slot>
-          </template>
-        </w-form-item>
-      </template>
-    </el-row>
-  </el-form>
-</template>
-
-<script lang="ts">
+<script lang="tsx">
   import type { SetupContext } from 'vue'
-  import type { ElFormMethods, WFormMethods, WFormProps } from './types'
+  import type {
+    ElFormMethods,
+    WFormMethods,
+    WFormProps,
+    WFormSchemaItem,
+  } from './types'
 
-  import { ref, unref, computed, defineComponent } from 'vue'
+  import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
+  import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
@@ -29,7 +17,7 @@
   import { useFormComponents } from './hooks/useFormComponents'
   import { useFormMethods } from './hooks/useFormMethods'
 
-  import props from './props'
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WForm',
@@ -41,7 +29,7 @@
     emits: ['update:modelValue', 'hook'],
 
     setup(props: WFormProps, ctx: SetupContext) {
-      const { attrs, emit, expose } = ctx
+      const { attrs, emit, expose, slots } = ctx
 
       const formRef = ref<Nullable<ElFormMethods>>(null)
 
@@ -56,8 +44,9 @@
       const getBindValue = computed(() => {
         return {
           ...attrs,
-          // unref the computed props and bind to el-form
-          ...unref(getProps),
+          // only use original el-form attrs, no custom props
+          // otherwise you'll see a lot of prop through the `Elements` tabs on chrome devtools
+          ...easyOmit(unref(getProps), extendPropKeys),
           // used for method like `valdiate` to work
           model: unref(getProps).modelValue,
         }
@@ -77,14 +66,33 @@
         expose,
       })
 
-      return {
-        formRef,
-        getBindValue,
+      // render slot type component's slot
+      const renderItemSlot = (item: WFormSchemaItem) => {
+        return (
+          Object.keys(slots).includes(item.formProp?.prop!) &&
+          renderSlot(slots, item.formProp?.prop!)
+        )
+      }
 
-        formSchemas,
+      // render Items
+      const renderItems = () =>
+        formSchemas.value.map((item) => (
+          <w-form-item item={item}>{renderItemSlot(item)}</w-form-item>
+        ))
+
+      // render el-col wrap
+      const renderColWrap = () =>
+        getProps.value.inline
+          ? renderItems()
+          : () => <el-row gutter={props.gutter}> {renderItems()} </el-row>
+
+      return () => {
+        return (
+          <el-form ref={formRef} {...getBindValue.value}>
+            {renderColWrap()}
+          </el-form>
+        )
       }
     },
   })
 </script>
-
-<style lang="scss" scoped></style>
