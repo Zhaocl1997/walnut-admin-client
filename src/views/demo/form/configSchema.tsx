@@ -5,16 +5,19 @@ import { generateBaseWFormRules } from '/@/components/UI/Form'
 import { options, TreeData } from '../data'
 
 export const useFormConfig = (fns: any) => {
-  const formConfig = reactive({
+  // config form data
+  const formConfig = reactive<any>({
+    labelWidth: '120px',
     disabled: false,
     inline: false,
     labelPosition: 'right',
     size: 'medium',
+    compact: false,
     vIf: true,
     vShow: true,
-    labelWidth: '120px',
   })
 
+  // config form schema
   const formConfigSchemas: WFormSchemaItem[] = [
     {
       type: 'Radio',
@@ -107,7 +110,27 @@ export const useFormConfig = (fns: any) => {
     {
       type: 'Radio',
       formProp: {
-        label: 'v-if',
+        label: 'Compact',
+        prop: 'compact',
+      },
+      componentProp: {
+        button: true,
+        options: [
+          {
+            value: false,
+            label: 'Normal',
+          },
+          {
+            value: true,
+            label: 'Compact',
+          },
+        ],
+      },
+    },
+    {
+      type: 'Radio',
+      formProp: {
+        label: 'v-if Input',
         prop: 'vIf',
       },
       componentProp: {
@@ -127,7 +150,7 @@ export const useFormConfig = (fns: any) => {
     {
       type: 'Radio',
       formProp: {
-        label: 'v-show',
+        label: 'v-show InputNumber',
         prop: 'vShow',
       },
       componentProp: {
@@ -146,7 +169,7 @@ export const useFormConfig = (fns: any) => {
     },
   ]
 
-  const demoFormData = reactive({
+  const demoFormData = reactive<any>({
     // need to init an empty array when multiple true
     baseFormCheckbox: [],
   })
@@ -166,8 +189,6 @@ export const useFormConfig = (fns: any) => {
             console.log('Clicked Button')
           },
         },
-        vIf: computed(() => formConfig.vIf),
-        vShow: computed(() => formConfig.vShow),
       },
       {
         type: 'ButtonGroup',
@@ -220,6 +241,7 @@ export const useFormConfig = (fns: any) => {
             trim: true,
           },
         },
+        vIf: computed(() => formConfig.vIf),
       },
       {
         type: 'InputNumber',
@@ -232,6 +254,7 @@ export const useFormConfig = (fns: any) => {
           max: 20,
           step: 2,
         },
+        vShow: computed(() => formConfig.vShow),
       },
       {
         type: 'Select',

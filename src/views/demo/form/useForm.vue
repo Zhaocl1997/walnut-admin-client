@@ -7,13 +7,21 @@
       <w-form v-model="formConfig" @hook="registerConfig"></w-form>
     </template>
 
-    <w-form v-model="demoFormData" @hook="registerDemo"></w-form>
+    <w-form v-model="demoFormData" @hook="registerDemo">
+      <template #baseFormSlot="{ disabled }">
+        <el-input
+          v-model="demoFormData.baseFormSlot"
+          :disabled="disabled"
+          placeholder="Slot render El-input"
+        ></el-input>
+      </template>
+    </w-form>
   </el-card>
 </template>
 
 <script lang="ts">
   import { useForm } from '/@/components/UI/Form'
-  import { defineComponent } from 'vue'
+  import { defineComponent, computed } from 'vue'
 
   import { useFormConfig } from './configSchema'
 
@@ -60,7 +68,12 @@
       ] = useForm({
         schemas: demoFormSchemas,
         rules: demoFormRules,
-        disabled: formConfig.disabled,
+        disabled: computed(() => formConfig.disabled),
+        inline: computed(() => formConfig.inline),
+        labelPosition: computed(() => formConfig.labelPosition),
+        size: computed(() => formConfig.size),
+        labelWidth: computed(() => formConfig.labelWidth),
+        compact: computed(() => formConfig.compact),
       })
 
       return {
