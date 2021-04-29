@@ -1,5 +1,5 @@
 import type { WFormSchemaItem } from './formSchemas'
-import type { MaybeRef } from '/~/utils'
+import type { MaybeRef, MaybeRefRecord } from '/~/utils'
 
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/form#biao-dan-yan-zheng
@@ -21,7 +21,7 @@ export interface WFormRule {
  */
 export interface ElFormProps {
   model: Recordable
-  rules: MaybeRef<WFormRule>
+  rules: WFormRule
   inline: boolean
   labelPosition: 'right' | 'left' | 'top'
 
@@ -45,7 +45,7 @@ export interface ElFormProps {
 /**
  * @description extend from `ElForm` props
  */
-export interface WFormProps extends Partial<ElFormProps> {
+export interface WFormProps extends Partial<MaybeRefRecord<ElFormProps>> {
   /**
    * @description v-model value for form
    * @type {Object}
@@ -101,7 +101,7 @@ export interface WFormProps extends Partial<ElFormProps> {
   query?: boolean
 
   /**
-   * @description Normally used for query form. Force to shrink `el-form-item` `margin-bottom` a little less.
+   * @description Normally used for query form. Force to shrink `el-form-item` `margin-bottom` a little bit.
    * @type {Boolean}
    * @default false
    */

@@ -81,10 +81,7 @@
 
       // render slot component
       const renderSlotComponent = () => {
-        return item?.type === 'Slot' &&
-          Object.keys(slots).includes(item.formProp?.prop!)
-          ? slots[item.formProp?.prop!]!()
-          : renderBaseComponents()
+        return item?.type === 'Slot' ? slots.default!() : renderBaseComponents()
       }
 
       // render component
@@ -97,12 +94,16 @@
       }
 
       // render transition wrap
-      const renderTransition = () => {
+      const renderTransitionFormItem = () => {
         const vShow = getVShow()
 
         return (
           <Transition name="fade" mode="out-in" appear>
-            <el-form-item v-show={vShow} {...(item!.formProp ?? {})}>
+            <el-form-item
+              v-show={vShow}
+              {...(item!.formProp ?? {})}
+              style={formProps.value.compact ? { marginBottom: '10px' } : {}}
+            >
               {renderComponent()}
             </el-form-item>
           </Transition>
@@ -116,9 +117,9 @@
         )
 
         return formProps.value.inline ? (
-          renderTransition()
+          renderTransitionFormItem()
         ) : (
-          <el-col {...unref(getColProp)}>{renderTransition()}</el-col>
+          <el-col {...unref(getColProp)}>{renderTransitionFormItem()}</el-col>
         )
       }
 
