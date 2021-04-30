@@ -2,10 +2,12 @@ import type { SetupContext } from 'vue'
 import type { WButtonProps } from '../types'
 
 import { computed, ref, unref } from 'vue'
-import { easyThrottle } from 'easy-fns-ts'
+import { useDebounceFn } from '@vueuse/core'
+import { easyOmit } from 'easy-fns-ts'
 
 import { useI18n } from '/@/locales'
 import { getDefaultSlotText } from '/@/utils/shared'
+import { extendPropKeys } from '../props'
 
 export const useButton = (props: WButtonProps, ctx: SetupContext) => {
   const { emit, slots, attrs } = ctx
@@ -14,12 +16,12 @@ export const useButton = (props: WButtonProps, ctx: SetupContext) => {
 
   const originText = getDefaultSlotText(slots)
 
-  let retryDelay: any = unref(props.retryDelay)
-  const loadDelay: any = unref(props.loadDelay)
+  let retryDelay = unref(props.retryDelay)
+  const loadDelay = unref(props.loadDelay)
 
   const loading = ref(false)
   const disabled = ref(false)
-  const delayText: any = ref('')
+  const delayText = ref('')
 
   const onClick = (event: EventListener) => {
     if (retryDelay) {
@@ -28,9 +30,9 @@ export const useButton = (props: WButtonProps, ctx: SetupContext) => {
       const intervalId = setInterval(() => {
         delayText.value = t('component.button.retry', { retryDelay })
 
-        --retryDelay
+        --retryDelay!
 
-        if (retryDelay < 0) {
+        if (retryDelay! < 0) {
           retryDelay = props.retryDelay
           delayText.value = originText
           disabled.value = false
@@ -56,9 +58,9 @@ export const useButton = (props: WButtonProps, ctx: SetupContext) => {
   const getBindValue = computed(() => {
     return {
       ...attrs,
-      ...props,
-      onClick: props.throttle
-        ? easyThrottle(onClick as () => void, +props.throttle)
+      ...easyOmit(props, extendPropKeys),
+      onClick: props.debounce
+        ? useDebounceFn(onClick, +props.debounce)
         : onClick,
       disabled: getDisabled.value,
       loading: getLoading.value,

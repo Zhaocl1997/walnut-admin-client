@@ -28,12 +28,12 @@ export interface WButtonProps extends Partial<ElButtonProps> {
   /**
    * @description retry delay in second
    */
-  retryDelay?: string | number
+  retryDelay?: number
 
   /**
    * @description load delay in second
    */
-  loadDelay?: string | number
+  loadDelay?: number
 
   /**
    * @description block mode
@@ -48,5 +48,5 @@ export interface WButtonProps extends Partial<ElButtonProps> {
   /**
    * @description Throttle time to prevent repeat click
    */
-  throttle?: string | number
+  debounce?: number
 }

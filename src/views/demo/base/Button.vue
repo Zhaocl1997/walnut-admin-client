@@ -10,7 +10,7 @@
     <w-button disabled @click="onClick">Disabled</w-button>
     <w-button loading @click="onClick">Loading</w-button>
     <w-button type="text" @click="onClick">Text styled</w-button>
-    <w-button type="danger" prefix-icon="el-icon-delete" @click="onClick"
+    <w-button type="danger" icon="el-icon-delete" @click="onClick"
       >Icon</w-button
     >
 
@@ -19,7 +19,7 @@
 
     <WTitle show-left>Group(prop)</WTitle>
     <el-button-group>
-      <w-button type="primary" prefix-icon="el-icon-back" @click="onClick"
+      <w-button type="primary" icon="el-icon-back" @click="onClick"
         >Prev</w-button
       >
       <w-button type="primary" suffix-icon="el-icon-right" @click="onClick"
@@ -53,8 +53,8 @@
     <WTitle show-left>Send email</WTitle>
     <w-button
       type="primary"
-      prefix-icon="el-icon-message"
-      retry-delay="10"
+      icon="el-icon-message"
+      :retry-delay="10"
       @click="onClick"
       >Send CAPTCHA</w-button
     >
@@ -65,7 +65,7 @@
     <WTitle show-left
       >Load delay(no need to manually control loading state)</WTitle
     >
-    <w-button type="primary" load-delay="10" @click="onClick"
+    <w-button type="primary" :load-delay="10" @click="onClick"
       >Request to API</w-button
     >
 
@@ -78,9 +78,9 @@
     <br />
     <br />
 
-    <WTitle show-left>Throttle</WTitle>
-    <w-button type="primary" throttle="1000" @click="onClick"
-      >Throttle 1000ms</w-button
+    <WTitle show-left>Debounce</WTitle>
+    <w-button type="primary" :debounce="1000" @click="onClick"
+      >Debounce 1000ms</w-button
     >
   </el-card>
 </template>
