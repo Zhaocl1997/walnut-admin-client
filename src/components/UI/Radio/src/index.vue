@@ -1,3 +1,4 @@
+<!-- TODO -->
 <template>
   <el-radio-group v-bind="getBindValue">
     <template v-if="button">
@@ -26,12 +27,10 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
   import type { WRadioProps } from './types'
-
   import { defineComponent, computed } from 'vue'
-
-  import props from './props'
+  import { easyOmit } from 'easy-fns-ts'
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WRadio',
@@ -40,11 +39,11 @@
 
     props: props,
 
-    setup(props: WRadioProps, ctx: SetupContext) {
+    setup(props: WRadioProps, ctx) {
       const { attrs } = ctx
 
       const getBindValue = computed(() => {
-        return { ...attrs, ...props }
+        return { ...attrs, ...easyOmit(props, extendPropKeys) }
       })
 
       return {

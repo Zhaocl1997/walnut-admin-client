@@ -1,3 +1,4 @@
+<!-- TODO -->
 <template>
   <el-dropdown v-bind="getBindValue" @command="onCommand">
     <slot></slot>
@@ -24,11 +25,10 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
   import type { WDropdownProps } from './types'
   import { defineComponent, computed } from 'vue'
   import { easyOmit } from 'easy-fns-ts'
-  import props from './props'
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WDropdown',
@@ -39,10 +39,10 @@
 
     emits: ['update:modelValue', 'command'],
 
-    setup(props: WDropdownProps, ctx: SetupContext) {
+    setup(props: WDropdownProps, ctx) {
       const { attrs, emit } = ctx
 
-      const calcClass = (val: any) => {
+      const calcClass = (val: BaseDataType) => {
         return [
           {
             'w-highlight': props.modelValue === val,
@@ -50,26 +50,13 @@
         ]
       }
 
-      const onCommand = (val: any) => {
+      const onCommand = (val: BaseDataType) => {
         emit('update:modelValue', val)
         emit('command', val)
       }
 
       const getBindValue = computed(() => {
-        return easyOmit(
-          {
-            ...attrs,
-            ...props,
-          },
-          [
-            'options',
-            'optionValue',
-            'optionLabel',
-            'modelValue',
-            'valueFormat',
-            'valueType',
-          ]
-        )
+        return { ...attrs, ...easyOmit(props, extendPropKeys) }
       })
 
       return {

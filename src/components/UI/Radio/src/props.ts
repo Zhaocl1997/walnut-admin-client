@@ -2,9 +2,7 @@ import type { PropType } from 'vue'
 import { ElRadioGroup } from 'element-plus'
 import { MultiTypeCompSharedProps } from '../../shared'
 
-export default {
-  ...ElRadioGroup.props,
-
+const extendProps = {
   ...MultiTypeCompSharedProps,
 
   valueKey: {
@@ -21,4 +19,12 @@ export default {
     type: Boolean as PropType<boolean>,
     default: false,
   },
+}
+
+export const extendPropKeys = Object.keys(extendProps)
+
+export default {
+  ...ElRadioGroup.props,
+
+  ...extendProps,
 }
