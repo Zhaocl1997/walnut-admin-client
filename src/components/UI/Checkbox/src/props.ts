@@ -2,12 +2,18 @@ import type { PropType } from 'vue'
 import { ElCheckboxGroup } from 'element-plus'
 import { MultiTypeCompSharedProps } from '../../shared'
 
-export default {
-  ...ElCheckboxGroup.props,
-
+const extendProps = {
   ...MultiTypeCompSharedProps,
 
   text: String as PropType<string>,
+}
+
+export const extendPropKeys = Object.keys(extendProps)
+
+export default {
+  ...ElCheckboxGroup.props,
+
+  ...extendProps,
 
   /**
    * @override

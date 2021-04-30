@@ -4,9 +4,9 @@
       <span>Checkbox：</span>
     </template>
 
-    <w-title show-left>Base 【{{ checkbox1 }}】 </w-title>
+    <w-title show-left>Base 【{{ checkbox1 }}】【{{ checkbox3 }}】 </w-title>
     <w-checkbox v-model="checkbox1"> Some text (slot) </w-checkbox>
-    <w-checkbox v-model="checkbox1" text="Some text (prop)"> </w-checkbox>
+    <w-checkbox v-model="checkbox3" text="Some text (prop)"> </w-checkbox>
 
     <br />
     <br />
@@ -29,7 +29,7 @@
       const state = reactive({
         checkbox1: false,
         checkbox2: ['1', '4'],
-        checkbox3: '',
+        checkbox3: false,
         checkbox4: '',
         checkbox5: '',
         checkbox6: '',

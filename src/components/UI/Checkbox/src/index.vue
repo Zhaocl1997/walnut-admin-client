@@ -24,7 +24,8 @@
   import type { SetupContext } from 'vue'
   import type { WCheckboxProps } from './types'
   import { defineComponent, computed } from 'vue'
-  import props from './props'
+  import { easyOmit } from 'easy-fns-ts'
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WCheckbox',
@@ -37,7 +38,7 @@
       const { attrs } = ctx
 
       const getBindValue = computed(() => {
-        return { ...attrs, ...props }
+        return { ...attrs, ...easyOmit(props, extendPropKeys) }
       })
 
       return {
