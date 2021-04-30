@@ -62,6 +62,7 @@ declare module 'vue' {
     'w-scrollbar': import('/@/components/UI/Scrollbar').WScrollProps
     'w-select': import('/@/components/UI/Select').WSelectProps
     'w-select-tree': import('/@/components/UI/SelectTree')
+    'w-switch': import('/@/components/UI/Switch').WSwitchProps
     'w-table': import('/@/components/UI/Table').WTableProps
     'w-tree': import('/@/components/UI/Tree')
   }

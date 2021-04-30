@@ -35,6 +35,7 @@ export const createComponentPlugin = (): Plugin => {
               'Scrollbar',
               'Select',
               'SelectTree',
+              'Switch',
               'Table',
               'Tree',
             ],

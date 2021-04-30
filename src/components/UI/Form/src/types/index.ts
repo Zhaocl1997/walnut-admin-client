@@ -8,6 +8,7 @@ export enum FORM_TYPE {
   RADIO = 'Radio',
   TREE = 'Tree',
   SELECTTREE = 'SelectTree',
+  SWITCH = 'Switch',
   // SLIDER = 'Slider',
   // SWITCH = 'Switch',
 }
@@ -24,6 +25,7 @@ export type WFormSchemaItemType =
   | 'Radio'
   | 'Tree'
   | 'SelectTree'
+  | 'Switch'
 
 export * from './formItem'
 export * from './formMethods'

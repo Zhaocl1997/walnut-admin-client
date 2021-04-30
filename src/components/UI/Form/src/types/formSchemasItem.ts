@@ -10,6 +10,7 @@ import type { WCheckboxProps } from '/@/components/UI/Checkbox'
 import type { WRadioProps } from '/@/components/UI/Radio'
 import type { WTreeProps } from '/@/components/UI/Tree'
 import type { WSelectTreeProp } from '/@/components/UI/SelectTree'
+import type { WSwitchProps } from '/@/components/UI/Switch'
 import { MaybeRef } from '/~/utils'
 
 /**
@@ -178,3 +179,8 @@ export type TreeSchema = SharedSchema<'Tree', WTreeProps>
  * @description Select Tree Schema
  */
 export type SelectTreeSchema = SharedSchema<'SelectTree', WSelectTreeProp>
+
+/**
+ * @description Switch Schema
+ */
+export type Switch = SharedSchema<'Switch', WSwitchProps>
