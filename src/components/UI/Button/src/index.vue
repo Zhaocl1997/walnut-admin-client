@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
   import type { WButtonProps } from './types'
   import { defineComponent } from 'vue'
   import props from './props'
@@ -30,7 +29,7 @@
 
     emits: ['click'],
 
-    setup(props: WButtonProps, ctx: SetupContext) {
+    setup(props: WButtonProps, ctx) {
       return useButton(props, ctx)
     },
   })

@@ -9,7 +9,10 @@ import { useI18n } from '/@/locales'
 import { getDefaultSlotText } from '/@/utils/shared'
 import { extendPropKeys } from '../props'
 
-export const useButton = (props: WButtonProps, ctx: SetupContext) => {
+export const useButton = (
+  props: WButtonProps,
+  ctx: SetupContext<'click'[]>
+) => {
   const { emit, slots, attrs } = ctx
 
   const { t } = useI18n()
