@@ -2,12 +2,35 @@ import type { PropType } from 'vue'
 import { ElButton } from 'element-plus'
 
 const extendProps = {
-  suffixIcon: String as PropType<string>,
-  retryDelay: [String, Number] as PropType<string | number>,
-  loadDelay: [String, Number] as PropType<string | number>,
-  block: Boolean as PropType<boolean>,
-  text: String as PropType<string>,
-  debounce: [String, Number] as PropType<string | number>,
+  suffixIcon: {
+    type: String as PropType<string>,
+    default: '',
+  },
+
+  retryDelay: {
+    type: Number as PropType<number>,
+    default: 0,
+  },
+
+  loadDelay: {
+    type: Number as PropType<number>,
+    default: 0,
+  },
+
+  block: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
+
+  text: {
+    type: String as PropType<string>,
+    default: '',
+  },
+
+  debounce: {
+    type: Number as PropType<number>,
+    default: 0,
+  },
 }
 
 export const extendPropKeys = Object.keys(extendProps)
