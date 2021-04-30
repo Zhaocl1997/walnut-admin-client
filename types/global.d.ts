@@ -30,7 +30,7 @@ declare type BaseOptionItemType<
   V extends string = 'value',
   L extends string = 'label',
   E extends Record = any
-> = Record<V, string | number> & Record<L, string | number> & Partial<E>
+> = Record<V, BaseDataType> & Record<L, string> & Partial<E>
 
 /**
  * @description Filter wanted type fields
