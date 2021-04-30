@@ -1,4 +1,8 @@
-export const options: BaseOptions<'value', 'label', 'disabled'>[] = [
+export const options: BaseOptionItemType<
+  'value',
+  'label',
+  { disabled: boolean }
+>[] = [
   {
     value: 1,
     label: 'Beijing',

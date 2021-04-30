@@ -10,7 +10,7 @@ export interface MultiTypeCompSharedPropType {
    * @description Options to render.Make sure item in options have same structure.
    * @default []
    */
-  options: MaybeRef<BaseOptions[]>
+  options: MaybeRef<BaseOptionItemType>[]
 
   /**
    * @description Option's real value filed. Default 'value'.
