@@ -15,7 +15,7 @@ import zhMessages from '/@/locales/lang/zh_CN'
 import { deepKeys } from './utils'
 import { Menu } from '/@/router/types'
 
-const ToFOptions: any = [
+const ToFOptions: BaseOptionItemType[] = [
   {
     value: true,
     label: 'Yes',
@@ -35,18 +35,10 @@ export const getMenuFormSchemas = (
 
   const { viewOptions } = useViews()
 
-  const getIsMenu = computed(() => unref(formData).type === MenuTypeEnum.MENU)
-
-  const getNotMenu = computed(() => unref(formData).type !== MenuTypeEnum.MENU)
-
-  const getNotElement = computed(
-    () => unref(formData).type !== MenuTypeEnum.ELEMENT
-  )
-
   /**
    * @description Get translated title list
    */
-  const getTitleList = computed(() => {
+  const getTitleList = computed((): any[] => {
     const locale = (AppI18n.global.locale as any).value
 
     const params = locale === LocaleEnum.EN ? enMessages : zhMessages
@@ -149,9 +141,7 @@ export const getMenuFormSchemas = (
           clearable: true,
           prepend: (toRaw(pathPrefix) as unknown) as string,
         },
-        // visible: getNotElement.value,
-        visible: ({ formData }) => {
-          console.log(formData)
+        vShow: ({ formData }) => {
           return formData.type !== MenuTypeEnum.ELEMENT
         },
       },
@@ -170,10 +160,13 @@ export const getMenuFormSchemas = (
             capitalize: true,
           },
         },
-        visible:
-          (getNotElement.value && !getIsMenu.value) ||
-          (getIsMenu.value &&
-            (unref(formData).external || unref(formData).internal)),
+        // visible:
+        //   (getNotElement.value && !getIsMenu.value) ||
+        //   (getIsMenu.value &&
+        //     (unref(formData).external || unref(formData).internal)),
+        vShow: ({ formData }) => {
+          return formData.type === MenuTypeEnum.CATALOG
+        },
       },
 
       // Only `menu` type is `Select`
@@ -191,9 +184,12 @@ export const getMenuFormSchemas = (
           optionValue: 'name',
           optionLabel: 'name',
         },
-        visible:
-          getIsMenu.value &&
-          !(unref(formData).external || unref(formData).internal),
+        vShow: ({ formData }) => {
+          return (
+            formData.type === MenuTypeEnum.MENU &&
+            !(formData.external || formData.internal)
+          )
+        },
       },
 
       // Auto bump `views` children vue file
@@ -215,9 +211,12 @@ export const getMenuFormSchemas = (
           },
           filterable: true,
         },
-        visible:
-          getIsMenu.value &&
-          !(unref(formData).external || unref(formData).internal),
+        vShow: ({ formData }) => {
+          return (
+            formData.type === MenuTypeEnum.MENU &&
+            !(formData.external || formData.internal)
+          )
+        },
       },
 
       // Aside title
@@ -233,17 +232,21 @@ export const getMenuFormSchemas = (
           options: getTitleList,
           filterable: true,
         },
-        visible: getNotElement.value,
+        vShow: ({ formData }) => {
+          return formData.type !== MenuTypeEnum.ELEMENT
+        },
       },
 
       // Icon
       {
-        type: 'Input',
+        type: 'Slot',
         formProp: {
           prop: 'icon',
           label: 'Icon',
         },
-        visible: getNotElement.value,
+        vShow: ({ formData }) => {
+          return formData.type !== MenuTypeEnum.ELEMENT
+        },
       },
 
       // Order
@@ -269,7 +272,9 @@ export const getMenuFormSchemas = (
           button: true,
           options: ToFOptions,
         },
-        visible: !getNotMenu.value && !unref(formData).internal,
+        vShow: ({ formData }) => {
+          return formData.type === MenuTypeEnum.MENU && formData.internal
+        },
       },
 
       // Weather internal
@@ -283,7 +288,9 @@ export const getMenuFormSchemas = (
           button: true,
           options: ToFOptions,
         },
-        visible: !getNotMenu.value && !unref(formData).external,
+        vShow: ({ formData }) => {
+          return formData.type === MenuTypeEnum.MENU && formData.external
+        },
       },
 
       // Internal/External link
@@ -297,9 +304,12 @@ export const getMenuFormSchemas = (
           placeholder: 'External/Internal url.',
           clearable: true,
         },
-        visible:
-          !getNotMenu.value &&
-          (unref(formData).external || unref(formData).internal),
+        vShow: ({ formData }) => {
+          return (
+            formData.type === MenuTypeEnum.MENU &&
+            (formData.external || formData.internal)
+          )
+        },
       },
 
       // Weather show aside
@@ -322,7 +332,9 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        visible: getNotElement.value,
+        vShow: ({ formData }) => {
+          return formData.type !== MenuTypeEnum.ELEMENT
+        },
       },
 
       // Keep alive flag
@@ -345,7 +357,9 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        visible: !getNotMenu.value,
+        vShow: ({ formData }) => {
+          return formData.type === MenuTypeEnum.MENU
+        },
       },
 
       // Status. `Disabled` means this menu won't be able to get from backend
@@ -368,7 +382,9 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        visible: getNotElement.value,
+        vShow: ({ formData }) => {
+          return formData.type !== MenuTypeEnum.ELEMENT
+        },
       },
     ]
   })
