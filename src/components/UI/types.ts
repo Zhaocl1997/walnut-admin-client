@@ -8,9 +8,8 @@ export type ValueFormatType = 'string' | 'number'
 export interface MultiTypeCompSharedPropType {
   /**
    * @description Options to render.Make sure item in options have same structure.
-   * @default []
    */
-  options: MaybeRef<BaseOptionItemType>[]
+  options: MaybeRef<BaseOptionItemType[]>
 
   /**
    * @description Option's real value filed. Default 'value'.

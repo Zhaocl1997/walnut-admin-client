@@ -1,7 +1,44 @@
-import type { TreeComponentProps as ElTreeProps } from 'element-plus/packages/tree/src/tree.type'
+import {
+  TreeData,
+  TreeKey,
+  LoadFunction,
+  FilterNodeMethodFunction,
+  RenderContentFunction,
+  AllowDragFunction,
+  AllowDropFunction,
+} from './ref'
 
 export * from './ref'
 export * from './methods'
+
+interface ElTreeProps {
+  data: TreeData
+  emptyText: string
+  renderAfterExpand: boolean
+  nodeKey: string
+  checkStrictly: boolean
+  expandOnClickNode: boolean
+  defaultExpandAll: boolean
+  checkOnClickNode: boolean
+  checkDescendants: boolean
+  autoExpandParent: boolean
+  defaultCheckedKeys: TreeKey[]
+  defaultExpandedKeys: TreeKey[]
+  currentNodeKey: TreeKey
+  renderContent: RenderContentFunction
+  showCheckbox: boolean
+  draggable: boolean
+  allowDrag: AllowDragFunction
+  allowDrop: AllowDropFunction
+  props: WTreePropsOptions
+  lazy: boolean
+  highlightCurrent: boolean
+  load: LoadFunction
+  filterNodeMethod: FilterNodeMethodFunction
+  accordion: boolean
+  indent: number
+  iconClass: string
+}
 
 export interface WTreePropsOptions {
   id?: string
