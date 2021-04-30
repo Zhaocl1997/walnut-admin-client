@@ -1,5 +1,5 @@
 <template>
-  <el-select v-bind="getBindValue" style="width: 100%;">
+  <el-select v-bind="getBindValue" :class="{ 'w-full': block }">
     <el-option
       v-for="item in options"
       :key="item[optionValue]"
@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
   import type { WSelectProps } from './types'
   import { defineComponent, computed } from 'vue'
-  import props from './props'
+  import { easyOmit } from 'easy-fns-ts'
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WSelect',
@@ -23,11 +23,11 @@
 
     props: props,
 
-    setup(props: WSelectProps, ctx: SetupContext) {
+    setup(props: WSelectProps, ctx) {
       const { attrs } = ctx
 
       const getBindValue = computed(() => {
-        return { ...attrs, ...props }
+        return { ...attrs, ...easyOmit(props, extendPropKeys) }
       })
 
       return {

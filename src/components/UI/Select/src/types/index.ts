@@ -36,4 +36,6 @@ export interface ElSelectProps {
  */
 export interface WSelectProps
   extends Partial<ElSelectProps>,
-    Partial<MultiTypeCompSharedPropType> {}
+    Partial<MultiTypeCompSharedPropType> {
+  block?: boolean
+}
