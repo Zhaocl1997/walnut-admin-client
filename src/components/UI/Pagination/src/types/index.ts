@@ -3,12 +3,22 @@
  */
 export interface ElPaginationProps {
   small: boolean
+
+  /**
+   * @override
+   * @default true
+   */
   background: boolean
   pageSize: number
   total: number
   pageCount: number
   pagerCount: number
   currentPage: number
+
+  /**
+   * @override
+   * @default 'total, sizes, prev, pager, next, jumper, slot'
+   */
   layout: string
   pageSizes: number[]
   popperClass: string

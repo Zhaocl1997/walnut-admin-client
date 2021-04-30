@@ -9,10 +9,10 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
   import type { WPaginationProps } from './types'
   import { defineComponent, computed, ref } from 'vue'
-  import props from './props'
+  import { easyOmit } from 'easy-fns-ts'
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WPagination',
@@ -23,14 +23,14 @@
 
     emits: ['change', 'update:pageSize', 'update:currentPage'],
 
-    setup(props: WPaginationProps, ctx: SetupContext) {
+    setup(props: WPaginationProps, ctx) {
       const { attrs, emit } = ctx
 
       const pageNum = ref(props.currentPage)
       const pageSize = ref(props.pageSize)
 
       const getBindValue = computed(() => {
-        return { ...attrs, ...props }
+        return { ...attrs, ...easyOmit(props, extendPropKeys) }
       })
 
       const onSizeChange = (val: number) => {

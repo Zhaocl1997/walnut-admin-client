@@ -1,13 +1,19 @@
 import type { PropType } from 'vue'
 import { ElPagination } from 'element-plus'
 
-export default {
-  ...ElPagination.props,
-
+const extendProp = {
   autoScroll: {
     type: Boolean as PropType<boolean>,
     default: true,
   },
+}
+
+export const extendPropKeys = Object.keys(extendProp)
+
+export default {
+  ...ElPagination.props,
+
+  ...extendProp,
 
   background: {
     type: Boolean as PropType<boolean>,
