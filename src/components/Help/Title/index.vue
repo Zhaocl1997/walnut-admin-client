@@ -2,7 +2,9 @@
   <div class="w-title">
     <span :class="getClass">
       <el-space>
-        <span v-if="$slots.default"><slot></slot></span>
+        <div v-if="$slots.default" class="block pl-4 break-all">
+          <slot></slot>
+        </div>
 
         <WMessage v-if="$props.content" v-bind="getHelpProps"></WMessage>
       </el-space>
@@ -70,9 +72,6 @@
 
 <style lang="scss" scoped>
   .w-title {
-    height: 30px;
-    line-height: 30px;
-
     &__text {
       position: relative;
       padding-bottom: 8px;
@@ -80,15 +79,13 @@
       font-size: 16px;
 
       &-left {
-        padding-left: 15px;
-
         &::before {
           position: absolute;
           top: 50%;
           left: 0;
           display: inline-block;
           height: 16px;
-          margin-top: -13px;
+          margin-top: -12px;
           border-left: 4px solid orangered;
           content: ' ';
         }
