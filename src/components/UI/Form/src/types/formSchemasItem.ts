@@ -183,4 +183,4 @@ export type SelectTreeSchema = SharedSchema<'SelectTree', WSelectTreeProp>
 /**
  * @description Switch Schema
  */
-export type Switch = SharedSchema<'Switch', WSwitchProps>
+export type SwitchSchema = SharedSchema<'Switch', WSwitchProps>

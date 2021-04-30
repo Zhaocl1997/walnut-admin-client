@@ -10,6 +10,7 @@ import type {
   RadioSchema,
   TreeSchema,
   SelectTreeSchema,
+  SwitchSchema,
 } from './formSchemasItem'
 
 /**
@@ -27,3 +28,4 @@ export type WFormSchemaItem =
   | RadioSchema
   | TreeSchema
   | SelectTreeSchema
+  | SwitchSchema
