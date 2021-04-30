@@ -12,8 +12,7 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
-  import type { WCheckTagProps } from './types'
+  import type { WCheckTagProps, WCheckTagOptionItemType } from './types'
   import { defineComponent, ref, watchEffect, watch, unref } from 'vue'
   import { findAllIndex } from 'easy-fns-ts'
   import props from './props'
@@ -27,20 +26,18 @@
 
     emits: ['update:modelValue'],
 
-    setup(props: WCheckTagProps, ctx: SetupContext) {
+    setup(props: WCheckTagProps, ctx) {
       const { emit } = ctx
 
-      const wOptions = ref<any & { checked: boolean }[]>([])
+      const wOptions = ref<WCheckTagOptionItemType[]>([])
 
-      const onClick = (item: any, index: string | number | symbol) => {
+      const onClick = (item: WCheckTagOptionItemType, index: IndexType) => {
         if (item.disabled) {
           return
         }
 
         if (!props.multiple) {
-          const checkedIndex = wOptions.value.findIndex(
-            (item: any) => item.checked
-          )
+          const checkedIndex = wOptions.value.findIndex((item) => item.checked)
 
           if (checkedIndex !== -1) {
             wOptions.value[checkedIndex].checked = false
@@ -51,7 +48,8 @@
       }
 
       watchEffect(() => {
-        wOptions.value = props.options?.map((item: any) => ({
+        // @ts-ignore
+        wOptions.value = props.options!.map((item) => ({
           ...item,
           checked: false,
         }))
@@ -60,19 +58,19 @@
       watchEffect(() => {
         if (!props.multiple) {
           const index = wOptions.value.findIndex(
-            (item: any) => item[props.optionValue!] === props.modelValue
+            (item) => item[props.optionValue as string] === props.modelValue
           )
           if (index !== -1) {
             wOptions.value[index].checked = true
           }
         } else {
-          const allIndex = findAllIndex(wOptions.value, (item: any) => {
-            return (props.modelValue! as any[]).includes(
-              item[props.optionValue!]
+          const allIndex = findAllIndex(wOptions.value, (item) => {
+            return (props.modelValue as any[]).includes(
+              item[props.optionValue as string]
             )
           })
           if (allIndex.length !== 0) {
-            allIndex.forEach((i: number) => {
+            allIndex.forEach((i) => {
               wOptions.value[i].checked = true
             })
           }
@@ -83,13 +81,13 @@
         () => unref(wOptions),
         (n) => {
           if (!props.multiple) {
-            const val = n.find((item: any) => item.checked)
-            emit('update:modelValue', val[props.optionValue!])
+            const val = n.find((item) => item.checked)
+            emit('update:modelValue', val![props.optionValue as string])
           } else {
-            const val = n.filter((item: any) => item.checked)
+            const val = n.filter((item) => item.checked)
             emit(
               'update:modelValue',
-              val.map((i: any) => i[props.optionValue!])
+              val.map((i) => i[props.optionValue as string])
             )
           }
         },

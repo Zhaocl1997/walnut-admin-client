@@ -8,6 +8,15 @@ export interface ElCheckTagProps {
 }
 
 /**
+ * @description w-check-tag option item type
+ */
+export type WCheckTagOptionItemType = BaseOptionItemType<
+  'value',
+  'label',
+  { checked: boolean; disabled: boolean }
+>
+
+/**
  * @description extend from `ElCheckTagProps` props
  */
 export interface WCheckTagProps
