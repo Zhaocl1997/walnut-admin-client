@@ -2,6 +2,7 @@
  * @link https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes
  */
 export interface ElTableColumnProps {
+  key: string
   type: 'selection' | 'index' | 'expand'
   index: number | Fn
   columnKey: string

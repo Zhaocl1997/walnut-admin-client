@@ -1,3 +1,4 @@
+import type { WButtonProps } from '../../../Button'
 import type { WTableHeaderItem } from './tableHeaders'
 import type { MaybeRef } from '/~/utils'
 
@@ -75,11 +76,27 @@ export interface WTableProps extends Partial<ElTableProps> {
 
   hasPage?: boolean
 
+  /**
+   * @description Index Column relative
+   */
   hasIndex?: boolean
+  index?: (index: number) => number
 
+  /**
+   * @description Select Column relative
+   */
   hasSelect?: boolean
+  selectable?: (row: any, index: number) => boolean
+  reserveSelection?: boolean
 
+  /**
+   * @description Expand Column relative
+   */
   hasExpand?: boolean
 
+  /**
+   * @description Action Column relative
+   */
   hasAction?: boolean
+  actionButtonGroup?: Array<WButtonProps & { onClick: (e: Event) => void }>
 }

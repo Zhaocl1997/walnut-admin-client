@@ -16,7 +16,12 @@
 
     <WTableColumnIndex />
     <WTableColumnSelect />
-    <WTableColumnExpand />
+    <WTableColumnExpand>
+      <template #default="scope">
+        <slot name="expand" v-bind="scope"></slot>
+      </template>
+    </WTableColumnExpand>
+
     <WTableColumnAction>
       <template #default="scope">
         <slot name="action" v-bind="scope"></slot>
@@ -33,19 +38,18 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
   import type { WTableProps } from './types'
 
   import { ref, unref, computed, defineComponent } from 'vue'
 
   import props from './props'
 
-  import { useTableContext } from './hooks/useTableContext'
-  import { useTableProps } from './hooks/useTableProps'
+  import { setTableContext } from './hooks/useTableContext'
   import { useTableHeaders } from './hooks/useTableHeaders'
   import { useTableComponent } from './hooks/useTableComponents'
   import { useTablePagination } from './hooks/useTablePagination'
   import { useTableMethods } from './hooks/useTableMethods'
+  import { useProps } from '/@/hooks/core/useProps'
 
   export default defineComponent({
     name: 'WTable',
@@ -56,14 +60,12 @@
 
     emits: ['hook', 'page'],
 
-    setup(props: WTableProps, ctx: SetupContext) {
+    setup(props: WTableProps, ctx) {
       const { attrs, emit, expose } = ctx
 
       const tableRef = ref<Nullable<any>>(null)
 
-      const { setTableContext } = useTableContext()
-
-      const { setProps, getProps } = useTableProps(props)
+      const { setProps, getProps } = useProps<WTableProps>(props)
 
       useTableComponent(getProps)
 
@@ -82,7 +84,9 @@
       })
 
       // create `WTable` context
-      setTableContext(getProps)
+      setTableContext({
+        tableProps: getProps,
+      })
 
       // create `useTable` hook
       emit('hook', tableMethods)
