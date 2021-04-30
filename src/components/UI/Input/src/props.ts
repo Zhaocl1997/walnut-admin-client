@@ -2,9 +2,7 @@ import type { PropType } from 'vue'
 import type { WInputModifiers, WInputSlotPosition } from './types'
 import { ElInput } from 'element-plus'
 
-export default {
-  ...ElInput.props,
-
+const extendProps = {
   modelModifiers: {
     type: Object as PropType<WInputModifiers>,
     default: () => ({ trim: true }),
@@ -35,8 +33,16 @@ export default {
     default: '',
   },
 
-  debounceDelay: {
+  debounce: {
     type: Number as PropType<number>,
     default: 0,
   },
+}
+
+export const extendPropKeys = Object.keys(extendProps)
+
+export default {
+  ...ElInput.props,
+
+  ...extendProps,
 }

@@ -1,18 +1,16 @@
 import type { WInputProps } from '../types'
-import { easyDebounce } from 'easy-fns-ts'
+import { useDebounceFn } from '@vueuse/core'
 
 /**
  * @description debounce search emit
  */
 export const useInputSearch = (props: WInputProps, emit: Fn) => {
-  const debouncedSearch = easyDebounce(() => {
+  const debouncedSearch = useDebounceFn(() => {
     emit('search', props.modelValue)
   }, props.debounce)
 
   const emitSearch = () => {
-    if (props.debounce !== 0) {
-      debouncedSearch()
-    }
+    props.debounce !== 0 && debouncedSearch()
   }
 
   return { emitSearch }

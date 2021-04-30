@@ -1,4 +1,4 @@
-import type { WInputModifiers, WInputProps } from '../types'
+import type { WInputProps } from '../types'
 import { line2Camel } from 'easy-fns-ts'
 
 /**
@@ -6,12 +6,7 @@ import { line2Camel } from 'easy-fns-ts'
  */
 export const useInputModifiers = (props: WInputProps) => {
   const modifiedValue = (value: string) => {
-    const {
-      capitalize,
-      uppercase,
-      camel,
-      trim,
-    } = props.modelModifiers as WInputModifiers
+    const { capitalize, uppercase, camel, trim } = props.modelModifiers!
 
     if (capitalize) {
       value = value.charAt(0).toUpperCase() + value.slice(1)

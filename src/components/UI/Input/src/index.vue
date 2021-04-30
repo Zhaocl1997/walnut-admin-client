@@ -28,13 +28,12 @@
 
 <script lang="ts">
   import type { WInputProps } from './types'
-
   import { computed, defineComponent, ref } from 'vue'
+  import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
 
-  import props from './props'
-
+  import props, { extendPropKeys } from './props'
   import { useInputMethods } from './hooks/useInputMethods'
   import { useInputSearch } from './hooks/useInputSearch'
   import { useInputModifiers } from './hooks/useInputModifiers'
@@ -49,7 +48,8 @@
 
     emits: ['update:modelValue', 'input', 'change', 'clear', 'search'],
 
-    setup(props: WInputProps, { attrs, emit, expose }) {
+    setup(props: WInputProps, ctx) {
+      const { attrs, emit, expose } = ctx
       const inputRef = ref<Nullable<any>>(null)
 
       const { inputMethods } = useInputMethods(inputRef)
@@ -76,7 +76,7 @@
       const getBindValue = computed(() => {
         return {
           ...attrs,
-          ...props,
+          ...easyOmit(props, extendPropKeys),
           onInput,
           onClear,
           ref: inputRef,

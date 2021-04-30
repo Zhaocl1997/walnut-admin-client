@@ -126,7 +126,7 @@
     <br />
     <br />
 
-    <w-title show-left>Debounce search input 【{{ input11 }}】 </w-title>
+    <w-title show-left>Debounce 1000ms search input 【{{ input11 }}】 </w-title>
     <w-input v-model="input11" clearable :debounce="500" @search="onInput" />
   </el-card>
 </template>
