@@ -8,7 +8,7 @@
       <w-form
         v-model="formConfig"
         :schemas="formConfigSchemas"
-        :span="8"
+        :span="6"
       ></w-form>
     </template>
 

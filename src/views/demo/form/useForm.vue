@@ -59,7 +59,7 @@
 
       const [registerConfig] = useForm({
         schemas: formConfigSchemas,
-        span: 8,
+        span: 6,
       })
 
       const [

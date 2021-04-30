@@ -20,43 +20,17 @@ export const useFormConfig = (fns: any) => {
   // config form schema
   const formConfigSchemas: WFormSchemaItem[] = [
     {
-      type: 'Radio',
+      type: 'Switch',
       formProp: {
         label: 'Disabled',
         prop: 'disabled',
       },
-      componentProp: {
-        button: true,
-        options: [
-          {
-            value: false,
-            label: 'Normal',
-          },
-          {
-            value: true,
-            label: 'Disabled',
-          },
-        ],
-      },
     },
     {
-      type: 'Radio',
+      type: 'Switch',
       formProp: {
         label: 'Inline',
         prop: 'inline',
-      },
-      componentProp: {
-        button: true,
-        options: [
-          {
-            value: false,
-            label: 'Normal',
-          },
-          {
-            value: true,
-            label: 'Inline',
-          },
-        ],
       },
     },
     {
@@ -67,6 +41,7 @@ export const useFormConfig = (fns: any) => {
       },
       componentProp: {
         button: true,
+        size: 'small',
         options: [
           {
             value: 'left',
@@ -91,6 +66,7 @@ export const useFormConfig = (fns: any) => {
       },
       componentProp: {
         button: true,
+        size: 'small',
         options: [
           {
             value: 'medium',
@@ -108,63 +84,24 @@ export const useFormConfig = (fns: any) => {
       },
     },
     {
-      type: 'Radio',
+      type: 'Switch',
       formProp: {
         label: 'Compact',
         prop: 'compact',
       },
-      componentProp: {
-        button: true,
-        options: [
-          {
-            value: false,
-            label: 'Normal',
-          },
-          {
-            value: true,
-            label: 'Compact',
-          },
-        ],
-      },
     },
     {
-      type: 'Radio',
+      type: 'Switch',
       formProp: {
-        label: 'v-if Input',
+        label: 'v-if',
         prop: 'vIf',
       },
-      componentProp: {
-        button: true,
-        options: [
-          {
-            value: true,
-            label: 'Display',
-          },
-          {
-            value: false,
-            label: 'Invisible',
-          },
-        ],
-      },
     },
     {
-      type: 'Radio',
+      type: 'Switch',
       formProp: {
-        label: 'v-show InputNumber',
+        label: 'v-show',
         prop: 'vShow',
-      },
-      componentProp: {
-        button: true,
-        options: [
-          {
-            value: true,
-            label: 'Display',
-          },
-          {
-            value: false,
-            label: 'Invisible',
-          },
-        ],
       },
     },
   ]

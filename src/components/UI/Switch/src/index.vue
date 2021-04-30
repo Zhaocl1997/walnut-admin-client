@@ -1,10 +1,10 @@
 <template>
-  <el-switch v-bind="$props"></el-switch>
+  <el-switch v-bind="getBindValue"></el-switch>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
   import type { WSwitchProps } from './types'
+  import { computed, defineComponent } from 'vue'
   import props from './props'
 
   export default defineComponent({
@@ -14,7 +14,13 @@
 
     props,
 
-    setup(props: WSwitchProps, ctx) {},
+    setup(props: WSwitchProps, ctx) {
+      const { attrs } = ctx
+      const getBindValue = computed(() => ({ ...attrs, ...props }))
+      return {
+        getBindValue,
+      }
+    },
   })
 </script>
 
