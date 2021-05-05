@@ -22,10 +22,12 @@ for (let i = 0; i < total; i++) {
       mom: {
         name: Random.name(),
         age: Random.integer(30, 60),
+        hasWork: Random.boolean(),
       },
       dad: {
         name: Random.name(),
         age: Random.integer(30, 60),
+        hasWork: Random.boolean(),
       },
     },
 

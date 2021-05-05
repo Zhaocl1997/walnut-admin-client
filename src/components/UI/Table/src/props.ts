@@ -83,36 +83,6 @@ export default {
   /**
    * =======================================
    * =======================================
-   * ======== Special Column Props =========
-   * =======================================
-   * =======================================
-   */
-
-  /**
-   * @description Index: index column index function
-   * @type {Function}
-   */
-  index: Function,
-
-  /**
-   * @description Select: select column able/enable function
-   * @type {Function}
-   */
-  selectable: Function,
-
-  /**
-   * @description Select:  reserve multiple select or not
-   * @type {Boolean}
-   * @default false
-   */
-  reserveSelection: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * =======================================
-   * =======================================
    * ============ Title / Help =============
    * =======================================
    * =======================================
@@ -201,46 +171,6 @@ export default {
    * =======================================
    * =======================================
    */
-
-  /**
-   * @description index column
-   * @type {Boolean}
-   * @default false
-   */
-  hasIndex: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * @description select column
-   * @type {Boolean}
-   * @default false
-   */
-  hasSelect: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * @description expand column
-   * @type {Boolean}
-   * @default false
-   */
-  hasExpand: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * @description action column
-   * @type {Boolean}
-   * @default false
-   */
-  hasAction: {
-    type: Boolean,
-    default: false,
-  },
 
   /**
    * @description table settings

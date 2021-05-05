@@ -1,8 +1,8 @@
 <script lang="tsx">
-  import type { ElTableColumnProps } from '../../types'
+  import type { ElTableColumnProps } from '/@/components/UI/Table'
 
   import { defineComponent } from 'vue'
-  import { useTableContext } from '../../hooks/useTableContext'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableColumnSelect',
@@ -23,11 +23,7 @@
           reserveSelection: tableProps.value.reserveSelection,
         }
 
-        return (
-          tableProps.value.hasSelect && (
-            <el-table-column {...defaultProps}></el-table-column>
-          )
-        )
+        return <el-table-column {...defaultProps}></el-table-column>
       }
     },
   })

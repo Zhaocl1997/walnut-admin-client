@@ -1,46 +1,7 @@
-<template>
-  <el-table ref="tableRef" v-bind="getBindValue">
-    <WTableItem
-      v-for="(header, index) in tableHeaders"
-      :key="index"
-      :item="header"
-    >
-      <template
-        #[slotName]="data"
-        v-for="(slotName, slotIndex) in Object.keys($slots)"
-        :key="slotIndex"
-      >
-        <slot :name="slotName" v-bind="data"></slot>
-      </template>
-    </WTableItem>
-
-    <WTableColumnIndex />
-    <WTableColumnSelect />
-    <WTableColumnExpand>
-      <template #default="scope">
-        <slot name="expand" v-bind="scope"></slot>
-      </template>
-    </WTableColumnExpand>
-
-    <WTableColumnAction>
-      <template #default="scope">
-        <slot name="action" v-bind="scope"></slot>
-      </template>
-    </WTableColumnAction>
-  </el-table>
-
-  <w-pagination
-    v-if="hasPage"
-    @change="onPageChange"
-    v-bind="pageState"
-    class="mt-4 flex justify-end"
-  ></w-pagination>
-</template>
-
-<script lang="ts">
+<script lang="tsx">
   import type { WTableProps } from './types'
 
-  import { ref, unref, computed, defineComponent } from 'vue'
+  import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
 
   import props from './props'
 
@@ -61,19 +22,19 @@
     emits: ['hook', 'page'],
 
     setup(props: WTableProps, ctx) {
-      const { attrs, emit, expose } = ctx
+      const { attrs, emit, expose, slots } = ctx
 
       const tableRef = ref<Nullable<any>>(null)
 
       const { setProps, getProps } = useProps<WTableProps>(props)
 
-      useTableComponent(getProps)
+      useTableComponent()
 
       const { tableHeaders } = useTableHeaders(getProps)
 
       const { tableMethods } = useTableMethods(tableRef, { setProps })
 
-      const { onPageChange, pageState } = useTablePagination(getProps, ctx)
+      const { onPageChange, pageState } = useTablePagination(getProps, emit)
 
       const getBindValue = computed(() => {
         return {
@@ -97,17 +58,43 @@
       //   expose,
       // })
 
-      return {
-        tableRef,
-        getBindValue,
-
-        onPageChange,
-        pageState,
-
-        tableHeaders,
+      // render column slot
+      const renderColumnsSlot = () => {
+        const ret = {}
+        Object.keys(slots).map((slotName) => {
+          ret[slotName] = (scope: Recordable) =>
+            renderSlot(slots, slotName, scope)
+        })
+        return ret
       }
+
+      // render table column
+      const renderTableItem = () =>
+        tableHeaders.value.map((item) => (
+          <w-table-item item={item}>{renderColumnsSlot()}</w-table-item>
+        ))
+
+      const renderPage = () =>
+        props.hasPage && (
+          <w-pagination
+            {...pageState}
+            onChange={onPageChange}
+            class="mt-4 flex justify-end"
+          ></w-pagination>
+        )
+
+      // render table
+      const renderTable = () => (
+        <>
+          <el-table ref={tableRef} {...getBindValue.value}>
+            {renderTableItem()}
+          </el-table>
+
+          {renderPage()}
+        </>
+      )
+
+      return () => renderTable()
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

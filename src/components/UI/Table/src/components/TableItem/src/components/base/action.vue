@@ -1,7 +1,9 @@
 <script lang="tsx">
+  import type { ElTableColumnScopedSlot } from '/@/components/UI/Table'
+  import type { WButtonProps } from '/@/components/UI/Button'
+
   import { defineComponent, renderSlot } from 'vue'
-  import { useTableContext } from '../../hooks/useTableContext'
-  import { WButtonProps } from '/@/components/UI/Button'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
   import { useI18n } from '/@/locales'
 
   export default defineComponent({
@@ -45,7 +47,7 @@
 
       // render action slot
       const renderDefaultSlot = () => ({
-        default: (scope: Recordable) =>
+        default: (scope: ElTableColumnScopedSlot) =>
           defaultActionButtonGroup.length !== 0
             ? defaultActionButtonGroup.map((i) => <w-button {...i}></w-button>)
             : renderSlot(slots, 'default', scope),
@@ -61,11 +63,9 @@
         }
 
         return (
-          tableProps.value.hasAction && (
-            <el-table-column {...defaultProps}>
-              {renderDefaultSlot()}
-            </el-table-column>
-          )
+          <el-table-column {...defaultProps}>
+            {renderDefaultSlot()}
+          </el-table-column>
         )
       }
     },

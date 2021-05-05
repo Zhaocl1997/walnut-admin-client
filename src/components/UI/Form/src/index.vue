@@ -41,16 +41,14 @@
 
       const { formMethods } = useFormMethods(formRef, { setProps })
 
-      const getBindValue = computed(() => {
-        return {
-          ...attrs,
-          // only use original el-form attrs, no custom props
-          // otherwise you'll see a lot of prop through the `Elements` tabs on chrome devtools
-          ...easyOmit(unref(getProps), extendPropKeys),
-          // used for method like `valdiate` to work
-          model: unref(getProps).modelValue,
-        }
-      })
+      const getBindValue = computed(() => ({
+        ...attrs,
+        // only use original el-form attrs, no custom props
+        // otherwise you'll see a lot of prop through the `Elements` tabs on chrome devtools
+        ...easyOmit(unref(getProps), extendPropKeys),
+        // used for method like `valdiate` to work
+        model: unref(getProps).modelValue,
+      }))
 
       // create `WForm` context
       setFormContext({
@@ -67,12 +65,9 @@
       })
 
       // render slot type component's slot
-      const renderItemSlot = (item: WFormSchemaItem) => {
-        return (
-          Object.keys(slots).includes(item.formProp?.prop!) &&
-          renderSlot(slots, item.formProp?.prop!)
-        )
-      }
+      const renderItemSlot = (item: WFormSchemaItem) =>
+        Object.keys(slots).includes(item.formProp?.prop!) &&
+        renderSlot(slots, item.formProp?.prop!)
 
       // render Items
       const renderItems = () =>
@@ -86,13 +81,11 @@
           ? renderItems()
           : () => <el-row gutter={props.gutter}> {renderItems()} </el-row>
 
-      return () => {
-        return (
-          <el-form ref={formRef} {...getBindValue.value}>
-            {renderColWrap()}
-          </el-form>
-        )
-      }
+      return () => (
+        <el-form ref={formRef} {...getBindValue.value}>
+          {renderColWrap()}
+        </el-form>
+      )
     },
   })
 </script>

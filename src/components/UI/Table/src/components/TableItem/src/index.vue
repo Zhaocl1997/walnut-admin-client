@@ -1,72 +1,110 @@
-<template>
-  <el-table-column v-if="getHasChildren" v-bind="getBindValue">
-    <WTableItem
-      v-for="(child, index) in item.children"
-      :key="index"
-      :item="child"
-    >
-      <template
-        #[slotName]="data"
-        v-for="(slotName, slotIndex) in Object.keys($slots)"
-        :key="slotIndex"
-      >
-        <slot :name="slotName" v-bind="data"></slot>
-      </template>
-    </WTableItem>
-  </el-table-column>
+<script lang="tsx">
+  import type { PropType } from 'vue'
+  import type {
+    WTableHeaderItem,
+    ActionColumn,
+    ElTableColumnScopedSlot,
+  } from '/@/components/UI/Table'
 
-  <el-table-column v-else v-bind="getBindValue">
-    <template v-if="getHasSlot" #default="scope">
-      <slot :name="item.prop" v-bind="scope"></slot>
-    </template>
-  </el-table-column>
-</template>
+  import { defineComponent, computed, renderSlot } from 'vue'
+  import { easyOmit, isArray, isUndefined } from 'easy-fns-ts'
 
-<script lang="ts">
-  import type { SetupContext, PropType } from 'vue'
-  import type { WTableHeaderItem } from '../../../types'
-  import { defineComponent, computed } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
+  import { useTableColumnComponents } from './hooks/useTableColumnComponents'
 
   export default defineComponent({
     name: 'WTableItem',
+
+    inheritAttrs: false,
 
     props: {
       item: Object as PropType<WTableHeaderItem>,
     },
 
-    setup(props: any, ctx: SetupContext) {
+    setup(props, ctx) {
       const { slots } = ctx
 
-      const getBindValue = computed(() => {
-        return easyOmit(
+      useTableColumnComponents()
+
+      const getColumnBindValue = computed(() =>
+        easyOmit(
           {
             ...props.item,
-            align: props.item.align ? props.item.align : 'center',
+            align: props.item!.align ? props.item!.align : 'center',
             showOverflowTooltip:
-              props.item.showOverflowTooltip !== undefined
-                ? props.item.showOverflowTooltip
+              props.item!.showOverflowTooltip !== undefined
+                ? props.item!.showOverflowTooltip
                 : true,
           },
           'children'
         )
-      })
+      )
 
-      const getHasChildren = computed(() => {
-        return props.item.children && props.item.children.length > 0
-      })
+      // render base column slot
+      const renderBaseColumnSlot = () => {
+        if (isUndefined(slots[props.item!.prop!])) {
+          return {}
+        }
 
-      const getHasSlot = computed(() => {
-        return slots[props.item.prop] !== undefined
-      })
-
-      return {
-        getBindValue,
-        getHasChildren,
-        getHasSlot,
+        return {
+          default: (scope: ElTableColumnScopedSlot) =>
+            renderSlot(slots, props.item!.prop!, scope),
+        }
       }
+
+      // render base columns
+      const renderBaseColumns = () => {
+        if (props.item!.type === 'index') {
+          return <w-table-column-index></w-table-column-index>
+        }
+
+        if (props.item!.type === 'expand') {
+          return <w-table-column-expand></w-table-column-expand>
+        }
+
+        if (props.item!.type === 'selection') {
+          return <w-table-column-select></w-table-column-select>
+        }
+
+        if ((props.item as ActionColumn).extType === 'action') {
+          return <w-table-column-action></w-table-column-action>
+        }
+
+        return (
+          <el-table-column {...getColumnBindValue.value}>
+            {renderBaseColumnSlot()}
+          </el-table-column>
+        )
+      }
+
+      // render nested cloumn slot
+      const renderNestedColumnSlot = () => {
+        const ret = {}
+        Object.keys(slots).map((name) => {
+          ret[name] = (scope: ElTableColumnScopedSlot) =>
+            renderSlot(slots, name, scope)
+        })
+        return ret
+      }
+
+      // render nested columns
+      const renderNestedColumns = () =>
+        props.item?.visible !== false && (
+          <el-table-column {...getColumnBindValue.value}>
+            {props.item?.children?.map((item) => (
+              <w-table-item item={item}>
+                {renderNestedColumnSlot()}
+              </w-table-item>
+            ))}
+          </el-table-column>
+        )
+
+      // render columns
+      const renderColumns = () =>
+        isArray(props.item!.children)
+          ? renderNestedColumns()
+          : props.item?.visible !== false && renderBaseColumns()
+
+      return () => renderColumns()
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

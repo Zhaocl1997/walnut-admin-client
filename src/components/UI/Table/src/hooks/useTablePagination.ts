@@ -1,10 +1,11 @@
-import type { SetupContext } from 'vue'
+import type { ComputedRef } from 'vue'
 import type { WTableProps } from '../types'
 import { unref, reactive, watch } from 'vue'
 
-export const useTablePagination = (props: WTableProps, ctx: SetupContext) => {
-  const { emit } = ctx
-
+export const useTablePagination = (
+  props: ComputedRef<WTableProps>,
+  emit: Fn
+) => {
   const state = reactive({
     total: 0,
     pageNum: 1,

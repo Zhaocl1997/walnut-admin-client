@@ -1,7 +1,10 @@
 <script lang="tsx">
-  import type { ElTableColumnProps } from '../../types'
+  import type {
+    ElTableColumnProps,
+    ElTableColumnScopedSlot,
+  } from '/@/components/UI/Table'
   import { defineComponent, renderSlot } from 'vue'
-  import { useTableContext } from '../../hooks/useTableContext'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableColumnExpand',
@@ -14,7 +17,8 @@
 
       // render expand slot
       const renderDefaultSlot = () => ({
-        default: (scope: Recordable) => renderSlot(slots, 'default', scope),
+        default: (scope: ElTableColumnScopedSlot) =>
+          renderSlot(slots, 'default', scope),
       })
 
       return () => {
@@ -27,11 +31,9 @@
         }
 
         return (
-          tableProps.value.hasExpand && (
-            <el-table-column {...defaultProps}>
-              {renderDefaultSlot()}
-            </el-table-column>
-          )
+          <el-table-column {...defaultProps}>
+            {renderDefaultSlot()}
+          </el-table-column>
         )
       }
     },

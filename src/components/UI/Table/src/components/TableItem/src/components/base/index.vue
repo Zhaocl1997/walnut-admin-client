@@ -1,8 +1,11 @@
 <script lang="tsx">
-  import type { ElTableColumnProps, ElTableColumnScopedSlot } from '../../types'
+  import type {
+    ElTableColumnProps,
+    ElTableColumnScopedSlot,
+  } from '/@/components/UI/Table'
   import { defineComponent } from 'vue'
   import { isFunction } from 'easy-fns-ts'
-  import { useTableContext } from '../../hooks/useTableContext'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
   import { useI18n } from '/@/locales'
 
   export default defineComponent({
@@ -39,11 +42,9 @@
         }
 
         return (
-          tableProps.value.hasIndex && (
-            <el-table-column {...defaultProps}>
-              {renderDefaultSlot()}
-            </el-table-column>
-          )
+          <el-table-column {...defaultProps}>
+            {renderDefaultSlot()}
+          </el-table-column>
         )
       }
     },
