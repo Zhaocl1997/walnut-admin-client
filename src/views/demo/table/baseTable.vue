@@ -3,27 +3,27 @@
     <template #header>
       <span>Base table: </span>
 
-      <WJson :value="tableHeaders"></WJson>
-      <w-form
-        v-model="tableConfig"
-        inline
-        @hook="registerTableConfigForm"
-      ></w-form>
+      <w-json :value="tableHeaders"></w-json>
+      <w-form v-model="tableConfig" inline @hook="registerForm"></w-form>
     </template>
 
     <w-table
       :headers="tableHeaders"
       :data="data"
       :total="total"
-      has-page
+      :has-page="tableConfig.page"
       @page="onPageChange"
-      :has-index="hasIndex"
-      :has-select="hasSelect"
-      :has-expand="hasExpand"
-      :has-action="hasAction"
     >
       <template #status="{ row }">
         <el-switch v-model="row.status"></el-switch>
+      </template>
+
+      <template #family.dad.hasWork="{ row }">
+        <el-switch v-model="row.family.dad.hasWork"></el-switch>
+      </template>
+
+      <template #family.mom.hasWork="{ row }">
+        <el-switch v-model="row.family.mom.hasWork"></el-switch>
       </template>
 
       <template #expand="{ row }">
@@ -40,61 +40,28 @@
 <script lang="ts">
   import { defineComponent, reactive, ref, onMounted, toRefs } from 'vue'
   import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
-  import { tableHeaders } from './headers'
-  import { useForm } from '/@/components/UI/Form'
+  import { useTableConfig } from './configHeader'
 
   export default defineComponent({
     name: 'BaseTableDemo',
 
     setup() {
-      const data = ref([])
+      const data = ref<any[]>([])
       const total = ref(0)
       const query = reactive({
         pageNum: 1,
         pageSize: 10,
       })
 
-      const tableConfig = reactive({
-        hasIndex: false,
-        hasSelect: false,
-        hasExpand: false,
-        hasAction: false,
-      })
+      const { tableConfig, registerForm, tableHeaders } = useTableConfig()
 
-      const [registerTableConfigForm] = useForm({
-        schemas: [
-          {
-            type: 'Switch',
-            formProp: {
-              prop: 'hasIndex',
-              label: 'Index',
-            },
-          },
-          {
-            type: 'Switch',
-            formProp: {
-              prop: 'hasSelect',
-              label: 'Select',
-            },
-          },
-          {
-            type: 'Switch',
-            formProp: {
-              prop: 'hasExpand',
-              label: 'Expand',
-            },
-          },
-          {
-            type: 'Switch',
-            formProp: {
-              prop: 'hasAction',
-              label: 'Action',
-            },
-          },
-        ],
-      })
-
-      const onPageChange = ({ pageNum, pageSize }) => {
+      const onPageChange = ({
+        pageNum,
+        pageSize,
+      }: {
+        pageNum: number
+        pageSize: number
+      }) => {
         query.pageNum = pageNum
         query.pageSize = pageSize
         onGetList()
@@ -111,9 +78,8 @@
       })
 
       return {
-        ...toRefs(tableConfig),
         tableConfig,
-        registerTableConfigForm,
+        registerForm,
         tableHeaders,
         data,
         total,

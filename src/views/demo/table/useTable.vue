@@ -17,7 +17,7 @@
 <script lang="ts">
   import { defineComponent, reactive, ref, onMounted } from 'vue'
   import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
-  import { tableHeaders } from './headers'
+  import { tableHeaders } from './configHeader'
   import { useTable } from '/@/components/UI/Table'
 
   export default defineComponent({
