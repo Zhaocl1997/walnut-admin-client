@@ -18,6 +18,25 @@ declare type BaseDataType = string | number | boolean
 declare type IndexType = string | number | symbol
 
 /**
+ * @description type for empty object
+ */
+declare type EmptyObject = Record<string, never>
+
+/**
+ * @description type for any object
+ */
+declare type AnyObject = Record<string, unknown>
+
+/**
+ * @description used for setup prop type
+ */
+declare type SetupProp<T> = Readonly<
+  EmptyObject & {
+    item?: T | undefined
+  }
+>
+
+/**
  * @description Used for components with `options` API.
  * Default value field is `value` and label field is `label`
  *
