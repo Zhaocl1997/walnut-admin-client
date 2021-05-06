@@ -1,10 +1,12 @@
+import type { WButtonGroup } from '../../../ButtonGroup'
+import type { WSwitchProps } from '../../../Switch'
+
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes
  */
 export interface ElTableColumnProps {
   key: string
-  type: 'index' | 'expand' | 'selection'
-  index: number | Fn
+
   columnKey: string
   label: string
   prop: string
@@ -23,8 +25,6 @@ export interface ElTableColumnProps {
   headerAlign: 'left' | 'center' | 'right'
   className: string
   labelClassName: string
-  selectable: Fn
-  reserveSelection: boolean
 
   filters: { text: string; value: string }[]
   filterPlacement: string
@@ -33,7 +33,6 @@ export interface ElTableColumnProps {
   filteredValue: any[]
 }
 
-// TODO type enhancement
 /**
  * @description Override origin column `type` field
  */
@@ -42,7 +41,7 @@ export type CustomTableColumn<T, K> = K &
     /**
      * @description custom column type
      */
-    extType: T
+    type: T
   }
 
 /**
@@ -72,6 +71,28 @@ export type SelectColumn = CustomTableColumn<
 export type ExpandColumn = CustomTableColumn<'expand', Record<string, unknown>>
 
 /**
+ * @description Action column render way
+ */
+export type WTableActionType = 'array' | 'slot'
+
+/**
+ * @description Action column array button group config
+ */
+export type WTableActionConfig = 'create' | 'edit' | 'delete'
+
+/**
  * @description Action column type
  */
-export type ActionColumn = CustomTableColumn<'action', Record<string, unknown>>
+export type ActionColumn = CustomTableColumn<
+  'action',
+  {
+    actionType: WTableActionType
+    buttonGroup: WButtonGroup
+    actionConfig: WTableActionConfig[]
+  }
+>
+
+/**
+ * @description Used for boolean type column, provide a default switch column
+ */
+export type SwitchColumn = CustomTableColumn<'switch', WSwitchProps>

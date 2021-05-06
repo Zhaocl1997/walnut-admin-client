@@ -9,14 +9,17 @@ export const useTableColumnComponents = () => {
     WTableColumnIndex: createAsyncComponent(
       () => import('../components/base/index.vue')
     ),
-    WTableColumnSelect: createAsyncComponent(
-      () => import('../components/base/select.vue')
+    WTableColumnSelection: createAsyncComponent(
+      () => import('../components/base/selection.vue')
     ),
     WTableColumnExpand: createAsyncComponent(
       () => import('../components/base/expand.vue')
     ),
     WTableColumnAction: createAsyncComponent(
       () => import('../components/base/action.vue')
+    ),
+    WTableColumnSwitch: createAsyncComponent(
+      () => import('../components/expand/switch.vue')
     ),
   }
 

@@ -4,6 +4,7 @@ import type {
   SelectColumn,
   ExpandColumn,
   ActionColumn,
+  SwitchColumn,
 } from './tableHeadersItem'
 import type { MaybeRef } from '/~/utils'
 
@@ -28,7 +29,7 @@ interface SharedColumnProps {
 export type WTableHeaderItem = Partial<
   (
     | ElTableColumnProps
-    | (IndexColumn | SelectColumn | ExpandColumn | ActionColumn)
+    | (IndexColumn | SelectColumn | ExpandColumn | ActionColumn | SwitchColumn)
   ) &
     SharedColumnProps
 >

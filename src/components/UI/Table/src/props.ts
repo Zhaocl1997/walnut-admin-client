@@ -191,14 +191,4 @@ export default {
     type: Boolean,
     default: false,
   },
-
-  /**
-   * @description button groups
-   * @type {Boolean}
-   * @default false
-   */
-  hasButtons: {
-    type: Boolean,
-    default: false,
-  },
 }

@@ -1,73 +1,112 @@
 <script lang="tsx">
-  import type { ElTableColumnScopedSlot } from '/@/components/UI/Table'
-  import type { WButtonProps } from '/@/components/UI/Button'
+  import type {
+    ElTableColumnScopedSlot,
+    ActionColumn,
+    WTableActionConfig,
+  } from '/@/components/UI/Table'
+  import type { PropType } from 'vue'
+  import type { WButtonGroup } from '/@/components/UI/ButtonGroup'
 
-  import { defineComponent, renderSlot } from 'vue'
-  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
+  import { defineComponent, renderSlot, renderList } from 'vue'
+  import { isArray } from 'easy-fns-ts'
+
   import { useI18n } from '/@/locales'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableColumnAction',
 
     inheritAttrs: false,
 
-    setup(_, ctx) {
+    props: {
+      column: Object as PropType<ActionColumn>,
+    },
+
+    setup(props, ctx) {
       const { slots } = ctx
       const { t } = useI18n()
-      const { tableProps } = useTableContext()
+      const { emitEvents } = useTableContext()
 
-      const defaultActionButtonGroup: Array<
-        WButtonProps & { onClick: (e: Event) => void }
-      > = [
+      const defaultActionButtonGroup: WButtonGroup = [
         {
           type: 'text',
           size: 'small',
           text: 'Create',
-          onClick: () => {
-            console.log(1)
+          onClick: (scope) => {
+            emitEvents.action('create', scope)
           },
         },
         {
           type: 'text',
           size: 'small',
           text: 'Edit',
-          onClick: () => {
-            console.log(2)
+          onClick: (scope) => {
+            emitEvents.action('edit', scope)
           },
         },
         {
           type: 'text',
           size: 'small',
           text: 'Delete',
-          onClick: () => {
-            console.log(3)
+          onClick: (scope) => {
+            emitEvents.action('delete', scope)
           },
         },
       ]
 
-      // render action slot
-      const renderDefaultSlot = () => ({
-        default: (scope: ElTableColumnScopedSlot) =>
-          defaultActionButtonGroup.length !== 0
-            ? defaultActionButtonGroup.map((i) => <w-button {...i}></w-button>)
-            : renderSlot(slots, 'default', scope),
-      })
-
-      return () => {
-        const defaultProps = {
-          key: 'action',
-          minWidth: '180px',
-          align: 'center',
-          fixed: 'right',
-          label: t('component.table.operation'),
+      // render action by button group array
+      const renderActionArray = (scope: ElTableColumnScopedSlot) => {
+        // render default button group
+        const renderDefault = () => {
+          // filter the configed button group
+          const filteredButtonGroup = defaultActionButtonGroup.filter((item) =>
+            props.column?.actionConfig.includes(
+              (item.text as string).toLowerCase() as WTableActionConfig
+            )
+          )
+          return renderList(filteredButtonGroup, (value) => (
+            <w-button
+              {...{ ...value, onClick: () => value.onClick!(scope) }}
+            ></w-button>
+          ))
         }
 
-        return (
-          <el-table-column {...defaultProps}>
-            {renderDefaultSlot()}
-          </el-table-column>
-        )
+        // render custom button group
+        const renderCustom = () =>
+          renderList(props.column!.buttonGroup, (value) => (
+            <w-button
+              {...{ ...value, onClick: () => value.onClick!(scope) }}
+            ></w-button>
+          ))
+
+        const isArrayRender =
+          props.column?.actionType === 'array' &&
+          isArray(props.column.buttonGroup) &&
+          props.column.buttonGroup.length > 0
+
+        return isArrayRender ? renderCustom() : renderDefault()
       }
+
+      // render action slot
+      const renderDefaultSlot = () => {
+        return {
+          default: (scope: ElTableColumnScopedSlot) =>
+            props.column?.actionType === 'slot'
+              ? renderSlot(slots, 'default', scope)
+              : renderActionArray(scope),
+        }
+      }
+
+      return () => (
+        <el-table-column
+          {...{
+            label: t('component.table.operation'),
+            ...props.column,
+          }}
+        >
+          {renderDefaultSlot()}
+        </el-table-column>
+      )
     },
   })
 </script>

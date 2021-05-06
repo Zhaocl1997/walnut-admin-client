@@ -1,28 +1,31 @@
 <script lang="tsx">
   import type {
-    ElTableColumnProps,
     ElTableColumnScopedSlot,
+    IndexColumn,
   } from '/@/components/UI/Table'
+  import type { PropType } from 'vue'
+
   import { defineComponent } from 'vue'
-  import { isFunction } from 'easy-fns-ts'
   import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
-  import { useI18n } from '/@/locales'
 
   export default defineComponent({
     name: 'WTableColumnIndex',
 
     inheritAttrs: false,
 
-    setup() {
-      const { t } = useI18n()
+    props: {
+      column: Object as PropType<IndexColumn>,
+    },
+
+    setup(props) {
       const { tableProps } = useTableContext()
 
       // render index
-      const renderIndex = (i: number) => {
-        return isFunction(tableProps.value.index)
-          ? tableProps.value.index!(i)
+      const renderIndex = (i: number) =>
+        typeof props.column!.index === 'function'
+          ? (tableProps.value.pageNum! - 1) * tableProps.value.pageSize! +
+            props.column!.index(i)
           : (tableProps.value.pageNum! - 1) * tableProps.value.pageSize! + i + 1
-      }
 
       // render default index slot
       const renderDefaultSlot = () => ({
@@ -31,22 +34,11 @@
         ),
       })
 
-      return () => {
-        const defaultProps: Partial<ElTableColumnProps> = {
-          key: 'index',
-          type: 'index',
-          width: '80',
-          align: 'center',
-          fixed: 'left',
-          label: t('component.table.index'),
-        }
-
-        return (
-          <el-table-column {...defaultProps}>
-            {renderDefaultSlot()}
-          </el-table-column>
-        )
-      }
+      return () => (
+        <el-table-column {...props.column}>
+          {renderDefaultSlot()}
+        </el-table-column>
+      )
     },
   })
 </script>

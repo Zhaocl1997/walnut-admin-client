@@ -3,10 +3,11 @@
     <template #header>
       <span>useTable hook: </span>
 
-      <WJson :value="tableHeaders"></WJson>
+      <w-json :value="tableHeaders"></w-json>
+      <w-form v-model="tableConfig" inline @hook="registerForm"></w-form>
     </template>
 
-    <w-table @hook="register" @page="onPageChange">
+    <w-table @hook="registerTable" @page="onPageChange">
       <template #status="{ row }">
         <el-switch v-model="row.status"></el-switch>
       </template>
@@ -17,7 +18,7 @@
 <script lang="ts">
   import { defineComponent, reactive, ref, onMounted } from 'vue'
   import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
-  import { tableHeaders } from './configHeader'
+  import { useTableConfig } from './configHeader'
   import { useTable } from '/@/components/UI/Table'
 
   export default defineComponent({
@@ -31,10 +32,13 @@
         pageSize: 10,
       })
 
-      const [register] = useTable({
+      const { tableConfig, registerForm, tableHeaders } = useTableConfig()
+
+      const [registerTable] = useTable({
         headers: tableHeaders,
         data: data,
         total: total,
+        hasPage: tableConfig.page,
       })
 
       const onPageChange = ({ pageNum, pageSize }) => {
@@ -54,7 +58,9 @@
       })
 
       return {
-        register,
+        tableConfig,
+        registerForm,
+        registerTable,
         onPageChange,
         tableHeaders,
       }

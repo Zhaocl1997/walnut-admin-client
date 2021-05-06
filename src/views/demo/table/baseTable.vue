@@ -3,8 +3,8 @@
     <template #header>
       <span>Base table: </span>
 
-      <w-json :value="tableHeaders"></w-json>
-      <w-form v-model="tableConfig" inline @hook="registerForm"></w-form>
+      <w-json :value="tableHeaders" resizable></w-json>
+      <w-form v-model="tableConfig" @hook="registerForm"></w-form>
     </template>
 
     <w-table
@@ -12,33 +12,28 @@
       :data="data"
       :total="total"
       :has-page="tableConfig.page"
-      @page="onPageChange"
+      :page-num="query.pageNum"
+      :page-size="query.pageSize"
+      :border="tableConfig.border"
+      :stripe="tableConfig.stripe"
+      :show-header="tableConfig.showHeader"
+      row-key="id"
+      @page="onPage"
+      @action="onAction"
     >
-      <template #status="{ row }">
-        <el-switch v-model="row.status"></el-switch>
-      </template>
-
-      <template #family.dad.hasWork="{ row }">
-        <el-switch v-model="row.family.dad.hasWork"></el-switch>
-      </template>
-
-      <template #family.mom.hasWork="{ row }">
-        <el-switch v-model="row.family.mom.hasWork"></el-switch>
-      </template>
-
       <template #expand="{ row }">
-        <span>expand {{ row }}</span>
+        <span>expand slot</span>
       </template>
 
       <template #action="{ row }">
-        <span>action</span>
+        <span>action slot</span>
       </template>
     </w-table>
   </el-card>
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, ref, onMounted, toRefs } from 'vue'
+  import { defineComponent, reactive, ref, onMounted } from 'vue'
   import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
   import { useTableConfig } from './configHeader'
 
@@ -55,7 +50,7 @@
 
       const { tableConfig, registerForm, tableHeaders } = useTableConfig()
 
-      const onPageChange = ({
+      const onPage = ({
         pageNum,
         pageSize,
       }: {
@@ -65,6 +60,10 @@
         query.pageNum = pageNum
         query.pageSize = pageSize
         onGetList()
+      }
+
+      const onAction = (type: string, scope: any) => {
+        console.log(type, scope)
       }
 
       const onGetList = () => {
@@ -83,7 +82,9 @@
         tableHeaders,
         data,
         total,
-        onPageChange,
+        query,
+        onPage,
+        onAction,
       }
     },
   })

@@ -1,7 +1,14 @@
 <script lang="tsx">
   import type { WTableProps } from './types'
 
-  import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
+  import {
+    ref,
+    unref,
+    computed,
+    defineComponent,
+    renderSlot,
+    renderList,
+  } from 'vue'
 
   import props from './props'
 
@@ -19,7 +26,7 @@
 
     props: props,
 
-    emits: ['hook', 'page'],
+    emits: ['hook', 'page', 'action'],
 
     setup(props: WTableProps, ctx) {
       const { attrs, emit, expose, slots } = ctx
@@ -47,6 +54,7 @@
       // create `WTable` context
       setTableContext({
         tableProps: getProps,
+        emitEvents: { action: (...args) => emit('action', ...args) },
       })
 
       // create `useTable` hook
@@ -70,10 +78,11 @@
 
       // render table column
       const renderTableItem = () =>
-        tableHeaders.value.map((item) => (
-          <w-table-item item={item}>{renderColumnsSlot()}</w-table-item>
+        renderList(tableHeaders.value, (value) => (
+          <w-table-item item={value}>{renderColumnsSlot()}</w-table-item>
         ))
 
+      // render pagination
       const renderPage = () =>
         props.hasPage && (
           <w-pagination
