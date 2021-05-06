@@ -17,7 +17,6 @@
       :border="tableConfig.border"
       :stripe="tableConfig.stripe"
       :show-header="tableConfig.showHeader"
-      row-key="id"
       @page="onPage"
       @action="onAction"
     >

@@ -1,4 +1,3 @@
-import type { WButtonProps } from '../../../Button'
 import type { WTableHeaderItem } from './tableHeaders'
 import type { MaybeRef } from '/~/utils'
 
@@ -66,15 +65,28 @@ export interface ElTableProps {
  * @description extend from `ElTable` props
  */
 export interface WTableProps extends Partial<ElTableProps> {
+  /**
+   * @description table header for renderer
+   */
   headers?: WTableHeaderItem[]
 
-  total?: MaybeRef<number>
-
-  pageNum?: number
-
-  pageSize?: number
-
+  /**
+   * @description has pagination or not
+   */
   hasPage?: boolean
 
-  actionButtonGroup?: Array<WButtonProps & { onClick: (e: Event) => void }>
+  /**
+   * @description table total count, used for pagination
+   */
+  total?: number
+
+  /**
+   * @description table page number, used for pagination
+   */
+  pageNum?: number
+
+  /**
+   * @description table current page, used for pagination
+   */
+  pageSize?: number
 }

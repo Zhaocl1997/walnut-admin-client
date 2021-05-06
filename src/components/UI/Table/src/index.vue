@@ -1,5 +1,5 @@
 <script lang="tsx">
-  import type { WTableProps } from './types'
+  import type { ElTableColumnScopedSlot, WTableProps } from './types'
 
   import {
     ref,
@@ -66,42 +66,45 @@
       //   expose,
       // })
 
-      // render column slot
-      const renderColumnsSlot = () => {
-        const ret = {}
-        Object.keys(slots).map((slotName) => {
-          ret[slotName] = (scope: Recordable) =>
-            renderSlot(slots, slotName, scope)
-        })
-        return ret
-      }
-
       // render table column
-      const renderTableItem = () =>
-        renderList(tableHeaders.value, (value) => (
+      const renderTableItem = () => {
+        // render column slot
+        const renderColumnsSlot = () => {
+          const ret = {}
+          Object.keys(slots).map((slotName) => {
+            ret[slotName] = (scope: ElTableColumnScopedSlot) =>
+              renderSlot(slots, slotName, scope)
+          })
+          return ret
+        }
+
+        return renderList(tableHeaders.value, (value) => (
           <w-table-item item={value}>{renderColumnsSlot()}</w-table-item>
         ))
-
-      // render pagination
-      const renderPage = () =>
-        props.hasPage && (
-          <w-pagination
-            {...pageState}
-            onChange={onPageChange}
-            class="mt-4 flex justify-end"
-          ></w-pagination>
-        )
+      }
 
       // render table
-      const renderTable = () => (
-        <>
-          <el-table ref={tableRef} {...getBindValue.value}>
-            {renderTableItem()}
-          </el-table>
+      const renderTable = () => {
+        // render pagination
+        const renderPage = () =>
+          getProps.value.hasPage && (
+            <w-pagination
+              {...pageState}
+              onChange={onPageChange}
+              class="mt-4 flex justify-end"
+            ></w-pagination>
+          )
 
-          {renderPage()}
-        </>
-      )
+        return (
+          <>
+            <el-table ref={tableRef} {...getBindValue.value}>
+              {renderTableItem()}
+            </el-table>
+
+            {renderPage()}
+          </>
+        )
+      }
 
       return () => renderTable()
     },

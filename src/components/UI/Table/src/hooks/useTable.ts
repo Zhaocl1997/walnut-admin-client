@@ -1,10 +1,11 @@
 import type { WTableProps } from '../types'
+import type { MaybeRefRecord } from '/~/utils'
 
 import { ref, unref, nextTick, watchEffect } from 'vue'
 import { isInSetup } from '/@/utils/shared'
 import { appError } from '/@/utils/log'
 
-export const useTable = (props: WTableProps) => {
+export const useTable = (props: MaybeRefRecord<WTableProps>) => {
   isInSetup()
 
   const tableRef = ref<Nullable<any>>(null)

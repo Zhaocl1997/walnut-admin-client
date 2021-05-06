@@ -3,20 +3,24 @@
     <template #header>
       <span>useTable hook: </span>
 
-      <w-json :value="tableHeaders"></w-json>
-      <w-form v-model="tableConfig" inline @hook="registerForm"></w-form>
+      <w-json :value="tableHeaders" resizable></w-json>
+      <w-form v-model="tableConfig" @hook="registerForm"></w-form>
     </template>
 
-    <w-table @hook="registerTable" @page="onPageChange">
-      <template #status="{ row }">
-        <el-switch v-model="row.status"></el-switch>
+    <w-table @hook="registerTable" @page="onPage">
+      <template #expand="{ row }">
+        <span>expand slot</span>
+      </template>
+
+      <template #action="{ row }">
+        <span>action slot</span>
       </template>
     </w-table>
   </el-card>
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, ref, onMounted } from 'vue'
+  import { defineComponent, reactive, ref, onMounted, computed } from 'vue'
   import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
   import { useTableConfig } from './configHeader'
   import { useTable } from '/@/components/UI/Table'
@@ -25,7 +29,7 @@
     name: 'UseTableDemo',
 
     setup() {
-      const data = ref([])
+      const data = ref<any[]>([])
       const total = ref(0)
       const query = reactive({
         pageNum: 1,
@@ -38,10 +42,21 @@
         headers: tableHeaders,
         data: data,
         total: total,
-        hasPage: tableConfig.page,
+        hasPage: computed(() => tableConfig.page),
+        border: computed(() => tableConfig.border),
+        stripe: computed(() => tableConfig.stripe),
+        showHeader: computed(() => tableConfig.showHeader),
+        pageNum: query.pageNum,
+        pageSize: query.pageSize,
       })
 
-      const onPageChange = ({ pageNum, pageSize }) => {
+      const onPage = ({
+        pageNum,
+        pageSize,
+      }: {
+        pageNum: number
+        pageSize: number
+      }) => {
         query.pageNum = pageNum
         query.pageSize = pageSize
         onGetList()
@@ -61,7 +76,7 @@
         tableConfig,
         registerForm,
         registerTable,
-        onPageChange,
+        onPage,
         tableHeaders,
       }
     },

@@ -6,7 +6,7 @@ import type { WSwitchProps } from '../../../Switch'
  */
 export interface ElTableColumnProps {
   key: string
-
+  type: 'index' | 'selection' | 'expand' | 'action' | 'switch'
   columnKey: string
   label: string
   prop: string
@@ -68,7 +68,7 @@ export type SelectColumn = CustomTableColumn<
 /**
  * @description Expand column type
  */
-export type ExpandColumn = CustomTableColumn<'expand', Record<string, unknown>>
+export type ExpandColumn = CustomTableColumn<'expand', EmptyObject>
 
 /**
  * @description Action column render way
@@ -82,6 +82,7 @@ export type WTableActionConfig = 'create' | 'edit' | 'delete'
 
 /**
  * @description Action column type
+ * @extends
  */
 export type ActionColumn = CustomTableColumn<
   'action',
@@ -94,5 +95,6 @@ export type ActionColumn = CustomTableColumn<
 
 /**
  * @description Used for boolean type column, provide a default switch column
+ * @extends
  */
 export type SwitchColumn = CustomTableColumn<'switch', WSwitchProps>
