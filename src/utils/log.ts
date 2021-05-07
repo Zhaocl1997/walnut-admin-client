@@ -4,6 +4,6 @@ export const appError = (msg: unknown) => {
   console.error(`[${appName}]`, msg)
 }
 
-export const appWarning = (msg: string) => {
-  console.warn(`[${appName}]`, msg)
+export const appWarning = (scope: string, msg: string) => {
+  console.warn(`[${appName}]-[${scope}]`, msg)
 }
