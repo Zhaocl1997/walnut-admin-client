@@ -17,7 +17,7 @@ const setupErrorhandler = (app: App) => {
   }
 
   app.config.warnHandler = (msg, vm, trace) => {
-    appWarning({ msg, vm, trace } as any)
+    appWarning('App Capture', { msg, vm, trace } as any)
   }
 }
 
