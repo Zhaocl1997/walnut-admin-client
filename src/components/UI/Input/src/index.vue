@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-  import type { WInputProps } from './types'
+  import type { ElInputRef, WInputProps } from './types'
   import { computed, defineComponent, ref } from 'vue'
   import { easyOmit } from 'easy-fns-ts'
 
@@ -50,7 +50,7 @@
 
     setup(props: WInputProps, ctx) {
       const { attrs, emit, expose } = ctx
-      const inputRef = ref<Nullable<any>>(null)
+      const inputRef = ref<Nullable<ElInputRef>>(null)
 
       const { inputMethods } = useInputMethods(inputRef)
       const { emitSearch } = useInputSearch(props, emit)

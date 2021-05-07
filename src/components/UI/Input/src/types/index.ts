@@ -1,3 +1,4 @@
+import type { CommonComponentMethods } from '../../../types'
 import type { MaybeRef } from '/~/utils'
 
 export interface ElInputTextareaResizeProp {
@@ -62,4 +63,11 @@ export interface WInputProps extends Partial<ElInputProps> {
   prepend?: string
   append?: string
   debounce?: number
+}
+
+/**
+ * @link https://element-plus.gitee.io/#/zh-CN/component/input#input-methods
+ */
+export interface ElInputRef extends CommonComponentMethods {
+  select: (e?: Event) => void
 }
