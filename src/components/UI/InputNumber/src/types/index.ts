@@ -1,3 +1,5 @@
+import type { ElInputRef } from '../../../Input'
+
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/input-number#attributes
  */
@@ -21,3 +23,10 @@ export interface ElInputNumberProps {
  * @description extend from `ElInputNumber` props
  */
 export type WInputNumberProps = Partial<ElInputNumberProps>
+
+/**
+ * @link https://element-plus.gitee.io/#/zh-CN/component/input-number#methods
+ */
+export interface ElInputNumberRef {
+  input: ElInputRef
+}

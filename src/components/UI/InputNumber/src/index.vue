@@ -1,12 +1,12 @@
 <template>
-  <el-input-number v-bind="getBindValue" />
+  <el-input-number ref="inputNumberRef" v-bind="getBindValue" />
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
-  import type { WInputNumberProps } from './types'
-  import { defineComponent, computed } from 'vue'
+  import type { WInputNumberProps, ElInputNumberRef } from './types'
+  import { defineComponent, computed, ref } from 'vue'
   import props from './props'
+  import { useExpose } from '/@/hooks/core/useExpose'
 
   export default defineComponent({
     name: 'WInputNumber',
@@ -15,14 +15,29 @@
 
     props: props,
 
-    setup(props: WInputNumberProps, ctx: SetupContext) {
-      const { attrs } = ctx
+    setup(props: WInputNumberProps, ctx) {
+      const inputNumberRef = ref<Nullable<ElInputNumberRef>>(null)
+
+      const { attrs, expose } = ctx
 
       const getBindValue = computed(() => {
         return { ...attrs, ...props }
       })
 
+      useExpose({
+        apis: {
+          focus: () => {
+            inputNumberRef.value!.input.focus()
+          },
+          select: () => {
+            inputNumberRef.value!.input.select()
+          },
+        },
+        expose,
+      })
+
       return {
+        inputNumberRef,
         getBindValue,
       }
     },
