@@ -30,8 +30,8 @@ declare type AnyObject = Record<string, unknown>
 /**
  * @description used for setup prop type
  */
-declare type SetupProp<T> = Readonly<
-  EmptyObject & {
+declare type SetupProp<T, E> = Readonly<
+  E & {
     item?: T | undefined
   }
 >
