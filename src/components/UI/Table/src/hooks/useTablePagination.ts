@@ -1,12 +1,12 @@
 import type { ComputedRef } from 'vue'
-import type { WTableProps } from '../types'
+import type { BasePaginationFields, WTableProps } from '../types'
 import { unref, reactive, watch } from 'vue'
 
 export const useTablePagination = (
   props: ComputedRef<WTableProps>,
   emit: Fn
 ) => {
-  const state = reactive({
+  const state = reactive<BasePaginationFields>({
     total: 0,
     pageNum: 1,
     pageSize: 10,
@@ -14,10 +14,10 @@ export const useTablePagination = (
 
   watch(
     () => unref(props),
-    (val: any) => {
-      state.total = val.total
-      state.pageNum = val.pageNum
-      state.pageSize = val.pageSize
+    (val: Exclude<WTableProps, BasePaginationFields>) => {
+      state.total = val.total!
+      state.pageNum = val.pageNum!
+      state.pageSize = val.pageSize!
     },
     {
       deep: true,
@@ -25,7 +25,7 @@ export const useTablePagination = (
     }
   )
 
-  const onPageChange = (val: any) => {
+  const onPageChange = (val: BasePaginationFields) => {
     emit('page', val)
   }
 

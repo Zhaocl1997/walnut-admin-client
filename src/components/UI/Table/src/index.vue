@@ -1,14 +1,7 @@
 <script lang="tsx">
   import type { ElTableColumnScopedSlot, WTableProps } from './types'
 
-  import {
-    ref,
-    unref,
-    computed,
-    defineComponent,
-    renderSlot,
-    renderList,
-  } from 'vue'
+  import { ref, unref, computed, defineComponent, renderList } from 'vue'
 
   import props from './props'
 
@@ -18,6 +11,7 @@
   import { useTablePagination } from './hooks/useTablePagination'
   import { useTableMethods } from './hooks/useTableMethods'
   import { useProps } from '/@/hooks/core/useProps'
+  import { renderSlots } from '/@/utils/shared'
 
   export default defineComponent({
     name: 'WTable',
@@ -26,7 +20,7 @@
 
     props: props,
 
-    emits: ['hook', 'page', 'action'],
+    emits: ['hook', 'page', 'action', 'edit'],
 
     setup(props: WTableProps, ctx) {
       const { attrs, emit, expose, slots } = ctx
@@ -54,7 +48,10 @@
       // create `WTable` context
       setTableContext({
         tableProps: getProps,
-        emitEvents: { action: (...args) => emit('action', ...args) },
+        emitEvents: {
+          action: (...args) => emit('action', ...args),
+          edit: (...args) => emit('edit', ...args),
+        },
       })
 
       // create `useTable` hook
@@ -67,21 +64,12 @@
       // })
 
       // render table column
-      const renderTableItem = () => {
-        // render column slot
-        const renderColumnsSlot = () => {
-          const ret = {}
-          Object.keys(slots).map((slotName) => {
-            ret[slotName] = (scope: ElTableColumnScopedSlot) =>
-              renderSlot(slots, slotName, scope)
-          })
-          return ret
-        }
-
-        return renderList(tableHeaders.value, (value) => (
-          <w-table-item item={value}>{renderColumnsSlot()}</w-table-item>
+      const renderTableItem = () =>
+        renderList(tableHeaders.value, (value) => (
+          <w-table-item item={value}>
+            {renderSlots<ElTableColumnScopedSlot>(slots)}
+          </w-table-item>
         ))
-      }
 
       // render table
       const renderTable = () => {
