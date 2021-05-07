@@ -15,11 +15,15 @@ export const useTableColumnComponents = () => {
     WTableColumnExpand: createAsyncComponent(
       () => import('../components/base/expand.vue')
     ),
+
+    // extension
     WTableColumnAction: createAsyncComponent(
       () => import('../components/base/action.vue')
     ),
-    WTableColumnSwitch: createAsyncComponent(
-      () => import('../components/expand/switch.vue')
+
+    // extension
+    WTableColumnEditable: createAsyncComponent(
+      () => import('../components/expand/editable/editable.vue')
     ),
   }
 

@@ -7,8 +7,10 @@ import type {
 import { computed, renderSlot, renderList, resolveDynamicComponent } from 'vue'
 import { easyOmit, isUndefined } from 'easy-fns-ts'
 
+import { renderSlots } from '/@/utils/shared'
+
 export const useTableColumn = (
-  props: SetupProp<WTableHeaderItem>,
+  props: SetupProp<WTableHeaderItem, AnyObject>,
   ctx: SetupContext
 ) => {
   const { slots } = ctx
@@ -37,9 +39,8 @@ export const useTableColumn = (
 
       return slotableColumn.includes(props.item!.type!)
         ? {
-            default: (scope: ElTableColumnScopedSlot) => {
-              return renderSlot(slots, props.item!.type!, scope)
-            },
+            default: (scope: ElTableColumnScopedSlot) =>
+              renderSlot(slots, props.item!.type!, scope),
           }
         : {}
     }
@@ -55,6 +56,24 @@ export const useTableColumn = (
     // include `index`/`select`/`expand`/`action`/`switch` types
     // resolve dynamically through `resolveDynamicComponent`
     const renderTypeColumn = () => {
+      // handle editable column
+      // this is used for editable cell, prevent only load for once and all cell in this column will display the same content
+      // need to use the `editable` component in slot
+      if (props.item?.type === 'editable') {
+        return (
+          <el-table-column {...getColumnBindValue.value}>
+            {{
+              default: ({ row }: ElTableColumnScopedSlot) => (
+                <w-table-column-editable
+                  item={props.item}
+                  row={row}
+                ></w-table-column-editable>
+              ),
+            }}
+          </el-table-column>
+        )
+      }
+
       const customComponent = resolveDynamicComponent(
         `w-table-column-${props.item!.type}`
       )
@@ -76,21 +95,13 @@ export const useTableColumn = (
    * @description render nested columns
    */
   const renderNestedColumns = () => {
-    // render nested column slot
-    const renderNestedColumnSlot = () => {
-      const ret = {}
-      Object.keys(slots).map((name) => {
-        ret[name] = (scope: ElTableColumnScopedSlot) =>
-          renderSlot(slots, name, scope)
-      })
-      return ret
-    }
-
     return (
       props.item?.visible !== false && (
         <el-table-column {...getColumnBindValue.value}>
           {renderList(props.item?.children, (value) => (
-            <w-table-item item={value}>{renderNestedColumnSlot()}</w-table-item>
+            <w-table-item item={value}>
+              {renderSlots<ElTableColumnScopedSlot>(slots)}
+            </w-table-item>
           ))}
         </el-table-column>
       )
