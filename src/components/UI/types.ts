@@ -46,3 +46,8 @@ export interface MultiTypeCompSharedPropType {
    */
   multiple: boolean
 }
+
+export interface CommonComponentMethods {
+  focus: (e?: Event) => void
+  blur: (e?: Event) => void
+}
