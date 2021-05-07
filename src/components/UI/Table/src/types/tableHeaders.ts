@@ -1,10 +1,10 @@
 import type {
   ElTableColumnProps,
-  IndexColumn,
-  SelectColumn,
-  ExpandColumn,
-  ActionColumn,
-  SwitchColumn,
+  WTableEditableColumnDefaultIndex,
+  WTableEditableColumnDefaultSelect,
+  WTableEditableColumnDefaultExpand,
+  WTableEditableColumnDefaultAction,
+  WTableEditableColumn,
 } from './tableHeadersItem'
 import type { MaybeRef } from '/~/utils'
 
@@ -29,7 +29,13 @@ interface SharedColumnProps {
 export type WTableHeaderItem = Partial<
   (
     | ElTableColumnProps
-    | (IndexColumn | SelectColumn | ExpandColumn | ActionColumn | SwitchColumn)
+    | (
+        | WTableEditableColumnDefaultIndex
+        | WTableEditableColumnDefaultSelect
+        | WTableEditableColumnDefaultExpand
+        | WTableEditableColumnDefaultAction
+        | WTableEditableColumn
+      )
   ) &
     SharedColumnProps
 >

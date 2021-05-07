@@ -1,12 +1,12 @@
 import type { WButtonGroup } from '../../../ButtonGroup'
-import type { WSwitchProps } from '../../../Switch'
+import type { WTableEditableColumnProps } from './tableHeadersItemEditable'
 
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes
  */
 export interface ElTableColumnProps {
   key: string
-  type: 'index' | 'selection' | 'expand' | 'action' | 'switch'
+  type: 'index' | 'selection' | 'expand' | 'action' | 'editable'
   columnKey: string
   label: string
   prop: string
@@ -36,7 +36,7 @@ export interface ElTableColumnProps {
 /**
  * @description Override origin column `type` field
  */
-export type CustomTableColumn<T, K> = K &
+export type WTableEditableColumnDefaultCustomType<T, K> = K &
   ElTableColumnProps & {
     /**
      * @description custom column type
@@ -47,7 +47,7 @@ export type CustomTableColumn<T, K> = K &
 /**
  * @description Index column type
  */
-export type IndexColumn = CustomTableColumn<
+export type WTableEditableColumnDefaultIndex = WTableEditableColumnDefaultCustomType<
   'index',
   {
     index: number | ((index: number) => number)
@@ -57,7 +57,7 @@ export type IndexColumn = CustomTableColumn<
 /**
  * @description Selection column type
  */
-export type SelectColumn = CustomTableColumn<
+export type WTableEditableColumnDefaultSelect = WTableEditableColumnDefaultCustomType<
   'selection',
   {
     selectable: (row: Recordable, index: number) => boolean
@@ -68,7 +68,10 @@ export type SelectColumn = CustomTableColumn<
 /**
  * @description Expand column type
  */
-export type ExpandColumn = CustomTableColumn<'expand', EmptyObject>
+export type WTableEditableColumnDefaultExpand = WTableEditableColumnDefaultCustomType<
+  'expand',
+  EmptyObject
+>
 
 /**
  * @description Action column render way
@@ -84,7 +87,7 @@ export type WTableActionConfig = 'create' | 'edit' | 'delete'
  * @description Action column type
  * @extends
  */
-export type ActionColumn = CustomTableColumn<
+export type WTableEditableColumnDefaultAction = WTableEditableColumnDefaultCustomType<
   'action',
   {
     actionType: WTableActionType
@@ -94,7 +97,10 @@ export type ActionColumn = CustomTableColumn<
 >
 
 /**
- * @description Used for boolean type column, provide a default switch column
+ * @description Used for editable columns
  * @extends
  */
-export type SwitchColumn = CustomTableColumn<'switch', WSwitchProps>
+export type WTableEditableColumn = WTableEditableColumnDefaultCustomType<
+  'editable',
+  WTableEditableColumnProps
+>
