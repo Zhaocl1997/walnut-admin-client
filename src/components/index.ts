@@ -41,6 +41,7 @@ import {
   ElBacktop,
   ElAvatar,
   ElCard,
+  ElAlert,
   ElMenu,
   ElMenuItem,
   ElMenuItemGroup,
@@ -103,6 +104,7 @@ const components = [
   ElBacktop,
   ElAvatar,
   ElCard,
+  ElAlert,
 
   ElMenu,
   ElMenuItem,
