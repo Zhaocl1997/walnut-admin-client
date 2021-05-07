@@ -58,10 +58,6 @@ export const useLoading = (options?: Partial<ElLoadingOptions>) => {
   }
 
   const startLoading = (startOptions?: Partial<ElLoadingOptions>) => {
-    if (instance) {
-      return
-    }
-
     instance = ElLoading.service(
       easyDeepMerge(getMergedOptions(), startOptions)
     )
