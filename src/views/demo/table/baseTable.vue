@@ -17,8 +17,10 @@
       :border="tableConfig.border"
       :stripe="tableConfig.stripe"
       :show-header="tableConfig.showHeader"
+      row-key="id"
       @page="onPage"
       @action="onAction"
+      @edit="onEdit"
     >
       <template #expand="{ row }">
         <span>expand slot</span>
@@ -32,9 +34,12 @@
 </template>
 
 <script lang="ts">
+  import type { WTableEditCellEmitParams } from '/@/components/UI/Table'
   import { defineComponent, reactive, ref, onMounted } from 'vue'
   import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
   import { useTableConfig } from './configHeader'
+  import { useMessage } from '/@/hooks/component/useMessage'
+  import { easyDeepSet } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'BaseTableDemo',
@@ -62,7 +67,16 @@
       }
 
       const onAction = (type: string, scope: any) => {
-        console.log(type, scope)
+        useMessage({ type: 'success', message: type })
+      }
+
+      const onEdit = (val: WTableEditCellEmitParams) => {
+        val.loadStart()
+        setTimeout(() => {
+          easyDeepSet(val.row, val.prop, val.newValue)
+          val.loadEnd()
+          useMessage({ type: 'success', message: 'Edit success!' })
+        }, 2000)
       }
 
       const onGetList = () => {
@@ -84,6 +98,7 @@
         query,
         onPage,
         onAction,
+        onEdit,
       }
     },
   })

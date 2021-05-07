@@ -1,7 +1,17 @@
 <template>
   <el-card>
     <template #header>
-      <span>useTable hook: </span>
+      <el-alert
+        title="useTable Hook"
+        type="info"
+        description="Use `useTable` hook to render. My personal understanding for this kind of usage is to enhance type support when adding props to table. 
+        But since got `volar` plugin on `vscode`, it is also possible to get type support in template usage(also slot typed support. 
+        One more to say, if you feel familiar with `tsx` usage, just forget the template type support thing😀). 
+        So feel free to code with any kind of usage to render table! "
+        show-icon
+        :closable="false"
+      >
+      </el-alert>
 
       <w-json :value="tableHeaders" resizable></w-json>
       <w-form v-model="tableConfig" @hook="registerForm"></w-form>

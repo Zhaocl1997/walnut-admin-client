@@ -3,6 +3,19 @@ import type { WTableHeaderItem, WTableActionType } from '/@/components/UI/Table'
 import { computed, reactive } from 'vue'
 
 import { useForm } from '/@/components/UI/Form'
+import { useMessage } from '/@/hooks/component/useMessage'
+import { easyDeepSet } from 'easy-fns-ts'
+
+const genderOptions: BaseOptionItemType[] = [
+  {
+    label: 'Female',
+    value: 'F',
+  },
+  {
+    label: 'Male',
+    value: 'M',
+  },
+]
 
 export const useTableConfig = () => {
   const tableConfig = reactive({
@@ -211,7 +224,7 @@ export const useTableConfig = () => {
                   text: 'Custom1',
                   icon: 'el-icon-success',
                   onClick: (scope) => {
-                    console.log(scope)
+                    useMessage({ type: 'success', message: 'Custom1' })
                   },
                 },
                 {
@@ -220,7 +233,7 @@ export const useTableConfig = () => {
                   text: 'Custom2',
                   icon: 'el-icon-info',
                   onClick: (scope) => {
-                    console.log(scope)
+                    useMessage({ type: 'info', message: 'Custom2' })
                   },
                 },
                 {
@@ -229,7 +242,7 @@ export const useTableConfig = () => {
                   text: 'Custom3',
                   icon: 'el-icon-question',
                   onClick: (scope) => {
-                    console.log(scope)
+                    useMessage({ type: 'warning', message: 'Custom3' })
                   },
                 },
               ]
@@ -240,6 +253,8 @@ export const useTableConfig = () => {
         label: 'Name',
         prop: 'name',
         align: 'center',
+        type: 'editable',
+        editType: 'input',
       },
 
       {
@@ -257,23 +272,35 @@ export const useTableConfig = () => {
             prop: 'user.gender',
             width: '80',
             align: 'center',
+            type: 'editable',
+            editType: 'select',
+            editTypeComponentProps: {
+              options: genderOptions,
+            },
           },
           {
             label: 'Age',
             prop: 'user.age',
             width: '100',
-            formatter: (row) => `${row.user.age} years`,
+            formatter: (row) => `${row.user?.age} years`,
             align: 'center',
+            type: 'editable',
+            editType: 'inputNumber',
+            editTypeComponentProps: {
+              precision: 0,
+              max: 99,
+            },
           },
           {
             label: 'Phone',
             prop: 'user.phone',
-            width: '120',
             formatter: (row) =>
-              row.user.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2'),
+              row.user?.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2'),
             visible: tableConfig.nestedItem,
             labelClassName: 'text-red-500',
             align: 'center',
+            type: 'editable',
+            editType: 'input',
           },
         ],
       },
@@ -305,7 +332,24 @@ export const useTableConfig = () => {
                 visible: tableConfig.nestedItem,
                 labelClassName: 'text-red-500',
                 align: 'center',
-                type: 'switch',
+                type: 'editable',
+                editType: 'switch',
+                editTypeComponentProps: {
+                  beforeChange: (val) => {
+                    val.loadStart()
+                    return new Promise((resolve) => {
+                      setTimeout(() => {
+                        easyDeepSet(val.row, val.prop, val.newValue)
+                        useMessage({
+                          type: 'success',
+                          message: 'Switch success!',
+                        })
+                        val.loadEnd()
+                        resolve(true)
+                      }, 2000)
+                    })
+                  },
+                },
               },
             ],
           },
@@ -330,7 +374,24 @@ export const useTableConfig = () => {
                 visible: tableConfig.nestedItem,
                 labelClassName: 'text-red-500',
                 align: 'center',
-                type: 'switch',
+                type: 'editable',
+                editType: 'switch',
+                editTypeComponentProps: {
+                  beforeChange: (val) => {
+                    val.loadStart()
+                    return new Promise((resolve) => {
+                      setTimeout(() => {
+                        easyDeepSet(val.row, val.prop, val.newValue)
+                        useMessage({
+                          type: 'success',
+                          message: 'Switch success!',
+                        })
+                        val.loadEnd()
+                        resolve(true)
+                      }, 2000)
+                    })
+                  },
+                },
               },
             ],
           },
@@ -340,15 +401,21 @@ export const useTableConfig = () => {
       {
         label: 'Status',
         prop: 'status',
-        type: 'switch',
+        type: 'editable',
         align: 'center',
-        beforeChange: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              // ElMessage.success('切换成功')
-              resolve(true)
-            }, 1000)
-          })
+        editType: 'switch',
+        editTypeComponentProps: {
+          beforeChange: (val) => {
+            val.loadStart()
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                easyDeepSet(val.row, val.prop, val.newValue)
+                useMessage({ type: 'success', message: 'Switch success!' })
+                val.loadEnd()
+                resolve(true)
+              }, 2000)
+            })
+          },
         },
       },
 
