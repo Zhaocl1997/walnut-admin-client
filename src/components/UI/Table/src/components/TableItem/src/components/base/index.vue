@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type {
     ElTableColumnScopedSlot,
-    IndexColumn,
+    WTableEditableColumnDefaultIndex,
   } from '/@/components/UI/Table'
   import type { PropType } from 'vue'
 
@@ -14,7 +14,7 @@
     inheritAttrs: false,
 
     props: {
-      column: Object as PropType<IndexColumn>,
+      column: Object as PropType<WTableEditableColumnDefaultIndex>,
     },
 
     setup(props) {

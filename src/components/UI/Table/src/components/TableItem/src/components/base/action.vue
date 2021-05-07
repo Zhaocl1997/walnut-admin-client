@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type {
     ElTableColumnScopedSlot,
-    ActionColumn,
+    WTableEditableColumnDefaultAction,
     WTableActionConfig,
   } from '/@/components/UI/Table'
   import type { PropType } from 'vue'
@@ -19,7 +19,7 @@
     inheritAttrs: false,
 
     props: {
-      column: Object as PropType<ActionColumn>,
+      column: Object as PropType<WTableEditableColumnDefaultAction>,
     },
 
     setup(props, ctx) {

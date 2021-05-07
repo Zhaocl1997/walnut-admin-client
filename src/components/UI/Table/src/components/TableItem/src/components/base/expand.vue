@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type {
     ElTableColumnScopedSlot,
-    ExpandColumn,
+    WTableEditableColumnDefaultExpand,
   } from '/@/components/UI/Table'
   import type { PropType } from 'vue'
 
@@ -13,7 +13,7 @@
     inheritAttrs: false,
 
     props: {
-      column: Object as PropType<ExpandColumn>,
+      column: Object as PropType<WTableEditableColumnDefaultExpand>,
     },
 
     setup(props, ctx) {
