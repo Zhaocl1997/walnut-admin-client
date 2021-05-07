@@ -86,7 +86,7 @@
     "vite-plugin-html": "^2.0.7",
     "vite-plugin-style-import": "^0.10.0",
     "vite-plugin-windicss": "^0.15.7",
-    "vue-tsc": "^0.0.25"
+    "vue-tsc": "^0.1.0"
   },
   "config": {
     "commitizen": {
