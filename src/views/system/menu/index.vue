@@ -24,25 +24,6 @@
           >Element</el-tag
         >
       </template>
-
-      <template #action="{ row }">
-        <el-button size="small" type="text" @click="onCreate(row._id)"
-          >Create</el-button
-        >
-        <el-button size="small" type="text" @click="onUpdate(row._id)"
-          >Edit</el-button
-        >
-        <el-popconfirm
-          title="Do you insist to do so?"
-          icon="el-icon-info"
-          icon-color="red"
-          @confirm="onDelete(row._id)"
-        >
-          <template #reference>
-            <el-button size="small" type="text">Delete</el-button>
-          </template>
-        </el-popconfirm>
-      </template>
     </w-table>
 
     <w-dialog
@@ -65,7 +46,6 @@
 
   import { defineComponent, onMounted, ref, nextTick, computed } from 'vue'
   import { arrToTree, orderTree, formatTree } from 'easy-fns-ts'
-  import { ElMessage } from 'element-plus'
 
   import { menuAPI } from '/@/api/system/menu'
 
@@ -76,6 +56,11 @@
   import { getMenuTableHeaders } from './headers'
   import { getMenuFormSchemas } from './schemas'
   import { getMaybeI18nMsg } from './utils'
+  import {
+    useMessage,
+    useMessageBox,
+    useTodo,
+  } from '/@/hooks/component/useMessage'
 
   export default defineComponent({
     name: 'Menu',
@@ -84,6 +69,22 @@
       const tableData = ref<Menu[]>([])
       const total = ref(0)
       const treeData = ref<TreeNode<Menu>[]>([])
+
+      const onGetList = async () => {
+        const res = await menuAPI.list()
+
+        const treeMenu = orderTree<Menu>(
+          arrToTree<Menu>(res.data, { id: '_id' })
+        )
+
+        treeData.value = treeMenu
+        tableData.value = treeMenu[0].children as Menu[]
+        total.value = res.total
+      }
+
+      onMounted(() => {
+        onGetList()
+      })
 
       const getTreeData = computed(() =>
         formatTree<Menu>(treeData.value, {
@@ -106,19 +107,36 @@
         getTreeData
       )
 
-      const { rules } = generateBaseWFormRules(menuFormSchemas)
-
       const [registerTable] = useTable({
         headers: getMenuTableHeaders(),
         data: tableData,
         total: total,
         rowKey: '_id',
         border: true,
-        hasAction: true,
+        onAction: (type, scope) => {
+          const id = scope.row?._id
+
+          const action = {
+            create: onCreate,
+            edit: onUpdate,
+            delete: onDelete,
+          }
+
+          action[type](id)
+        },
+        onEdit: async ({ row, prop, newValue, loadStart, loadEnd }) => {
+          loadStart()
+          const newData = Object.assign(row, { [prop]: newValue })
+          await menuAPI.update(newData)
+          useMessage({ type: 'success', message: 'Operation Success!' })
+          loadEnd()
+        },
       })
 
       const [registerDialog, { openDialog, closeDialog }] = useDialog()
 
+      // form and rules
+      const { rules } = generateBaseWFormRules(menuFormSchemas)
       const [registerForm, { validate, clearValidate, resetFields }] = useForm({
         schemas: menuFormSchemas,
         span: 23,
@@ -126,18 +144,7 @@
         labelWidth: '150px',
       })
 
-      const onGetList = async () => {
-        const res = await menuAPI.list()
-
-        const treeMenu = orderTree<Menu>(
-          arrToTree<Menu>(res.data, { id: '_id' })
-        )
-
-        treeData.value = treeMenu
-        tableData.value = treeMenu[0].children as Menu[]
-        total.value = res.total
-      }
-
+      // create
       const onCreate = (id: string) => {
         if (id) {
           menuFormData.value.pid = id
@@ -154,6 +161,7 @@
         })
       }
 
+      // update
       const onUpdate = async (id: string) => {
         const res = await menuAPI.read(id)
 
@@ -170,12 +178,18 @@
         })
       }
 
+      // delete
       const onDelete = async (id: string) => {
-        await menuAPI.delete(id)
-        ElMessage.success('Success')
-        await onGetList()
+        const next = await useTodo('Are you sure to delete this menu?')
+
+        if (next) {
+          await menuAPI.delete(id)
+          useMessage({ type: 'success', message: 'Operation Success!' })
+          await onGetList()
+        }
       }
 
+      // dialog cancel
       const onDialogCancel = async () => {
         await resetFields()
 
@@ -193,22 +207,19 @@
         await clearValidate()
       }
 
+      // dialog confirm
       const onDialogConfirm = async () => {
         if (menuFormData.value._id) {
-          await menuAPI.update(menuFormData.value)
-          ElMessage.success('Success')
+          await menuAPI.update(menuFormData.value as Menu)
+          useMessage({ type: 'success', message: 'Operation Success!' })
         } else {
-          await menuAPI.create(menuFormData.value)
-          ElMessage.success('Success')
+          await menuAPI.create(menuFormData.value as Menu)
+          useMessage({ type: 'success', message: 'Operation Success!' })
         }
 
         onDialogCancel()
         await onGetList()
       }
-
-      onMounted(() => {
-        onGetList()
-      })
 
       return {
         menuFormData,
@@ -219,10 +230,6 @@
 
         onDialogCancel,
         onDialogConfirm,
-
-        onCreate,
-        onUpdate,
-        onDelete,
       }
     },
   })

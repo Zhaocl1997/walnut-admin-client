@@ -25,6 +25,8 @@ export const getMenuTableHeaders = (): WTableHeaderItem[] => {
       label: 'Order',
       prop: 'order',
       width: '80px',
+      type: 'editable',
+      editType: 'inputNumber',
     },
     {
       label: 'Visible',
@@ -47,6 +49,10 @@ export const getMenuTableHeaders = (): WTableHeaderItem[] => {
       prop: 'updatedAt',
       width: '200px',
       formatter: (row) => formatTime(row.updatedAt),
+    },
+    {
+      type: 'action',
+      minWidth: '180',
     },
   ]
 }
