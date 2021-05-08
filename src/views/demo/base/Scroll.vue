@@ -4,6 +4,22 @@
       <span>ScrollBar：</span>
     </template>
 
+    <w-title show-left>Virtual Scroll</w-title>
+
+    <br />
+    <br />
+
+    <div class="border-gray-300 border-2">
+      <w-virtual-scroll :data="data" :height="400" :itemHeight="39" :bench="50">
+        <template #default="{ item, index }">
+          {{ item.title + ' ' + (index + 1) }}
+        </template>
+      </w-virtual-scroll>
+    </div>
+
+    <br />
+    <br />
+
     <el-button @click="scrollTo(800)">Scroll to 800px position</el-button>
     <el-button @click="scrollTo(1600)">Scroll to 1600px position</el-button>
 
@@ -27,10 +43,10 @@
     <br />
     <br />
 
-    <w-title show-left>Horizontal(default)</w-title>
+    <w-title show-left>Horizontal Position: {{ position }}</w-title>
 
     <div class="h-56 border border-2 border-gray-600 rounded-sm">
-      <w-scrollbar ref="scrollRef">
+      <w-scrollbar v-model="position" ref="scrollRef">
         <div v-for="(i, index) in 100" :key="i" class="text-3xl my-3">
           Horizontal-{{ index }}
         </div>
@@ -66,10 +82,10 @@
     <br />
     <br />
 
-    <w-title show-left>Vertical</w-title>
+    <w-title show-left>Vertical Position: {{ positionVertival }}</w-title>
 
     <div class="border border-2 border-gray-600 rounded-sm h-12">
-      <w-scrollbar ref="scrollVerticalRef" vertical>
+      <w-scrollbar v-model="positionVertival" ref="scrollVerticalRef" vertical>
         <div class="flex flex-row flex-nowrap whitespace-nowrap">
           <div v-for="(i, index) in 100" :key="i" class="text-3xl mx-3">
             Vertical-{{ index }}
@@ -83,11 +99,29 @@
 <script lang="ts">
   import type { WScrollbarRef } from '/@/components/UI/Scrollbar'
   import { defineComponent, ref } from 'vue'
+  import { WVirtualScroll } from '/@/components/UI/Scrollbar'
+
+  const data: Recordable[] = (() => {
+    const arr: Recordable[] = []
+    for (let index = 1; index < 20000; index++) {
+      arr.push({
+        title: 'List item',
+      })
+    }
+    return arr
+  })()
 
   export default defineComponent({
     name: 'ScrollDemo',
 
+    components: {
+      WVirtualScroll,
+    },
+
     setup() {
+      const position = ref(0)
+      const positionVertival = ref(0)
+
       const scrollRef = ref<Nullable<WScrollbarRef>>(null)
       const scrollVerticalRef = ref<Nullable<WScrollbarRef>>(null)
 
@@ -126,6 +160,11 @@
       }
 
       return {
+        data,
+
+        position,
+        positionVertival,
+
         scrollRef,
         scrollVerticalRef,
 
