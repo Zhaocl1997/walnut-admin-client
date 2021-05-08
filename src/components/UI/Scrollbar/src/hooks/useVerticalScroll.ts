@@ -1,10 +1,15 @@
-import type { WScrollProps } from '../types'
-import { onMounted, onUnmounted, ref } from 'vue'
-import { genString, off, on } from 'easy-fns-ts'
+import type { WScrollProps, ElScrollbarRef } from '../types'
+import type { Ref } from 'vue'
+
+import { ref, nextTick } from 'vue'
+
+import { genString } from 'easy-fns-ts'
+
+import { useEventListener } from '@vueuse/core'
 
 export const useVerticalScroll = (
   props: WScrollProps,
-  getScrollRef: Fn,
+  scrollRef: Ref<Nullable<ElScrollbarRef>>,
   emit: Fn
 ) => {
   const scrollId = ref(genString(8))
@@ -13,8 +18,6 @@ export const useVerticalScroll = (
    * @description Capture wheel event so be able to handle x axias scroll
    */
   const onScroll = (event: WheelEvent) => {
-    const { scrollbar } = getScrollRef()
-
     // get scroll direction
     const detail = (event as any).wheelDelta || event.detail
 
@@ -33,29 +36,20 @@ export const useVerticalScroll = (
     }
 
     // move action
-    scrollbar.wrap.scrollLeft += step
+    scrollRef.value!.wrap.scrollLeft += step
 
     emit('scroll')
   }
 
-  onMounted(() => {
+  nextTick(() => {
     if (props.vertical) {
       const target = document.getElementById(scrollId.value)!
-      // @ts-ignore
-      // TODO easy-fns-ts
-      on(target, 'wheel', onScroll, {
+
+      useEventListener(target, 'wheel', onScroll, {
         passive: true,
         once: false,
         capture: true,
       })
-    }
-  })
-
-  onUnmounted(() => {
-    if (props.vertical) {
-      const target = document.getElementById(scrollId.value)!
-      // @ts-ignore
-      off(target, 'wheel', onScroll, false)
     }
   })
 

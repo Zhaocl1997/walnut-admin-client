@@ -2,7 +2,10 @@ import type {
   WScrollbarRef,
   ScrollToAdvancedParams,
   WScrollProps,
+  ElScrollbarRef,
 } from '../types'
+import type { Ref } from 'vue'
+
 import { nextTick } from 'vue'
 
 import { ScrollModeEnum, ScrollFieldEnum } from '../types'
@@ -12,7 +15,7 @@ const defaultDurationTime = 500
 
 export const useScrollCore = (
   props: WScrollProps,
-  getScrollRef: Fn
+  scrollRef: Ref<Nullable<ElScrollbarRef>>
 ): WScrollbarRef => {
   const mode = props.vertical
     ? ScrollModeEnum.VERTICAL
@@ -26,11 +29,9 @@ export const useScrollCore = (
    * @description scroll to specfic position
    */
   const scrollTo = (to: number, duration: number = defaultDurationTime) => {
-    const { scrollbar } = getScrollRef()
-
     nextTick(() => {
       const { start } = useScrollTo({
-        el: scrollbar.wrap,
+        el: scrollRef.value!.wrap,
         to,
         duration,
         mode,
@@ -50,11 +51,9 @@ export const useScrollCore = (
    * @description scroll to top
    */
   const scrollToEnd = (duration?: number) => {
-    const { scrollbar } = getScrollRef()
-
     const val = props.vertical
-      ? scrollbar.wrap.scrollWidth
-      : scrollbar.wrap.scrollHeight
+      ? scrollRef.value!.wrap.scrollWidth
+      : scrollRef.value!.wrap.scrollHeight
 
     scrollTo(val, duration)
   }
@@ -66,16 +65,16 @@ export const useScrollCore = (
     args: ScrollToAdvancedParams,
     duration?: number
   ) => {
-    const { scrollbar } = getScrollRef()
-
     const { index } = args
 
     let val: any
 
     try {
-      val = scrollbar.wrap.children[0].children[index!][field]
+      val = scrollRef.value!.wrap.children[0].children[index!][field]
     } catch (e) {
-      val = scrollbar.wrap.children[0].children[0].children[index!][field]
+      val = scrollRef.value!.wrap.children[0].children[0].children[index!][
+        field
+      ]
     }
 
     scrollTo(val, duration)

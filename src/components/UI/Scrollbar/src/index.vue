@@ -1,42 +1,41 @@
-<template>
-  <el-scrollbar :id="scrollId" ref="scrollRef" noresize>
-    <slot />
-  </el-scrollbar>
-</template>
+<script lang="tsx">
+  import type { WScrollProps, ElScrollbarRef } from './types'
 
-<script lang="ts">
-  import type { SetupContext, PropType } from 'vue'
-  import type { WScrollProps } from './types'
-  import { defineComponent, ref, unref } from 'vue'
+  import { defineComponent, ref, computed, renderSlot } from 'vue'
+  import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
 
   import { useScrollCore } from './hooks/useScrollCore'
   import { useVerticalScroll } from './hooks/useVerticalScroll'
+  import { useScrollPosition } from './hooks/useScrollPosition'
+
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WScroll',
 
-    props: {
-      vertical: Boolean as PropType<boolean>,
-    },
+    inheritAttrs: false,
 
-    emits: ['scroll'],
+    props: props,
 
-    setup(props: WScrollProps, ctx: SetupContext) {
-      const { expose, emit } = ctx
+    emits: ['scroll', 'update:modelValue'],
 
-      const scrollRef = ref(null)
+    setup(props: WScrollProps, ctx) {
+      const { expose, emit, attrs, slots } = ctx
 
-      const getScrollRef = () => {
-        const scrollbar = unref(scrollRef)
-        if (!scrollbar) return
-        return { scrollbar }
-      }
+      const scrollRef = ref<Nullable<ElScrollbarRef>>(null)
 
-      const { scrollId } = useVerticalScroll(props, getScrollRef, emit)
+      const getBindValue = computed(() => ({
+        ...attrs,
+        ...easyOmit(props, extendPropKeys),
+      }))
 
-      const scrollToMethods = useScrollCore(props, getScrollRef)
+      const { onScroll } = useScrollPosition(props, emit)
+
+      const { scrollId } = useVerticalScroll(props, scrollRef, emit)
+
+      const scrollToMethods = useScrollCore(props, scrollRef)
 
       // expose to outside
       useExpose({
@@ -44,12 +43,17 @@
         expose: expose,
       })
 
-      return {
-        scrollRef,
-        scrollId,
-      }
+      return () => (
+        <el-scrollbar
+          id={scrollId.value}
+          ref={scrollRef}
+          {...getBindValue.value}
+          noresize
+          onScroll={onScroll}
+        >
+          {renderSlot(slots, 'default')}
+        </el-scrollbar>
+      )
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

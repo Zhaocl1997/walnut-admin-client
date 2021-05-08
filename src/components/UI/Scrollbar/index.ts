@@ -1,5 +1,8 @@
-import WScroll from './src/index.vue'
+import WScrollbar from './src/index.vue'
+import WVirtualScroll from './src/virtual.vue'
 
 export * from './src/types'
 
-export default WScroll
+export { WVirtualScroll }
+
+export default WScrollbar
