@@ -1,11 +1,6 @@
 import { ElTable } from 'element-plus'
 
-export default {
-  /**
-   * @description original ElTable props
-   */
-  ...ElTable.props,
-
+const extendProps = {
   /**
    * =======================================
    * =======================================
@@ -191,4 +186,12 @@ export default {
     type: Boolean,
     default: false,
   },
+}
+
+export const extendPropKeys = Object.keys(extendProps)
+
+export default {
+  ...ElTable.props,
+
+  ...extendProps,
 }

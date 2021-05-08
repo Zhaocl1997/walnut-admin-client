@@ -1,9 +1,10 @@
 <script lang="tsx">
-  import type { ElTableColumnScopedSlot, WTableProps } from './types'
+  import type { WTableProps } from './types'
 
   import { ref, unref, computed, defineComponent, renderList } from 'vue'
+  import { easyOmit } from 'easy-fns-ts'
 
-  import props from './props'
+  import props, { extendPropKeys } from './props'
 
   import { setTableContext } from './hooks/useTableContext'
   import { useTableHeaders } from './hooks/useTableHeaders'
@@ -40,8 +41,8 @@
       const getBindValue = computed(() => {
         return {
           ...attrs,
-          // unref the computed props and bind to el-table
-          ...unref(getProps),
+          // omit custom props
+          ...easyOmit(unref(getProps), extendPropKeys),
         }
       })
 
@@ -66,9 +67,7 @@
       // render table column
       const renderTableItem = () =>
         renderList(tableHeaders.value, (value) => (
-          <w-table-column item={value}>
-            {renderSlots<ElTableColumnScopedSlot>(slots)}
-          </w-table-column>
+          <w-table-column item={value}>{renderSlots(slots)}</w-table-column>
         ))
 
       // render table
