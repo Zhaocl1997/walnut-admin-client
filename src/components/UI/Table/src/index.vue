@@ -66,9 +66,9 @@
       // render table column
       const renderTableItem = () =>
         renderList(tableHeaders.value, (value) => (
-          <w-table-item item={value}>
+          <w-table-column item={value}>
             {renderSlots<ElTableColumnScopedSlot>(slots)}
-          </w-table-item>
+          </w-table-column>
         ))
 
       // render table

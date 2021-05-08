@@ -1,12 +1,12 @@
 import { getCurrentInstance } from 'vue'
 
-import WTableItem from '../components/TableItem'
+import WTableColumn from '../components/TableColumn'
 
 export const useTableComponent = () => {
   const instance = getCurrentInstance()
 
   const components = {
-    WTableItem,
+    WTableColumn,
   }
 
   // @ts-ignore

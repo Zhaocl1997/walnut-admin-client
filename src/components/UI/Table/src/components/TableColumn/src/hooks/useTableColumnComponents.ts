@@ -7,18 +7,18 @@ export const useTableColumnComponents = () => {
 
   const components = {
     WTableColumnIndex: createAsyncComponent(
-      () => import('../components/base/index.vue')
+      () => import('../components/default/index.vue')
     ),
     WTableColumnSelection: createAsyncComponent(
-      () => import('../components/base/selection.vue')
+      () => import('../components/default/selection.vue')
     ),
     WTableColumnExpand: createAsyncComponent(
-      () => import('../components/base/expand.vue')
+      () => import('../components/default/expand.vue')
     ),
 
     // extension
     WTableColumnAction: createAsyncComponent(
-      () => import('../components/base/action.vue')
+      () => import('../components/expand/action/action.vue')
     ),
 
     // extension
