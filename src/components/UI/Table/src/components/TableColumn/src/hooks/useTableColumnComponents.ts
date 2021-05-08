@@ -18,12 +18,12 @@ export const useTableColumnComponents = () => {
 
     // extension
     WTableColumnAction: createAsyncComponent(
-      () => import('../components/expand/action/action.vue')
+      () => import('../components/extend/action/action.vue')
     ),
 
     // extension
     WTableColumnEditable: createAsyncComponent(
-      () => import('../components/expand/editable/editable.vue')
+      () => import('../components/extend/editable/editable.vue')
     ),
   }
 
