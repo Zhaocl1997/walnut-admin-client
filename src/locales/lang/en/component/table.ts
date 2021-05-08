@@ -27,6 +27,8 @@ export default {
   screenfull: 'Full Screen',
   buttons: {
     create: 'Create',
+    edit: 'Edit',
+    delete: 'Delete',
     import: 'Import',
     export: 'Export',
   },

@@ -28,6 +28,8 @@ export default {
   screenfull: '全屏',
   buttons: {
     create: '新增',
+    edit: '修改',
+    delete: '删除',
     import: '导入',
     export: '导出',
   },
