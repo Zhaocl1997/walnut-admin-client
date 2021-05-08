@@ -1,15 +1,14 @@
 import { ElDialog } from 'element-plus'
 
+const extendProps = {}
+
+export const extendPropKeys = Object.keys(extendProps).concat('isTrusted')
+
 export default {
-  /**
-   * @description original ElDialog props
-   */
   ...ElDialog.props,
 
   /**
    * @override
-   * @type {Boolean}
-   * @default false
    */
   modelValue: {
     type: Boolean,
@@ -18,11 +17,11 @@ export default {
 
   /**
    * @override
-   * @type {String}
-   * @default 6vh
    */
   top: {
     type: String,
     default: '6vh',
   },
+
+  ...extendProps,
 }

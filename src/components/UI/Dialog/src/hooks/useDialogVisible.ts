@@ -4,7 +4,7 @@ import { ref } from 'vue'
 export const useDialogVisible = (props?: WDialogProps) => {
   const visibleRef = ref(false)
 
-  const onToggleVisible = (visible: boolean | undefined) => {
+  const onToggleVisible = (visible?: boolean) => {
     if (visible === undefined) {
       visibleRef.value = !visibleRef.value
       return

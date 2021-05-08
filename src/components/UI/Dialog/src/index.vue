@@ -1,7 +1,7 @@
 <template>
-  <div class="w-dialog">
-    <el-dialog v-bind="getBindValue" @close="onClose">
-      <template #title>
+  <div ref="wDialogRef" class="w-dialog">
+    <el-dialog v-bind="getBindValue" @close="emit('cancel')">
+      <template #title v-if="!$slots.title">
         <w-title show-left>{{ getBindValue.title }}</w-title>
       </template>
 
@@ -9,13 +9,13 @@
         <slot></slot>
       </div>
 
-      <template #footer>
+      <template #footer v-if="!$slots.footer">
         <el-space>
-          <el-button size="small" @click="onCancel">{{
+          <el-button size="small" @click="emit('cancel')">{{
             t('component.dialog.cancel')
           }}</el-button>
 
-          <el-button size="small" type="primary" @click="onConfirm">{{
+          <el-button size="small" type="primary" @click="emit('confirm')">{{
             t('component.dialog.confirm')
           }}</el-button>
         </el-space>
@@ -25,16 +25,19 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
   import type { WDialogProps } from './types'
-  import { defineComponent, computed, unref } from 'vue'
 
-  import props from './props'
+  import { defineComponent, computed, unref, nextTick, ref } from 'vue'
+  import { easyOmit } from 'easy-fns-ts'
 
   import { useI18n } from '/@/locales'
-  import { useDialogProps } from './hooks/useDialogProps'
+  import { useProps } from '/@/hooks/core/useProps'
+
   import { useDialogVisible } from './hooks/useDialogVisible'
   import { useDialogMethods } from './hooks/useDialogMethods'
+  import { useDialogDrag } from './hooks/useDialogDrag'
+
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WDialog',
@@ -45,12 +48,14 @@
 
     emits: ['hook', 'cancel', 'confirm'],
 
-    setup(props: WDialogProps, ctx: SetupContext) {
+    setup(props: WDialogProps, ctx) {
       const { attrs, emit } = ctx
 
       const { t } = useI18n()
 
-      const { setProps, getProps } = useDialogProps(props)
+      const wDialogRef = ref<Nullable<HTMLElement>>(null)
+
+      const { setProps, getProps } = useProps<WDialogProps>(props)
 
       const { visibleRef, onToggleVisible } = useDialogVisible()
 
@@ -59,32 +64,23 @@
       const getBindValue = computed(() => {
         return {
           ...attrs,
-          ...unref(getProps),
+          ...easyOmit(unref(getProps), extendPropKeys),
           modelValue: visibleRef.value,
-        }
+        } as WDialogProps
       })
-
-      const onCancel = () => {
-        emit('cancel')
-      }
-
-      const onConfirm = () => {
-        emit('confirm')
-      }
-
-      const onClose = () => {
-        emit('cancel')
-      }
 
       // create `useDialog` hook
       emit('hook', dialogMethods)
 
+      nextTick(() => {
+        useDialogDrag(wDialogRef)
+      })
+
       return {
+        wDialogRef,
         t,
+        emit,
         getBindValue,
-        onCancel,
-        onConfirm,
-        onClose,
         onToggleVisible,
       }
     },

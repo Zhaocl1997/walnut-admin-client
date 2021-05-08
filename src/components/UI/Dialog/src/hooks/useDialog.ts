@@ -3,23 +3,13 @@ import type {
   WDialogMethods,
   WDialogProps,
 } from '../types'
-import { ref, unref, nextTick, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { isInSetup } from '/@/utils/shared'
-import { appError } from '/@/utils/log'
 
 export const useDialog = (props?: WDialogProps): useDialogReturnType => {
   isInSetup()
 
-  const dialogRef = ref<Nullable<any>>(null)
-
-  const getInstance = async (): Promise<WDialogMethods> => {
-    const instance: WDialogMethods = unref(dialogRef)!
-    if (!instance) {
-      appError('Dialog instance is undefined!')
-    }
-    await nextTick()
-    return instance
-  }
+  const dialogRef = ref<Nullable<WDialogMethods>>(null)
 
   const register = (instance: WDialogMethods): void => {
     dialogRef.value = instance
@@ -31,11 +21,11 @@ export const useDialog = (props?: WDialogProps): useDialogReturnType => {
 
   const methods = {
     openDialog: async (props: WDialogProps) => {
-      ;(await getInstance()).openDialog(props)
+      dialogRef.value!.openDialog(props)
     },
 
     closeDialog: async () => {
-      ;(await getInstance()).closeDialog()
+      dialogRef.value!.closeDialog()
     },
   }
 
