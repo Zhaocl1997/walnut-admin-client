@@ -2,7 +2,7 @@ import type { App } from 'vue'
 
 import { setupI18n } from '/@/locales'
 import { setupElementPlus } from '/@/components'
-import { AppRouter, setupRouter } from '/@/router'
+import { setupRouter } from '/@/router'
 import { setupStore } from '/@/store'
 import { setupDirectives } from '/@/directives'
 
@@ -36,8 +36,6 @@ export const setupApp = async (app: App) => {
   setupDirectives(app)
 
   setupErrorhandler(app)
-
-  await AppRouter.isReady()
 
   if (isDev()) {
     app.config.performance = true
