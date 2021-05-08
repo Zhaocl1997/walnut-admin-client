@@ -1,4 +1,7 @@
-import type { WTableHeaderItem, WTableActionType } from '/@/components/UI/Table'
+import type {
+  WTableHeaderItem,
+  WTableEditableColumnActionType,
+} from '/@/components/UI/Table'
 
 import { computed, reactive } from 'vue'
 
@@ -28,7 +31,7 @@ export const useTableConfig = () => {
     stripe: false,
     showHeader: true,
     action: false,
-    actionType: 'slot',
+    actionType: 'slot' as WTableEditableColumnActionType,
     actionArrayConfig: 'default',
     nested: false,
     nestedItem: false,
@@ -208,14 +211,14 @@ export const useTableConfig = () => {
         width: '180px',
         align: 'center',
         fixed: 'right',
-        actionType: tableConfig.actionType as WTableActionType,
+        actionType: tableConfig.actionType,
 
         actionConfig:
           tableConfig.actionArrayConfig === 'config'
             ? ['create', 'edit']
             : ['create', 'delete', 'edit'],
 
-        buttonGroup:
+        actionButtonGroup:
           tableConfig.actionArrayConfig === 'custom'
             ? [
                 {

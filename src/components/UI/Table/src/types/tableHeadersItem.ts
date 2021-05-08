@@ -1,4 +1,4 @@
-import type { WButtonGroup } from '../../../ButtonGroup'
+import type { WButtonGroupItem } from '../../../ButtonGroup'
 import type { WTableEditableColumnProps } from './tableHeadersItemEditable'
 
 /**
@@ -76,12 +76,19 @@ export type WTableEditableColumnDefaultExpand = WTableEditableColumnDefaultCusto
 /**
  * @description Action column render way
  */
-export type WTableActionType = 'array' | 'slot'
+export type WTableEditableColumnActionType = 'array' | 'slot'
 
 /**
  * @description Action column array button group config
  */
-export type WTableActionConfig = 'create' | 'edit' | 'delete'
+export type WTableEditableColumnActionConfig = 'create' | 'edit' | 'delete'
+
+/**
+ * @description Action column custom array to render button group
+ */
+export type WTableEditableColumnActionButtonGroup = (WButtonGroupItem & {
+  actionButtonType?: WTableEditableColumnActionConfig
+})[]
 
 /**
  * @description Action column type
@@ -90,9 +97,9 @@ export type WTableActionConfig = 'create' | 'edit' | 'delete'
 export type WTableEditableColumnDefaultAction = WTableEditableColumnDefaultCustomType<
   'action',
   {
-    actionType: WTableActionType
-    buttonGroup: WButtonGroup
-    actionConfig: WTableActionConfig[]
+    actionType: WTableEditableColumnActionType
+    actionConfig: WTableEditableColumnActionConfig[]
+    actionButtonGroup: WTableEditableColumnActionButtonGroup
   }
 >
 

@@ -2,16 +2,15 @@
   import type {
     ElTableColumnScopedSlot,
     WTableEditableColumnDefaultAction,
-    WTableActionConfig,
   } from '/@/components/UI/Table'
   import type { PropType } from 'vue'
-  import type { WButtonGroup } from '/@/components/UI/ButtonGroup'
 
-  import { defineComponent, renderSlot, renderList } from 'vue'
+  import { defineComponent, renderSlot, renderList, computed } from 'vue'
   import { isArray } from 'easy-fns-ts'
 
   import { useI18n } from '/@/locales'
-  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
+
+  import { useActionColumnDefaultButtonGroup } from './hooks/useActionColumnDefaultButtonGroup'
 
   export default defineComponent({
     name: 'WTableColumnAction',
@@ -25,46 +24,17 @@
     setup(props, ctx) {
       const { slots } = ctx
       const { t } = useI18n()
-      const { emitEvents } = useTableContext()
 
-      const defaultActionButtonGroup: WButtonGroup = [
-        {
-          type: 'text',
-          size: 'small',
-          text: 'Create',
-          onClick: (scope) => {
-            emitEvents.action('create', scope)
-          },
-        },
-        {
-          type: 'text',
-          size: 'small',
-          text: 'Edit',
-          onClick: (scope) => {
-            emitEvents.action('edit', scope)
-          },
-        },
-        {
-          type: 'text',
-          size: 'small',
-          text: 'Delete',
-          onClick: (scope) => {
-            emitEvents.action('delete', scope)
-          },
-        },
-      ]
+      const { filteredButtonGroup } = useActionColumnDefaultButtonGroup(
+        props,
+        t
+      )
 
       // render action by button group array
       const renderActionArray = (scope: ElTableColumnScopedSlot) => {
         // render default button group
         const renderDefault = () => {
-          // filter the configed button group
-          const filteredButtonGroup = defaultActionButtonGroup.filter((item) =>
-            props.column?.actionConfig.includes(
-              (item.text as string).toLowerCase() as WTableActionConfig
-            )
-          )
-          return renderList(filteredButtonGroup, (value) => (
+          return renderList(filteredButtonGroup.value, (value) => (
             <w-button
               {...{ ...value, onClick: () => value.onClick!(scope) }}
             ></w-button>
@@ -73,7 +43,7 @@
 
         // render custom button group
         const renderCustom = () =>
-          renderList(props.column!.buttonGroup, (value) => (
+          renderList(props.column!.actionButtonGroup, (value) => (
             <w-button
               {...{ ...value, onClick: () => value.onClick!(scope) }}
             ></w-button>
@@ -81,21 +51,20 @@
 
         const isArrayRender =
           props.column?.actionType === 'array' &&
-          isArray(props.column.buttonGroup) &&
-          props.column.buttonGroup.length > 0
+          isArray(props.column.actionButtonGroup) &&
+          props.column.actionButtonGroup.length > 0
 
         return isArrayRender ? renderCustom() : renderDefault()
       }
 
-      // render action slot
-      const renderDefaultSlot = () => {
-        return {
-          default: (scope: ElTableColumnScopedSlot) =>
-            props.column?.actionType === 'slot'
-              ? renderSlot(slots, 'default', scope)
-              : renderActionArray(scope),
-        }
-      }
+      // render action default slot
+      // `slot` or `array`
+      const renderDefaultSlot = () => ({
+        default: (scope: ElTableColumnScopedSlot) =>
+          props.column?.actionType === 'slot'
+            ? renderSlot(slots, 'default', scope)
+            : renderActionArray(scope),
+      })
 
       return () => (
         <el-table-column
