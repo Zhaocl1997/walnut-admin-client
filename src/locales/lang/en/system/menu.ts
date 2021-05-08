@@ -23,6 +23,7 @@ export default {
       selectTree: 'SelectTree',
       scrollbar: 'ScrollBar',
       clickoutside: 'ClickOutside',
+      dialog: 'Dialog',
     },
   },
 

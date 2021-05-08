@@ -23,6 +23,7 @@ export default {
       selectTree: '下拉树',
       scrollbar: '滚动条',
       clickoutside: '点击外部',
+      dialog: '对话框',
     },
   },
 
