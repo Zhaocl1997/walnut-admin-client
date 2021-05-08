@@ -14,7 +14,7 @@ export const useActionColumnDefaultButtonGroup = (
   >,
   t: Fn
 ) => {
-  const { emitEvents } = useTableContext()
+  const { emitEvents, tableProps } = useTableContext()
 
   // default button group
   const defaultButtonGroup = computed(
@@ -26,7 +26,11 @@ export const useActionColumnDefaultButtonGroup = (
           text: t('component.table.buttons.create'),
           actionButtonType: 'create',
           onClick: (scope) => {
+            // for emit event
             emitEvents.action('create', scope)
+
+            // for prop usage
+            tableProps.value.onAction!('create', scope)
           },
         },
         {
@@ -36,6 +40,7 @@ export const useActionColumnDefaultButtonGroup = (
           actionButtonType: 'edit',
           onClick: (scope) => {
             emitEvents.action('edit', scope)
+            tableProps.value.onAction!('edit', scope)
           },
         },
         {
@@ -45,6 +50,7 @@ export const useActionColumnDefaultButtonGroup = (
           actionButtonType: 'delete',
           onClick: (scope) => {
             emitEvents.action('delete', scope)
+            tableProps.value.onAction!('delete', scope)
           },
         },
       ]
@@ -54,7 +60,9 @@ export const useActionColumnDefaultButtonGroup = (
   // filter the configed button group
   const filteredButtonGroup = computed(() =>
     defaultButtonGroup.value.filter((item) =>
-      props.column?.actionConfig.includes(item.actionButtonType!)
+      (props.column?.actionConfig ?? ['create', 'delete', 'edit']).includes(
+        item.actionButtonType!
+      )
     )
   )
 

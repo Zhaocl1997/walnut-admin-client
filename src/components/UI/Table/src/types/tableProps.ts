@@ -1,4 +1,7 @@
+import type { WTableEditCellEmitParams } from './tableContext'
 import type { WTableHeaderItem } from './tableHeaders'
+import type { WTableEditableColumnActionConfig } from './tableHeadersItem'
+import type { ElTableColumnScopedSlot } from './tableSlot'
 import type { MaybeRef } from '/~/utils'
 
 export interface ElTableStyleAndClassParams {
@@ -89,4 +92,11 @@ export interface WTableProps extends Partial<ElTableProps> {
    * @description table current page, used for pagination
    */
   pageSize?: number
+
+  onAction?: (
+    type: WTableEditableColumnActionConfig,
+    scope: ElTableColumnScopedSlot
+  ) => void
+
+  onEdit?: (val: WTableEditCellEmitParams) => void
 }

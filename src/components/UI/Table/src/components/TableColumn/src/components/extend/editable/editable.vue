@@ -47,7 +47,7 @@
       const editValue = ref('')
       const editableComponentRef = ref<Nullable<ElInputRef>>(null)
 
-      const { emitEvents } = useTableContext()
+      const { emitEvents, tableProps } = useTableContext()
 
       // render original content
       const renderOriginContent = () => {
@@ -122,6 +122,7 @@
       const onSave = (e: KeyboardEvent | any) => {
         // handle common and enter keyup
         if (!e.key || e.key === 'Enter') {
+          // for emit event
           emitEvents.edit({
             newValue: editValue.value,
             row: props.row,
@@ -130,6 +131,17 @@
               startLoading({ target: `#${loadingTargetId.value}` }),
             loadEnd: () => endLoading(),
           })
+
+          // for prop usage
+          tableProps.value.onEdit!({
+            newValue: editValue.value,
+            row: props.row,
+            prop: props.item!.prop,
+            loadStart: () =>
+              startLoading({ target: `#${loadingTargetId.value}` }),
+            loadEnd: () => endLoading(),
+          })
+
           editable.value = false
         }
 
