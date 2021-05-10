@@ -23,6 +23,7 @@ const genderOptions: BaseOptionItemType[] = [
 export const useTableConfig = () => {
   const tableConfig = reactive({
     page: false,
+    settings: false,
     index: false,
     indexFn: false,
     select: false,
@@ -45,6 +46,13 @@ export const useTableConfig = () => {
         formProp: {
           prop: 'page',
           label: 'Pagination',
+        },
+      },
+      {
+        type: 'Switch',
+        formProp: {
+          prop: 'settings',
+          label: 'Settings',
         },
       },
       {

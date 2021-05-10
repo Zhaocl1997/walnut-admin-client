@@ -1,5 +1,7 @@
 import { getCurrentInstance } from 'vue'
 
+import { createAsyncComponent } from '/@/utils/factory/asyncComponent'
+
 import WTableColumn from '../components/TableColumn'
 
 export const useTableComponent = () => {
@@ -7,6 +9,9 @@ export const useTableComponent = () => {
 
   const components = {
     WTableColumn,
+    WTableExtendSettings: createAsyncComponent(
+      () => import('../components/Extend/settings')
+    ),
   }
 
   // @ts-ignore

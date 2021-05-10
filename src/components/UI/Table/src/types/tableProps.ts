@@ -79,6 +79,11 @@ export interface WTableProps extends Partial<ElTableProps> {
   hasPage?: boolean
 
   /**
+   * @description has table settings or not
+   */
+  hasSettings?: boolean
+
+  /**
    * @description table total count, used for pagination
    */
   total?: number

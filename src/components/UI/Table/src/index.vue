@@ -72,6 +72,11 @@
 
       // render table
       const renderTable = () => {
+        const renderHeader = () =>
+          getProps.value.hasSettings && (
+            <w-table-extend-settings></w-table-extend-settings>
+          )
+
         // render pagination
         const renderPage = () =>
           getProps.value.hasPage && (
@@ -84,6 +89,8 @@
 
         return (
           <>
+            {renderHeader()}
+
             <el-table ref={tableRef} {...getBindValue.value}>
               {renderTableItem()}
             </el-table>

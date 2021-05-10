@@ -12,6 +12,7 @@
       :data="data"
       :total="total"
       :has-page="tableConfig.page"
+      :has-settings="tableConfig.settings"
       :page-num="query.pageNum"
       :page-size="query.pageSize"
       :border="tableConfig.border"

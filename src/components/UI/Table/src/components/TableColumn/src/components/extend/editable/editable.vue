@@ -133,14 +133,15 @@
           })
 
           // for prop usage
-          tableProps.value.onEdit!({
-            newValue: editValue.value,
-            row: props.row,
-            prop: props.item!.prop,
-            loadStart: () =>
-              startLoading({ target: `#${loadingTargetId.value}` }),
-            loadEnd: () => endLoading(),
-          })
+          tableProps.value.onEdit &&
+            tableProps.value.onEdit({
+              newValue: editValue.value,
+              row: props.row,
+              prop: props.item!.prop,
+              loadStart: () =>
+                startLoading({ target: `#${loadingTargetId.value}` }),
+              loadEnd: () => endLoading(),
+            })
 
           editable.value = false
         }
