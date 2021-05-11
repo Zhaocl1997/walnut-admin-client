@@ -1,6 +1,7 @@
 <script lang="tsx">
-  import type { SetupContext } from 'vue'
   import { defineComponent } from 'vue'
+  import { useDialog } from '/@/components/UI/Dialog'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableExtendSettingsColumns',
@@ -13,18 +14,53 @@
 
     emits: [],
 
-    setup(props: any, ctx: SetupContext) {
-      const renderContent = () => {
+    setup(props: any, ctx) {
+      const [register, { openDialog, closeDialog }] = useDialog({
+        title: 'Table Settings',
+      })
+
+      const { tableHeaders } = useTableContext()
+
+      const renderSetting = () => {
+        const headers = tableHeaders.value.filter(
+          (item) =>
+            !['index', 'expand', 'selection', 'action'].includes(item.type!)
+        )
+
         return (
-          <>
-            <w-icon
-              icon="ant-design:setting-outlined"
-              height="20"
-              class="cursor-pointer"
-            ></w-icon>
-          </>
+          <el-tree data={tableHeaders.value} draggable default-expand-all>
+            {{
+              default: ({ node, data }: { node: any; data: any }) => (
+                <>
+                  <el-checkbox v-model={data.visible}></el-checkbox>
+                  {data.label}
+                </>
+              ),
+            }}
+          </el-tree>
         )
       }
+
+      const renderDialog = () => (
+        <w-dialog onHook={register} onClose={closeDialog}>
+          {renderSetting()}
+        </w-dialog>
+      )
+
+      const renderContent = () => (
+        <>
+          <w-icon
+            icon="ant-design:setting-outlined"
+            height="20"
+            class="cursor-pointer"
+            onClick={openDialog}
+          ></w-icon>
+
+          {renderDialog()}
+        </>
+      )
+
+      return () => renderContent()
     },
   })
 </script>
