@@ -1,7 +1,7 @@
 import type { WTableEditableColumnSwitch } from '/@/components/UI/Table'
 import type { WTableEditableColumnHookProps } from '../type'
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { isFunction } from 'easy-fns-ts'
 
 import { wTableWarning } from '/@/components/UI/Table/src/utils'
@@ -14,9 +14,9 @@ export const useEditableColumnSwitch = (
   const switchLoadStart = () => (switchLoading.value = true)
   const switchLoadEnd = () => (switchLoading.value = false)
 
-  const isSwitchType = props.item?.editType === 'switch'
+  const isSwitchType = computed(() => props.item?.editType === 'switch')
 
-  if (isSwitchType) {
+  if (isSwitchType.value) {
     if (
       !isFunction(
         (props.item as WTableEditableColumnSwitch)?.editTypeComponentProps

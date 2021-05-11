@@ -87,7 +87,7 @@
         // `w-table` use `beforeChange` API to achieve the same action like `emitEvents.edit`
         return (
           <el-space size="mini">
-            {isSwitchType ? (
+            {isSwitchType.value ? (
               <el-switch
                 {...props.item!.editTypeComponentProps}
                 v-model={editValue.value}
@@ -108,7 +108,7 @@
               <span>{formattedValue}</span>
             )}
 
-            {!isSwitchType && (
+            {!isSwitchType.value && (
               <i
                 class="el-icon-edit cursor-pointer w-table-edit-icon"
                 onClick={onClickEdit}
