@@ -1,6 +1,7 @@
 import type { ComputedRef } from 'vue'
 import { ref, unref, watch } from 'vue'
-import { WTableProps, WTableHeaderItem } from './../types'
+import { formatTree } from 'easy-fns-ts'
+import { WTableProps, WTableHeaderItem } from '../types'
 
 export const useTableHeaders = (props: ComputedRef<WTableProps>) => {
   const tableHeaders = ref<WTableHeaderItem[]>([])
@@ -8,7 +9,11 @@ export const useTableHeaders = (props: ComputedRef<WTableProps>) => {
   watch(
     () => unref(props).headers,
     (val: any) => {
-      tableHeaders.value = val
+      const formatted = formatTree(val, {
+        format: (node) => ({ ...node, visible: node.visible !== false }),
+      })
+
+      tableHeaders.value = formatted
     },
     {
       deep: true,

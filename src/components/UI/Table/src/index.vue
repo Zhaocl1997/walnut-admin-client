@@ -49,6 +49,7 @@
       // create `WTable` context
       setTableContext({
         tableProps: getProps,
+        tableHeaders: tableHeaders,
         emitEvents: {
           action: (...args) => emit('action', ...args),
           edit: (...args) => emit('edit', ...args),

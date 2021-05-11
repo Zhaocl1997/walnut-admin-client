@@ -1,4 +1,5 @@
-import type { ComputedRef } from '@vue/reactivity'
+import type { ComputedRef, Ref } from '@vue/reactivity'
+import type { WTableHeaderItem } from './tableHeaders'
 import type { WTableProps } from './tableProps'
 import type { ElTableColumnScopedSlot } from './tableSlot'
 
@@ -31,6 +32,11 @@ export interface WTableContext {
    * @description w-table props for `ComputedRef`
    */
   tableProps: ComputedRef<WTableProps>
+
+  /**
+   * @description w-table inside header context
+   */
+  tableHeaders: Ref<WTableHeaderItem[]>
 
   /**
    * @description w-table emit events
