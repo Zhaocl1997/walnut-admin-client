@@ -2,7 +2,7 @@
   import type { WTableProps } from './types'
 
   import { ref, unref, computed, defineComponent, renderList } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
+  import { easyOmit, genString } from 'easy-fns-ts'
 
   import props, { extendPropKeys } from './props'
 
@@ -67,9 +67,15 @@
 
       // render table column
       const renderTableItem = () =>
-        renderList(tableHeaders.value, (value) => (
-          <w-table-column item={value}>{renderSlots(slots)}</w-table-column>
-        ))
+        renderList(tableHeaders.value, (value) => {
+          const key = genString(8)
+
+          return (
+            <w-table-column item={value} key={key}>
+              {renderSlots(slots)}
+            </w-table-column>
+          )
+        })
 
       // render table
       const renderTable = () => {
