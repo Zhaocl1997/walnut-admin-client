@@ -38,6 +38,8 @@ export interface WTableContext {
    */
   tableHeaders: Ref<WTableHeaderItem[]>
 
+  tableRef: Ref<any>
+
   /**
    * @description w-table emit events
    * Provide these events on the top of the root vue file

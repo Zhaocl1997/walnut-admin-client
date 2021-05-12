@@ -50,6 +50,7 @@
       setTableContext({
         tableProps: getProps,
         tableHeaders: tableHeaders,
+        tableRef: tableRef,
         emitEvents: {
           action: (...args) => emit('action', ...args),
           edit: (...args) => emit('edit', ...args),
