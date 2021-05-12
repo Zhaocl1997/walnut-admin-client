@@ -8,8 +8,6 @@
   import { defineComponent, renderSlot, renderList, computed } from 'vue'
   import { isArray } from 'easy-fns-ts'
 
-  import { useI18n } from '/@/locales'
-
   import { useActionColumnDefaultButtonGroup } from './hooks/useActionColumnDefaultButtonGroup'
 
   export default defineComponent({
@@ -23,12 +21,8 @@
 
     setup(props, ctx) {
       const { slots } = ctx
-      const { t } = useI18n()
 
-      const { filteredButtonGroup } = useActionColumnDefaultButtonGroup(
-        props,
-        t
-      )
+      const { filteredButtonGroup } = useActionColumnDefaultButtonGroup(props)
 
       // render action by button group array
       const renderActionArray = (scope: ElTableColumnScopedSlot) => {
@@ -67,12 +61,7 @@
       })
 
       return () => (
-        <el-table-column
-          {...{
-            label: t('component.table.operation'),
-            ...props.column,
-          }}
-        >
+        <el-table-column {...props.column}>
           {renderDefaultSlot()}
         </el-table-column>
       )

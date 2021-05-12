@@ -5,15 +5,18 @@ import type {
 
 import { computed } from 'vue'
 
+import { useI18n } from '/@/locales'
+
 import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
 export const useActionColumnDefaultButtonGroup = (
   props: SetupProp<
     {},
     { column?: WTableEditableColumnDefaultAction | undefined }
-  >,
-  t: Fn
+  >
 ) => {
+  const { t } = useI18n()
+
   const { emitEvents, tableProps } = useTableContext()
 
   // default button group
