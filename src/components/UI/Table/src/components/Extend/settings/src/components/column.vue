@@ -1,5 +1,5 @@
 <script lang="tsx">
-  import { defineComponent } from 'vue'
+  import { defineComponent, nextTick } from 'vue'
   import { useDialog } from '/@/components/UI/Dialog'
   import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
@@ -17,18 +17,14 @@
     setup(props: any, ctx) {
       const [register, { openDialog, closeDialog }] = useDialog({
         title: 'Table Settings',
+        width: '30%',
       })
 
       const { tableHeaders } = useTableContext()
 
       const renderSetting = () => {
-        const headers = tableHeaders.value.filter(
-          (item) =>
-            !['index', 'expand', 'selection', 'action'].includes(item.type!)
-        )
-
         return (
-          <el-tree data={tableHeaders.value} draggable default-expand-all>
+          <el-tree data={tableHeaders.value} draggable>
             {{
               default: ({ node, data }: { node: any; data: any }) => (
                 <>
@@ -64,5 +60,3 @@
     },
   })
 </script>
-
-<style lang="scss" scoped></style>
