@@ -100,7 +100,11 @@ interface SharedSchema<T, P> {
   /**
    * @description Refer to ElFormItemProp
    */
-  formProp?: Partial<ElFormItemProp>
+  formProp?: Partial<
+    ElFormItemProp & {
+      labelClass: string
+    }
+  >
 
   /**
    * @description Refer to ElColProp
