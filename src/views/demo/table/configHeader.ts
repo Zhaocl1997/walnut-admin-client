@@ -171,6 +171,7 @@ export const useTableConfig = () => {
         formProp: {
           prop: 'nested',
           label: 'Nested',
+          labelClass: 'text-green-500',
         },
       },
       {
@@ -178,6 +179,7 @@ export const useTableConfig = () => {
         formProp: {
           prop: 'nestedItem',
           label: 'Nested Item',
+          labelClass: 'text-red-500',
         },
         vIf: ({ formData }) => {
           return formData.nested
@@ -192,7 +194,6 @@ export const useTableConfig = () => {
         type: 'index',
         visible: tableConfig.index,
         width: '80',
-        align: 'center',
         fixed: 'left',
         index: tableConfig.indexFn ? (i) => i * 2 : (i) => i,
       },
@@ -201,7 +202,6 @@ export const useTableConfig = () => {
         type: 'expand',
         visible: tableConfig.expand,
         width: '50',
-        align: 'center',
         fixed: 'left',
       },
 
@@ -209,7 +209,6 @@ export const useTableConfig = () => {
         type: 'selection',
         visible: tableConfig.select,
         width: '50',
-        align: 'center',
         fixed: 'left',
       },
 
@@ -217,7 +216,6 @@ export const useTableConfig = () => {
         type: 'action',
         visible: tableConfig.action,
         width: '180px',
-        align: 'center',
         fixed: 'right',
         actionType: tableConfig.actionType,
 
@@ -263,7 +261,6 @@ export const useTableConfig = () => {
       {
         label: 'Name',
         prop: 'name',
-        align: 'center',
         type: 'editable',
         editType: 'input',
       },
@@ -275,14 +272,12 @@ export const useTableConfig = () => {
         // item with children, `prop` doesn't mean anything either
         prop: 'some prop',
         visible: tableConfig.nested,
-        align: 'center',
         labelClassName: 'text-green-500',
         children: [
           {
             label: 'Gender',
             prop: 'user.gender',
             width: '80',
-            align: 'center',
             type: 'editable',
             editType: 'select',
             editTypeComponentProps: {
@@ -294,7 +289,6 @@ export const useTableConfig = () => {
             prop: 'user.age',
             width: '100',
             formatter: (row) => `${row.user?.age} years`,
-            align: 'center',
             type: 'editable',
             editType: 'inputNumber',
             editTypeComponentProps: {
@@ -309,7 +303,6 @@ export const useTableConfig = () => {
               row.user?.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2'),
             visible: tableConfig.nestedItem,
             labelClassName: 'text-red-500',
-            align: 'center',
             type: 'editable',
             editType: 'input',
           },
@@ -319,30 +312,25 @@ export const useTableConfig = () => {
       {
         label: 'Family Info',
         visible: tableConfig.nested,
-        align: 'center',
         labelClassName: 'text-green-500',
         children: [
           {
             label: 'Mom',
-            align: 'center',
             children: [
               {
                 label: 'Name',
                 prop: 'family.mom.name',
-                align: 'center',
               },
               {
                 label: 'Age',
                 prop: 'family.mom.age',
                 formatter: (row) => `${row.family.mom.age} years`,
-                align: 'center',
               },
               {
                 label: 'HasWork',
                 prop: 'family.mom.hasWork',
                 visible: tableConfig.nestedItem,
                 labelClassName: 'text-red-500',
-                align: 'center',
                 type: 'editable',
                 editType: 'switch',
                 editTypeComponentProps: {
@@ -366,25 +354,21 @@ export const useTableConfig = () => {
           },
           {
             label: 'Dad',
-            align: 'center',
             children: [
               {
                 label: 'Name',
                 prop: 'family.dad.name',
-                align: 'center',
               },
               {
                 label: 'Age',
                 prop: 'family.dad.age',
                 formatter: (row) => `${row.family.dad.age} years`,
-                align: 'center',
               },
               {
                 label: 'HasWork',
                 prop: 'family.dad.hasWork',
                 visible: tableConfig.nestedItem,
                 labelClassName: 'text-red-500',
-                align: 'center',
                 type: 'editable',
                 editType: 'switch',
                 editTypeComponentProps: {
@@ -413,7 +397,6 @@ export const useTableConfig = () => {
         label: 'Status',
         prop: 'status',
         type: 'editable',
-        align: 'center',
         editType: 'switch',
         editTypeComponentProps: {
           beforeChange: (val) => {
@@ -433,13 +416,11 @@ export const useTableConfig = () => {
       {
         label: 'CreatedAt',
         prop: 'createdAt',
-        align: 'center',
       },
 
       {
         label: 'Description',
         prop: 'description',
-        align: 'center',
         showOverflowTooltip: true,
       },
     ]
