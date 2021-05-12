@@ -75,7 +75,7 @@ npm i
 - [x] ElementPlus 按需加载
 - [ ] Layout 优化，目前只是最基本的左侧菜单布局  
 - [ ] vue-tsc 错误全部消除  
-- [ ] 虚拟滚动
+- [x] 虚拟滚动
 - [x] 屏幕断点优化
 - [ ] 带有options API 的组件 统一加 valueFormat 和 valueType
 - [ ] table 重构优化(WIP)
@@ -91,7 +91,7 @@ npm i
 - [ ] 环境变量优化，打包优化和自动化
 - [ ] 部署，自动化部署
 - [ ] icon 扩展 支持更多方法使用icon
-- [x] 尝试使用AppContext的方式替代全局的状态管理(已有进展，正逐步替换)
+- [x] 尝试使用AppContext的方式替代全局的状态管理(已完成，但不是很成熟，可以参考)
 - [ ] title/message 组件优化
 - [x] axios 重构，增加缓存功能
 - [x] axios 类型优化
