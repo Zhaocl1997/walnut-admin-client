@@ -15,17 +15,13 @@
       WTableExtendSettingsColumns,
     },
 
-    props: {},
-
-    emits: [],
-
     setup(props: any, ctx) {
       return () => (
-        <>
+        <el-space size="mini">
           <WTableExtendSettingsRefresh />
           <WTableExtendSettingsFullScreen />
           <WTableExtendSettingsColumns />
-        </>
+        </el-space>
       )
     },
   })

@@ -1,24 +1,21 @@
-<template>
-  <w-icon icon="ant-design:fullscreen-outlined" height="20"></w-icon>
-</template>
-
-<script lang="ts">
-  import type { SetupContext } from 'vue'
+<script lang="tsx">
   import { defineComponent } from 'vue'
+
+  import AppFullScreen from '/@/components/App/AppFullScreen'
+
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableExtendSettingsFullScreen',
 
     inheritAttrs: false,
 
-    components: {},
+    components: { AppFullScreen },
 
-    props: {},
+    setup(props, ctx) {
+      const { tableId } = useTableContext()
 
-    emits: [],
-
-    setup(props: any, ctx: SetupContext) {},
+      return () => <AppFullScreen target={`#${tableId}`} width="20px" />
+    },
   })
 </script>
-
-<style lang="scss" scoped></style>

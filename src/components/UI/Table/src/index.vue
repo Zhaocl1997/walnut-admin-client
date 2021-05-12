@@ -24,6 +24,8 @@
     emits: ['hook', 'page', 'action', 'edit'],
 
     setup(props: WTableProps, ctx) {
+      const tableId = `w-table-${genString(6)}`
+
       const { attrs, emit, expose, slots } = ctx
 
       const tableRef = ref<Nullable<any>>(null)
@@ -51,6 +53,7 @@
         tableProps: getProps,
         tableHeaders: tableHeaders,
         tableRef: tableRef,
+        tableId: tableId,
         emitEvents: {
           action: (...args) => emit('action', ...args),
           edit: (...args) => emit('edit', ...args),
@@ -92,7 +95,7 @@
           )
 
         return (
-          <>
+          <div id={tableId}>
             {renderHeader()}
 
             <el-table ref={tableRef} {...getBindValue.value}>
@@ -100,7 +103,7 @@
             </el-table>
 
             {renderPage()}
-          </>
+          </div>
         )
       }
 
