@@ -1,4 +1,5 @@
 import { useFullscreen as VueUseFullScreen } from '@vueuse/core'
+import { toggleClass } from 'easy-fns-ts'
 
 export interface useFullScreenOptions {
   /**
@@ -13,6 +14,9 @@ export const useFullScreen = (opt: useFullScreenOptions) => {
 
   return {
     isFullscreen,
-    toggleFullScreen: toggle,
+    toggleFullScreen: () => {
+      toggle()
+      toggleClass(el as HTMLElement, 'bg-white p-4', !isFullscreen.value)
+    },
   }
 }
