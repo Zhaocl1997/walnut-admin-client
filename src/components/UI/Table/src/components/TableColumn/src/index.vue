@@ -42,9 +42,9 @@
       const renderColumns = () =>
         getCanRenderNested.value
           ? renderNestedColumns()
-          : props.item?.visible && renderNotNestedColumns()
+          : renderNotNestedColumns()
 
-      return () => renderColumns()
+      return () => props.item?.visible && renderColumns()
     },
   })
 </script>
