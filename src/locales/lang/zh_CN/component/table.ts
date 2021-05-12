@@ -1,6 +1,8 @@
 export default {
   index: '序号',
   operation: '操作',
+  selection: '多选框',
+  expand: '展开列',
   density: {
     tooltip: '密度',
     default: '默认',

@@ -1,6 +1,8 @@
 export default {
   index: 'Index',
   operation: 'Operation',
+  selection: 'Selection',
+  expand: 'Expand',
   density: {
     tooltip: 'Density',
     default: 'Default',
