@@ -6,6 +6,7 @@
   import type { PropType } from 'vue'
 
   import { defineComponent, renderSlot } from 'vue'
+  import { easyOmit } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WTableColumnExpand',
@@ -26,7 +27,7 @@
       })
 
       return () => (
-        <el-table-column {...props.column}>
+        <el-table-column {...easyOmit(props.column, 'label')}>
           {renderDefaultSlot()}
         </el-table-column>
       )
