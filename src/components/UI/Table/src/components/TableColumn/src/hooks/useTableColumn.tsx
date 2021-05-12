@@ -94,19 +94,16 @@ export const useTableColumn = (
   /**
    * @description render nested columns
    */
-  const renderNestedColumns = () => {
-    return (
-      props.item?.visible !== false && (
-        <el-table-column {...getColumnBindValue.value}>
-          {renderList(props.item?.children, (value) => (
-            <w-table-item item={value}>
-              {renderSlots<ElTableColumnScopedSlot>(slots)}
-            </w-table-item>
-          ))}
-        </el-table-column>
-      )
+  const renderNestedColumns = () =>
+    props.item?.visible && (
+      <el-table-column {...getColumnBindValue.value}>
+        {renderList(props.item?.children, (value) => (
+          <w-table-item item={value}>
+            {renderSlots<ElTableColumnScopedSlot>(slots)}
+          </w-table-item>
+        ))}
+      </el-table-column>
     )
-  }
 
   return {
     renderNotNestedColumns,
