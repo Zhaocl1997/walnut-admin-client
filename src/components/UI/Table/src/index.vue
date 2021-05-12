@@ -67,15 +67,11 @@
 
       // render table column
       const renderTableItem = () =>
-        renderList(tableHeaders.value, (value) => {
-          const key = genString(8)
-
-          return (
-            <w-table-column item={value} key={key}>
-              {renderSlots(slots)}
-            </w-table-column>
-          )
-        })
+        renderList(tableHeaders.value, (value) => (
+          <w-table-column item={value} key={genString(8)}>
+            {renderSlots(slots)}
+          </w-table-column>
+        ))
 
       // render table
       const renderTable = () => {
