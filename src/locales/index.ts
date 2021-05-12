@@ -43,6 +43,6 @@ export const setupI18n = async (app: App) => {
 export { langLists }
 
 export const useI18n = () => {
-  const { t } = AppI18n.global
-  return { t }
+  const { t, locale } = AppI18n.global
+  return { t, locale }
 }
