@@ -28,7 +28,7 @@
 
       // render columns
       const renderColumns = () =>
-        isArray(props.item!.children)
+        isArray(props.item!.children) && props.item!.children?.length !== 0
           ? renderNestedColumns()
           : props.item?.visible !== false && renderNotNestedColumns()
 
