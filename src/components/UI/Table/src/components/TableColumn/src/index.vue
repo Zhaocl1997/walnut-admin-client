@@ -2,7 +2,7 @@
   import type { PropType } from 'vue'
   import type { WTableHeaderItem } from '/@/components/UI/Table'
 
-  import { defineComponent } from 'vue'
+  import { defineComponent, computed } from 'vue'
   import { isArray } from 'easy-fns-ts'
 
   import { useTableColumnComponents } from './hooks/useTableColumnComponents'
@@ -21,16 +21,28 @@
       // dynamic component
       useTableColumnComponents()
 
+      // get render function, include nested and common columns
       const { renderNotNestedColumns, renderNestedColumns } = useTableColumn(
         props,
         ctx
       )
 
+      // make sure item has children as an array
+      // alse make sure not empty one
+      // finally make sure each item in children is visible
+      // otherwise just render not nested column
+      const getCanRenderNested = computed(
+        () =>
+          isArray(props.item!.children) &&
+          props.item!.children?.length !== 0 &&
+          props.item?.children?.some((i) => i.visible)
+      )
+
       // render columns
       const renderColumns = () =>
-        isArray(props.item!.children) && props.item!.children?.length !== 0
+        getCanRenderNested.value
           ? renderNestedColumns()
-          : props.item?.visible !== false && renderNotNestedColumns()
+          : props.item?.visible && renderNotNestedColumns()
 
       return () => renderColumns()
     },
