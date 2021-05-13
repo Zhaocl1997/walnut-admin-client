@@ -64,7 +64,7 @@ declare module 'vue' {
     'w-select-tree': import('/@/components/UI/SelectTree')
     'w-switch': import('/@/components/UI/Switch').WSwitchProps
     'w-table': import('/@/components/UI/Table').WTableProps
-    'w-tree': import('/@/components/UI/Tree')
+    'w-tree': import('/@/components/UI/Tree').WTreeProps
   }
 }
 
