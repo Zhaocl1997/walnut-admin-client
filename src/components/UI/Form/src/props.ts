@@ -13,7 +13,6 @@ const extendProps = {
   modelValue: {
     type: Object as PropType<Recordable>,
     default: () => ({}),
-    required: true,
   },
 
   gutter: {
