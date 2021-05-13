@@ -3,8 +3,8 @@ import { resolve } from 'path'
 
 import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
-import { getApiPrefix, getEnv } from './src/utils/env'
-import { ImportMetaEnv } from './types/env'
+import { getEnv } from './src/utils/env'
+import { getApiPrefix } from './src/utils'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
@@ -14,7 +14,7 @@ function pathResolve(dir: string) {
 export default ({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd()
 
-  const env: ImportMetaEnv = getEnv(mode, root)
+  const env = getEnv(mode, root)
 
   const apiPrefix = getApiPrefix(env.VITE_API_PREFIX, env.VITE_API_VERSION)
 
