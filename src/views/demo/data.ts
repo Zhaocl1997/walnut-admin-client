@@ -1,8 +1,4 @@
-export const options: BaseOptionItemType<
-  'value',
-  'label',
-  { disabled: boolean }
->[] = [
+export const options: OptionDataItem<{ disabled: boolean }>[] = [
   {
     value: 1,
     label: 'Beijing',
@@ -26,36 +22,36 @@ export const options: BaseOptionItemType<
   },
 ]
 
-export const TreeData = [
+export const TreeData: TreeData<{ _id: number; _label: string }> = [
   {
     _id: 1,
-    label: 'Level 1',
+    _label: 'Level 1',
     children: [
       {
         _id: 4,
-        label: 'Level 1-1',
+        _label: 'Level 1-1',
         children: [
           {
             _id: 9,
-            label: 'Level 1-1-1',
+            _label: 'Level 1-1-1',
           },
           {
             _id: 10,
-            label: 'Level 1-1-2',
+            _label: 'Level 1-1-2',
           },
         ],
       },
       {
         _id: 11,
-        label: 'Level 1-2',
+        _label: 'Level 1-2',
         children: [
           {
             _id: 12,
-            label: 'Level 1-2-1',
+            _label: 'Level 1-2-1',
           },
           {
             _id: 13,
-            label: 'Level 1-2-2',
+            _label: 'Level 1-2-2',
             _disabled: true,
           },
         ],
@@ -64,33 +60,33 @@ export const TreeData = [
   },
   {
     _id: 2,
-    label: 'Level 2',
+    _label: 'Level 2',
     children: [
       {
         _id: 5,
-        label: 'Level 2-1',
+        _label: 'Level 2-1',
         children: [
           {
             _id: 14,
-            label: 'Level 2-1-1',
+            _label: 'Level 2-1-1',
           },
           {
             _id: 15,
-            label: 'Level 2-1-2',
+            _label: 'Level 2-1-2',
           },
         ],
       },
       {
         _id: 6,
-        label: 'Level 2-2',
+        _label: 'Level 2-2',
         children: [
           {
             _id: 16,
-            label: 'Level 2-2-1',
+            _label: 'Level 2-2-1',
           },
           {
             _id: 17,
-            label: 'Level 2-2-2',
+            _label: 'Level 2-2-2',
           },
         ],
       },
@@ -98,15 +94,15 @@ export const TreeData = [
   },
   {
     _id: 3,
-    label: 'Level 3',
+    _label: 'Level 3',
     children: [
       {
         _id: 7,
-        label: 'Level 3-1',
+        _label: 'Level 3-1',
       },
       {
         _id: 8,
-        label: 'Level 3-2',
+        _label: 'Level 3-2',
       },
     ],
   },
