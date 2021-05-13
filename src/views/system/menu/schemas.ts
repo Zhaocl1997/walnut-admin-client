@@ -15,7 +15,7 @@ import zhMessages from '/@/locales/lang/zh_CN'
 import { deepKeys } from './utils'
 import { Menu } from '/@/router/types'
 
-const ToFOptions: BaseOptionItemType[] = [
+const ToFOptions: OptionDataItem[] = [
   {
     value: true,
     label: 'Yes',

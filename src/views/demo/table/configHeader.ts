@@ -9,7 +9,7 @@ import { useForm } from '/@/components/UI/Form'
 import { useMessage } from '/@/hooks/component/useMessage'
 import { easyDeepSet } from 'easy-fns-ts'
 
-const genderOptions: BaseOptionItemType[] = [
+const genderOptions: OptionDataItem[] = [
   {
     label: 'Female',
     value: 'F',

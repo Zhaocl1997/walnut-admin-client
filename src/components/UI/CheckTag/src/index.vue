@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-  import type { WCheckTagProps, WCheckTagOptionItemType } from './types'
+  import type { WCheckTagProps, WCheckTagOptionItem } from './types'
   import { defineComponent, ref, watchEffect, watch, unref } from 'vue'
   import { findAllIndex } from 'easy-fns-ts'
   import props from './props'
@@ -29,9 +29,9 @@
     setup(props: WCheckTagProps, ctx) {
       const { emit } = ctx
 
-      const wOptions = ref<WCheckTagOptionItemType[]>([])
+      const wOptions = ref<WCheckTagOptionItem[]>([])
 
-      const onClick = (item: WCheckTagOptionItemType, index: IndexType) => {
+      const onClick = (item: WCheckTagOptionItem, index: IndexType) => {
         if (item.disabled) {
           return
         }
