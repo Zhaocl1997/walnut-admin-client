@@ -7,11 +7,13 @@ export * from './src/types'
 import { Axios } from './src/Axios'
 import { cacheAdapterEnhancer } from './src/adapter'
 import { transform } from './transform'
+import { getApiPrefix } from '../index'
 
 // api url
-const baseURL = `${import.meta.env.VITE_PROXY}/${
-  import.meta.env.VITE_API_PREFIX
-}/v${import.meta.env.VITE_API_VERSION}`
+const baseURL = `${import.meta.env.VITE_PROXY}${getApiPrefix(
+  import.meta.env.VITE_API_PREFIX,
+  import.meta.env.VITE_API_VERSION
+)}`
 
 // time out , default 10 seconds
 const timeout = 10 * 1000
