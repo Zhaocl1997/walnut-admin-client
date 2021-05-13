@@ -16,7 +16,9 @@ export const useFullScreen = (opt: useFullScreenOptions) => {
     isFullscreen,
     toggleFullScreen: () => {
       toggle()
-      toggleClass(el as HTMLElement, 'bg-white p-4', !isFullscreen.value)
+      if (opt.target !== '#app') {
+        toggleClass(el as HTMLElement, 'bg-white p-4', !isFullscreen.value)
+      }
     },
   }
 }
