@@ -36,7 +36,7 @@ export class BaseAPI<T> {
     )
   }
 
-  read(id: MaybeRef<string | number>) {
+  read(id: MaybeRef<StringOrNumber>) {
     return AppAxios.get<T>({
       url: `${this.getModule()}/${id}`,
     })
@@ -54,7 +54,7 @@ export class BaseAPI<T> {
     )
   }
 
-  delete(id: MaybeRef<string | number>) {
+  delete(id: MaybeRef<StringOrNumber>) {
     return AppAxios.delete(
       {
         url: `${this.getModule()}/${id}`,

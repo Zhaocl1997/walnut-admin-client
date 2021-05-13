@@ -7,5 +7,5 @@ export default {
 
   ...MultiTypeCompSharedProps,
 
-  modelValue: [String, Number, Array] as PropType<string | number[]>,
+  modelValue: [String, Number, Array] as PropType<StringOrNumber[]>,
 }

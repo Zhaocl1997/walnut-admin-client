@@ -6,7 +6,7 @@ import type { MultiTypeCompSharedPropType } from '../../../types'
 export interface ElDropdownProps {
   type: ComponentType
   size: ComponentSize
-  maxHeight: string | number
+  maxHeight: StringOrNumber
   splitButton: boolean
   placement: ComponentPlacement
   trigger: ComponentTrigger

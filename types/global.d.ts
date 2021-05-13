@@ -10,12 +10,14 @@ declare type ReadonlyRecordable<T extends any = any> = {
 
 declare type Nullable<T> = T | null
 
-declare type BaseDataType = string | number | boolean
+declare type StringOrNumber = string | number
+
+declare type BaseDataType = StringOrNumber | boolean
 
 /**
  * @description v-for index type
  */
-declare type IndexType = string | number | symbol
+declare type IndexType = StringOrNumber | symbol
 
 /**
  * @description type for empty object

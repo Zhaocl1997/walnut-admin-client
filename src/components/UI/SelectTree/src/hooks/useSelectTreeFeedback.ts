@@ -20,7 +20,7 @@ export const useSelectTreeFeedback = (props: any, args: any) => {
       const tagArray: string[] = []
       const nodeArray: any[] = []
 
-      props.modelValue.map((i: string | number) => {
+      props.modelValue.map((i: StringOrNumber) => {
         const node = findNode(props.data, (n: any) => n[nodeKey] === i, {
           id: nodeKey,
           children: children,

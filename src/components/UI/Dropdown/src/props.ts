@@ -7,7 +7,7 @@ import { MultiTypeCompSharedProps } from '../../shared'
 const extendProps = {
   ...MultiTypeCompSharedProps,
 
-  modelValue: [String, Number] as PropType<string | number>,
+  modelValue: [String, Number] as PropType<StringOrNumber>,
 }
 
 export const extendPropKeys = Object.keys(extendProps)

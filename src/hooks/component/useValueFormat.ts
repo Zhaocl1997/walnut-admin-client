@@ -40,7 +40,7 @@ export const useValueFormat = () => {
     return []
   }
 
-  const onSingleFormatType = (val: string | number) => {
+  const onSingleFormatType = (val: StringOrNumber) => {
     if (!val) {
       return
     }

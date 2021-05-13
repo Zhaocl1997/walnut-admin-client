@@ -4,7 +4,7 @@
 export interface ElDialogProps {
   modelValue: boolean
   title: string
-  width: string | number
+  width: StringOrNumber
   fullscreen: boolean
   top: string
   modal: boolean

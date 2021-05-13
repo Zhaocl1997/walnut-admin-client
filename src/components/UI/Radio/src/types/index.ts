@@ -4,7 +4,7 @@ import { MultiTypeCompSharedPropType } from '../../../types'
  * @link https://element-plus.gitee.io/#/zh-CN/component/radio#radio-group-attributes
  */
 export interface ElRadioProps {
-  modelValue: string | number | boolean
+  modelValue: StringOrNumber | boolean
   size: ComponentSize
   disabled: boolean
   textColor: string

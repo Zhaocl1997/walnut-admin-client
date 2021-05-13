@@ -24,15 +24,15 @@ export type ElTableClass = (
  */
 export interface ElTableProps {
   data: MaybeRef<any[]>
-  height: string | number
-  maxHeight: string | number
+  height: StringOrNumber
+  maxHeight: StringOrNumber
   stripe: boolean
   border: boolean
   size: ComponentSize
   fit: boolean
   showHeader: boolean
   highlightCurrentRow: boolean
-  currentRowKey: string | number
+  currentRowKey: StringOrNumber
 
   rowClassName: ElTableClass
   rowStyle: ElTableStyle

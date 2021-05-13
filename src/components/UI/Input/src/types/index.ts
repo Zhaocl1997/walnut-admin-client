@@ -11,9 +11,9 @@ export interface ElInputTextareaResizeProp {
  */
 export interface ElInputProps {
   type: string
-  modelValue: string | number
-  maxlength: string | number
-  minlength: string | number
+  modelValue: StringOrNumber
+  maxlength: StringOrNumber
+  minlength: StringOrNumber
   showWordLimit: boolean
   placeholder: MaybeRef<string>
   clearable: boolean
@@ -22,14 +22,14 @@ export interface ElInputProps {
   size: ComponentSize
   prefixIcon: string
   suffixIcon: string
-  rows: string | number
+  rows: StringOrNumber
   autosize: boolean | ElInputTextareaResizeProp
   autocomplete: 'on' | 'off'
   name: string
   readonly: boolean
-  max: string | number
-  min: string | number
-  step: string | number
+  max: StringOrNumber
+  min: StringOrNumber
+  step: StringOrNumber
   resize: 'none' | 'both' | 'horizontal' | 'vertical'
   autofocus: boolean
   form: string
