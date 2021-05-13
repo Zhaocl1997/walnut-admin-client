@@ -31,7 +31,7 @@
     "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
     "easy-fns-ts": "^1.0.22",
-    "element-plus": "^1.0.2-beta.42",
+    "element-plus": "^1.0.2-beta.44",
     "nprogress": "^0.2.0",
     "vue": "^3.0.11",
     "vue-i18n": "^9.1.6",
@@ -80,13 +80,13 @@
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.19.0",
     "typescript": "^4.2.3",
-    "vite": "^2.2.4",
-    "vite-plugin-components": "^0.8.4",
+    "vite": "^2.3.2",
+    "vite-plugin-components": "^0.9.1",
     "vite-plugin-compression": "^0.2.4",
     "vite-plugin-html": "^2.0.7",
     "vite-plugin-style-import": "^0.10.0",
-    "vite-plugin-windicss": "^0.15.7",
-    "vue-tsc": "^0.1.0"
+    "vite-plugin-windicss": "^0.15.10",
+    "vue-tsc": "^0.1.2"
   },
   "config": {
     "commitizen": {
