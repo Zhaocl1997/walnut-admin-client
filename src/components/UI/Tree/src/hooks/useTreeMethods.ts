@@ -1,6 +1,11 @@
-import type { Ref } from 'vue'
-import type { WTreeProps } from '../types'
-import type { ElTreeMethods } from '../types/methods'
+import type { ComputedRef, Ref } from 'vue'
+import type {
+  WTreeProps,
+  ElTreeRef,
+  ElTreeMethods,
+  WTreeMethods,
+  WTreeSetProps,
+} from '../types'
 
 import { nextTick } from 'vue'
 
@@ -8,22 +13,23 @@ import { nextTick } from 'vue'
  * @description expose ElTree methods to outside
  */
 export const useTreeMethods = (
-  treeRef: Ref<Nullable<ElTreeMethods>>,
-  props: WTreeProps,
-  emit: Fn,
-  onGetCheckedNodes: Fn
+  props: ComputedRef<WTreeProps>,
+  treeRef: Ref<Nullable<ElTreeRef>>,
+  emit: Record<string, Fn>,
+  onGetCheckedNodes: Fn,
+  setProps: WTreeSetProps
 ) => {
-  // Below is original ElTree methods
-  const elTreeMethods = {
-    filter: (value: any) => {
+  // Original ElTree methods
+  const elTreeMethods: ElTreeMethods = {
+    filter: (value) => {
       treeRef.value!.filter(value)
     },
 
-    updateKeyChildren: (key: any, data: any[]) => {
+    updateKeyChildren: (key, data) => {
       treeRef.value!.updateKeyChildren(key, data)
     },
 
-    setChecked: (data: any, checked: boolean, deep: boolean) => {
+    setChecked: (data, checked, deep) => {
       treeRef.value!.setChecked(data, checked, deep)
     },
 
@@ -35,18 +41,18 @@ export const useTreeMethods = (
       return treeRef.value!.getHalfCheckedKeys()
     },
 
-    setCheckedNodes: (array: any[], leafOnly = props.leafOnly) => {
-      treeRef.value!.setCheckedNodes(array, leafOnly)
+    setCheckedNodes: (nodes, leafOnly = props.value.leafOnly) => {
+      treeRef.value!.setCheckedNodes(nodes, leafOnly)
     },
 
     getCheckedNodes: (
-      leafOnly = props.leafOnly,
-      includeHalfChecked = props.includeHalfChecked
+      leafOnly = props.value.leafOnly,
+      includeHalfChecked = props.value.includeHalfChecked
     ) => {
       return treeRef.value!.getCheckedNodes(leafOnly, includeHalfChecked)
     },
 
-    setCheckedKeys: (keys: any[], leafOnly = props.leafOnly) => {
+    setCheckedKeys: (keys: any[], leafOnly = props.value.leafOnly) => {
       treeRef.value!.setCheckedKeys(keys, leafOnly)
     },
 
@@ -54,7 +60,7 @@ export const useTreeMethods = (
       return treeRef.value!.getCheckedKeys()
     },
 
-    setCurrentKey: (key: any) => {
+    setCurrentKey: (key) => {
       treeRef.value!.setCurrentKey(key)
     },
 
@@ -62,7 +68,7 @@ export const useTreeMethods = (
       return treeRef.value!.getCurrentKey()
     },
 
-    setCurrentNode: (currentNode: any) => {
+    setCurrentNode: (currentNode) => {
       treeRef.value!.setCurrentNode(currentNode)
     },
 
@@ -70,61 +76,70 @@ export const useTreeMethods = (
       return treeRef.value!.getCurrentNode()
     },
 
-    getNode: (data: any) => {
+    getNode: (data) => {
       return treeRef.value!.getNode(data)
     },
 
-    remove: (data: any) => {
+    remove: (data) => {
       treeRef.value!.remove(data)
     },
 
-    append: (data: any, parentData: any) => {
+    append: (data, parentData) => {
       treeRef.value!.append(data, parentData)
     },
 
-    insertBefore: (data: any, refData: any) => {
+    insertBefore: (data, refData) => {
       treeRef.value!.insertBefore(data, refData)
     },
 
-    insertAfter: (data: any, refData: any) => {
+    insertAfter: (data, refData) => {
       treeRef.value!.insertAfter(data, refData)
     },
   }
 
-  // Below is custom methods
+  // Extend methods
+  const extendMethods: WTreeMethods = {
+    /**
+     * @description Expand all nodes
+     */
+    expandAll: (val) => {
+      const nodes = (treeRef.value! as any).store.nodesMap
+      for (const i in nodes) {
+        nodes[i].expanded = val
+      }
+    },
 
-  // expand all node
-  const expandAll = (val: boolean) => {
-    const nodes = (treeRef.value! as any).store.nodesMap
-    for (const i in nodes) {
-      nodes[i].expanded = val
-    }
-  }
+    /**
+     * @description Check all nodes
+     */
+    checkAll: (val) => {
+      if (!props.value.multiple) {
+        return
+      }
 
-  // check all node
-  const checkAll = (val: boolean) => {
-    if (!props.multiple) {
-      return
-    }
+      if (val) {
+        treeRef.value!.setCheckedNodes(
+          props.value.data as any,
+          props.value.leafOnly
+        )
 
-    if (val) {
-      treeRef.value!.setCheckedNodes(props.data as any, props.leafOnly)
+        nextTick(() => {
+          const ret = onGetCheckedNodes()
 
-      nextTick(() => {
-        const ret = onGetCheckedNodes()
-        emit('update:modelValue', ret)
-      })
-    } else {
-      treeRef.value!.setCheckedKeys([])
+          emit.emitModelValue(ret)
+        })
+      } else {
+        treeRef.value!.setCheckedKeys([])
 
-      emit('update:modelValue', [])
-    }
+        emit.emitModelValue([])
+      }
+    },
   }
 
   const treeMethods = {
     ...elTreeMethods,
-    expandAll,
-    checkAll,
+    ...extendMethods,
+    setProps: setProps,
   }
 
   return { treeMethods }

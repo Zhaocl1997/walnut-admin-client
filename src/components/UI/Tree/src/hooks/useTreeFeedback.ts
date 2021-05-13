@@ -1,24 +1,23 @@
 import type { ComputedRef, Ref } from 'vue'
-import type { ElTreeMethods } from '../types/methods'
-import type { WTreeProps } from '../types'
+import type { WTreeProps, ElTreeRef, TreeKey } from '../types'
 
 import { nextTick, onMounted, watch } from 'vue'
 
 import { easyIsEmpty, except } from 'easy-fns-ts'
 
 export const useTreeFeedback = (
-  props: WTreeProps,
-  treeRef: Ref<Nullable<ElTreeMethods>>,
-  nodeKey: ComputedRef
+  props: ComputedRef<WTreeProps>,
+  treeRef: Ref<Nullable<ElTreeRef>>,
+  nodeKey: TreeKey
 ) => {
   // feedback
   const feedback = () => {
-    if (props.includeHalfChecked) {
+    if (props.value.includeHalfChecked) {
       return
     }
 
-    if (easyIsEmpty(props.modelValue)) {
-      if (props.multiple) {
+    if (easyIsEmpty(props.value.modelValue)) {
+      if (props.value.multiple) {
         nextTick(() => {
           treeRef.value!.setCheckedKeys([])
         })
@@ -31,16 +30,16 @@ export const useTreeFeedback = (
       return
     }
 
-    if (props.multiple) {
-      const levelOneNodeIdArr = props.data!.map((i) => i[nodeKey.value])
-      const val = except(props.modelValue!, levelOneNodeIdArr)
+    if (props.value.multiple) {
+      const levelOneNodeIdArr = props.value.data!.map((i) => i[nodeKey])
+      const val = except(props.value.modelValue as TreeKey[], levelOneNodeIdArr)
 
       setTimeout(() => {
         treeRef.value!.setCheckedKeys(val)
       }, 50)
     } else {
       setTimeout(() => {
-        treeRef.value!.setCurrentKey(props.modelValue)
+        treeRef.value!.setCurrentKey(props.value.modelValue as TreeKey)
       }, 50)
     }
   }
@@ -50,7 +49,7 @@ export const useTreeFeedback = (
   })
 
   watch(
-    () => props.modelValue,
+    () => props.value.modelValue,
     () => {
       feedback()
     }

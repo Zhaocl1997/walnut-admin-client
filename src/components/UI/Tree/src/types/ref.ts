@@ -1,5 +1,7 @@
 import type { ComponentInternalInstance, VNode } from 'vue'
-import { h as vueH } from 'vue'
+import type { ElTreeMethods } from './methods'
+
+import { h as VueH } from 'vue'
 
 export type TreeNode = {
   id: number
@@ -21,7 +23,7 @@ export type TreeNode = {
   childNodes: TreeNode[]
   loading: boolean
 }
-export type TreeKey = string | number
+export type TreeKey = StringOrNumber
 export type TreeData = TreeNodeData[]
 export interface TreeNodeData {
   [key: string]: any
@@ -36,7 +38,7 @@ export type LoadFunction = (
 ) => void
 
 export type RenderContentFunction = (
-  h: typeof vueH,
+  h: typeof VueH,
   context: RenderContentContext
 ) => VNode | VNode[]
 export interface RenderContentContext {
@@ -60,7 +62,10 @@ export type FilterNodeMethodFunction = (
   child: TreeNode
 ) => boolean
 
-export interface ElTreeRef {
+/**
+ * @description el-tree ref typing
+ */
+export interface ElTreeRef extends ElTreeMethods {
   currentNode: TreeNode
   currentNodeKey: TreeKey
   nodesMap: TreeStoreNodesMap

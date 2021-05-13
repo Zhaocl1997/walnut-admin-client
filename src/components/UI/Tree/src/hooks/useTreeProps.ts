@@ -5,14 +5,12 @@ import { computed } from 'vue'
 import { defaultTreeProp } from '../utils'
 
 export const useTreeProps = (props: WTreeProps) => {
-  const getProps = computed(() => {
-    return {
-      ...defaultTreeProp,
-      ...props.props,
-    }
-  })
+  const getTreeProps = computed(() => ({
+    ...defaultTreeProp,
+    ...props.props,
+  }))
 
-  const getNodeKey = computed(() => getProps.value.id)
+  const getNodeKey = computed(() => getTreeProps.value.id)
 
   const getShowCheckbox = computed(() => props.multiple)
 
@@ -21,7 +19,7 @@ export const useTreeProps = (props: WTreeProps) => {
   )
 
   return {
-    getProps,
+    getTreeProps,
     getNodeKey,
     getShowCheckbox,
     getDefaultExpandKeys,

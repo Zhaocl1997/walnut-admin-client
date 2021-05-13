@@ -1,22 +1,21 @@
-import type { ComputedRef, Ref } from 'vue'
+import type { Ref, ComputedRef } from 'vue'
 import type { WTreeProps } from '../types'
-import type { ElTreeRef } from '../types/ref'
+import type { ElTreeRef, TreeKey } from '../types/ref'
 
 export const useTreeCore = (
-  props: WTreeProps,
-  treeRef: Ref<Nullable<ElTreeRef>>,
-  nodeKey: ComputedRef
+  props: ComputedRef<WTreeProps>,
+  treeRef: Ref<Nullable<ElTreeRef>>
 ) => {
-  // 1. Weather only child node，default false
-  // 2. Weather include half checked node，default false
+  // 1. `leafOnly`: Weather only child node，default false
+  // 2. `includeHalfChecked`: Weather include half checked node，default false
   // 3. This function is the KEY to v-model when multiple is true
   const onGetCheckedNodes = () => {
     const res = treeRef.value!.getCheckedNodes(
-      props.leafOnly,
-      props.includeHalfChecked
+      props.value.leafOnly,
+      props.value.includeHalfChecked
     )
 
-    return res.map((i) => i[nodeKey.value])
+    return res.map((i) => i[props.value.props!.id!])
   }
 
   return { onGetCheckedNodes }

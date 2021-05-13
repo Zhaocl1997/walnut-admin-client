@@ -1,22 +1,11 @@
 import type { PropType } from 'vue'
+import type { TreeKey } from './types'
 
 import { ElTree } from 'element-plus'
 
-export default {
-  ...ElTree.props,
-
-  highlightCurrent: {
-    type: Boolean as PropType<boolean>,
-    default: true,
-  },
-
-  expandOnClickNode: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-
+const extendProps = {
   modelValue: {
-    type: [String, Number, Array] as PropType<string[] | number[]>,
+    type: [String, Number, Array] as PropType<TreeKey[]>,
     default: '',
   },
 
@@ -34,4 +23,28 @@ export default {
     type: Boolean as PropType<boolean>,
     default: false,
   },
+}
+
+export const extendPropKeys = Object.keys(extendProps)
+
+export default {
+  ...ElTree.props,
+
+  /**
+   * @override
+   */
+  highlightCurrent: {
+    type: Boolean as PropType<boolean>,
+    default: true,
+  },
+
+  /**
+   * @override
+   */
+  expandOnClickNode: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
+
+  ...extendProps,
 }
