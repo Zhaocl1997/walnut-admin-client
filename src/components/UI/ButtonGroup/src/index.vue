@@ -1,5 +1,5 @@
 <template>
-  <el-space>
+  <el-space wrap>
     <div v-for="(button, index) in groups" :key="index">
       <w-button v-bind="button"></w-button>
     </div>
