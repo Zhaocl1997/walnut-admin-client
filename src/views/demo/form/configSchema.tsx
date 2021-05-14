@@ -2,7 +2,7 @@ import type { WFormSchemaItem } from '/@/components/UI/Form'
 
 import { reactive, computed } from 'vue'
 import { generateBaseWFormRules } from '/@/components/UI/Form'
-import { options, TreeData } from '../data'
+import { options, getTreeData } from '../data'
 
 export const useFormConfig = (fns: any) => {
   // config form data
@@ -233,11 +233,11 @@ export const useFormConfig = (fns: any) => {
           label: 'Tree',
         },
         componentProp: {
-          data: TreeData,
+          data: getTreeData(),
           defaultExpandAll: true,
           props: {
             id: '_id',
-            disabled: '_disabled',
+            label: '_label',
           },
           class: 'border-2',
           style: {
@@ -254,10 +254,10 @@ export const useFormConfig = (fns: any) => {
         },
         componentProp: {
           clearable: true,
-          data: TreeData,
+          data: getTreeData(),
           props: {
             id: '_id',
-            disabled: '_disabled',
+            label: '_label',
           },
         },
       },
