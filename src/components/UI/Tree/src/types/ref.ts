@@ -3,28 +3,34 @@ import type { ElTreeMethods } from './methods'
 
 import { h as VueH } from 'vue'
 
-export type TreeNode = {
+/**
+ * @description Tree node key, string or number
+ */
+export type TreeKey = StringOrNumber
+
+/**
+ * @description Tree node type, refactor from element-plus inside TreeNode type
+ */
+export type TreeNode<T = any> = {
   id: number
   text: string
   checked: boolean
   indeterminate: boolean
-  data: TreeNodeData
+  data: TreeDataItem<T>
   expanded: boolean
-  parent: TreeNode
+  parent: TreeNode<T>
   visible: boolean
   isCurrent: boolean
-  store: ElTreeRef
+  store: ElTreeRef<T>
   isLeafByUser: boolean
   isLeaf: boolean
   canFocus: boolean
 
   level: number
   loaded: boolean
-  childNodes: TreeNode[]
+  childNodes: TreeNode<T>[]
   loading: boolean
 }
-export type TreeKey = StringOrNumber
-export type TreeData = TreeNodeData[]
 export interface TreeNodeData {
   [key: string]: any
 }
@@ -32,9 +38,9 @@ export interface TreeStoreNodesMap {
   [key: string]: TreeNode
 }
 
-export type LoadFunction = (
-  rootNode: TreeNode,
-  loadedCallback: (data: TreeData) => void
+export type LoadFunction<T> = (
+  rootNode: TreeNode<T>,
+  loadedCallback: (data: TreeDataItem<T>[]) => void
 ) => void
 
 export type RenderContentFunction = (
@@ -56,24 +62,24 @@ export type AllowDropFunction = (
   type: DropType
 ) => boolean
 
-export type FilterNodeMethodFunction = (
+export type FilterNodeMethodFunction<T> = (
   value: any,
-  data: TreeNodeData,
+  data: TreeDataItem<T>,
   child: TreeNode
 ) => boolean
 
 /**
  * @description el-tree ref typing
  */
-export interface ElTreeRef extends ElTreeMethods {
-  currentNode: TreeNode
+export interface ElTreeRef<T = any> extends ElTreeMethods {
+  currentNode: TreeNode<T>
   currentNodeKey: TreeKey
   nodesMap: TreeStoreNodesMap
   root: TreeNode
-  data: TreeData
+  data: TreeDataItem<T>[]
   lazy: boolean
-  load: LoadFunction
-  filterNodeMethod: FilterNodeMethodFunction
+  load: LoadFunction<T>
+  filterNodeMethod: FilterNodeMethodFunction<T>
   key: TreeKey
   defaultCheckedKeys: TreeKey[]
   checkStrictly: boolean

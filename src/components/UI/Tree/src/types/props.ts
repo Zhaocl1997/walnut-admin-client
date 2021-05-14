@@ -1,5 +1,4 @@
 import type {
-  TreeData,
   TreeKey,
   LoadFunction,
   FilterNodeMethodFunction,
@@ -9,12 +8,13 @@ import type {
 } from './ref'
 
 import type { WTreePropsOptions } from './index'
+import type { MaybeRef } from '/~/utils'
 
 /**
  * @link https://element-plus.org/#/zh-CN/component/tree#attributes
  */
-interface ElTreeProps {
-  data: TreeData
+interface ElTreeProps<T> {
+  data: TreeDataItem<T>[]
   emptyText: string
   renderAfterExpand: boolean
   nodeKey: string
@@ -35,14 +35,14 @@ interface ElTreeProps {
   // props: any
   lazy: boolean
   highlightCurrent: boolean
-  load: LoadFunction
-  filterNodeMethod: FilterNodeMethodFunction
+  load: LoadFunction<T>
+  filterNodeMethod: FilterNodeMethodFunction<T>
   accordion: boolean
   indent: number
   iconClass: string
 }
 
-export interface WTreeProps<D = Recordable> extends Partial<ElTreeProps> {
+export interface WTreeProps<D = any> extends Partial<ElTreeProps<D>> {
   /**
    * @override
    */
@@ -72,19 +72,19 @@ export interface WTreeProps<D = Recordable> extends Partial<ElTreeProps> {
    * @type {Boolean}
    * @default false
    */
-  multiple?: boolean
+  multiple?: MaybeRef<boolean>
 
   /**
    * @description used for multiple change, if only need leaf node, default false
    * @type {Boolean}
    * @default false
    */
-  leafOnly?: boolean
+  leafOnly?: MaybeRef<boolean>
 
   /**
    * @description used for multiple change, if include half checked node, default false
    * @type {Boolean}
    * @default false
    */
-  includeHalfChecked?: boolean
+  includeHalfChecked?: MaybeRef<boolean>
 }

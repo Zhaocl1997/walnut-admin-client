@@ -4,7 +4,7 @@ export * from './ref'
 export * from './methods'
 export * from './props'
 
-type ElTreePropsFn<D, T> = (data: TreeData<D>, node: TreeNode) => T
+type ElTreePropsFn<D, T> = (data: TreeDataItem<D>[], node: TreeNode) => T
 
 export interface WTreePropsOptions<D = Recordable> {
   id?: TreeKey

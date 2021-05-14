@@ -1,6 +1,5 @@
 import type { Ref, ComputedRef } from 'vue'
-import type { WTreeProps } from '../types'
-import type { ElTreeRef, TreeKey } from '../types/ref'
+import type { WTreeProps, ElTreeRef } from '../types'
 
 export const useTreeCore = (
   props: ComputedRef<WTreeProps>,
@@ -11,8 +10,8 @@ export const useTreeCore = (
   // 3. This function is the KEY to v-model when multiple is true
   const onGetCheckedNodes = () => {
     const res = treeRef.value!.getCheckedNodes(
-      props.value.leafOnly,
-      props.value.includeHalfChecked
+      props.value.leafOnly as boolean,
+      props.value.includeHalfChecked as boolean
     )
 
     return res.map((i) => i[props.value.props!.id!])

@@ -41,18 +41,18 @@ export const useTreeMethods = (
       return treeRef.value!.getHalfCheckedKeys()
     },
 
-    setCheckedNodes: (nodes, leafOnly = props.value.leafOnly) => {
-      treeRef.value!.setCheckedNodes(nodes, leafOnly)
+    setCheckedNodes: (nodes) => {
+      treeRef.value!.setCheckedNodes(nodes)
     },
 
     getCheckedNodes: (
-      leafOnly = props.value.leafOnly,
-      includeHalfChecked = props.value.includeHalfChecked
+      leafOnly = props.value.leafOnly as boolean,
+      includeHalfChecked = props.value.includeHalfChecked as boolean
     ) => {
       return treeRef.value!.getCheckedNodes(leafOnly, includeHalfChecked)
     },
 
-    setCheckedKeys: (keys: any[], leafOnly = props.value.leafOnly) => {
+    setCheckedKeys: (keys, leafOnly = props.value.leafOnly as boolean) => {
       treeRef.value!.setCheckedKeys(keys, leafOnly)
     },
 
@@ -118,10 +118,7 @@ export const useTreeMethods = (
       }
 
       if (val) {
-        treeRef.value!.setCheckedNodes(
-          props.value.data as any,
-          props.value.leafOnly
-        )
+        treeRef.value!.setCheckedNodes(props.value.data as any)
 
         nextTick(() => {
           const ret = onGetCheckedNodes()

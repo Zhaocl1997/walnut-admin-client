@@ -79,7 +79,7 @@
           nodeKey: getProps.value.props?.id,
           showCheckbox: getProps.value.multiple,
           defaultExpandedKeys:
-            getProps.value.modelValue && getProps.value.showCheckbox
+            getProps.value.modelValue && getProps.value.multiple
               ? props.modelValue
               : [],
         }
