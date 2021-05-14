@@ -49,4 +49,9 @@ export interface WButtonProps extends Partial<ElButtonProps> {
    * @description Throttle time to prevent repeat click
    */
   debounce?: number
+
+  /**
+   * @description help message on button
+   */
+  helpMessage?: string
 }

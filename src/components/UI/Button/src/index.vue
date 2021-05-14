@@ -10,6 +10,12 @@
       <slot v-if="$slots.suffix" name="suffix"></slot>
 
       <i v-if="suffixIcon" :class="suffixIcon" />
+
+      <w-message
+        v-if="helpMessage"
+        :content="helpMessage"
+        icon="el-icon-warning-outline"
+      />
     </el-space>
   </el-button>
 </template>
@@ -17,8 +23,8 @@
 <script lang="ts">
   import type { WButtonProps } from './types'
   import { defineComponent } from 'vue'
-  import props from './props'
   import { useButton } from './hooks/useButton'
+  import props from './props'
 
   export default defineComponent({
     name: 'WButton',

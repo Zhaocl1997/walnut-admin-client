@@ -31,6 +31,11 @@ const extendProps = {
     type: Number as PropType<number>,
     default: 0,
   },
+
+  helpMessage: {
+    type: String as PropType<string>,
+    default: '',
+  },
 }
 
 export const extendPropKeys = Object.keys(extendProps)

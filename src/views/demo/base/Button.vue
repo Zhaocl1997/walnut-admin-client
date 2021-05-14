@@ -4,7 +4,7 @@
       <span>Button：【{{ value }}】</span>
     </template>
 
-    <WTitle show-left>Base</WTitle>
+    <w-title show-left>Base</w-title>
     <w-button @click="onClick">Click me(slot)</w-button>
     <w-button @click="onClick" text="Click me(prop)"></w-button>
     <w-button disabled @click="onClick">Disabled</w-button>
@@ -17,7 +17,7 @@
     <br />
     <br />
 
-    <WTitle show-left>Group(prop)</WTitle>
+    <w-title show-left>Group(prop)</w-title>
     <el-button-group>
       <w-button type="primary" icon="el-icon-back" @click="onClick"
         >Prev</w-button
@@ -30,7 +30,15 @@
     <br />
     <br />
 
-    <WTitle show-left>Group(slot)</WTitle>
+    <w-title show-left>Help Message</w-title>
+    <w-button type="primary" @click="onClick" help-message="Some help message"
+      >Button with help message</w-button
+    >
+
+    <br />
+    <br />
+
+    <w-title show-left>Group(slot)</w-title>
     <el-button-group>
       <w-button type="primary" @click="onClick">
         Prev
@@ -50,7 +58,7 @@
     <br />
     <br />
 
-    <WTitle show-left>Send email</WTitle>
+    <w-title show-left>Send email</w-title>
     <w-button
       type="primary"
       icon="el-icon-message"
@@ -62,8 +70,8 @@
     <br />
     <br />
 
-    <WTitle show-left
-      >Load delay(no need to manually control loading state)</WTitle
+    <w-title show-left
+      >Load delay(no need to manually control loading state)</w-title
     >
     <w-button type="primary" :load-delay="10" @click="onClick"
       >Request to API</w-button
@@ -72,13 +80,13 @@
     <br />
     <br />
 
-    <WTitle show-left>Filled parent container width</WTitle>
+    <w-title show-left>Filled parent container width</w-title>
     <w-button type="primary" block @click="onClick">Block mode</w-button>
 
     <br />
     <br />
 
-    <WTitle show-left>Debounce</WTitle>
+    <w-title show-left>Debounce</w-title>
     <w-button type="primary" :debounce="1000" @click="onClick"
       >Debounce 1000ms</w-button
     >
