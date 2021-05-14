@@ -48,19 +48,23 @@ declare type SetupProp<T, E> = Readonly<
 >
 
 /**
- * @description tree structure data
- * First generic is base data structure
- * Second generic is 'children' field, default is 'children'
+ * @description tree structure data.
+ * First generic is base data structure.
+ * Second generic is 'children' field, default is 'children'.
+ *
+ * @example
+ * const treeItem: TreeDataItem<{ id: number }> = { id: 1, children: [] }
+ * const treeData: TreeDataItem<{ id: number }>[] = [{ id: 1, children: [] }]
+ * const customChildrenField: TreeDataItem<{ id: number }, 'child'>[] = [{ id: 1, child: [] }]
  */
-declare type TreeData<T, C extends string = 'children'> = (T &
-  Partial<Record<C, TreeData<T>>>)[]
+declare type TreeDataItem<T, C extends string = 'children'> = T &
+  Partial<Record<C, TreeDataItem<T>[]>>
 
 /**
  * @description Used for components with `options` API.
  * Default value field is `value` and label field is `label`
  *
  * @example
- *
  * Default: const options1: OptionDataItem[] = [{ value: 'foo', label: 'bar' }]
  * Custom:  const options2: OptionDataItem<'value1', 'label1'>[] = [{ value1: 'foo', label1: 'bar' }]
  */
@@ -72,8 +76,8 @@ declare type OptionDataItem<
 
 /**
  * @description Filter wanted type fields
- * @example
  *
+ * @example
  * interface Thing {
  *   id: string;
  *   price: number;
