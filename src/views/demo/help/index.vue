@@ -6,24 +6,44 @@
 
     <w-title show-left>Tooltip help message</w-title>
     <el-space>
-      <WMessage
+      <w-message
         content="Tooltip Help Message1"
         placement="top"
         effect="dark"
-      ></WMessage>
+      ></w-message>
 
-      <WMessage
+      <w-message
         content="Tooltip Help Message2"
         placement="bottom"
         effect="light"
-      ></WMessage>
+      ></w-message>
 
-      <WMessage
+      <w-message
         content="Tooltip Help Message3"
         placement="top"
         effect="dark"
         icon="el-icon-warning-outline"
-      ></WMessage>
+      ></w-message>
+
+      <w-message
+        content="Tooltip Help Message3"
+        placement="top"
+        effect="dark"
+        icon="el-icon-warning-outline"
+      >
+        <template #content> Slot Content Message </template>
+      </w-message>
+
+      <w-message
+        content="Slot icon"
+        placement="top"
+        effect="dark"
+        icon="el-icon-warning-outline"
+      >
+        <template #icon>
+          <w-icon icon="ant-design:home-outlined"></w-icon>
+        </template>
+      </w-message>
     </el-space>
 
     <br />
@@ -61,11 +81,11 @@
       </el-form-item>
     </el-form>
 
-    <WArrow
+    <w-arrow
       :active="arrow.active"
       :left="arrow.left"
       :right="arrow.right"
-    ></WArrow>
+    ></w-arrow>
 
     <br />
     <br />
@@ -74,7 +94,7 @@
     <br />
 
     <el-space size="medium">
-      <WFlipper trigger="click" class="Card" width="270px" height="300px">
+      <w-flipper trigger="click" class="Card" width="270px" height="300px">
         <template #front>
           <div class="Card__face">
             <span class="Card__value Card__value--top">10</span>
@@ -86,9 +106,9 @@
         <template #back>
           <figure class="Card__pattern"></figure>
         </template>
-      </WFlipper>
+      </w-flipper>
 
-      <WFlipper trigger="hover" class="Card" width="270px" height="300px">
+      <w-flipper trigger="hover" class="Card" width="270px" height="300px">
         <template #front>
           <div class="Card__face">
             <span class="Card__value Card__value--top">10</span>
@@ -100,7 +120,7 @@
         <template #back>
           <figure class="Card__pattern"></figure>
         </template>
-      </WFlipper>
+      </w-flipper>
     </el-space>
 
     <br />
@@ -108,22 +128,22 @@
 
     <w-title show-left>Locale Picker</w-title>
 
-    <WAppLocalePicker></WAppLocalePicker>
-    <WAppLocalePicker show-text></WAppLocalePicker>
+    <w-app-locale-picker></w-app-locale-picker>
+    <w-app-locale-picker show-text></w-app-locale-picker>
 
     <br />
     <br />
 
     <w-title show-left>Icon Picker 【{{ icon }}】</w-title>
 
-    <WIconPicker v-model="icon"></WIconPicker>
+    <w-icon-picker v-model="icon"></w-icon-picker>
 
     <br />
     <br />
 
     <w-title show-left>Screen full</w-title>
 
-    <WAppFullScreen></WAppFullScreen>
+    <w-app-full-screen></w-app-full-screen>
   </el-card>
 </template>
 
