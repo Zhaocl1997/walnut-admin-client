@@ -4,12 +4,12 @@ import type { ElFormItemRule, WFormSchemaItem } from '../types'
 import { unref, computed } from 'vue'
 import { useI18n } from '/@/locales'
 
-const { t } = useI18n()
-
 /**
  * @description Get rule message
  */
 const getMessage = (type: string, label: string) => {
+  const { t } = useI18n()
+
   const getType = ['Input', 'InputNumber'].includes(type)
     ? t('common.inputAction')
     : t('common.chooseAction')
