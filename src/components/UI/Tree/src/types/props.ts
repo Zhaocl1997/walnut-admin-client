@@ -14,7 +14,7 @@ import type { MaybeRef } from '/~/utils'
  * @link https://element-plus.org/#/zh-CN/component/tree#attributes
  */
 interface ElTreeProps<T> {
-  data: TreeDataItem<T>[]
+  data: MaybeRef<TreeDataItem<T>[]>
   emptyText: string
   renderAfterExpand: boolean
   nodeKey: string
