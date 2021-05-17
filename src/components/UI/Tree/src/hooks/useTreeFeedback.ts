@@ -3,7 +3,7 @@ import type { WTreeProps, ElTreeRef, TreeKey } from '../types'
 
 import { nextTick, onMounted, watch } from 'vue'
 
-import { easyIsEmpty, except } from 'easy-fns-ts'
+import { easyIsEmpty } from 'easy-fns-ts'
 
 export const useTreeFeedback = (
   props: ComputedRef<WTreeProps>,
@@ -31,16 +31,13 @@ export const useTreeFeedback = (
     }
 
     if (props.value.multiple) {
-      const levelOneNodeIdArr = props.value.data!.map((i) => i[nodeKey])
-      const val = except(props.value.modelValue as TreeKey[], levelOneNodeIdArr)
-
       setTimeout(() => {
-        treeRef.value!.setCheckedKeys(val)
-      }, 50)
+        treeRef.value?.setCheckedKeys(props.value.modelValue as TreeKey[])
+      }, 0)
     } else {
       setTimeout(() => {
-        treeRef.value!.setCurrentKey(props.value.modelValue as TreeKey)
-      }, 50)
+        treeRef.value?.setCurrentKey(props.value.modelValue as TreeKey)
+      }, 0)
     }
   }
 
@@ -52,6 +49,9 @@ export const useTreeFeedback = (
     () => props.value.modelValue,
     () => {
       feedback()
+    },
+    {
+      deep: true,
     }
   )
 }
