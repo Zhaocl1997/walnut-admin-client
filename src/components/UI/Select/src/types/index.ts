@@ -4,12 +4,13 @@ import type { MultiTypeCompSharedPropType } from '../../../types'
  * @link https://element-plus.gitee.io/#/zh-CN/component/select#select-attributes
  */
 export interface ElSelectProps {
-  modelValue: StringOrNumber | boolean | Recordable | any[]
+  modelValue: BaseDataType | BaseDataType[] | Recordable[]
   disabled: boolean
   valueKey: string
   size: ComponentSize
   clearable: boolean
   collapseTags: boolean
+  multiple: boolean
   multipleLimit: number
   name: string
   autocomplete: string
