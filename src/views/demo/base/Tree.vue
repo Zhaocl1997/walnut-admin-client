@@ -139,11 +139,17 @@
             return resolve([{ _id: 1, _label: 'Level 1' }])
           }
 
+          if (node.level === 5) {
+            return resolve([])
+          }
+
           setTimeout(() => {
+            const id = Math.ceil(Math.random() * 1000)
             resolve([
               {
-                _id: Math.ceil(Math.random() * 1000),
-                _label: 'Lazy node',
+                _id: id,
+                _label: `Lazy node ${id}`,
+                children: [],
               },
             ])
           }, 500)
