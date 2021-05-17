@@ -60,7 +60,7 @@ export interface WInputProps extends Partial<ElInputProps> {
   blackList?: string[]
   helpMessage?: string
   helpPosition?: WInputSlotPosition
-  prepend?: string
+  prepend?: MaybeRef<string>
   append?: string
   debounce?: number
 }
