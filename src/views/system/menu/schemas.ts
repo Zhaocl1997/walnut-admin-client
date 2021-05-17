@@ -1,19 +1,19 @@
 import type { WFormSchemaItem } from '/@/components/UI/Form'
+import type { Menu } from '/@/router/types'
+import type { Ref } from 'vue'
 
-import { computed, toRaw, unref, ref, watch } from 'vue'
-import { findPath } from 'easy-fns-ts'
+import { computed, unref, ref, watch } from 'vue'
+import { findPath, formatTree } from 'easy-fns-ts'
+
+import enMessages from '/@/locales/lang/en'
+import zhMessages from '/@/locales/lang/zh_CN'
 
 import { MenuTypeEnum } from '/@/enums/menu'
 import { LocaleEnum } from '/@/enums/locale'
 
-import { useViews } from '/@/hooks/core/useViews'
+import { useAppContext } from '/@/App'
 
-import { AppI18n } from '/@/locales'
-import enMessages from '/@/locales/lang/en'
-import zhMessages from '/@/locales/lang/zh_CN'
-
-import { deepKeys } from './utils'
-import { Menu } from '/@/router/types'
+import { deepKeys, getMaybeI18nMsg, getViewsOptions } from './utils'
 
 const ToFOptions: OptionDataItem[] = [
   {
@@ -27,53 +27,62 @@ const ToFOptions: OptionDataItem[] = [
 ]
 
 export const getMenuFormSchemas = (
-  formData: any,
-  tableData: any,
-  treeData: any
+  formData: Ref<Menu>,
+  tableData: Ref<Menu[]>,
+  treeData: Ref<TreeDataItem<Menu>[]>
 ) => {
-  const pathPrefix = ref('')
+  const { app } = useAppContext()
 
-  const { viewOptions } = useViews()
+  // view options
+  const { viewOptions } = getViewsOptions()
+
+  // path prefix
+  const pathPrefix = ref('')
 
   /**
    * @description Get translated title list
    */
-  const getTitleList = computed((): any[] => {
-    const locale = (AppI18n.global.locale as any).value
-
-    const params = locale === LocaleEnum.EN ? enMessages : zhMessages
-
-    return Array.from(deepKeys(params)).filter(
-      (i: any) =>
-        i.value.includes('system.menu') || i.value.includes('common.base')
-    )
-  })
+  const getTreeData = computed(() =>
+    formatTree<Menu>(treeData.value, {
+      format: (node) => ({ ...node, title: getMaybeI18nMsg(node.title) }),
+    })
+  )
 
   /**
-   * @description Get `path` prefix base on formData._id
+   * @description Get translated title list
+   */
+  const getTitleList = computed(() =>
+    (Array.from(
+      deepKeys(app.value.locale === LocaleEnum.EN ? enMessages : zhMessages)
+    ) as OptionDataItem[]).filter(
+      (i) =>
+        (i.value as string).includes('system.menu') ||
+        (i.value as string).includes('common.base')
+    )
+  )
+
+  /**
+   * @description Get `path` prefix base on formData._id and formData.pid
    */
   watch(
-    () => unref(formData)._id,
-    (val: any) => {
-      if (!val) return
-
-      const node = findPath<Menu & { _id?: string }>(
+    () => [unref(formData)._id, unref(formData).pid],
+    ([id, pid]) => {
+      const node = findPath<Menu>(
         unref(tableData),
-        (n) => n._id === val
+        (n) => n._id === (pid ?? id)
       )
-      const ret = node!.map((item: any) => item.path)
 
-      if (ret.length === 1) {
+      if (!node) {
         pathPrefix.value = '/'
         return
       }
 
-      ret.pop()
+      const ret = (node as Menu[]).map((item) => item.path)
       pathPrefix.value = ret.join('/') + '/'
     }
   )
 
-  const menuFormSchemas = computed((): WFormSchemaItem[] => {
+  const menuFormSchemas = computed((): WFormSchemaItem<Menu>[] => {
     return [
       // Parent node
       {
@@ -85,20 +94,10 @@ export const getMenuFormSchemas = (
         componentProp: {
           placeholder: 'Select parent menu.',
           clearable: true,
-          data: treeData,
+          data: getTreeData.value,
           props: {
             id: '_id',
             label: 'title',
-          },
-          onChange: (val: any) => {
-            const node = findPath(
-              unref(tableData),
-              (n: any) => n._id === val._id
-            )
-
-            const ret = node.map((item: any) => item.path)
-
-            pathPrefix.value = ret.join('/') + '/'
           },
         },
       },
@@ -139,7 +138,7 @@ export const getMenuFormSchemas = (
         componentProp: {
           placeholder: 'Route path field.',
           clearable: true,
-          prepend: (toRaw(pathPrefix) as unknown) as string,
+          prepend: pathPrefix,
         },
         vShow: ({ formData }) => {
           return formData.type !== MenuTypeEnum.ELEMENT
@@ -204,10 +203,10 @@ export const getMenuFormSchemas = (
           placeholder: 'Route component field.',
           clearable: true,
           options: viewOptions,
-          onChange: (val: any) => {
+          onChange: (val: string) => {
             // Get the name property automatically from vue `name` property
-            const target = viewOptions.find((item: any) => item.value == val)
-            formData.value = { ...formData.value, name: target.name }
+            const target = viewOptions.find((item) => item.value == val)
+            formData.value = { ...formData.value, name: target!.name }
           },
           filterable: true,
         },
@@ -273,7 +272,7 @@ export const getMenuFormSchemas = (
           options: ToFOptions,
         },
         vShow: ({ formData }) => {
-          return formData.type === MenuTypeEnum.MENU && formData.internal
+          return formData.type === MenuTypeEnum.MENU && formData.internal!
         },
       },
 
@@ -289,7 +288,7 @@ export const getMenuFormSchemas = (
           options: ToFOptions,
         },
         vShow: ({ formData }) => {
-          return formData.type === MenuTypeEnum.MENU && formData.external
+          return formData.type === MenuTypeEnum.MENU && formData.external!
         },
       },
 
@@ -307,7 +306,7 @@ export const getMenuFormSchemas = (
         vShow: ({ formData }) => {
           return (
             formData.type === MenuTypeEnum.MENU &&
-            (formData.external || formData.internal)
+            (formData.external! || formData.internal!)
           )
         },
       },

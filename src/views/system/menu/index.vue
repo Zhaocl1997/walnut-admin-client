@@ -33,7 +33,7 @@
     >
       <w-form v-model="menuFormData" @hook="registerForm">
         <template #icon>
-          <WIconPicker v-model="menuFormData.icon" />
+          <w-icon-picker v-model="menuFormData.icon" />
         </template>
       </w-form>
     </w-dialog>
@@ -42,12 +42,12 @@
 
 <script lang="ts">
   import type { Menu } from '/@/router/types'
-  import type { TreeNode } from 'easy-fns-ts'
 
-  import { defineComponent, onMounted, ref, nextTick, computed } from 'vue'
-  import { arrToTree, orderTree, formatTree } from 'easy-fns-ts'
+  import { defineComponent, onMounted, ref, nextTick } from 'vue'
+  import { arrToTree, orderTree } from 'easy-fns-ts'
 
   import { menuAPI } from '/@/api/system/menu'
+  import { useMessage, useTodo } from '/@/hooks/component/useMessage'
 
   import { useTable } from '/@/components/UI/Table'
   import { useDialog } from '/@/components/UI/Dialog'
@@ -55,20 +55,24 @@
 
   import { getMenuTableHeaders } from './headers'
   import { getMenuFormSchemas } from './schemas'
-  import { getMaybeI18nMsg } from './utils'
-  import {
-    useMessage,
-    useMessageBox,
-    useTodo,
-  } from '/@/hooks/component/useMessage'
 
   export default defineComponent({
     name: 'Menu',
 
     setup() {
-      const tableData = ref<Menu[]>([])
       const total = ref(0)
-      const treeData = ref<TreeNode<Menu>[]>([])
+
+      const tableData = ref<Menu[]>([])
+      const treeData = ref<TreeDataItem<Menu>[]>([])
+
+      const menuFormData = ref<Menu>({
+        type: 'catalog',
+        external: false,
+        internal: false,
+        cache: false,
+        status: true,
+        show: true,
+      })
 
       const onGetList = async () => {
         const res = await menuAPI.list()
@@ -86,25 +90,10 @@
         onGetList()
       })
 
-      const getTreeData = computed(() =>
-        formatTree<Menu>(treeData.value, {
-          format: (node) => ({ ...node, title: getMaybeI18nMsg(node.title) }),
-        })
-      )
-
-      const menuFormData = ref<Partial<Menu> & { _id?: string }>({
-        type: 'catalog',
-        external: false,
-        internal: false,
-        cache: false,
-        status: true,
-        show: true,
-      })
-
       const { menuFormSchemas } = getMenuFormSchemas(
         menuFormData,
         tableData,
-        getTreeData
+        treeData
       )
 
       const [registerTable] = useTable({

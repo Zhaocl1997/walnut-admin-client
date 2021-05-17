@@ -9,6 +9,7 @@ export const getMenuTableHeaders = (): WTableHeaderItem[] => {
       prop: 'title',
       width: '200px',
       align: 'left',
+      fixed: 'left',
       formatter: (row) => getMaybeI18nMsg(row.title),
     },
     {
@@ -53,6 +54,7 @@ export const getMenuTableHeaders = (): WTableHeaderItem[] => {
     {
       type: 'action',
       minWidth: '180',
+      fixed: 'right',
     },
   ]
 }
