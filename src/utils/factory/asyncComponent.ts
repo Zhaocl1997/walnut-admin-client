@@ -3,13 +3,13 @@ import { defineAsyncComponent, h } from 'vue'
 // TODO still need to prove
 // loading component
 const loadingComponent = () => {
-  return h('div', {}, 'Component Loading...')
+  return h('div', {}, 'Loading...')
 }
 
 // TODO still need to prove
 // error component
 const ErrorComponent = () => {
-  return h('div', {}, 'Component Error...')
+  return h('div', {}, 'Error...')
 }
 
 // Used 1: w-form async component
@@ -25,7 +25,7 @@ export const createAsyncComponent = (loader: any) => {
     errorComponent: ErrorComponent,
 
     // Delay before showing the loading component. Default: 200ms.
-    delay: 200,
+    delay: 300,
 
     // The error component will be displayed if a timeout is
     // provided and exceeded. Default: Infinity.
