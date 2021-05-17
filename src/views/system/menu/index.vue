@@ -96,14 +96,14 @@
         treeData
       )
 
-      const [registerTable] = useTable({
+      const [registerTable] = useTable<Menu>({
         headers: getMenuTableHeaders(),
         data: tableData,
         total: total,
         rowKey: '_id',
         border: true,
         onAction: (type, scope) => {
-          const id = scope.row?._id
+          const id = scope.row?._id!
 
           const action = {
             create: onCreate,
@@ -139,14 +139,12 @@
           menuFormData.value.pid = id
         }
 
-        nextTick(() => {
-          openDialog({
-            title: 'Create Menu',
-          })
+        openDialog({
+          title: 'Create Menu',
+        })
 
-          nextTick(async () => {
-            await clearValidate()
-          })
+        nextTick(() => {
+          clearValidate()
         })
       }
 
@@ -156,14 +154,8 @@
 
         menuFormData.value = res
 
-        nextTick(() => {
-          openDialog({
-            title: 'Update Menu',
-          })
-
-          nextTick(async () => {
-            await clearValidate()
-          })
+        openDialog({
+          title: 'Update Menu',
         })
       }
 
@@ -198,16 +190,22 @@
 
       // dialog confirm
       const onDialogConfirm = async () => {
-        if (menuFormData.value._id) {
-          await menuAPI.update(menuFormData.value as Menu)
-          useMessage({ type: 'success', message: 'Operation Success!' })
-        } else {
-          await menuAPI.create(menuFormData.value as Menu)
-          useMessage({ type: 'success', message: 'Operation Success!' })
-        }
+        const valid = await validate()
 
-        onDialogCancel()
-        await onGetList()
+        console.log(1)
+
+        if (valid) {
+          if (menuFormData.value._id) {
+            await menuAPI.update(menuFormData.value)
+            useMessage({ type: 'success', message: 'Operation Success!' })
+          } else {
+            await menuAPI.create(menuFormData.value)
+            useMessage({ type: 'success', message: 'Operation Success!' })
+          }
+
+          onDialogCancel()
+          await onGetList()
+        }
       }
 
       return {

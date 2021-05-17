@@ -95,7 +95,7 @@ export const getMenuFormSchemas = (
         componentProp: {
           placeholder: 'Select parent menu.',
           clearable: true,
-          data: getTreeData.value,
+          data: getTreeData,
           props: {
             id: '_id',
             label: 'title',
@@ -141,7 +141,7 @@ export const getMenuFormSchemas = (
           clearable: true,
           prepend: pathPrefix,
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type !== MenuTypeEnum.ELEMENT
         },
       },
@@ -160,11 +160,7 @@ export const getMenuFormSchemas = (
             capitalize: true,
           },
         },
-        // visible:
-        //   (getNotElement.value && !getIsMenu.value) ||
-        //   (getIsMenu.value &&
-        //     (unref(formData).external || unref(formData).internal)),
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type === MenuTypeEnum.CATALOG
         },
       },
@@ -184,7 +180,7 @@ export const getMenuFormSchemas = (
           optionValue: 'name',
           optionLabel: 'name',
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return (
             formData.type === MenuTypeEnum.MENU &&
             !(formData.external || formData.internal)
@@ -211,7 +207,7 @@ export const getMenuFormSchemas = (
           },
           filterable: true,
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return (
             formData.type === MenuTypeEnum.MENU &&
             !(formData.external || formData.internal)
@@ -232,7 +228,7 @@ export const getMenuFormSchemas = (
           options: getTitleList,
           filterable: true,
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type !== MenuTypeEnum.ELEMENT
         },
       },
@@ -244,7 +240,7 @@ export const getMenuFormSchemas = (
           prop: 'icon',
           label: 'Icon',
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type !== MenuTypeEnum.ELEMENT
         },
       },
@@ -272,7 +268,7 @@ export const getMenuFormSchemas = (
           button: true,
           options: ToFOptions,
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type === MenuTypeEnum.MENU && formData.internal!
         },
       },
@@ -288,7 +284,7 @@ export const getMenuFormSchemas = (
           button: true,
           options: ToFOptions,
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type === MenuTypeEnum.MENU && formData.external!
         },
       },
@@ -304,7 +300,7 @@ export const getMenuFormSchemas = (
           placeholder: 'External/Internal url.',
           clearable: true,
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return (
             formData.type === MenuTypeEnum.MENU &&
             (formData.external! || formData.internal!)
@@ -332,7 +328,7 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type !== MenuTypeEnum.ELEMENT
         },
       },
@@ -357,7 +353,7 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type === MenuTypeEnum.MENU
         },
       },
@@ -382,7 +378,7 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        vShow: ({ formData }) => {
+        vIf: ({ formData }) => {
           return formData.type !== MenuTypeEnum.ELEMENT
         },
       },
