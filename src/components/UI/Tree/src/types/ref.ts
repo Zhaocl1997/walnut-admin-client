@@ -11,7 +11,7 @@ export type TreeKey = StringOrNumber
 /**
  * @description Tree node type, refactor from element-plus inside TreeNode type
  */
-export type TreeNode<T = any> = {
+export type TreeNode<T = unknown> = {
   id: number
   text: string
   checked: boolean
@@ -71,7 +71,7 @@ export type FilterNodeMethodFunction<T> = (
 /**
  * @description el-tree ref typing
  */
-export interface ElTreeRef<T = any> extends ElTreeMethods {
+export interface ElTreeRef<T = unknown> extends ElTreeMethods {
   currentNode: TreeNode<T>
   currentNodeKey: TreeKey
   nodesMap: TreeStoreNodesMap

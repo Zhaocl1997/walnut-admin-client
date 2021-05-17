@@ -4,7 +4,7 @@ import { TreeNode } from './ref'
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/tree#fang-fa
  */
-export interface ElTreeMethods<T = any> {
+export interface ElTreeMethods<T = unknown> {
   filter: (val: any) => void
 
   updateKeyChildren: (key: TreeKey, data: TreeDataItem<T>[]) => void
@@ -79,10 +79,10 @@ export interface WTreeMethods {
   checkAll: (val: boolean) => void
 }
 
-export type WTreeSetProps<T = any> = (newProps: WTreeProps<T>) => void
+export type WTreeSetProps<T = unknown> = (newProps: WTreeProps<T>) => void
 
 /**
  * @description w-tree expose methods through ref
  */
-export type WTreeExposedMethods<T = any> = ElTreeMethods<T> &
+export type WTreeExposedMethods<T = unknown> = ElTreeMethods<T> &
   WTreeMethods & { setProps: WTreeSetProps<T> }

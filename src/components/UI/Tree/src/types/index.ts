@@ -6,7 +6,7 @@ export * from './props'
 
 type ElTreePropsFn<D, T> = (data: TreeDataItem<D>[], node: TreeNode) => T
 
-export interface WTreePropsOptions<D = Recordable> {
+export interface WTreePropsOptions<D = unknown> {
   id?: TreeKey
   children?: string
   label?: string | ElTreePropsFn<D, string>
