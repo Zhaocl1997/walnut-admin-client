@@ -1,6 +1,6 @@
 import type { WTreeExposedMethods } from '../../../Tree'
 import type { CommonComponentMethods } from '../../../types'
-import { onMounted, reactive, toRefs, watch } from 'vue'
+import { reactive, toRefs, watch } from 'vue'
 import { easyIsEmpty } from 'easy-fns-ts'
 import { WSelectTreeProp } from '../types'
 
@@ -8,7 +8,7 @@ export const useSelectTreeCore = (props: WSelectTreeProp, emit: Fn) => {
   const state = reactive({
     selectValue: '' as any,
     optionValue: '' as any,
-    treeValue: '',
+    treeValue: '' as any,
     wTreeRef: null as Nullable<WTreeExposedMethods>,
     elSelectRef: null,
   })
@@ -56,17 +56,19 @@ export const useSelectTreeCore = (props: WSelectTreeProp, emit: Fn) => {
 
         setTimeout(() => {
           // update the displayed label
-          state.selectValue = state.wTreeRef!.getCurrentNode()![
-            props.props!.label as string
-          ]
-        }, 0)
+          const node = state.wTreeRef!.getCurrentNode()!
+
+          if (node) {
+            state.selectValue = node[props.props!.label as string]
+          }
+        }, 10)
       } else {
         // multiple
         setTimeout(() => {
           const res = state.wTreeRef!.getCheckedNodes()
           state.selectValue = res.map((i) => i[props.props!.label as string])
           state.optionValue = res
-        }, 0)
+        }, 10)
       }
     },
     {
@@ -75,9 +77,16 @@ export const useSelectTreeCore = (props: WSelectTreeProp, emit: Fn) => {
     }
   )
 
-  onMounted(() => {
-    state.treeValue = props.modelValue as string
-  })
+  watch(
+    () => props.modelValue,
+    (v) => {
+      state.treeValue = v
+    },
+    {
+      deep: true,
+      immediate: true,
+    }
+  )
 
   return {
     ...toRefs(state),
