@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type { WTreeProps, ElTreeRef } from './types'
 
-  import { ref, computed, defineComponent, unref } from 'vue'
+  import { ref, computed, defineComponent } from 'vue'
   import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
@@ -10,7 +10,6 @@
   import props, { extendPropKeys } from './props'
 
   import { useTreeCore } from './hooks/useTreeCore'
-  import { useTreeProps } from './hooks/useTreeProps'
   import { useTreeSingle } from './hooks/useTreeSingle'
   import { useTreeMultiple } from './hooks/useTreeMultiple'
   import { useTreeFeedback } from './hooks/useTreeFeedback'
@@ -39,13 +38,6 @@
       } = useTreeEmit(emit)
 
       const { setProps, getProps } = useProps<WTreeProps>(props)
-
-      const {
-        getTreeProps,
-        getNodeKey,
-        getShowCheckbox,
-        getDefaultExpandKeys,
-      } = useTreeProps(getProps.value)
 
       const { onNodeClick } = useTreeSingle(getProps, {
         emitModelValue,

@@ -42,11 +42,11 @@ interface ElTreeProps<T> {
   iconClass: string
 }
 
-export interface WTreeProps<D = any> extends Partial<ElTreeProps<D>> {
+export interface WTreeProps<T = any> extends Partial<ElTreeProps<T>> {
   /**
    * @override
    */
-  props?: WTreePropsOptions<D>
+  props?: WTreePropsOptions<T>
 
   /**
    * @override
