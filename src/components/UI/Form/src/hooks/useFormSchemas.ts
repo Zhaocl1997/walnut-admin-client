@@ -8,6 +8,7 @@ export const useFormSchemas = (props: ComputedRef<WFormProps>) => {
   watch(
     () => unref(props).schemas,
     (val) => {
+      // @ts-ignore
       formSchemas.value = val
     },
     {

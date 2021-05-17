@@ -79,14 +79,14 @@ type SharedComponentProp = Partial<SharedFormComponentEvent> &
   Partial<SharedDomProp>
 
 // TODO type support
-export interface WFormCallback {
-  formData: Recordable
+export interface WFormCallback<T> {
+  formData: T
 }
 
 /**
  * @description shared schema
  */
-interface SharedSchema<T, P> {
+interface SharedSchema<T, P, D> {
   /**
    * @description schema type
    */
@@ -114,77 +114,85 @@ interface SharedSchema<T, P> {
   /**
    * @description v-if control visible
    */
-  vIf?: ((cb: WFormCallback) => boolean) | MaybeRef<boolean>
+  vIf?: ((cb: WFormCallback<D>) => boolean) | MaybeRef<boolean>
 
   /**
    * @description v-show control visible
    */
-  vShow?: ((cb: WFormCallback) => boolean) | MaybeRef<boolean>
+  vShow?: ((cb: WFormCallback<D>) => boolean) | MaybeRef<boolean>
 
-  visible?: ((cb: WFormCallback) => boolean) | boolean
+  visible?: ((cb: WFormCallback<D>) => boolean) | boolean
 }
 
 /**
  * @description JSX Render Schema
  */
-export type RenderSchema = SharedSchema<'Render', any> & {
+export type RenderSchema<D> = SharedSchema<'Render', any, D> & {
   /**
    * @description JSX render function
    */
-  render?: (cb: WFormCallback) => VNode | VNode[] | string
+  render?: (cb: WFormCallback<D>) => VNode | VNode[] | string
 }
 
 /**
  * @description Slot Schema
  */
-export type SlotSchema = SharedSchema<'Slot', any>
+export type SlotSchema<D> = SharedSchema<'Slot', any, D>
 
 /**
  * @description Button Schema
  */
-export type ButtonSchema = SharedSchema<'Button', WButtonProps>
+export type ButtonSchema<D> = SharedSchema<'Button', WButtonProps, D>
 
 /**
  * @description Button Group Schema
  */
-export type ButtonGroupSchema = SharedSchema<'ButtonGroup', WButtonGroupProps>
+export type ButtonGroupSchema<D> = SharedSchema<
+  'ButtonGroup',
+  WButtonGroupProps,
+  D
+>
 
 /**
  * @description Input Schema
  */
-export type InputSchema = SharedSchema<'Input', WInputProps>
+export type InputSchema<D> = SharedSchema<'Input', WInputProps, D>
 
 /**
  * @description Input number Schema
  */
-export type InputNumberSchema = SharedSchema<'InputNumber', WInputNumberProps>
+export type InputNumberSchema<D> = SharedSchema<
+  'InputNumber',
+  WInputNumberProps,
+  D
+>
 
 /**
  * @description Select Schema
  */
-export type SelectSchema = SharedSchema<'Select', WSelectProps>
+export type SelectSchema<D> = SharedSchema<'Select', WSelectProps, D>
 
 /**
  * @description Checkbox Schema
  */
-export type CheckboxSchema = SharedSchema<'Checkbox', WCheckboxProps>
+export type CheckboxSchema<D> = SharedSchema<'Checkbox', WCheckboxProps, D>
 
 /**
  * @description Radio Schema
  */
-export type RadioSchema = SharedSchema<'Radio', WRadioProps>
+export type RadioSchema<D> = SharedSchema<'Radio', WRadioProps, D>
 
 /**
  * @description Tree Schema
  */
-export type TreeSchema = SharedSchema<'Tree', WTreeProps>
+export type TreeSchema<D> = SharedSchema<'Tree', WTreeProps, D>
 
 /**
  * @description Select Tree Schema
  */
-export type SelectTreeSchema = SharedSchema<'SelectTree', WSelectTreeProp>
+export type SelectTreeSchema<D> = SharedSchema<'SelectTree', WSelectTreeProp, D>
 
 /**
  * @description Switch Schema
  */
-export type SwitchSchema = SharedSchema<'Switch', WSwitchProps>
+export type SwitchSchema<D> = SharedSchema<'Switch', WSwitchProps, D>

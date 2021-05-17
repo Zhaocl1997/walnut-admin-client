@@ -45,7 +45,8 @@ export interface ElFormProps {
 /**
  * @description extend from `ElForm` props
  */
-export interface WFormProps extends Partial<MaybeRefRecord<ElFormProps>> {
+export interface WFormProps<T = Recordable>
+  extends Partial<MaybeRefRecord<ElFormProps>> {
   /**
    * @description v-model value for form
    * @type {Object}
@@ -56,7 +57,7 @@ export interface WFormProps extends Partial<MaybeRefRecord<ElFormProps>> {
    * @description Form model to render relevant component
    * @type {Array}
    */
-  schemas?: MaybeRef<WFormSchemaItem[]>
+  schemas?: MaybeRef<WFormSchemaItem<T>[]>
 
   /**
    * @description Form item gutter provided by el-row

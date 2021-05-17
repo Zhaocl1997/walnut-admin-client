@@ -16,16 +16,16 @@ import type {
 /**
  * @description Form schema item interface
  */
-export type WFormSchemaItem =
-  | RenderSchema // JSX
-  | SlotSchema // Slot
-  | ButtonSchema
-  | ButtonGroupSchema
-  | InputSchema
-  | InputNumberSchema
-  | SelectSchema
-  | CheckboxSchema
-  | RadioSchema
-  | TreeSchema
-  | SelectTreeSchema
-  | SwitchSchema
+export type WFormSchemaItem<D = Recordable> =
+  | RenderSchema<D> // JSX
+  | SlotSchema<D> // Slot
+  | ButtonSchema<D>
+  | ButtonGroupSchema<D>
+  | InputSchema<D>
+  | InputNumberSchema<D>
+  | SelectSchema<D>
+  | CheckboxSchema<D>
+  | RadioSchema<D>
+  | TreeSchema<D>
+  | SelectTreeSchema<D>
+  | SwitchSchema<D>
