@@ -1,5 +1,5 @@
 import { useTitle as VueUseTitle } from '@vueuse/core'
-import { getMaybeI18nMsg } from '/@/views/system/menu/utils'
+import { getMaybeI18nMsg } from '/@/locales/utils'
 
 /**
  * @description reactive document title

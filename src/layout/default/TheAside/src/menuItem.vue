@@ -49,7 +49,7 @@
   import { computed, defineComponent } from 'vue'
 
   import { useRouterPush } from '/@/router'
-  import { getMaybeI18nMsg } from '/@/views/system/menu/utils'
+  import { getMaybeI18nMsg } from '/@/locales/utils'
   import { useAppContext } from '/@/App'
 
   interface MenuItem extends Menu {

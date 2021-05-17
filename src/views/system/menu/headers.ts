@@ -1,6 +1,6 @@
 import type { WTableHeaderItem } from '/@/components/UI/Table'
 import { formatTime } from 'easy-fns-ts'
-import { getMaybeI18nMsg } from './utils'
+import { getMaybeI18nMsg } from '/@/locales/utils'
 
 export const getMenuTableHeaders = (): WTableHeaderItem[] => {
   return [

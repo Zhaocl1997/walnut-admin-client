@@ -24,7 +24,7 @@
 
   import { useAppRoute } from '/@/router'
   import { indexName } from '/@/router/constant'
-  import { getMaybeI18nMsg } from '/@/views/system/menu/utils'
+  import { getMaybeI18nMsg } from '/@/locales/utils'
 
   export default defineComponent({
     name: 'HeaderBreadCrumb',

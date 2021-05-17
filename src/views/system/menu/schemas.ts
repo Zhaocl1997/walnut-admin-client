@@ -12,8 +12,9 @@ import { MenuTypeEnum } from '/@/enums/menu'
 import { LocaleEnum } from '/@/enums/locale'
 
 import { useAppContext } from '/@/App'
+import { getMaybeI18nMsg } from '/@/locales/utils'
 
-import { deepKeys, getMaybeI18nMsg, getViewsOptions } from './utils'
+import { deepKeys, getViewsOptions } from './utils'
 
 const ToFOptions: OptionDataItem[] = [
   {
