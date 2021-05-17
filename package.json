@@ -30,7 +30,7 @@
     "@vueuse/core": "^4.9.0",
     "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
-    "easy-fns-ts": "^1.0.22",
+    "easy-fns-ts": "^1.0.23",
     "element-plus": "^1.0.2-beta.44",
     "nprogress": "^0.2.0",
     "vue": "^3.0.11",
