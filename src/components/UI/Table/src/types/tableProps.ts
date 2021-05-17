@@ -2,7 +2,6 @@ import type { WTableEditCellEmitParams } from './tableContext'
 import type { WTableHeaderItem } from './tableHeaders'
 import type { WTableEditableColumnActionConfig } from './tableHeadersItem'
 import type { ElTableColumnScopedSlot } from './tableSlot'
-import type { MaybeRef } from '/~/utils'
 
 export interface ElTableStyleAndClassParams {
   row: any
@@ -22,8 +21,8 @@ export type ElTableClass = (
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/table#table-attributes
  */
-export interface ElTableProps {
-  data: MaybeRef<any[]>
+export interface ElTableProps<T> {
+  data: T[]
   height: StringOrNumber
   maxHeight: StringOrNumber
   stripe: boolean
@@ -67,7 +66,7 @@ export interface ElTableProps {
 /**
  * @description extend from `ElTable` props
  */
-export interface WTableProps extends Partial<ElTableProps> {
+export interface WTableProps<T = unknown> extends Partial<ElTableProps<T>> {
   /**
    * @description table header for renderer
    */
@@ -100,8 +99,8 @@ export interface WTableProps extends Partial<ElTableProps> {
 
   onAction?: (
     type: WTableEditableColumnActionConfig,
-    scope: ElTableColumnScopedSlot
+    scope: ElTableColumnScopedSlot<T>
   ) => void
 
-  onEdit?: (val: WTableEditCellEmitParams) => void
+  onEdit?: (val: WTableEditCellEmitParams<T>) => void
 }

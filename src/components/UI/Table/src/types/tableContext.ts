@@ -16,9 +16,9 @@ type WTableActionButtonType = 'create' | 'edit' | 'delete'
  * 4. loadStart: start the loading meanually
  * 5. loadEnd: end the loading meanually
  */
-export interface WTableEditCellEmitParams {
+export interface WTableEditCellEmitParams<T = unknown> {
   newValue: any
-  row: any
+  row: T
   prop: string
   loadStart: Fn
   loadEnd: Fn
