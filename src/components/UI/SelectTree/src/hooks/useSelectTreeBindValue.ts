@@ -1,14 +1,6 @@
 import { computed } from 'vue'
 
-export const useSelectTreeBindValue = (props: any, args: any) => {
-  const {
-    onSelectChange,
-
-    getProps,
-    onNodeClick,
-    onCheckChange,
-  } = args
-
+export const useSelectTreeBindValue = (props: any) => {
   const getSelectBindValue = computed(() => {
     return {
       class: 'w-full',
@@ -19,20 +11,15 @@ export const useSelectTreeBindValue = (props: any, args: any) => {
       clearable: props.clearable,
       placeholder: props.placeholder,
       collapseTags: props.collapseTags,
-
-      onChange: onSelectChange,
     }
   })
 
   const getTreeBindValue = computed(() => {
     return {
       data: props.data,
-      props: getProps.value,
+      props: props.props,
       multiple: props.multiple,
       accordion: props.accordion,
-
-      onNodeClick: onNodeClick,
-      onCheck: onCheckChange,
     }
   })
 

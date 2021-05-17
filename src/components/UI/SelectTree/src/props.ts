@@ -1,26 +1,24 @@
-import type { PropType } from 'vue'
-import type { WTreePropsOptions } from '../../Tree'
-
 export default {
-  // origin
-  data: Array as PropType<any[]>,
+  // tree origin
+  data: Array,
 
-  size: String as PropType<ComponentSize>,
+  accordion: Boolean,
 
-  multiple: Boolean as PropType<boolean>,
+  // select
+  size: String,
 
-  disabled: Boolean as PropType<boolean>,
+  multiple: Boolean,
 
-  clearable: Boolean as PropType<boolean>,
+  disabled: Boolean,
 
-  collapseTags: Boolean as PropType<boolean>,
+  clearable: Boolean,
 
-  accordion: Boolean as PropType<boolean>,
+  collapseTags: Boolean,
 
-  placeholder: String as PropType<string>,
+  placeholder: String,
 
   // custom
-  modelValue: [String, Number, Array] as PropType<any[]>,
+  modelValue: [String, Number, Array],
 
-  props: Object as PropType<WTreePropsOptions>,
+  props: Object,
 }

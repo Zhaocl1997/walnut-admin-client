@@ -1,8 +1,25 @@
-import type { ElSelectProps } from '/@/components/UI/Select'
-import type { WTreePropsOptions } from '/@/components/UI/Tree'
+import type { WSelectProps } from '/@/components/UI/Select'
+import type { WTreeProps } from '/@/components/UI/Tree'
 
-export interface WSelectTreeProp<T = any> extends Partial<ElSelectProps> {
-  data: T[]
-
-  props: WTreePropsOptions
-}
+/**
+ * @description extend from select and tree props
+ */
+export interface WSelectTreeProp<T = unknown>
+  extends Pick<
+      WSelectProps,
+      | 'size'
+      | 'multiple'
+      | 'disabled'
+      | 'clearable'
+      | 'collapseTags'
+      | 'placeholder'
+    >,
+    Pick<
+      WTreeProps<T>,
+      | 'data'
+      | 'accordion'
+      | 'modelValue'
+      | 'props'
+      | 'leafOnly'
+      | 'includeHalfChecked'
+    > {}

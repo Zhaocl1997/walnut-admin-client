@@ -3,41 +3,40 @@
     ref="elSelectRef"
     v-model="selectValue"
     v-bind="getSelectBindValue"
+    @change="onSelectChange"
   >
     <el-option :value="optionValue" class="w-select-tree-option">
-      <WTree
+      <w-tree
         ref="wTreeRef"
         v-model="treeValue"
         v-bind="getTreeBindValue"
-      ></WTree>
+      ></w-tree>
     </el-option>
   </el-select>
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
+  import type { WSelectTreeProp } from './types'
   import { defineComponent } from 'vue'
 
-  import props from './props'
-
-  import { useSelectTreeState } from './hooks/useSelectTreeState'
-  import { useSelectTreeProps } from './hooks/useSelectTreeProps'
+  import WTree from '/@/components/UI/Tree'
+  import { useSelectTreeCore } from './hooks/useSelectTreeCore'
   import { useSelectTreeBindValue } from './hooks/useSelectTreeBindValue'
-  import { useSelectTreeSingle } from './hooks/useSelectTreeSingle'
-  import { useSelectTreeMultiple } from './hooks/useSelectTreeMultiple'
-  import { useSelectTreeFeedback } from './hooks/useSelectTreeFeedback'
+  import props from './props'
 
   export default defineComponent({
     name: 'WSelectTree',
 
     inheritAttrs: false,
 
+    components: { WTree },
+
     props: props,
 
-    emits: ['update:modelValue', 'change'],
+    emits: ['update:modelValue'],
 
-    setup(props: any, ctx: SetupContext) {
-      const { attrs, emit } = ctx
+    setup(props, ctx) {
+      const { emit } = ctx
 
       // state
       const {
@@ -46,62 +45,24 @@
         treeValue,
         wTreeRef,
         elSelectRef,
-      } = useSelectTreeState()
-
-      // props
-      const { getProps, nodeKey, label, children } = useSelectTreeProps(props)
-
-      // single handler
-      const { onNodeClick } = useSelectTreeSingle(props, {
-        elSelectRef,
-        selectValue,
-        treeValue,
-        label,
-        emit,
-      })
-
-      // multiple handler
-      const { onSelectChange, onCheckChange } = useSelectTreeMultiple(props, {
-        selectValue,
-        optionValue,
-        treeValue,
-        wTreeRef,
-        emit,
-        label,
-        nodeKey,
-      })
-
-      // feedback handler
-      useSelectTreeFeedback(props, {
-        selectValue,
-        optionValue,
-        treeValue,
-        nodeKey,
-        label,
-        children,
-      })
+        onSelectChange,
+      } = useSelectTreeCore(props as WSelectTreeProp, emit)
 
       // bind value handler
       const { getSelectBindValue, getTreeBindValue } = useSelectTreeBindValue(
-        props,
-        {
-          onSelectChange,
-
-          getProps,
-          onNodeClick,
-          onCheckChange,
-        }
+        props
       )
 
       return {
-        getSelectBindValue,
-        getTreeBindValue,
-
         selectValue,
         optionValue,
         treeValue,
         wTreeRef,
         elSelectRef,
+        onSelectChange,
+
+        getSelectBindValue,
+        getTreeBindValue,
       }
     },
   })
