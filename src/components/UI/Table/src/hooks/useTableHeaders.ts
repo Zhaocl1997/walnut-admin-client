@@ -14,6 +14,10 @@ export const useTableHeaders = (props: ComputedRef<WTableProps>) => {
   watch(
     () => [unref(props).headers, locale],
     ([val, _]: any) => {
+      if (!val) {
+        return
+      }
+
       const formatted = formatTree(val, {
         format: (node) => ({
           ...node,
