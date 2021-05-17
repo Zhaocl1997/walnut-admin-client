@@ -1,4 +1,7 @@
 export interface Menu {
+  /* id */
+  _id?: string
+
   /* parent id */
   pid?: string
 
@@ -6,7 +9,7 @@ export interface Menu {
   type?: 'catalog' | 'menu' | 'element'
 
   /* route path field */
-  path: string
+  path?: string
 
   /* route name field */
   name?: string | symbol | undefined
