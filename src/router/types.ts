@@ -43,4 +43,10 @@ export interface Menu {
 
   /* weather disabled */
   status?: boolean
+
+  /* created at */
+  createdAt?: Date
+
+  /* updated at */
+  updatedAt?: Date
 }

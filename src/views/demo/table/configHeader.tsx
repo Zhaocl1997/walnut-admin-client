@@ -1,8 +1,4 @@
-import type {
-  WTableHeaderItem,
-  WTableHeaderItemNew,
-  WTableEditableColumnActionType,
-} from '/@/components/UI/Table'
+import type { WTable } from '/@/components/UI/Table'
 
 import { computed, reactive } from 'vue'
 
@@ -33,7 +29,7 @@ export const useTableConfig = () => {
     stripe: false,
     showHeader: true,
     action: false,
-    actionType: 'slot' as WTableEditableColumnActionType,
+    actionType: 'slot' as WTable.Header.Extend.Action.Type,
     actionArrayConfig: 'default',
     nested: false,
     nestedItem: false,
@@ -189,7 +185,7 @@ export const useTableConfig = () => {
     ],
   })
 
-  const tableHeaders = computed((): WTableHeaderItemNew[] => {
+  const tableHeaders = computed((): WTable.Header.Item.Props[] => {
     return [
       // index column
       {
@@ -224,9 +220,13 @@ export const useTableConfig = () => {
 
       // common column
       {
+        type: 'editable',
         columnProps: {
           label: 'Name',
           prop: 'name',
+        },
+        componentProps: {
+          editType: 'input',
         },
       },
 
@@ -268,6 +268,106 @@ export const useTableConfig = () => {
             visible: tableConfig.nestedItem,
           },
         ],
+      },
+
+      // another nested columns
+      {
+        columnProps: {
+          label: 'Family Info',
+          labelClassName: 'text-green-500',
+        },
+        visible: tableConfig.nested,
+        children: [
+          {
+            columnProps: {
+              label: 'Mom',
+            },
+            children: [
+              {
+                columnProps: {
+                  label: 'Name',
+                  prop: 'family.mom.name',
+                },
+              },
+
+              {
+                columnProps: {
+                  label: 'Age',
+                  prop: 'family.mom.age',
+                  formatter: (row) => `${row.family.mom.age} years`,
+                },
+              },
+
+              {
+                columnProps: {
+                  label: 'HasWork',
+                  prop: 'family.mom.hasWork',
+                  labelClassName: 'text-red-500',
+                },
+                visible: tableConfig.nestedItem,
+              },
+            ],
+          },
+
+          {
+            columnProps: {
+              label: 'Dad',
+            },
+            children: [
+              {
+                columnProps: {
+                  label: 'Name',
+                  prop: 'family.dad.name',
+                },
+              },
+
+              {
+                columnProps: {
+                  label: 'Age',
+                  prop: 'family.dad.age',
+                  formatter: (row) => `${row.family.dad.age} years`,
+                },
+              },
+
+              {
+                columnProps: {
+                  label: 'HasWork',
+                  prop: 'family.dad.hasWork',
+                  labelClassName: 'text-red-500',
+                },
+                visible: tableConfig.nestedItem,
+              },
+            ],
+          },
+        ],
+      },
+
+      // switch type
+      {
+        type: 'editable',
+        columnProps: {
+          label: 'Status',
+          prop: 'status',
+        },
+        componentProps: {
+          editType: 'switch',
+          editTypeComponentProps: {
+            beforeChange: (val) => {
+              val.loadStart()
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  easyDeepSet(val.row, val.prop, val.newValue)
+                  useMessage({
+                    type: 'success',
+                    message: 'Switch success!',
+                  })
+                  val.loadEnd()
+                  resolve(true)
+                }, 2000)
+              })
+            },
+          },
+        },
       },
 
       // action column

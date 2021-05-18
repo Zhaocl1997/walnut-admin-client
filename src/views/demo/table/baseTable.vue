@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-  import type { WTableEditCellEmitParams } from '/@/components/UI/Table'
+  import type { WTable } from '/@/components/UI/Table'
   import { defineComponent, reactive, ref, onMounted } from 'vue'
   import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
   import { useTableConfig } from './configHeader'
@@ -71,7 +71,7 @@
         useMessage({ type: 'success', message: type })
       }
 
-      const onEdit = (val: WTableEditCellEmitParams) => {
+      const onEdit = (val: WTable.EditableChangeParams) => {
         val.loadStart()
         setTimeout(() => {
           easyDeepSet(val.row, val.prop, val.newValue)
