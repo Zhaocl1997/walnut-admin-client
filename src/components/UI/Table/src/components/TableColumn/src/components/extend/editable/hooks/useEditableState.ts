@@ -14,12 +14,12 @@ export const useEditableState = (
   const editableComponentRef = ref<Nullable<ElInputRef>>(null)
 
   // get column props
-  const getColumnProps = computed(() => props.item?.columnProps)!
+  const getColumnProps = computed(() => props.item?.columnProps)
   // get table column prop
-  const getProp = computed(() => getColumnProps.value?.prop)!
+  const getProp = computed(() => getColumnProps.value?.prop)
 
   // get component type
-  const getComponentType = computed(() => props.item?.componentProps?.editType)!
+  const getComponentType = computed(() => props.item?.componentProps?.editType)
   // get component props
   const getComponentProps = computed(
     () => props.item?.componentProps?.editTypeComponentProps

@@ -6,7 +6,7 @@ import { isFunction } from 'easy-fns-ts'
 import { wTableWarning } from '/@/components/UI/Table/src/utils'
 
 export const useEditableColumnSwitch = (
-  getComponentType: ComputedRef<string>,
+  getComponentType: ComputedRef<string | undefined>,
   getComponentProps: ComputedRef
 ) => {
   const switchLoading = ref(false)

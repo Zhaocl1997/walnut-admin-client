@@ -61,8 +61,8 @@
         editValue.value = getValue
 
         // item may have `formatter` function
-        const formattedValue = isFunction(getColumnProps.value.formatter)
-          ? getColumnProps.value.formatter!(props.row)
+        const formattedValue = isFunction(getColumnProps.value!.formatter)
+          ? getColumnProps.value!.formatter!(props.row)
           : getValue
 
         // edit click event
@@ -99,7 +99,7 @@
                     {
                       newValue: editValue.value,
                       row: props.row,
-                      prop: getProp.value,
+                      prop: getProp.value!,
                       loadStart: switchLoadStart,
                       loadEnd: switchLoadEnd,
                     }
@@ -128,7 +128,7 @@
           emitEvents.edit({
             newValue: editValue.value,
             row: props.row,
-            prop: getProp.value,
+            prop: getProp.value!,
             loadStart: () =>
               startLoading({ target: `#${loadingTargetId.value}` }),
             loadEnd: () => endLoading(),
@@ -139,7 +139,7 @@
             tableProps.value.onEdit({
               newValue: editValue.value,
               row: props.row,
-              prop: getProp.value,
+              prop: getProp.value!,
               loadStart: () =>
                 startLoading({ target: `#${loadingTargetId.value}` }),
               loadEnd: () => endLoading(),
@@ -170,7 +170,7 @@
       // specific for `input`/`select`
       const renderEditComponentType = () => {
         const editComponent = resolveDynamicComponent(
-          `w-table-${camel2Line(getComponentType.value)}`
+          `w-table-${camel2Line(getComponentType.value!)}`
         )
 
         // different type comp trigger `onSave` in different way
@@ -184,12 +184,12 @@
             size="small"
             v-model={editValue.value}
             onKeyup={
-              keyupComps.includes(getComponentType.value)
+              keyupComps.includes(getComponentType.value!)
                 ? onSave
                 : emptyFunction
             }
             onChange={
-              changeComps.includes(getComponentType.value)
+              changeComps.includes(getComponentType.value!)
                 ? onSave
                 : emptyFunction
             }

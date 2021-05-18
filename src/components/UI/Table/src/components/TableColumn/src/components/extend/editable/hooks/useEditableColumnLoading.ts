@@ -9,7 +9,7 @@ import { wTableWarning } from '/@/components/UI/Table/src/utils'
 
 export const useEditableColumnLoading = (
   props: SetupProp<{ row: Pick<WTable.ScopeSlotData, 'row'> }>,
-  getProp: ComputedRef<string>
+  getProp: ComputedRef<string | undefined>
 ) => {
   const { tableProps } = useTableContext()
 
@@ -23,7 +23,7 @@ export const useEditableColumnLoading = (
     }
 
     // handle nested prop
-    return `w-${getProp.value.replaceAll('.', '')}-${
+    return `w-${getProp.value!.replaceAll('.', '')}-${
       props.row![tableProps.value.rowKey as string]
     }`
   })
