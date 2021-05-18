@@ -31,6 +31,7 @@ export const AuthRoute: RouteRecordRaw = {
 export const RootRoute: RouteRecordRaw = {
   name: rootName,
   path: rootPath,
+  redirect: indexPath,
   component: () => import('../layout/default'),
   children: [
     {
