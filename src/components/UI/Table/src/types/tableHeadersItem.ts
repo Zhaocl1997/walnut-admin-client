@@ -1,4 +1,5 @@
 import type { WButtonGroupItem } from '../../../ButtonGroup'
+import type { WTableHeaderItemExtendActionProps } from './tableHeadersItemAction'
 import type { WTableEditableColumnProps } from './tableHeadersItemEditable'
 
 /**
@@ -6,7 +7,7 @@ import type { WTableEditableColumnProps } from './tableHeadersItemEditable'
  */
 export interface ElTableColumnProps {
   key: string
-  type: 'index' | 'selection' | 'expand' | 'action' | 'editable'
+  type: 'index' | 'selection' | 'expand'
   columnKey: string
   label: string
   prop: string
@@ -70,8 +71,13 @@ export type WTableEditableColumnDefaultSelect = WTableEditableColumnDefaultCusto
  */
 export type WTableEditableColumnDefaultExpand = WTableEditableColumnDefaultCustomType<
   'expand',
-  EmptyObject
+  {}
 >
+
+type WTableHeaderItemBaseColumnProps =
+  | WTableEditableColumnDefaultIndex
+  | WTableEditableColumnDefaultSelect
+  | WTableEditableColumnDefaultExpand
 
 /**
  * @description Action column render way
@@ -111,3 +117,62 @@ export type WTableEditableColumn = WTableEditableColumnDefaultCustomType<
   'editable',
   WTableEditableColumnProps
 >
+
+////////////////////////////////////////////////////////////////////////////
+
+type WTableHeaderItemBase<T, P> = {
+  /**
+   * @description generaic type
+   */
+  type?: T
+
+  /**
+   * @description column visibility
+   */
+  visible?: boolean
+
+  /**
+   * @description Original el-table-column props, support different type different props.
+   * Only specific `type` column have its own types. Same structure for action and editable column.
+   * @example type: 'index' => componentProps: { index: () => {} }
+   * @example type: 'selection' => componentProps: { selectable: () => {} }
+   * @example type: 'expand' => componentProps: {  }
+   */
+  columnProps?: Partial<WTableHeaderItemBaseColumnProps>
+
+  /**
+   * @description Custom props for different type
+   */
+  componentProps?: Partial<P>
+}
+
+/**
+ * @description Default table column types, support for tree data structure
+ */
+type WTableHeaderItemBaseDefault = TreeDataItem<
+  WTableHeaderItemBase<'default', {}>
+>
+
+/**
+ * @description Action table column types
+ */
+type WTableHeaderItemExtendAction = WTableHeaderItemBase<
+  'action',
+  WTableHeaderItemExtendActionProps
+>
+
+/**
+ * @description Editable table column types
+ */
+type WTableHeaderItemExtendEditable = WTableHeaderItemBase<
+  'editable',
+  WTableEditableColumnProps
+>
+
+/**
+ * @description w-table header item typing
+ */
+export type WTableHeaderItemNew =
+  | WTableHeaderItemBaseDefault
+  | WTableHeaderItemExtendAction
+  | WTableHeaderItemExtendEditable

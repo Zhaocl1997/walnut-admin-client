@@ -6,6 +6,7 @@ import type {
   WTableEditableColumnDefaultAction,
   WTableEditableColumn,
 } from './tableHeadersItem'
+import { WTableEditableColumnProps } from './tableHeadersItemEditable'
 import type { MaybeRef } from '/~/utils'
 
 /**

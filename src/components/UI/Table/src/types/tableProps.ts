@@ -1,6 +1,9 @@
 import type { WTableEditCellEmitParams } from './tableContext'
 import type { WTableHeaderItem } from './tableHeaders'
-import type { WTableEditableColumnActionConfig } from './tableHeadersItem'
+import type {
+  WTableEditableColumnActionConfig,
+  WTableHeaderItemNew,
+} from './tableHeadersItem'
 import type { ElTableColumnScopedSlot } from './tableSlot'
 
 export interface ElTableStyleAndClassParams {
@@ -70,7 +73,8 @@ export interface WTableProps<T = unknown> extends Partial<ElTableProps<T>> {
   /**
    * @description table header for renderer
    */
-  headers?: WTableHeaderItem[]
+  // headers?: WTableHeaderItem[]
+  headers?: WTableHeaderItemNew[]
 
   /**
    * @description has pagination or not
