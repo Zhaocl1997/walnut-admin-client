@@ -1,19 +1,11 @@
-import type {
-  WTableEditableColumnActionButtonGroup,
-  WTableEditableColumnDefaultAction,
-} from '/@/components/UI/Table'
+import type { WTable } from '/@/components/UI/Table'
 
 import { computed } from 'vue'
-
 import { useI18n } from '/@/locales'
-
 import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
 export const useActionColumnDefaultButtonGroup = (
-  props: SetupProp<
-    {},
-    { column?: WTableEditableColumnDefaultAction | undefined }
-  >
+  props: SetupProp<{ column: WTable.Header.Item.Action }>
 ) => {
   const { t } = useI18n()
 
@@ -21,7 +13,7 @@ export const useActionColumnDefaultButtonGroup = (
 
   // default button group
   const defaultButtonGroup = computed(
-    (): WTableEditableColumnActionButtonGroup => {
+    (): WTable.Header.Extend.Action.Group[] => {
       return [
         {
           type: 'text',
@@ -63,9 +55,13 @@ export const useActionColumnDefaultButtonGroup = (
   // filter the configed button group
   const filteredButtonGroup = computed(() =>
     defaultButtonGroup.value.filter((item) =>
-      (props.column?.actionConfig ?? ['create', 'delete', 'edit']).includes(
-        item.actionButtonType!
-      )
+      (
+        props.column?.componentProps?.actionConfig ?? [
+          'create',
+          'delete',
+          'edit',
+        ]
+      ).includes(item.actionButtonType!)
     )
   )
 

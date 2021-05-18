@@ -6,23 +6,22 @@ export const useTableColumnComponents = () => {
   const instance = getCurrentInstance()
 
   const components = {
-    WTableColumnIndex: createAsyncComponent(
+    // original
+    WTableColumnDefaultIndex: createAsyncComponent(
       () => import('../components/default/index.vue')
     ),
-    WTableColumnSelection: createAsyncComponent(
+    WTableColumnDefaultSelection: createAsyncComponent(
       () => import('../components/default/selection.vue')
     ),
-    WTableColumnExpand: createAsyncComponent(
+    WTableColumnDefaultExpand: createAsyncComponent(
       () => import('../components/default/expand.vue')
     ),
 
-    // extension
-    WTableColumnAction: createAsyncComponent(
+    // extend
+    WTableColumnExtendAction: createAsyncComponent(
       () => import('../components/extend/action/action.vue')
     ),
-
-    // extension
-    WTableColumnEditable: createAsyncComponent(
+    WTableColumnExtendEditable: createAsyncComponent(
       () => import('../components/extend/editable/editable.vue')
     ),
   }

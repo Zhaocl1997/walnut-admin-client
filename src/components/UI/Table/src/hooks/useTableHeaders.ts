@@ -1,15 +1,15 @@
 import type { ComputedRef } from 'vue'
-import type { WTableProps, WTableHeaderItem } from '../types'
+import type { WTable } from '../types'
 
 import { ref, unref, watch } from 'vue'
 import { formatTree } from 'easy-fns-ts'
 
 import { useI18n } from '/@/locales'
 
-export const useTableHeaders = (props: ComputedRef<WTableProps>) => {
+export const useTableHeaders = (props: ComputedRef<WTable.Props>) => {
   const { t, locale } = useI18n()
 
-  const tableHeaders = ref<WTableHeaderItem[]>([])
+  const tableHeaders = ref<WTable.Header.Item.Props[]>([])
 
   watch(
     () => [unref(props).headers, locale],

@@ -1,9 +1,6 @@
 <script lang="tsx">
-  import type {
-    ElTableColumnScopedSlot,
-    WTableEditableColumnDefaultIndex,
-  } from '/@/components/UI/Table'
   import type { PropType } from 'vue'
+  import type { WTable } from '/@/components/UI/Table'
 
   import { defineComponent } from 'vue'
   import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
@@ -14,7 +11,7 @@
     inheritAttrs: false,
 
     props: {
-      column: Object as PropType<WTableEditableColumnDefaultIndex>,
+      column: Object as PropType<WTable.Header.Default.Index>,
     },
 
     setup(props) {
@@ -29,7 +26,7 @@
 
       // render default index slot
       const renderDefaultSlot = () => ({
-        default: ({ $index }: ElTableColumnScopedSlot) => (
+        default: ({ $index }: WTable.ScopeSlotData) => (
           <span>{renderIndex(+$index)}</span>
         ),
       })

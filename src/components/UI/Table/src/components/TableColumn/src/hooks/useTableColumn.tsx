@@ -1,9 +1,5 @@
 import type { SetupContext } from 'vue'
-import type {
-  WTableHeaderItem,
-  WTableHeaderItemNew,
-  ElTableColumnScopedSlot,
-} from '/@/components/UI/Table'
+import type { WTable } from '/@/components/UI/Table'
 
 import { computed, renderSlot, renderList, resolveDynamicComponent } from 'vue'
 import { isUndefined } from 'easy-fns-ts'
@@ -11,7 +7,7 @@ import { isUndefined } from 'easy-fns-ts'
 import { renderSlots } from '/@/utils/shared'
 
 export const useTableColumn = (
-  props: SetupProp<WTableHeaderItemNew, AnyObject>,
+  props: SetupProp<{ item: WTable.Header.Item.Props }>,
   ctx: SetupContext
 ) => {
   const { slots } = ctx
@@ -26,14 +22,16 @@ export const useTableColumn = (
   // `type` field in root level has higher priority then `type` in `columnProps`
   const getType = computed(() => getExtendType.value ?? getBaseType.value)
 
-  // render common columns
+  /**
+   * @description Render common columns
+   */
   const renderCommonColumn = () => {
     // render common column slot
     // the slots defined by user through prop named slot
     const renderCommonColumnSlot = () =>
       !isUndefined(slots[getProp.value!])
         ? {
-            default: (scope: ElTableColumnScopedSlot) =>
+            default: (scope: WTable.ScopeSlotData) =>
               renderSlot(slots, getProp.value!, scope),
           }
         : {}
@@ -45,28 +43,12 @@ export const useTableColumn = (
     )
   }
 
-  // render typed columns
-  // include `index`/`select`/`expand`/`action`/`switch` types
-  // resolve dynamically through `resolveDynamicComponent`
+  /**
+   * @description Render typed columns
+   * include `index`/`select`/`expand`/`action`/`switch` types
+   * resolve dynamically through `resolveDynamicComponent`
+   */
   const renderTypeColumn = () => {
-    // handle editable column
-    // this is used for editable cell, prevent only load for once and all cell in this column will display the same content
-    // need to use the `editable` component in slot
-    if (props.item?.type === 'editable') {
-      return (
-        <el-table-column {...getColumnBindValue.value}>
-          {{
-            default: ({ row }: ElTableColumnScopedSlot) => (
-              <w-table-column-editable
-                item={props.item}
-                row={row}
-              ></w-table-column-editable>
-            ),
-          }}
-        </el-table-column>
-      )
-    }
-
     // render typed column slot
     // only `expand` and `action` typed column has slot
     const renderTypeColumnSlot = () => {
@@ -74,20 +56,53 @@ export const useTableColumn = (
 
       return slotableColumn.includes(getType.value!)
         ? {
-            default: (scope: ElTableColumnScopedSlot) =>
+            default: (scope: WTable.ScopeSlotData) =>
               renderSlot(slots, getType.value!, scope),
           }
         : {}
     }
 
-    const customComponent = resolveDynamicComponent(
-      `w-table-column-${getType.value}`
+    // el-table-column original typed columns
+    const originalColumnTypes = ['index', 'expand', 'selection']
+    if (originalColumnTypes.includes(getType.value!)) {
+      const editableColumn = resolveDynamicComponent(
+        `w-table-column-default-${getType.value}`
+      )
+
+      return (
+        <editableColumn column={props.item?.columnProps}>
+          {renderTypeColumnSlot()}
+        </editableColumn>
+      )
+    }
+
+    // handle editable column
+    // this is used for editable cell, prevent only load for once and all cell in this column will display the same content
+    // need to use the `editable` component in slot
+    if (getType.value === 'editable') {
+      const editableColumn = resolveDynamicComponent(
+        `w-table-column-extend-editable`
+      )
+
+      return (
+        <el-table-column {...getColumnBindValue.value}>
+          {{
+            default: ({ row }: WTable.ScopeSlotData) => (
+              <editableColumn item={props.item} row={row}></editableColumn>
+            ),
+          }}
+        </el-table-column>
+      )
+    }
+
+    const extendComponent = resolveDynamicComponent(
+      `w-table-column-extend-${getType.value}`
     )
 
     return (
-      <customComponent column={props.item}>
+      <extendComponent column={props.item}>
         {renderTypeColumnSlot()}
-      </customComponent>
+      </extendComponent>
     )
   }
 
@@ -108,9 +123,12 @@ export const useTableColumn = (
    */
   const renderNestedColumns = () => (
     <el-table-column {...getColumnBindValue.value}>
-      {renderList(props.item?.children, (value) => (
-        <w-table-item item={value}>{renderSlots(slots)}</w-table-item>
-      ))}
+      {renderList(
+        (props.item as WTable.Header.Item.Default)?.children,
+        (value) => (
+          <w-table-item item={value}>{renderSlots(slots)}</w-table-item>
+        )
+      )}
     </el-table-column>
   )
 

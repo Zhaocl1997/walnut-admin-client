@@ -1,6 +1,6 @@
 <script lang="tsx">
-  import type { WTableEditableColumnDefaultSelect } from '/@/components/UI/Table'
   import type { PropType } from 'vue'
+  import type { WTable } from '/@/components/UI/Table'
 
   import { defineComponent } from 'vue'
 
@@ -10,7 +10,7 @@
     inheritAttrs: false,
 
     props: {
-      column: Object as PropType<WTableEditableColumnDefaultSelect>,
+      column: Object as PropType<WTable.Header.Default.Selection>,
     },
 
     setup(props) {

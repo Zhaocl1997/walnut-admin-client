@@ -1,5 +1,4 @@
-import type { WTableEditableColumnSwitch } from '/@/components/UI/Table'
-import type { WTableEditableColumnHookProps } from '../type'
+import type { ComputedRef } from 'vue'
 
 import { ref, computed } from 'vue'
 import { isFunction } from 'easy-fns-ts'
@@ -7,22 +6,18 @@ import { isFunction } from 'easy-fns-ts'
 import { wTableWarning } from '/@/components/UI/Table/src/utils'
 
 export const useEditableColumnSwitch = (
-  props: WTableEditableColumnHookProps
+  getComponentType: ComputedRef<string>,
+  getComponentProps: ComputedRef
 ) => {
   const switchLoading = ref(false)
 
   const switchLoadStart = () => (switchLoading.value = true)
   const switchLoadEnd = () => (switchLoading.value = false)
 
-  const isSwitchType = computed(() => props.item?.editType === 'switch')
+  const isSwitchType = computed(() => getComponentType.value === 'switch')
 
   if (isSwitchType.value) {
-    if (
-      !isFunction(
-        (props.item as WTableEditableColumnSwitch)?.editTypeComponentProps
-          ?.beforeChange
-      )
-    ) {
+    if (!isFunction(getComponentProps.value?.beforeChange)) {
       wTableWarning(
         'Should provide `beforeChange` prop in `editTypeComponentProps` for change when use `switch` type editable cell!'
       )

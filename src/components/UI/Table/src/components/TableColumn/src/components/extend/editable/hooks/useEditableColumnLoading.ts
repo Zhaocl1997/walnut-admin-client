@@ -1,4 +1,5 @@
-import type { WTableEditableColumnHookProps } from '../type'
+import type { ComputedRef } from 'vue'
+import type { WTable } from '/@/components/UI/Table'
 
 import { computed } from 'vue'
 
@@ -7,7 +8,8 @@ import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContex
 import { wTableWarning } from '/@/components/UI/Table/src/utils'
 
 export const useEditableColumnLoading = (
-  props: WTableEditableColumnHookProps
+  props: SetupProp<{ row: Pick<WTable.ScopeSlotData, 'row'> }>,
+  getProp: ComputedRef<string>
 ) => {
   const { tableProps } = useTableContext()
 
@@ -21,7 +23,7 @@ export const useEditableColumnLoading = (
     }
 
     // handle nested prop
-    return `w-${props.item?.prop.replaceAll('.', '')}-${
+    return `w-${getProp.value.replaceAll('.', '')}-${
       props.row![tableProps.value.rowKey as string]
     }`
   })

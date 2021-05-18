@@ -28,7 +28,7 @@
             {{
               default: ({ node, data }: { node: any; data: any }) => (
                 <>
-                  <el-checkbox v-model={data.visible}></el-checkbox>
+                  <el-checkbox vModel={data.visible}></el-checkbox>
                   {data.label}
                 </>
               ),

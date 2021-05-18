@@ -1,5 +1,5 @@
 <script lang="tsx">
-  import type { WTableProps } from './types'
+  import type { WTable } from './types'
 
   import { ref, unref, computed, defineComponent, renderList } from 'vue'
   import { easyOmit, genString } from 'easy-fns-ts'
@@ -23,14 +23,14 @@
 
     emits: ['hook', 'page', 'action', 'edit'],
 
-    setup(props: WTableProps, ctx) {
+    setup(props: WTable.Props, ctx) {
       const tableId = `w-table-${genString(6)}`
 
       const { attrs, emit, expose, slots } = ctx
 
       const tableRef = ref<Nullable<any>>(null)
 
-      const { setProps, getProps } = useProps<WTableProps>(props)
+      const { setProps, getProps } = useProps<WTable.Props>(props)
 
       useTableComponent()
 

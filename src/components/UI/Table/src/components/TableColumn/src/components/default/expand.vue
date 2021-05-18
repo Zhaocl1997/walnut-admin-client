@@ -1,9 +1,6 @@
 <script lang="tsx">
-  import type {
-    ElTableColumnScopedSlot,
-    WTableEditableColumnDefaultExpand,
-  } from '/@/components/UI/Table'
   import type { PropType } from 'vue'
+  import type { WTable } from '/@/components/UI/Table'
 
   import { defineComponent, renderSlot } from 'vue'
   import { easyOmit } from 'easy-fns-ts'
@@ -14,7 +11,7 @@
     inheritAttrs: false,
 
     props: {
-      column: Object as PropType<WTableEditableColumnDefaultExpand>,
+      column: Object as PropType<WTable.Header.Default.Expand>,
     },
 
     setup(props, ctx) {
@@ -22,7 +19,7 @@
 
       // render expand slot
       const renderDefaultSlot = () => ({
-        default: (scope: ElTableColumnScopedSlot) =>
+        default: (scope: WTable.ScopeSlotData) =>
           renderSlot(slots, 'default', scope),
       })
 

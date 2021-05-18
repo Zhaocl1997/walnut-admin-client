@@ -1,11 +1,8 @@
 <script lang="tsx">
-  import type {
-    ElTableColumnScopedSlot,
-    WTableEditableColumnDefaultAction,
-  } from '/@/components/UI/Table'
   import type { PropType } from 'vue'
+  import type { WTable } from '/@/components/UI/Table'
 
-  import { defineComponent, renderSlot, renderList, computed } from 'vue'
+  import { defineComponent, renderSlot, renderList } from 'vue'
   import { isArray } from 'easy-fns-ts'
 
   import { useActionColumnDefaultButtonGroup } from './hooks/useActionColumnDefaultButtonGroup'
@@ -16,7 +13,7 @@
     inheritAttrs: false,
 
     props: {
-      column: Object as PropType<WTableEditableColumnDefaultAction>,
+      column: Object as PropType<WTable.Header.Item.Action>,
     },
 
     setup(props, ctx) {
@@ -25,7 +22,7 @@
       const { filteredButtonGroup } = useActionColumnDefaultButtonGroup(props)
 
       // render action by button group array
-      const renderActionArray = (scope: ElTableColumnScopedSlot) => {
+      const renderActionArray = (scope: WTable.ScopeSlotData) => {
         // render default button group
         const renderDefault = () => {
           return renderList(filteredButtonGroup.value, (value) => (
@@ -37,16 +34,19 @@
 
         // render custom button group
         const renderCustom = () =>
-          renderList(props.column!.actionButtonGroup, (value) => (
-            <w-button
-              {...{ ...value, onClick: () => value.onClick!(scope) }}
-            ></w-button>
-          ))
+          renderList(
+            props.column?.componentProps?.actionButtonGroup!,
+            (value) => (
+              <w-button
+                {...{ ...value, onClick: () => value.onClick!(scope) }}
+              ></w-button>
+            )
+          )
 
         const isArrayRender =
-          props.column?.actionType === 'array' &&
-          isArray(props.column.actionButtonGroup) &&
-          props.column.actionButtonGroup.length > 0
+          props.column?.componentProps?.actionType === 'array' &&
+          isArray(props.column?.componentProps?.actionButtonGroup!) &&
+          props.column?.componentProps?.actionButtonGroup!.length > 0
 
         return isArrayRender ? renderCustom() : renderDefault()
       }
@@ -54,8 +54,8 @@
       // render action default slot
       // `slot` or `array`
       const renderDefaultSlot = () => ({
-        default: (scope: ElTableColumnScopedSlot) =>
-          props.column?.actionType === 'slot'
+        default: (scope: WTable.ScopeSlotData) =>
+          props.column?.componentProps?.actionType === 'slot'
             ? renderSlot(slots, 'default', scope)
             : renderActionArray(scope),
       })
