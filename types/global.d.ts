@@ -41,11 +41,7 @@ declare type AnyObject = Record<string, unknown>
 /**
  * @description used for setup prop type
  */
-declare type SetupProp<T, E> = Readonly<
-  E & {
-    item?: T | undefined
-  }
->
+declare type SetupProp<P> = Readonly<{} & Partial<P>>
 
 /**
  * @description tree structure data.
