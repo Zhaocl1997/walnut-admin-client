@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref } from 'vue'
+import type { ComputedRef, Ref, VNode } from 'vue'
 
 import type { WInputProps } from '../../../Input'
 import type { WInputNumberProps } from '../../../InputNumber'
@@ -74,6 +74,30 @@ export declare namespace WTable {
     loadEnd: Fn
   }
 
+  interface PageChangeParams {
+    pageNum: number
+    pageSize: number
+  }
+
+  /**
+   * @description w-table event entry
+   */
+  export namespace Event {
+    type EventsCustom<E, P> = {
+      eventName: E
+      eventParams: P
+    }
+
+    export type Action = EventsCustom<
+      'action',
+      { type: Header.Extend.Action.Config; scope: ScopeSlotData }
+    >
+
+    export type Edit = EventsCustom<'edit', { val: EditableChangeParams }>
+
+    export type Entry = Action | Edit
+  }
+
   /**
    * @description w-table pagination base fields
    */
@@ -90,6 +114,8 @@ export declare namespace WTable {
 
     tableRef: Ref<any>
 
+    tableEvent: (val: Event.Entry) => void
+
     tableId: string
 
     /**
@@ -104,6 +130,9 @@ export declare namespace WTable {
 
       // type for edit event
       edit: (val: EditableChangeParams) => void
+
+      // type for page event
+      page: (val: PageChangeParams) => void
     }
   }
 
@@ -143,17 +172,23 @@ export declare namespace WTable {
       pageSize: number
 
       /**
-       * @description w-table onAction prop event
+       * @description
+       *   Notice that the emit event common usage is @event="onEvent"
+       *   But vue inside also handle event as a prop which start with `on`
+       *   And capitalize the first event like `onEvent`
+       *   So the props below is just a type support for coding
+       *   There will not be any actually code declares these events which are the same usage as props
+       *
+       * @example Below two lines work the same result
+       * <w-table @action="onAction" />
+       * <w-table :onAction="onAction" />
        */
       onAction: (
         type: Header.Extend.Action.Config,
         scope: ScopeSlotData<T>
       ) => void
-
-      /**
-       * @description w-table onEdit prop event
-       */
       onEdit: (val: EditableChangeParams<T>) => void
+      onPage: (val: PageChangeParams) => void
     }
   >
 
@@ -239,9 +274,16 @@ export declare namespace WTable {
      * @example const headers: WTable.Header.Item.Props[] = []
      */
     export namespace Item {
-      export type Default<D = any> = TreeDataItem<
-        HeaderItemCustom<'default', {}, D>
-      >
+      export type Types =
+        | 'default'
+        | 'action'
+        | 'editable'
+        | 'slot'
+        | 'render'
+        | 'nested'
+
+      export type Default<D = any> = HeaderItemCustom<'default', {}, D>
+
       export type Action<D = any> = HeaderItemCustom<
         'action',
         Header.Extend.Action.Props,
@@ -253,8 +295,22 @@ export declare namespace WTable {
         D
       >
 
+      export type Slot<D = any> = HeaderItemCustom<'slot', {}, D>
+
+      export type Render<D = any> = HeaderItemCustom<
+        'render',
+        {
+          render: (cb: ScopeSlotData) => VNode | VNode[] | string
+        },
+        D
+      >
+
+      export type Nested<D = any> = HeaderItemCustom<'nested', {}, D>
+
       // entry
-      export type Props<T = any> = Default<T> | Action<T> | Editable<T>
+      export type Props<T = any> = TreeDataItem<
+        Default<T> | Action<T> | Editable<T> | Slot<T> | Render<T> | Nested<T>
+      >
     }
   }
 }

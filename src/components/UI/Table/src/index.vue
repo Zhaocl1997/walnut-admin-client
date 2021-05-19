@@ -4,15 +4,17 @@
   import { ref, unref, computed, defineComponent, renderList } from 'vue'
   import { easyOmit, genString } from 'easy-fns-ts'
 
-  import props, { extendPropKeys } from './props'
+  import { useProps } from '/@/hooks/core/useProps'
+  import { renderSlots } from '/@/utils/shared'
 
   import { setTableContext } from './hooks/useTableContext'
   import { useTableHeaders } from './hooks/useTableHeaders'
   import { useTableComponent } from './hooks/useTableComponents'
   import { useTablePagination } from './hooks/useTablePagination'
   import { useTableMethods } from './hooks/useTableMethods'
-  import { useProps } from '/@/hooks/core/useProps'
-  import { renderSlots } from '/@/utils/shared'
+  import { useTableEvents } from './hooks/useTableEvents'
+
+  import props, { extendPropKeys } from './props'
 
   export default defineComponent({
     name: 'WTable',
@@ -36,6 +38,8 @@
 
       const { tableHeaders } = useTableHeaders(getProps)
 
+      const { tableEvent } = useTableEvents(getProps, emit)
+
       const { tableMethods } = useTableMethods(tableRef, { setProps })
 
       const { onPageChange, pageState } = useTablePagination(getProps, emit)
@@ -52,11 +56,13 @@
       setTableContext({
         tableProps: getProps,
         tableHeaders: tableHeaders,
+        tableEvent: tableEvent,
         tableRef: tableRef,
         tableId: tableId,
         emitEvents: {
           action: (...args) => emit('action', ...args),
           edit: (...args) => emit('edit', ...args),
+          page: (...args) => emit('page', ...args),
         },
       })
 

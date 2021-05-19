@@ -17,7 +17,11 @@
       <w-form v-model="tableConfig" @hook="registerForm"></w-form>
     </template>
 
-    <w-table @hook="registerTable" @page="onPage">
+    <w-table @hook="registerTable">
+      <template #name="{ row }">
+        <span>name slot: {{ row.name }}</span>
+      </template>
+
       <template #expand="{ row }">
         <span>expand slot</span>
       </template>
@@ -48,18 +52,6 @@
 
       const { tableConfig, registerForm, tableHeaders } = useTableConfig()
 
-      const [registerTable] = useTable({
-        headers: tableHeaders,
-        data: data,
-        total: total,
-        hasPage: computed(() => tableConfig.page),
-        border: computed(() => tableConfig.border),
-        stripe: computed(() => tableConfig.stripe),
-        showHeader: computed(() => tableConfig.showHeader),
-        pageNum: query.pageNum,
-        pageSize: query.pageSize,
-      })
-
       const onPage = ({
         pageNum,
         pageSize,
@@ -77,6 +69,22 @@
         data.value = res.data
         total.value = res.total
       }
+
+      const [registerTable] = useTable({
+        headers: tableHeaders,
+        data: data,
+        total: total,
+        hasPage: computed(() => tableConfig.page),
+        border: computed(() => tableConfig.border),
+        stripe: computed(() => tableConfig.stripe),
+        showHeader: computed(() => tableConfig.showHeader),
+        pageNum: query.pageNum,
+        pageSize: query.pageSize,
+        onPage: onPage,
+        onAction: (val) => {
+          console.log(val)
+        },
+      })
 
       onMounted(() => {
         onGetList()

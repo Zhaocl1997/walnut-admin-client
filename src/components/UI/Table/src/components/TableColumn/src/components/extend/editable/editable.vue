@@ -36,11 +36,10 @@
         getComponentProps,
       } = useEditableState(props)
 
-      const {
-        startLoading,
-        endLoading,
-        loadingTargetId,
-      } = useEditableColumnLoading(props, getProp)
+      const { loadingTargetId, loadStart, loadEnd } = useEditableColumnLoading(
+        props,
+        getProp
+      )
 
       const {
         switchLoading,
@@ -49,7 +48,14 @@
         isSwitchType,
       } = useEditableColumnSwitch(getComponentType, getComponentProps)
 
-      const { emitEvents, tableProps } = useTableContext()
+      const canFocusAndKeyupComponents = ['input', 'inputNumber']
+
+      const { emitEvents } = useTableContext()
+
+      const onTriggerSave = (val: WTable.EditableChangeParams) => {
+        // trigger onSave event
+        emitEvents.edit(val)
+      }
 
       // render original content
       const renderOriginContent = () => {
@@ -71,12 +77,9 @@
 
           // `input` and `inputNumber`
           // default focus
-          ;(getComponentType.value === 'input' ||
-            getComponentType.value === 'inputNumber') &&
+          canFocusAndKeyupComponents.includes(getComponentType.value!) &&
             setTimeout(() => {
-              // since these components are loaded by `createAsyncComponent`
-              // it has 200ms delay to load the component
-              // so we use setTimeout for 300ms to focus when comp loaded complete
+              // ensure ref has value and call `focus`
               editableComponentRef.value!.focus()
             }, 300)
         }
@@ -124,26 +127,13 @@
       const onSave = (e: KeyboardEvent | any) => {
         // handle common and enter keyup
         if (!e.key || e.key === 'Enter') {
-          // for emit event
-          emitEvents.edit({
+          onTriggerSave({
             newValue: editValue.value,
             row: props.row,
             prop: getProp.value!,
-            loadStart: () =>
-              startLoading({ target: `#${loadingTargetId.value}` }),
-            loadEnd: () => endLoading(),
+            loadStart,
+            loadEnd,
           })
-
-          // for prop usage
-          tableProps.value.onEdit &&
-            tableProps.value.onEdit({
-              newValue: editValue.value,
-              row: props.row,
-              prop: getProp.value!,
-              loadStart: () =>
-                startLoading({ target: `#${loadingTargetId.value}` }),
-              loadEnd: () => endLoading(),
-            })
 
           editable.value = false
         }
@@ -173,18 +163,18 @@
           `w-table-${camel2Line(getComponentType.value!)}`
         )
 
-        // different type comp trigger `onSave` in different way
-        const keyupComps = ['input', 'inputNumber']
+        // default select change trigger onSave
+        // not considering multiple mode
         const changeComps = ['select']
 
         return (
           <editComponent
             {...props.item!.componentProps?.editTypeComponentProps}
             ref={editableComponentRef}
-            size="small"
+            size="mini"
             v-model={editValue.value}
             onKeyup={
-              keyupComps.includes(getComponentType.value!)
+              canFocusAndKeyupComponents.includes(getComponentType.value!)
                 ? onSave
                 : emptyFunction
             }

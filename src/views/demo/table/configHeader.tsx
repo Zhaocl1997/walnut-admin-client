@@ -33,6 +33,7 @@ export const useTableConfig = () => {
     actionArrayConfig: 'default',
     nested: false,
     nestedItem: false,
+    nameType: 'default' as WTable.Header.Item.Types,
   })
 
   const [registerForm] = useForm({
@@ -141,6 +142,9 @@ export const useTableConfig = () => {
           prop: 'actionArrayConfig',
           label: 'Action Array config',
         },
+        colProp: {
+          span: 16,
+        },
         componentProp: {
           button: true,
           size: 'mini',
@@ -182,6 +186,38 @@ export const useTableConfig = () => {
           return formData.nested
         },
       },
+      {
+        type: 'Radio',
+        formProp: {
+          prop: 'nameType',
+          label: 'Name Column Type',
+        },
+        colProp: {
+          span: 16,
+        },
+        componentProp: {
+          button: true,
+          size: 'mini',
+          options: [
+            {
+              value: 'default',
+              label: 'Default',
+            },
+            {
+              value: 'editable',
+              label: 'Editable Input',
+            },
+            {
+              value: 'slot',
+              label: 'Slot',
+            },
+            {
+              value: 'render',
+              label: 'Render',
+            },
+          ],
+        },
+      },
     ],
   })
 
@@ -218,20 +254,30 @@ export const useTableConfig = () => {
         visible: tableConfig.select,
       },
 
-      // common column
+      // different way to render column
       {
-        type: 'editable',
+        type: tableConfig.nameType,
         columnProps: {
           label: 'Name',
           prop: 'name',
         },
-        componentProps: {
-          editType: 'input',
-        },
+        componentProps:
+          tableConfig.nameType === 'editable'
+            ? {
+                editType: 'input',
+              }
+            : tableConfig.nameType === 'render'
+            ? {
+                render: (scope) => {
+                  return <div>name render: {scope.row.name}</div>
+                },
+              }
+            : ({} as any),
       },
 
       // nested columns
       {
+        type: 'nested',
         columnProps: {
           label: 'Base Info',
           // item with `children`, `width` won't work
@@ -243,21 +289,37 @@ export const useTableConfig = () => {
         visible: tableConfig.nested,
         children: [
           {
+            type: 'editable',
             columnProps: {
               label: 'Gender',
               prop: 'user.gender',
               width: '80',
             },
+            componentProps: {
+              editType: 'select',
+              editTypeComponentProps: {
+                options: genderOptions,
+              },
+            },
           },
           {
+            type: 'editable',
             columnProps: {
               label: 'Age',
               prop: 'user.age',
               width: '100',
               formatter: (row) => `${row.user?.age} years`,
             },
+            componentProps: {
+              editType: 'inputNumber',
+              editTypeComponentProps: {
+                precision: 0,
+                max: 99,
+              },
+            },
           },
           {
+            type: 'editable',
             columnProps: {
               label: 'Phone',
               prop: 'user.phone',
@@ -266,12 +328,16 @@ export const useTableConfig = () => {
               labelClassName: 'text-red-500',
             },
             visible: tableConfig.nestedItem,
+            componentProps: {
+              editType: 'input',
+            },
           },
         ],
       },
 
       // another nested columns
       {
+        type: 'nested',
         columnProps: {
           label: 'Family Info',
           labelClassName: 'text-green-500',
@@ -279,6 +345,7 @@ export const useTableConfig = () => {
         visible: tableConfig.nested,
         children: [
           {
+            type: 'nested',
             columnProps: {
               label: 'Mom',
             },
@@ -299,22 +366,44 @@ export const useTableConfig = () => {
               },
 
               {
+                type: 'editable',
                 columnProps: {
                   label: 'HasWork',
                   prop: 'family.mom.hasWork',
                   labelClassName: 'text-red-500',
                 },
                 visible: tableConfig.nestedItem,
+                componentProps: {
+                  editType: 'switch',
+                  editTypeComponentProps: {
+                    beforeChange: (val) => {
+                      val.loadStart()
+                      return new Promise((resolve) => {
+                        setTimeout(() => {
+                          easyDeepSet(val.row, val.prop, val.newValue)
+                          useMessage({
+                            type: 'success',
+                            message: 'Switch success!',
+                          })
+                          val.loadEnd()
+                          resolve(true)
+                        }, 2000)
+                      })
+                    },
+                  },
+                },
               },
             ],
           },
 
           {
+            type: 'nested',
             columnProps: {
               label: 'Dad',
             },
             children: [
               {
+                type: 'editable',
                 columnProps: {
                   label: 'Name',
                   prop: 'family.dad.name',
@@ -330,12 +419,32 @@ export const useTableConfig = () => {
               },
 
               {
+                type: 'editable',
                 columnProps: {
                   label: 'HasWork',
                   prop: 'family.dad.hasWork',
                   labelClassName: 'text-red-500',
                 },
                 visible: tableConfig.nestedItem,
+                componentProps: {
+                  editType: 'switch',
+                  editTypeComponentProps: {
+                    beforeChange: (val) => {
+                      val.loadStart()
+                      return new Promise((resolve) => {
+                        setTimeout(() => {
+                          easyDeepSet(val.row, val.prop, val.newValue)
+                          useMessage({
+                            type: 'success',
+                            message: 'Switch success!',
+                          })
+                          val.loadEnd()
+                          resolve(true)
+                        }, 2000)
+                      })
+                    },
+                  },
+                },
               },
             ],
           },
@@ -367,6 +476,21 @@ export const useTableConfig = () => {
               })
             },
           },
+        },
+      },
+
+      {
+        columnProps: {
+          label: 'CreatedAt',
+          prop: 'createdAt',
+        },
+      },
+
+      {
+        columnProps: {
+          label: 'Description',
+          prop: 'description',
+          showOverflowTooltip: true,
         },
       },
 
@@ -421,241 +545,6 @@ export const useTableConfig = () => {
         },
       },
     ]
-    // return [
-    //   {
-    //     type: 'index',
-    //     visible: tableConfig.index,
-    //     width: '80',
-    //     fixed: 'left',
-    //     index: tableConfig.indexFn ? (i) => i * 2 : (i) => i,
-    //   },
-
-    //   {
-    //     type: 'expand',
-    //     visible: tableConfig.expand,
-    //     width: '50',
-    //     fixed: 'left',
-    //   },
-
-    //   {
-    //     type: 'selection',
-    //     visible: tableConfig.select,
-    //     width: '50',
-    //     fixed: 'left',
-    //   },
-
-    //   {
-    //     type: 'action',
-    //     visible: tableConfig.action,
-    //     width: '180px',
-    //     fixed: 'right',
-    //     actionType: tableConfig.actionType,
-
-    //     actionConfig:
-    //       tableConfig.actionArrayConfig === 'config'
-    //         ? ['create', 'edit']
-    //         : ['create', 'delete', 'edit'],
-
-    //     actionButtonGroup:
-    //       tableConfig.actionArrayConfig === 'custom'
-    //         ? [
-    //             {
-    //               type: 'primary',
-    //               size: 'mini',
-    //               text: 'Custom1',
-    //               icon: 'el-icon-success',
-    //               onClick: (scope) => {
-    //                 useMessage({ type: 'success', message: 'Custom1' })
-    //               },
-    //             },
-    //             {
-    //               type: 'info',
-    //               size: 'mini',
-    //               text: 'Custom2',
-    //               icon: 'el-icon-info',
-    //               onClick: (scope) => {
-    //                 useMessage({ type: 'info', message: 'Custom2' })
-    //               },
-    //             },
-    //             {
-    //               type: 'warning',
-    //               size: 'mini',
-    //               text: 'Custom3',
-    //               icon: 'el-icon-question',
-    //               onClick: (scope) => {
-    //                 useMessage({ type: 'warning', message: 'Custom3' })
-    //               },
-    //             },
-    //           ]
-    //         : [],
-    //   },
-
-    //   {
-    //     label: 'Name',
-    //     prop: 'name',
-    //     type: 'editable',
-    //     editType: 'input',
-    //   },
-
-    //   {
-    //     label: 'Base Info',
-    //     // item with children, `width` won't work
-    //     width: '300',
-    //     // item with children, `prop` doesn't mean anything either
-    //     prop: 'some prop',
-    //     visible: tableConfig.nested,
-    //     labelClassName: 'text-green-500',
-    //     children: [
-    //       {
-    //         label: 'Gender',
-    //         prop: 'user.gender',
-    //         width: '80',
-    //         type: 'editable',
-    //         editType: 'select',
-    //         editTypeComponentProps: {
-    //           options: genderOptions,
-    //         },
-    //       },
-    //       {
-    //         label: 'Age',
-    //         prop: 'user.age',
-    //         width: '100',
-    //         formatter: (row) => `${row.user?.age} years`,
-    //         type: 'editable',
-    //         editType: 'inputNumber',
-    //         editTypeComponentProps: {
-    //           precision: 0,
-    //           max: 99,
-    //         },
-    //       },
-    //       {
-    //         label: 'Phone',
-    //         prop: 'user.phone',
-    //         formatter: (row) =>
-    //           row.user?.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2'),
-    //         visible: tableConfig.nestedItem,
-    //         labelClassName: 'text-red-500',
-    //         type: 'editable',
-    //         editType: 'input',
-    //       },
-    //     ],
-    //   },
-
-    //   {
-    //     label: 'Family Info',
-    //     visible: tableConfig.nested,
-    //     labelClassName: 'text-green-500',
-    //     children: [
-    //       {
-    //         label: 'Mom',
-    //         children: [
-    //           {
-    //             label: 'Name',
-    //             prop: 'family.mom.name',
-    //           },
-    //           {
-    //             label: 'Age',
-    //             prop: 'family.mom.age',
-    //             formatter: (row) => `${row.family.mom.age} years`,
-    //           },
-    //           {
-    //             label: 'HasWork',
-    //             prop: 'family.mom.hasWork',
-    //             visible: tableConfig.nestedItem,
-    //             labelClassName: 'text-red-500',
-    //             type: 'editable',
-    //             editType: 'switch',
-    //             editTypeComponentProps: {
-    //               beforeChange: (val) => {
-    //                 val.loadStart()
-    //                 return new Promise((resolve) => {
-    //                   setTimeout(() => {
-    //                     easyDeepSet(val.row, val.prop, val.newValue)
-    //                     useMessage({
-    //                       type: 'success',
-    //                       message: 'Switch success!',
-    //                     })
-    //                     val.loadEnd()
-    //                     resolve(true)
-    //                   }, 2000)
-    //                 })
-    //               },
-    //             },
-    //           },
-    //         ],
-    //       },
-    //       {
-    //         label: 'Dad',
-    //         children: [
-    //           {
-    //             label: 'Name',
-    //             prop: 'family.dad.name',
-    //           },
-    //           {
-    //             label: 'Age',
-    //             prop: 'family.dad.age',
-    //             formatter: (row) => `${row.family.dad.age} years`,
-    //           },
-    //           {
-    //             label: 'HasWork',
-    //             prop: 'family.dad.hasWork',
-    //             visible: tableConfig.nestedItem,
-    //             labelClassName: 'text-red-500',
-    //             type: 'editable',
-    //             editType: 'switch',
-    //             editTypeComponentProps: {
-    //               beforeChange: (val) => {
-    //                 val.loadStart()
-    //                 return new Promise((resolve) => {
-    //                   setTimeout(() => {
-    //                     easyDeepSet(val.row, val.prop, val.newValue)
-    //                     useMessage({
-    //                       type: 'success',
-    //                       message: 'Switch success!',
-    //                     })
-    //                     val.loadEnd()
-    //                     resolve(true)
-    //                   }, 2000)
-    //                 })
-    //               },
-    //             },
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   },
-
-    //   {
-    //     label: 'Status',
-    //     prop: 'status',
-    //     type: 'editable',
-    //     editType: 'switch',
-    //     editTypeComponentProps: {
-    //       beforeChange: (val) => {
-    //         val.loadStart()
-    //         return new Promise((resolve) => {
-    //           setTimeout(() => {
-    //             easyDeepSet(val.row, val.prop, val.newValue)
-    //             useMessage({ type: 'success', message: 'Switch success!' })
-    //             val.loadEnd()
-    //             resolve(true)
-    //           }, 2000)
-    //         })
-    //       },
-    //     },
-    //   },
-
-    //   {
-    //     label: 'CreatedAt',
-    //     prop: 'createdAt',
-    //   },
-
-    //   {
-    //     label: 'Description',
-    //     prop: 'description',
-    //     showOverflowTooltip: true,
-    //   },
-    // ]
   })
 
   return {

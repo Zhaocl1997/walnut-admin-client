@@ -27,17 +27,17 @@
         ctx
       )
 
-      // make sure item has children as an array
-      // alse make sure not empty one
+      // first make sure type is `nested`
+      // then make sure item has children as an array
+      // also make sure not empty one
       // finally make sure each item in children is visible
       // otherwise just render not nested column
       const getCanRenderNested = computed(
         () =>
-          isArray((props.item as WTable.Header.Item.Default)?.children) &&
-          (props.item as WTable.Header.Item.Default)?.children?.length !== 0 &&
-          (props.item as WTable.Header.Item.Default)?.children?.some(
-            (i) => i.visible
-          )
+          props.item?.type === 'nested' &&
+          isArray(props.item?.children) &&
+          props.item?.children?.length !== 0 &&
+          props.item?.children?.some((i) => i.visible)
       )
 
       // render columns

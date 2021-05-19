@@ -19,7 +19,10 @@ export const useEditableState = (
   const getProp = computed(() => getColumnProps.value?.prop)
 
   // get component type
-  const getComponentType = computed(() => props.item?.componentProps?.editType)
+  // if no `editType` provided, default is input
+  const getComponentType = computed(
+    () => props.item?.componentProps?.editType ?? 'input'
+  )
   // get component props
   const getComponentProps = computed(
     () => props.item?.componentProps?.editTypeComponentProps

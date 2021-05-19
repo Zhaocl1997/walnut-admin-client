@@ -9,7 +9,24 @@ export const useActionColumnDefaultButtonGroup = (
 ) => {
   const { t } = useI18n()
 
-  const { emitEvents, tableProps } = useTableContext()
+  const { tableEvent } = useTableContext()
+
+  const onAction = (
+    type: WTable.Header.Extend.Action.Config,
+    scope: WTable.ScopeSlotData
+  ) => {
+    tableEvent({
+      eventName: 'action',
+      eventParams: {
+        type: type,
+        scope: {
+          row: scope.row,
+          column: scope.column,
+          $index: scope.$index,
+        },
+      },
+    })
+  }
 
   // default button group
   const defaultButtonGroup = computed(
@@ -21,11 +38,7 @@ export const useActionColumnDefaultButtonGroup = (
           text: t('component.table.buttons.create'),
           actionButtonType: 'create',
           onClick: (scope) => {
-            // for emit event
-            emitEvents.action('create', scope)
-
-            // for prop usage
-            tableProps.value.onAction!('create', scope)
+            onAction('create', scope)
           },
         },
         {
@@ -34,8 +47,7 @@ export const useActionColumnDefaultButtonGroup = (
           text: t('component.table.buttons.edit'),
           actionButtonType: 'edit',
           onClick: (scope) => {
-            emitEvents.action('edit', scope)
-            tableProps.value.onAction!('edit', scope)
+            onAction('edit', scope)
           },
         },
         {
@@ -44,8 +56,7 @@ export const useActionColumnDefaultButtonGroup = (
           text: t('component.table.buttons.delete'),
           actionButtonType: 'delete',
           onClick: (scope) => {
-            emitEvents.action('delete', scope)
-            tableProps.value.onAction!('delete', scope)
+            onAction('delete', scope)
           },
         },
       ]

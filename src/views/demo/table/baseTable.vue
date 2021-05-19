@@ -23,6 +23,10 @@
       @action="onAction"
       @edit="onEdit"
     >
+      <template #name="{ row }">
+        <span>name slot: {{ row.name }}</span>
+      </template>
+
       <template #expand="{ row }">
         <span>expand slot</span>
       </template>

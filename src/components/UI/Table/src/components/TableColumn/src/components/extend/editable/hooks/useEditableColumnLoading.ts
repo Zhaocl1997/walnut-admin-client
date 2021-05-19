@@ -23,14 +23,17 @@ export const useEditableColumnLoading = (
     }
 
     // handle nested prop
-    return `w-${getProp.value!.replaceAll('.', '')}-${
+    return `w-${getProp.value?.replaceAll('.', '')}-${
       props.row![tableProps.value.rowKey as string]
     }`
   })
 
+  const loadStart = () => startLoading({ target: `#${loadingTargetId.value}` })
+  const loadEnd = () => endLoading()
+
   return {
-    startLoading,
-    endLoading,
+    loadStart,
+    loadEnd,
     loadingTargetId,
   }
 }
