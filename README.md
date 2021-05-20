@@ -78,8 +78,10 @@ npm i
 - [x] 虚拟滚动
 - [x] 屏幕断点优化
 - [ ] 带有options API 的组件 统一加 valueFormat 和 valueType
-- [ ] table 重构优化(WIP)
-- [ ] table 自定义表头迁移优化，按钮组，操作列，自定义导出导入，打印
+- [x] table 重构优化(WIP)
+- [x] table 自定义表头迁移优化，按钮组，操作列
+- [ ] table 自定义导出导入，打印
+- [ ] table state loading/empty
 - [ ] form 重构优化(WIP)
 - [ ] form 添加更复杂的表单用例，添加tsx语法支持(WIP)
 - [ ] dialog 重构优化
