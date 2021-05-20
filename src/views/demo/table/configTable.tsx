@@ -1,10 +1,12 @@
 import type { WTable } from '/@/components/UI/Table'
 
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref, onMounted } from 'vue'
+import { easyDeepSet } from 'easy-fns-ts'
 
 import { useForm } from '/@/components/UI/Form'
 import { useMessage } from '/@/hooks/component/useMessage'
-import { easyDeepSet } from 'easy-fns-ts'
+
+import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
 
 const genderOptions: OptionDataItem[] = [
   {
@@ -18,6 +20,13 @@ const genderOptions: OptionDataItem[] = [
 ]
 
 export const useTableConfig = () => {
+  const data = ref<any[]>([])
+  const total = ref(0)
+  const query = reactive({
+    pageNum: 1,
+    pageSize: 10,
+  })
+
   const tableConfig = reactive({
     page: false,
     settings: false,
@@ -351,6 +360,7 @@ export const useTableConfig = () => {
             },
             children: [
               {
+                type: 'editable',
                 columnProps: {
                   label: 'Name',
                   prop: 'family.mom.name',
@@ -358,10 +368,14 @@ export const useTableConfig = () => {
               },
 
               {
+                type: 'editable',
                 columnProps: {
                   label: 'Age',
                   prop: 'family.mom.age',
-                  formatter: (row) => `${row.family.mom.age} years`,
+                  formatter: (row) => `${row.family?.mom.age} years`,
+                },
+                componentProps: {
+                  editType: 'inputNumber',
                 },
               },
 
@@ -403,7 +417,6 @@ export const useTableConfig = () => {
             },
             children: [
               {
-                type: 'editable',
                 columnProps: {
                   label: 'Name',
                   prop: 'family.dad.name',
@@ -547,7 +560,50 @@ export const useTableConfig = () => {
     ]
   })
 
+  const onGetList = () => {
+    const res = mockListUser(query)
+    data.value = res.data
+    total.value = res.total
+  }
+
+  onMounted(() => {
+    onGetList()
+  })
+
+  const onAction = ({ type, scope }: WTable.Params.Action) => {
+    useMessage({ type: 'success', message: type })
+  }
+
+  const onEdit = ({
+    loadEnd,
+    loadStart,
+    newValue,
+    prop,
+    row,
+  }: WTable.Params.Edit) => {
+    loadStart()
+    setTimeout(() => {
+      easyDeepSet(row, prop, newValue)
+      loadEnd()
+      useMessage({ type: 'success', message: 'Edit success!' })
+    }, 2000)
+  }
+
+  const onPage = ({ pageNum, pageSize }: WTable.Params.Page) => {
+    query.pageNum = pageNum
+    query.pageSize = pageSize
+    onGetList()
+  }
+
   return {
+    data,
+    total,
+    query,
+
+    onAction,
+    onEdit,
+    onPage,
+
     tableConfig,
     registerForm,
     tableHeaders,

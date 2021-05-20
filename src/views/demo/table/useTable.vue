@@ -34,67 +34,49 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, ref, onMounted, computed } from 'vue'
-  import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
-  import { useTableConfig } from './configHeader'
+  import { defineComponent, computed } from 'vue'
+  import { useTableConfig } from './configTable'
   import { useTable } from '/@/components/UI/Table'
 
   export default defineComponent({
     name: 'UseTableDemo',
 
     setup() {
-      const data = ref<any[]>([])
-      const total = ref(0)
-      const query = reactive({
-        pageNum: 1,
-        pageSize: 10,
-      })
+      const {
+        data,
+        total,
+        query,
 
-      const { tableConfig, registerForm, tableHeaders } = useTableConfig()
+        onAction,
+        onEdit,
+        onPage,
 
-      const onPage = ({
-        pageNum,
-        pageSize,
-      }: {
-        pageNum: number
-        pageSize: number
-      }) => {
-        query.pageNum = pageNum
-        query.pageSize = pageSize
-        onGetList()
-      }
-
-      const onGetList = () => {
-        const res = mockListUser(query)
-        data.value = res.data
-        total.value = res.total
-      }
+        tableConfig,
+        registerForm,
+        tableHeaders,
+      } = useTableConfig()
 
       const [registerTable] = useTable({
         headers: tableHeaders,
         data: data,
         total: total,
+        rowKey: 'id',
         hasPage: computed(() => tableConfig.page),
+        hasSettings: computed(() => tableConfig.settings),
         border: computed(() => tableConfig.border),
         stripe: computed(() => tableConfig.stripe),
         showHeader: computed(() => tableConfig.showHeader),
         pageNum: query.pageNum,
         pageSize: query.pageSize,
-        onPage: onPage,
-        onAction: (val) => {
-          console.log(val)
-        },
-      })
-
-      onMounted(() => {
-        onGetList()
+        onAction,
+        onEdit,
+        onPage,
       })
 
       return {
         tableConfig,
         registerForm,
         registerTable,
-        onPage,
         tableHeaders,
       }
     },

@@ -39,72 +39,14 @@
 </template>
 
 <script lang="ts">
-  import type { WTable } from '/@/components/UI/Table'
-  import { defineComponent, reactive, ref, onMounted } from 'vue'
-  import { mockListUser } from '/@/components/UI/Table/src/utils/mock'
-  import { useTableConfig } from './configHeader'
-  import { useMessage } from '/@/hooks/component/useMessage'
-  import { easyDeepSet } from 'easy-fns-ts'
+  import { defineComponent } from 'vue'
+  import { useTableConfig } from './configTable'
 
   export default defineComponent({
     name: 'BaseTableDemo',
 
     setup() {
-      const data = ref<any[]>([])
-      const total = ref(0)
-      const query = reactive({
-        pageNum: 1,
-        pageSize: 10,
-      })
-
-      const { tableConfig, registerForm, tableHeaders } = useTableConfig()
-
-      const onPage = ({
-        pageNum,
-        pageSize,
-      }: {
-        pageNum: number
-        pageSize: number
-      }) => {
-        query.pageNum = pageNum
-        query.pageSize = pageSize
-        onGetList()
-      }
-
-      const onAction = (type: string, scope: any) => {
-        useMessage({ type: 'success', message: type })
-      }
-
-      const onEdit = (val: WTable.EditableChangeParams) => {
-        val.loadStart()
-        setTimeout(() => {
-          easyDeepSet(val.row, val.prop, val.newValue)
-          val.loadEnd()
-          useMessage({ type: 'success', message: 'Edit success!' })
-        }, 2000)
-      }
-
-      const onGetList = () => {
-        const res = mockListUser(query)
-        data.value = res.data
-        total.value = res.total
-      }
-
-      onMounted(() => {
-        onGetList()
-      })
-
-      return {
-        tableConfig,
-        registerForm,
-        tableHeaders,
-        data,
-        total,
-        query,
-        onPage,
-        onAction,
-        onEdit,
-      }
+      return useTableConfig()
     },
   })
 </script>
