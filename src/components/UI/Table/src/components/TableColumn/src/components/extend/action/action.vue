@@ -22,7 +22,7 @@
       const { filteredButtonGroup } = useActionColumnDefaultButtonGroup(props)
 
       // render action by button group array
-      const renderActionArray = (scope: WTable.ScopeSlotData) => {
+      const renderActionArray = (scope: WTable.ElTable.SlotData) => {
         // render default button group
         const renderDefault = () => {
           return renderList(filteredButtonGroup.value, (value) => (
@@ -54,7 +54,7 @@
       // render action default slot
       // `slot` or `array`
       const renderDefaultSlot = () => ({
-        default: (scope: WTable.ScopeSlotData) =>
+        default: (scope: WTable.ElTable.SlotData) =>
           props.column?.componentProps?.actionType === 'slot'
             ? renderSlot(slots, 'default', scope)
             : renderActionArray(scope),

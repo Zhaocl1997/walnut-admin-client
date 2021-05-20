@@ -6,7 +6,7 @@ import { ref, computed } from 'vue'
 export const useEditableState = (
   props: SetupProp<{
     item: WTable.Header.Item.Editable
-    row: Pick<WTable.ScopeSlotData, 'row'>
+    row: Pick<WTable.ElTable.SlotData, 'row'>
   }>
 ) => {
   const editable = ref(false)

@@ -19,7 +19,7 @@
 
       // render expand slot
       const renderDefaultSlot = () => ({
-        default: (scope: WTable.ScopeSlotData) =>
+        default: (scope: WTable.ElTable.SlotData) =>
           renderSlot(slots, 'default', scope),
       })
 

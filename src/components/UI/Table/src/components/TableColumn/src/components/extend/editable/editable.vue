@@ -20,7 +20,7 @@
 
     props: {
       item: Object as PropType<WTable.Header.Item.Editable>,
-      row: Object as PropType<Pick<WTable.ScopeSlotData, 'row'>>,
+      row: Object as PropType<Pick<WTable.ElTable.SlotData, 'row'>>,
     },
 
     setup(props) {
@@ -48,14 +48,9 @@
         isSwitchType,
       } = useEditableColumnSwitch(getComponentType, getComponentProps)
 
+      const { tableEvent } = useTableContext()
+
       const canFocusAndKeyupComponents = ['input', 'inputNumber']
-
-      const { emitEvents } = useTableContext()
-
-      const onTriggerSave = (val: WTable.EditableChangeParams) => {
-        // trigger onSave event
-        emitEvents.edit(val)
-      }
 
       // render original content
       const renderOriginContent = () => {
@@ -81,7 +76,7 @@
             setTimeout(() => {
               // ensure ref has value and call `focus`
               editableComponentRef.value!.focus()
-            }, 300)
+            }, 500)
         }
 
         // if `switch` type
@@ -89,7 +84,7 @@
         // instead, `w-table` provide a default boolean type value switch component
         // so below need a judge to decide render `formattedValue` or `el-switch`
         // also, the most important thing is that `el-switch` has a `beforeChange` prop like a hook before change
-        // `w-table` use `beforeChange` API to achieve the same action like `emitEvents.edit`
+        // `w-table` use `beforeChange` API to achieve the same action like `WTable.Event.Edit`
         return (
           <el-space size="mini">
             {isSwitchType.value ? (
@@ -127,12 +122,15 @@
       const onSave = (e: KeyboardEvent | any) => {
         // handle common and enter keyup
         if (!e.key || e.key === 'Enter') {
-          onTriggerSave({
-            newValue: editValue.value,
-            row: props.row,
-            prop: getProp.value!,
-            loadStart,
-            loadEnd,
+          tableEvent({
+            eventName: 'edit',
+            eventParams: {
+              newValue: editValue.value,
+              row: props.row,
+              prop: getProp.value!,
+              loadStart,
+              loadEnd,
+            },
           })
 
           editable.value = false

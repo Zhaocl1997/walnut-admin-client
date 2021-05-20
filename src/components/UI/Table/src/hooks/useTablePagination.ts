@@ -6,7 +6,7 @@ export const useTablePagination = (
   props: ComputedRef<WTable.Props>,
   emit: Fn
 ) => {
-  const state = reactive<WTable.PaginationFields>({
+  const state = reactive<WTable.Params.PageState>({
     total: 0,
     pageNum: 1,
     pageSize: 10,
@@ -14,7 +14,7 @@ export const useTablePagination = (
 
   watch(
     () => unref(props),
-    (val: Exclude<WTable.Props, WTable.PaginationFields>) => {
+    (val: Exclude<WTable.Props, WTable.Params.PageState>) => {
       state.total = val.total!
       state.pageNum = val.pageNum!
       state.pageSize = val.pageSize!
@@ -25,12 +25,7 @@ export const useTablePagination = (
     }
   )
 
-  const onPageChange = (val: WTable.PaginationFields) => {
-    emit('page', val)
-  }
-
   return {
-    onPageChange,
     pageState: state,
   }
 }

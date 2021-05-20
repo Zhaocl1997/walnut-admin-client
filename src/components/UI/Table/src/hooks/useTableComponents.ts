@@ -12,6 +12,9 @@ export const useTableComponent = () => {
     WTableExtendSettings: createAsyncComponent(
       () => import('../components/Extend/settings')
     ),
+    WTableExtendPagination: createAsyncComponent(
+      () => import('../components/Extend/Pagination')
+    ),
   }
 
   // @ts-ignore

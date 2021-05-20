@@ -40,7 +40,7 @@ export const useTableColumn = (
       return (
         <el-table-column {...getColumnBindValue.value}>
           {{
-            default: (scope: WTable.ScopeSlotData) =>
+            default: (scope: WTable.ElTable.SlotData) =>
               renderSlot(slots, getProp.value!, scope),
           }}
         </el-table-column>
@@ -52,7 +52,7 @@ export const useTableColumn = (
       return (
         <el-table-column {...getColumnBindValue.value}>
           {{
-            default: (scope: WTable.ScopeSlotData) =>
+            default: (scope: WTable.ElTable.SlotData) =>
               (props.item as WTable.Header.Item.Render)?.componentProps
                 ?.render!(scope),
           }}
@@ -71,7 +71,7 @@ export const useTableColumn = (
       return (
         <el-table-column {...getColumnBindValue.value}>
           {{
-            default: ({ row }: WTable.ScopeSlotData) => (
+            default: ({ row }: WTable.ElTable.SlotData) => (
               <editableColumn item={props.item} row={row}></editableColumn>
             ),
           }}
@@ -86,7 +86,7 @@ export const useTableColumn = (
 
       return slotableColumn.includes(getType.value!)
         ? {
-            default: (scope: WTable.ScopeSlotData) =>
+            default: (scope: WTable.ElTable.SlotData) =>
               renderSlot(slots, getType.value!, scope),
           }
         : {}

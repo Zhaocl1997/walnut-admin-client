@@ -42,7 +42,7 @@
 
       const { tableMethods } = useTableMethods(tableRef, { setProps })
 
-      const { onPageChange, pageState } = useTablePagination(getProps, emit)
+      const { pageState } = useTablePagination(getProps, emit)
 
       const getBindValue = computed(() => {
         return {
@@ -54,16 +54,12 @@
 
       // create `WTable` context
       setTableContext({
+        tableId: tableId,
+        tableRef: tableRef,
         tableProps: getProps,
         tableHeaders: tableHeaders,
         tableEvent: tableEvent,
-        tableRef: tableRef,
-        tableId: tableId,
-        emitEvents: {
-          action: (...args) => emit('action', ...args),
-          edit: (...args) => emit('edit', ...args),
-          page: (...args) => emit('page', ...args),
-        },
+        tablePageState: pageState,
       })
 
       // create `useTable` hook
@@ -93,11 +89,7 @@
         // render pagination
         const renderPage = () =>
           getProps.value.hasPage && (
-            <w-pagination
-              {...pageState}
-              onChange={onPageChange}
-              class="mt-4 flex justify-end"
-            ></w-pagination>
+            <w-table-extend-pagination></w-table-extend-pagination>
           )
 
         return (

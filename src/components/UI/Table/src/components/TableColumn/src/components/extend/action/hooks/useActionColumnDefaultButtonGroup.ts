@@ -13,7 +13,7 @@ export const useActionColumnDefaultButtonGroup = (
 
   const onAction = (
     type: WTable.Header.Extend.Action.Config,
-    scope: WTable.ScopeSlotData
+    scope: WTable.ElTable.SlotData
   ) => {
     tableEvent({
       eventName: 'action',

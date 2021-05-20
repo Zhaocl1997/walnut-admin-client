@@ -8,7 +8,7 @@ import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContex
 import { wTableWarning } from '/@/components/UI/Table/src/utils'
 
 export const useEditableColumnLoading = (
-  props: SetupProp<{ row: Pick<WTable.ScopeSlotData, 'row'> }>,
+  props: SetupProp<{ row: Pick<WTable.ElTable.SlotData, 'row'> }>,
   getProp: ComputedRef<string | undefined>
 ) => {
   const { tableProps } = useTableContext()

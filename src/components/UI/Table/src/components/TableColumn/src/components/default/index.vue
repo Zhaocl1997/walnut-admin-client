@@ -26,7 +26,7 @@
 
       // render default index slot
       const renderDefaultSlot = () => ({
-        default: ({ $index }: WTable.ScopeSlotData) => (
+        default: ({ $index }: WTable.ElTable.SlotData) => (
           <span>{renderIndex(+$index)}</span>
         ),
       })
