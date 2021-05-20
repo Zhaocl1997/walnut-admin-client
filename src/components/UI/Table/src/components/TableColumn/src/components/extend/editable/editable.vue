@@ -54,7 +54,7 @@
 
       // render original content
       const renderOriginContent = () => {
-        // fir for nested prop
+        // fit for nested prop
         // use `deepGet` method to get real nested value
         const getValue = easyDeepGet(props.row, getProp.value)
 

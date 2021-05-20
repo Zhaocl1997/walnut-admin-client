@@ -5,6 +5,7 @@ import { ref, unref, watch } from 'vue'
 import { formatTree } from 'easy-fns-ts'
 
 import { useI18n } from '/@/locales'
+import { wTableWarning } from '../utils'
 
 export const useTableHeaders = (props: ComputedRef<WTable.Props>) => {
   const { t, locale } = useI18n()
@@ -22,7 +23,7 @@ export const useTableHeaders = (props: ComputedRef<WTable.Props>) => {
         return
       }
 
-      console.log(123)
+      wTableWarning('Rendered!')
 
       const formatted = formatTree(val, {
         format: (node) => ({

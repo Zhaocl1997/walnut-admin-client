@@ -2,10 +2,12 @@ import type { SetupContext } from 'vue'
 import type { WTable } from '/@/components/UI/Table'
 
 import { computed, renderSlot, renderList, resolveDynamicComponent } from 'vue'
-import { isUndefined } from 'easy-fns-ts'
+import { isUndefined, easyDeepGet } from 'easy-fns-ts'
 
 import { renderSlots } from '/@/utils/shared'
 import WIcon from '/@/components/UI/Icon'
+import { useClipboard } from '@vueuse/core'
+import { useMessage } from '/@/hooks/component/useMessage'
 
 export const useTableColumn = (
   props: SetupProp<{ item: WTable.Header.Item.Props }>,
@@ -27,25 +29,38 @@ export const useTableColumn = (
    */
   const renderCommonColumn = () => {
     if ((props.item as WTable.Header.Item.Default).componentProps?.copy) {
+      const onCopy = (val: string) => {
+        const { copy } = useClipboard({ source: val })
+        copy()
+        useMessage({ type: 'success', message: 'Copy Success' })
+      }
+
       return (
         <el-table-column {...getColumnBindValue.value}>
           {{
             default: (scope: WTable.ElTable.SlotData) => {
+              // fit for nested prop
+              // use `deepGet` method to get real nested value
+              const getValue = easyDeepGet(scope.row, getProp.value)
+
               return (
-                <>
-                  <div class="truncate">{scope.row[getProp.value!]}</div>
+                <div class="flex flex-nowrap flex-row justify-start">
+                  <div class="truncate w-11/12">{getValue}</div>
+
                   <WIcon
                     icon="ant-design:copy-outlined"
-                    class="cursor-pointer text-blue-700"
+                    class="cursor-pointer text-blue-700 mt-1"
                     height="16"
+                    onClick={() => onCopy(getValue)}
                   ></WIcon>
-                </>
+                </div>
               )
             },
           }}
         </el-table-column>
       )
     }
+
     return <el-table-column {...getColumnBindValue.value}></el-table-column>
   }
 

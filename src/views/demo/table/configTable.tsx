@@ -43,6 +43,7 @@ export const useTableConfig = () => {
     nested: false,
     nestedItem: false,
     nameType: 'default' as WTable.Header.Item.Types,
+    copy: false,
   })
 
   const [registerForm] = useForm({
@@ -227,6 +228,13 @@ export const useTableConfig = () => {
           ],
         },
       },
+      {
+        type: 'Switch',
+        formProp: {
+          prop: 'copy',
+          label: 'Copy Column',
+        },
+      },
     ],
   })
 
@@ -281,7 +289,7 @@ export const useTableConfig = () => {
                   return <div>name render: {scope.row.name}</div>
                 },
               }
-            : ({} as any),
+            : ({ copy: tableConfig.copy } as any),
       },
 
       // nested columns
@@ -421,6 +429,9 @@ export const useTableConfig = () => {
                   label: 'Name',
                   prop: 'family.dad.name',
                 },
+                componentProps: {
+                  copy: tableConfig.copy,
+                },
               },
 
               {
@@ -506,7 +517,7 @@ export const useTableConfig = () => {
           showOverflowTooltip: true,
         },
         componentProps: {
-          copy: true,
+          copy: tableConfig.copy,
         },
       },
 
