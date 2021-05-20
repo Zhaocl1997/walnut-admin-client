@@ -5,6 +5,7 @@ import { computed, renderSlot, renderList, resolveDynamicComponent } from 'vue'
 import { isUndefined } from 'easy-fns-ts'
 
 import { renderSlots } from '/@/utils/shared'
+import WIcon from '/@/components/UI/Icon'
 
 export const useTableColumn = (
   props: SetupProp<{ item: WTable.Header.Item.Props }>,
@@ -12,7 +13,6 @@ export const useTableColumn = (
 ) => {
   const { slots } = ctx
 
-  //
   const getColumnBindValue = computed(() => props.item?.columnProps)
   const getProp = computed(() => props.item?.columnProps?.prop)
 
@@ -25,9 +25,29 @@ export const useTableColumn = (
   /**
    * @description Render common columns
    */
-  const renderCommonColumn = () => (
-    <el-table-column {...getColumnBindValue.value}></el-table-column>
-  )
+  const renderCommonColumn = () => {
+    if ((props.item as WTable.Header.Item.Default).componentProps?.copy) {
+      return (
+        <el-table-column {...getColumnBindValue.value}>
+          {{
+            default: (scope: WTable.ElTable.SlotData) => {
+              return (
+                <>
+                  <div class="truncate">{scope.row[getProp.value!]}</div>
+                  <WIcon
+                    icon="ant-design:copy-outlined"
+                    class="cursor-pointer text-blue-700"
+                    height="16"
+                  ></WIcon>
+                </>
+              )
+            },
+          }}
+        </el-table-column>
+      )
+    }
+    return <el-table-column {...getColumnBindValue.value}></el-table-column>
+  }
 
   /**
    * @description Render typed columns

@@ -12,11 +12,17 @@ export const useTableHeaders = (props: ComputedRef<WTable.Props>) => {
   const tableHeaders = ref<WTable.Header.Item.Props[]>([])
 
   watch(
+    // TODO
+    // Since props has been proxyed
+    // So if even props like `stripe`/`border` which are not relatived to header will trigger the watch and rerender again
+    // Demo is the case, really bad experience
     () => [unref(props).headers, locale],
     ([val, _]: any) => {
       if (!val) {
         return
       }
+
+      console.log(123)
 
       const formatted = formatTree(val, {
         format: (node) => ({

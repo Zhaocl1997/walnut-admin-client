@@ -383,7 +383,13 @@ export declare namespace WTable {
         | 'render'
         | 'nested'
 
-      type Default<D = any> = HeaderItemCustom<'default', {}, D>
+      type Default<D = any> = HeaderItemCustom<
+        'default' | '',
+        {
+          copy?: boolean
+        },
+        D
+      >
 
       type Action<D = any> = HeaderItemCustom<
         'action',

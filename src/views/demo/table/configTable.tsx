@@ -505,6 +505,9 @@ export const useTableConfig = () => {
           prop: 'description',
           showOverflowTooltip: true,
         },
+        componentProps: {
+          copy: true,
+        },
       },
 
       // action column
