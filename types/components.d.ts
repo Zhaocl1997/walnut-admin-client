@@ -14,9 +14,17 @@ import type {
 } from 'vue-router'
 
 import type { WFormProps } from '/@/components/UI/Form'
+import type { WTable } from '/@/components/UI/Table'
 
-declare const WForm: new () => {
+declare const WFormComp: new () => {
   $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & WFormProps
+}
+
+declare const WTableComp: new () => {
+  $props: AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    WTable.Props
 }
 
 declare module 'vue' {
@@ -49,7 +57,7 @@ declare module 'vue' {
     'w-empty': import('/@/components/UI/Empty').WEmptyProps
 
     // type support for slot
-    'w-form': typeof WForm & {
+    'w-form': typeof WFormComp & {
       __VLS_slots: {
         [key: string]: WFormProps
       }
@@ -64,7 +72,14 @@ declare module 'vue' {
     'w-select': import('/@/components/UI/Select').WSelectProps
     'w-select-tree': import('/@/components/UI/SelectTree').WSelectTreeProp
     'w-switch': import('/@/components/UI/Switch').WSwitchProps
-    'w-table': import('/@/components/UI/Table').WTableProps
+
+    // type support for slot
+    'w-table': typeof WTableComp & {
+      __VLS_slots: {
+        [key: string]: WTable.ElTable.SlotData
+      }
+    }
+
     'w-tree': import('/@/components/UI/Tree').WTreeProps
   }
 }
