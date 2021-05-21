@@ -1,31 +1,29 @@
-import type { ComputedRef } from 'vue'
 import type { WTable } from '../types'
 
-import { ref, unref, watch } from 'vue'
+import { ComputedRef, ref, watchEffect } from 'vue'
 import { formatTree } from 'easy-fns-ts'
 
 import { useI18n } from '/@/locales'
 import { wTableWarning } from '../utils'
 
-export const useTableHeaders = (props: ComputedRef<WTable.Props>) => {
-  const { t, locale } = useI18n()
+/**
+ * @description
+ * Since props has been proxyed
+ * So to prevent props like `stripe`/`border` which are not relatived to header from triggering table rerender again
+ * This hook only use normal props, but not proxyed one
+ */
+export const useTableHeaders = (
+  props: WTable.Props,
+  getProps: ComputedRef<WTable.Props>
+) => {
+  const { t } = useI18n()
 
   const tableHeaders = ref<WTable.Header.Item.Props[]>([])
 
-  watch(
-    // TODO
-    // Since props has been proxyed
-    // So if even props like `stripe`/`border` which are not relatived to header will trigger the watch and rerender again
-    // Demo is the case, really bad experience
-    () => [unref(props).headers, locale],
-    ([val, _]: any) => {
-      if (!val) {
-        return
-      }
-
-      wTableWarning('Rendered!')
-
-      const formatted = formatTree(val, {
+  watchEffect(() => {
+    const formatted = formatTree(
+      props.headers ? props.headers! : getProps.value.headers!,
+      {
         format: (node) => ({
           ...node,
           visible: node.visible !== false,
@@ -40,15 +38,13 @@ export const useTableHeaders = (props: ComputedRef<WTable.Props>) => {
               ? t('component.table.expand')
               : node.label,
         }),
-      })
+      }
+    )
 
-      tableHeaders.value = formatted
-    },
-    {
-      deep: true,
-      immediate: true,
-    }
-  )
+    wTableWarning('Rendered!')
+
+    tableHeaders.value = formatted
+  })
 
   return {
     tableHeaders,
