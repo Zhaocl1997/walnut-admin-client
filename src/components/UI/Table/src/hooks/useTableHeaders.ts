@@ -21,25 +21,22 @@ export const useTableHeaders = (
   const tableHeaders = ref<WTable.Header.Item.Props[]>([])
 
   watchEffect(() => {
-    const formatted = formatTree(
-      props.headers ? props.headers! : getProps.value.headers!,
-      {
-        format: (node) => ({
-          ...node,
-          visible: node.visible !== false,
-          label:
-            node.type === 'index'
-              ? t('component.table.index')
-              : node.type === 'action'
-              ? t('component.table.operation')
-              : node.type === 'selection'
-              ? t('component.table.selection')
-              : node.type === 'expand'
-              ? t('component.table.expand')
-              : node.label,
-        }),
-      }
-    )
+    const formatted = formatTree(props.headers ?? getProps.value.headers!, {
+      format: (node) => ({
+        ...node,
+        visible: node.visible !== false,
+        label:
+          node.type === 'index'
+            ? t('component.table.index')
+            : node.type === 'action'
+            ? t('component.table.operation')
+            : node.type === 'selection'
+            ? t('component.table.selection')
+            : node.type === 'expand'
+            ? t('component.table.expand')
+            : node.label,
+      }),
+    })
 
     wTableWarning('Rendered!')
 
