@@ -2,6 +2,7 @@ import type { Ref, VNode } from 'vue'
 
 import { ElLoading } from 'element-plus'
 import { easyDeepMerge } from 'easy-fns-ts'
+import { ref } from 'vue'
 
 import { useI18n } from '/@/locales'
 
@@ -45,12 +46,14 @@ export interface ElLoadingInstance {
 
 export const useLoading = (options?: Partial<ElLoadingOptions>) => {
   const { t } = useI18n()
+  const loading = ref(false)
 
   let instance: ElLoadingInstance | undefined
 
   const defaultOptions: Partial<ElLoadingOptions> = {
     text: t('component.loading.text'),
     customClass: 'w-loading',
+    background: 'rgba(255,255,255,0.4)',
   }
 
   const getMergedOptions = () => {
@@ -58,17 +61,20 @@ export const useLoading = (options?: Partial<ElLoadingOptions>) => {
   }
 
   const startLoading = (startOptions?: Partial<ElLoadingOptions>) => {
+    loading.value = true
     instance = ElLoading.service(
       easyDeepMerge(getMergedOptions(), startOptions)
     )
   }
 
   const endLoading = () => {
+    loading.value = false
     instance && instance.close()
     instance = undefined
   }
 
   return {
+    loading,
     startLoading,
     endLoading,
   }
