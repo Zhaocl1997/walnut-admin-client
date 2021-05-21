@@ -17,6 +17,8 @@
       :page-size="query.pageSize"
       :border="tableConfig.border"
       :stripe="tableConfig.stripe"
+      :size="tableConfig.size"
+      :loading="tableConfig.loading"
       :show-header="tableConfig.showHeader"
       row-key="id"
       @page="onPage"

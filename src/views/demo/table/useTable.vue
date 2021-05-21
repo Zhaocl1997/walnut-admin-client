@@ -66,6 +66,8 @@
         border: computed(() => tableConfig.border),
         stripe: computed(() => tableConfig.stripe),
         showHeader: computed(() => tableConfig.showHeader),
+        size: computed(() => tableConfig.size),
+        loading: computed(() => tableConfig.loading),
         pageNum: query.pageNum,
         pageSize: query.pageSize,
         onAction,

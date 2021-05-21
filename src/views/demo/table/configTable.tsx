@@ -1,6 +1,6 @@
 import type { WTable } from '/@/components/UI/Table'
 
-import { computed, reactive, ref, onMounted } from 'vue'
+import { computed, reactive, ref, onMounted, watch } from 'vue'
 import { easyDeepSet } from 'easy-fns-ts'
 
 import { useForm } from '/@/components/UI/Form'
@@ -44,7 +44,17 @@ export const useTableConfig = () => {
     nestedItem: false,
     nameType: 'default' as WTable.Header.Item.Types,
     copy: false,
+    loading: false,
+    empty: false,
+    size: '' as ComponentSize,
   })
+
+  watch(
+    () => tableConfig.empty,
+    (v) => {
+      v ? (data.value = []) : onGetList()
+    }
+  )
 
   const [registerForm] = useForm({
     span: 8,
@@ -233,6 +243,52 @@ export const useTableConfig = () => {
         formProp: {
           prop: 'copy',
           label: 'Copy Column',
+        },
+      },
+      {
+        type: 'Switch',
+        formProp: {
+          prop: 'loading',
+          label: 'Loading',
+        },
+      },
+      {
+        type: 'Switch',
+        formProp: {
+          prop: 'empty',
+          label: 'Empty',
+        },
+      },
+      {
+        type: 'Radio',
+        formProp: {
+          prop: 'size',
+          label: 'Size',
+        },
+        colProp: {
+          span: 16,
+        },
+        componentProp: {
+          button: true,
+          size: 'mini',
+          options: [
+            {
+              value: '',
+              label: 'Default',
+            },
+            {
+              value: 'small',
+              label: 'Small',
+            },
+            {
+              value: 'medium',
+              label: 'Medium',
+            },
+            {
+              value: 'mini',
+              label: 'Mini',
+            },
+          ],
         },
       },
     ],

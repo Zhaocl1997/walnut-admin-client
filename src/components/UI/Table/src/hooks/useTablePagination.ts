@@ -2,10 +2,7 @@ import type { ComputedRef } from 'vue'
 import type { WTable } from '../types'
 import { unref, reactive, watch } from 'vue'
 
-export const useTablePagination = (
-  props: ComputedRef<WTable.Props>,
-  emit: Fn
-) => {
+export const useTablePagination = (props: ComputedRef<WTable.Props>) => {
   const state = reactive<WTable.Params.PageState>({
     total: 0,
     pageNum: 1,

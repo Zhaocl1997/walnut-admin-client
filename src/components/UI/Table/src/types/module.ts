@@ -242,6 +242,11 @@ export declare namespace WTable {
       pageSize: number
 
       /**
+       * @description w-table loading prop
+       */
+      loading: boolean
+
+      /**
        * @description
        *   Notice that the emit event common usage is @event="onEvent"
        *   But vue inside also handle event as a prop which start with `on`

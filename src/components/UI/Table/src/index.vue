@@ -13,6 +13,7 @@
   import { useTablePagination } from './hooks/useTablePagination'
   import { useTableMethods } from './hooks/useTableMethods'
   import { useTableEvents } from './hooks/useTableEvents'
+  import { useTableLoading } from './hooks/useTableLoading'
 
   import props, { extendPropKeys } from './props'
 
@@ -34,15 +35,17 @@
 
       const { setProps, getProps } = useProps<WTable.Props>(props)
 
+      useTableLoading(getProps, tableId)
+
       useTableComponent()
 
-      const { tableHeaders } = useTableHeaders(getProps)
+      const { tableHeaders } = useTableHeaders(props, getProps)
 
       const { tableEvent } = useTableEvents(getProps, emit)
 
       const { tableMethods } = useTableMethods(tableRef, { setProps })
 
-      const { pageState } = useTablePagination(getProps, emit)
+      const { pageState } = useTablePagination(getProps)
 
       const getBindValue = computed(() => {
         return {
@@ -71,13 +74,17 @@
       //   expose,
       // })
 
-      // render table column
-      const renderTableItem = () =>
-        renderList(tableHeaders.value, (value) => (
-          <w-table-column item={value} key={genString(8)}>
-            {renderSlots(slots)}
-          </w-table-column>
-        ))
+      // render table content
+      const renderTableContent = () =>
+        getProps.value.data?.length !== 0
+          ? renderList(tableHeaders.value, (value) => (
+              <w-table-column item={value} key={genString(8)}>
+                {renderSlots(slots)}
+              </w-table-column>
+            ))
+          : {
+              empty: () => <el-empty />,
+            }
 
       // render table
       const renderTable = () => {
@@ -97,7 +104,7 @@
             {renderHeader()}
 
             <el-table ref={tableRef} {...getBindValue.value}>
-              {renderTableItem()}
+              {renderTableContent()}
             </el-table>
 
             {renderPage()}
