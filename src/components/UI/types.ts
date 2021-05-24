@@ -9,19 +9,19 @@ export interface MultiTypeCompSharedPropType {
   /**
    * @description Options to render.Make sure item in options have same structure.
    */
-  options: MaybeRef<OptionDataItem[]>
+  options?: MaybeRef<OptionDataItem[]>
 
   /**
    * @description Option's real value filed. Default 'value'.
    * @default value
    */
-  optionValue: MaybeRef<string>
+  optionValue?: MaybeRef<string>
 
   /**
    * @description Option's display label field. Default 'label'.
    * @default label
    */
-  optionLabel: MaybeRef<string>
+  optionLabel?: MaybeRef<string>
 
   /**
    * @description v-model value type to specific.
@@ -30,7 +30,7 @@ export interface MultiTypeCompSharedPropType {
    * @default string
    */
   // TODO
-  // valueType: ValueFormatType
+  // valueType?: ValueFormatType
 
   /**
    * @description v-model value structure to specific.
@@ -38,16 +38,25 @@ export interface MultiTypeCompSharedPropType {
    * @example valueFormat => ','  modelValue: [1,2,3] => '1,2,3'
    */
   // TODO
-  // valueFormat: string
+  // valueFormat?: string
 
   /**
    * @description Fit for same structured API.
    * @default false
    */
-  multiple: boolean
+  multiple?: boolean
 }
 
 export interface CommonComponentMethods {
   focus: (e?: Event) => void
   blur: (e?: Event) => void
 }
+
+export interface SharedEvents {
+  onFocus?: (e?: Event) => void
+  onBlur?: (e?: Event) => void
+  onClear?: () => void
+  onChange?: (val: BaseDataType) => void
+}
+
+export type onClick = (e?: Event) => void

@@ -1,4 +1,4 @@
-import type { MultiTypeCompSharedPropType } from '../../../types'
+import type { SharedEvents, MultiTypeCompSharedPropType } from '../../../types'
 
 /**
  * @link https://element-plus.gitee.io/#/zh-CN/component/select#select-attributes
@@ -33,10 +33,23 @@ export interface ElSelectProps {
 }
 
 /**
+ * @link https://element-plus.gitee.io/#/zh-CN/component/select#select-events
+ */
+export interface ElSelectEvents extends SharedEvents {
+  onVisibleChange?: (visible: boolean) => void
+
+  onRemoveTag?: (tag: BaseDataType) => void
+}
+
+/**
  * @description extend from `ElSelect` props
  */
 export interface WSelectProps
   extends Partial<ElSelectProps>,
-    Partial<MultiTypeCompSharedPropType> {
+    MultiTypeCompSharedPropType,
+    ElSelectEvents {
+  /**
+   * @description block mode
+   */
   block?: boolean
 }

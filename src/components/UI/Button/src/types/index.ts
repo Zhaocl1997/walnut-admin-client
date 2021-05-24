@@ -1,3 +1,4 @@
+import type { onClick } from '../../../types'
 import type { MaybeRef } from '/~/utils'
 
 /**
@@ -54,4 +55,6 @@ export interface WButtonProps extends Partial<ElButtonProps> {
    * @description help message on button
    */
   helpMessage?: string
+
+  onClick?: onClick
 }

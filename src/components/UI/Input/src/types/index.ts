@@ -1,4 +1,4 @@
-import type { CommonComponentMethods } from '../../../types'
+import type { SharedEvents, CommonComponentMethods } from '../../../types'
 import type { MaybeRef } from '/~/utils'
 
 export interface ElInputTextareaResizeProp {
@@ -49,10 +49,15 @@ export interface WInputModifiers {
   lazy: boolean
 }
 
+export interface ElInputEvents extends SharedEvents {
+  onInput?: (val?: StringOrNumber) => void
+  onKeyup?: (e?: KeyboardEvent) => void
+}
+
 /**
  * @description extend from `ElInput` props
  */
-export interface WInputProps extends Partial<ElInputProps> {
+export interface WInputProps extends Partial<ElInputProps>, ElInputEvents {
   /**
    * @description default set trim true
    */
