@@ -1,4 +1,4 @@
-import type { WFormSchemaItem } from '/@/components/UI/Form'
+import type { WForm } from '/@/components/UI/Form'
 
 import { reactive, computed } from 'vue'
 import { generateBaseWFormRules } from '/@/components/UI/Form'
@@ -6,19 +6,19 @@ import { options, getTreeData } from '../data'
 
 export const useFormConfig = (fns: any) => {
   // config form data
-  const formConfig = reactive<any>({
+  const formConfig = reactive({
     labelWidth: '120px',
     disabled: false,
     inline: false,
-    labelPosition: 'right',
-    size: 'medium',
+    labelPosition: 'right' as WForm.ElForm.LabelPosition,
+    size: 'medium' as ComponentSize,
     compact: false,
     vIf: true,
     vShow: true,
   })
 
   // config form schema
-  const formConfigSchemas: WFormSchemaItem[] = [
+  const formConfigSchemas: WForm.Schema.Item[] = [
     {
       type: 'Switch',
       formProp: {
@@ -111,7 +111,7 @@ export const useFormConfig = (fns: any) => {
     baseFormCheckbox: [],
   })
 
-  const demoFormSchemas = computed((): WFormSchemaItem[] => {
+  const demoFormSchemas = computed((): WForm.Schema.Item[] => {
     return [
       {
         type: 'Button',

@@ -1,10 +1,10 @@
 import type { PropType } from 'vue'
-import type { WFormSchemaItem } from './types'
+import type { WForm } from './types'
 import { ElForm } from 'element-plus'
 
 const extendProps = {
   schemas: {
-    type: Array as PropType<WFormSchemaItem[]>,
+    type: Array as PropType<WForm.Schema.Item[]>,
     default: () => {
       return []
     },

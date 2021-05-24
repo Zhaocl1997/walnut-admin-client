@@ -1,4 +1,4 @@
-import type { WFormSchemaItem } from '/@/components/UI/Form'
+import type { WForm } from '/@/components/UI/Form'
 import type { Menu } from '/@/router/types'
 import type { Ref } from 'vue'
 
@@ -83,7 +83,7 @@ export const getMenuFormSchemas = (
     }
   )
 
-  const menuFormSchemas = computed((): WFormSchemaItem<Menu>[] => {
+  const menuFormSchemas = computed((): WForm.Schema.Item<Menu>[] => {
     return [
       // Parent node
       {
@@ -200,7 +200,7 @@ export const getMenuFormSchemas = (
           placeholder: 'Route component field.',
           clearable: true,
           options: viewOptions,
-          onChange: (val: string) => {
+          onChange: (val) => {
             // Get the name property automatically from vue `name` property
             const target = viewOptions.find((item) => item.value == val)
             formData.value = { ...formData.value, name: target!.name }

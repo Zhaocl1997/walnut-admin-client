@@ -1,11 +1,11 @@
-import type { ElFormMethods, WFormMethods } from './../types/formMethods'
+import type { WForm } from '../types'
 import type { Ref } from 'vue'
 
 export const useFormMethods = (
-  formRef: Ref<Nullable<ElFormMethods>>,
+  formRef: Ref<Nullable<WForm.ElForm.Methods>>,
   customMethods: any
 ) => {
-  const formMethods: WFormMethods = {
+  const formMethods: WForm.Methods = {
     ...customMethods,
 
     validate: () => {

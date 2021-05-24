@@ -1,9 +1,9 @@
+import type { WForm } from '../types'
 import type { ComputedRef } from 'vue'
-import type { WFormProps, WFormSchemaItem } from './../types'
 import { ref, unref, watch } from 'vue'
 
-export const useFormSchemas = (props: ComputedRef<WFormProps>) => {
-  const formSchemas = ref<WFormSchemaItem[]>([])
+export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
+  const formSchemas = ref<WForm.Schema.Item[]>([])
 
   watch(
     () => unref(props).schemas,

@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-  import type { WFormRule, WFormSchemaItem } from '/@/components/UI/Form'
+  import type { WForm } from '/@/components/UI/Form'
 
   import { defineComponent, reactive, ref, computed, onMounted } from 'vue'
   import { useForm } from '/@/components/UI/Form'
@@ -50,7 +50,7 @@
         }
       }
 
-      const signinFormSchemas = computed((): WFormSchemaItem[] => {
+      const signinFormSchemas = computed((): WForm.Schema.Item[] => {
         return [
           {
             type: 'Input',
@@ -74,7 +74,7 @@
               clearable: true,
               showPassword: true,
               onKeyup: (e) => {
-                if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+                if (e!.code === 'Enter' || e!.code === 'NumpadEnter') {
                   onSignin()
                 }
               },
@@ -110,7 +110,7 @@
         ]
       })
 
-      const signinFormRules: WFormRule = {
+      const signinFormRules: WForm.ElForm.RuleRecord = {
         username: [
           {
             required: true,

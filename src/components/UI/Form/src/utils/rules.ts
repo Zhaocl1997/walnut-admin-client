@@ -1,5 +1,5 @@
-import { ComputedRef } from 'vue'
-import type { ElFormItemRule, WFormSchemaItem } from '../types'
+import type { MaybeRef } from '/~/utils'
+import type { WForm } from '../types'
 
 import { unref, computed } from 'vue'
 import { useI18n } from '/@/locales'
@@ -24,10 +24,10 @@ const getMessage = (type: string, label: string) => {
  * @description Generate a default rules based on WFormSchema
  */
 export const generateBaseWFormRules = (
-  schemas: WFormSchemaItem[] | ComputedRef<WFormSchemaItem[]>
+  schemas: MaybeRef<WForm.Schema.Item[]>
 ) => {
   const rules = computed(() => {
-    const ret: { [key: string]: ElFormItemRule[] } = {}
+    const ret: { [key: string]: WForm.ElForm.Rule[] } = {}
 
     const formProps = unref(schemas).map((item) => ({
       ...item.formProp,

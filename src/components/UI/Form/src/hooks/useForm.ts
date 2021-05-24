@@ -1,17 +1,17 @@
-import type { WFormMethods, WFormProps, ElFormMethods } from '../types'
+import type { WForm } from '../types'
 import { ref, watchEffect } from 'vue'
 import { isInSetup } from '/@/utils/shared'
 
-type useFormRegisterFn = (instance: WFormMethods) => void
+type useFormRegisterFn = (instance: WForm.Methods) => void
 
-type useFormReturnType = [useFormRegisterFn, ElFormMethods]
+type useFormReturnType = [useFormRegisterFn, WForm.ElForm.Methods]
 
-export const useForm = (props: Partial<WFormProps>): useFormReturnType => {
+export const useForm = (props: WForm.Props): useFormReturnType => {
   isInSetup()
 
-  const wFormRef = ref<Nullable<WFormMethods>>(null)
+  const wFormRef = ref<Nullable<WForm.Methods>>(null)
 
-  const register = (instance: WFormMethods): void => {
+  const register = (instance: WForm.Methods): void => {
     wFormRef.value = instance
 
     watchEffect(() => {
@@ -19,7 +19,7 @@ export const useForm = (props: Partial<WFormProps>): useFormReturnType => {
     })
   }
 
-  const methods: ElFormMethods = {
+  const methods: WForm.ElForm.Methods = {
     validate: async () => {
       return await wFormRef.value!.validate()
     },

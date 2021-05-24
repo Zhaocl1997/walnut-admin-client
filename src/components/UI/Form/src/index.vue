@@ -1,11 +1,5 @@
 <script lang="tsx">
-  import type { SetupContext } from 'vue'
-  import type {
-    ElFormMethods,
-    WFormMethods,
-    WFormProps,
-    WFormSchemaItem,
-  } from './types'
+  import type { WForm } from './types'
 
   import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
   import { easyOmit } from 'easy-fns-ts'
@@ -28,12 +22,12 @@
 
     emits: ['update:modelValue', 'hook'],
 
-    setup(props: WFormProps, ctx: SetupContext) {
+    setup(props: WForm.Props, ctx) {
       const { attrs, emit, expose, slots } = ctx
 
-      const formRef = ref<Nullable<ElFormMethods>>(null)
+      const formRef = ref<Nullable<WForm.ElForm.Methods>>(null)
 
-      const { setProps, getProps } = useProps<WFormProps>(props)
+      const { setProps, getProps } = useProps<WForm.Props>(props)
 
       const { formSchemas } = useFormSchemas(getProps)
 
@@ -59,13 +53,13 @@
       emit('hook', formMethods)
 
       // expose API through ref
-      useExpose<WFormMethods>({
+      useExpose({
         apis: formMethods,
         expose,
       })
 
       // render slot type component's slot
-      const renderItemSlot = (item: WFormSchemaItem) =>
+      const renderItemSlot = (item: WForm.Schema.Item) =>
         Object.keys(slots).includes(item.formProp?.prop!) &&
         renderSlot(slots, item.formProp?.prop!)
 

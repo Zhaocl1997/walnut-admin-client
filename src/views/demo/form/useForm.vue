@@ -20,6 +20,7 @@
 </template>
 
 <script lang="ts">
+  import type { WForm } from '/@/components/UI/Form'
   import { useForm } from '/@/components/UI/Form'
   import { defineComponent, computed } from 'vue'
 

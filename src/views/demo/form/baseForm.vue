@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-  import type { WFormMethods } from '/@/components/UI/Form'
+  import type { WForm } from '/@/components/UI/Form'
   import { ref, defineComponent } from 'vue'
 
   import { useFormConfig } from './configSchema'
@@ -43,7 +43,7 @@
     setup() {
       const value1 = ref(24)
 
-      const wFormRef = ref<Nullable<WFormMethods>>(null)
+      const wFormRef = ref<Nullable<WForm.Methods>>(null)
 
       const fns = {
         validate: async () => {

@@ -1,6 +1,6 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
-  import type { WFormSchemaItem } from '/@/components/UI/Form'
+  import type { WForm } from '/@/components/UI/Form'
 
   import { defineComponent, computed, Transition, unref } from 'vue'
   import { isBoolean, isFunction, isUndefined } from 'easy-fns-ts'
@@ -14,7 +14,7 @@
     inheritAttrs: false,
 
     props: {
-      item: Object as PropType<WFormSchemaItem>,
+      item: Object as PropType<WForm.Schema.Item>,
     },
 
     setup(props, ctx) {
