@@ -14,8 +14,6 @@
   export default defineComponent({
     name: 'WArrow',
 
-    inheritAttrs: false,
-
     props: {
       icon: {
         type: String as PropType<string>,
