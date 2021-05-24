@@ -114,6 +114,63 @@ export const useFormConfig = (fns: any) => {
   const demoFormSchemas = computed((): WForm.Schema.Item[] => {
     return [
       {
+        type: 'Divider',
+        componentProp: {
+          title: 'Divider 1',
+          fold: true,
+          countToFold: 3,
+          children: [
+            {
+              type: 'Input',
+              formProp: {
+                prop: 'DividerInput1',
+                label: 'Divider Input1',
+              },
+              colProp: {
+                span: 12,
+              },
+            },
+            {
+              type: 'Input',
+              formProp: {
+                prop: 'DividerInput2',
+                label: 'Divider Input2',
+              },
+              colProp: {
+                span: 12,
+              },
+            },
+            {
+              type: 'Input',
+              formProp: {
+                prop: 'DividerInput3',
+                label: 'Divider Input3',
+              },
+            },
+            {
+              type: 'Input',
+              formProp: {
+                prop: 'DividerInput4',
+                label: 'Divider Input4',
+              },
+              colProp: {
+                span: 12,
+              },
+            },
+            {
+              type: 'Input',
+              formProp: {
+                prop: 'DividerInput5',
+                label: 'Divider Input5',
+              },
+              colProp: {
+                span: 12,
+              },
+            },
+          ],
+        },
+      },
+      {
         type: 'Button',
         formProp: {
           label: 'Button',

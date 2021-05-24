@@ -1,4 +1,4 @@
-import type { VNode, ComputedRef } from 'vue'
+import type { VNode, ComputedRef, Ref } from 'vue'
 import type { MaybeRef, MaybeRefRecord } from '/~/utils'
 
 import type { WButtonProps } from '/@/components/UI/Button'
@@ -122,6 +122,7 @@ export declare namespace WForm {
    */
   interface Context {
     formProps: ComputedRef<Props>
+    formSchemas: Ref<Schema.Item[]>
   }
 
   /**
@@ -256,6 +257,23 @@ export declare namespace WForm {
     type SlotSchema<D> = Custom<'Slot', any, D>
 
     /**
+     * @description Divider Schema
+     */
+    type DividerSchema<D> = Custom<
+      'Divider',
+      {
+        title?: string
+
+        fold?: boolean
+
+        countToFold?: number
+
+        children?: Schema.Item[]
+      },
+      D
+    >
+
+    /**
      * @description Button Schema
      */
     type ButtonSchema<D> = Custom<'Button', WButtonProps, D>
@@ -308,6 +326,7 @@ export declare namespace WForm {
     type Item<D = any> =
       | RenderSchema<D> // JSX
       | SlotSchema<D> // Slot
+      | DividerSchema<D> // Divider
       | ButtonSchema<D>
       | ButtonGroupSchema<D>
       | InputSchema<D>

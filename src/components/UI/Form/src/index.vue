@@ -47,6 +47,7 @@
       // create `WForm` context
       setFormContext({
         formProps: getProps,
+        formSchemas: formSchemas,
       })
 
       // create `useForm` hook
@@ -65,9 +66,25 @@
 
       // render Items
       const renderItems = () =>
-        formSchemas.value.map((item) => (
-          <w-form-item item={item}>{renderItemSlot(item)}</w-form-item>
-        ))
+        formSchemas.value.map((item, index) => {
+          const formItem = (i: WForm.Schema.Item) => (
+            <w-form-item item={i}>{renderItemSlot(i)}</w-form-item>
+          )
+
+          if (item.type === 'Divider') {
+            const childrenItems = () =>
+              item.componentProp?.children!.map((child) => formItem(child))
+
+            return (
+              <>
+                <w-form-item-extend-divider item={item} index={index} />
+                {childrenItems()}
+              </>
+            )
+          }
+
+          return formItem(item)
+        })
 
       // render el-col wrap
       const renderColWrap = () =>
