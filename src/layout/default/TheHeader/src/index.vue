@@ -10,7 +10,7 @@
         </div>
 
         <div
-          class="flex flex-nowrap flex-row justify-end space-x-2 h-full all-child:cursor-pointer all-child:flex all-child:items-center"
+          class="flex flex-nowrap flex-row justify-end space-x-2 h-full children:cursor-pointer children:flex children:items-center"
         >
           <div class="hover:bg-warm-gray-300 px-0.5">
             <WAppFullScreen v-if="!app.isMobile" />
