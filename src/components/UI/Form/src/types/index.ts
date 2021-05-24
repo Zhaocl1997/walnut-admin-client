@@ -27,10 +27,4 @@ export type WFormSchemaItemType =
   | 'SelectTree'
   | 'Switch'
 
-// export * from './formItem'
-// export * from './formMethods'
-// export * from './formProps'
-// export * from './formSchemas'
-// export * from './formSchemasItem'
-
 export * from './module'

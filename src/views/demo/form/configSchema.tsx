@@ -4,6 +4,24 @@ import { reactive, computed } from 'vue'
 import { generateBaseWFormRules } from '/@/components/UI/Form'
 import { options, getTreeData } from '../data'
 
+// type support for conditional vIf/vShow/render function
+interface DemoFormDataType {
+  extendDividerInput1: string
+  extendDividerInput2: string
+  extendDividerInput3: string
+  extendDividerInput4: string
+  extendDividerInput5: string
+  baseInput: string
+  baseInputNumber: number
+  baseSelect: number
+  baseCheckbox: number[]
+  baseRadio: number
+  baseTree: number
+  baseSelectTree: number
+  baseSlot: string
+  baseJSX: string
+}
+
 export const useFormConfig = (fns: any) => {
   // config form data
   const formConfig = reactive({
@@ -106,25 +124,28 @@ export const useFormConfig = (fns: any) => {
     },
   ]
 
-  const demoFormData = reactive<any>({
+  const demoFormData = reactive({
     // need to init an empty array when multiple true
-    baseFormCheckbox: [],
+    baseCheckbox: [],
   })
 
-  const demoFormSchemas = computed((): WForm.Schema.Item[] => {
+  const demoFormSchemas = computed((): WForm.Schema.Item<
+    Partial<DemoFormDataType>
+  >[] => {
     return [
       {
         type: 'Divider',
         componentProp: {
-          title: 'Divider 1',
+          foldable: true,
           fold: true,
+          title: 'Foldable Divider',
           countToFold: 3,
           children: [
             {
               type: 'Input',
               formProp: {
-                prop: 'DividerInput1',
-                label: 'Divider Input1',
+                prop: 'extendDividerInput1',
+                label: 'Divider Input 1',
               },
               colProp: {
                 span: 12,
@@ -133,8 +154,27 @@ export const useFormConfig = (fns: any) => {
             {
               type: 'Input',
               formProp: {
-                prop: 'DividerInput2',
-                label: 'Divider Input2',
+                prop: 'extendDividerInput2',
+                label: 'Divider Input 2',
+              },
+              colProp: {
+                span: 12,
+              },
+              vShow: ({ formData }) => !!formData.extendDividerInput1,
+            },
+            {
+              type: 'Input',
+              formProp: {
+                prop: 'extendDividerInput3',
+                label: 'Divider Input 3',
+              },
+              vIf: ({ formData }) => !!formData.extendDividerInput2,
+            },
+            {
+              type: 'Input',
+              formProp: {
+                prop: 'extendDividerInput4',
+                label: 'Divider Input 4',
               },
               colProp: {
                 span: 12,
@@ -143,31 +183,20 @@ export const useFormConfig = (fns: any) => {
             {
               type: 'Input',
               formProp: {
-                prop: 'DividerInput3',
-                label: 'Divider Input3',
-              },
-            },
-            {
-              type: 'Input',
-              formProp: {
-                prop: 'DividerInput4',
-                label: 'Divider Input4',
-              },
-              colProp: {
-                span: 12,
-              },
-            },
-            {
-              type: 'Input',
-              formProp: {
-                prop: 'DividerInput5',
-                label: 'Divider Input5',
+                prop: 'extendDividerInput5',
+                label: 'Divider Input 5',
               },
               colProp: {
                 span: 12,
               },
             },
           ],
+        },
+      },
+      {
+        type: 'Divider',
+        componentProp: {
+          title: 'Just A Divider',
         },
       },
       {
@@ -215,16 +244,16 @@ export const useFormConfig = (fns: any) => {
           ],
         },
         vIf: ({ formData }) => {
-          return formData.baseFormInput
+          return !!formData.baseInput
         },
         vShow: ({ formData }) => {
-          return formData.baseFormInputNumber
+          return !!formData.baseInputNumber
         },
       },
       {
         type: 'Input',
         formProp: {
-          prop: 'baseFormInput',
+          prop: 'baseInput',
           label: 'Input',
         },
         componentProp: {
@@ -240,7 +269,7 @@ export const useFormConfig = (fns: any) => {
       {
         type: 'InputNumber',
         formProp: {
-          prop: 'baseFormInputNumber',
+          prop: 'baseInputNumber',
           label: 'InputNumber',
         },
         componentProp: {
@@ -253,7 +282,7 @@ export const useFormConfig = (fns: any) => {
       {
         type: 'Select',
         formProp: {
-          prop: 'baseFormSelect',
+          prop: 'baseSelect',
           label: 'Select',
         },
         componentProp: {
@@ -264,7 +293,7 @@ export const useFormConfig = (fns: any) => {
       {
         type: 'Checkbox',
         formProp: {
-          prop: 'baseFormCheckbox',
+          prop: 'baseCheckbox',
           label: 'Checkbox',
         },
         componentProp: {
@@ -275,7 +304,7 @@ export const useFormConfig = (fns: any) => {
       {
         type: 'Radio',
         formProp: {
-          prop: 'baseFormRadio',
+          prop: 'baseRadio',
           label: 'Radio',
         },
         componentProp: {
@@ -286,7 +315,7 @@ export const useFormConfig = (fns: any) => {
       {
         type: 'Tree',
         formProp: {
-          prop: 'baseFormTree',
+          prop: 'baseTree',
           label: 'Tree',
         },
         componentProp: {
@@ -306,7 +335,7 @@ export const useFormConfig = (fns: any) => {
       {
         type: 'SelectTree',
         formProp: {
-          prop: 'baseFormSelectTree',
+          prop: 'baseSelectTree',
           label: 'SelectTree',
         },
         componentProp: {
@@ -352,19 +381,19 @@ export const useFormConfig = (fns: any) => {
         type: 'Slot',
         formProp: {
           label: 'Slot render',
-          prop: 'baseFormSlot',
+          prop: 'baseSlot',
         },
       },
       {
         type: 'Render',
         formProp: {
           label: 'JSX render',
-          prop: 'baseFormJSX',
+          prop: 'baseJSX',
         },
         render: ({ formData }) => {
           return (
             <el-input
-              v-model={formData.baseFormJSX}
+              v-model={formData.baseJSX}
               placeholder="JSX render El-input"
             ></el-input>
           )

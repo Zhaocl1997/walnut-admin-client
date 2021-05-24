@@ -13,6 +13,7 @@ export const useTitle = () => {
   const { currentRoute } = useAppRouter()
 
   watch(
+    // TODO not reactive
     () => currentRoute.value.path,
     () => {
       const translateTitle = t((currentRoute.value.meta.title as string) ?? '')

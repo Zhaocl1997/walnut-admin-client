@@ -2,7 +2,7 @@
   import type { WForm } from './types'
 
   import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
+  import { easyOmit, isArray } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
@@ -73,7 +73,7 @@
 
           if (item.type === 'Divider') {
             const childrenItems = () =>
-              item.componentProp?.children!.map((child) => formItem(child))
+              item.componentProp?.children?.map((child) => formItem(child))
 
             return (
               <>

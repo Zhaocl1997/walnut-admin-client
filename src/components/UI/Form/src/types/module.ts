@@ -138,7 +138,7 @@ export declare namespace WForm {
    * @description w-form events
    */
   namespace Events {
-    type Callback<R = void> = (params: Params.Callback) => R
+    type Callback<T = any, R = void> = (params: Params.Callback<T>) => R
   }
 
   /**
@@ -231,14 +231,17 @@ export declare namespace WForm {
       /**
        * @description v-if control visible
        */
-      vIf?: Events.Callback<boolean> | MaybeRef<boolean>
+      vIf?: Events.Callback<D, boolean> | MaybeRef<boolean>
 
       /**
        * @description v-show control visible
        */
-      vShow?: Events.Callback<boolean> | MaybeRef<boolean>
+      vShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
 
-      visible?: Events.Callback<boolean> | MaybeRef<boolean>
+      /**
+       * @description fold-show flag,
+       */
+      foldShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
     }
 
     /**
@@ -248,7 +251,7 @@ export declare namespace WForm {
       /**
        * @description JSX render function
        */
-      render?: Events.Callback<VNode | VNode[] | string>
+      render?: Events.Callback<D, VNode | VNode[] | string>
     }
 
     /**
@@ -262,13 +265,30 @@ export declare namespace WForm {
     type DividerSchema<D> = Custom<
       'Divider',
       {
+        /**
+         * @description divider dividable flag
+         */
+        foldable?: boolean
+
+        /**
+         * @description divider title
+         */
         title?: string
 
+        /**
+         * @description divider fold state
+         */
         fold?: boolean
 
+        /**
+         * @description divider count to fold
+         */
         countToFold?: number
 
-        children?: Schema.Item[]
+        /**
+         * @description divider children
+         */
+        children?: Schema.Item<D>[]
       },
       D
     >

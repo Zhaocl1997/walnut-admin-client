@@ -30,6 +30,11 @@
       const { formSchemas } = useFormContext()
 
       const onChildren = () => {
+        // not foldable, do not excute the code below
+        if (!formSchemas.value[props.index!].componentProp.foldable) {
+          return
+        }
+
         const countToFold =
           formSchemas.value[props.index!].componentProp.countToFold
 
@@ -38,33 +43,32 @@
           const len =
             formSchemas.value[props.index!].componentProp.children.length
 
-          console.log(countToFold, len)
-
           for (let i = countToFold; i < len; i++) {
             if (
               isUndefined(
-                formSchemas.value[props.index!].componentProp.children[i].vShow
+                formSchemas.value[props.index!].componentProp.children[i]
+                  .foldShow
               )
             ) {
               formSchemas.value[props.index!].componentProp.children[
                 i
-              ].vShow = true
+              ].foldShow = true
             }
 
             formSchemas.value[props.index!].componentProp.children[
               i
-            ].vShow = !formSchemas.value[props.index!].componentProp.children[i]
-              .vShow
+            ].foldShow = !formSchemas.value[props.index!].componentProp
+              .children[i].foldShow
           }
         }
 
-        // handle vShow
+        // handle foldShow
         formSchemas.value[props.index!].componentProp.children.map(
           (child: WForm.Schema.Item) => {
-            if (isUndefined(child.vShow)) {
-              child.vShow = true
+            if (isUndefined(child.foldShow)) {
+              child.foldShow = true
             }
-            child.vShow = !child.vShow
+            child.foldShow = !child.foldShow
           }
         )
       }
@@ -85,14 +89,19 @@
       return () => {
         return (
           <el-divider content-position="left">
-            <el-space size="mini">
-              <w-title show-left>{item?.componentProp?.title}</w-title>
-              <w-arrow
-                active={!item?.componentProp?.fold}
-                width="16"
-                onClick={onClick}
-              ></w-arrow>
-            </el-space>
+            {item?.componentProp?.title && (
+              <el-space size="mini">
+                <w-title show-left>{item?.componentProp?.title}</w-title>
+
+                {item?.componentProp?.foldable && (
+                  <w-arrow
+                    active={!item?.componentProp?.fold}
+                    width="16"
+                    onClick={onClick}
+                  ></w-arrow>
+                )}
+              </el-space>
+            )}
           </el-divider>
         )
       }

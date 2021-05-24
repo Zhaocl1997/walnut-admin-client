@@ -57,6 +57,23 @@
         }
       }
 
+      // get fold-show value
+      const getFoldShow = () => {
+        const { foldShow } = item!
+
+        if (isUndefined(foldShow)) {
+          return true
+        }
+
+        if (isBoolean(foldShow)) {
+          return foldShow
+        }
+
+        if (typeof foldShow === 'function') {
+          return foldShow({ formData: formProps.value.modelValue! })
+        }
+      }
+
       // render base components like input/select
       const renderBaseComponents = () => {
         const component = componentMap.get(item?.type)
@@ -96,11 +113,12 @@
       // render transition wrap
       const renderTransitionFormItem = () => {
         const vShow = getVShow()
+        const foldShow = getFoldShow()
 
         return (
           <Transition name="fade" mode="out-in" appear>
             <el-form-item
-              v-show={vShow}
+              v-show={vShow && foldShow}
               {...(item!.formProp ?? {})}
               style={formProps.value.compact ? { marginBottom: '10px' } : {}}
             >
