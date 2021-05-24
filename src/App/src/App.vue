@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, watchEffect } from 'vue'
+  import { defineComponent, nextTick, watchEffect } from 'vue'
   import { useAppRoute } from '/@/router'
   import { useTitle } from '/@/hooks/core/useTitle'
   import AppProvider from './AppProvider.vue'
@@ -19,7 +19,9 @@
       const route = useAppRoute()
 
       watchEffect(() => {
-        useTitle(route.meta.title)
+        nextTick(() => {
+          useTitle(route.meta.title)
+        })
       })
 
       return {}
