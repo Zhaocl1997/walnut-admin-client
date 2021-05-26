@@ -3,7 +3,7 @@
   import type { WForm } from '/@/components/UI/Form'
 
   import { defineComponent, computed, Transition, unref } from 'vue'
-  import { isBoolean, isFunction, isUndefined } from 'easy-fns-ts'
+  import { isFunction, isUndefined } from 'easy-fns-ts'
 
   import { useFormContext } from '/@/components/UI/Form/src/hooks/useFormContext'
   import { componentMap } from './componentMap'
@@ -23,128 +23,88 @@
 
       const { formProps } = useFormContext()
 
-      // get v-if value
-      const getVIf = () => {
-        const { vIf } = item!
+      // get target field boolean value
+      const getBooleanValue = (field: string) => {
+        const bool = item?.extraProp?.[field]
 
-        if (isUndefined(vIf)) {
-          return true
+        if (typeof bool === 'function') {
+          return bool({ formData: formProps.value.modelValue! })
         }
 
-        if (isBoolean(vIf)) {
-          return vIf
-        }
-
-        if (typeof vIf === 'function') {
-          return vIf({ formData: formProps.value.modelValue! })
-        }
+        return isUndefined(bool) ? true : bool
       }
 
-      // get v-show value
-      const getVShow = () => {
-        const { vShow } = item!
-
-        if (isUndefined(vShow)) {
-          return true
-        }
-
-        if (isBoolean(vShow)) {
-          return vShow
-        }
-
-        if (typeof vShow === 'function') {
-          return vShow({ formData: formProps.value.modelValue! })
-        }
-      }
-
-      // get fold-show value
-      const getFoldShow = () => {
-        const { foldShow } = item!
-
-        if (isUndefined(foldShow)) {
-          return true
-        }
-
-        if (isBoolean(foldShow)) {
-          return foldShow
-        }
-
-        if (typeof foldShow === 'function') {
-          return foldShow({ formData: formProps.value.modelValue! })
-        }
-      }
-
-      // render base components like input/select
-      const renderBaseComponents = () => {
-        const component = componentMap.get(item?.type)
-
-        return (
-          component && (
-            <component
-              is={component}
-              v-model={formProps.value.modelValue![item!.formProp?.prop!]}
-              {...item?.componentProp}
-            ></component>
-          )
-        )
-      }
-
-      // render custom JSX component
-      const renderJSXComponent = () => {
-        return item?.type === 'Render' && isFunction(item.render)
-          ? item.render!({ formData: formProps.value.modelValue! })
-          : renderBaseComponents()
-      }
-
-      // render slot component
-      const renderSlotComponent = () => {
-        return item?.type === 'Slot' ? slots.default!() : renderBaseComponents()
-      }
-
-      // render component
+      // Render component core function
+      // DO NOT declare too many functions outside this function,
+      // Cause some functions are only usable in some cases
+      // So define the function when we need it
+      // Decrease the memory use
       const renderComponent = () => {
         return item?.type === 'Render'
-          ? renderJSXComponent()
+          ? () =>
+              isFunction(item!.extraProp?.render) &&
+              item!.extraProp?.render!({
+                formData: formProps.value.modelValue!,
+              })
           : item?.type === 'Slot'
-          ? renderSlotComponent()
-          : renderBaseComponents()
+          ? () => slots.default!()
+          : () => {
+              const renderBaseComponents = () => {
+                const component = componentMap.get(item?.type)
+
+                return (
+                  component && (
+                    <component
+                      is={component}
+                      v-model={
+                        formProps.value.modelValue![item!.formProp?.prop!]
+                      }
+                      {...item?.componentProp}
+                    ></component>
+                  )
+                )
+              }
+
+              return renderBaseComponents()
+            }
       }
 
       // render transition wrap
-      const renderTransitionFormItem = () => {
-        const vShow = getVShow()
-        const foldShow = getFoldShow()
-
-        return (
-          <Transition name="fade" mode="out-in" appear>
-            <el-form-item
-              v-show={vShow && foldShow}
-              {...(item!.formProp ?? {})}
-              style={formProps.value.compact ? { marginBottom: '10px' } : {}}
-            >
-              {renderComponent()}
-            </el-form-item>
-          </Transition>
-        )
-      }
+      const renderFormItem = () => (
+        <el-form-item
+          {...(item!.formProp ?? {})}
+          style={formProps.value.compact ? { marginBottom: '10px' } : {}}
+        >
+          {renderComponent()}
+        </el-form-item>
+      )
 
       // render el-col wrap
       const renderContent = () => {
+        const vShow = getBooleanValue('vShow')
+        const foldShow = getBooleanValue('foldShow')
+
         const getColProp = computed(
-          () => item!.colProp ?? { span: formProps.value.span }
+          () => item?.colProp ?? { span: formProps.value.span }
         )
 
         return formProps.value.inline ? (
-          renderTransitionFormItem()
+          renderFormItem()
         ) : (
-          <el-col {...unref(getColProp)}>{renderTransitionFormItem()}</el-col>
+          <el-col vShow={vShow && foldShow} {...unref(getColProp)}>
+            {renderFormItem()}
+          </el-col>
         )
       }
 
       return () => {
-        const vIf = getVIf()
+        const vIf = getBooleanValue('vIf')
 
-        return vIf && renderContent()
+        return (
+          <Transition name="fade" mode="out-in" appear>
+            {vIf && renderContent()}
+          </Transition>
+        )
       }
     },
   })
