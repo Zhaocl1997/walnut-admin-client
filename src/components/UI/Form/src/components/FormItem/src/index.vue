@@ -2,11 +2,12 @@
   import type { PropType } from 'vue'
   import type { WForm } from '/@/components/UI/Form'
 
-  import { defineComponent, computed, Transition, unref } from 'vue'
-  import { isFunction, isUndefined } from 'easy-fns-ts'
+  import { defineComponent, computed, Transition, unref, watch } from 'vue'
+  import { isFunction } from 'easy-fns-ts'
 
   import { useFormContext } from '/@/components/UI/Form/src/hooks/useFormContext'
   import { componentMap } from './componentMap'
+  import { getEPBooleanValue } from '/@/components/UI/Form/src/utils'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -23,24 +24,36 @@
 
       const { formProps } = useFormContext()
 
-      // get target field boolean value
-      const getBooleanValue = (field: string) => {
-        const bool = item?.extraProp?.[field]
-
-        if (typeof bool === 'function') {
-          return bool({ formData: formProps.value.modelValue! })
+      // handle VVC item
+      watch(
+        () => formProps.value.modelValue,
+        () => {
+          if (
+            getEPBooleanValue(item, formProps, 'VVC') &&
+            !(
+              getEPBooleanValue(item, formProps, 'vIf') &&
+              getEPBooleanValue(item, formProps, 'vShow') &&
+              getEPBooleanValue(item, formProps, 'foldShow')
+            )
+          ) {
+            // really straight forward to set undefined
+            // i think maybe better solution
+            // also it will not support for nested `prop`
+            formProps.value.modelValue[item?.formProp?.prop!] = undefined
+          }
+        },
+        {
+          deep: true,
         }
-
-        return isUndefined(bool) ? true : bool
-      }
+      )
 
       // Render component core function
       // DO NOT declare too many functions outside this function,
       // Cause some functions are only usable in some cases
       // So define the function when we need it
       // Decrease the memory use
-      const renderComponent = () => {
-        return item?.type === 'Render'
+      const renderComponent = () =>
+        item?.type === 'Render'
           ? () =>
               isFunction(item!.extraProp?.render) &&
               item!.extraProp?.render!({
@@ -49,25 +62,18 @@
           : item?.type === 'Slot'
           ? () => slots.default!()
           : () => {
-              const renderBaseComponents = () => {
-                const component = componentMap.get(item?.type)
+              const component = componentMap.get(item?.type)
 
-                return (
-                  component && (
-                    <component
-                      is={component}
-                      v-model={
-                        formProps.value.modelValue![item!.formProp?.prop!]
-                      }
-                      {...item?.componentProp}
-                    ></component>
-                  )
+              return (
+                component && (
+                  <component
+                    is={component}
+                    v-model={formProps.value.modelValue![item!.formProp?.prop!]}
+                    {...item?.componentProp}
+                  ></component>
                 )
-              }
-
-              return renderBaseComponents()
+              )
             }
-      }
 
       // render transition wrap
       const renderFormItem = () => (
@@ -81,9 +87,6 @@
 
       // render el-col wrap
       const renderContent = () => {
-        const vShow = getBooleanValue('vShow')
-        const foldShow = getBooleanValue('foldShow')
-
         const getColProp = computed(
           () => item?.colProp ?? { span: formProps.value.span }
         )
@@ -91,21 +94,23 @@
         return formProps.value.inline ? (
           renderFormItem()
         ) : (
-          <el-col vShow={vShow && foldShow} {...unref(getColProp)}>
+          <el-col
+            vShow={
+              getEPBooleanValue(item, formProps, 'vShow') &&
+              getEPBooleanValue(item, formProps, 'foldShow')
+            }
+            {...unref(getColProp)}
+          >
             {renderFormItem()}
           </el-col>
         )
       }
 
-      return () => {
-        const vIf = getBooleanValue('vIf')
-
-        return (
-          <Transition name="fade" mode="out-in" appear>
-            {vIf && renderContent()}
-          </Transition>
-        )
-      }
+      return () => (
+        <Transition name="fade" mode="out-in" appear>
+          {getEPBooleanValue(item, formProps, 'vIf') && renderContent()}
+        </Transition>
+      )
     },
   })
 </script>

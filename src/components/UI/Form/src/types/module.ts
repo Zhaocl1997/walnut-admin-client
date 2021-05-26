@@ -207,7 +207,13 @@ export declare namespace WForm {
       class?: string
     }
 
-    interface Custom<T, P, D> {
+    /**
+     * @description there generic pararms
+     * First is component type like `input`/`select` etc
+     * Second is custom `componentProp` for current type\
+     * Last is `formData` type, maybe any
+     */
+    interface Custom<T, CP, EP, D> {
       /**
        * @description schema type
        */
@@ -216,7 +222,7 @@ export declare namespace WForm {
       /**
        * @description target type component prop
        */
-      componentProp?: P & DomProps
+      componentProp?: CP & DomProps
 
       /**
        * @description Refer to ElFormItemProp
@@ -228,36 +234,50 @@ export declare namespace WForm {
        */
       colProp?: Partial<ElLayout.ColProps>
 
-      /**
-       * @description v-if control visible
-       */
-      vIf?: Events.Callback<D, boolean> | MaybeRef<boolean>
+      extraProp?: Partial<EP> & {
+        /**
+         * @description v-if control visible
+         */
+        vIf?: Events.Callback<D, boolean> | MaybeRef<boolean>
 
-      /**
-       * @description v-show control visible
-       */
-      vShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
+        /**
+         * @description v-show control visible
+         */
+        vShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
 
-      /**
-       * @description fold-show flag,
-       */
-      foldShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
+        /**
+         * @description fold-show flag
+         */
+        foldShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
+
+        /**
+         * @description Alias for `Visibility & Value Consistent`
+         * Default is true, means that if the invisible item also has v-model value, it will not trigger the value to omitted
+         * Set this false, means that as long as item is invisible, its v-model value will be omitted from form data as well
+         */
+        VVC?: Events.Callback<D, boolean> | MaybeRef<boolean>
+      }
     }
 
     /**
      * @description JSX Render Schema
      */
-    type RenderSchema<D> = Custom<'Render', any, D> & {
-      /**
-       * @description JSX render function
-       */
-      render?: Events.Callback<D, VNode | VNode[] | string>
-    }
+    type RenderSchema<D> = Custom<
+      'Render',
+      {
+        /**
+         * @description JSX render function
+         */
+        render?: Events.Callback<D, VNode | VNode[] | string>
+      },
+      any,
+      D
+    >
 
     /**
      * @description Slot Schema
      */
-    type SlotSchema<D> = Custom<'Slot', any, D>
+    type SlotSchema<D> = Custom<'Slot', any, any, D>
 
     /**
      * @description Divider Schema
@@ -290,59 +310,61 @@ export declare namespace WForm {
          */
         children?: Schema.Item<D>[]
       },
+      any,
       D
     >
 
     /**
      * @description Button Schema
      */
-    type ButtonSchema<D> = Custom<'Button', WButtonProps, D>
+    type ButtonSchema<D> = Custom<'Button', WButtonProps, any, D>
 
     /**
      * @description Button Group Schema
      */
-    type ButtonGroupSchema<D> = Custom<'ButtonGroup', WButtonGroupProps, D>
+    type ButtonGroupSchema<D> = Custom<'ButtonGroup', WButtonGroupProps, any, D>
 
     /**
      * @description Input Schema
      */
-    type InputSchema<D> = Custom<'Input', WInputProps, D>
+    type InputSchema<D> = Custom<'Input', WInputProps, any, D>
 
     /**
      * @description Input number Schema
      */
-    type InputNumberSchema<D> = Custom<'InputNumber', WInputNumberProps, D>
+    type InputNumberSchema<D> = Custom<'InputNumber', WInputNumberProps, any, D>
 
     /**
      * @description Select Schema
      */
-    type SelectSchema<D> = Custom<'Select', WSelectProps, D>
+    type SelectSchema<D> = Custom<'Select', WSelectProps, any, D>
 
     /**
      * @description Checkbox Schema
      */
-    type CheckboxSchema<D> = Custom<'Checkbox', WCheckboxProps, D>
+    type CheckboxSchema<D> = Custom<'Checkbox', WCheckboxProps, any, D>
 
     /**
      * @description Radio Schema
      */
-    type RadioSchema<D> = Custom<'Radio', WRadioProps, D>
+    type RadioSchema<D> = Custom<'Radio', WRadioProps, any, D>
 
     /**
      * @description Tree Schema
      */
-    type TreeSchema<D> = Custom<'Tree', WTreeProps, D>
+    type TreeSchema<D> = Custom<'Tree', WTreeProps, any, D>
 
     /**
      * @description Select Tree Schema
      */
-    type SelectTreeSchema<D> = Custom<'SelectTree', WSelectTreeProp, D>
+    type SelectTreeSchema<D> = Custom<'SelectTree', WSelectTreeProp, any, D>
 
     /**
      * @description Switch Schema
      */
-    type SwitchSchema<D> = Custom<'Switch', WSwitchProps, D>
+    type SwitchSchema<D> = Custom<'Switch', WSwitchProps, any, D>
 
+    // entry to schema item
     type Item<D = any> =
       | RenderSchema<D> // JSX
       | SlotSchema<D> // Slot
