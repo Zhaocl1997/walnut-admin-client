@@ -42,7 +42,37 @@ export const setupI18n = async (app: App) => {
 
 export { langLists }
 
-export const useI18n = () => {
-  const { t, locale } = VueUseI18n()
-  return { t, locale }
+type I18nGlobalTranslation = {
+  (key: string): string
+  (key: string, locale: string): string
+  (key: string, locale: string, list: unknown[]): string
+  (key: string, locale: string, named: Record<string, unknown>): string
+  (key: string, list: unknown[]): string
+  (key: string, named: Record<string, unknown>): string
+}
+
+export const useI18n = (): {
+  t: I18nGlobalTranslation
+} => {
+  const normalFn = {
+    t: (key: string) => {
+      return key
+    },
+  }
+
+  if (!AppI18n) {
+    return normalFn
+  }
+
+  const { t, ...others } = AppI18n.global
+
+  const tFn = (key: string) => {
+    if (!key) return ''
+    if (!key.includes('.')) return key
+    return t(key)
+  }
+  return {
+    ...others,
+    t: tFn,
+  }
 }
