@@ -20,9 +20,9 @@
       :span="value1"
       v-bind="formConfig"
     >
-      <template #baseFormSlot="{ disabled }">
+      <template #baseSlot="{ disabled }">
         <el-input
-          v-model="demoFormData.baseFormSlot"
+          v-model="demoFormData.baseSlot"
           :disabled="disabled"
           placeholder="Slot render El-input"
         ></el-input>

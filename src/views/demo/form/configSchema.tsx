@@ -157,10 +157,17 @@ export const useFormConfig = (fns: any) => {
                 prop: 'extendDividerInput2',
                 label: 'Divider Input 2',
               },
+              componentProp: {
+                helpMessage:
+                  'Will appear once `extendDividerInput1` has value. Also the value will not be omitted when this item disappered (by set `VVC` false in `extraProp`).',
+              },
               colProp: {
                 span: 12,
               },
-              vShow: ({ formData }) => !!formData.extendDividerInput1,
+              extraProp: {
+                vShow: ({ formData }) => !!formData.extendDividerInput1,
+                VVC: false,
+              },
             },
             {
               type: 'Input',
@@ -168,7 +175,13 @@ export const useFormConfig = (fns: any) => {
                 prop: 'extendDividerInput3',
                 label: 'Divider Input 3',
               },
-              vIf: ({ formData }) => !!formData.extendDividerInput2,
+              componentProp: {
+                helpMessage:
+                  'Will appear once `extendDividerInput2` has value. And this value will be omitted when disappered. This is default behavior.',
+              },
+              extraProp: {
+                vIf: ({ formData }) => !!formData.extendDividerInput2,
+              },
             },
             {
               type: 'Input',
@@ -176,8 +189,16 @@ export const useFormConfig = (fns: any) => {
                 prop: 'extendDividerInput4',
                 label: 'Divider Input 4',
               },
+              componentProp: {
+                helpMessage:
+                  'Will appear once `extendDividerInput3` has value. And if `extendDividerInput5` has value, this will disapper also with values omitted.',
+              },
               colProp: {
                 span: 12,
+              },
+              extraProp: {
+                vIf: ({ formData }) => !!formData.extendDividerInput3,
+                VVC: ({ formData }) => !!formData.extendDividerInput5,
               },
             },
             {
@@ -243,11 +264,13 @@ export const useFormConfig = (fns: any) => {
             },
           ],
         },
-        vIf: ({ formData }) => {
-          return !!formData.baseInput
-        },
-        vShow: ({ formData }) => {
-          return !!formData.baseInputNumber
+        extraProp: {
+          vIf: ({ formData }) => {
+            return !!formData.baseInput
+          },
+          vShow: ({ formData }) => {
+            return !!formData.baseInputNumber
+          },
         },
       },
       {
@@ -264,7 +287,9 @@ export const useFormConfig = (fns: any) => {
             trim: true,
           },
         },
-        vIf: computed(() => formConfig.vIf),
+        extraProp: {
+          vIf: computed(() => formConfig.vIf),
+        },
       },
       {
         type: 'InputNumber',
@@ -277,7 +302,9 @@ export const useFormConfig = (fns: any) => {
           max: 20,
           step: 2,
         },
-        vShow: computed(() => formConfig.vShow),
+        extraProp: {
+          vShow: computed(() => formConfig.vShow),
+        },
       },
       {
         type: 'Select',
@@ -390,13 +417,15 @@ export const useFormConfig = (fns: any) => {
           label: 'JSX render',
           prop: 'baseJSX',
         },
-        render: ({ formData }) => {
-          return (
-            <el-input
-              v-model={formData.baseJSX}
-              placeholder="JSX render El-input"
-            ></el-input>
-          )
+        componentProp: {
+          render: ({ formData }) => {
+            return (
+              <el-input
+                v-model={formData.baseJSX}
+                placeholder="JSX render El-input"
+              ></el-input>
+            )
+          },
         },
       },
     ]

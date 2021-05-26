@@ -8,9 +8,9 @@
     </template>
 
     <w-form v-model="demoFormData" @hook="registerDemo">
-      <template #baseFormSlot="{ disabled }">
+      <template #baseSlot="{ disabled }">
         <el-input
-          v-model="demoFormData.baseFormSlot"
+          v-model="demoFormData.baseSlot"
           :disabled="disabled"
           placeholder="Slot render El-input"
         ></el-input>
