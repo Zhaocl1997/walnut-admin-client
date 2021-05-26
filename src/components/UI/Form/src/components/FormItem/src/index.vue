@@ -75,7 +75,7 @@
               )
             }
 
-      // render transition wrap
+      // render el-form-item with target typed component
       const renderFormItem = () => (
         <el-form-item
           {...(item!.formProp ?? {})}
@@ -85,7 +85,7 @@
         </el-form-item>
       )
 
-      // render el-col wrap
+      // render transition content
       const renderContent = () => {
         const getColProp = computed(
           () => item?.colProp ?? { span: formProps.value.span }
