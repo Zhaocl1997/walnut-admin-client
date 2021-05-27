@@ -7,7 +7,10 @@
 
   import { useFormContext } from '/@/components/UI/Form/src/hooks/useFormContext'
   import { componentMap } from './componentMap'
-  import { getEPBooleanValue } from '/@/components/UI/Form/src/utils'
+  import {
+    getEPBooleanValue,
+    getBoolean,
+  } from '/@/components/UI/Form/src/utils'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -33,7 +36,7 @@
             !(
               getEPBooleanValue(item, formProps, 'vIf') &&
               getEPBooleanValue(item, formProps, 'vShow') &&
-              getEPBooleanValue(item, formProps, 'foldShow')
+              getBoolean(item!.foldShow)
             )
           ) {
             // really straight forward to set undefined
@@ -55,8 +58,8 @@
       const renderComponent = () =>
         item?.type === 'Render'
           ? () =>
-              isFunction(item!.extraProp?.render) &&
-              item!.extraProp?.render!({
+              isFunction(item!.componentProp?.render) &&
+              item!.componentProp?.render!({
                 formData: formProps.value.modelValue!,
               })
           : item?.type === 'Slot'
@@ -97,7 +100,7 @@
           <el-col
             vShow={
               getEPBooleanValue(item, formProps, 'vShow') &&
-              getEPBooleanValue(item, formProps, 'foldShow')
+              getBoolean(item!.foldShow)
             }
             {...unref(getColProp)}
           >
