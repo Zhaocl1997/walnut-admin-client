@@ -9,11 +9,11 @@ import { useI18n } from '/@/locales'
 export const useTitle = () => {
   const title = VueUseTitle()
 
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const { currentRoute } = useAppRouter()
 
   watch(
-    () => currentRoute.value.path,
+    () => [currentRoute.value.path, locale],
     () => {
       const translateTitle = t(currentRoute.value.meta.title as string)
 
@@ -22,6 +22,7 @@ export const useTitle = () => {
         : `${import.meta.env.VITE_APP_TITLE}`
     },
     {
+      deep: true,
       immediate: true,
     }
   )

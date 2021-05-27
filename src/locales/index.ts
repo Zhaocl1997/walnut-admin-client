@@ -1,7 +1,7 @@
 import type { App } from 'vue'
-import type { I18nOptions } from 'vue-i18n'
+import type { I18nOptions, VueI18n } from 'vue-i18n'
 
-import { createI18n, useI18n as VueUseI18n } from 'vue-i18n'
+import { createI18n } from 'vue-i18n'
 
 import { useAppContext } from '/@/App'
 import { langLists, fallbackLocale, availableLocales } from './utils'
@@ -42,37 +42,28 @@ export const setupI18n = async (app: App) => {
 
 export { langLists }
 
-type I18nGlobalTranslation = {
-  (key: string): string
-  (key: string, locale: string): string
-  (key: string, locale: string, list: unknown[]): string
-  (key: string, locale: string, named: Record<string, unknown>): string
-  (key: string, list: unknown[]): string
-  (key: string, named: Record<string, unknown>): string
-}
-
-export const useI18n = (): {
-  t: I18nGlobalTranslation
-} => {
+export const useI18n = (): VueI18n => {
   const normalFn = {
     t: (key: string) => {
       return key
     },
   }
 
+  // avoid undefined error
   if (!AppI18n) {
-    return normalFn
+    return normalFn as VueI18n
   }
 
-  const { t, ...others } = AppI18n.global
+  const { t, locale } = AppI18n.global
 
   const tFn = (key: string) => {
     if (!key) return ''
     if (!key.includes('.')) return key
     return t(key)
   }
+
   return {
-    ...others,
+    locale,
     t: tFn,
-  }
+  } as VueI18n
 }
