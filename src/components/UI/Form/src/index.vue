@@ -2,7 +2,7 @@
   import type { WForm } from './types'
 
   import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
-  import { easyOmit, isArray } from 'easy-fns-ts'
+  import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
@@ -18,7 +18,7 @@
   // 2. multiple item
   // 3. nested prop
   // 4. label help tooltip, also callback
-  // 5. divider refactor
+  // 5. divider refactor(×)
   // 6. item Transition optimise
 
   export default defineComponent({

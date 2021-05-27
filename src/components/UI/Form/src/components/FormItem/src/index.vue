@@ -42,6 +42,7 @@
             // really straight forward to set undefined
             // i think maybe better solution
             // also it will not support for nested `prop`
+            // TODO menu name prop trigger a bug
             formProps.value.modelValue[item?.formProp?.prop!] = undefined
           }
         },
@@ -110,7 +111,7 @@
       }
 
       return () => (
-        <Transition name="fade" mode="out-in" appear>
+        <Transition name="fade" mode="out-in">
           {getEPBooleanValue(item, formProps, 'vIf') && renderContent()}
         </Transition>
       )
