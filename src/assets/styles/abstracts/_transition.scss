@@ -1,44 +1,71 @@
+@mixin transition-default {
+  &-enter-active,
+  &-leave-active {
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1) !important;
+  }
+
+  &-move {
+    transition: transform 0.4s;
+  }
+}
+
 // ============================
 // ======== fade base =========
 // ============================
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.4s ease-in-out;
-}
+.fade-transition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.4s ease-in-out;
+  }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-// ============================
-// ========= zoom out =========
-// ============================
-.zoom-out-enter-active,
-.zoom-out-leave-active {
-  transition: opacity 0.1 ease-in-out, transform 0.15s ease-out;
-}
-
-.zoom-out-enter-from,
-.zoom-out-leave-to {
-  opacity: 0;
-  transform: scale(0);
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
 }
 
 // ============================
-// ======== zoom fade =========
+// ========== scale ===========
 // ============================
-.zoom-fade-enter-active,
-.zoom-fade-leave-active {
-  transition: transform 0.2s, opacity 0.3s ease-out;
+.scale-transition {
+  &-enter-from,
+  &-leave,
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  @include transition-default;
 }
 
-.zoom-fade-enter-from {
-  opacity: 0;
-  transform: scale(0.92);
-}
+// // ============================
+// // ========= zoom out =========
+// // ============================
+// .zoom-out-enter-active,
+// .zoom-out-leave-active {
+//   transition: opacity 0.1 ease-in-out, transform 0.15s ease-out;
+// }
 
-.zoom-fade-leave-to {
-  opacity: 0;
-  transform: scale(1.06);
-}
+// .zoom-out-enter-from,
+// .zoom-out-leave-to {
+//   opacity: 0;
+//   transform: scale(0);
+// }
+
+// // ============================
+// // ======== zoom fade =========
+// // ============================
+// .zoom-fade-enter-active,
+// .zoom-fade-leave-active {
+//   transition: transform 0.2s, opacity 0.3s ease-out;
+// }
+
+// .zoom-fade-enter-from {
+//   opacity: 0;
+//   transform: scale(0.92);
+// }
+
+// .zoom-fade-leave-to {
+//   opacity: 0;
+//   transform: scale(1.06);
+// }

@@ -50,6 +50,7 @@ export default {
       storage: 'Storage',
       state: 'State',
       axios: 'Axios',
+      transition: 'Transition',
     },
   },
 

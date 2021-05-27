@@ -50,6 +50,7 @@ export default {
       storage: '存储',
       state: '状态',
       axios: '请求',
+      transition: '过渡',
     },
   },
 
