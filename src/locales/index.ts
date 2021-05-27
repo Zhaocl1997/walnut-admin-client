@@ -56,10 +56,10 @@ export const useI18n = (): VueI18n => {
 
   const { t, locale } = AppI18n.global
 
-  const tFn = (key: string) => {
+  const tFn = (key: string, ...arg: any[]) => {
     if (!key) return ''
     if (!key.includes('.')) return key
-    return t(key)
+    return t(key, ...(arg as []))
   }
 
   return {
