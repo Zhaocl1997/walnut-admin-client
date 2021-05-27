@@ -141,8 +141,10 @@ export const getMenuFormSchemas = (
           clearable: true,
           prepend: pathPrefix,
         },
-        vIf: ({ formData }) => {
-          return formData.type !== MenuTypeEnum.ELEMENT
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type !== MenuTypeEnum.ELEMENT
+          },
         },
       },
 
@@ -160,8 +162,10 @@ export const getMenuFormSchemas = (
             capitalize: true,
           },
         },
-        vIf: ({ formData }) => {
-          return formData.type === MenuTypeEnum.CATALOG
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type === MenuTypeEnum.CATALOG
+          },
         },
       },
 
@@ -180,11 +184,13 @@ export const getMenuFormSchemas = (
           optionValue: 'name',
           optionLabel: 'name',
         },
-        vIf: ({ formData }) => {
-          return (
-            formData.type === MenuTypeEnum.MENU &&
-            !(formData.external || formData.internal)
-          )
+        extraProp: {
+          vIf: ({ formData }) => {
+            return (
+              formData.type === MenuTypeEnum.MENU &&
+              !(formData.external || formData.internal)
+            )
+          },
         },
       },
 
@@ -207,11 +213,13 @@ export const getMenuFormSchemas = (
           },
           filterable: true,
         },
-        vIf: ({ formData }) => {
-          return (
-            formData.type === MenuTypeEnum.MENU &&
-            !(formData.external || formData.internal)
-          )
+        extraProp: {
+          vIf: ({ formData }) => {
+            return (
+              formData.type === MenuTypeEnum.MENU &&
+              !(formData.external || formData.internal)
+            )
+          },
         },
       },
 
@@ -228,8 +236,10 @@ export const getMenuFormSchemas = (
           options: getTitleList,
           filterable: true,
         },
-        vIf: ({ formData }) => {
-          return formData.type !== MenuTypeEnum.ELEMENT
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type !== MenuTypeEnum.ELEMENT
+          },
         },
       },
 
@@ -240,8 +250,10 @@ export const getMenuFormSchemas = (
           prop: 'icon',
           label: 'Icon',
         },
-        vIf: ({ formData }) => {
-          return formData.type !== MenuTypeEnum.ELEMENT
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type !== MenuTypeEnum.ELEMENT
+          },
         },
       },
 
@@ -268,8 +280,10 @@ export const getMenuFormSchemas = (
           button: true,
           options: ToFOptions,
         },
-        vIf: ({ formData }) => {
-          return formData.type === MenuTypeEnum.MENU && formData.internal!
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type === MenuTypeEnum.MENU && formData.internal!
+          },
         },
       },
 
@@ -284,8 +298,10 @@ export const getMenuFormSchemas = (
           button: true,
           options: ToFOptions,
         },
-        vIf: ({ formData }) => {
-          return formData.type === MenuTypeEnum.MENU && formData.external!
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type === MenuTypeEnum.MENU && formData.external!
+          },
         },
       },
 
@@ -300,11 +316,13 @@ export const getMenuFormSchemas = (
           placeholder: 'External/Internal url.',
           clearable: true,
         },
-        vIf: ({ formData }) => {
-          return (
-            formData.type === MenuTypeEnum.MENU &&
-            (formData.external! || formData.internal!)
-          )
+        extraProp: {
+          vIf: ({ formData }) => {
+            return (
+              formData.type === MenuTypeEnum.MENU &&
+              (formData.external! || formData.internal!)
+            )
+          },
         },
       },
 
@@ -328,8 +346,10 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        vIf: ({ formData }) => {
-          return formData.type !== MenuTypeEnum.ELEMENT
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type !== MenuTypeEnum.ELEMENT
+          },
         },
       },
 
@@ -353,8 +373,10 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        vIf: ({ formData }) => {
-          return formData.type === MenuTypeEnum.MENU
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type === MenuTypeEnum.MENU
+          },
         },
       },
 
@@ -378,8 +400,10 @@ export const getMenuFormSchemas = (
             },
           ],
         },
-        vIf: ({ formData }) => {
-          return formData.type !== MenuTypeEnum.ELEMENT
+        extraProp: {
+          vIf: ({ formData }) => {
+            return formData.type !== MenuTypeEnum.ELEMENT
+          },
         },
       },
     ]

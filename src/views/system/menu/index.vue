@@ -102,7 +102,7 @@
         total: total,
         rowKey: '_id',
         border: true,
-        onAction: (type, scope) => {
+        onAction: ({ scope, type }) => {
           const id = scope.row?._id!
 
           const action = {

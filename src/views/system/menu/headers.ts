@@ -23,6 +23,7 @@ export const getMenuTableHeaders = (): WTable.Header.Item.Props<Menu>[] => {
       },
     },
     {
+      type: 'slot',
       columnProps: {
         label: 'Icon',
         prop: 'icon',

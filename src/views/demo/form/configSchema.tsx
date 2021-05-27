@@ -124,7 +124,7 @@ export const useFormConfig = (fns: any) => {
     },
   ]
 
-  const demoFormData = reactive({
+  const demoFormData = reactive<any>({
     // need to init an empty array when multiple true
     baseCheckbox: [],
   })
@@ -158,6 +158,7 @@ export const useFormConfig = (fns: any) => {
                 label: 'Divider Input 2',
               },
               componentProp: {
+                helpPosition: 'suffix',
                 helpMessage:
                   'Will appear once `extendDividerInput1` has value. Also the value will not be omitted when this item disappered (by set `VVC` false in `extraProp`).',
               },
@@ -176,6 +177,7 @@ export const useFormConfig = (fns: any) => {
                 label: 'Divider Input 3',
               },
               componentProp: {
+                helpPosition: 'suffix',
                 helpMessage:
                   'Will appear once `extendDividerInput2` has value. And this value will be omitted when disappered. This is default behavior.',
               },
@@ -190,6 +192,7 @@ export const useFormConfig = (fns: any) => {
                 label: 'Divider Input 4',
               },
               componentProp: {
+                helpPosition: 'suffix',
                 helpMessage:
                   'Will appear once `extendDividerInput3` has value. And if `extendDividerInput5` has value, this will disapper also with values omitted.',
               },
