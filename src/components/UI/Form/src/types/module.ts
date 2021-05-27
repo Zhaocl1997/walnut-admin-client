@@ -246,17 +246,17 @@ export declare namespace WForm {
         vShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
 
         /**
-         * @description fold-show flag
-         */
-        foldShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
-
-        /**
          * @description Alias for `Visibility & Value Consistent`
          * Default is true, means that if the invisible item also has v-model value, it will not trigger the value to omitted
          * Set this false, means that as long as item is invisible, its v-model value will be omitted from form data as well
          */
         VVC?: Events.Callback<D, boolean> | MaybeRef<boolean>
       }
+
+      /**
+       * @description fold-show flag
+       */
+      foldShow?: boolean
     }
 
     /**

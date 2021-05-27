@@ -1,13 +1,15 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
+  import type { WForm } from '/@/components/UI/Form'
 
   import { defineComponent, onMounted } from 'vue'
   import { isUndefined } from 'easy-fns-ts'
 
-  import type { WForm } from '/@/components/UI/Form'
   import WTitle from '/@/components/Help/Title'
   import WArrow from '/@/components/Help/Arrow'
+
   import { useFormContext } from '../../hooks/useFormContext'
+  import { getBoolean } from '../../utils'
 
   export default defineComponent({
     name: 'WFormExtendDivider',
@@ -44,31 +46,18 @@
             formSchemas.value[props.index!].componentProp.children.length
 
           for (let i = countToFold; i < len; i++) {
-            if (
-              isUndefined(
-                formSchemas.value[props.index!].componentProp.children[i]
-                  .foldShow
-              )
-            ) {
-              formSchemas.value[props.index!].componentProp.children[
-                i
-              ].foldShow = true
-            }
-
             formSchemas.value[props.index!].componentProp.children[
               i
-            ].foldShow = !formSchemas.value[props.index!].componentProp
-              .children[i].foldShow
+            ].foldShow = !getBoolean(
+              formSchemas.value[props.index!].componentProp.children[i].foldShow
+            )
           }
         }
 
         // handle foldShow
         formSchemas.value[props.index!].componentProp.children.map(
           (child: WForm.Schema.Item) => {
-            if (isUndefined(child.foldShow)) {
-              child.foldShow = true
-            }
-            child.foldShow = !child.foldShow
+            child.foldShow = !getBoolean(child.foldShow)
           }
         )
       }
@@ -86,25 +75,23 @@
         onChildren()
       })
 
-      return () => {
-        return (
-          <el-divider content-position="left">
-            {item?.componentProp?.title && (
-              <el-space size="mini">
-                <w-title show-left>{item?.componentProp?.title}</w-title>
+      return () => (
+        <el-divider content-position="left">
+          {item?.componentProp?.title && (
+            <el-space size="mini">
+              <w-title show-left>{item?.componentProp?.title}</w-title>
 
-                {item?.componentProp?.foldable && (
-                  <w-arrow
-                    active={!item?.componentProp?.fold}
-                    width="16"
-                    onClick={onClick}
-                  ></w-arrow>
-                )}
-              </el-space>
-            )}
-          </el-divider>
-        )
-      }
+              {item?.componentProp?.foldable && (
+                <w-arrow
+                  active={!item?.componentProp?.fold}
+                  width="16"
+                  onClick={onClick}
+                ></w-arrow>
+              )}
+            </el-space>
+          )}
+        </el-divider>
+      )
     },
   })
 </script>

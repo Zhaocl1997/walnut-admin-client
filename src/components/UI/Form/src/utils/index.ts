@@ -15,5 +15,8 @@ export const getEPBooleanValue = (
     return maybeBool({ formData: formProps.value.modelValue! })
   }
 
-  return isUndefined(maybeBool) ? defaultValue : maybeBool
+  return getBoolean(maybeBool, defaultValue)
 }
+
+// handle undefined to defaultValue
+export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
