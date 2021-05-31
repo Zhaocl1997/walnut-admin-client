@@ -38,34 +38,170 @@
   @include transition-default;
 }
 
-// // ============================
-// // ========= zoom out =========
-// // ============================
-// .zoom-out-enter-active,
-// .zoom-out-leave-active {
-//   transition: opacity 0.1 ease-in-out, transform 0.15s ease-out;
-// }
+// ============================
+// ======== zoom out ==========
+// ============================
+.zoom-transition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.1 ease-in-out, transform 0.15s ease-out;
+  }
 
-// .zoom-out-enter-from,
-// .zoom-out-leave-to {
-//   opacity: 0;
-//   transform: scale(0);
-// }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
 
-// // ============================
-// // ======== zoom fade =========
-// // ============================
-// .zoom-fade-enter-active,
-// .zoom-fade-leave-active {
-//   transition: transform 0.2s, opacity 0.3s ease-out;
-// }
+// ============================
+// ======== zoom fade =========
+// ============================
+.zoom-fade-transition {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 0.2s, opacity 0.3s ease-out;
+  }
 
-// .zoom-fade-enter-from {
-//   opacity: 0;
-//   transform: scale(0.92);
-// }
+  &-enter-from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
 
-// .zoom-fade-leave-to {
-//   opacity: 0;
-//   transform: scale(1.06);
-// }
+  &-leave-to {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+// ============================
+// ======= slide out up =======
+// ============================
+.slide-up-transition {
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+
+  @include transition-default;
+}
+
+// ============================
+// ===== slide out right ======
+// ============================
+.slide-right-transition {
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(15px);
+  }
+
+  @include transition-default;
+}
+
+// ============================
+// ====== slide out down ======
+// ============================
+.slide-down-transition {
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  @include transition-default;
+}
+
+// ============================
+// ====== slide out left ======
+// ============================
+.slide-left-transition {
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  @include transition-default;
+}
+
+// ============================
+// ====== scroll out up =======
+// ============================
+.scroll-up-transition {
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: translateY(15px);
+  }
+
+  &-leave-to {
+    transform: translateY(-15px);
+  }
+
+  @include transition-default;
+}
+
+// ============================
+// ===== scroll out right =====
+// ============================
+.scroll-right-transition {
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: translateX(-15px);
+  }
+
+  &-leave-to {
+    transform: translateX(15px);
+  }
+
+  @include transition-default;
+}
+
+// ============================
+// ===== scroll out down ======
+// ============================
+.scroll-down-transition {
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: translateY(-15px);
+  }
+
+  &-leave-to {
+    transform: translateY(15px);
+  }
+
+  @include transition-default;
+}
+
+// ============================
+// ===== scroll out left ======
+// ============================
+.scroll-left-transition {
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: translateX(15px);
+  }
+
+  &-leave-to {
+    transform: translateX(-15px);
+  }
+
+  @include transition-default;
+}

@@ -1,69 +1,75 @@
 <template>
   <div>
-    <w-select v-model="type" :options="options"></w-select>
+    <w-form v-model="formData" @hook="register"></w-form>
 
-    <el-button type="primary" class="ml-4" @click="onStart">Start</el-button>
-    <component :is="`${type}Transition`">
+    <w-transition :name="formData.name">
       <div v-show="show" class="h-36 w-36 bg-red-400"></div>
-    </component>
+    </w-transition>
   </div>
 </template>
 
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
-  import {
-    FadeTransition,
-    ScaleTransition,
-  } from '/@/components/Help/Transition'
+  import { TransitionEnum } from '/@/components/Help/Transition'
+  import WTransition from '/@/components/Help/Transition'
+  import { useForm } from '/@/components/UI/Form'
 
-  const list = [
-    'Fade',
-    'Scale',
-    'SlideY',
-    'ScrollY',
-    'SlideYReverse',
-    'ScrollYReverse',
-    'SlideX',
-    'ScrollX',
-    'SlideXReverse',
-    'ScrollXReverse',
-    'ScaleRotate',
-    'ExpandX',
-    'Expand',
-  ]
-
-  const options = list.map(
-    (item) =>
-      ({
-        value: item,
-        label: item,
-      } as OptionDataItem)
+  const options: OptionDataItem[] = Object.entries(TransitionEnum).map(
+    ([key, value]) => ({
+      value: value,
+      label: key,
+    })
   )
 
   export default defineComponent({
     name: 'TransitionDemo',
 
     components: {
-      FadeTransition,
-      ScaleTransition,
+      WTransition,
     },
 
     setup() {
-      const type = ref('Fade')
       const show = ref(true)
+      const formData = ref({
+        name: 'fade',
+      })
 
       const onStart = () => {
         show.value = false
         setTimeout(() => {
           show.value = true
-        }, 300)
+        }, 500)
       }
 
+      const [register] = useForm({
+        span: 6,
+        schemas: [
+          {
+            type: 'Select',
+            formProp: {
+              prop: 'name',
+            },
+            componentProp: {
+              options: options,
+            },
+          },
+          {
+            type: 'Button',
+            componentProp: {
+              type: 'primary',
+              text: 'Start',
+              onClick: onStart,
+            },
+          },
+        ],
+      })
+
       return {
-        type,
+        formData,
         show,
         options,
         onStart,
+        register,
       }
     },
   })
