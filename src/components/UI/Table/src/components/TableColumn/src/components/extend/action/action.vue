@@ -61,7 +61,7 @@
       })
 
       return () => (
-        <el-table-column {...props.column}>
+        <el-table-column {...props.column?.columnProps}>
           {renderDefaultSlot()}
         </el-table-column>
       )

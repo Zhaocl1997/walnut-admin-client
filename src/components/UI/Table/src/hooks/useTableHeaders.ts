@@ -25,16 +25,19 @@ export const useTableHeaders = (
       format: (node) => ({
         ...node,
         visible: node.visible !== false,
-        label:
-          node.type === 'index'
-            ? t('component.table.index')
-            : node.type === 'action'
-            ? t('component.table.operation')
-            : node.type === 'selection'
-            ? t('component.table.selection')
-            : node.type === 'expand'
-            ? t('component.table.expand')
-            : node.label,
+        columnProps: {
+          ...node.columnProps,
+          label:
+            node.type === 'index'
+              ? t('component.table.index')
+              : node.type === 'action'
+              ? t('component.table.operation')
+              : node.type === 'selection'
+              ? t('component.table.selection')
+              : node.type === 'expand'
+              ? t('component.table.expand')
+              : node.columnProps.label,
+        },
       }),
     })
 
