@@ -102,6 +102,7 @@
         total: total,
         rowKey: '_id',
         border: true,
+        height: '600px',
         onAction: ({ scope, type }) => {
           const id = scope.row?._id!
 
