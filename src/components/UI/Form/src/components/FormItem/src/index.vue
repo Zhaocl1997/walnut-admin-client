@@ -2,15 +2,16 @@
   import type { PropType } from 'vue'
   import type { WForm } from '/@/components/UI/Form'
 
-  import { defineComponent, computed, Transition, unref, watch } from 'vue'
+  import { defineComponent, computed, unref, watch } from 'vue'
   import { isFunction } from 'easy-fns-ts'
 
   import { useFormContext } from '/@/components/UI/Form/src/hooks/useFormContext'
-  import { componentMap } from './componentMap'
   import {
     getEPBooleanValue,
     getBoolean,
   } from '/@/components/UI/Form/src/utils'
+  import { componentMap } from './componentMap'
+  import { useFormItemComponents } from './hooks/useComponents'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -24,6 +25,8 @@
     setup(props, ctx) {
       const { item } = props
       const { slots } = ctx
+
+      useFormItemComponents()
 
       const { formProps } = useFormContext()
 
@@ -96,7 +99,14 @@
         )
 
         return formProps.value.inline ? (
-          renderFormItem()
+          <div
+            vShow={
+              getEPBooleanValue(item, formProps, 'vShow') &&
+              getBoolean(item!.foldShow)
+            }
+          >
+            {renderFormItem()}
+          </div>
         ) : (
           <el-col
             vShow={
@@ -111,9 +121,9 @@
       }
 
       return () => (
-        <Transition name="fade" mode="out-in">
+        <w-form-item-transition {...item?.transitionProp}>
           {getEPBooleanValue(item, formProps, 'vIf') && renderContent()}
-        </Transition>
+        </w-form-item-transition>
       )
     },
   })
