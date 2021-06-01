@@ -11,6 +11,7 @@ import type { WRadioProps } from '/@/components/UI/Radio'
 import type { WTreeProps } from '/@/components/UI/Tree'
 import type { WSelectTreeProp } from '/@/components/UI/SelectTree'
 import type { WSwitchProps } from '/@/components/UI/Switch'
+import type { WTransitionProps } from '/@/components/Help/Transition'
 
 /**
  * @description WForm Type Module
@@ -215,6 +216,11 @@ export declare namespace WForm {
      */
     interface Custom<T, CP, EP, D> {
       /**
+       * @description uuid for item
+       */
+      readonly uid?: string
+
+      /**
        * @description schema type
        */
       type: T
@@ -257,6 +263,11 @@ export declare namespace WForm {
        * @description fold-show flag
        */
       foldShow?: boolean
+
+      /**
+       * @description transition props
+       */
+      transitionProp?: Omit<WTransitionProps, 'group'>
     }
 
     /**
@@ -304,6 +315,26 @@ export declare namespace WForm {
          * @description divider count to fold
          */
         countToFold?: number
+
+        /**
+         * @description divider children
+         */
+        children?: Schema.Item<D>[]
+      },
+      any,
+      D
+    >
+
+    /**
+     * @description Multiple Schema
+     */
+    type MultipleSchema<D> = Custom<
+      'Multiple',
+      {
+        /**
+         * @description field key for v-model
+         */
+        fieldKey: string
 
         /**
          * @description divider children
@@ -369,6 +400,7 @@ export declare namespace WForm {
       | RenderSchema<D> // JSX
       | SlotSchema<D> // Slot
       | DividerSchema<D> // Divider
+      | MultipleSchema<D> // Multiple
       | ButtonSchema<D>
       | ButtonGroupSchema<D>
       | InputSchema<D>
