@@ -2,7 +2,7 @@
   import type { WForm } from './types'
 
   import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
+  import { easyOmit, getRandomInt } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
@@ -75,23 +75,30 @@
       // render Items
       const renderItems = () =>
         formSchemas.value.map((item, index) => {
-          const formItem = (i: WForm.Schema.Item) => (
-            <w-form-item item={i}>{renderItemSlot(i)}</w-form-item>
+          const formItem = (i: WForm.Schema.Item, index: number) => (
+            <w-form-item item={i} key={index}>
+              {renderItemSlot(i)}
+            </w-form-item>
           )
 
+          // handle divider
           if (item.type === 'Divider') {
             const childrenItems = () =>
-              item.componentProp?.children?.map((child) => formItem(child))
+              item.componentProp?.children?.map((child, index) =>
+                formItem(child, index)
+              )
 
             return (
               <>
                 <w-form-item-extend-divider item={item} index={index} />
-                {childrenItems()}
+                <w-form-transition-group group>
+                  {childrenItems()}
+                </w-form-transition-group>
               </>
             )
           }
 
-          return formItem(item)
+          return formItem(item, getRandomInt(10, 100))
         })
 
       // render el-col wrap

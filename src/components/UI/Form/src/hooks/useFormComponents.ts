@@ -10,6 +10,9 @@ export const useFormComponents = () => {
     WFormItemExtendDivider: createAsyncComponent(
       () => import('../components/Extend/Divider.vue')
     ),
+    WFormTransitionGroup: createAsyncComponent(
+      () => import('../../../../Help/Transition')
+    ),
   }
 
   // @ts-ignore
