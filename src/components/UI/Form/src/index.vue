@@ -15,11 +15,12 @@
 
   // TODO
   // 1. disabled support for callback
-  // 2. multiple item
-  // 3. nested prop
-  // 4. label help tooltip, also callback
-  // 5. divider refactor(×)
-  // 6. item Transition optimise
+  // 2. nested prop
+  // 3. label help tooltip, also callback
+  // 4. divider refactor(×)
+  // 5. item Transition optimise(×)
+  // 6. refactor divider into form item
+  // 7. multiple/search/card/tab/step form
 
   export default defineComponent({
     name: 'WForm',
@@ -75,8 +76,8 @@
       // render Items
       const renderItems = () =>
         formSchemas.value.map((item, index) => {
-          const formItem = (i: WForm.Schema.Item, index: number) => (
-            <w-form-item item={i} key={index}>
+          const formItem = (i: WForm.Schema.Item) => (
+            <w-form-item item={i} key={i.uid}>
               {renderItemSlot(i)}
             </w-form-item>
           )
@@ -84,10 +85,9 @@
           // handle divider
           if (item.type === 'Divider') {
             const childrenItems = () =>
-              item.componentProp?.children?.map((child, index) =>
-                formItem(child, index)
-              )
+              item.componentProp?.children?.map((child) => formItem(child))
 
+            // TODO transition for form item optimise
             return (
               <>
                 <w-form-item-extend-divider item={item} index={index} />
@@ -98,7 +98,51 @@
             )
           }
 
-          return formItem(item, getRandomInt(10, 100))
+          // handle multiple
+          // if (item.type === 'Multiple') {
+          //   const childrenItems = () =>
+          //     item.componentProp?.children?.map((child, index) =>
+          //       formItem(child, index)
+          //     )
+
+          //   const onAdd = () => {
+          //     item.componentProp?.children?.push({
+          //       ...item.componentProp?.children[0],
+          //       formProp: {
+          //         ...item.componentProp?.children[0].formProp,
+          //         prop: `${
+          //           item.componentProp?.children[0].formProp?.prop
+          //         }${getRandomInt(10, 100)}`,
+          //       },
+          //     })
+          //   }
+
+          //   const onRemove = () => {}
+
+          //   return (
+          //     <>
+          //       {childrenItems()}
+
+          //       <w-form-item
+          //         item={{
+          //           type: 'Button',
+          //           componentProp: {
+          //             text: 'Add More',
+          //             icon: 'el-icon-circle-plus-outline',
+          //             onClick: onAdd,
+          //           },
+          //         }}
+          //       ></w-form-item>
+
+          //       {/* <i
+          //         class="el-icon-remove-outline text-3xl cursor-pointer"
+          //         onClick={onRemove}
+          //       ></i> */}
+          //     </>
+          //   )
+          // }
+
+          return formItem(item)
         })
 
       // render el-col wrap
