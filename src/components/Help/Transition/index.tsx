@@ -1,23 +1,42 @@
 import type { PropType } from 'vue'
 import { defineComponent, Transition, TransitionGroup, renderSlot } from 'vue'
 
-type TransitionMode = 'in-out' | 'out-in' | 'default' | undefined
+export type TransitionMode = 'in-out' | 'out-in' | 'default'
+export type TransitionName =
+  | 'fade'
+  | 'scale'
+  | 'zoom-out'
+  | 'zoom-fade'
+  | 'slide-up'
+  | 'slide-right'
+  | 'slide-down'
+  | 'slide-left'
+  | 'scroll-up'
+  | 'scroll-right'
+  | 'scroll-down'
+  | 'scroll-left'
+
+export interface WTransitionProps {
+  name?: TransitionName
+  mode?: TransitionMode
+  group?: boolean
+}
 
 export default defineComponent({
   name: 'WTransition',
 
   props: {
     name: {
-      type: String as PropType<any>,
+      type: String as PropType<TransitionName>,
       default: 'fade',
-    },
-    group: {
-      type: Boolean as PropType<boolean>,
-      default: false,
     },
     mode: {
       type: String as PropType<TransitionMode>,
       default: 'default',
+    },
+    group: {
+      type: Boolean as PropType<boolean>,
+      default: false,
     },
   },
 
