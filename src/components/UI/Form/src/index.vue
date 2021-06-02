@@ -71,30 +71,6 @@
       // render Items
       const renderItems = () =>
         formSchemas.value.map((item, index) => {
-          const formItem = (i: WForm.Schema.Item) => (
-            <w-form-item item={i} key={i.uid}>
-              {i.type === 'Slot' &&
-                Object.keys(slots).includes(i.formProp?.prop!) &&
-                renderSlot(slots, i.formProp?.prop!)}
-            </w-form-item>
-          )
-
-          // handle divider
-          if (item.type === 'Divider') {
-            const childrenItems = () =>
-              item.componentProp?.children?.map((child) => formItem(child))
-
-            // TODO transition for form item optimise
-            return (
-              <>
-                <w-form-item-extend-divider item={item} index={index} />
-                <w-form-transition-group group>
-                  {childrenItems()}
-                </w-form-transition-group>
-              </>
-            )
-          }
-
           // handle multiple
           // if (item.type === 'Multiple') {
           //   const childrenItems = () =>
@@ -139,7 +115,13 @@
           //   )
           // }
 
-          return formItem(item)
+          return (
+            <w-form-item item={item} key={item.uid} index={index}>
+              {item.type === 'Slot' &&
+                Object.keys(slots).includes(item.formProp?.prop!) &&
+                renderSlot(slots, item.formProp?.prop!)}
+            </w-form-item>
+          )
         })
 
       // render el-col wrap

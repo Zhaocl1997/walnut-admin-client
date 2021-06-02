@@ -275,6 +275,9 @@ export const useFormConfig = (fns: any) => {
             return !!formData.baseInputNumber
           },
         },
+        transitionProp: {
+          name: 'scroll-left',
+        },
       },
       {
         type: 'Input',
