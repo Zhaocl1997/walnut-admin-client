@@ -68,17 +68,14 @@
         expose,
       })
 
-      // render slot type component's slot
-      const renderItemSlot = (item: WForm.Schema.Item) =>
-        Object.keys(slots).includes(item.formProp?.prop!) &&
-        renderSlot(slots, item.formProp?.prop!)
-
       // render Items
       const renderItems = () =>
         formSchemas.value.map((item, index) => {
           const formItem = (i: WForm.Schema.Item) => (
             <w-form-item item={i} key={i.uid}>
-              {renderItemSlot(i)}
+              {i.type === 'Slot' &&
+                Object.keys(slots).includes(i.formProp?.prop!) &&
+                renderSlot(slots, i.formProp?.prop!)}
             </w-form-item>
           )
 
