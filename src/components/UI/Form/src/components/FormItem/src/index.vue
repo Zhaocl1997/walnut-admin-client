@@ -99,9 +99,7 @@
           return (
             <>
               <w-form-item-extend-divider item={item} index={props.index} />
-              <w-form-item-transition group>
-                {childrenItems()}
-              </w-form-item-transition>
+              {childrenItems()}
             </>
           )
         }
