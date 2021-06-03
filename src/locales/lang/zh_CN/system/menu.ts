@@ -40,6 +40,7 @@ export default {
     base: {
       base: '基础表单',
       hook: 'Hook表单',
+      query: '查询表单',
     },
   },
 

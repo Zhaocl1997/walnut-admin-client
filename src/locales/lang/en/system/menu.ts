@@ -40,6 +40,7 @@ export default {
     base: {
       base: 'Base Form',
       hook: 'Hook Form',
+      query: 'Query Form',
     },
   },
 
