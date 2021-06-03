@@ -31,17 +31,17 @@
 
       const { formProps } = useFormContext()
 
-      const vShow =
-        getEPBooleanValue(item, formProps, 'vShow') &&
-        getBoolean(item!.foldShow)
-
       // handle VVC item
       watch(
         () => formProps.value.modelValue,
         () => {
           if (
             getEPBooleanValue(item, formProps, 'VVC') &&
-            !(getEPBooleanValue(item, formProps, 'vIf') && vShow)
+            !(
+              getEPBooleanValue(item, formProps, 'vIf') &&
+              getEPBooleanValue(item, formProps, 'vShow') &&
+              getBoolean(item!.foldShow)
+            )
           ) {
             // really straight forward to set undefined
             // i think maybe better solution
@@ -95,6 +95,10 @@
 
       // render w-form item
       const renderWFormItem = () => {
+        const vShow =
+          getEPBooleanValue(item, formProps, 'vShow') &&
+          getBoolean(item!.foldShow)
+
         // Divider
         if (item?.type === 'Divider') {
           const childrenItems = () =>
