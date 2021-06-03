@@ -2,7 +2,7 @@
   import type { PropType } from 'vue'
   import type { WForm } from '/@/components/UI/Form'
 
-  import { defineComponent, computed, unref, watch, renderSlot } from 'vue'
+  import { defineComponent, watch, renderSlot } from 'vue'
   import { isFunction } from 'easy-fns-ts'
 
   import { useFormContext } from '/@/components/UI/Form/src/hooks/useFormContext'
@@ -31,17 +31,17 @@
 
       const { formProps } = useFormContext()
 
+      const vShow =
+        getEPBooleanValue(item, formProps, 'vShow') &&
+        getBoolean(item!.foldShow)
+
       // handle VVC item
       watch(
         () => formProps.value.modelValue,
         () => {
           if (
             getEPBooleanValue(item, formProps, 'VVC') &&
-            !(
-              getEPBooleanValue(item, formProps, 'vIf') &&
-              getEPBooleanValue(item, formProps, 'vShow') &&
-              getBoolean(item!.foldShow)
-            )
+            !(getEPBooleanValue(item, formProps, 'vIf') && vShow)
           ) {
             // really straight forward to set undefined
             // i think maybe better solution
@@ -83,8 +83,18 @@
               )
             }
 
-      // render el-form-item with target typed component
-      const renderFormItem = () => {
+      // render el-form-item
+      const renderElFormItem = () => (
+        <el-form-item
+          {...(item!.formProp ?? {})}
+          style={formProps.value.compact ? { marginBottom: '10px' } : {}}
+        >
+          {renderBaseComponent()}
+        </el-form-item>
+      )
+
+      // render w-form item
+      const renderWFormItem = () => {
         // Divider
         if (item?.type === 'Divider') {
           const childrenItems = () =>
@@ -97,34 +107,33 @@
             ))
 
           return (
-            <>
-              <w-form-item-extend-divider item={item} index={props.index} />
-              {childrenItems()}
-            </>
+            vShow && (
+              <>
+                <w-form-item-extend-divider item={item} index={props.index} />
+                {childrenItems()}
+              </>
+            )
           )
         }
 
         return (
-          <w-form-item-transition {...item?.transitionProp}>
-            <el-col
-              vShow={
-                getEPBooleanValue(item, formProps, 'vShow') &&
-                getBoolean(item!.foldShow)
-              }
-              {...(item?.colProp ?? { span: formProps.value.span })}
-            >
-              <el-form-item
-                {...(item!.formProp ?? {})}
-                style={formProps.value.compact ? { marginBottom: '10px' } : {}}
+          <w-form-item-transition {...item?.transitionProp} appear>
+            {formProps.value.inline ? (
+              vShow && renderElFormItem()
+            ) : (
+              <el-col
+                vShow={vShow}
+                {...(item?.colProp ?? { span: formProps.value.span })}
               >
-                {renderBaseComponent()}
-              </el-form-item>
-            </el-col>
+                {renderElFormItem()}
+              </el-col>
+            )}
           </w-form-item-transition>
         )
       }
 
-      return () => getEPBooleanValue(item, formProps, 'vIf') && renderFormItem()
+      return () =>
+        getEPBooleanValue(item, formProps, 'vIf') && renderWFormItem()
     },
   })
 </script>
