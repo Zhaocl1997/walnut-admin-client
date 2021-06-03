@@ -37,6 +37,11 @@ const extendProps = {
     default: 2,
   },
 
+  loading: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
+
   // defaultFold: {
   //   type: Boolean as PropType<boolean>,
   //   default: false,

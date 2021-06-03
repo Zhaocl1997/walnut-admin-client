@@ -194,6 +194,11 @@ export declare namespace WForm {
     countToFold?: number
 
     /**
+     * @description Weather the form is query form
+     */
+    loading?: boolean
+
+    /**
      * @description Normally used for query form. Force to shrink `el-form-item` `margin-bottom` a little bit.
      */
     compact?: MaybeRef<boolean>

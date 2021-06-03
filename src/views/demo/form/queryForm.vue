@@ -90,6 +90,19 @@
               label: 'Foldable',
               prop: 'foldable',
             },
+            colProp: {
+              span: 4,
+            },
+          },
+          {
+            type: 'Switch',
+            formProp: {
+              label: 'Loading',
+              prop: 'loading',
+            },
+            colProp: {
+              span: 4,
+            },
           },
           {
             type: 'Render',
