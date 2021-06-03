@@ -166,6 +166,7 @@ export const getMenuFormSchemas = (
           vIf: ({ formData }) => {
             return formData.type === MenuTypeEnum.CATALOG
           },
+          VVC: false,
         },
       },
 
@@ -191,6 +192,7 @@ export const getMenuFormSchemas = (
               !(formData.external || formData.internal)
             )
           },
+          VVC: false,
         },
       },
 
