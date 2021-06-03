@@ -12,7 +12,7 @@
   import { getBoolean } from '../../utils'
 
   export default defineComponent({
-    name: 'WFormExtendDivider',
+    name: 'WFormItemExtendDivider',
 
     inheritAttrs: false,
 

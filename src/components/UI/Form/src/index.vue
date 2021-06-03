@@ -2,7 +2,7 @@
   import type { WForm } from './types'
 
   import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
-  import { easyOmit, getRandomInt } from 'easy-fns-ts'
+  import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
@@ -38,7 +38,7 @@
 
       const { setProps, getProps } = useProps<WForm.Props>(props)
 
-      const { formSchemas } = useFormSchemas(getProps)
+      const { formSchemas } = useFormSchemas(props, getProps)
 
       useFormComponents()
 
@@ -131,9 +131,13 @@
           : () => <el-row gutter={props.gutter}> {renderItems()} </el-row>
 
       return () => (
-        <el-form ref={formRef} {...getBindValue.value}>
-          {renderColWrap()}
-        </el-form>
+        <>
+          <el-form ref={formRef} {...getBindValue.value} class="relative">
+            {renderColWrap()}
+          </el-form>
+
+          {getProps.value.query && <w-form-extend-query></w-form-extend-query>}
+        </>
       )
     },
   })
