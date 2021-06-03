@@ -24,8 +24,8 @@
 
       const onReset = () => {}
 
-      const onToggle = () => {
-        active.value = !active.value
+      const onToggle = (val?: any) => {
+        active.value = val ?? !active.value
 
         const endIndex = formSchemas.value.length
 
@@ -39,7 +39,7 @@
       watch(
         () => formProps.value.span,
         () => {
-          active.value = false
+          onToggle(false)
         }
       )
 
@@ -80,7 +80,7 @@
                 <w-button
                   size="small"
                   type="text"
-                  onClick={onToggle}
+                  onClick={() => onToggle()}
                   text={getText.value}
                 >
                   {{
