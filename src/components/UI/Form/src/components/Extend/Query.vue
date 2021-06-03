@@ -52,19 +52,28 @@
 
       return () => {
         return (
-          <div class="flex justify-end relative" style={getStyle.value}>
+          <div
+            class="flex justify-end relative float-right"
+            style={getStyle.value}
+          >
             <el-space size="mini">
+              <el-button
+                size="small"
+                type="info"
+                onClick={onReset}
+                disabled={formProps.value.loading}
+              >
+                {t('component.form.reset')}
+              </el-button>
+
               <el-button
                 size="small"
                 type="primary"
                 icon="el-icon-search"
                 onClick={onQuery}
+                loading={formProps.value.loading}
               >
                 {t('component.form.query')}
-              </el-button>
-
-              <el-button size="small" type="info" onClick={onReset}>
-                {t('component.form.reset')}
               </el-button>
 
               {formProps.value.foldable && (
