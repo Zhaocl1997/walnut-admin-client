@@ -3,17 +3,9 @@ import type { WForm } from './types'
 import { ElForm } from 'element-plus'
 
 const extendProps = {
-  schemas: {
-    type: Array as PropType<WForm.Schema.Item[]>,
-    default: () => {
-      return []
-    },
-  },
+  schemas: Array as PropType<WForm.Schema.Item[]>,
 
-  modelValue: {
-    type: Object as PropType<Recordable>,
-    default: () => ({}),
-  },
+  modelValue: Object as PropType<Recordable>,
 
   gutter: {
     type: Number as PropType<number>,
@@ -30,22 +22,27 @@ const extendProps = {
     default: false,
   },
 
+  query: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
+
+  foldable: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
+
+  countToFold: {
+    type: Number as PropType<number>,
+    default: 2,
+  },
+
   // defaultFold: {
   //   type: Boolean as PropType<boolean>,
   //   default: false,
   // },
 
-  // countToFold: {
-  //   type: Number as PropType<number>,
-  //   default: 3,
-  // },
-
   // mock: {
-  //   type: Boolean as PropType<boolean>,
-  //   default: false,
-  // },
-
-  // query: {
   //   type: Boolean as PropType<boolean>,
   //   default: false,
   // },

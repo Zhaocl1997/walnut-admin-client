@@ -174,16 +174,6 @@ export declare namespace WForm {
     span?: number
 
     /**
-     * @description Used for query form
-     */
-    defaultFold?: boolean
-
-    /**
-     * @description Used for query form
-     */
-    countToFold?: number
-
-    /**
      * @description Used for mock button with mockjs
      */
     mock?: boolean
@@ -192,6 +182,16 @@ export declare namespace WForm {
      * @description Weather the form is query form
      */
     query?: boolean
+
+    /**
+     * @description Weather the form is query form
+     */
+    foldable?: boolean
+
+    /**
+     * @description Used for query form
+     */
+    countToFold?: number
 
     /**
      * @description Normally used for query form. Force to shrink `el-form-item` `margin-bottom` a little bit.
