@@ -33,6 +33,9 @@ export const useFormConfig = (fns: any) => {
     compact: false,
     vIf: true,
     vShow: true,
+    fDivider: false,
+    nDivider: false,
+    query: false,
   })
 
   // config form schema
@@ -122,6 +125,27 @@ export const useFormConfig = (fns: any) => {
         prop: 'vShow',
       },
     },
+    {
+      type: 'Switch',
+      formProp: {
+        label: 'Foldable Divider',
+        prop: 'fDivider',
+      },
+    },
+    {
+      type: 'Switch',
+      formProp: {
+        label: 'Normal Divider',
+        prop: 'nDivider',
+      },
+    },
+    {
+      type: 'Switch',
+      formProp: {
+        label: 'Query Form',
+        prop: 'query',
+      },
+    },
   ]
 
   const demoFormData = reactive<any>({
@@ -135,6 +159,9 @@ export const useFormConfig = (fns: any) => {
     return [
       {
         type: 'Divider',
+        extraProp: {
+          vShow: formConfig.fDivider,
+        },
         componentProp: {
           foldable: true,
           fold: true,
@@ -149,6 +176,9 @@ export const useFormConfig = (fns: any) => {
               },
               colProp: {
                 span: 12,
+              },
+              transitionProp: {
+                name: 'scroll-left',
               },
             },
             {
@@ -169,6 +199,9 @@ export const useFormConfig = (fns: any) => {
                 vShow: ({ formData }) => !!formData.extendDividerInput1,
                 VVC: false,
               },
+              transitionProp: {
+                name: 'scroll-right',
+              },
             },
             {
               type: 'Input',
@@ -183,6 +216,9 @@ export const useFormConfig = (fns: any) => {
               },
               extraProp: {
                 vIf: ({ formData }) => !!formData.extendDividerInput2,
+              },
+              transitionProp: {
+                name: 'scroll-down',
               },
             },
             {
@@ -222,6 +258,9 @@ export const useFormConfig = (fns: any) => {
         componentProp: {
           title: 'Just A Divider',
         },
+        extraProp: {
+          vShow: formConfig.nDivider,
+        },
       },
       {
         type: 'Button',
@@ -235,6 +274,7 @@ export const useFormConfig = (fns: any) => {
           onClick: () => {
             console.log('Clicked Button')
           },
+          type: 'text',
         },
       },
       {
@@ -294,7 +334,7 @@ export const useFormConfig = (fns: any) => {
           },
         },
         extraProp: {
-          vIf: computed(() => formConfig.vIf),
+          vIf: formConfig.vIf,
         },
       },
       {
@@ -309,7 +349,7 @@ export const useFormConfig = (fns: any) => {
           step: 2,
         },
         extraProp: {
-          vShow: computed(() => formConfig.vShow),
+          vShow: formConfig.vShow,
         },
       },
       {

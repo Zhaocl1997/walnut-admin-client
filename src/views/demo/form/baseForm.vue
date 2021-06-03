@@ -18,6 +18,7 @@
       :schemas="demoFormSchemas"
       :rules="demoFormRules"
       :span="value1"
+      foldable
       v-bind="formConfig"
     >
       <template #baseSlot="{ disabled }">

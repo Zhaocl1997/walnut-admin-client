@@ -1,6 +1,7 @@
 import type { WTable } from '../types'
+import type { ComputedRef } from 'vue'
 
-import { ComputedRef, ref, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { formatTree } from 'easy-fns-ts'
 
 import { useI18n } from '/@/locales'
