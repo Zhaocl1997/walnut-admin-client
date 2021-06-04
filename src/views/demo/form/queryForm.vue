@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <template #header>
-      <span>Base Query form：</span>
+      <span>Query form：</span>
 
       <w-json :value="baseQueryFormData"></w-json>
       <w-form v-model="baseQueryConfigFormData" @hook="register"></w-form>
@@ -10,18 +10,20 @@
     <w-form
       v-model="baseQueryFormData"
       :schemas="queryFormSchemas"
-      query
       size="small"
       v-bind="baseQueryConfigFormData"
+      @query="onQuery"
+      @reset="onReset"
     >
     </w-form>
   </el-card>
 </template>
 
 <script lang="tsx">
-  import { useForm, WForm } from '/@/components/UI/Form'
-  import { toRefs } from '@vueuse/core'
-  import { defineComponent, reactive } from 'vue'
+  import type { WForm } from '/@/components/UI/Form'
+  import { useForm } from '/@/components/UI/Form'
+  import { defineComponent, reactive, toRefs } from 'vue'
+  import { useMessage } from '/@/hooks/component/useMessage'
 
   export default defineComponent({
     name: 'QueryFormDemo',
@@ -30,10 +32,12 @@
       const state = reactive({
         baseQueryFormData: {},
         baseQueryConfigFormData: {
+          query: true,
           foldable: false,
-          fold: false,
+          loading: false,
           gutter: 20,
           span: 8,
+          countToFold: 2,
         },
         queryFormSchemas: [
           {
@@ -83,7 +87,15 @@
 
       const [register] = useForm({
         span: 8,
+        gutter: 20,
         schemas: [
+          {
+            type: 'Switch',
+            formProp: {
+              label: 'Query',
+              prop: 'query',
+            },
+          },
           {
             type: 'Switch',
             formProp: {
@@ -128,12 +140,44 @@
               },
             },
           },
+          {
+            type: 'Render',
+            formProp: {
+              label: 'Count to Fold',
+              prop: 'countToFold',
+            },
+            componentProp: {
+              render: ({ formData }) => {
+                return (
+                  <el-slider
+                    vModel={formData.countToFold}
+                    max={state.queryFormSchemas.length}
+                  ></el-slider>
+                )
+              },
+            },
+          },
         ],
       })
+
+      const onQuery = () => {
+        state.baseQueryConfigFormData.loading = true
+
+        setTimeout(() => {
+          state.baseQueryConfigFormData.loading = false
+          useMessage({ type: 'success', message: 'Query' })
+        }, 2000)
+      }
+
+      const onReset = () => {
+        useMessage({ type: 'success', message: 'Reset' })
+      }
 
       return {
         ...toRefs(state),
         register,
+        onQuery,
+        onReset,
       }
     },
   })

@@ -1,6 +1,8 @@
 import type { VNode, ComputedRef, Ref } from 'vue'
 import type { MaybeRef, MaybeRefRecord } from '/~/utils'
 
+import type { useEventParams } from '/@/hooks/component/useEvent'
+
 import type { WButtonProps } from '/@/components/UI/Button'
 import type { WButtonGroupProps } from '/@/components/UI/ButtonGroup'
 import type { WInputProps } from '/@/components/UI/Input'
@@ -122,8 +124,10 @@ export declare namespace WForm {
    * @description w-form context
    */
   interface Context {
+    formRef: Ref<Nullable<ElForm.Methods>>
     formProps: ComputedRef<Props>
     formSchemas: Ref<Schema.Item[]>
+    formEvent: (val: Params.Entry) => void
   }
 
   /**
@@ -133,6 +137,9 @@ export declare namespace WForm {
     interface Callback<T = any> {
       formData: T
     }
+
+    // entry
+    type Entry = useEventParams<'query', any> | useEventParams<'reset', any>
   }
 
   /**
