@@ -41,6 +41,7 @@ export default {
       base: 'Base Form',
       hook: 'Hook Form',
       query: 'Query Form',
+      multiple: 'Multiple Form',
     },
   },
 
