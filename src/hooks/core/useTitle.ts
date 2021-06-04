@@ -15,11 +15,12 @@ export const useTitle = () => {
   watch(
     () => [currentRoute.value.path, locale],
     () => {
-      const translateTitle = t(currentRoute.value.meta.title as string)
-
-      title.value = translateTitle
-        ? `${translateTitle} - ${import.meta.env.VITE_APP_TITLE}`
-        : `${import.meta.env.VITE_APP_TITLE}`
+      try {
+        const translateTitle = t(currentRoute.value.meta.title as string)
+        title.value = `${translateTitle} - ${import.meta.env.VITE_APP_TITLE}`
+      } catch (error) {
+        title.value = `${import.meta.env.VITE_APP_TITLE}`
+      }
     },
     {
       deep: true,

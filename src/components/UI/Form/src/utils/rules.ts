@@ -11,10 +11,10 @@ const getMessage = (type: string, label: string) => {
   const { t } = useI18n()
 
   const getType = ['Input', 'InputNumber'].includes(type)
-    ? t('common.inputAction')
-    : t('common.chooseAction')
+    ? t('component.base.action.input')
+    : t('component.base.action.choose')
 
-  return t('common.rule', {
+  return t('component.form.rule', {
     type: getType,
     label,
   })

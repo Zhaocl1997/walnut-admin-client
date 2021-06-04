@@ -6,4 +6,5 @@ export default {
   reset: '重 置',
   expand: '展开',
   fold: '收起',
+  rule: 'Please {type} {label}!',
 }

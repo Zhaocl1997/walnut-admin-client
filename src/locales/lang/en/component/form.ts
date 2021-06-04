@@ -6,4 +6,5 @@ export default {
   reset: 'Reset',
   expand: 'Expand',
   fold: 'Fold',
+  rule: 'Please {type} {label}!',
 }

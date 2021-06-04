@@ -12,11 +12,11 @@
       <template #footer v-if="!$slots.footer">
         <el-space>
           <el-button size="small" @click="emit('cancel')">{{
-            t('component.dialog.cancel')
+            t('component.base.action.cancel')
           }}</el-button>
 
           <el-button size="small" type="primary" @click="emit('confirm')">{{
-            t('component.dialog.confirm')
+            t('component.base.action.confirm')
           }}</el-button>
         </el-space>
       </template>

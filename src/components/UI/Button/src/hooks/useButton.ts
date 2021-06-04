@@ -31,7 +31,7 @@ export const useButton = (
       disabled.value = true
 
       const intervalId = setInterval(() => {
-        delayText.value = t('component.button.retry', { retryDelay })
+        delayText.value = t('component.base.button.retry', { retryDelay })
 
         --retryDelay!
 

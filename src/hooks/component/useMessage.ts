@@ -34,10 +34,10 @@ export const useTodo = (msg: string) => {
   return new Promise((res) => {
     useMessageBox({
       type: 'warning',
-      title: t('component.dialog.warning'),
+      title: t('component.base.message.warning'),
       message: msg,
-      cancelButtonText: t('component.dialog.cancel'),
-      confirmButtonText: t('component.dialog.confirm'),
+      cancelButtonText: t('component.base.action.cancel'),
+      confirmButtonText: t('component.base.action.confirm'),
       showCancelButton: true,
       closeOnClickModal: false,
     })

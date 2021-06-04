@@ -30,14 +30,14 @@
                 clearable
                 placeholder="Filter the icon."
                 @search="init"
-                :debounce="1000"
+                :debounce="300"
                 @clear="init"
               ></w-input>
             </div>
           </div>
 
           <div class="w-icon-picker-main" style="min-height: 230px;">
-            <WEmpty :total="total" :image-size="74">
+            <w-empty :total="total" :image-size="74">
               <w-icon
                 v-for="(icon, index) in lists"
                 :key="index"
@@ -52,7 +52,7 @@
                 ]"
                 @click="onClosePopover(icon)"
               ></w-icon>
-            </WEmpty>
+            </w-empty>
           </div>
 
           <w-pagination
@@ -108,7 +108,7 @@
         searchInputRef: null as any,
       })
 
-      const init = (needFeedback: boolean) => {
+      const init = (needFeedback?: boolean) => {
         insideStartLoading()
 
         if (props.modelValue && needFeedback) {
@@ -154,14 +154,12 @@
       }
 
       onMounted(() => {
-        nextTick(() => {
-          const { startLoading, endLoading } = useLoading({
-            target: `#${state.popoverRef!.popperId} .w-icon-picker-main`,
-          })
-
-          insideStartLoading = startLoading
-          insideEndLoading = endLoading
+        const { startLoading, endLoading } = useLoading({
+          target: `#${state.popoverRef!.popperId} .w-icon-picker-main`,
         })
+
+        insideStartLoading = startLoading
+        insideEndLoading = endLoading
       })
 
       return {

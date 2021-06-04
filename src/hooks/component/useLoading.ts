@@ -51,7 +51,7 @@ export const useLoading = (options?: Partial<ElLoadingOptions>) => {
   let instance: ElLoadingInstance | undefined
 
   const defaultOptions: Partial<ElLoadingOptions> = {
-    text: t('component.loading.text'),
+    text: t('component.base.loading.text'),
     customClass: 'w-loading',
     background: 'rgba(255,255,255,0.4)',
   }
