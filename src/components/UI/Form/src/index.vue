@@ -10,6 +10,7 @@
   import { useFormSchemas } from './hooks/useFormSchemas'
   import { useFormComponents } from './hooks/useFormComponents'
   import { useFormMethods } from './hooks/useFormMethods'
+  import { useFormEvents } from './hooks/useFormEvents'
 
   import props, { extendPropKeys } from './props'
 
@@ -19,7 +20,7 @@
   // 3. label help tooltip, also callback
   // 4. divider refactor(×)
   // 5. item Transition optimise(×)
-  // 6. refactor divider into form item
+  // 6. refactor divider into form item(×)
   // 7. multiple/search/card/tab/step form
 
   export default defineComponent({
@@ -29,7 +30,7 @@
 
     props: props,
 
-    emits: ['update:modelValue', 'hook'],
+    emits: ['update:modelValue', 'hook', 'query', 'reset'],
 
     setup(props: WForm.Props, ctx) {
       const { attrs, emit, expose, slots } = ctx
@@ -39,6 +40,8 @@
       const { setProps, getProps } = useProps<WForm.Props>(props)
 
       const { formSchemas } = useFormSchemas(props, getProps)
+
+      const { onEvent } = useFormEvents(getProps)
 
       useFormComponents()
 
@@ -55,8 +58,10 @@
 
       // create `WForm` context
       setFormContext({
+        formRef: formRef,
         formProps: getProps,
         formSchemas: formSchemas,
+        formEvent: onEvent,
       })
 
       // create `useForm` hook
@@ -128,7 +133,9 @@
       const renderColWrap = () =>
         getProps.value.inline
           ? renderItems()
-          : () => <el-row gutter={props.gutter}> {renderItems()} </el-row>
+          : () => (
+              <el-row gutter={getProps.value.gutter}> {renderItems()} </el-row>
+            )
 
       return () => (
         <>
