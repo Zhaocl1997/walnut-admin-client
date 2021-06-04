@@ -1,10 +1,10 @@
 import type { UserConfig, ConfigEnv } from 'vite'
+
 import { resolve } from 'path'
+import { loadEnv } from 'vite'
 
 import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
-import { getEnv } from './src/utils/env'
-import { getApiPrefix } from './src/utils'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
@@ -12,21 +12,20 @@ function pathResolve(dir: string) {
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfig => {
-  const root = process.cwd()
+  const envPath = 'env'
 
-  const env = getEnv(mode, root)
-
-  const apiPrefix = getApiPrefix(env.VITE_API_PREFIX, env.VITE_API_VERSION)
+  const env = loadEnv(mode, pathResolve(envPath)) as ImportMetaEnv
 
   const alias = {
     '/@': pathResolve('src'),
+    // remove warning in dev
     'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
   }
 
   return {
-    root,
-
     base: env.VITE_PUBLIC_PATH,
+
+    envDir: envPath,
 
     define: {
       __VUE_I18N_LEGACY_API__: false,
@@ -45,7 +44,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     server: {
       port: env.VITE_PORT,
 
-      proxy: createViteProxy({ target: env.VITE_PROXY, prefix: apiPrefix }),
+      proxy: createViteProxy(mode, env),
 
       open: '/index',
 

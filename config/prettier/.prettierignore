@@ -8,6 +8,5 @@
 node_modules
 public
 dist
-build
 config
 docs
