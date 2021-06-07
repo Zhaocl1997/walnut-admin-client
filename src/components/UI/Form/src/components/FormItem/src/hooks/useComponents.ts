@@ -11,6 +11,9 @@ export const useFormItemComponents = () => {
     WFormItemExtendDivider: createAsyncComponent(
       () => import('../../../Extend/Divider.vue')
     ),
+    WFormItemExtendMultiple: createAsyncComponent(
+      () => import('../../../Extend/Multiple.vue')
+    ),
   }
 
   // @ts-ignore

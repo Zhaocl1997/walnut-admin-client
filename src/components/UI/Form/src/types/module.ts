@@ -343,15 +343,17 @@ export declare namespace WForm {
     type MultipleSchema<D> = Custom<
       'Multiple',
       {
-        /**
-         * @description field key for v-model
-         */
-        fieldKey: string
+        preset?: 'input' | 'pair'
 
-        /**
-         * @description divider children
-         */
-        children?: Schema.Item<D>[]
+        presetProps?: WInputProps
+
+        min?: number
+
+        max?: number
+
+        keyField?: string
+
+        valueField?: string
       },
       any,
       D

@@ -3,7 +3,7 @@
   import type { WForm } from '/@/components/UI/Form'
 
   import { defineComponent, watch, renderSlot } from 'vue'
-  import { isFunction } from 'easy-fns-ts'
+  import { getRandomInt, isFunction } from 'easy-fns-ts'
 
   import { useFormContext } from '/@/components/UI/Form/src/hooks/useFormContext'
   import {
@@ -29,7 +29,7 @@
 
       useFormItemComponents()
 
-      const { formProps } = useFormContext()
+      const { formProps, formSchemas } = useFormContext()
 
       // handle VVC item
       watch(
@@ -117,6 +117,15 @@
                 {childrenItems()}
               </>
             )
+          )
+        }
+
+        // Multiple
+        if (item?.type === 'Multiple') {
+          return (
+            <w-form-item-extend-multiple
+              item={item}
+            ></w-form-item-extend-multiple>
           )
         }
 
