@@ -1,5 +1,5 @@
 import { ElNotification } from 'element-plus'
-import { useI18n } from '/@/locales'
+import { AppI18n } from '/@/locales'
 import { userActionSignOut } from '/@/store/actions/user'
 
 const responseError = (msg: string) => {
@@ -10,7 +10,7 @@ const responseError = (msg: string) => {
 }
 
 export const checkReponseErrorStatus = (status?: number, msg?: string) => {
-  const { t } = useI18n()
+  const { t } = AppI18n.global
 
   switch (status) {
     case 400:
