@@ -60,6 +60,12 @@ export const createComponentPlugin = (): Plugin => {
           })
           return ret
         }
+
+        // resolver for naive-ui
+        if (name.startsWith('N')) {
+          console.log(name)
+          return { importName: name, path: 'naive-ui' }
+        }
       },
     ],
   }
