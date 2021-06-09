@@ -1,31 +1,16 @@
 <template>
-  <w-dropdown
-    v-model="app.locale"
-    :options="langLists"
-    size="medium"
-    trigger="click"
-  >
-    <template #default>
-      <div>
-        <w-icon icon="ant-design:dribbble-outlined" width="24"></w-icon>
-        <div
-          v-if="showText"
-          class="inline font-sans text-base font-semibold text-gray-600 absolute bottom-0.5 whitespace-nowrap"
-        >
-          {{ getLangText }}
-        </div>
-      </div>
-    </template>
-  </w-dropdown>
+  <n-popselect :options="langLists" v-model:value="app.locale">
+    <w-icon icon="ant-design:dribbble-outlined" width="24"></w-icon>
+  </n-popselect>
 </template>
 
 <script lang="ts">
   import type { PropType } from 'vue'
-  import { defineComponent, computed, watchEffect } from 'vue'
+  import { defineComponent, watchEffect } from 'vue'
 
   import { langLists } from '/@/locales'
   import { useAppContext } from '/@/App'
-  import { useLocale } from './useLocale'
+  import { useLocale } from './useAppLocale'
 
   export default defineComponent({
     name: 'AppLocalePicker',
@@ -47,10 +32,6 @@
     setup(props) {
       const { app } = useAppContext()
 
-      const getLangText = computed(
-        () => langLists.find((item) => item.value === app.value.locale)?.label
-      )
-
       watchEffect(async () => {
         const { loadLocaleMessages, setI18nLanguage } = useLocale(
           app.value.locale
@@ -63,10 +44,7 @@
       return {
         app,
         langLists,
-        getLangText,
       }
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

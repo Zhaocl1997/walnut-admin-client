@@ -1,18 +1,4 @@
-<template>
-  <div @click="toggleFullScreen">
-    <w-icon
-      class="cursor-pointer"
-      :width="width"
-      :icon="
-        isFullscreen
-          ? 'ant-design:fullscreen-exit-outlined'
-          : 'ant-design:fullscreen-outlined'
-      "
-    ></w-icon>
-  </div>
-</template>
-
-<script lang="ts">
+<script lang="tsx">
   import type { PropType } from 'vue'
   import { defineComponent } from 'vue'
 
@@ -31,14 +17,25 @@
 
       width: {
         type: String as PropType<string>,
-        default: '24px',
+        default: '24',
       },
     },
 
     setup(props) {
-      return { ...useFullScreen(props) }
+      const { width } = props
+      const { isFullscreen, toggleFullScreen } = useFullScreen(props)
+
+      return () => (
+        <w-icon
+          icon={
+            isFullscreen.value
+              ? 'ant-design:fullscreen-exit-outlined'
+              : 'ant-design:fullscreen-outlined'
+          }
+          width={width}
+          onClick={toggleFullScreen}
+        ></w-icon>
+      )
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

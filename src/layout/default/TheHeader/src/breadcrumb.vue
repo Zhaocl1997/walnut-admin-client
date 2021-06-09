@@ -1,28 +1,7 @@
-<template>
-  <div class="select-none w-96">
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item
-        v-if="$route.name !== indexName"
-        :to="{ path: getIndex.path }"
-      >
-        <span class="text-base text-primary">{{
-          getMaybeI18nMsg(getIndex.meta && getIndex.meta.title)
-        }}</span>
-      </el-breadcrumb-item>
-
-      <el-breadcrumb-item v-for="route in getChildren" :key="route.path">
-        <span class="text-base text-primary">{{
-          getMaybeI18nMsg(route.meta.title)
-        }}</span>
-      </el-breadcrumb-item>
-    </el-breadcrumb>
-  </div>
-</template>
-
-<script lang="ts">
+<script lang="tsx">
   import { defineComponent, computed } from 'vue'
 
-  import { useAppRoute } from '/@/router'
+  import { useAppRoute, useAppRouter } from '/@/router'
   import { indexName } from '/@/router/constant'
   import { getMaybeI18nMsg } from '/@/locales/utils'
 
@@ -31,6 +10,7 @@
 
     setup() {
       const route = useAppRoute()
+      const router = useAppRouter()
 
       const getIndex = computed(() => route.matched[0].children[0])
 
@@ -38,14 +18,29 @@
         route.matched.filter((item) => item.meta && item.meta.title)
       )
 
-      return {
-        indexName,
-        getIndex,
-        getChildren,
-        getMaybeI18nMsg,
+      return () => {
+        return (
+          <n-breadcrumb>
+            {router.currentRoute.value.name !== indexName && (
+              <n-breadcrumb-item>
+                <span class="text-base text-primary">
+                  {getMaybeI18nMsg(
+                    getIndex.value.meta && getIndex.value.meta.title
+                  )}
+                </span>
+              </n-breadcrumb-item>
+            )}
+
+            {getChildren.value.map((item) => (
+              <n-breadcrumb-item>
+                <span class="text-base text-primary">
+                  {getMaybeI18nMsg(item.meta.title)}
+                </span>
+              </n-breadcrumb-item>
+            ))}
+          </n-breadcrumb>
+        )
       }
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

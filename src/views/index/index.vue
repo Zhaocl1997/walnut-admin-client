@@ -2,8 +2,8 @@
   <div>
     <n-config-provider
       :theme="!app.isDark ? {} : darkTheme"
-      :locale="app.locale === 'en' ? '' : zhCN"
-      :date-locale="app.locale === 'en' ? '' : dateZhCN"
+      :locale="app.locale === 'en' ? {} : zhCN"
+      :date-locale="app.locale === 'en' ? {} : dateZhCN"
       :theme-overrides="themeOverrides"
     >
       <n-button type="primary">naive-ui</n-button>
