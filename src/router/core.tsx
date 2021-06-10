@@ -2,11 +2,10 @@ import type { Menu } from './types'
 import type { RouteRecordRaw } from 'vue-router'
 
 import { arrToTree, formatTree, orderTree } from 'easy-fns-ts'
+
 import { getPermissions } from '../api/auth'
 import { MenuTypeEnum } from '../enums/menu'
-
 import { notFoundRoute } from './constant'
-
 import {
   createKeepAliveRouteNameList,
   createCommonRoute,
@@ -17,29 +16,20 @@ import {
 
 /**
  * @description Get menu data to display aside, build and order into tree structure.
- * Here is where we request from back end to get login user permissions.
  */
-export const createMenus = async () => {
-  const res = await getPermissions()
-
-  // generate keep-alive route name lists
-  const keepAliveRouteNames = createKeepAliveRouteNameList(res.data)
-
+export const createMenus = (menus: Menu[]) => {
   // filter menus which are visible aside
-  const visibleMenus = res.data.filter((i) => i.show)
+  const visibleMenus = menus.filter((i) => i.show)
 
-  // build to tree
-  const menuTree = arrToTree(visibleMenus, { id: '_id' })
+  // build tree
+  const menuTree = arrToTree(menus, { id: '_id' })
 
   // order tree
-  const menus = orderTree(menuTree, {
+  const orderedTree = orderTree(menuTree, {
     order: 'order',
   })[0].children
 
-  return {
-    menus,
-    keepAliveRouteNames,
-  }
+  return orderedTree
 }
 
 /**
@@ -77,20 +67,28 @@ export const createRoutes = (menus: Menu[]) => {
 
   routes.push(notFoundRoute)
 
-  return { routes }
+  return routes
 }
 
 /**
  * @description Entry permission
  */
 export const createPermissions = async () => {
-  const { menus, keepAliveRouteNames } = await createMenus()
+  // Here is where we request from back end to get login user permissions.
+  const res = await getPermissions()
 
-  const { routes } = createRoutes(menus)
+  // keep-alive name list
+  const keepAliveRouteNames = createKeepAliveRouteNameList(res.data)
+
+  // menus
+  const menus = createMenus(res.data)
+
+  // routes
+  const routes = createRoutes(menus!)
 
   return {
+    keepAliveRouteNames,
     menus,
     routes,
-    keepAliveRouteNames,
   }
 }

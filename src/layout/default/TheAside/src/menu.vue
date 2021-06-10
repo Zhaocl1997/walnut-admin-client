@@ -1,48 +1,17 @@
-<template>
-  <div class="select-none">
-    <!-- <w-scrollbar>
-      <el-menu
-        :default-active="$route.name"
-        :collapse="app.collapse"
-        :collapse-transition="false"
-        unique-opened
-        background-color="var(--color-bg-primary)"
-        text-color="var(--color-text-primary)"
-        style="border-right: 0"
-      >
-        <AsideMenuItem
-          v-for="item in menus"
-          :key="item.path"
-          :index="item.name"
-          :item="item"
-        ></AsideMenuItem>
-      </el-menu>
-    </w-scrollbar> -->
-    <n-menu
-      :indent="15"
-      :options="newMenus"
-      :collapsed="app.collapse"
-      :value="$route.name"
-      :default-expanded-keys="defaultExpandedKeys"
-    />
-  </div>
-</template>
-
 <script lang="tsx">
   import type { PropType } from 'vue'
   import type { Menu } from '/@/router/types'
-  import { defineComponent } from 'vue'
+  import type { MenuOption } from 'naive-ui'
 
-  import AsideMenuItem from './menuItem.vue'
-  import { useAppContext } from '/@/App'
+  import { defineComponent, computed } from 'vue'
   import { findPath, formatTree } from 'easy-fns-ts'
+
+  import { useAppContext } from '/@/App'
+  import { useAppRouter, useRouterPush } from '/@/router'
   import { useI18n } from '/@/locales'
-  import { useAppRouter } from '/@/router'
 
   export default defineComponent({
     name: 'AsideMenu',
-
-    components: { AsideMenuItem },
 
     props: {
       menus: {
@@ -56,35 +25,62 @@
       const { app } = useAppContext()
       const { t } = useI18n()
 
-      const newMenus = formatTree(props.menus, {
-        format: (node) => {
-          return {
-            label: t(node.title),
-            key: node.name,
-            icon: () => <w-icon icon={node.icon}></w-icon>,
-          }
-        },
-      })
-
-      const paths = findPath(
-        props.menus,
-        (node) => node.name == router.currentRoute.value.name,
-        { id: '_id' }
+      const getTranslatedMenus = computed(() =>
+        formatTree(props.menus, {
+          format: (node) =>
+            ({
+              key: node.name,
+              label: t(node.title),
+              icon: () => <w-icon icon={node.icon}></w-icon>,
+              // extra: () => (node.badge && <n-badge value="hot"></n-badge>)
+            } as MenuOption),
+        })
       )
 
-      paths!.pop()
+      const defaultExpandedKeys = computed(() => {
+        const paths = findPath(
+          props.menus,
+          (node) => node.name === router.currentRoute.value.name,
+          { id: '_id' }
+        ) as Menu[]
 
-      const defaultExpandedKeys = paths!.map((i) => i.name)
+        if (!paths) {
+          return []
+        }
 
-      console.log(defaultExpandedKeys)
+        paths.pop()
 
-      return {
-        app,
-        newMenus,
-        defaultExpandedKeys,
+        return paths.map((i) => i.name)
+      })
+
+      const onChange = (key: string, item: MenuOption) => {
+
+        // If isMobile and showAside true, set showAside to false to close drawer
+        if (app.value.isMobile && app.value.showAside) {
+          app.value.showAside = false
+        }
+
+        // If external, open new tab and go
+        // if (item.external) {
+        //   window.open(item.url, '_blank')
+        // } else
+        //  {
+        useRouterPush({ name: key })
+        // }
       }
-    },
+
+      return () =>(
+        <w-scrollbar>
+          <n-menu
+            indent={15}
+            options={getTranslatedMenus.value}
+            collapsed={app.value.collapse}
+            value={router.currentRoute.value.name}
+            on-update:value={onChange}
+            default-expanded-keys={defaultExpandedKeys.value}
+          ></n-menu></w-scrollbar>
+
+        )
+    }
   })
 </script>
-
-<style lang="scss" scoped></style>

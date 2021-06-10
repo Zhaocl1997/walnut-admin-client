@@ -1,13 +1,15 @@
 import type { SigninPayloadType } from '../types/user'
 
 import { useAppContext } from '/@/App'
+import { AppRouter } from '/@/router'
 import { getUserInfo, signin } from '/@/api/auth'
 import { PersistentKeysEnum } from '/@/enums/persistent'
 import { removeToken, setToken } from '/@/utils/auth'
 import { setLocal } from '/@/utils/persistent'
 import { useRouterPush } from '/@/router'
-import { authName, indexName } from '/@/router/constant'
+import { authName, indexName, rootName } from '/@/router/constant'
 import { tabActionClear } from './tabs'
+import { menuActionPermissions } from './menu'
 
 const setUserToken = (token: string) => {
   const { user } = useAppContext<false>()
@@ -27,6 +29,7 @@ const setUserInfo = (userInfo: Recordable) => {
  */
 export const userActionSignin = async (payload: SigninPayloadType) => {
   const res = await signin(payload)
+  const { addRoute } = AppRouter
 
   setUserToken(res.token)
 
@@ -37,7 +40,14 @@ export const userActionSignin = async (payload: SigninPayloadType) => {
     setLocal(PersistentKeysEnum.USER_PASSWORD, password)
   }
 
-  useRouterPush({ name: indexName })
+  // TODO
+  const routes = await menuActionPermissions()
+
+  routes.forEach((route) => {
+    addRoute(rootName, route)
+  })
+
+  await useRouterPush({ name: indexName })
 }
 
 /**

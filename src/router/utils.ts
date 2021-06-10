@@ -25,13 +25,10 @@ export const createCommonRoute = (node: Menu): RouteRecordRaw | any => {
 /**
  * @description Generate keep-alive component name lists based on `menu` list.
  */
-export const createKeepAliveRouteNameList = (menus: Menu[]): string[] => {
-  const nameList = menus
+export const createKeepAliveRouteNameList = (menus: Menu[]): string[] =>
+  menus
     .filter((i) => i.type === MenuTypeEnum.MENU && i.cache)
     .map((i) => i.name as string)
-
-  return nameList
-}
 
 /**
  * @description Resolve `catalog` type menu with self name

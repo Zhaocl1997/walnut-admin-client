@@ -34,15 +34,15 @@ export const RootRoute: RouteRecordRaw = {
   redirect: indexPath,
   component: () => import('../layout/default'),
   children: [
-    {
-      path: indexPath,
-      name: indexName,
-      component: () => import('../views/index/index.vue'),
-      meta: {
-        title: t('system.menu.index'),
-        affix: true,
-      },
-    },
+    // {
+    //   path: indexPath,
+    //   name: indexName,
+    //   component: () => import('../views/index/index.vue'),
+    //   meta: {
+    //     title: t('system.menu.index'),
+    //     affix: true,
+    //   },
+    // },
   ],
 }
 

@@ -1,5 +1,5 @@
 import { useAppContext } from '/@/App'
-import { createPermissions } from '/@/router/core'
+import { createPermissions } from '../../router/core'
 import { Menu } from '/@/router/types'
 
 const setMenus = (menus: Menu[]) => {

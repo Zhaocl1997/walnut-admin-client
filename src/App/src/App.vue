@@ -1,6 +1,8 @@
 <template>
   <AppProvider>
-    <router-view></router-view>
+    <UIProvider>
+      <RouterView></RouterView>
+    </UIProvider>
   </AppProvider>
 </template>
 
@@ -8,11 +10,12 @@
   import { defineComponent } from 'vue'
   import { useTitle } from '/@/hooks/core/useTitle'
   import AppProvider from './AppProvider.vue'
+  import UIProvider from './UIProvider.vue'
 
   export default defineComponent({
     name: 'App',
 
-    components: { AppProvider },
+    components: { AppProvider, UIProvider },
 
     setup() {
       useTitle()
