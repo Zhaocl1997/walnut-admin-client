@@ -4,6 +4,26 @@
       <span>Input：</span>
     </template>
 
+    <n-space vertical>
+      <WInputNew v-model:value="input14" :black-list="['<', '>']"></WInputNew>
+
+      <WInputNew v-model:value="input15" type="password"></WInputNew>
+      <WInputNew v-model:value="input16" suffix="123" prefix="312" trim />
+      <WInputNew
+        v-model:value="input17"
+        suffix-icon="ant-design:home-outlined"
+        prefix-icon="ant-design:home-outlined"
+      />
+      <WInputNew
+        v-model:value="input18"
+        help-message="Some help message"
+        :debounce="500"
+        @search="onInput"
+      />
+    </n-space>
+
+    <n-divider></n-divider>
+
     <w-title show-left>Base 【{{ input1 }}】 </w-title>
     <w-input
       v-model="input1"
@@ -133,9 +153,12 @@
 
 <script lang="ts">
   import { toRefs, reactive, defineComponent } from 'vue'
+  import WInputNew from '/@/components/UINew/Input'
 
   export default defineComponent({
     name: 'InputDemo',
+
+    components: { WInputNew },
 
     setup() {
       const state = reactive({
@@ -152,6 +175,11 @@
         input11: '',
         input12: '',
         input13: '',
+        input14: '',
+        input15: '',
+        input16: '',
+        input17: '',
+        input18: '',
       })
 
       const onChange = (value: any) => {

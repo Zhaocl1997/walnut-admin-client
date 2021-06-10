@@ -8,7 +8,6 @@
       "</template>",
       "",
       "<script lang='ts'>",
-      "  import type { SetupContext } from 'vue'",
       "  import { defineComponent } from 'vue'",
       "",
       "  export default defineComponent({",
@@ -22,12 +21,9 @@
       "",
       "    emits: [],",
       "",
-      "    setup(props: any, ctx: SetupContext) {},",
+      "    setup(props, ctx) {},",
       "  })",
       "</script>",
-      "",
-      "<style lang='scss' scoped></style>",
-      ""
     ],
     "description": "vue3 template"
   },
@@ -55,5 +51,29 @@
       ""
     ],
     "description": "vue3 template"
-  }
+  },
+  "vue-tsx": {
+    "scope": "vue",
+    "prefix": "vue3-tsx",
+    "body": [
+      "<script lang='tsx'>",
+      "  import { defineComponent } from 'vue'",
+      "",
+      "  export default defineComponent({",
+      "    name: 'Component',",
+      "",
+      "    inheritAttrs: false,",
+      "",
+      "    components: {},",
+      "",
+      "    props: {},",
+      "",
+      "    emits: [],",
+      "",
+      "    setup(props, { attrs, slots, emit, expose }) {},",
+      "  })",
+      "</script>",
+    ],
+    "description": "vue3 template"
+  },
 }

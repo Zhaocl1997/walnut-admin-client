@@ -4,6 +4,28 @@
       <span>Button：【{{ value }}】</span>
     </template>
 
+    <n-space>
+      <WButtonNew @click="onClick">Default</WButtonNew>
+      <WButtonNew
+        @click="onClick"
+        type="primary"
+        icon="ant-design:home-outlined"
+        >Primary
+      </WButtonNew>
+      <WButtonNew @click="onClick" type="info" text-prop="Info(prop)"
+        >Info</WButtonNew
+      >
+      <WButtonNew @click="onClick" type="success" :retry="10"
+        >Success</WButtonNew
+      >
+      <WButtonNew @click="onClick" type="warning" :debounce="1000"
+        >Warning</WButtonNew
+      >
+      <WButtonNew @click="onClick" type="error">Error</WButtonNew>
+    </n-space>
+
+    <n-divider></n-divider>
+
     <w-title show-left>Base</w-title>
     <w-button @click="onClick">Click me(slot)</w-button>
     <w-button @click="onClick" text="Click me(prop)"></w-button>
@@ -95,9 +117,12 @@
 
 <script lang="ts">
   import { ref, defineComponent } from 'vue'
+  import WButtonNew from '/@/components/UINew/Button'
 
   export default defineComponent({
     name: 'ButtonDemo',
+
+    components: { WButtonNew },
 
     setup() {
       const value = ref(0)
