@@ -1,7 +1,7 @@
 import type { Plugin } from 'vite'
 
 import type { Options } from 'vite-plugin-components'
-import ViteComponents from 'vite-plugin-components'
+import ViteComponents, { NaiveUiResolver } from 'vite-plugin-components'
 
 export const createComponentPlugin = (): Plugin => {
   const config: Options = {
@@ -60,12 +60,8 @@ export const createComponentPlugin = (): Plugin => {
           })
           return ret
         }
-
-        // resolver for naive-ui
-        if (name.startsWith('N')) {
-          return { importName: name, path: 'naive-ui' }
-        }
       },
+      NaiveUiResolver(),
     ],
   }
 
