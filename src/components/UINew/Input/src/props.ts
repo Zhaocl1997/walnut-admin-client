@@ -40,14 +40,4 @@ export const props = {
     type: Number as PropType<number>,
     default: 0,
   },
-
-  // prepend: {
-  //   type: String as PropType<string>,
-  //   default: '',
-  // },
-
-  // append: {
-  //   type: String as PropType<string>,
-  //   default: '',
-  // },
 }

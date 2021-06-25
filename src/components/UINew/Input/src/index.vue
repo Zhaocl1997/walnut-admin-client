@@ -2,9 +2,8 @@
   import type { WInputProps } from './types'
   import { computed, defineComponent, unref } from 'vue'
 
-  import { props } from './props'
   import { clearIllegalChars } from 'easy-fns-ts'
-  import { useDebounceFn } from '@vueuse/shared'
+  import { props } from './props'
 
   export default defineComponent({
     name: 'WInput',

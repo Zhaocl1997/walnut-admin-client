@@ -1,9 +1,11 @@
 <script lang="tsx">
   import type { WButtonProps } from './types'
   import { computed, defineComponent, unref, ref } from 'vue'
-  import { props } from './props'
-  import { useI18n } from '/@/locales'
+
   import { useDebounceFn } from '@vueuse/shared'
+  import { useI18n } from '/@/locales'
+
+  import { props } from './props'
 
   export default defineComponent({
     name: 'WButton',

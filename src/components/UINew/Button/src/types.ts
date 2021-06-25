@@ -3,6 +3,6 @@ import type { ExtractPropTypes } from 'vue'
 
 import { props } from './props'
 
-type ExtendButtonProps = Partial<ExtractPropTypes<typeof props>>
+type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 
-export interface WButtonProps extends ButtonProps, ExtendButtonProps {}
+export interface WButtonProps extends ButtonProps, ExtendProps {}
