@@ -1,87 +1,103 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>useForm hook：</span>
+  <w-demo-card title="useForm">
+    <w-json :value="formData"></w-json>
 
-      <w-json :value="demoFormData"></w-json>
-      <w-form v-model="formConfig" @hook="registerConfig"></w-form>
-    </template>
-
-    <w-form v-model="demoFormData" @hook="registerDemo">
-      <template #baseSlot="{ disabled }">
-        <el-input
-          v-model="demoFormData.baseSlot"
-          :disabled="disabled"
-          placeholder="Slot render El-input"
-        ></el-input>
-      </template>
-    </w-form>
-  </el-card>
+    <w-form-new @hook="register" :model="formData"></w-form-new>
+  </w-demo-card>
 </template>
 
 <script lang="ts">
-  import type { WForm } from '/@/components/UI/Form'
-  import { useForm } from '/@/components/UI/Form'
-  import { defineComponent, computed } from 'vue'
+  import { defineComponent, ref } from 'vue'
 
-  import { useFormConfig } from './configSchema'
+  import WFormNew from '/@/components/UINew/Form'
+  import { useForm } from '/@/components/UINew/Form'
 
   export default defineComponent({
-    name: 'UseFormDemo',
+    name: 'UseForm',
+
+    components: { WFormNew },
 
     setup() {
-      const fns = {
-        validate: async () => {
-          const valid = await validate()
-          console.log('[Validate]', valid)
-        },
-        validateField: async () => {
-          const msg = await validateField('baseFormInput')
-          console.log('[ValidateField]', msg)
-        },
-        clearValidate: async () => {
-          await clearValidate()
-        },
-        clearValidateInput: async () => {
-          await clearValidate('baseFormInput')
-        },
-        resetFields: async () => {
-          await resetFields()
-        },
-      }
+      const formData = ref({})
 
-      const {
-        formConfig,
-        formConfigSchemas,
-        demoFormData,
-        demoFormSchemas,
-        demoFormRules,
-      } = useFormConfig(fns)
-
-      const [registerConfig] = useForm({
-        schemas: formConfigSchemas,
-        span: 6,
-      })
-
-      const [
-        registerDemo,
-        { validate, validateField, resetFields, clearValidate },
-      ] = useForm({
-        schemas: demoFormSchemas,
-        rules: demoFormRules,
-        disabled: computed(() => formConfig.disabled),
-        inline: computed(() => formConfig.inline),
-        labelPosition: computed(() => formConfig.labelPosition),
-        size: computed(() => formConfig.size),
-        labelWidth: computed(() => formConfig.labelWidth),
-        compact: computed(() => formConfig.compact),
+      const [register, { validate, restoreValidation }] = useForm({
+        span: 8,
+        labelWidth: 100,
+        schemas: [
+          {
+            type: 'Base:Input',
+            formProp: {
+              label: 'Input 1',
+              path: 'input1',
+              rule: {
+                required: true,
+              },
+            },
+          },
+          {
+            type: 'Base:Input',
+            formProp: {
+              label: 'Input 2',
+              path: 'input2',
+            },
+          },
+          {
+            type: 'Base:Input',
+            formProp: {
+              label: 'Input 3',
+              path: 'input3',
+            },
+          },
+          {
+            type: 'Base:Input',
+            formProp: {
+              label: 'Input 4',
+              path: 'input4',
+            },
+          },
+          {
+            type: 'Base:Input',
+            formProp: {
+              label: 'Input 5',
+              path: 'input5',
+            },
+          },
+          {
+            type: 'Base:Input',
+            formProp: {
+              label: 'Input 6',
+              path: 'input6',
+            },
+          },
+          {
+            type: 'Base:ButtonGroup',
+            formProp: {
+              label: 'Methods',
+            },
+            componentProp: {
+              groups: [
+                {
+                  textProp: 'Validate',
+                  onClick: async () => {
+                    const ret = await validate!()
+                    console.log('validate', ret)
+                  },
+                },
+                {
+                  textProp: 'Clear Validation',
+                  onClick: async () => {
+                    await restoreValidation!()
+                  },
+                },
+              ],
+            },
+          },
+        ],
       })
 
       return {
-        registerConfig,
-        formConfig,
-        registerDemo,
-        demoFormData,
+        formData,
+        register,
       }
     },
   })

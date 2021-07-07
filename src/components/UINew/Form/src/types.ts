@@ -1,4 +1,4 @@
-import type { VNode, Ref, ExtractPropTypes } from 'vue'
+import type { VNode, Ref as VueRef, ExtractPropTypes } from 'vue'
 
 import type {
   GridProps,
@@ -47,16 +47,29 @@ export enum BUILTIN_FORM_TYPE {
 }
 
 export declare namespace WForm {
+  namespace Ref {
+    type NFormRef = FormInst
+
+    interface WFormRef extends NFormRef {
+      setProps: Fn
+    }
+  }
+
+  namespace Hook {
+    type useFormReturnType = [
+      (instance: Ref.WFormRef) => void,
+      Partial<Ref.WFormRef>
+    ]
+  }
+
   interface Props<D = any>
     extends FormProps,
       Partial<ExtractPropTypes<typeof props>> {}
 
-  type FormRef = FormInst
-
   interface Context {
-    formRef: Ref<Nullable<FormRef>>
+    formRef: VueRef<Nullable<Ref.NFormRef>>
     formProps: Props
-    formSchemas: Schema.Item[]
+    formSchemas: VueRef<Schema.Item<any>[]>
     formEvent: (val: Params.Entry) => void
   }
 
@@ -65,7 +78,10 @@ export declare namespace WForm {
       formData: T
     }
 
-    type Entry = useEventParams<'query', any> | useEventParams<'reset', any>
+    type Entry =
+      | useEventParams<'query', any>
+      | useEventParams<'reset', any>
+      | useEventParams<'hook', any>
   }
 
   namespace Events {
@@ -79,26 +95,31 @@ export declare namespace WForm {
     }
 
     interface ComponentPropPool<D = any> {
-      'Extend:Render': {
+      'Extend:Divider': MaybeRefRecord<
+        {
+          title?: string
+          helpMessage?: string
+          foldable?: boolean
+          startIndex?: number
+          endIndex?: number
+        } & Pick<DividerProps, 'titlePlacement' | 'dashed'> &
+          Pick<H3Props, 'prefix' | 'type'>
+      >
+
+      'Extend:Query': MaybeRefRecord<{
+        countToFold?: number
+        foldable?: boolean
+      }>
+
+      'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
       }
-      'Extend:Slot': {}
-      'Extend:Divider': {
-        title?: string
-        helpMessage?: string
-        foldable?: boolean
-        startIndex?: number
-        endIndex?: number
-      } & Pick<DividerProps, 'titlePlacement' | 'dashed'> &
-        Pick<H3Props, 'prefix' | 'type'>
-      'Extend:Query': {
-        countToFold?: number
-      }
+      'Base:Slot': {}
 
       'Base:Button': WButtonProps
       'Base:ButtonGroup': WButtonGroupProps
-      'Base:Input': WInputProps
-      'Base:InputNumber': WInputNumberProps
+      'Base:Input': MaybeRefRecord<WInputProps>
+      'Base:InputNumber': MaybeRefRecord<WInputNumberProps>
       'Base:Select': WSelectProps
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
@@ -120,13 +141,15 @@ export declare namespace WForm {
 
       componentProp?: ComponentPropPool<D>[T] & DomProps
 
-      formProp?: FormItemProps & {
-        labelHelpMessage?: string | string[]
-      }
+      formProp?: MaybeRefRecord<
+        FormItemProps & {
+          labelHelpMessage?: string | string[]
+        }
+      >
 
-      gridProp?: GridItemProps
+      gridProp?: MaybeRefRecord<GridItemProps>
 
-      transitionProp?: Omit<WTransitionProps, 'group'>
+      transitionProp?: MaybeRefRecord<Omit<WTransitionProps, 'group'>>
 
       extraProp?: Partial<EP> & {
         /**
@@ -148,10 +171,11 @@ export declare namespace WForm {
       }
     }
 
-    type RenderSchema<D> = DynamicSchemaItemProps<'Extend:Render', D>
-    type SlotSchema<D> = DynamicSchemaItemProps<'Extend:Slot', D>
     type DividerSchema<D> = DynamicSchemaItemProps<'Extend:Divider', D>
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
+
+    type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
+    type SlotSchema<D> = DynamicSchemaItemProps<'Base:Slot', D>
 
     type ButtonSchema<D> = DynamicSchemaItemProps<'Base:Button', D>
     type ButtonGroupSchema<D> = DynamicSchemaItemProps<'Base:ButtonGroup', D>

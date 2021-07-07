@@ -19,7 +19,7 @@ export const props = {
 
   xGap: {
     type: Number as PropType<number>,
-    default: 20,
+    default: 0,
   },
 
   yGap: {

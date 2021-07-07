@@ -13,6 +13,7 @@
 
     props: {
       countToFold: Number as PropType<number>,
+      foldable: Boolean as PropType<boolean>,
     },
 
     setup(props, { attrs, slots, emit, expose }) {
@@ -29,7 +30,7 @@
       const { formEvent, formSchemas } = useFormContext()
 
       const onReset = () => {
-        formEvent({ name: 'reset', params: 'asd' })
+        formEvent({ name: 'reset' })
       }
 
       const onQuery = () => {
@@ -47,49 +48,57 @@
       const onToggle = () => {
         active.value = !active.value
 
-        for (let i = props.countToFold!; i < formSchemas.length; i++) {
-          formSchemas[i].foldShow = !formSchemas[i].foldShow
+        for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
+          formSchemas.value[i].foldShow = !formSchemas.value[i].foldShow
         }
       }
 
       return () => (
-        <div class="flex flex-row flex-nowrap space-x-2">
-          <n-button
-            size="small"
-            type="info"
-            onClick={onReset}
-            disabled={unref(loading)}
-          >
-            {t('component.form.reset')}
-          </n-button>
+        <n-form-item>
+          <n-space wrap={false} size="small">
+            <n-button
+              size="small"
+              type="info"
+              onClick={onReset}
+              disabled={unref(loading)}
+            >
+              {t('component.form.reset')}
+            </n-button>
 
-          <n-button
-            size="small"
-            type="primary"
-            onClick={onQuery}
-            disabled={unref(loading)}
-            loading={unref(loading)}
-          >
-            {t('component.form.query')}
-          </n-button>
+            <n-button
+              size="small"
+              type="primary"
+              onClick={onQuery}
+              disabled={unref(loading)}
+              loading={unref(loading)}
+            >
+              {{
+                default: () => t('component.form.query'),
+                icon: () => <w-icon icon="ant-design:search-outlined"></w-icon>,
+              }}
+            </n-button>
 
-          <n-button
-            size="small"
-            type="default"
-            icon-placement="right"
-            onClick={onToggle}
-          >
-            {{
-              default: () => unref(getText),
-              icon: () => (
-                <w-help-arrow
-                  active={!unref(active)}
-                  class="mt-0.5"
-                ></w-help-arrow>
-              ),
-            }}
-          </n-button>
-        </div>
+            {props.foldable && (
+              <n-button
+                size="small"
+                type="default"
+                icon-placement="right"
+                onClick={onToggle}
+                disabled={unref(loading)}
+              >
+                {{
+                  default: () => unref(getText),
+                  icon: () => (
+                    <w-help-arrow
+                      active={!unref(active)}
+                      class="mt-0.5"
+                    ></w-help-arrow>
+                  ),
+                }}
+              </n-button>
+            )}
+          </n-space>
+        </n-form-item>
       )
     },
   })

@@ -41,7 +41,9 @@ export default {
       base: 'Base Form',
       hook: 'Hook Form',
       query: 'Query Form',
+      divider: 'Divider Form',
       multiple: 'Multiple Form',
+      dynamic: 'Dynamic Form',
     },
   },
 

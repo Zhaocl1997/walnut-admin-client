@@ -14,19 +14,17 @@
     },
 
     setup(props, { attrs, slots, emit, expose }) {
-      const { helpMessage } = props
-
       return () => (
-        <n-h3>
+        <n-h4>
           {() => (
             <>
               {slots.default?.()}{' '}
-              {helpMessage && (
-                <w-help-message msg={helpMessage}></w-help-message>
+              {props.helpMessage && (
+                <w-help-message msg={props.helpMessage}></w-help-message>
               )}
             </>
           )}
-        </n-h3>
+        </n-h4>
       )
     },
   })

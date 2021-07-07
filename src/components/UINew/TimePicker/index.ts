@@ -1,5 +1,3 @@
-import WTimePicker from './src/index.vue'
-
 export * from './src/types'
 
-export default WTimePicker
+export { default } from './src/index.vue'

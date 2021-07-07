@@ -10,8 +10,13 @@
   } from 'vue'
 
   import { useExpose } from '/@/hooks/core/useExpose'
+  import { useProps } from '/@/hooks/core/useProps'
 
   import WFormItem from './components/FormItem/index.vue'
+  import WFormItemExtendQuery from './components/Extend/Query.vue'
+  import WFormItemExtendDivider from './components/Extend/Divider.vue'
+  import WFormItemTransition from '/@/components/Help/Transition'
+
   import { useFormSchemas } from './hooks/useFormSchemas'
   import { setFormContext } from './hooks/useFormContext'
   import { useFormEvents } from './hooks/useFormEvents'
@@ -21,41 +26,32 @@
   export default defineComponent({
     name: 'WForm',
 
-    components: { WFormItem },
+    components: {
+      WFormItem,
+      WFormItemExtendQuery,
+      WFormItemExtendDivider,
+      WFormItemTransition,
+    },
 
     props,
 
-    emits: ['reset', 'query'],
+    emits: ['reset', 'query', 'hook'],
 
     setup(props: WForm.Props, { attrs, slots, emit, expose }) {
-      const formRef = ref<Nullable<WForm.FormRef>>(null)
+      const formRef = ref<Nullable<WForm.Ref.NFormRef>>(null)
 
-      const { formSchemas } = useFormSchemas(props)
+      const { setProps, getProps } = useProps<WForm.Props>(props)
 
-      const { onEvent } = useFormEvents(props)
+      const { formSchemas } = useFormSchemas(getProps)
+
+      const { onEvent } = useFormEvents(getProps.value)
 
       setFormContext({
         formRef,
-        formProps: { ...props, ...attrs },
-        formSchemas: formSchemas.value,
+        formProps: { ...unref(getProps), ...attrs },
+        formSchemas,
         formEvent: onEvent,
       })
-
-      const renderItem = () =>
-        renderList(formSchemas.value, (item) => (
-          <n-gi
-            {...(item.type === 'Extend:Query'
-              ? { span: 4 }
-              : item?.gridProp ?? { span: props.span })}
-            suffix={item.type === 'Extend:Query'}
-          >
-            <w-form-item item={item}>
-              {item.type === 'Extend:Slot' &&
-                Object.keys(slots).includes(item.formProp?.path!) &&
-                renderSlot(slots, item.formProp?.path!)}
-            </w-form-item>
-          </n-gi>
-        ))
 
       useExpose({
         apis: {
@@ -65,6 +61,50 @@
         expose,
       })
 
+      onEvent({
+        name: 'hook',
+        params: {
+          validate: () => formRef.value?.validate(),
+          restoreValidation: () => formRef.value?.restoreValidation(),
+          setProps,
+        },
+      })
+
+      const renderItem = () =>
+        renderList(formSchemas.value, (item, index) => {
+          if (item.type === 'Extend:Query') {
+            return (
+              <n-gi span={4} suffix={true}>
+                <w-form-item-extend-query {...item.componentProp} />
+              </n-gi>
+            )
+          }
+
+          if (item.type === 'Extend:Divider') {
+            return (
+              <n-gi span={24}>
+                <w-form-item-extend-divider
+                  index={index}
+                  {...item.componentProp}
+                />
+              </n-gi>
+            )
+          }
+
+          return (
+            <n-gi
+              {...(item?.gridProp ?? { span: getProps.value.span })}
+              v-show={item.foldShow}
+            >
+              <w-form-item item={item}>
+                {item.type === 'Base:Slot' &&
+                  Object.keys(slots).includes(item.formProp?.path!) &&
+                  renderSlot(slots, item.formProp?.path!)}
+              </w-form-item>
+            </n-gi>
+          )
+        })
+
       return () => (
         <n-form
           ref={formRef}
@@ -73,8 +113,13 @@
             labelAlign: attrs.labelAlign ?? 'right',
             labelPlacement: attrs.labelPlacement ?? 'left',
           }}
+          {...unref(getProps)}
         >
-          <n-grid cols={props.cols} xGap={props.xGap} yGap={props.yGap}>
+          <n-grid
+            cols={unref(getProps).cols}
+            xGap={unref(getProps).xGap}
+            yGap={unref(getProps).yGap}
+          >
             {renderItem()}
           </n-grid>
         </n-form>

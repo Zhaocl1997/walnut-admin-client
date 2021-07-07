@@ -41,7 +41,9 @@ export default {
       base: '基础表单',
       hook: 'Hook表单',
       query: '查询表单',
+      divider: '分割线表单',
       multiple: '多条表单',
+      dynamic: '动态表单',
     },
   },
 

@@ -15,21 +15,23 @@
     },
 
     setup(props, { attrs, slots, emit, expose }) {
-      const { icon, msg } = props
-
       const formatMessage = () =>
-        typeof msg === 'string'
-          ? msg!.includes(' \n ')
-            ? msg!.split(' \n ').map((i) => <div>{i}</div>)
-            : msg
-          : msg!.map((i) => <div>{i}</div>)
+        typeof props.msg === 'string'
+          ? props.msg!.includes(' \n ')
+            ? props.msg!.split(' \n ').map((i) => <div>{i}</div>)
+            : props.msg
+          : props.msg!.map((i) => <div>{i}</div>)
 
       return () => (
         <n-tooltip>
           {{
             default: () => formatMessage(),
             trigger: () => (
-              <w-icon icon={icon} width="16" class="align-middle"></w-icon>
+              <w-icon
+                icon={props.icon}
+                width="16"
+                class="align-middle"
+              ></w-icon>
             ),
           }}
         </n-tooltip>

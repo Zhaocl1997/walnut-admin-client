@@ -1,5 +1,3 @@
-import WSelect from './src/index.vue'
-
 export * from './src/types'
 
-export default WSelect
+export { default } from './src/index.vue'

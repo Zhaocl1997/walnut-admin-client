@@ -1,5 +1,3 @@
-import WButton from './src/index.vue'
-
 export * from './src/types'
 
-export default WButton
+export { default } from './src/index.vue'

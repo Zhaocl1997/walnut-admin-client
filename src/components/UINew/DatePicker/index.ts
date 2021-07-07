@@ -1,5 +1,3 @@
-import WDatePicker from './src/index.vue'
-
 export * from './src/types'
 
-export default WDatePicker
+export { default } from './src/index.vue'

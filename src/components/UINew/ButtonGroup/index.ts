@@ -1,5 +1,3 @@
-import WButtonGroup from './src/index.vue'
-
 export * from './src/types'
 
-export default WButtonGroup
+export { default } from './src/index.vue'

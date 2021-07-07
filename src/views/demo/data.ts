@@ -1,4 +1,4 @@
-export const options: OptionDataItem<{ disabled: boolean }>[] = [
+export const options = [
   {
     value: 1,
     label: 'Beijing',

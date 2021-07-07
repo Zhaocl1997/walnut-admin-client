@@ -1,7 +1,6 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
   import { defineComponent, ref } from 'vue'
-  import { isUndefined } from 'easy-fns-ts'
 
   import WHelpTitle from '/@/components/Extra/HelpTitle'
   import WHelpArrow from '/@/components/Extra/HelpArrow'
@@ -21,6 +20,7 @@
       foldable: Boolean as PropType<boolean>,
       startIndex: Number as PropType<number>,
       endIndex: Number as PropType<number>,
+      index: Number as PropType<number>,
     },
 
     setup(props, { attrs, slots, emit, expose }) {
@@ -31,8 +31,12 @@
       const onToggle = () => {
         active.value = !active.value
 
-        for (let i = props.startIndex!; i <= props.endIndex!; i++) {
-          formSchemas![i]!.foldShow = !formSchemas![i]!.foldShow
+        for (
+          let i = props.index! + props.startIndex! + 1;
+          i <= props.index! + props.endIndex!;
+          i++
+        ) {
+          formSchemas.value[i]!.foldShow = !formSchemas.value[i]!.foldShow
         }
       }
 
@@ -50,7 +54,7 @@
 
               {props.foldable && (
                 <w-help-arrow
-                  active={active.value}
+                  active={!active.value}
                   class="mb-4"
                   onClick={onToggle}
                 ></w-help-arrow>

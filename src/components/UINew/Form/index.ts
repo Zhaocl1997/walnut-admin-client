@@ -1,5 +1,5 @@
-import WForm from './src/index.vue'
-
 export * from './src/types'
 
-export default WForm
+export * from './src/hooks/useForm'
+
+export { default } from './src/index.vue'

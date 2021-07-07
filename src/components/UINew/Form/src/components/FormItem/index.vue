@@ -7,8 +7,6 @@
 
   import WFormItemTransition from '/@/components/Help/Transition'
   import WHelpMessage from '/@/components/Extra/HelpMessage'
-  import WFormItemExtendDivider from '../Extend/Divider.vue'
-  import WFormItemExtendQuery from '../Extend/Query.vue'
 
   import { componentMap } from './utils'
   import { useFormContext } from '../../hooks/useFormContext'
@@ -22,8 +20,6 @@
     components: {
       WFormItemTransition,
       WHelpMessage,
-      WFormItemExtendDivider,
-      WFormItemExtendQuery,
     },
 
     props: {
@@ -38,13 +34,13 @@
       const { formProps } = useFormContext()
 
       const renderBase =
-        item?.type === 'Extend:Render'
+        item?.type === 'Base:Render'
           ? () =>
               isFunction(item!.componentProp?.render) &&
               item!.componentProp?.render!({
                 formData: formProps?.model!,
               })
-          : item?.type === 'Extend:Slot'
+          : item?.type === 'Base:Slot'
           ? () => slots.default!()
           : () => {
               const component = componentMap.get(item?.type.split(':')[1])
@@ -64,28 +60,9 @@
             }
 
       const renderNFormItem = () => {
-        if (item?.type === 'Extend:Divider') {
-          return (
-            <w-form-item-extend-divider
-              {...item?.componentProp}
-            ></w-form-item-extend-divider>
-          )
-        }
-
-        if (item?.type === 'Extend:Query') {
-          return (
-            <w-form-item-extend-query
-              {...item?.componentProp}
-            ></w-form-item-extend-query>
-          )
-        }
-
         return (
           <n-form-item
-            vShow={
-              getEPBooleanValue(item, formProps!, 'vShow') &&
-              getBoolean(item?.foldShow)
-            }
+            vShow={getEPBooleanValue(item, formProps!, 'vShow')}
             {...item?.formProp}
           >
             {{

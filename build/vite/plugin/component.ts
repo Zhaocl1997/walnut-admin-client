@@ -48,6 +48,7 @@ export const createComponentPlugin = (): Plugin => {
               'Title',
             ],
             App: ['AppLocalePicker', 'AppDarkMode', 'AppFullScreen'],
+            Extra: ['DemoCard'],
           }
 
           let ret = ''
