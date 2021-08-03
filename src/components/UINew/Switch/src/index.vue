@@ -12,7 +12,14 @@
     emits: [],
 
     setup(props: WSwitchProps, { attrs, slots, emit, expose }) {
-      return () => <n-switch></n-switch>
+      return () => (
+        <n-switch>
+          {{
+            checked: () => attrs.checkedText,
+            unchecked: () => attrs.uncheckedText,
+          }}
+        </n-switch>
+      )
     },
   })
 </script>
