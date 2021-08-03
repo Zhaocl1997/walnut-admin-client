@@ -17,7 +17,11 @@
           locale={app.value.locale === 'en' ? {} : zhCN}
           date-locale={app.value.locale === 'en' ? {} : dateZhCN}
         >
-          {() => slots.default?.()}
+          <n-dialog-provider>
+            <n-notification-provider>
+              <n-message-provider>{() => slots.default?.()}</n-message-provider>
+            </n-notification-provider>
+          </n-dialog-provider>
         </n-config-provider>
       )
     },
