@@ -1,4 +1,80 @@
 <template>
+  <w-demo-card title="useTable" description="Better typescript support.">
+    <w-table-new @hook="register"></w-table-new>
+  </w-demo-card>
+</template>
+
+<script lang="ts">
+  import { defineComponent } from 'vue'
+
+  import WTableNew, { useTable } from '/@/components/UINew/Table'
+
+  export default defineComponent({
+    name: 'UseTable',
+
+    components: { WTableNew },
+
+    setup() {
+      const [register] = useTable({
+        columns: [
+          {
+            type: 'selection',
+          },
+          {
+            type: 'expand',
+            renderExpand: (row) => 1,
+          },
+          {
+            title: 'Name',
+            key: 'name',
+          },
+          {
+            title: 'Age',
+            key: 'age',
+          },
+          {
+            title: 'Address',
+            key: 'address',
+          },
+        ],
+        data: [
+          {
+            key: 0,
+            name: 'John Brown',
+            age: 32,
+            address: 'New York No. 1 Lake Park',
+            tags: ['nice', 'developer'],
+          },
+          {
+            key: 1,
+            name: 'Jim Green',
+            age: 42,
+            address: 'London No. 1 Lake Park',
+            tags: ['wow'],
+          },
+          {
+            key: 2,
+            name: 'Joe Black',
+            age: 32,
+            address: 'Sidney No. 1 Lake Park',
+            tags: ['cool', 'teacher'],
+          },
+        ],
+        pagination: {
+          pageSize: 10,
+        },
+      })
+
+      return {
+        register,
+      }
+    },
+  })
+</script>
+
+<style lang="scss" scoped></style>
+
+<!-- <template>
   <el-card>
     <template #header>
       <el-alert
@@ -85,4 +161,4 @@
   })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped></style> -->
