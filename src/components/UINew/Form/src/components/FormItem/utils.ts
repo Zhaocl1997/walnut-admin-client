@@ -1,7 +1,7 @@
 import { BUILTIN_FORM_TYPE } from '../../types'
 import { createAsyncComponent } from '/@/utils/factory/asyncComponent'
 
-import { NSlider } from 'naive-ui'
+import { NSlider, NDynamicInput } from 'naive-ui'
 
 /**
  * @description Generate all usable components through `BUILTIN_FORM_TYPE`.
@@ -26,6 +26,7 @@ const allComponents = getAllComponents(BUILTIN_FORM_TYPE)
 
 // set extra component here
 componentMap.set('Slider', NSlider)
+componentMap.set('DynamicInput', NDynamicInput)
 
 Object.values(BUILTIN_FORM_TYPE).map((value) => {
   componentMap.set(value, allComponents[value])

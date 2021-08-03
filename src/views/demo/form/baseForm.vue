@@ -32,7 +32,7 @@
     components: { WFormNew },
 
     setup() {
-      const formRef = ref<WForm.Ref.WFormRef>()
+      const formRef = ref<WForm.Inst.WFormInst>()
 
       const formData = ref({
         formInput: undefined,

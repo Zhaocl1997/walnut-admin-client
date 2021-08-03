@@ -44,6 +44,7 @@ export default {
       divider: '分割线表单',
       multiple: '多条表单',
       dynamic: '动态表单',
+      advanced: '高级表单',
     },
   },
 

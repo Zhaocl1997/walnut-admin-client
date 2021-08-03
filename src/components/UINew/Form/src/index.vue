@@ -1,13 +1,6 @@
 <script lang="tsx">
   import type { WForm } from './types'
-  import {
-    ref,
-    unref,
-    computed,
-    defineComponent,
-    renderSlot,
-    renderList,
-  } from 'vue'
+  import { ref, unref, defineComponent, renderSlot, renderList } from 'vue'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
@@ -15,11 +8,11 @@
   import WFormItem from './components/FormItem/index.vue'
   import WFormItemExtendQuery from './components/Extend/Query.vue'
   import WFormItemExtendDivider from './components/Extend/Divider.vue'
-  import WFormItemTransition from '/@/components/Help/Transition'
 
   import { useFormSchemas } from './hooks/useFormSchemas'
   import { setFormContext } from './hooks/useFormContext'
   import { useFormEvents } from './hooks/useFormEvents'
+  import { useFormAdvanced } from './hooks/useFormAdvanced'
 
   import { props } from './props'
 
@@ -30,7 +23,6 @@
       WFormItem,
       WFormItemExtendQuery,
       WFormItemExtendDivider,
-      WFormItemTransition,
     },
 
     props,
@@ -38,7 +30,7 @@
     emits: ['reset', 'query', 'hook'],
 
     setup(props: WForm.Props, { attrs, slots, emit, expose }) {
-      const formRef = ref<Nullable<WForm.Ref.NFormRef>>(null)
+      const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
 
       const { setProps, getProps } = useProps<WForm.Props>(props)
 
@@ -51,23 +43,7 @@
         formProps: { ...unref(getProps), ...attrs },
         formSchemas,
         formEvent: onEvent,
-      })
-
-      useExpose({
-        apis: {
-          validate: () => formRef.value?.validate(),
-          restoreValidation: () => formRef.value?.restoreValidation(),
-        },
-        expose,
-      })
-
-      onEvent({
-        name: 'hook',
-        params: {
-          validate: () => formRef.value?.validate(),
-          restoreValidation: () => formRef.value?.restoreValidation(),
-          setProps,
-        },
+        setProps,
       })
 
       const renderItem = () =>
@@ -93,7 +69,7 @@
 
           return (
             <n-gi
-              {...(item?.gridProp ?? { span: getProps.value.span })}
+              {...(item?.gridProp ?? { span: unref(getProps).span })}
               v-show={item.foldShow}
             >
               <w-form-item item={item}>
@@ -105,7 +81,7 @@
           )
         })
 
-      return () => (
+      const renderNForm = () => (
         <n-form
           ref={formRef}
           {...{
@@ -124,6 +100,35 @@
           </n-grid>
         </n-form>
       )
+
+      const { renderAdvanced, ...advancedMethods } = useFormAdvanced(
+        renderNForm,
+        getProps,
+        formRef
+      )
+
+      // expose
+      useExpose({
+        apis: {
+          validate: () => formRef.value?.validate(),
+          restoreValidation: () => formRef.value?.restoreValidation(),
+          ...advancedMethods,
+        },
+        expose,
+      })
+
+      // hook
+      onEvent({
+        name: 'hook',
+        params: {
+          validate: () => formRef.value?.validate(),
+          restoreValidation: () => formRef.value?.restoreValidation(),
+          ...advancedMethods,
+          setProps,
+        },
+      })
+
+      return () => (unref(getProps).preset ? renderAdvanced() : renderNForm())
     },
   })
 </script>

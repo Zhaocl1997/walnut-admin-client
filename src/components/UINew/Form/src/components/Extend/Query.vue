@@ -27,7 +27,7 @@
         active.value ? t('component.form.expand') : t('component.form.fold')
       )
 
-      const { formEvent, formSchemas } = useFormContext()
+      const { formEvent, formSchemas, setProps } = useFormContext()
 
       const onReset = () => {
         formEvent({ name: 'reset' })
@@ -35,11 +35,13 @@
 
       const onQuery = () => {
         loading.value = true
+        setProps({ disabled: true })
         formEvent({
           name: 'query',
           params: {
             done: () => {
               loading.value = false
+              setProps({ disabled: false })
             },
           },
         })

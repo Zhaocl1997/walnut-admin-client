@@ -40,29 +40,32 @@
         }
       }
 
-      return () => (
-        <n-divider>
-          {props.title && (
-            <>
-              <w-help-title
-                prefix={props.prefix}
-                type={props.type}
-                helpMessage={props.helpMessage}
-              >
-                {props.title}
-              </w-help-title>
+      return () =>
+        props.title ? (
+          <n-divider>
+            {props.title && (
+              <>
+                <w-help-title
+                  prefix={props.prefix}
+                  type={props.type}
+                  helpMessage={props.helpMessage}
+                >
+                  {props.title}
+                </w-help-title>
 
-              {props.foldable && (
-                <w-help-arrow
-                  active={!active.value}
-                  class="mb-4"
-                  onClick={onToggle}
-                ></w-help-arrow>
-              )}
-            </>
-          )}
-        </n-divider>
-      )
+                {props.foldable && (
+                  <w-help-arrow
+                    active={!active.value}
+                    class="mb-4"
+                    onClick={onToggle}
+                  ></w-help-arrow>
+                )}
+              </>
+            )}
+          </n-divider>
+        ) : (
+          <n-divider></n-divider>
+        )
     },
   })
 </script>

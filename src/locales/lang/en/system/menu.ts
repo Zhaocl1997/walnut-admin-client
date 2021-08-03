@@ -44,6 +44,7 @@ export default {
       divider: 'Divider Form',
       multiple: 'Multiple Form',
       dynamic: 'Dynamic Form',
+      advanced: 'Advanced Form',
     },
   },
 

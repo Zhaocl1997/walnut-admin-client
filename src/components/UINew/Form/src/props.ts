@@ -1,4 +1,5 @@
 import type { PropType } from 'vue'
+import type { ModalProps, DrawerProps, DrawerContentProps } from 'naive-ui'
 import type { WForm } from './types'
 
 export const props = {
@@ -25,5 +26,15 @@ export const props = {
   yGap: {
     type: Number as PropType<number>,
     default: 0,
+  },
+
+  preset: {
+    type: String as PropType<WForm.preset>,
+    default: undefined,
+  },
+
+  advancedProps: {
+    type: Object as PropType<ModalProps | (DrawerProps & DrawerContentProps)>,
+    default: undefined,
   },
 }

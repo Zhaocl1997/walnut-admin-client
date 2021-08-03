@@ -50,7 +50,7 @@
                   <component
                     is={component}
                     v-model={[
-                      formProps!.model![item?.formProp?.path!],
+                      formProps!.model![item?.formProp?.path! as string],
                       'value',
                     ]}
                     {...item?.componentProp}

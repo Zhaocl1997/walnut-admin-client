@@ -9,9 +9,9 @@ export const useForm = <T>(
 ): WForm.Hook.useFormReturnType => {
   isInSetup()
 
-  const wFormRef = ref<Nullable<WForm.Ref.WFormRef>>(null)
+  const wFormRef = ref<Nullable<WForm.Inst.WFormInst>>(null)
 
-  const register = (instance: WForm.Ref.WFormRef) => {
+  const register = (instance: WForm.Inst.WFormInst) => {
     wFormRef.value = instance
 
     watchEffect(() => {
@@ -21,7 +21,10 @@ export const useForm = <T>(
 
   const methods = {
     validate: async () => await wFormRef.value?.validate(),
-    restoreValidation: async () => await wFormRef.value?.restoreValidation(),
+    restoreValidation: () => wFormRef.value?.restoreValidation(),
+    onOpen: () => wFormRef.value?.onOpen(),
+    onClose: () => wFormRef.value?.onClose(),
+    onYes: () => wFormRef.value?.onYes(),
   }
 
   return [register, methods]

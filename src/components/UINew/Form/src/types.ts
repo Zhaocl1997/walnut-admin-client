@@ -1,16 +1,17 @@
-import type { VNode, Ref as VueRef, ExtractPropTypes } from 'vue'
+import type { VNode, Ref } from 'vue'
 
 import type {
-  GridProps,
   GridItemProps,
   FormProps,
   FormItemProps,
-  FormItemGiProps,
-  FormItemGridItemProps,
   FormInst,
   SliderProps,
   DividerProps,
   H3Props,
+  DynamicInputProps,
+  ModalProps,
+  DrawerProps,
+  DrawerContentProps,
 } from 'naive-ui'
 
 import type { MaybeRef, MaybeRefRecord } from '/~/utils'
@@ -30,8 +31,6 @@ import type { WTimePickerProps } from '../../TimePicker'
 import type { WDatePickerProps } from '../../DatePicker'
 import type { WDynamicTagsProps } from '../../DynamicTags'
 
-import { props } from './props'
-
 export enum BUILTIN_FORM_TYPE {
   Button,
   ButtonGroup,
@@ -47,30 +46,47 @@ export enum BUILTIN_FORM_TYPE {
 }
 
 export declare namespace WForm {
-  namespace Ref {
-    type NFormRef = FormInst
+  type preset = 'modal' | 'drawer'
+  namespace Inst {
+    type NFormInst = FormInst
 
-    interface WFormRef extends NFormRef {
+    interface WFormInst extends NFormInst {
       setProps: Fn
+      onOpen: Fn
+      onClose: Fn
+      onYes: Fn
+      onNo: Fn
     }
   }
 
   namespace Hook {
     type useFormReturnType = [
-      (instance: Ref.WFormRef) => void,
-      Partial<Ref.WFormRef>
+      (instance: Inst.WFormInst) => void,
+      Partial<Inst.WFormInst>
     ]
   }
 
-  interface Props<D = any>
-    extends FormProps,
-      Partial<ExtractPropTypes<typeof props>> {}
+  interface Props<D = any> extends FormProps {
+    schemas?: Schema.Item<D>[]
+    preset?: preset
+    advancedProps?: MaybeRefRecord<
+      ModalProps | (DrawerProps & DrawerContentProps)
+    >
+
+    cols?: number
+    span?: number
+    xGap?: number
+    yGap?: number
+  }
 
   interface Context {
-    formRef: VueRef<Nullable<Ref.NFormRef>>
+    formRef: Ref<Nullable<Inst.NFormInst>>
     formProps: Props
-    formSchemas: VueRef<Schema.Item<any>[]>
+    // TODO too deep instance
+    // formSchemas: Ref<Schema.Item[]>
+    formSchemas: any
     formEvent: (val: Params.Entry) => void
+    setProps: (val: Props) => void
   }
 
   namespace Params {
@@ -115,6 +131,7 @@ export declare namespace WForm {
         render: Events.Callback<D, VNode | VNode[] | string>
       }
       'Base:Slot': {}
+      'Base:DynamicInput': DynamicInputProps
 
       'Base:Button': WButtonProps
       'Base:ButtonGroup': WButtonGroupProps
@@ -123,7 +140,10 @@ export declare namespace WForm {
       'Base:Select': WSelectProps
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
-      'Base:Switch': WSwitchProps
+      'Base:Switch': WSwitchProps & {
+        checkedText?: string
+        uncheckedText?: string
+      }
       'Base:TimePicker': WTimePickerProps
       'Base:DatePicker': WDatePickerProps
       'Base:DynamicTags': WDynamicTagsProps
@@ -161,13 +181,6 @@ export declare namespace WForm {
          * @description v-show control visible
          */
         vShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
-
-        /**
-         * @description Alias for `Visibility & Value Consistent`
-         * Default is true, means that if the invisible item also has v-model value, it will not trigger the value to omitted
-         * Set this false, means that as long as item is invisible, its v-model value will be omitted from form data as well
-         */
-        VVC?: Events.Callback<D, boolean> | boolean
       }
     }
 
@@ -176,6 +189,7 @@ export declare namespace WForm {
 
     type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
     type SlotSchema<D> = DynamicSchemaItemProps<'Base:Slot', D>
+    type DynamicInputSchema<D> = DynamicSchemaItemProps<'Base:DynamicInput', D>
 
     type ButtonSchema<D> = DynamicSchemaItemProps<'Base:Button', D>
     type ButtonGroupSchema<D> = DynamicSchemaItemProps<'Base:ButtonGroup', D>
@@ -191,10 +205,11 @@ export declare namespace WForm {
     type SliderSchema<D> = DynamicSchemaItemProps<'Base:Slider', D>
 
     type Item<D = any> =
-      | RenderSchema<D>
-      | SlotSchema<D>
       | DividerSchema<D>
       | QuerySchema<D>
+      | RenderSchema<D>
+      | SlotSchema<D>
+      | DynamicInputSchema<D>
       | ButtonSchema<D>
       | ButtonGroupSchema<D>
       | InputSchema<D>

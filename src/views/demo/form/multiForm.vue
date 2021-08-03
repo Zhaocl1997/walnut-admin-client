@@ -1,79 +1,65 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Multi form：</span>
+  <w-demo-card title="Dynamic Input Form" description="Dynamic Input Form.">
+    <w-form-new @hook="register1" :model="configData"></w-form-new>
 
-      <w-json :value="multiFormData"></w-json>
-    </template>
+    <w-json :value="formData"></w-json>
 
-    <w-form v-model="multiFormData" @hook="register"> </w-form>
-  </el-card>
+    <w-form-new @hook="register2" :model="formData"></w-form-new>
+  </w-demo-card>
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, toRefs } from 'vue'
-  import { useForm } from '/@/components/UI/Form'
+  import { defineComponent, ref } from 'vue'
+
+  import WFormNew, { useForm } from '/@/components/UINew/Form'
 
   export default defineComponent({
-    name: 'MultiFormDemo',
+    name: 'DynamicInputForm',
 
-    components: {},
+    components: { WFormNew },
 
     setup() {
-      const state = reactive({
-        multiFormData: {
-          multiple1: ['123', '321', '342'],
-        },
+      const configData = ref({})
+
+      const [register1] = useForm<typeof configData.value>({
+        span: 12,
+        xGap: 20,
+        labelWidth: 100,
+        schemas: [],
       })
 
-      const [register] = useForm({
+      const formData = ref({})
+
+      const [register2] = useForm({
+        span: 24,
+        xGap: 20,
         schemas: [
           {
-            type: 'Divider',
-            componentProp: {
-              title: 'Base Multiple',
-            },
-          },
-          {
-            type: 'Multiple',
+            type: 'Base:DynamicInput',
             formProp: {
-              label: 'Multiple Item',
-              prop: 'multiple1',
+              path: 'dynamic1',
+              label: 'Base Dynamic',
             },
-            componentProp: {
-              preset: 'input',
-              presetProps: {
-                placeholder: 'Input something',
-              },
-              min: 3,
-              max: 6,
-            },
+            componentProp: {},
           },
           {
-            type: 'Divider',
-            componentProp: {
-              title: 'Key-Value Pair Multiple',
-            },
-          },
-          {
-            type: 'Multiple',
+            type: 'Base:DynamicInput',
             formProp: {
-              label: 'Multiple Item',
-              prop: 'multiple2',
+              path: 'dynamic2',
+              label: 'Pair Key/Value',
             },
             componentProp: {
               preset: 'pair',
-              keyField: 'key1',
-              valueField: 'value1',
             },
           },
         ],
       })
 
       return {
-        ...toRefs(state),
-
-        register,
+        configData,
+        register1,
+        formData,
+        register2,
       }
     },
   })
