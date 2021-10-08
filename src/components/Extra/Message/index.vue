@@ -3,7 +3,7 @@
   import { defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'WHelpMessage',
+    name: 'WMessage',
 
     props: {
       msg: [String, Array] as PropType<string | string[]>,

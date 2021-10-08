@@ -1,9 +1,6 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Dropdown：</span>
-    </template>
-
+  <w-demo-card title="Dropdown">
+    <!-- 
     <w-title show-left>Base usage 【{{ dropdown1 }}】</w-title>
     <el-form inline>
       <el-space>
@@ -33,8 +30,8 @@
           ></w-icon>
         </div>
       </template>
-    </w-dropdown>
-  </el-card>
+    </w-dropdown> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

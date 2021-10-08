@@ -1,18 +1,17 @@
 <template>
-  <el-card>
-    <template #header>
-      <w-title show-left>Axios Demo</w-title>
-    </template>
+  <w-demo-card title="Axios Demo(watch network tab on devtool)">
+    <n-space size="small">
+      <n-button @click="onAddNormal">Add Normal Request</n-button>
 
-    <el-button @click="onAddCached">Add Cached Request</el-button>
-    <el-button @click="onAddNormal">Add Normal Request</el-button>
+      <n-button @click="onAddCached" type="info">Add Cached Request</n-button>
+    </n-space>
 
     <div class="m-4">
       <div v-for="i in count">
-        <Hello :cache="cache"></Hello>
+        <Hello :cache="cache">{{ i }}</Hello>
       </div>
     </div>
-  </el-card>
+  </w-demo-card>
 </template>
 
 <script lang="ts">
@@ -23,7 +22,7 @@
     props: {
       cache: Boolean,
     },
-    setup(props) {
+    setup(props, { slots }) {
       const text = ref()
       const init = async () => {
         const res = await HelloAPI(props.cache)
@@ -32,7 +31,8 @@
 
       init()
 
-      return () => h('div', {}, text.value)
+      return () =>
+        h('div', {}, text.value + '   ' + slots.default!()[0].children)
     },
   })
 

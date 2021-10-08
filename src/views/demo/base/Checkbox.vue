@@ -1,10 +1,6 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Checkbox：</span>
-    </template>
-
-    <w-title show-left>Base 【{{ checkbox1 }}】【{{ checkbox3 }}】 </w-title>
+  <w-demo-card title="Checkbox">
+    <!-- <w-title show-left>Base 【{{ checkbox1 }}】【{{ checkbox3 }}】 </w-title>
     <w-checkbox v-model="checkbox1"> Some text (slot) </w-checkbox>
     <w-checkbox v-model="checkbox3" text="Some text (prop)"> </w-checkbox>
 
@@ -15,8 +11,8 @@
     <w-checkbox v-model="checkbox2" :options="options" multiple />
 
     <br />
-    <br />
-  </el-card>
+    <br /> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

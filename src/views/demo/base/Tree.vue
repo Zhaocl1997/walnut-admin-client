@@ -1,10 +1,6 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Tree：</span>
-    </template>
-
-    <w-title show-left>Base 【{{ tree1 }}】 </w-title>
+  <w-demo-card title="Tree">
+    <!-- <w-title show-left>Base 【{{ tree1 }}】 </w-title>
     <w-form v-model="tree1Form" @hook="register1Form"></w-form>
     <w-tree v-model="tree1" @hook="register1" />
 
@@ -19,8 +15,8 @@
     <br />
 
     <w-title show-left>Lazy 【{{ tree3 }}】 </w-title>
-    <w-tree v-model="tree3" @hook="register3" />
-  </el-card>
+    <w-tree v-model="tree3" @hook="register3" /> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

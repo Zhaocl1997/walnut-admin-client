@@ -1,16 +1,11 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Icon</span>
-    </template>
-
-    <w-title show-left>Base </w-title>
+  <w-demo-card title="Icon(iconify)">
+    <w-title prefix="bar">Base </w-title>
     <w-icon icon="ant-design:home-outlined" />
 
     <br />
-    <br />
 
-    <w-title show-left>Color </w-title>
+    <w-title prefix="bar">Color </w-title>
     <w-icon icon="ant-design:home-outlined" color="red" />
     <w-icon icon="ant-design:home-outlined" color="green" />
     <w-icon icon="ant-design:home-outlined" color="blue" />
@@ -22,31 +17,27 @@
     <w-icon icon="ant-design:home-outlined" color="#409EFF" />
 
     <br />
-    <br />
 
-    <w-title show-left>Width / Height </w-title>
+    <w-title prefix="bar">Width / Height </w-title>
     <w-icon icon="ant-design:home-outlined" width="40" />
     <w-icon icon="ant-design:home-outlined" height="80" />
 
     <br />
-    <br />
 
-    <w-title show-left>Flip </w-title>
+    <w-title prefix="bar">Flip </w-title>
     <w-icon icon="ant-design:home-outlined" horizontal-flip />
     <w-icon icon="ant-design:home-outlined" vertical-flip />
 
     <br />
-    <br />
 
-    <w-title show-left>Rotate </w-title>
+    <w-title prefix="bar">Rotate </w-title>
     <w-icon icon="ant-design:home-outlined" rotate="1" />
     <w-icon icon="ant-design:home-outlined" rotate="2" />
     <w-icon icon="ant-design:home-outlined" rotate="3" />
 
     <br />
-    <br />
 
-    <w-title show-left>Horizontal shift </w-title>
+    <w-title prefix="bar">Horizontal shift </w-title>
     <w-icon
       icon="ant-design:home-outlined"
       width="40"
@@ -70,9 +61,8 @@
     />
 
     <br />
-    <br />
 
-    <w-title show-left>Vertical shift </w-title>
+    <w-title prefix="bar">Vertical shift </w-title>
     <w-icon
       icon="ant-design:home-outlined"
       width="24"
@@ -96,9 +86,8 @@
     />
 
     <br />
-    <br />
 
-    <w-title show-left>Horizontal sliced icon </w-title>
+    <w-title prefix="bar">Horizontal sliced icon </w-title>
     <w-icon
       icon="ant-design:home-outlined"
       width="24"
@@ -122,9 +111,8 @@
     />
 
     <br />
-    <br />
 
-    <w-title show-left>Vertical sliced icon </w-title>
+    <w-title prefix="bar">Vertical sliced icon </w-title>
     <w-icon
       icon="ant-design:home-outlined"
       width="40"
@@ -148,9 +136,8 @@
     />
 
     <br />
-    <br />
 
-    <w-title show-left>Different way to achieve above effect </w-title>
+    <w-title prefix="bar">Different way to achieve above effect </w-title>
     <w-icon
       icon="ant-design:home-outlined"
       width="40"
@@ -165,7 +152,7 @@
       align="left,top,slice"
       class="iconify"
     />
-  </el-card>
+  </w-demo-card>
 </template>
 
 <script lang="ts">

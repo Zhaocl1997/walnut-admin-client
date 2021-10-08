@@ -1,17 +1,16 @@
 <template>
-  <div>
+  <w-demo-card title="Transition Demo">
     <w-form v-model="formData" @hook="register"></w-form>
 
     <w-transition :name="formData.name">
       <div v-show="show" class="h-36 w-36 bg-red-400"></div>
     </w-transition>
-  </div>
+  </w-demo-card>
 </template>
 
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
   import { TransitionEnum } from '/@/components/Help/Transition'
-  import WTransition from '/@/components/Help/Transition'
   import { useForm } from '/@/components/UI/Form'
 
   const options: OptionDataItem[] = Object.entries(TransitionEnum).map(
@@ -23,10 +22,6 @@
 
   export default defineComponent({
     name: 'TransitionDemo',
-
-    components: {
-      WTransition,
-    },
 
     setup() {
       const show = ref(true)

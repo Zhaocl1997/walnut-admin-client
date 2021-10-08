@@ -1,9 +1,5 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Input：</span>
-    </template>
-
+  <w-demo-card title="Input">
     <n-space vertical>
       <WInputNew v-model:value="input14" :black-list="['<', '>']"></WInputNew>
 
@@ -24,7 +20,7 @@
 
     <n-divider></n-divider>
 
-    <w-title show-left>Base 【{{ input1 }}】 </w-title>
+    <!-- <w-title show-left>Base 【{{ input1 }}】 </w-title>
     <w-input
       v-model="input1"
       clearable
@@ -147,8 +143,8 @@
     <br />
 
     <w-title show-left>Debounce 1000ms search input 【{{ input11 }}】 </w-title>
-    <w-input v-model="input11" clearable :debounce="500" @search="onInput" />
-  </el-card>
+    <w-input v-model="input11" clearable :debounce="500" @search="onInput" /> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

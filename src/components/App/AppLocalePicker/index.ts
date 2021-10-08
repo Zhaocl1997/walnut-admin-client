@@ -1,3 +1,1 @@
-import AppLocalePicker from './index.vue'
-
-export default AppLocalePicker
+export { default } from './index.vue'

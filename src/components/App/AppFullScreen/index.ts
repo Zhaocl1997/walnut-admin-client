@@ -1,3 +1,1 @@
-import AppFullScreen from './index.vue'
-
-export default AppFullScreen
+export { default } from './index.vue'

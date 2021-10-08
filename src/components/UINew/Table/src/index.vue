@@ -5,9 +5,10 @@
 
   import { useProps } from '/@/hooks/core/useProps'
 
-  import { props } from './props'
-
   import { useTableEvents } from './hooks/useTableEvents'
+  import { useTableColumns } from './hooks/useTableColumns'
+
+  import { props } from './props'
 
   export default defineComponent({
     name: 'WTable',
@@ -19,9 +20,13 @@
     emits: ['hook'],
 
     setup(props: WTable.Props, ctx) {
+      const { attrs, emit, expose, slots } = ctx
+
       const { setProps, getProps } = useProps<WTable.Props>(props)
 
       const { onEvent } = useTableEvents(getProps.value)
+
+      const { columns } = useTableColumns(getProps)
 
       onEvent({
         name: 'hook',
@@ -30,7 +35,12 @@
         },
       })
 
-      return () => <n-data-table {...unref(getProps)} />
+      return () => (
+        <n-data-table
+          {...unref(getProps)}
+          columns={unref(columns)}
+        ></n-data-table>
+      )
     },
   })
 </script>

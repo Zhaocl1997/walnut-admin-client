@@ -2,12 +2,12 @@
   import type { PropType } from 'vue'
   import { defineComponent } from 'vue'
 
-  import WHelpMessage from '../HelpMessage'
+  import WMessage from '../Message'
 
   export default defineComponent({
-    name: 'WHelpTitle',
+    name: 'WTitle',
 
-    components: { WHelpMessage },
+    components: { WMessage },
 
     props: {
       helpMessage: String as PropType<string>,
@@ -20,7 +20,7 @@
             <>
               {slots.default?.()}{' '}
               {props.helpMessage && (
-                <w-help-message msg={props.helpMessage}></w-help-message>
+                <w-message msg={props.helpMessage}></w-message>
               )}
             </>
           )}

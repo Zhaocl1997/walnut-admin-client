@@ -36,6 +36,13 @@
             title: 'Address',
             key: 'address',
           },
+          {
+            extendType: 'action',
+          },
+          {
+            extendType: 'icon',
+            extendIconName: 'ant-design:home-outlined',
+          },
         ],
         data: [
           {

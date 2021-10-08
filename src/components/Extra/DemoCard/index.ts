@@ -1,3 +1,1 @@
-import WDemoCard from './index.vue'
-
-export default WDemoCard
+export { default } from './index.vue'

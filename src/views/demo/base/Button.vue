@@ -1,9 +1,5 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Button：【{{ value }}】</span>
-    </template>
-
+  <w-demo-card :title="`Button: ${value}`">
     <n-space>
       <WButtonNew @click="onClick">Default</WButtonNew>
       <WButtonNew
@@ -26,7 +22,7 @@
 
     <n-divider></n-divider>
 
-    <w-title show-left>Base</w-title>
+    <!-- <w-title show-left>Base</w-title>
     <w-button @click="onClick">Click me(slot)</w-button>
     <w-button @click="onClick" text="Click me(prop)"></w-button>
     <w-button disabled @click="onClick">Disabled</w-button>
@@ -111,8 +107,8 @@
     <w-title show-left>Debounce</w-title>
     <w-button type="primary" :debounce="1000" @click="onClick"
       >Debounce 1000ms</w-button
-    >
-  </el-card>
+    > -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

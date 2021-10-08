@@ -12,17 +12,13 @@
       <div v-show="showCard">
         <WFlipper width="450px" height="500px" class="w-auth-card abs-center">
           <template #front>
-            <div
-              class="w-auth-card__front h-full cursor-pointer rounded-2xl shadow-2xl"
-            >
+            <div class="w-auth-card__front h-full rounded-2xl">
               <SignIn></SignIn>
             </div>
           </template>
 
           <template #back>
-            <div
-              class="w-auth-card__back h-full cursor-pointer rounded-2xl shadow-2xl"
-            >
+            <div class="w-auth-card__back h-full rounded-2xl">
               <SignUp></SignUp>
             </div>
           </template>

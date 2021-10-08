@@ -1,10 +1,6 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>SelectTree：</span>
-    </template>
-
-    <w-title show-left>Single 【{{ selectTree1 }}】 </w-title>
+  <w-demo-card title="Select Tree">
+    <!-- <w-title show-left>Single 【{{ selectTree1 }}】 </w-title>
     <w-select-tree
       v-model="selectTree1"
       :data="data"
@@ -26,8 +22,8 @@
     />
 
     <br />
-    <br />
-  </el-card>
+    <br /> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

@@ -1,157 +1,123 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Help Components</span>
-    </template>
+  <div>
+    <w-demo-card title="Message">
+      <n-space size="small">
+        <w-message msg="This is a help message."></w-message>
 
-    <w-title show-left>Tooltip help message</w-title>
-    <el-space>
-      <w-message
-        content="Tooltip Help Message1"
-        placement="top"
-        effect="dark"
-      ></w-message>
+        <w-message
+          :msg="'This is a help message. \n Wrap by string.'"
+        ></w-message>
 
-      <w-message
-        content="Tooltip Help Message2"
-        placement="bottom"
-        effect="light"
-      ></w-message>
+        <w-message
+          :msg="['This is a help message.', 'Wrap by array.']"
+        ></w-message>
 
-      <w-message
-        content="Tooltip Help Message3"
-        placement="top"
-        effect="dark"
-        icon="el-icon-warning-outline"
-      ></w-message>
+        <w-message
+          msg="Change Icon"
+          icon="ant-design:home-outlined"
+        ></w-message>
 
-      <w-message
-        content="Tooltip Help Message3"
-        placement="top"
-        effect="dark"
-        icon="el-icon-warning-outline"
-      >
-        <template #content> Slot Content Message </template>
-      </w-message>
-
-      <w-message
-        content="Slot icon"
-        placement="top"
-        effect="dark"
-        icon="el-icon-warning-outline"
-      >
-        <template #icon>
-          <w-icon icon="ant-design:home-outlined"></w-icon>
-        </template>
-      </w-message>
-    </el-space>
-
-    <br />
-    <br />
-
-    <w-title show-left>Title</w-title>
-    <w-title content="Help message 1" placement="top" effect="dark"
-      >Title 1</w-title
-    >
-    <w-title content="Help message 2" placement="bottom" effect="light"
-      >Title 2</w-title
-    >
-    <w-title
-      content="Help message 3"
-      placement="top"
-      effect="dark"
-      icon="el-icon-warning-outline"
-      >Title 3</w-title
-    >
+        <w-message
+          msg="All n-tooltip props will work."
+          placement="bottom"
+          :show-arrow="false"
+          :delay="1000"
+        ></w-message>
+      </n-space>
+    </w-demo-card>
 
     <br />
 
-    <w-title show-left>Arrow</w-title>
-    <el-form inline>
-      <el-form-item label="Active">
-        <el-switch v-model="arrow.active"></el-switch>
-      </el-form-item>
-
-      <el-form-item label="Turn to left">
-        <el-switch v-model="arrow.left" :disabled="arrow.right"></el-switch>
-      </el-form-item>
-
-      <el-form-item label="Turn to right">
-        <el-switch v-model="arrow.right" :disabled="arrow.left"></el-switch>
-      </el-form-item>
-    </el-form>
-
-    <w-arrow
-      :active="arrow.active"
-      :left="arrow.left"
-      :right="arrow.right"
-    ></w-arrow>
+    <w-demo-card title="Title">
+      <n-space size="small" vertical>
+        <w-title>This is a normal title.</w-title>
+        <w-title help-message="This is a help message."
+          >This is a title with a help message.</w-title
+        >
+        <w-title prefix="bar" type="error">This is a title with state.</w-title>
+      </n-space>
+    </w-demo-card>
 
     <br />
-    <br />
 
-    <w-title show-left>Flipper</w-title>
-    <br />
+    <w-demo-card title="Arrow">
+      <n-space size="small" vertical>
+        <n-form :model="arrow" inline label-placement="left" :label-width="60">
+          <n-form-item label="Active" path="active">
+            <n-switch v-model:value="arrow.active" />
+          </n-form-item>
 
-    <el-space size="medium">
-      <w-flipper trigger="click" class="Card" width="270px" height="300px">
-        <template #front>
-          <div class="Card__face">
-            <span class="Card__value Card__value--top">10</span>
-            <span class="Card__center">♣</span>
-            <span class="Card__value Card__value--bottom">10</span>
-          </div>
-        </template>
+          <n-form-item label="Left" path="left">
+            <n-switch v-model:value="arrow.left" />
+          </n-form-item>
 
-        <template #back>
-          <figure class="Card__pattern"></figure>
-        </template>
-      </w-flipper>
+          <n-form-item label="Right" path="right">
+            <n-switch v-model:value="arrow.right" />
+          </n-form-item>
+        </n-form>
 
-      <w-flipper trigger="hover" class="Card" width="270px" height="300px">
-        <template #front>
-          <div class="Card__face">
-            <span class="Card__value Card__value--top">10</span>
-            <span class="Card__center">♣</span>
-            <span class="Card__value Card__value--bottom">10</span>
-          </div>
-        </template>
-
-        <template #back>
-          <figure class="Card__pattern"></figure>
-        </template>
-      </w-flipper>
-    </el-space>
+        <w-arrow
+          :active="arrow.active"
+          :left="arrow.left"
+          :right="arrow.right"
+          @click="arrow.active = !arrow.active"
+        ></w-arrow>
+      </n-space>
+    </w-demo-card>
 
     <br />
+
+    <w-demo-card title="Flipper">
+      <n-space size="small">
+        <w-flipper trigger="hover" width="270px" height="300px">
+          <template #front>
+            <div class="abs-center">this is front</div>
+          </template>
+
+          <template #back>
+            <div class="abs-center">this is back</div>
+          </template>
+        </w-flipper>
+
+        <w-flipper trigger="click" width="270px" height="300px">
+          <template #front>
+            <div class="abs-center">this is front</div>
+          </template>
+
+          <template #back>
+            <div class="abs-center">this is back</div>
+          </template>
+        </w-flipper>
+      </n-space>
+    </w-demo-card>
+
     <br />
 
-    <w-title show-left>Locale Picker</w-title>
-
-    <w-app-locale-picker></w-app-locale-picker>
-    <w-app-locale-picker show-text></w-app-locale-picker>
-
-    <br />
-    <br />
-
-    <w-title show-left>Icon Picker 【{{ icon }}】</w-title>
-
-    <w-icon-picker v-model="icon"></w-icon-picker>
+    <w-demo-card title="App Locale Picker">
+      <w-app-locale-picker></w-app-locale-picker>
+    </w-demo-card>
 
     <br />
+
+    <w-demo-card title="App Dark Mode Picker">
+      <w-app-dark-mode></w-app-dark-mode>
+    </w-demo-card>
+
     <br />
 
-    <w-title show-left>Screen full</w-title>
+    <w-demo-card title="Icon Picker">
+      <w-title prefix="bar">【{{ icon }}】</w-title>
 
-    <w-app-full-screen></w-app-full-screen>
-  </el-card>
+      <w-icon-picker v-model:value="icon"></w-icon-picker>
+    </w-demo-card>
+  </div>
 </template>
 
 <script lang="ts">
   import { reactive, defineComponent, toRefs } from 'vue'
 
   export default defineComponent({
-    name: 'HelpDemo',
+    name: 'ExtraDemo',
 
     setup() {
       const state = reactive({
@@ -170,48 +136,4 @@
   })
 </script>
 
-<style lang="scss" scoped>
-  .Card {
-    display: inline-block;
-
-    &__face,
-    &__pattern {
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      box-shadow: 0 3px 15px rgba(#000, 0.45);
-      cursor: pointer;
-    }
-
-    &__pattern {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNjAiIGhlaWdodD0iMzAiPgo8ZGVmcz4KPHJlY3QgaWQ9InIiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxNSIgZmlsbD0iI2JiMDg1ZiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZT0iIzdhMDU0ZCI+PC9yZWN0Pgo8ZyBpZD0icCI+Cjx1c2UgeGxpbms6aHJlZj0iI3IiPjwvdXNlPgo8dXNlIHk9IjE1IiB4bGluazpocmVmPSIjciI+PC91c2U+Cjx1c2UgeT0iMzAiIHhsaW5rOmhyZWY9IiNyIj48L3VzZT4KPHVzZSB5PSI0NSIgeGxpbms6aHJlZj0iI3IiPjwvdXNlPgo8L2c+CjwvZGVmcz4KPHVzZSB4bGluazpocmVmPSIjcCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtMjUpIHNrZXdZKDQwKSI+PC91c2U+Cjx1c2UgeGxpbms6aHJlZj0iI3AiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMwIDApIHNrZXdZKC00MCkiPjwvdXNlPgo8L3N2Zz4=');
-    }
-
-    &__face {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-      padding: 15px;
-    }
-
-    &__value {
-      display: block;
-      font-size: 18pt;
-
-      &--top {
-        align-self: flex-start;
-      }
-
-      &--bottom {
-        align-self: flex-end;
-      }
-    }
-
-    &__center {
-      display: block;
-      align-self: center;
-      font-size: 32pt;
-    }
-  }
-</style>
+<style lang="scss" scoped></style>

@@ -40,15 +40,23 @@ export const createComponentPlugin = (): Plugin => {
               'Tree',
             ],
             Help: [
+              // 'Flipper',
+              // 'IconPicker',
+              'Json',
+              // 'Message',
+              // 'Title',
+              // 'Arrow',
+            ],
+            App: ['AppLocalePicker', 'AppDarkMode', 'AppFullScreen'],
+            Extra: [
+              'DemoCard',
+              'Message',
+              'Title',
               'Arrow',
               'Flipper',
               'IconPicker',
-              'Json',
-              'Message',
-              'Title',
+              'Transition',
             ],
-            App: ['AppLocalePicker', 'AppDarkMode', 'AppFullScreen'],
-            Extra: ['DemoCard'],
           }
 
           let ret = ''

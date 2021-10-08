@@ -1,10 +1,6 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Select：</span>
-    </template>
-
-    <w-title show-left>Base 【{{ select1 }}】 </w-title>
+  <w-demo-card title="Select">
+    <!-- <w-title show-left>Base 【{{ select1 }}】 </w-title>
     <w-select v-model="select1" :options="options" value-type="number" />
 
     <br />
@@ -43,8 +39,8 @@
     />
 
     <br />
-    <br />
-  </el-card>
+    <br /> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

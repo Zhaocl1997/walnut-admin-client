@@ -1,13 +1,24 @@
-import type { ExtractPropTypes } from 'vue'
-import type { DataTableProps } from 'naive-ui'
+import type { DataTableProps, DataTableColumn } from 'naive-ui'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
-import { props } from './props'
-
 export declare namespace WTable {
-  interface Props
-    extends DataTableProps,
-      Partial<ExtractPropTypes<typeof props>> {}
+  namespace ExtendType {
+    interface Action {
+      extendType?: 'action'
+      extendActionType?: ('create' | 'read' | 'delete')[]
+    }
+
+    interface Icon {
+      extendType?: 'icon'
+      extendIconName?: string
+    }
+  }
+
+  type Columns = (DataTableColumn | ExtendType.Action | ExtendType.Icon)[]
+
+  interface Props extends Omit<DataTableProps, 'columns'> {
+    columns: Columns
+  }
 
   namespace Params {
     type Entry = useEventParams<'hook', any>

@@ -3,13 +3,10 @@
 
   import { defineComponent, ref, unref, computed } from 'vue'
   import { useI18n } from '/@/locales'
-  import WHelpArrow from '/@/components/Extra/HelpArrow'
   import { useFormContext } from '../../hooks/useFormContext'
 
   export default defineComponent({
     name: 'WFormItemExtendQuery',
-
-    components: { WHelpArrow },
 
     props: {
       countToFold: Number as PropType<number>,
@@ -91,10 +88,7 @@
                 {{
                   default: () => unref(getText),
                   icon: () => (
-                    <w-help-arrow
-                      active={!unref(active)}
-                      class="mt-0.5"
-                    ></w-help-arrow>
+                    <w-arrow active={!unref(active)} class="mt-0.5"></w-arrow>
                   ),
                 }}
               </n-button>

@@ -5,9 +5,6 @@
   import { defineComponent } from 'vue'
   import { isFunction } from 'easy-fns-ts'
 
-  import WFormItemTransition from '/@/components/Help/Transition'
-  import WHelpMessage from '/@/components/Extra/HelpMessage'
-
   import { componentMap } from './utils'
   import { useFormContext } from '../../hooks/useFormContext'
   import { getEPBooleanValue, getBoolean } from '../../utils'
@@ -16,11 +13,6 @@
     name: 'WFormItem',
 
     inheritAttrs: false,
-
-    components: {
-      WFormItemTransition,
-      WHelpMessage,
-    },
 
     props: {
       item: Object as PropType<WForm.Schema.Item>,
@@ -71,9 +63,9 @@
                 <>
                   {item?.formProp?.label}{' '}
                   {item?.formProp?.labelHelpMessage && (
-                    <w-help-message
+                    <w-message
                       msg={item?.formProp?.labelHelpMessage}
-                    ></w-help-message>
+                    ></w-message>
                   )}
                 </>
               ),
@@ -83,9 +75,9 @@
       }
 
       const renderContent = () => (
-        <w-form-item-transition {...item?.transitionProp} appear>
+        <w-transition {...item?.transitionProp} appear>
           {getEPBooleanValue(item, formProps!, 'vIf') && renderNFormItem()}
-        </w-form-item-transition>
+        </w-transition>
       )
 
       return () => renderContent()

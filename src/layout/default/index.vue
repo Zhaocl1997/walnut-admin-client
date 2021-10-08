@@ -26,7 +26,13 @@
 
     <div
       id="w-main-layout"
-      class="flex flex-col flex-1 h-screen flex-nowrap w-full overflow-x-hidden overflow-y-auto"
+      class="
+        flex flex-col flex-1
+        h-screen
+        flex-nowrap
+        w-full
+        overflow-x-hidden overflow-y-auto
+      "
     >
       <div
         class="fixed transition-width duration-500 ease-in-out"
@@ -47,7 +53,7 @@
       <TheContent class="bg-primary flex-1 p-4 mt-20" />
     </div>
 
-    <el-backtop target="#w-main-layout" />
+    <!-- <el-backtop target="#w-main-layout" /> -->
   </div>
 </template>
 

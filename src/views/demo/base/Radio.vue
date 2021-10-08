@@ -1,10 +1,6 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>Radio：</span>
-    </template>
-
-    <w-title show-left>Base 【{{ radio1 }}】</w-title>
+  <w-demo-card title="Radio">
+    <!-- <w-title show-left>Base 【{{ radio1 }}】</w-title>
     <w-radio v-model="radio1" :options="options"></w-radio>
 
     <br />
@@ -23,8 +19,8 @@
     <br />
 
     <w-title show-left>Feedback 【{{ radio4 }}】</w-title>
-    <w-radio v-model="radio4" :options="options"></w-radio>
-  </el-card>
+    <w-radio v-model="radio4" :options="options"></w-radio> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

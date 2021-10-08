@@ -1,10 +1,6 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>CheckTag：</span>
-    </template>
-
-    <w-title show-left>Single 【{{ checkTag1 }}】 </w-title>
+  <w-demo-card title="CheckTag">
+    <!-- <w-title show-left>Single 【{{ checkTag1 }}】 </w-title>
     <w-check-tag v-model="checkTag1" :options="options" />
 
     <br />
@@ -26,8 +22,8 @@
     <w-check-tag v-model="checkTag4" :options="options" multiple />
 
     <br />
-    <br />
-  </el-card>
+    <br /> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">

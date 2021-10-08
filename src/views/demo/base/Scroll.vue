@@ -1,26 +1,36 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>ScrollBar：</span>
-    </template>
+  <w-demo-card title="Scrollbar">
+    <w-title prefix="bar">Position: {{ position }}</w-title>
 
-    <w-title show-left>Virtual Scroll</w-title>
+    <n-space size="small">
+      <n-button @click="scrollRef?.scrollTo({ top: 800 })"
+        >Scroll to 800px position</n-button
+      >
+      <n-button @click="scrollRef?.scrollTo({ top: 1600 })"
+        >Scroll to 1600px position</n-button
+      >
 
-    <br />
-    <br />
+      <n-button @click="scrollRef?.scrollToStart()">Scroll to Top</n-button>
+      <n-button @click="scrollRef?.scrollToEnd()">Scroll to Bottom</n-button>
 
-    <div class="border-gray-300 border-2">
-      <w-virtual-scroll :data="data" :height="400" :itemHeight="39" :bench="50">
-        <template #default="{ item, index }">
-          {{ item.title + ' ' + (index + 1) }}
-        </template>
-      </w-virtual-scroll>
+      <n-button @click="scrollRef?.scrollToIndex(20)"
+        >Scroll to index 20</n-button
+      >
+
+      <n-button @click="scrollRef?.scrollToIndex(100)"
+        >Scroll to index 100</n-button
+      >
+    </n-space>
+
+    <div class="mt-2 border border-2 border-gray-600 rounded-sm">
+      <w-scrollbar2 ref="scrollRef" v-model="position">
+        <div v-for="i in 200" :key="i" class="text-3xl my-3">
+          Horizontal-{{ i }}
+        </div>
+      </w-scrollbar2>
     </div>
 
-    <br />
-    <br />
-
-    <el-button @click="scrollTo(800)">Scroll to 800px position</el-button>
+    <!-- <el-button @click="scrollTo(800)">Scroll to 800px position</el-button>
     <el-button @click="scrollTo(1600)">Scroll to 1600px position</el-button>
 
     <br />
@@ -92,31 +102,20 @@
           </div>
         </div>
       </w-scrollbar>
-    </div>
-  </el-card>
+    </div> -->
+  </w-demo-card>
 </template>
 
 <script lang="ts">
   import type { WScrollbarRef } from '/@/components/UI/Scrollbar'
   import { defineComponent, ref } from 'vue'
-  import { WVirtualScroll } from '/@/components/UI/Scrollbar'
 
-  const data: Recordable[] = (() => {
-    const arr: Recordable[] = []
-    for (let index = 1; index < 20000; index++) {
-      arr.push({
-        title: 'List item',
-      })
-    }
-    return arr
-  })()
+  import WScrollbar2 from '/@/components/Extra/Scrollbar'
 
   export default defineComponent({
     name: 'ScrollDemo',
 
-    components: {
-      WVirtualScroll,
-    },
+    components: { WScrollbar2 },
 
     setup() {
       const position = ref(0)
@@ -160,8 +159,6 @@
       }
 
       return {
-        data,
-
         position,
         positionVertival,
 

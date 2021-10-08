@@ -2,15 +2,10 @@
   import type { PropType } from 'vue'
   import { defineComponent, ref } from 'vue'
 
-  import WHelpTitle from '/@/components/Extra/HelpTitle'
-  import WHelpArrow from '/@/components/Extra/HelpArrow'
-
   import { useFormContext } from '../../hooks/useFormContext'
 
   export default defineComponent({
     name: 'WFormItemExtendDivider',
-
-    components: { WHelpTitle, WHelpArrow },
 
     props: {
       title: String as PropType<string>,
@@ -45,20 +40,20 @@
           <n-divider>
             {props.title && (
               <>
-                <w-help-title
+                <w-title
                   prefix={props.prefix}
                   type={props.type}
                   helpMessage={props.helpMessage}
                 >
                   {props.title}
-                </w-help-title>
+                </w-title>
 
                 {props.foldable && (
-                  <w-help-arrow
+                  <w-arrow
                     active={!active.value}
                     class="mb-4"
                     onClick={onToggle}
-                  ></w-help-arrow>
+                  ></w-arrow>
                 )}
               </>
             )}
