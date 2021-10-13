@@ -17,7 +17,7 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   const stage = mode === 'staging'
   const prod = mode === 'production'
 
-  // https://github.com/antfu/vite-plugin-components
+  // https://github.com/antfu/unplugin-vue-components
   vitePlugins.push(createComponentPlugin())
 
   // https://github.com/windicss/vite-plugin-windicss

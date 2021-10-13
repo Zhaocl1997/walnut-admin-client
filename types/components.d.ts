@@ -47,7 +47,7 @@
 
 //     // Here is where we enhance typing support in template usage
 //     // Components below are not actually global components
-//     // Usage of `vite-plugin-components` make these seem like global comps
+//     // Usage of `unplugin-vue-components` make these seem like global comps
 //     // 'w-button': import('../src/components/UI/Button').WButtonProps
 //     // 'w-button-group': import('../src/components/UI/ButtonGroup').WButtonGroupProps
 //     // 'w-checkbox': import('../src/components/UI/Checkbox').WCheckboxProps
