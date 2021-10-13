@@ -1,5 +1,3 @@
-import { ElSwitch } from 'element-plus'
+import type { PropType } from 'vue'
 
-export default {
-  ...ElSwitch.props,
-}
+export const props = {}

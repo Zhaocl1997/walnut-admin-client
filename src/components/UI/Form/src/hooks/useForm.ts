@@ -1,17 +1,17 @@
 import type { WForm } from '../types'
+import type { MaybeRefRecord } from '/~/utils'
+
 import { ref, watchEffect } from 'vue'
 import { isInSetup } from '/@/utils/shared'
 
-type useFormRegisterFn = (instance: WForm.Methods) => void
-
-type useFormReturnType = [useFormRegisterFn, WForm.ElForm.Methods]
-
-export const useForm = (props: WForm.Props): useFormReturnType => {
+export const useForm = <T>(
+  props: MaybeRefRecord<WForm.Props<T>>
+): WForm.Hook.useFormReturnType => {
   isInSetup()
 
-  const wFormRef = ref<Nullable<WForm.Methods>>(null)
+  const wFormRef = ref<Nullable<WForm.Inst.WFormInst>>(null)
 
-  const register = (instance: WForm.Methods): void => {
+  const register = (instance: WForm.Inst.WFormInst) => {
     wFormRef.value = instance
 
     watchEffect(() => {
@@ -19,22 +19,12 @@ export const useForm = (props: WForm.Props): useFormReturnType => {
     })
   }
 
-  const methods: WForm.ElForm.Methods = {
-    validate: async () => {
-      return await wFormRef.value!.validate()
-    },
-
-    validateField: async (props) => {
-      return await wFormRef.value!.validateField(props)
-    },
-
-    clearValidate: async (props) => {
-      return await wFormRef.value!.clearValidate(props)
-    },
-
-    resetFields: async () => {
-      return await wFormRef.value!.resetFields()
-    },
+  const methods = {
+    validate: async () => await wFormRef.value?.validate(),
+    restoreValidation: () => wFormRef.value?.restoreValidation(),
+    onOpen: () => wFormRef.value?.onOpen(),
+    onClose: () => wFormRef.value?.onClose(),
+    onYes: () => wFormRef.value?.onYes(),
   }
 
   return [register, methods]

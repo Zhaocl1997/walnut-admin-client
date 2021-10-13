@@ -1,5 +1,3 @@
-import { ElInputNumber } from 'element-plus'
+import type { PropType } from 'vue'
 
-export default {
-  ...ElInputNumber.props,
-}
+export const props = {}

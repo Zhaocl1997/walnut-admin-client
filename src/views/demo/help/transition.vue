@@ -1,6 +1,6 @@
 <template>
   <w-demo-card title="Transition Demo">
-    <w-form v-model="formData" @hook="register"></w-form>
+    <w-form :model="formData" @hook="register"></w-form>
 
     <w-transition :name="formData.name">
       <div v-show="show" class="h-36 w-36 bg-red-400"></div>
@@ -10,7 +10,7 @@
 
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
-  import { TransitionEnum } from '/@/components/Help/Transition'
+  import { TransitionEnum } from '/@/components/Extra/Transition'
   import { useForm } from '/@/components/UI/Form'
 
   const options: OptionDataItem[] = Object.entries(TransitionEnum).map(
@@ -40,19 +40,18 @@
         span: 6,
         schemas: [
           {
-            type: 'Select',
+            type: 'Base:Select',
             formProp: {
-              prop: 'name',
+              path: 'name',
             },
             componentProp: {
               options: options,
             },
           },
           {
-            type: 'Button',
+            type: 'Base:Button',
             componentProp: {
-              type: 'primary',
-              text: 'Start',
+              textProp: 'Start',
               onClick: onStart,
             },
           },

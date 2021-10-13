@@ -1,4 +1,4 @@
-import type { WScrollbarRef } from '/@/components/UI/Scrollbar'
+import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
 import type { AppTab } from '../types'
 
 import { watchEffect, ref, nextTick, computed } from 'vue'
@@ -44,11 +44,11 @@ export const useTabs = () => {
       nextTick(() => {
         // If is mobile, just scroll to current route tab index
         // Others leave a room for index
-        scrollRef.value?.scrollToAdvanced({
-          index: app.value.isMobile
+        scrollRef.value?.scrollToIndex(
+          app.value.isMobile
             ? currentRouteTabIndex.value
-            : calcIndex(currentRouteTabIndex.value),
-        })
+            : calcIndex(currentRouteTabIndex.value)
+        )
       })
     },
     // This is important

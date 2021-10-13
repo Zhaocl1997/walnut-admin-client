@@ -1,22 +1,20 @@
 <template>
   <w-demo-card title="Dynamic Input Form" description="Dynamic Input Form.">
-    <w-form-new @hook="register1" :model="configData"></w-form-new>
+    <w-form @hook="register1" :model="configData"></w-form>
 
-    <w-json :value="formData"></w-json>
+    <w-JSON :value="formData"></w-JSON>
 
-    <w-form-new @hook="register2" :model="formData"></w-form-new>
+    <w-form @hook="register2" :model="formData"></w-form>
   </w-demo-card>
 </template>
 
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
 
-  import WFormNew, { useForm } from '/@/components/UINew/Form'
+  import { useForm } from '/@/components/UI/Form'
 
   export default defineComponent({
     name: 'DynamicInputForm',
-
-    components: { WFormNew },
 
     setup() {
       const configData = ref({})

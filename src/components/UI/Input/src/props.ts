@@ -1,11 +1,9 @@
 import type { PropType } from 'vue'
-import type { WInputModifiers, WInputSlotPosition } from './types'
-import { ElInput } from 'element-plus'
 
-const extendProps = {
-  modelModifiers: {
-    type: Object as PropType<WInputModifiers>,
-    default: () => ({ trim: true }),
+export const props = {
+  trim: {
+    type: Boolean as PropType<boolean>,
+    default: false,
   },
 
   blackList: {
@@ -13,22 +11,27 @@ const extendProps = {
     default: () => [],
   },
 
+  suffix: {
+    type: String as PropType<string>,
+    default: '',
+  },
+
+  prefix: {
+    type: String as PropType<string>,
+    default: '',
+  },
+
+  suffixIcon: {
+    type: String as PropType<string>,
+    default: '',
+  },
+
+  prefixIcon: {
+    type: String as PropType<string>,
+    default: '',
+  },
+
   helpMessage: {
-    type: String as PropType<string>,
-    default: '',
-  },
-
-  helpPosition: {
-    type: String as PropType<WInputSlotPosition>,
-    default: 'append',
-  },
-
-  prepend: {
-    type: String as PropType<string>,
-    default: '',
-  },
-
-  append: {
     type: String as PropType<string>,
     default: '',
   },
@@ -37,12 +40,4 @@ const extendProps = {
     type: Number as PropType<number>,
     default: 0,
   },
-}
-
-export const extendPropKeys = Object.keys(extendProps)
-
-export default {
-  ...ElInput.props,
-
-  ...extendProps,
 }

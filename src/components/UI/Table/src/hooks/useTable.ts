@@ -4,20 +4,20 @@ import type { MaybeRefRecord } from '/~/utils'
 import { ref, watchEffect } from 'vue'
 import { isInSetup } from '/@/utils/shared'
 
-export const useTable = <T>(props: MaybeRefRecord<WTable.Props<T>>) => {
+export const useTable = (props: WTable.Props) => {
   isInSetup()
 
-  const tableRef = ref<Nullable<any>>(null)
+  const wTableRef = ref(null)
 
-  const register = (instance: any): void => {
-    tableRef.value = instance
+  const register = (instance: WTable.Ref.WFormInst) => {
+    wTableRef.value = instance
 
     watchEffect(() => {
       props && instance.setProps(props)
     })
   }
 
-  const methods: any = {}
+  const methods = {}
 
   return [register, methods]
 }

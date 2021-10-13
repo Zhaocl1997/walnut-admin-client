@@ -1,21 +1,18 @@
 <template>
   <w-demo-card title="useForm">
-    <w-json :value="formData"></w-json>
+    <w-JSON :value="formData"></w-JSON>
 
-    <w-form-new @hook="register" :model="formData"></w-form-new>
+    <w-form @hook="register" :model="formData"></w-form>
   </w-demo-card>
 </template>
 
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
 
-  import WFormNew from '/@/components/UINew/Form'
-  import { useForm } from '/@/components/UINew/Form'
+  import { useForm } from '/@/components/UI/Form'
 
   export default defineComponent({
     name: 'UseForm',
-
-    components: { WFormNew },
 
     setup() {
       const formData = ref({})

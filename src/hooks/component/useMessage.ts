@@ -29,31 +29,7 @@ export const useNotification = (opt: INotificationOptions) => {
 /**
  * @description operations to confirm weather to continue, like delete or other important operations
  */
-export const useTodo = (msg: string) => {
-  const { t } = useI18n()
-
-  const goNext = () => {
-    return new Promise((res) => {
-      useMessageBox({
-        type: 'warning',
-        title: t('component.base.message.warning'),
-        message: msg,
-        cancelButtonText: t('component.base.action.cancel'),
-        confirmButtonText: t('component.base.action.confirm'),
-        showCancelButton: true,
-        closeOnClickModal: false,
-      })
-        .then(() => res(true))
-        .catch(() => res(false))
-    })
-  }
-
-  return {
-    goNext,
-  }
-}
-
-export const useTodoNew = (msg: string) => {
+export const useContinue = (msg: string) => {
   const { t } = useI18n()
   const dialog = useDialog()
 

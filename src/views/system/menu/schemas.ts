@@ -1,4 +1,4 @@
-import type { WForm } from '/@/components/UI/Form'
+import type { WForm } from '../../../components/UI/Form'
 import type { Menu } from '/@/router/types'
 import type { Ref } from 'vue'
 
@@ -53,9 +53,11 @@ export const getMenuFormSchemas = (
    * @description Get translated title list
    */
   const getTitleList = computed(() =>
-    (Array.from(
-      deepKeys(app.value.locale === LocaleEnum.EN ? enMessages : zhMessages)
-    ) as OptionDataItem[]).filter(
+    (
+      Array.from(
+        deepKeys(app.value.locale === LocaleEnum.EN ? enMessages : zhMessages)
+      ) as OptionDataItem[]
+    ).filter(
       (i) =>
         (i.value as string).includes('system.menu') ||
         (i.value as string).includes('common.base')

@@ -1,7 +1,6 @@
 import type { App } from 'vue'
 
 import { setupI18n } from '/@/locales'
-import { setupElementPlus } from '/@/components'
 import { setupRouter } from '/@/router'
 import { setupStore } from '/@/store'
 import { setupDirectives } from '/@/directives'
@@ -30,8 +29,6 @@ export const setupApp = async (app: App) => {
   // setupStore(app)
 
   setupRouter(app)
-
-  setupElementPlus(app)
 
   setupDirectives(app)
 

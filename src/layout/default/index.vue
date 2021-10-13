@@ -8,21 +8,14 @@
       ]"
     />
 
-    <el-drawer
-      v-else
-      v-model="app.showAside"
-      :with-header="false"
-      :show-close="false"
-      direction="ltr"
-      size="65%"
-    >
+    <n-drawer v-else v-model:show="app.showAside" width="60%" placement="left">
       <TheAside
         :class="[
           'bg-gray-100 h-screen overflow-y-auto w-56 transition-width duration-500 ease-in-out',
           { 'w-16': app.collapse },
         ]"
       />
-    </el-drawer>
+    </n-drawer>
 
     <div
       id="w-main-layout"

@@ -1,27 +1,25 @@
-<template>
-  <el-switch v-bind="getBindValue"></el-switch>
-</template>
-
-<script lang="ts">
+<script lang="tsx">
   import type { WSwitchProps } from './types'
-  import { computed, defineComponent } from 'vue'
-  import props from './props'
+
+  import { defineComponent } from 'vue'
+  import { props } from './props'
 
   export default defineComponent({
     name: 'WSwitch',
 
-    inheritAttrs: false,
-
     props,
 
-    setup(props: WSwitchProps, ctx) {
-      const { attrs } = ctx
-      const getBindValue = computed(() => ({ ...attrs, ...props }))
-      return {
-        getBindValue,
-      }
+    emits: [],
+
+    setup(props: WSwitchProps, { attrs, slots, emit, expose }) {
+      return () => (
+        <n-switch>
+          {{
+            checked: () => attrs.checkedText,
+            unchecked: () => attrs.uncheckedText,
+          }}
+        </n-switch>
+      )
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

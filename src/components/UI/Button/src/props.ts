@@ -1,47 +1,27 @@
 import type { PropType } from 'vue'
-import { ElButton } from 'element-plus'
 
-const extendProps = {
-  suffixIcon: {
+export const props = {
+  /* icon through prop */
+  icon: {
     type: String as PropType<string>,
     default: '',
   },
 
-  retryDelay: {
-    type: Number as PropType<number>,
-    default: 0,
-  },
-
-  loadDelay: {
-    type: Number as PropType<number>,
-    default: 0,
-  },
-
-  block: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-
-  text: {
+  /* text(default slot) through prop */
+  textProp: {
     type: String as PropType<string>,
     default: '',
   },
 
+  /* retry delay for seconds */
+  retry: {
+    type: Number as PropType<number>,
+    default: 0,
+  },
+
+  /* debounce delay for miliseconds */
   debounce: {
     type: Number as PropType<number>,
     default: 0,
   },
-
-  helpMessage: {
-    type: String as PropType<string>,
-    default: '',
-  },
-}
-
-export const extendPropKeys = Object.keys(extendProps)
-
-export default {
-  ...ElButton.props,
-
-  ...extendProps,
 }

@@ -1,5 +1,5 @@
 <template>
-  <w-scrollbar ref="scrollRef" @scroll="onCloseCtxMenu" vertical>
+  <w-scrollbar2 ref="scrollRef" @scroll="onCloseCtxMenu" vertical>
     <ul class="h-8 flex flex-row flex-nowrap">
       <li
         v-for="(tab, index) in getTabs"
@@ -16,7 +16,13 @@
         <!-- active symbol -->
         <div
           v-show="$route.name === tab.name"
-          class="border-8 border-solid border-blue-500 rounded-full h-4 w-4 hover:border-blue-700"
+          class="
+            border-8 border-solid border-blue-500
+            rounded-full
+            h-4
+            w-4
+            hover:border-blue-700
+          "
         ></div>
 
         <!-- title -->
@@ -25,16 +31,20 @@
         }}</span>
 
         <!-- close icon -->
-        <div>
-          <i
-            v-show="tab.name !== indexName"
-            class="el-icon-close text-primary hover:bg-orange-400 rounded-full transform hover:scale-110 hover:opacity-80"
-            @click.prevent.stop="onTabRemove(tab.name)"
-          ></i>
-        </div>
+        <w-icon
+          icon="ant-design:close-outlined"
+          width="12"
+          class="
+            hover:bg-red-300
+            rounded-full
+            transform
+            hover:scale-110 hover:opacity-80
+          "
+          @click.prevent.stop="onTabRemove(tab.name)"
+        ></w-icon>
       </li>
     </ul>
-  </w-scrollbar>
+  </w-scrollbar2>
 </template>
 
 <script lang="ts">
@@ -44,10 +54,14 @@
 
   import { getTabsContext } from '../hooks/useTabsContext'
 
+  import WScrollbar2 from '/@/components/Extra/Scrollbar'
+
   export default defineComponent({
     name: 'TabsScroll',
 
     inheritAttrs: false,
+
+    components: { WScrollbar2 },
 
     setup() {
       const {

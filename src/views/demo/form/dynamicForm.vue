@@ -1,23 +1,24 @@
 <template>
   <w-demo-card title="Dynamic Form" description="Some features.">
-    <w-form-new @hook="register1" :model="configFormData"></w-form-new>
+    <w-form @hook="register1" :model="configFormData"></w-form>
 
-    <w-json :value="formData"></w-json>
+    <w-JSON :value="formData"></w-JSON>
 
-    <w-form-new @hook="register2" :model="formData"></w-form-new>
+    <w-form @hook="register2" :model="formData"></w-form>
   </w-demo-card>
 </template>
 
 <script lang="ts">
   import { computed, defineComponent, ref } from 'vue'
 
-  import WFormNew, { useForm } from '/@/components/UINew/Form'
-  import { TransitionEnum, TransitionName } from '/@/components/Help/Transition'
+  import { useForm } from '/@/components/UI/Form'
+  import {
+    TransitionEnum,
+    TransitionName,
+  } from '/@/components/Extra/Transition'
 
   export default defineComponent({
     name: 'DynamicForm',
-
-    components: { WFormNew },
 
     setup() {
       const configFormData = ref({

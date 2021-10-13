@@ -1,4 +1,4 @@
-import type { WTable } from '/@/components/UI/Table'
+import type { WTable } from '../../../components/UI/Table'
 import { formatTime } from 'easy-fns-ts'
 import { getMaybeI18nMsg } from '/@/locales/utils'
 import { Menu } from '/@/router/types'

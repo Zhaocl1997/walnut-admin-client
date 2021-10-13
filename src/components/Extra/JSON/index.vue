@@ -55,17 +55,7 @@
         { flush: 'post' }
       )
 
-      return () => (
-        <>
-          <pre id={id} style={getStyle.value} class="w-json-pre" />
-          <el-backtop
-            target=".w-json-pre"
-            style={{ position: 'relative' }}
-            right={-widthRef + 60}
-            bottom={60}
-          />
-        </>
-      )
+      return () => <pre id={id} style={getStyle.value} class="w-json-pre" />
     },
   })
 </script>

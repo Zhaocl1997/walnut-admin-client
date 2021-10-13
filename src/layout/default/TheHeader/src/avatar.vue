@@ -21,7 +21,7 @@
 
   import { useAppContext } from '/@/App'
   import { userActionSignOut } from '/@/store/actions/user'
-  import { useTodo } from '/@/hooks/component/useMessage'
+  import { useContinue } from '/@/hooks/component/useMessage'
 
   export default defineComponent({
     name: 'HeaderAvatar',
@@ -29,7 +29,7 @@
     setup() {
       const { user } = useAppContext()
 
-      const { goNext } = useTodo('Are you sure to sign out?')
+      const { goNext } = useContinue('Are you sure to sign out?')
 
       const userDropdown = reactive([
         {

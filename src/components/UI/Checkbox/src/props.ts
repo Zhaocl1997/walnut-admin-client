@@ -1,22 +1,9 @@
 import type { PropType } from 'vue'
-import { ElCheckboxGroup } from 'element-plus'
-import { MultiTypeCompSharedProps } from '../../shared'
+import type { CheckboxProps } from 'naive-ui'
 
-const extendProps = {
-  ...MultiTypeCompSharedProps,
-
-  text: String as PropType<string>,
-}
-
-export const extendPropKeys = Object.keys(extendProps)
-
-export default {
-  ...ElCheckboxGroup.props,
-
-  ...extendProps,
-
-  /**
-   * @override
-   */
-  modelValue: [Object, Array, Boolean, String] as PropType<any>,
+export const props = {
+  options: {
+    type: Array as PropType<CheckboxProps[]>,
+    default: () => [],
+  },
 }

@@ -1,18 +1,16 @@
 <template>
   <w-demo-card title="useTable" description="Better typescript support.">
-    <w-table-new @hook="register"></w-table-new>
+    <w-table @hook="register"></w-table>
   </w-demo-card>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue'
 
-  import WTableNew, { useTable } from '/@/components/UINew/Table'
+  import { useTable } from '/@/components/UI/Table'
 
   export default defineComponent({
     name: 'UseTable',
-
-    components: { WTableNew },
 
     setup() {
       const [register] = useTable({
@@ -96,7 +94,7 @@
       >
       </el-alert>
 
-      <w-json :value="tableHeaders" resizable></w-json>
+      <w-JSON :value="tableHeaders" resizable></w-JSON>
       <w-form v-model="tableConfig" @hook="registerForm"></w-form>
     </template>
 

@@ -1,15 +1,16 @@
 import type { PropType } from 'vue'
+import type { ModalProps, DrawerProps, DrawerContentProps } from 'naive-ui'
 import type { WForm } from './types'
-import { ElForm } from 'element-plus'
 
-const extendProps = {
-  schemas: Array as PropType<WForm.Schema.Item[]>,
+export const props = {
+  schemas: {
+    type: Array as PropType<WForm.Schema.Item[]>,
+    default: () => [],
+  },
 
-  modelValue: Object as PropType<Recordable>,
-
-  gutter: {
+  cols: {
     type: Number as PropType<number>,
-    default: 0,
+    default: 24,
   },
 
   span: {
@@ -17,51 +18,23 @@ const extendProps = {
     default: 24,
   },
 
-  compact: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-
-  query: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-
-  foldable: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-
-  countToFold: {
+  xGap: {
     type: Number as PropType<number>,
-    default: 2,
+    default: 0,
   },
 
-  loading: {
-    type: Boolean as PropType<boolean>,
-    default: false,
+  yGap: {
+    type: Number as PropType<number>,
+    default: 0,
   },
 
-  // defaultFold: {
-  //   type: Boolean as PropType<boolean>,
-  //   default: false,
-  // },
-
-  // mock: {
-  //   type: Boolean as PropType<boolean>,
-  //   default: false,
-  // },
-}
-
-export const extendPropKeys = Object.keys(extendProps)
-
-export default {
-  ...ElForm.props,
-
-  labelWidth: {
-    type: String as PropType<string>,
-    default: 'auto',
+  preset: {
+    type: String as PropType<WForm.preset>,
+    default: undefined,
   },
 
-  ...extendProps,
+  advancedProps: {
+    type: Object as PropType<ModalProps | (DrawerProps & DrawerContentProps)>,
+    default: undefined,
+  },
 }

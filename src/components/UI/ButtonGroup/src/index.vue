@@ -1,30 +1,28 @@
-<template>
-  <el-space wrap>
-    <div v-for="(button, index) in groups" :key="index">
-      <w-button v-bind="button"></w-button>
-    </div>
-  </el-space>
-</template>
+<script lang="tsx">
+  import type { WButtonGroupProps } from './types'
 
-<script lang="ts">
-  import type { PropType } from 'vue'
-  import type { WButtonProps } from '../../Button/src/types'
   import { defineComponent } from 'vue'
+  import { props } from './props'
+
+  import WButtonNew from '../../Button'
 
   export default defineComponent({
     name: 'WButtonGroup',
 
-    inheritAttrs: false,
+    components: { WButtonNew },
 
-    props: {
-      groups: {
-        type: Array as PropType<WButtonProps[]>,
-        default: () => [],
-      },
+    props,
+
+    emits: [],
+
+    setup(props: WButtonGroupProps, { attrs, slots, emit, expose }) {
+      return () => (
+        <n-button-group {...attrs}>
+          {props.groups?.map((item) => (
+            <w-button-new {...item}></w-button-new>
+          ))}
+        </n-button-group>
+      )
     },
-
-    setup() {},
   })
 </script>
-
-<style lang="scss" scoped></style>

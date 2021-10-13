@@ -2,7 +2,7 @@
   import type { PropType } from 'vue'
   import { defineComponent, ref } from 'vue'
   import { useDebounceFn } from '@vueuse/core'
-  import { ScrollbarInst, ScrollbarProps } from 'naive-ui'
+  import { ScrollbarInst } from 'naive-ui'
 
   import { useExpose } from '/@/hooks/core/useExpose'
 
@@ -80,7 +80,7 @@
           scrollRef.value!.scrollTo(
             props.vertical
               ? {
-                  left: scrollRef.value!.containerRef?.scrollLeft,
+                  left: scrollRef.value!.containerRef?.scrollWidth,
                   behavior: props.behavior,
                 }
               : {
@@ -91,6 +91,31 @@
         },
 
         scrollToIndex: (index: number) => {
+          if (index <= 0) return
+
+          if (props.vertical) {
+            let val = 0
+
+            // TODO
+            // stupid way currently
+            try {
+              val =
+                scrollRef.value!.containerRef!.children[0]?.children[index - 1][
+                  field
+                ]
+            } catch (e) {
+              console.log(index)
+
+              val =
+                scrollRef.value!.containerRef!.children[0]?.children[0]
+                  ?.children[index - 1][field]
+            }
+
+            scrollRef.value?.scrollTo({ left: val, behavior: props.behavior })
+
+            return
+          }
+
           scrollRef.value!.scrollTo({
             index: index - 1,
             elSize: 48,
@@ -112,6 +137,7 @@
             height: props.height,
             width: props.width,
           }}
+          x-scrollable={props.vertical}
         >
           {slots}
         </n-scrollbar>

@@ -1,25 +1,22 @@
 <template>
   <w-demo-card title="useForm(advanced)" description="Advanced Form usage.">
-    <w-form-new @hook="register1" :model="configData"></w-form-new>
+    <w-form @hook="register1" :model="configData"></w-form>
 
-    <w-json :value="formData"></w-json>
+    <w-JSON :value="formData"></w-JSON>
 
     <n-button @click="onOpen">Open An Advanced Form</n-button>
 
-    <w-form-new @hook="register2" :model="formData"></w-form-new>
+    <w-form @hook="register2" :model="formData"></w-form>
   </w-demo-card>
 </template>
 
 <script lang="ts">
   import { defineComponent, ref, computed } from 'vue'
 
-  import WFormNew from '/@/components/UINew/Form'
-  import { useForm } from '/@/components/UINew/Form'
+  import { useForm } from '/@/components/UI/Form'
 
   export default defineComponent({
     name: 'UseFormAdvanced',
-
-    components: { WFormNew },
 
     setup() {
       const configData = ref({

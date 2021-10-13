@@ -3,9 +3,9 @@
     title="Base Form"
     description="Simply display all BASE kind in schemas."
   >
-    <w-json :value="formData"></w-json>
+    <w-JSON :value="formData"></w-JSON>
 
-    <w-form-new
+    <w-form
       ref="formRef"
       :model="formData"
       :schemas="schemas"
@@ -14,22 +14,19 @@
       <template #formSlot>
         <n-input v-model:value="formData.formSlot"></n-input>
       </template>
-    </w-form-new>
+    </w-form>
   </w-demo-card>
 </template>
 
 <script lang="tsx">
-  import type { WForm } from '/@/components/UINew/Form'
+  import type { WForm } from '/@/components/UI/Form'
 
   import { defineComponent, computed, ref } from 'vue'
-  import WFormNew from '/@/components/UINew/Form'
 
   import { options } from '../data'
 
   export default defineComponent({
     name: 'BaseForm',
-
-    components: { WFormNew },
 
     setup() {
       const formRef = ref<WForm.Inst.WFormInst>()

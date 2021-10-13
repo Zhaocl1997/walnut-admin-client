@@ -1,23 +1,18 @@
 <template>
   <w-demo-card :title="`Button: ${value}`">
     <n-space>
-      <WButtonNew @click="onClick">Default</WButtonNew>
-      <WButtonNew
-        @click="onClick"
-        type="primary"
-        icon="ant-design:home-outlined"
+      <w-button @click="onClick">Default</w-button>
+      <w-button @click="onClick" type="primary" icon="ant-design:home-outlined"
         >Primary
-      </WButtonNew>
-      <WButtonNew @click="onClick" type="info" text-prop="Info(prop)"
-        >Info</WButtonNew
+      </w-button>
+      <w-button @click="onClick" type="info" text-prop="Info(prop)"
+        >Info</w-button
       >
-      <WButtonNew @click="onClick" type="success" :retry="10"
-        >Success</WButtonNew
+      <w-button @click="onClick" type="success" :retry="10">Success</w-button>
+      <w-button @click="onClick" type="warning" :debounce="1000"
+        >Warning</w-button
       >
-      <WButtonNew @click="onClick" type="warning" :debounce="1000"
-        >Warning</WButtonNew
-      >
-      <WButtonNew @click="onClick" type="error">Error</WButtonNew>
+      <w-button @click="onClick" type="error">Error</w-button>
     </n-space>
 
     <n-divider></n-divider>
@@ -113,12 +108,9 @@
 
 <script lang="ts">
   import { ref, defineComponent } from 'vue'
-  import WButtonNew from '/@/components/UINew/Button'
 
   export default defineComponent({
     name: 'ButtonDemo',
-
-    components: { WButtonNew },
 
     setup() {
       const value = ref(0)

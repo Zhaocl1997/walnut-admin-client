@@ -1,151 +1,136 @@
 <script lang="tsx">
   import type { WForm } from './types'
-
-  import { ref, unref, computed, defineComponent, renderSlot } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
+  import { ref, unref, defineComponent, renderSlot, renderList } from 'vue'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
-  import { setFormContext } from './hooks/useFormContext'
+
+  import WFormItem from './components/FormItem/index.vue'
+  import WFormItemExtendQuery from './components/Extend/Query.vue'
+  import WFormItemExtendDivider from './components/Extend/Divider.vue'
+
   import { useFormSchemas } from './hooks/useFormSchemas'
-  import { useFormComponents } from './hooks/useFormComponents'
-  import { useFormMethods } from './hooks/useFormMethods'
+  import { setFormContext } from './hooks/useFormContext'
   import { useFormEvents } from './hooks/useFormEvents'
+  import { useFormAdvanced } from './hooks/useFormAdvanced'
 
-  import props, { extendPropKeys } from './props'
-
-  // TODO
-  // 1. disabled support for callback
-  // 2. nested prop
-  // 3. label help tooltip, also callback
-  // 4. divider refactor(×)
-  // 5. item Transition optimise(×)
-  // 6. refactor divider into form item(×)
-  // 7. multiple/search/card/tab/step form
+  import { props } from './props'
 
   export default defineComponent({
     name: 'WForm',
 
-    inheritAttrs: false,
+    components: {
+      WFormItem,
+      WFormItemExtendQuery,
+      WFormItemExtendDivider,
+    },
 
-    props: props,
+    props,
 
-    emits: ['update:modelValue', 'hook', 'query', 'reset'],
+    emits: ['reset', 'query', 'hook'],
 
-    setup(props: WForm.Props, ctx) {
-      const { attrs, emit, expose, slots } = ctx
-
-      const formRef = ref<Nullable<WForm.ElForm.Methods>>(null)
+    setup(props: WForm.Props, { attrs, slots, emit, expose }) {
+      const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
 
       const { setProps, getProps } = useProps<WForm.Props>(props)
 
-      const { formSchemas } = useFormSchemas(props, getProps)
+      const { formSchemas } = useFormSchemas(getProps)
 
-      const { onEvent } = useFormEvents(getProps)
+      const { onEvent } = useFormEvents(getProps.value)
 
-      useFormComponents()
-
-      const { formMethods } = useFormMethods(formRef, { setProps })
-
-      const getBindValue = computed(() => ({
-        ...attrs,
-        // only use original el-form attrs, no custom props
-        // otherwise you'll see a lot of prop through the `Elements` tabs on chrome devtools
-        ...easyOmit(unref(getProps), extendPropKeys),
-        // used for method like `valdiate` to work
-        model: unref(getProps).modelValue,
-      }))
-
-      // create `WForm` context
       setFormContext({
-        formRef: formRef,
-        formProps: getProps,
-        formSchemas: formSchemas,
+        formRef,
+        formProps: { ...unref(getProps), ...attrs },
+        formSchemas,
         formEvent: onEvent,
+        setProps,
       })
 
-      // create `useForm` hook
-      emit('hook', formMethods)
+      const renderItem = () =>
+        renderList(formSchemas.value, (item, index) => {
+          if (item.type === 'Extend:Query') {
+            return (
+              <n-gi span={4} suffix={true}>
+                <w-form-item-extend-query {...item.componentProp} />
+              </n-gi>
+            )
+          }
 
-      // expose API through ref
-      useExpose({
-        apis: formMethods,
-        expose,
-      })
-
-      // render Items
-      const renderItems = () =>
-        formSchemas.value.map((item, index) => {
-          // handle multiple
-          // if (item.type === 'Multiple') {
-          //   const childrenItems = () =>
-          //     item.componentProp?.children?.map((child, index) =>
-          //       formItem(child, index)
-          //     )
-
-          //   const onAdd = () => {
-          //     item.componentProp?.children?.push({
-          //       ...item.componentProp?.children[0],
-          //       formProp: {
-          //         ...item.componentProp?.children[0].formProp,
-          //         prop: `${
-          //           item.componentProp?.children[0].formProp?.prop
-          //         }${getRandomInt(10, 100)}`,
-          //       },
-          //     })
-          //   }
-
-          //   const onRemove = () => {}
-
-          //   return (
-          //     <>
-          //       {childrenItems()}
-
-          //       <w-form-item
-          //         item={{
-          //           type: 'Button',
-          //           componentProp: {
-          //             text: 'Add More',
-          //             icon: 'el-icon-circle-plus-outline',
-          //             onClick: onAdd,
-          //           },
-          //         }}
-          //       ></w-form-item>
-
-          //       {/* <i
-          //         class="el-icon-remove-outline text-3xl cursor-pointer"
-          //         onClick={onRemove}
-          //       ></i> */}
-          //     </>
-          //   )
-          // }
+          if (item.type === 'Extend:Divider') {
+            return (
+              <n-gi span={24}>
+                <w-form-item-extend-divider
+                  index={index}
+                  {...item.componentProp}
+                />
+              </n-gi>
+            )
+          }
 
           return (
-            <w-form-item item={item} key={item.uid} index={index}>
-              {item.type === 'Slot' &&
-                Object.keys(slots).includes(item.formProp?.prop!) &&
-                renderSlot(slots, item.formProp?.prop!)}
-            </w-form-item>
+            <n-gi
+              {...(item?.gridProp ?? { span: unref(getProps).span })}
+              v-show={item.foldShow}
+            >
+              <w-form-item item={item}>
+                {item.type === 'Base:Slot' &&
+                  Object.keys(slots).includes(item.formProp?.path!) &&
+                  renderSlot(slots, item.formProp?.path!)}
+              </w-form-item>
+            </n-gi>
           )
         })
 
-      // render el-col wrap
-      const renderColWrap = () =>
-        getProps.value.inline
-          ? renderItems()
-          : () => (
-              <el-row gutter={getProps.value.gutter}> {renderItems()} </el-row>
-            )
-
-      return () => (
-        <>
-          <el-form ref={formRef} {...getBindValue.value} class="relative">
-            {renderColWrap()}
-          </el-form>
-
-          {getProps.value.query && <w-form-extend-query></w-form-extend-query>}
-        </>
+      const renderNForm = () => (
+        <n-form
+          ref={formRef}
+          {...{
+            ...attrs,
+            labelAlign: attrs.labelAlign ?? 'right',
+            labelPlacement: attrs.labelPlacement ?? 'left',
+          }}
+          {...unref(getProps)}
+        >
+          <n-grid
+            cols={unref(getProps).cols}
+            xGap={unref(getProps).xGap}
+            yGap={unref(getProps).yGap}
+          >
+            {renderItem()}
+          </n-grid>
+        </n-form>
       )
+
+      const { renderAdvanced, ...advancedMethods } = useFormAdvanced(
+        renderNForm,
+        getProps,
+        formRef
+      )
+
+      // expose
+      useExpose({
+        apis: {
+          validate: () => formRef.value?.validate(),
+          restoreValidation: () => formRef.value?.restoreValidation(),
+          ...advancedMethods,
+        },
+        expose,
+      })
+
+      // hook
+      onEvent({
+        name: 'hook',
+        params: {
+          validate: () => formRef.value?.validate(),
+          restoreValidation: () => formRef.value?.restoreValidation(),
+          ...advancedMethods,
+          setProps,
+        },
+      })
+
+      return () => (unref(getProps).preset ? renderAdvanced() : renderNForm())
     },
   })
 </script>
+
+<style scoped></style>

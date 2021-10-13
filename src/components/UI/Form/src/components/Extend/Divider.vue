@@ -1,97 +1,66 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
-  import type { WForm } from '/@/components/UI/Form'
-
-  import { defineComponent, onMounted } from 'vue'
-  import { isUndefined } from 'easy-fns-ts'
-
-  import WTitle from '/@/components/Help/Title'
-  import WArrow from '/@/components/Help/Arrow'
+  import { defineComponent, ref } from 'vue'
 
   import { useFormContext } from '../../hooks/useFormContext'
-  import { getBoolean } from '../../utils'
 
   export default defineComponent({
     name: 'WFormItemExtendDivider',
 
-    inheritAttrs: false,
-
-    components: {
-      WTitle,
-      WArrow,
-    },
-
     props: {
-      item: Object as PropType<WForm.Schema.DividerSchema<any>>,
+      title: String as PropType<string>,
+      helpMessage: String as PropType<string>,
+      prefix: String as PropType<string>,
+      type: String as PropType<string>,
+      foldable: Boolean as PropType<boolean>,
+      startIndex: Number as PropType<number>,
+      endIndex: Number as PropType<number>,
       index: Number as PropType<number>,
     },
 
-    setup(props, ctx) {
-      const { item } = props
+    setup(props, { attrs, slots, emit, expose }) {
+      const active = ref(false)
 
       const { formSchemas } = useFormContext()
 
-      const onChildren = () => {
-        // not foldable, do not excute the code below
-        if (!formSchemas.value[props.index!].componentProp.foldable) {
-          return
+      const onToggle = () => {
+        active.value = !active.value
+
+        for (
+          let i = props.index! + props.startIndex! + 1;
+          i <= props.index! + props.endIndex!;
+          i++
+        ) {
+          formSchemas.value[i]!.foldShow = !formSchemas.value[i]!.foldShow
         }
+      }
 
-        const countToFold =
-          formSchemas.value[props.index!].componentProp.countToFold
+      return () =>
+        props.title ? (
+          <n-divider>
+            {props.title && (
+              <>
+                <w-title
+                  prefix={props.prefix}
+                  type={props.type}
+                  helpMessage={props.helpMessage}
+                >
+                  {props.title}
+                </w-title>
 
-        // handle count to fold
-        if (!isUndefined(countToFold) && countToFold !== 0) {
-          const len =
-            formSchemas.value[props.index!].componentProp.children.length
-
-          for (let i = countToFold; i < len; i++) {
-            formSchemas.value[props.index!].componentProp.children[
-              i
-            ].foldShow = !getBoolean(
-              formSchemas.value[props.index!].componentProp.children[i].foldShow
-            )
-          }
-        }
-
-        // handle foldShow
-        formSchemas.value[props.index!].componentProp.children.map(
-          (child: WForm.Schema.Item) => {
-            child.foldShow = !getBoolean(child.foldShow)
-          }
+                {props.foldable && (
+                  <w-arrow
+                    active={!active.value}
+                    class="mb-4"
+                    onClick={onToggle}
+                  ></w-arrow>
+                )}
+              </>
+            )}
+          </n-divider>
+        ) : (
+          <n-divider></n-divider>
         )
-      }
-
-      const onClick = () => {
-        // set fold reverse
-        formSchemas.value[props.index!].componentProp.fold = !formSchemas.value[
-          props.index!
-        ].componentProp.fold
-
-        onChildren()
-      }
-
-      onMounted(() => {
-        onChildren()
-      })
-
-      return () => (
-        <el-divider content-position="left">
-          {item?.componentProp?.title && (
-            <el-space size="mini">
-              <w-title show-left>{item?.componentProp?.title}</w-title>
-
-              {item?.componentProp?.foldable && (
-                <w-arrow
-                  active={!item?.componentProp?.fold}
-                  width="16"
-                  onClick={onClick}
-                ></w-arrow>
-              )}
-            </el-space>
-          )}
-        </el-divider>
-      )
     },
   })
 </script>

@@ -26,7 +26,7 @@
       </template>
     </w-table>
 
-    <w-dialog
+    <!-- <w-dialog
       @hook="registerDialog"
       @cancel="onDialogCancel"
       @confirm="onDialogConfirm"
@@ -36,7 +36,7 @@
           <w-icon-picker v-model="menuFormData.icon" />
         </template>
       </w-form>
-    </w-dialog>
+    </w-dialog> -->
   </div>
 </template>
 
@@ -47,11 +47,11 @@
   import { arrToTree, orderTree } from 'easy-fns-ts'
 
   import { menuAPI } from '/@/api/system/menu'
-  import { useMessage, useTodo } from '/@/hooks/component/useMessage'
+  import { useMessage, useContinue } from '/@/hooks/component/useMessage'
 
   import { useTable } from '/@/components/UI/Table'
-  import { useDialog } from '/@/components/UI/Dialog'
-  import { useForm, generateBaseWFormRules } from '/@/components/UI/Form'
+  // import { useDialog } from '/@/components/UI/Dialog'
+  // import { useForm, generateBaseWFormRules } from '/@/components/UI/Form'
 
   import { getMenuTableHeaders } from './headers'
   import { getMenuFormSchemas } from './schemas'
@@ -123,16 +123,16 @@
         },
       })
 
-      const [registerDialog, { openDialog, closeDialog }] = useDialog()
+      // const [registerDialog, { openDialog, closeDialog }] = useDialog()
 
-      // form and rules
-      const { rules } = generateBaseWFormRules(menuFormSchemas)
-      const [registerForm, { validate, clearValidate, resetFields }] = useForm({
-        schemas: menuFormSchemas,
-        span: 23,
-        rules: rules,
-        labelWidth: '150px',
-      })
+      // // form and rules
+      // const { rules } = generateBaseWFormRules(menuFormSchemas)
+      // const [registerForm, { validate, clearValidate, resetFields }] = useForm({
+      //   schemas: menuFormSchemas,
+      //   span: 23,
+      //   rules: rules,
+      //   labelWidth: '150px',
+      // })
 
       // create
       const onCreate = (id: string) => {
@@ -162,7 +162,7 @@
 
       // delete
       const onDelete = async (id: string) => {
-        const next = await useTodo('Are you sure to delete this menu?')
+        const next = await useContinue('Are you sure to delete this menu?')
 
         if (next) {
           await menuAPI.delete(id)

@@ -1,98 +1,67 @@
-<template>
-  <el-input v-bind="getBindValue">
-    <template v-if="$slots.prepend || prepend" #prepend>
-      <span v-if="prepend">{{ prepend }}</span>
-      <span v-else><slot name="prepend" /></span>
-    </template>
+<script lang="tsx">
+  import type { WInputProps } from './types'
+  import { computed, defineComponent, unref } from 'vue'
 
-    <template v-if="$slots.append || append" #append>
-      <span v-if="append">{{ append }}</span>
-      <span v-else><slot name="append" /></span>
-    </template>
-
-    <template v-if="$slots.suffix" #suffix>
-      <slot name="suffix" />
-    </template>
-
-    <template v-if="$slots.prefix" #prefix>
-      <slot name="prefix" />
-    </template>
-
-    <template v-if="helpMessage" #[helpPosition]>
-      <el-tooltip effect="dark" :content="helpMessage" placement="top">
-        <i class="el-icon-question"></i>
-      </el-tooltip>
-    </template>
-  </el-input>
-</template>
-
-<script lang="ts">
-  import type { ElInputRef, WInputProps } from './types'
-  import { computed, defineComponent, ref } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
-
-  import { useExpose } from '/@/hooks/core/useExpose'
-
-  import props, { extendPropKeys } from './props'
-  import { useInputMethods } from './hooks/useInputMethods'
-  import { useInputSearch } from './hooks/useInputSearch'
-  import { useInputModifiers } from './hooks/useInputModifiers'
-  import { useInputLegal } from './hooks/useInputLegal'
+  import { clearIllegalChars } from 'easy-fns-ts'
+  import { props } from './props'
 
   export default defineComponent({
     name: 'WInput',
 
-    inheritAttrs: false,
+    props,
 
-    props: props,
+    emits: ['update:value', 'search'],
 
-    emits: ['update:modelValue', 'input', 'change', 'clear', 'search'],
+    setup(props: WInputProps, { attrs, slots, emit, expose }) {
+      const inputSlots = computed(() => {
+        const def: {
+          suffix?: Fn
+          prefix?: Fn
+          suffixIcon?: Fn
+          prefixIcon?: Fn
+          separator?: Fn
+        } = {}
 
-    setup(props: WInputProps, ctx) {
-      const { attrs, emit, expose } = ctx
-      const inputRef = ref<Nullable<ElInputRef>>(null)
+        // prop suffix/prefix
+        props.suffix && (def.suffix = () => props.suffix)
+        props.prefix && (def.prefix = () => props.prefix)
 
-      const { inputMethods } = useInputMethods(inputRef)
-      const { emitSearch } = useInputSearch(props, emit)
-      const { modifiedValue } = useInputModifiers(props)
-      const { legalizedValue } = useInputLegal(props)
+        // prop icon for suffix/prefix
+        props.suffixIcon &&
+          (def.suffix = () => <w-icon icon={props.suffixIcon}></w-icon>)
+        props.prefixIcon &&
+          (def.prefix = () => <w-icon icon={props.prefixIcon}></w-icon>)
 
-      const onInput = (value: string) => {
-        value = modifiedValue(value)
+        // help message
+        props.helpMessage &&
+          (def.suffix = () => (
+            <n-tooltip>
+              {{
+                default: () => props.helpMessage,
+                trigger: () => (
+                  <w-icon icon="ant-design:question-circle-outlined"></w-icon>
+                ),
+              }}
+            </n-tooltip>
+          ))
 
-        value = legalizedValue(value)
+        // slot has highest priority
+        slots.suffix && (def.suffix = () => slots.suffix?.())
+        slots.prefix && (def.prefix = () => slots.prefix?.())
+        slots.separator && (def.separator = () => slots.separator?.())
 
-        emit('update:modelValue', value)
-        emit('input', value)
-        emitSearch()
-      }
-
-      const onClear = () => {
-        emit('update:modelValue', '')
-        emit('change', '')
-        emit('clear')
-      }
-
-      const getBindValue = computed(() => {
-        return {
-          ...attrs,
-          ...easyOmit(props, extendPropKeys),
-          onInput,
-          onClear,
-          ref: inputRef,
-        }
+        return def
       })
 
-      useExpose({
-        apis: inputMethods,
-        expose: expose,
-      })
-
-      return {
-        getBindValue,
+      const onUpdateValue = (val: string) => {
+        !props.pair && (val = clearIllegalChars(val, props.blackList!))
+        !props.pair && props.trim && (val = val.trim())
+        emit('update:value', val)
       }
+
+      return () => (
+        <n-input onInput={onUpdateValue}>{unref(inputSlots)}</n-input>
+      )
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

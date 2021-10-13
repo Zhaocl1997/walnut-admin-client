@@ -1,10 +1,6 @@
 <template>
   <w-demo-card title="Base Table" description="Simple usage of w-table.">
-    <w-table-new
-      :columns="columns"
-      :data="data"
-      :pagination="pagination"
-    ></w-table-new>
+    <w-table :columns="columns" :data="data" :pagination="pagination"></w-table>
   </w-demo-card>
 </template>
 
@@ -13,12 +9,8 @@
 
   import { NTag, NButton, useMessage } from 'naive-ui'
 
-  import WTableNew from '/@/components/UINew/Table'
-
   export default defineComponent({
     name: 'BaseTable',
-
-    components: { WTableNew },
 
     setup() {
       const message = useMessage()
@@ -113,7 +105,7 @@
     <template #header>
       <span>Base table: </span>
 
-      <w-json :value="tableHeaders" resizable></w-json>
+      <w-JSON :value="tableHeaders" resizable></w-JSON>
       <w-form v-model="tableConfig" @hook="registerForm"></w-form>
     </template>
 

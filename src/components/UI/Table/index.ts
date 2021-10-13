@@ -1,7 +1,5 @@
-import WTable from './src/index.vue'
-
 export * from './src/types'
 
-export { useTable } from './src/hooks/useTable'
+export * from './src/hooks/useTable'
 
-export default WTable
+export { default } from './src/index.vue'

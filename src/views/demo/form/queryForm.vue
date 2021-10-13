@@ -3,7 +3,7 @@
     title="Query Form"
     description="Normally used in table search area."
   >
-    <w-form-new
+    <w-form
       :span="12"
       :x-gap="20"
       :model="configData"
@@ -30,27 +30,25 @@
           },
         },
       ]"
-    ></w-form-new>
+    ></w-form>
 
-    <w-json :value="formData"></w-json>
+    <w-JSON :value="formData"></w-JSON>
 
-    <w-form-new
+    <w-form
       :model="formData"
       @hook="register"
       @reset="onReset"
       @query="onQuery"
-    ></w-form-new>
+    ></w-form>
   </w-demo-card>
 </template>
 
 <script lang="tsx">
   import { computed, defineComponent, ref } from 'vue'
-  import WFormNew, { useForm } from '/@/components/UINew/Form'
+  import { useForm } from '/@/components/UI/Form'
 
   export default defineComponent({
     name: 'QueryForm',
-
-    components: { WFormNew },
 
     setup() {
       const configData = ref({ foldable: false, countToFold: 2 })

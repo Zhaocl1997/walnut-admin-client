@@ -1,56 +1,28 @@
-<!-- TODO -->
-<template>
-  <el-radio-group v-bind="getBindValue">
-    <template v-if="button">
-      <el-radio-button
-        v-for="item in options"
-        :key="item[optionValue]"
-        :label="item[optionValue]"
-        :disabled="item.disabled"
-      >
-        {{ item[optionLabel] }}
-      </el-radio-button>
-    </template>
-
-    <template v-else>
-      <el-radio
-        v-for="item in options"
-        :key="item[optionValue]"
-        :label="item[optionValue]"
-        :disabled="item.disabled"
-        :border="border"
-      >
-        {{ item[optionLabel] }}
-      </el-radio>
-    </template>
-  </el-radio-group>
-</template>
-
-<script lang="ts">
+<script lang="tsx">
   import type { WRadioProps } from './types'
-  import { defineComponent, computed } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
-  import props, { extendPropKeys } from './props'
+
+  import { defineComponent } from 'vue'
+  import { props } from './props'
 
   export default defineComponent({
     name: 'WRadio',
 
-    inheritAttrs: false,
+    props,
 
-    props: props,
+    emits: [],
 
-    setup(props: WRadioProps, ctx) {
-      const { attrs } = ctx
-
-      const getBindValue = computed(() => {
-        return { ...attrs, ...easyOmit(props, extendPropKeys) }
-      })
-
-      return {
-        getBindValue,
-      }
+    setup(props: WRadioProps, { attrs, slots, emit, expose }) {
+      return () => (
+        <n-radio-group name="radiogroup">
+          <n-space>
+            {props.options!.map((item) => (
+              <n-radio key={item.value} {...item}>
+                {item.label}
+              </n-radio>
+            ))}
+          </n-space>
+        </n-radio-group>
+      )
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

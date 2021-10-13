@@ -1,16 +1,16 @@
 <template>
   <w-demo-card title="Input">
     <n-space vertical>
-      <WInputNew v-model:value="input14" :black-list="['<', '>']"></WInputNew>
+      <w-input v-model:value="input14" :black-list="['<', '>']"></w-input>
 
-      <WInputNew v-model:value="input15" type="password"></WInputNew>
-      <WInputNew v-model:value="input16" suffix="123" prefix="312" trim />
-      <WInputNew
+      <w-input v-model:value="input15" type="password"></w-input>
+      <w-input v-model:value="input16" suffix="123" prefix="312" trim />
+      <w-input
         v-model:value="input17"
         suffix-icon="ant-design:home-outlined"
         prefix-icon="ant-design:home-outlined"
       />
-      <WInputNew
+      <w-input
         v-model:value="input18"
         help-message="Some help message"
         :debounce="500"
@@ -149,12 +149,9 @@
 
 <script lang="ts">
   import { toRefs, reactive, defineComponent } from 'vue'
-  import WInputNew from '/@/components/UINew/Input'
 
   export default defineComponent({
     name: 'InputDemo',
-
-    components: { WInputNew },
 
     setup() {
       const state = reactive({

@@ -1,18 +1,22 @@
 <script lang="tsx">
-  import { computed, defineComponent, ref, watch } from 'vue'
-  import { useFormContext } from '../../hooks/useFormContext'
-  import { getBoolean } from '../../utils'
+  import type { PropType } from 'vue'
+
+  import { defineComponent, ref, unref, computed } from 'vue'
   import { useI18n } from '/@/locales'
+  import { useFormContext } from '../../hooks/useFormContext'
 
   export default defineComponent({
-    name: 'WFormExtendQuery',
+    name: 'WFormItemExtendQuery',
 
-    inheritAttrs: false,
+    props: {
+      countToFold: Number as PropType<number>,
+      foldable: Boolean as PropType<boolean>,
+    },
 
-    setup() {
+    setup(props, { attrs, slots, emit, expose }) {
       const { t } = useI18n()
 
-      const { formProps, formSchemas, formEvent, formRef } = useFormContext()
+      const loading = ref(false)
 
       const active = ref(false)
 
@@ -20,99 +24,77 @@
         active.value ? t('component.form.expand') : t('component.form.fold')
       )
 
-      const onQuery = () => {
-        formEvent({ name: 'query' })
-      }
+      const { formEvent, formSchemas, setProps } = useFormContext()
 
       const onReset = () => {
         formEvent({ name: 'reset' })
-
-        formRef.value?.resetFields()
       }
 
-      const onToggle = (val?: number) => {
-        !val && (active.value = !active.value)
-
-        const len = formSchemas.value.length
-
-        for (let i = formProps.value.countToFold!; i < len; i++) {
-          formSchemas.value[i].foldShow = !getBoolean(
-            formSchemas.value[i].foldShow
-          )
-        }
+      const onQuery = () => {
+        loading.value = true
+        setProps({ disabled: true })
+        formEvent({
+          name: 'query',
+          params: {
+            done: () => {
+              loading.value = false
+              setProps({ disabled: false })
+            },
+          },
+        })
       }
 
-      watch(
-        () => formProps.value.countToFold,
-        (val) => {
-          if (formProps.value.foldable) {
-            const len = formSchemas.value.length
+      const onToggle = () => {
+        active.value = !active.value
 
-            for (let i = 0; i < len; i++) {
-              formSchemas.value[i].foldShow = true
-            }
-
-            if (val === len) {
-              active.value = false
-              return
-            }
-
-            onToggle(1)
-          }
+        for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
+          formSchemas.value[i].foldShow = !formSchemas.value[i].foldShow
         }
-      )
-
-      const getStyle = computed(() =>
-        active.value &&
-        24 - formProps.value.span! * formProps.value.countToFold! >= 6
-          ? { marginTop: '-52px' }
-          : {}
-      )
+      }
 
       return () => (
-        <div
-          class="flex justify-end relative float-right"
-          style={getStyle.value}
-        >
-          <el-space size="mini">
-            <el-button
+        <n-form-item>
+          <n-space wrap={false} size="small">
+            <n-button
               size="small"
               type="info"
               onClick={onReset}
-              disabled={formProps.value.loading}
+              disabled={unref(loading)}
             >
               {t('component.form.reset')}
-            </el-button>
+            </n-button>
 
-            <el-button
+            <n-button
               size="small"
               type="primary"
-              icon="el-icon-search"
               onClick={onQuery}
-              loading={formProps.value.loading}
+              disabled={unref(loading)}
+              loading={unref(loading)}
             >
-              {t('component.form.query')}
-            </el-button>
+              {{
+                default: () => t('component.form.query'),
+                icon: () => <w-icon icon="ant-design:search-outlined"></w-icon>,
+              }}
+            </n-button>
 
-            {formProps.value.foldable && (
-              <w-button
+            {props.foldable && (
+              <n-button
                 size="small"
-                type="text"
-                onClick={() => onToggle(0)}
-                text={getText.value}
+                type="default"
+                icon-placement="right"
+                onClick={onToggle}
+                disabled={unref(loading)}
               >
                 {{
-                  suffix: () => (
-                    <w-arrow
-                      active={!active.value}
-                      style={{ height: '16px' }}
-                    ></w-arrow>
+                  default: () => unref(getText),
+                  icon: () => (
+                    <w-arrow active={!unref(active)} class="mt-0.5"></w-arrow>
                   ),
                 }}
-              </w-button>
+              </n-button>
             )}
-          </el-space>
-        </div>
+          </n-space>
+        </n-form-item>
       )
     },
   })

@@ -1,14 +1,12 @@
 <template>
   <div class="w-default-layout-aside">
-    <el-aside width="auto">
-      <AsideLogo />
+    <AsideLogo />
 
-      <AsideMenu
-        :menus="menu.menus"
-        :style="{ height: 'calc(100vh - 3rem)' }"
-        class="h-full bg-primary text-primary"
-      />
-    </el-aside>
+    <AsideMenu
+      :menus="menu.menus"
+      :style="{ height: 'calc(100vh - 3rem)' }"
+      class="h-full bg-primary text-primary"
+    />
   </div>
 </template>
 
