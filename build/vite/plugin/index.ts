@@ -7,7 +7,6 @@ import legacy from '@vitejs/plugin-legacy'
 import { createWindicssPlugin } from './windicss'
 import { createComponentPlugin } from './component'
 import { createVisualizerPlugin } from './visualizer'
-import { createStyleImportPlugin } from './styleImport'
 import { createCompressionPlugin } from './compression'
 import { createHTMLPlugin } from './html'
 import { createI18nPlugin } from './i18n'
@@ -29,9 +28,6 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
 
   // https://github.com/intlify/vite-plugin-vue-i18n
   vitePlugins.push(createI18nPlugin())
-
-  // https://github.com/anncwb/vite-plugin-style-import
-  vitePlugins.push(createStyleImportPlugin())
 
   // https://github.com/btd/rollup-plugin-visualizer
   stage && vitePlugins.push(createVisualizerPlugin())
