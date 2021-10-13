@@ -7,7 +7,7 @@
     "
     @click="onClick"
     width="24"
-    class="cursor-pointer dark:text-primary"
+    class="cursor-pointer"
   ></w-icon>
 </template>
 

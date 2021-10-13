@@ -1,11 +1,6 @@
 import type { PropType } from 'vue'
 
 export const props = {
-  trim: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-
   blackList: {
     type: Array as PropType<string[]>,
     default: () => [],
@@ -36,8 +31,18 @@ export const props = {
     default: '',
   },
 
-  debounce: {
-    type: Number as PropType<number>,
-    default: 0,
+  // Just add your own modifiers here!
+  valueModifiers: {
+    type: Object as PropType<{
+      trim: boolean
+      capitalize: boolean
+      uppercase: boolean
+    }>,
+
+    default: () => ({
+      trim: false,
+      capitalize: false,
+      uppercase: false,
+    }),
   },
 }

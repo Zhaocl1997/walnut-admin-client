@@ -12,7 +12,7 @@ import {
   NetworkErrorRoute,
 } from './constant'
 import { createRouterGuard } from './guard'
-import { ElMessage } from 'element-plus'
+// import { ElMessage } from 'element-plus'
 
 const routes: RouteRecordRaw[] = [
   AuthRoute,
@@ -44,7 +44,7 @@ export const useAppRouter = () => {
 
 export const useRouterPush = (info: RouteLocationRaw) => {
   return AppRouter.push(info).catch(() => {
-    ElMessage({ type: 'warning', message: 'Page is under construction...' })
+    // ElMessage({ type: 'warning', message: 'Page is under construction...' })
     // end nprogress
     done()
   })

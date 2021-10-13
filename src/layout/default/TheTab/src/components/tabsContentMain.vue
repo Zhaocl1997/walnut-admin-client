@@ -1,5 +1,6 @@
 <template>
-  <w-scrollbar2 ref="scrollRef" @scroll="onCloseCtxMenu" vertical>
+  <!-- @scroll="onCloseCtxMenu" -->
+  <w-scrollbar ref="scrollRef" vertical>
     <ul class="h-8 flex flex-row flex-nowrap">
       <li
         v-for="(tab, index) in getTabs"
@@ -44,7 +45,7 @@
         ></w-icon>
       </li>
     </ul>
-  </w-scrollbar2>
+  </w-scrollbar>
 </template>
 
 <script lang="ts">
@@ -54,14 +55,10 @@
 
   import { getTabsContext } from '../hooks/useTabsContext'
 
-  import WScrollbar2 from '/@/components/Extra/Scrollbar'
-
   export default defineComponent({
     name: 'TabsScroll',
 
     inheritAttrs: false,
-
-    components: { WScrollbar2 },
 
     setup() {
       const {

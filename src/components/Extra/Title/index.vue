@@ -2,12 +2,8 @@
   import type { PropType } from 'vue'
   import { defineComponent } from 'vue'
 
-  import WMessage from '../Message'
-
   export default defineComponent({
     name: 'WTitle',
-
-    components: { WMessage },
 
     props: {
       helpMessage: String as PropType<string>,

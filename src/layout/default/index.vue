@@ -3,7 +3,7 @@
     <TheAside
       v-if="!app.isMobile"
       :class="[
-        'bg-gray-100 h-screen overflow-y-auto w-56 transition-width duration-500 ease-in-out',
+        'h-screen w-56 transition-width duration-500 ease-in-out',
         { 'w-16': app.collapse },
       ]"
     />
@@ -11,7 +11,7 @@
     <n-drawer v-else v-model:show="app.showAside" width="60%" placement="left">
       <TheAside
         :class="[
-          'bg-gray-100 h-screen overflow-y-auto w-56 transition-width duration-500 ease-in-out',
+          'h-screen w-56 transition-width duration-500 ease-in-out',
           { 'w-16': app.collapse },
         ]"
       />

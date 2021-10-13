@@ -67,7 +67,7 @@
 
 <script lang="ts">
   import { defineComponent, reactive, toRefs, onMounted } from 'vue'
-  import { ElMessage } from 'element-plus'
+  // import { ElMessage } from 'element-plus'
   import {
     setLocal,
     getLocal,
@@ -117,7 +117,7 @@
 
       const onSet = () => {
         if (!state.key || !state.value) {
-          ElMessage.warning('Please enter key/value!')
+          // ElMessage.warning('Please enter key/value!')
           return
         }
 
@@ -146,7 +146,7 @@
 
       const onGet = () => {
         if (!state.key) {
-          ElMessage.warning('Please enter key!')
+          // ElMessage.warning('Please enter key!')
           return
         }
         switch (state.type) {
@@ -169,7 +169,7 @@
 
       const onRemove = () => {
         if (!state.key) {
-          ElMessage.warning('Please enter key!')
+          // ElMessage.warning('Please enter key!')
           return
         }
         switch (state.type) {
@@ -220,7 +220,7 @@
 
       const onSetObject = () => {
         if (!state.key) {
-          ElMessage.warning('Please enter key!')
+          // ElMessage.warning('Please enter key!')
           return
         }
 
@@ -248,7 +248,7 @@
 
       const onSetArray = () => {
         if (!state.key) {
-          ElMessage.warning('Please enter key!')
+          // ElMessage.warning('Please enter key!')
           return
         }
 

@@ -1,5 +1,4 @@
 import type { WTable } from '../types'
-import type { MaybeRefRecord } from '/~/utils'
 
 import { ref, watchEffect } from 'vue'
 import { isInSetup } from '/@/utils/shared'

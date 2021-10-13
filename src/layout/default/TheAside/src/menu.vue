@@ -54,7 +54,6 @@
       })
 
       const onChange = (key: string, item: MenuOption) => {
-
         // If isMobile and showAside true, set showAside to false to close drawer
         if (app.value.isMobile && app.value.showAside) {
           app.value.showAside = false
@@ -69,8 +68,8 @@
         // }
       }
 
-      return () =>(
-        <w-scrollbar>
+      return () => (
+        <w-scrollbar height="100%">
           <n-menu
             indent={15}
             options={getTranslatedMenus.value}
@@ -78,9 +77,9 @@
             value={router.currentRoute.value.name}
             on-update:value={onChange}
             default-expanded-keys={defaultExpandedKeys.value}
-          ></n-menu></w-scrollbar>
-
-        )
-    }
+          ></n-menu>
+        </w-scrollbar>
+      )
+    },
   })
 </script>

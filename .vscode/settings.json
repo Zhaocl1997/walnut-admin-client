@@ -10,7 +10,7 @@
 
   /* eslint */
   "eslint.options": {
-    "plugins": ["html", "vue", "typescript"],
+    // "plugins": ["html", "vue", "typescript"],
     "extensions": [".ts", ".vue"]
   },
   "eslint.validate": ["javascript", "typescript", "vue"],
@@ -25,13 +25,10 @@
   "i18n-ally.enabledParsers": ["ts"],
   "i18n-ally.sourceLanguage": "zh",
   "i18n-ally.enabledFrameworks": ["vue"],
-
-  /* ts */
-  "typescript.tsdk": "node_modules\\typescript\\lib",
   
   /* volar */
-  "volar.tsPlugin": true,
   "volar.codeLens.pugTools": false,
+  "volar.takeOverMode.enabled": true,
 
   /* vscode format default */
   "[vue]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },

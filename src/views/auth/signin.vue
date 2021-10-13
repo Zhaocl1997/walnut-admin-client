@@ -15,12 +15,9 @@
 <script lang="tsx">
   import type { WForm } from '/@/components/UI/Form'
 
-  // import type { WForm } from '/@/components/UI/Form'
-
   import { useForm } from '/@/components/UI/Form'
 
   import { defineComponent, reactive, ref, computed, onMounted } from 'vue'
-  // import { useForm } from '/@/components/UI/Form'
   import { useI18n } from '/@/locales'
   import { getLocal } from '/@/utils/persistent'
   import { PersistentKeysEnum } from '/@/enums/persistent'
@@ -44,7 +41,6 @@
 
       const onSignin = async () => {
         const valid = await validate!()
-        console.log(valid)
 
         if (!valid) {
           buttonLoading.value = true
@@ -93,8 +89,9 @@
                 placeholder: computed(() => t('system.auth.password')),
                 clearable: true,
                 type: 'password',
+                showPasswordOn: 'mousedown',
                 onKeyup: (e) => {
-                  if (e!.code === 'Enter' || e!.code === 'NumpadEnter') {
+                  if (e.code === 'Enter' || e.code === 'NumpadEnter') {
                     onSignin()
                   }
                 },
@@ -114,7 +111,7 @@
               type: 'Base:Button',
               componentProp: {
                 textProp: computed(() => t('system.auth.signin')),
-                loading: buttonLoading,
+                loading: buttonLoading.value,
                 style: {
                   background: 'transparent',
                   width: '100%',
@@ -128,26 +125,8 @@
         }
       )
 
-      // const signinFormRules: WForm.ElForm.RuleRecord = {
-      //   username: [
-      //     {
-      //       required: true,
-      //       message: t('system.auth.rules.username'),
-      //       trigger: 'blur',
-      //     },
-      //   ],
-      //   password: [
-      //     {
-      //       required: true,
-      //       message: t('system.auth.rules.password'),
-      //       trigger: 'blur',
-      //     },
-      //   ],
-      // }
-
       const [register, { validate }] = useForm({
         schemas: signinFormSchemas,
-        // rules: signinFormRules,
       })
 
       onMounted(() => {

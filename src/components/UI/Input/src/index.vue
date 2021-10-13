@@ -2,7 +2,7 @@
   import type { WInputProps } from './types'
   import { computed, defineComponent, unref } from 'vue'
 
-  import { clearIllegalChars } from 'easy-fns-ts'
+  import { clearIllegalChars, upperFirst } from 'easy-fns-ts'
   import { props } from './props'
 
   export default defineComponent({
@@ -54,8 +54,13 @@
       })
 
       const onUpdateValue = (val: string) => {
-        !props.pair && (val = clearIllegalChars(val, props.blackList!))
-        !props.pair && props.trim && (val = val.trim())
+        if (!props.pair) {
+          val = clearIllegalChars(val, props.blackList!)
+          props.valueModifiers?.trim && (val = val.trim())
+          props.valueModifiers?.capitalize && (val = upperFirst(val))
+          props.valueModifiers?.uppercase && (val = val.toLocaleUpperCase())
+        }
+
         emit('update:value', val)
       }
 

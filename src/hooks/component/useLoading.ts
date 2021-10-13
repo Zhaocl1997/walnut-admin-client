@@ -1,6 +1,6 @@
 import type { Ref, VNode } from 'vue'
 
-import { ElLoading } from 'element-plus'
+// import { ElLoading } from 'element-plus'
 import { easyDeepMerge } from 'easy-fns-ts'
 import { ref } from 'vue'
 
@@ -62,9 +62,9 @@ export const useLoading = (options?: Partial<ElLoadingOptions>) => {
 
   const startLoading = (startOptions?: Partial<ElLoadingOptions>) => {
     loading.value = true
-    instance = ElLoading.service(
-      easyDeepMerge(getMergedOptions(), startOptions)
-    )
+    // instance = ElLoading.service(
+    //   easyDeepMerge(getMergedOptions(), startOptions)
+    // )
   }
 
   const endLoading = () => {

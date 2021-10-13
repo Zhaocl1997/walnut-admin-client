@@ -23,7 +23,7 @@
   import { computed, defineComponent, reactive, toRefs } from 'vue'
 
   import { appInfo, appTable } from '/@/utils/log'
-  import { useTree } from '/@/components/UI/Tree'
+  // import { useTree } from '/@/components/UI/Tree'
   import { useForm } from '/@/components/UI/Form'
   import { useMessage, useNotification } from '/@/hooks/component/useMessage'
 
@@ -47,110 +47,110 @@
         checkAll: false,
       })
 
-      const [
-        register1,
-        {
-          filter,
-          updateKeyChildren,
-          // getCheckedNodes,
-          // setCheckedNodes,
-          // getCheckedKeys,
-          // setCheckedKeys,
-          // setChecked,
-          // getHalfCheckedNodes,
-          // getHalfCheckedKeys,
-          getCurrentKey,
-          getCurrentNode,
-          setCurrentKey,
-          setCurrentNode,
-          getNode,
-          remove,
-          append,
-          insertBefore,
-          insertAfter,
-          expandAll,
-          // checkAll
-        },
-      ] = useTree<{
-        _id: number
-        _label: string
-      }>({
-        data: getTreeData(),
-        filterNodeMethod: (value, data) => {
-          if (!value) return true
-          return data._label.indexOf(value) !== -1
-        },
-        props: {
-          id: '_id',
-          label: '_label',
-        },
-      })
+      // const [
+      //   register1,
+      //   {
+      //     filter,
+      //     updateKeyChildren,
+      //     // getCheckedNodes,
+      //     // setCheckedNodes,
+      //     // getCheckedKeys,
+      //     // setCheckedKeys,
+      //     // setChecked,
+      //     // getHalfCheckedNodes,
+      //     // getHalfCheckedKeys,
+      //     getCurrentKey,
+      //     getCurrentNode,
+      //     setCurrentKey,
+      //     setCurrentNode,
+      //     getNode,
+      //     remove,
+      //     append,
+      //     insertBefore,
+      //     insertAfter,
+      //     expandAll,
+      //     // checkAll
+      //   },
+      // ] = useTree<{
+      //   _id: number
+      //   _label: string
+      // }>({
+      //   data: getTreeData(),
+      //   filterNodeMethod: (value, data) => {
+      //     if (!value) return true
+      //     return data._label.indexOf(value) !== -1
+      //   },
+      //   props: {
+      //     id: '_id',
+      //     label: '_label',
+      //   },
+      // })
 
-      const [
-        register2,
-        {
-          // updateKeyChildren,
-          getCheckedNodes,
-          setCheckedNodes,
-          getCheckedKeys,
-          setCheckedKeys,
-          setChecked,
-          getHalfCheckedNodes,
-          getHalfCheckedKeys,
-          // getCurrentKey,
-          // getCurrentNode,
-          // setCurrentKey,
-          // setCurrentNode,
-          // getNode,
-          // remove,
-          // append,
-          // insertBefore,
-          // insertAfter,
-          // expandAll,
-          checkAll,
-        },
-      ] = useTree<{
-        _id: number
-        _label: string
-      }>({
-        data: getTreeData(),
-        multiple: true,
-        leafOnly: computed(() => state.tree2Form.leafOnly),
-        includeHalfChecked: computed(() => state.tree2Form.includeHalfChecked),
-        props: {
-          id: '_id',
-          label: '_label',
-        },
-      })
+      // const [
+      //   register2,
+      //   {
+      //     // updateKeyChildren,
+      //     getCheckedNodes,
+      //     setCheckedNodes,
+      //     getCheckedKeys,
+      //     setCheckedKeys,
+      //     setChecked,
+      //     getHalfCheckedNodes,
+      //     getHalfCheckedKeys,
+      //     // getCurrentKey,
+      //     // getCurrentNode,
+      //     // setCurrentKey,
+      //     // setCurrentNode,
+      //     // getNode,
+      //     // remove,
+      //     // append,
+      //     // insertBefore,
+      //     // insertAfter,
+      //     // expandAll,
+      //     checkAll,
+      //   },
+      // ] = useTree<{
+      //   _id: number
+      //   _label: string
+      // }>({
+      //   data: getTreeData(),
+      //   multiple: true,
+      //   leafOnly: computed(() => state.tree2Form.leafOnly),
+      //   includeHalfChecked: computed(() => state.tree2Form.includeHalfChecked),
+      //   props: {
+      //     id: '_id',
+      //     label: '_label',
+      //   },
+      // })
 
-      const [register3] = useTree<{ _id: number; _label: string }>({
-        data: getTreeData(),
-        props: {
-          id: '_id',
-          label: '_label',
-        },
-        lazy: true,
-        load: (node, resolve) => {
-          if (node.level === 0) {
-            return resolve([{ _id: 1, _label: 'Level 1' }])
-          }
+      // const [register3] = useTree<{ _id: number; _label: string }>({
+      //   data: getTreeData(),
+      //   props: {
+      //     id: '_id',
+      //     label: '_label',
+      //   },
+      //   lazy: true,
+      //   load: (node, resolve) => {
+      //     if (node.level === 0) {
+      //       return resolve([{ _id: 1, _label: 'Level 1' }])
+      //     }
 
-          if (node.level === 5) {
-            return resolve([])
-          }
+      //     if (node.level === 5) {
+      //       return resolve([])
+      //     }
 
-          setTimeout(() => {
-            const id = Math.ceil(Math.random() * 1000)
-            resolve([
-              {
-                _id: id,
-                _label: `Lazy node ${id}`,
-                children: [],
-              },
-            ])
-          }, 500)
-        },
-      })
+      //     setTimeout(() => {
+      //       const id = Math.ceil(Math.random() * 1000)
+      //       resolve([
+      //         {
+      //           _id: id,
+      //           _label: `Lazy node ${id}`,
+      //           children: [],
+      //         },
+      //       ])
+      //     }, 500)
+      //   },
+      // })
 
       const [register1Form] = useForm({
         schemas: [

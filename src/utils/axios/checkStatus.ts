@@ -1,12 +1,12 @@
-import { ElNotification } from 'element-plus'
+// import { ElNotification } from 'element-plus'
 import { AppI18n } from '/@/locales'
 import { userActionSignOut } from '/@/store/actions/user'
 
 const responseError = (msg: string) => {
-  ElNotification({
-    type: 'error',
-    title: msg,
-  })
+  // ElNotification({
+  //   type: 'error',
+  //   title: msg,
+  // })
 }
 
 export const checkReponseErrorStatus = (status?: number, msg?: string) => {

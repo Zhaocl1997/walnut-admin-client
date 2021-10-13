@@ -14,9 +14,9 @@ import type {
   DrawerContentProps,
 } from 'naive-ui'
 
-import type { MaybeRef, MaybeRefRecord } from '/~/utils'
+import type { MaybeRefDeep } from '/~/utils'
 
-import type { WTransitionProps } from '/@/components/Help/Transition'
+import type { WTransitionProps } from '/@/components/Extra/Transition'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import type { WButtonProps } from '../../Button'
@@ -69,7 +69,7 @@ export declare namespace WForm {
   interface Props<D = any> extends FormProps {
     schemas?: Schema.Item<D>[]
     preset?: preset
-    advancedProps?: MaybeRefRecord<
+    advancedProps?: MaybeRefDeep<
       ModalProps | (DrawerProps & DrawerContentProps)
     >
 
@@ -111,21 +111,19 @@ export declare namespace WForm {
     }
 
     interface ComponentPropPool<D = any> {
-      'Extend:Divider': MaybeRefRecord<
-        {
-          title?: string
-          helpMessage?: string
-          foldable?: boolean
-          startIndex?: number
-          endIndex?: number
-        } & Pick<DividerProps, 'titlePlacement' | 'dashed'> &
-          Pick<H3Props, 'prefix' | 'type'>
-      >
+      'Extend:Divider': {
+        title?: string
+        helpMessage?: string
+        foldable?: boolean
+        startIndex?: number
+        endIndex?: number
+      } & Pick<DividerProps, 'titlePlacement' | 'dashed'> &
+        Pick<H3Props, 'prefix' | 'type'>
 
-      'Extend:Query': MaybeRefRecord<{
+      'Extend:Query': {
         countToFold?: number
         foldable?: boolean
-      }>
+      }
 
       'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
@@ -135,8 +133,8 @@ export declare namespace WForm {
 
       'Base:Button': WButtonProps
       'Base:ButtonGroup': WButtonGroupProps
-      'Base:Input': MaybeRefRecord<WInputProps>
-      'Base:InputNumber': MaybeRefRecord<WInputNumberProps>
+      'Base:Input': WInputProps
+      'Base:InputNumber': WInputNumberProps
       'Base:Select': WSelectProps
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
@@ -161,26 +159,24 @@ export declare namespace WForm {
 
       componentProp?: ComponentPropPool<D>[T] & DomProps
 
-      formProp?: MaybeRefRecord<
-        FormItemProps & {
-          labelHelpMessage?: string | string[]
-        }
-      >
+      formProp?: FormItemProps & {
+        labelHelpMessage?: string | string[]
+      }
 
-      gridProp?: MaybeRefRecord<GridItemProps>
+      gridProp?: GridItemProps
 
-      transitionProp?: MaybeRefRecord<Omit<WTransitionProps, 'group'>>
+      transitionProp?: Omit<WTransitionProps, 'group'>
 
       extraProp?: Partial<EP> & {
         /**
          * @description v-if control visible
          */
-        vIf?: Events.Callback<D, boolean> | MaybeRef<boolean>
+        vIf?: Events.Callback<D, boolean>
 
         /**
          * @description v-show control visible
          */
-        vShow?: Events.Callback<D, boolean> | MaybeRef<boolean>
+        vShow?: Events.Callback<D, boolean>
       }
     }
 
@@ -204,7 +200,7 @@ export declare namespace WForm {
     type DynamicTagsSchema<D> = DynamicSchemaItemProps<'Base:DynamicTags', D>
     type SliderSchema<D> = DynamicSchemaItemProps<'Base:Slider', D>
 
-    type Item<D = any> =
+    type Item<D = any> = MaybeRefDeep<
       | DividerSchema<D>
       | QuerySchema<D>
       | RenderSchema<D>
@@ -222,5 +218,6 @@ export declare namespace WForm {
       | DatePickerSchema<D>
       | DynamicTagsSchema<D>
       | SliderSchema<D>
+    >
   }
 }

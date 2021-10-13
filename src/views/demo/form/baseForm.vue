@@ -102,7 +102,7 @@
                 ],
                 labelHelpMessage: [
                   '1. Set `whitespace` in `formProp` true, it will treat whitespace as invalid input.',
-                  '2. Set `trim` in `componentProp` true, it will force to disable input whitespace.',
+                  '2. Set `trim` in `componentProp.valueModifiers` true, it will force to disable input whitespace.',
                 ],
               },
               componentProp: {

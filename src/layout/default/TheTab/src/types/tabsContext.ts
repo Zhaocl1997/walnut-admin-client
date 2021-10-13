@@ -1,6 +1,6 @@
 import type { ComputedRef, Ref } from '@vue/reactivity'
 import type { AppTab } from '.'
-import type { WScrollbarRef } from '/@/components/UI/Scrollbar'
+import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
 import { DeleteTabTypeEnum } from '/@/enums/tab'
 
 export interface TabsContext {

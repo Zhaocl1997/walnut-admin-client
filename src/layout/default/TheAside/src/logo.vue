@@ -22,7 +22,14 @@
       />
 
       <div
-        class="font-sans text-xl text-primary subpixel-antialiased not-italic font-bold text-center"
+        class="
+          font-sans
+          text-xl text-primary
+          subpixel-antialiased
+          not-italic
+          font-bold
+          text-center
+        "
       >
         Walnut Admin
       </div>

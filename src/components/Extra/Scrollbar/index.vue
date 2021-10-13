@@ -26,8 +26,6 @@
   export default defineComponent({
     name: 'WScrollbar',
 
-    inheritAttrs: false,
-
     props: {
       modelValue: Number as PropType<number>,
       vertical: Boolean as PropType<boolean>,

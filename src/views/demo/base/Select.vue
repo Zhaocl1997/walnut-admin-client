@@ -1,64 +1,58 @@
 <template>
   <w-demo-card title="Select">
-    <!-- <w-title show-left>Base 【{{ select1 }}】 </w-title>
-    <w-select v-model="select1" :options="options" value-type="number" />
+    <W-JSON :value="state" height="400px"></W-JSON>
 
-    <br />
-    <br />
+    <n-space vertical>
+      <w-select
+        v-model:value="state.select1"
+        :options="options"
+        clearable
+      ></w-select>
 
-    <w-title show-left>Object modelValue 【{{ select2 }}】 </w-title>
-    <w-select
-      v-model="select2"
-      :options="options"
-      value-key="value"
-      value-type="number"
-    />
+      <w-select
+        v-model:value="state.select2"
+        :options="options"
+        clearable
+      ></w-select>
 
-    <br />
-    <br />
+      <w-select
+        v-model:value="state.select3"
+        :options="options"
+        clearable
+        multiple
+      ></w-select>
 
-    <w-title show-left>Multiple 【{{ select3 }}】 </w-title>
-    <w-select
-      v-model="select3"
-      multiple
-      :options="options"
-      value-type="number"
-    />
+      <w-select
+        v-model:value="state.select4"
+        :options="options"
+        clearable
+        multiple
+      ></w-select>
 
-    <br />
-    <br />
-
-    <w-title show-left>Multiple Object 【{{ select4 }}】 </w-title>
-    <w-select
-      v-model="select4"
-      multiple
-      :options="options"
-      value-key="value"
-      value-type="number"
-      block
-    />
-
-    <br />
-    <br /> -->
+      <w-select
+        v-model:value="state.select5"
+        :options="options"
+        clearable
+        multiple
+        value-separator=","
+      ></w-select>
+    </n-space>
   </w-demo-card>
 </template>
 
 <script lang="ts">
-  import { toRefs, reactive, defineComponent } from 'vue'
+  import { reactive, defineComponent } from 'vue'
 
   export default defineComponent({
     name: 'SelectDemo',
 
     setup() {
-      const state = reactive({
+      const state = reactive<any>({
         select1: '1',
-        select2: { value: '6', label: 'label-6' },
-        select3: ['1', '2'],
-        select4: [
-          { value: '1', label: 'label-1' },
-          { value: '2', label: 'label-2' },
-        ],
-        select5: '1,3',
+        select2: 1,
+        select3: ['1', '3', '5'],
+        select4: [1, 3, 5],
+        select5: '2,4,6',
       })
 
       const options = []
@@ -77,7 +71,7 @@
       })
 
       return {
-        ...toRefs(state),
+        state,
         options,
       }
     },
