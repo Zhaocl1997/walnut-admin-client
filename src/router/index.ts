@@ -2,7 +2,7 @@ import type { App } from 'vue'
 import type { RouteLocationRaw, RouteRecordRaw } from 'vue-router'
 
 import { done } from 'nprogress'
-import { createRouter, createWebHistory, useRoute, useRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import { isInSetup } from '../utils/shared'
 import {

@@ -12,9 +12,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, computed } from 'vue'
-
-  import { useI18n } from '/@/locales'
   import { DarkModeEnum } from '/@/enums/dark'
   import { useDarkMode } from './useAppDarkMode'
 
@@ -24,7 +21,7 @@
     inheritAttrs: false,
 
     setup() {
-      const { t } = useI18n()
+      const { t } = useAppI18n()
       const { app } = useDarkMode()
 
       const darkModeOptions = computed(() => {

@@ -3,12 +3,7 @@
   import type { Menu } from '/@/router/types'
   import type { MenuOption } from 'naive-ui'
 
-  import { defineComponent, computed } from 'vue'
   import { findPath, formatTree } from 'easy-fns-ts'
-
-  import { useAppContext } from '/@/App'
-  import { useAppRouter, useRouterPush } from '/@/router'
-  import { useI18n } from '/@/locales'
 
   export default defineComponent({
     name: 'AsideMenu',
@@ -23,7 +18,7 @@
     setup(props) {
       const router = useAppRouter()
       const { app } = useAppContext()
-      const { t } = useI18n()
+      const { t } = useAppI18n()
 
       const getTranslatedMenus = computed(() =>
         formatTree(props.menus, {

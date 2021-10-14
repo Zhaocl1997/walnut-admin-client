@@ -1,4 +1,4 @@
-import { useFullscreen as VueUseFullScreen } from '@vueuse/core'
+import type { MaybeElementRef } from '@vueuse/core'
 import { toggleClass } from 'easy-fns-ts'
 
 export interface useFullScreenOptions {
@@ -8,9 +8,9 @@ export interface useFullScreenOptions {
   target?: string
 }
 
-export const useFullScreen = (opt: useFullScreenOptions) => {
-  const el = document.querySelector(opt.target!)
-  const { isFullscreen, toggle } = VueUseFullScreen(el)
+export const useAppFullScreen = (opt: useFullScreenOptions) => {
+  const el = document.querySelector(opt.target!) as MaybeElementRef
+  const { isFullscreen, toggle } = useFullscreen(el)
 
   return {
     isFullscreen,

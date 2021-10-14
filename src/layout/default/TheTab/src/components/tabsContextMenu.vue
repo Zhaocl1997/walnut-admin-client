@@ -3,7 +3,12 @@
     <div
       ref="tabsContextMenu"
       v-if="ctxMenuVisible"
-      class="border border-solid border-gray-600 border-opacity-50 rounded bg-primary p-1"
+      class="
+        border border-solid border-gray-600 border-opacity-50
+        rounded
+        bg-primary
+        p-1
+      "
       :style="getCtxMenuStyle"
     >
       <ul class="flex flex-col flex-wrap bg-primary">
@@ -23,7 +28,14 @@
           <w-icon :icon="item.icon" height="22"></w-icon>
 
           <span
-            class="whitespace-nowrap font-sans text-base text-primary antialiased m-1 select-none"
+            class="
+              whitespace-nowrap
+              font-sans
+              text-base text-primary
+              antialiased
+              m-1
+              select-none
+            "
             >{{ item.name }}</span
           >
         </li>
@@ -33,17 +45,12 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, ref } from 'vue'
-  import { onClickOutside } from '@vueuse/core'
-
   import { emptyFunction } from '/@/utils'
   import { DeleteTabTypeEnum } from '/@/enums/tab'
   import { useRedirect } from '/@/hooks/core/useRedirect'
 
   import { getTabsContext } from '../hooks/useTabsContext'
-  import { useFullScreen } from '/@/components/App/AppFullScreen/useFullScreen'
-  import { useAppRouter } from '/@/router'
-  import { useI18n } from '/@/locales'
+  import { useAppFullScreen } from '/@/components/App/AppFullScreen/useAppFullScreen'
 
   export default defineComponent({
     name: 'TabsContextMenu',
@@ -51,7 +58,7 @@
     inheritAttrs: false,
 
     setup() {
-      const { t } = useI18n()
+      const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
 
       const tabsContextMenu = ref(null)
@@ -152,7 +159,7 @@
             name: t('layout.tab.screenfull'),
             icon: 'ant-design:fullscreen-outlined',
             event: () => {
-              const { toggleFullScreen } = useFullScreen({
+              const { toggleFullScreen } = useAppFullScreen({
                 target: `#${currentTabName.value}`,
               })
 

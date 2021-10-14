@@ -4,7 +4,6 @@ import type { AxiosTransform } from './src/types'
 
 import { getToken } from '../auth'
 import { checkReponseErrorStatus } from './checkStatus'
-import { useRouterPush } from '/@/router'
 
 // custom transform for req and res interceptors
 export const transform: AxiosTransform = {
@@ -14,7 +13,7 @@ export const transform: AxiosTransform = {
 
     // carry token
     if (mergedCustomOptions.needAuth) {
-      getToken() && (config.headers['Authorization'] = `Bearer ${getToken()}`)
+      getToken() && (config.headers!['Authorization'] = `Bearer ${getToken()}`)
     }
 
     // Demonstrate purpose API
@@ -51,8 +50,8 @@ export const transform: AxiosTransform = {
     if (err.message === 'Demonstrate') {
       // ElNotification({ type: 'warning', message: 'Demonstrate Only!' })
     } else {
-      const statusCode = err.response?.data.statusCode
-      const msg = err.response?.data.detail.message
+      const statusCode = (err.response?.data as any).statusCode
+      const msg = (err.response?.data as any).detail.message
       checkReponseErrorStatus(statusCode, msg)
     }
 

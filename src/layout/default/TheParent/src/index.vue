@@ -14,8 +14,6 @@
 <script lang="ts">
   import type { VNode } from 'vue'
   import type { RouteLocationNormalized } from 'vue-router'
-  import { defineComponent, computed } from 'vue'
-  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     parentView: true,

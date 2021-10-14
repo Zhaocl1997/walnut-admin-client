@@ -1,9 +1,8 @@
 import type { App } from 'vue'
 import type { I18nOptions } from 'vue-i18n'
 
-import { createI18n, useI18n as useVueI18n } from 'vue-i18n'
+import { createI18n } from 'vue-i18n'
 
-import { useAppContext } from '/@/App'
 import { langLists, fallbackLocale, availableLocales } from './utils'
 
 /**
@@ -42,4 +41,4 @@ export const setupI18n = async (app: App) => {
 
 export { langLists }
 
-export const useI18n = () => useVueI18n()
+export const useAppI18n = () => useI18n()

@@ -9,9 +9,6 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, ref } from 'vue'
-
-  import { useForm } from '/@/components/UI/Form'
   import {
     TransitionEnum,
     TransitionName,

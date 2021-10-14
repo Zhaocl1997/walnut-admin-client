@@ -7,8 +7,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-  import { useTitle } from '/@/hooks/core/useTitle'
+  import { useAppTitle } from '/@/hooks/core/useTitle'
   import AppProvider from './AppProvider.vue'
   import UIProvider from './UIProvider.vue'
 
@@ -18,7 +17,7 @@
     components: { AppProvider, UIProvider },
 
     setup() {
-      useTitle()
+      useAppTitle()
 
       return {}
     },

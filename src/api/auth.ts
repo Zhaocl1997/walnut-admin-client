@@ -2,8 +2,6 @@ import type { Menu } from '/@/router/types'
 import type { SigninPayloadType } from '/@/store/types/user'
 import type { BaseListResponse } from '/@/utils/axios'
 
-import { AppAxios } from '/@/utils/axios'
-
 enum AuthEnum {
   SIGNIN = '/auth/signin',
   SIGNUP = '/auth/signup',

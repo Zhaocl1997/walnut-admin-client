@@ -5,8 +5,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-
   import { useTable } from '/@/components/UI/Table'
 
   export default defineComponent({

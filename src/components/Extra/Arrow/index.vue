@@ -1,6 +1,5 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
-  import { computed, defineComponent, unref } from 'vue'
 
   export default defineComponent({
     name: 'WHelpArrow',

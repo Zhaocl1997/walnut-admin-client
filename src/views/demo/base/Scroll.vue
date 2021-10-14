@@ -70,7 +70,6 @@
 
 <script lang="ts">
   import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
-  import { defineComponent, ref } from 'vue'
 
   export default defineComponent({
     name: 'ScrollDemo',

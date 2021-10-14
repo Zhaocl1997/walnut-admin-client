@@ -12,9 +12,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-  import { useAppContext } from '/@/App'
-
   export default defineComponent({
     name: 'HeaderCollapse',
 

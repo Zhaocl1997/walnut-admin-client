@@ -1,5 +1,4 @@
 import { DeleteTabTypeEnum } from '/@/enums/tab'
-import { useRouterPush } from '/@/router'
 import { tabActionDelete } from '/@/store/actions/tabs'
 
 export const useTabsActions = () => {

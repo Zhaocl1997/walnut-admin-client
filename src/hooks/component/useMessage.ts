@@ -1,5 +1,4 @@
 // import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
-import { useI18n } from '/@/locales'
 import { useDialog } from 'naive-ui'
 
 export const useMessage = (opt) => {
@@ -18,7 +17,7 @@ export const useNotification = (opt) => {
  * @description operations to confirm weather to continue, like delete or other important operations
  */
 export const useContinue = (msg: string) => {
-  const { t } = useI18n()
+  const { t } = useAppI18n()
   const dialog = useDialog()
 
   const goNext = () => {

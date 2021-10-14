@@ -15,10 +15,6 @@
 <script lang="tsx">
   import type { WForm } from '/@/components/UI/Form'
 
-  import { useForm } from '/@/components/UI/Form'
-
-  import { defineComponent, reactive, ref, computed, onMounted } from 'vue'
-  import { useI18n } from '/@/locales'
   import { getLocal } from '/@/utils/persistent'
   import { PersistentKeysEnum } from '/@/enums/persistent'
   import { userActionSignin } from '/@/store/actions/user'
@@ -29,7 +25,7 @@
     defaultView: false,
 
     setup() {
-      const { t } = useI18n()
+      const { t } = useAppI18n()
 
       const buttonLoading = ref(false)
 

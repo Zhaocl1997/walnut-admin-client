@@ -80,8 +80,6 @@
 
 <script lang="ts">
   import type { PropType } from 'vue'
-  import { defineComponent, reactive, toRefs, nextTick } from 'vue'
-  import { useDebounceFn } from '@vueuse/core'
 
   import { mockListApi } from '/@/utils/mockListApi'
   import iconLists from '../../UI/Icon/src/utils/list'

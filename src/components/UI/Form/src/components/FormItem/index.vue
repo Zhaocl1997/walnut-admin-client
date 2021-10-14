@@ -2,7 +2,6 @@
   import type { PropType } from 'vue'
   import type { WForm } from '../../types'
 
-  import { defineComponent } from 'vue'
   import { isFunction } from 'easy-fns-ts'
 
   import { componentMap } from './utils'

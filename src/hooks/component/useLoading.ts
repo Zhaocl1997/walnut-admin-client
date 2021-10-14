@@ -2,9 +2,6 @@ import type { Ref, VNode } from 'vue'
 
 // import { ElLoading } from 'element-plus'
 import { easyDeepMerge } from 'easy-fns-ts'
-import { ref } from 'vue'
-
-import { useI18n } from '/@/locales'
 
 export interface ElLoadingParentElement extends HTMLElement {
   vLoadingAddClassList?: () => void
@@ -45,7 +42,7 @@ export interface ElLoadingInstance {
 }
 
 export const useLoading = (options?: Partial<ElLoadingOptions>) => {
-  const { t } = useI18n()
+  const { t } = useAppI18n()
   const loading = ref(false)
 
   let instance: ElLoadingInstance | undefined

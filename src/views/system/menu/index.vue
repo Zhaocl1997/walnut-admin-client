@@ -43,7 +43,6 @@
 <script lang="ts">
   import type { Menu } from '/@/router/types'
 
-  import { defineComponent, onMounted, ref, nextTick } from 'vue'
   import { arrToTree, orderTree } from 'easy-fns-ts'
 
   import { menuAPI } from '/@/api/system/menu'

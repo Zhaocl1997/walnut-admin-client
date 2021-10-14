@@ -38,10 +38,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-  import { useRouterPush } from '/@/router'
   import { indexName } from '/@/router/constant'
-  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'AsideLogo',

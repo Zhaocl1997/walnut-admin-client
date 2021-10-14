@@ -1,7 +1,4 @@
 <script lang="tsx">
-  import { defineComponent, computed } from 'vue'
-
-  import { useAppRoute } from '/@/router'
   import { getMaybeI18nMsg } from '/@/locales/utils'
 
   export default defineComponent({

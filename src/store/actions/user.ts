@@ -1,12 +1,9 @@
 import type { SigninPayloadType } from '../types/user'
 
-import { useAppContext } from '/@/App'
-import { AppRouter } from '/@/router'
 import { getUserInfo, signin } from '/@/api/auth'
 import { PersistentKeysEnum } from '/@/enums/persistent'
 import { removeToken, setToken } from '/@/utils/auth'
 import { setLocal } from '/@/utils/persistent'
-import { useRouterPush } from '/@/router'
 import { authName, indexName, rootName } from '/@/router/constant'
 import { tabActionClear } from './tabs'
 import { menuActionPermissions } from './menu'

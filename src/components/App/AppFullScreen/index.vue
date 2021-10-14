@@ -1,8 +1,7 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
-  import { defineComponent } from 'vue'
 
-  import { useFullScreen } from './useFullScreen'
+  import { useAppFullScreen } from './useAppFullScreen'
 
   export default defineComponent({
     name: 'AppFullScreen',
@@ -23,7 +22,7 @@
 
     setup(props) {
       const { width } = props
-      const { isFullscreen, toggleFullScreen } = useFullScreen(props)
+      const { isFullscreen, toggleFullScreen } = useAppFullScreen(props)
 
       return () => (
         <w-icon

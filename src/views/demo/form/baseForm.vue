@@ -21,8 +21,6 @@
 <script lang="tsx">
   import type { WForm } from '/@/components/UI/Form'
 
-  import { defineComponent, computed, ref } from 'vue'
-
   import { options } from '../data'
 
   export default defineComponent({

@@ -1,7 +1,5 @@
 import type { AppTab } from '/@/layout/default/TheTab'
 
-import { useAppContext } from '/@/App'
-import { useRouterPush } from '/@/router'
 import { indexName, notFoundName, redirectName } from '/@/router/constant'
 
 import { SymbolKeyEnum } from '/@/enums/symbol'

@@ -38,12 +38,9 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
   import HeaderAvatar from './avatar.vue'
-  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'Header',

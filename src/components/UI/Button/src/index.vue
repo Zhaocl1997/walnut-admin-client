@@ -1,9 +1,5 @@
 <script lang="tsx">
   import type { WButtonProps } from './types'
-  import { computed, defineComponent, unref, ref } from 'vue'
-
-  import { useDebounceFn } from '@vueuse/core'
-  import { useI18n } from '/@/locales'
 
   import { props } from './props'
 
@@ -15,7 +11,7 @@
     emits: ['click'],
 
     setup(props: WButtonProps, { attrs, slots, emit, expose }) {
-      const { t } = useI18n()
+      const { t } = useAppI18n()
 
       const disabled = ref(false)
 

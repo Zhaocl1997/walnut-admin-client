@@ -2,7 +2,6 @@
   import type { PropType } from 'vue'
 
   import { genString } from 'easy-fns-ts'
-  import { defineComponent, computed, ref, watchEffect } from 'vue'
   import { highlightSyntax } from './utils'
 
   export default defineComponent({

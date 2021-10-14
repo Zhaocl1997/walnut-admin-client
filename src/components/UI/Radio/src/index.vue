@@ -1,7 +1,6 @@
 <script lang="tsx">
   import type { WRadioProps } from './types'
 
-  import { defineComponent } from 'vue'
   import { props } from './props'
 
   export default defineComponent({

@@ -1,12 +1,7 @@
 import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
 import type { AppTab } from '../types'
 
-import { watchEffect, ref, nextTick, computed } from 'vue'
-
-import { useAppRoute, useAppRouter } from '/@/router'
-
 import { calcIndex, createTab } from '../utils'
-import { useAppContext } from '/@/App'
 import { tabActionCreate } from '/@/store/actions/tabs'
 
 /**

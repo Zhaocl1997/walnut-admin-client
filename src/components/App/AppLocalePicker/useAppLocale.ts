@@ -1,6 +1,5 @@
 import type { AppLocaleType } from '/@/App/src/types'
 
-import { nextTick } from 'vue'
 import { AppI18n } from '/@/locales'
 
 /**

@@ -3,15 +3,11 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-
-  import { useRouter } from 'vue-router'
-
   export default defineComponent({
     name: 'Redirect',
 
     setup() {
-      const { currentRoute, replace } = useRouter()
+      const { currentRoute, replace } = useAppRouter()
 
       const { params, query } = currentRoute.value
       const { path } = params

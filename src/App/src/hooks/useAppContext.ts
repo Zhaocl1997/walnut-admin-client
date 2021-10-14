@@ -1,9 +1,6 @@
 import type { ToRefs } from 'vue'
 import type { AppContext } from '../types'
 
-import { getCurrentInstance } from 'vue'
-
-import { useContext } from '/@/hooks/core/useContext'
 import { appKey } from '../utils/InjectionKey'
 import { AppGlobalContext } from '/@/store/ctx'
 

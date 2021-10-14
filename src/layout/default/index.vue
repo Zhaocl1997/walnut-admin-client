@@ -51,8 +51,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-
   import TheAside from './TheAside'
   import TheHeader from './TheHeader'
   import TheContent from './TheContent'

@@ -1,6 +1,5 @@
 import type { AppContext } from '/@/App'
 
-import { reactive } from 'vue'
 import { getToken } from '../utils/auth'
 
 /**

@@ -1,6 +1,3 @@
-import { tryOnMounted } from '@vueuse/core'
-
-import { useAppContext } from '/@/App'
 import { useResize } from '/@/hooks/core/useResize'
 import { useBreakpoints } from '/@/hooks/core/useBreakpoints'
 

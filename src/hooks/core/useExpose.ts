@@ -1,5 +1,3 @@
-import { getCurrentInstance } from 'vue'
-
 export interface useExposeOptions<T> {
   /**
    * @description Custom apis want to expose

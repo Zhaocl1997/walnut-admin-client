@@ -1,6 +1,5 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
-  import { defineComponent, ref } from 'vue'
 
   import { useFormContext } from '../../hooks/useFormContext'
 

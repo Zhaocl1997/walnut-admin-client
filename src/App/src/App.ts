@@ -2,7 +2,6 @@ import type { App } from 'vue'
 
 import { setupI18n } from '/@/locales'
 import { setupRouter } from '/@/router'
-import { setupStore } from '/@/store'
 import { setupDirectives } from '/@/directives'
 
 import { appError, appWarning } from '/@/utils/log'
@@ -25,8 +24,6 @@ const setupErrorhandler = (app: App) => {
  */
 export const setupApp = async (app: App) => {
   await setupI18n(app)
-
-  // setupStore(app)
 
   setupRouter(app)
 

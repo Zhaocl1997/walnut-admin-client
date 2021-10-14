@@ -29,7 +29,6 @@
 </template>
 
 <script lang="ts">
-  import { ref, defineComponent } from 'vue'
   import SignIn from './signin.vue'
   import SignUp from './signup.vue'
 

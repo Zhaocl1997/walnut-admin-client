@@ -1,8 +1,6 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
-  import { defineComponent, ref } from 'vue'
-  import { useDebounceFn } from '@vueuse/core'
-  import { ScrollbarInst } from 'naive-ui'
+  import type { ScrollbarInst } from 'naive-ui'
 
   import { useExpose } from '/@/hooks/core/useExpose'
 

@@ -1,5 +1,5 @@
 import type { Slots } from 'vue'
-import { getCurrentInstance, renderSlot } from 'vue'
+import { renderSlot } from 'vue'
 import { appError } from './log'
 
 export const getDefaultSlotText = (slots: Slots): string => {

@@ -1,5 +1,3 @@
-import { computed, reactive, ref } from 'vue'
-
 export const useTabsContextMenu = () => {
   const ctxMenuVisible = ref(false)
   const currentTabName = ref('')

@@ -1,15 +1,10 @@
-import { watch } from 'vue'
-import { useTitle as VueUseTitle } from '@vueuse/core'
-import { useAppRouter } from '/@/router'
-import { useI18n } from '/@/locales'
-
 /**
  * @description reactive document title
  */
-export const useTitle = () => {
-  const title = VueUseTitle()
+export const useAppTitle = () => {
+  const title = useTitle()
 
-  const { t, locale } = useI18n()
+  const { t, locale } = useAppI18n()
   const { currentRoute } = useAppRouter()
 
   watch(

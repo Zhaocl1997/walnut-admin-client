@@ -24,8 +24,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-
   import TabsContentMain from './components/tabsContentMain.vue'
   import TabsContentLeft from './components/tabsContentLeft.vue'
   import TabsContentRight from './components/tabsContentRight.vue'

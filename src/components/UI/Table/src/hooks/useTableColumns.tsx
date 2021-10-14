@@ -1,10 +1,7 @@
 import type { ComputedRef } from 'vue'
 import type { WTable } from '../types'
 
-import { ref, watchEffect } from 'vue'
 import { NButton, NSpace } from 'naive-ui'
-
-import WIcon from '/@/components/UI/Icon'
 
 export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
   const columns = ref<WTable.Columns>([])
@@ -33,7 +30,7 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
           ...item,
           key: 'ExtendIcon',
           render() {
-            return <WIcon icon={item.extendIconName}></WIcon>
+            return <w-icon icon={item.extendIconName}></w-icon>
           },
         }
       }

@@ -68,8 +68,6 @@
 </template>
 
 <script lang="ts">
-  import { reactive, defineComponent } from 'vue'
-
   export default defineComponent({
     name: 'InputDemo',
 

@@ -2,8 +2,6 @@ import { easyDeepSet } from 'easy-fns-ts'
 
 import { LocaleEnum } from '/@/enums/locale'
 
-import { useI18n } from './index'
-
 /**
  * @description Get locale messages include ElementPlus locale
  */
@@ -67,6 +65,6 @@ export const t = (key: string) => key
  * @description Dummy way to get real message.
  */
 export const getMaybeI18nMsg = (field?: string) => {
-  const { t } = useI18n()
+  const { t } = useAppI18n()
   return field && field.includes('.') ? t(field!) : field
 }

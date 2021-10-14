@@ -1,6 +1,6 @@
 import type { MaybeRef } from '/~/utils'
 
-import { getCurrentInstance, capitalize, unref } from 'vue'
+import { capitalize } from 'vue'
 
 export interface useEventParams<N = string, P = any> {
   name: N

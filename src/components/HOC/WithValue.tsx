@@ -1,7 +1,5 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 
-import { ref, defineComponent, onMounted } from 'vue'
-
 const props = {
   valueType: {
     type: String as PropType<'string' | 'number'>,

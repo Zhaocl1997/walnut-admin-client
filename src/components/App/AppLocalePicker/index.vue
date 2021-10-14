@@ -10,10 +10,8 @@
 
 <script lang="ts">
   import type { PropType } from 'vue'
-  import { defineComponent, watchEffect } from 'vue'
 
   import { langLists } from '/@/locales'
-  import { useAppContext } from '/@/App'
   import { useLocale } from './useAppLocale'
 
   export default defineComponent({

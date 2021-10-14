@@ -2,7 +2,6 @@ import type { WForm } from '../types'
 import type { ComputedRef, Ref } from 'vue'
 import type { ModalProps } from 'naive-ui'
 
-import { ref, nextTick } from 'vue'
 import {
   NModal,
   NDrawer,

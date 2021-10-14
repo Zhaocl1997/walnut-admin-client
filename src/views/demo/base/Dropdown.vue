@@ -35,8 +35,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, computed, toRefs } from 'vue'
-
   export default defineComponent({
     name: 'DropdownDemo',
 

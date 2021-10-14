@@ -1,6 +1,5 @@
 <script lang="tsx">
   import type { WInputProps } from './types'
-  import { computed, defineComponent, unref } from 'vue'
 
   import { clearIllegalChars, upperFirst } from 'easy-fns-ts'
   import { props } from './props'

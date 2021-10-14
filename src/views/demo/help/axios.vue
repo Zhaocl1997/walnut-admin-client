@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, h } from 'vue'
   import { HelloAPI } from '/@/api'
 
   const Hello = defineComponent({

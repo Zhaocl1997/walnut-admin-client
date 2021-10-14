@@ -2,9 +2,7 @@ import type { Router } from 'vue-router'
 import { easyIsEmpty } from 'easy-fns-ts'
 
 import { authPath, rootName, networkErrorPath } from '../constant'
-import { AppRouter } from '/@/router'
 import { menuActionPermissions } from '/@/store/actions/menu'
-import { useAppContext } from '/@/App'
 import { userActionInfo } from '/@/store/actions/user'
 
 const whiteLists: string[] = [authPath, networkErrorPath]

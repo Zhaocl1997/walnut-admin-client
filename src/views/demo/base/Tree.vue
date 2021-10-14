@@ -20,11 +20,8 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, reactive, toRefs } from 'vue'
-
   import { appInfo, appTable } from '/@/utils/log'
   // import { useTree } from '/@/components/UI/Tree'
-  import { useForm } from '/@/components/UI/Form'
   import { useMessage, useNotification } from '/@/hooks/component/useMessage'
 
   import { getTreeData } from '../data'

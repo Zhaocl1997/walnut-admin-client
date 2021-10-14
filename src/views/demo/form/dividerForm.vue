@@ -9,10 +9,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, computed } from 'vue'
-
-  import { useForm } from '/@/components/UI/Form'
-
   export default defineComponent({
     name: 'DividerForm',
 

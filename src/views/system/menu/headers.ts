@@ -1,7 +1,7 @@
 import type { WTable } from '../../../components/UI/Table'
+import type { Menu } from '/@/router/types'
 import { formatTime } from 'easy-fns-ts'
 import { getMaybeI18nMsg } from '/@/locales/utils'
-import { Menu } from '/@/router/types'
 
 export const getMenuTableHeaders = (): WTable.Header.Item.Props<Menu>[] => {
   return [

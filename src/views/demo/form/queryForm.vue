@@ -44,9 +44,6 @@
 </template>
 
 <script lang="tsx">
-  import { computed, defineComponent, ref } from 'vue'
-  import { useForm } from '/@/components/UI/Form'
-
   export default defineComponent({
     name: 'QueryForm',
 

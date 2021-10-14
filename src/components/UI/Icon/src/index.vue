@@ -4,7 +4,6 @@
 
 <script lang="ts">
   import { Icon as IconifyVueComponent } from '@iconify/vue'
-  import { defineComponent } from 'vue'
 
   export default defineComponent({
     name: 'WIcon',

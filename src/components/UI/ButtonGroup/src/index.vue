@@ -1,7 +1,6 @@
 <script lang="tsx">
   import type { WButtonGroupProps } from './types'
 
-  import { defineComponent } from 'vue'
   import { props } from './props'
 
   export default defineComponent({

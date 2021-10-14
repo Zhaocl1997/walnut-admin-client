@@ -4,7 +4,6 @@
 
 <script lang="ts">
   import type { SetupContext } from 'vue'
-  import { defineComponent } from 'vue'
 
   export default defineComponent({
     name: '500',

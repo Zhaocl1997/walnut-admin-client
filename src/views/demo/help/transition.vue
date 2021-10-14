@@ -9,9 +9,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref } from 'vue'
   import { TransitionEnum } from '/@/components/Extra/Transition'
-  import { useForm } from '/@/components/UI/Form'
 
   const options: OptionDataItem[] = Object.entries(TransitionEnum).map(
     ([key, value]) => ({

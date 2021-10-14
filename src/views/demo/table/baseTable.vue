@@ -5,8 +5,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, h } from 'vue'
-
   import { NTag, NButton, useMessage } from 'naive-ui'
 
   export default defineComponent({

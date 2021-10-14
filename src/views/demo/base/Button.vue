@@ -28,24 +28,17 @@
 </template>
 
 <script lang="ts">
-  import { ref, defineComponent } from 'vue'
-
-  export default defineComponent({
+  export default {
     name: 'ButtonDemo',
+  }
+</script>
 
-    setup() {
-      const value = ref(0)
+<script setup lang="ts">
+  const value = ref(0)
 
-      const onClick = () => {
-        value.value++
-      }
-
-      return {
-        value,
-        onClick,
-      }
-    },
-  })
+  const onClick = () => {
+    value.value++
+  }
 </script>
 
 <style lang="scss" scoped></style>

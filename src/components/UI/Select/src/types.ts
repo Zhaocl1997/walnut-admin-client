@@ -1,6 +1,6 @@
 import type { SelectProps } from 'naive-ui'
 import type { ExtractPropTypes } from 'vue'
-import type { WithValueProp } from '../../../HOC/WithValue'
+import type { WithValueProp } from '/@/components/HOC/WithValue'
 
 import { props } from './props'
 

@@ -1,8 +1,6 @@
 <script lang="tsx">
   import type { WTable } from '../src/types'
 
-  import { defineComponent, unref } from 'vue'
-
   import { useProps } from '/@/hooks/core/useProps'
 
   import { useTableEvents } from './hooks/useTableEvents'

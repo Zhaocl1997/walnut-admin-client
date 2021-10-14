@@ -12,9 +12,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, computed, ref, onMounted, nextTick } from 'vue'
   import { useLoading } from '/@/hooks/component/useLoading'
-  import { useAppRouter } from '/@/router'
 
   export default defineComponent({
     name: 'Link',

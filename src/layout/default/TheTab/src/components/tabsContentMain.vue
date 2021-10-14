@@ -49,7 +49,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
   import { getMaybeI18nMsg } from '/@/locales/utils'
   import { indexName } from '/@/router/constant'
 

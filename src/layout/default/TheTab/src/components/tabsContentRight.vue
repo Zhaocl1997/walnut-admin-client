@@ -17,8 +17,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-
   import { getTabsContext } from '../hooks/useTabsContext'
 
   export default defineComponent({

@@ -27,7 +27,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, toRefs } from 'vue'
   import { getTreeData } from '../data'
 
   export default defineComponent({

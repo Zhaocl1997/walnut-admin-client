@@ -1,8 +1,6 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
 
-  import { defineComponent, ref, unref, computed } from 'vue'
-  import { useI18n } from '/@/locales'
   import { useFormContext } from '../../hooks/useFormContext'
 
   export default defineComponent({
@@ -14,7 +12,7 @@
     },
 
     setup(props, { attrs, slots, emit, expose }) {
-      const { t } = useI18n()
+      const { t } = useAppI18n()
 
       const loading = ref(false)
 

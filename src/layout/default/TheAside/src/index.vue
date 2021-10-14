@@ -11,11 +11,8 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-
   import AsideMenu from './menu.vue'
   import AsideLogo from './logo.vue'
-  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'Aside',

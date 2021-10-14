@@ -1,4 +1,3 @@
-import { AppRouter } from '/@/router'
 import { redirectPath } from '/@/router/constant'
 
 /**

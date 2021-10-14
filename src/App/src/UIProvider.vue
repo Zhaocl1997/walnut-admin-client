@@ -1,9 +1,6 @@
 <script lang="tsx">
-  import { defineComponent } from 'vue'
   import { darkTheme } from 'naive-ui'
   import { zhCN, dateZhCN } from 'naive-ui'
-
-  import { useAppContext } from '/@/App'
 
   export default defineComponent({
     name: 'UIProvider',

@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import { defineComponent, Transition, TransitionGroup, renderSlot } from 'vue'
+import { Transition, TransitionGroup, renderSlot } from 'vue'
 
 export type TransitionMode = 'in-out' | 'out-in' | 'default'
 export type TransitionName =

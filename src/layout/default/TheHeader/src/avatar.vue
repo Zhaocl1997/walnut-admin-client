@@ -16,10 +16,8 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, computed, reactive } from 'vue'
   import { upperFirst } from 'easy-fns-ts'
 
-  import { useAppContext } from '/@/App'
   import { userActionSignOut } from '/@/store/actions/user'
   import { useContinue } from '/@/hooks/component/useMessage'
 
