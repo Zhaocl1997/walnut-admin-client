@@ -3,8 +3,7 @@ import type { AxiosAdapterOptions, AxiosRequestConfigExtend } from './types'
 
 import { Memory } from '../../memory'
 
-// axios memory default 5000 ms
-const httpMempry = new Memory<any, any>(5000)
+const httpMempry = new Memory<any, any>()
 
 /**
  * @description generate request key

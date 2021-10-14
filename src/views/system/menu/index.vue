@@ -46,7 +46,6 @@
   import { arrToTree, orderTree } from 'easy-fns-ts'
 
   import { menuAPI } from '/@/api/system/menu'
-  import { useMessage } from '/@/hooks/component/useMessage'
 
   import { useTable } from '/@/components/UI/Table'
   // import { useDialog } from '/@/components/UI/Dialog'
@@ -117,7 +116,7 @@
           loadStart()
           const newData = Object.assign(row, { [prop]: newValue })
           await menuAPI.update(newData)
-          useMessage({ type: 'success', message: 'Operation Success!' })
+          useAppMessage({ type: 'success', message: 'Operation Success!' })
           loadEnd()
         },
       })
@@ -165,7 +164,7 @@
 
         if (next) {
           await menuAPI.delete(id)
-          useMessage({ type: 'success', message: 'Operation Success!' })
+          useAppMessage({ type: 'success', message: 'Operation Success!' })
           await onGetList()
         }
       }
@@ -197,10 +196,10 @@
         if (valid) {
           if (menuFormData.value._id) {
             await menuAPI.update(menuFormData.value)
-            useMessage({ type: 'success', message: 'Operation Success!' })
+            useAppMessage({ type: 'success', message: 'Operation Success!' })
           } else {
             await menuAPI.create(menuFormData.value)
-            useMessage({ type: 'success', message: 'Operation Success!' })
+            useAppMessage({ type: 'success', message: 'Operation Success!' })
           }
 
           onDialogCancel()

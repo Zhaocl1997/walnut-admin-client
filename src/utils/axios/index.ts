@@ -15,13 +15,11 @@ const baseURL = `${import.meta.env.VITE_PROXY}${getApiPrefix(
   import.meta.env.VITE_API_VERSION
 )}`
 
-// time out , default 10 seconds
-const timeout = 10 * 1000
-
 const axiosConfig: AxiosRequestConfigExtend = {
   baseURL,
 
-  timeout,
+  // time out, default is 10s
+  timeout: Number(import.meta.env.VITE_AXIOS_TIMEOUT),
 
   transform,
 
@@ -40,9 +38,9 @@ const axiosConfig: AxiosRequestConfigExtend = {
     cache: false,
   },
 
-  // adapter for cache
+  // adapter for cache, default is 5s
   adapter: cacheAdapterEnhancer(axios.defaults.adapter!, {
-    maxAge: 5000,
+    maxAge: Number(import.meta.env.VITE_AXIOS_CACHE_MAXAGE),
   }),
 }
 

@@ -20,7 +20,7 @@ export class Memory<T, V> {
   private maxAge: number
 
   constructor(maxAge = 0) {
-    this.maxAge = maxAge * 1000
+    this.maxAge = maxAge
   }
 
   set<K extends keyof T>(key: K, value: V, expires?: number) {

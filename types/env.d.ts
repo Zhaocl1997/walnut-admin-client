@@ -5,4 +5,8 @@ interface ImportMetaEnv {
   VITE_API_PREFIX: string
   VITE_API_VERSION: number
   VITE_PUBLIC_PATH: string
+  VITE_CRYRTO_KEY: string
+  VITE_CRYRTO_IV: string
+  VITE_AXIOS_TIMEOUT: number
+  VITE_AXIOS_CACHE_MAXAGE: number
 }

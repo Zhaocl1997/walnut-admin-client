@@ -22,7 +22,6 @@
 <script lang="ts">
   import { appInfo, appTable } from '/@/utils/log'
   // import { useTree } from '/@/components/UI/Tree'
-  import { useMessage, useNotification } from '/@/hooks/component/useMessage'
 
   import { getTreeData } from '../data'
 
@@ -193,14 +192,14 @@
                   text: 'GetCurrentKey',
                   onClick: () => {
                     if (!state.tree1) {
-                      useMessage({
+                      useAppMessage({
                         type: 'info',
                         message: 'Please select one tree node!',
                       })
                       return
                     }
                     const key = getCurrentKey()
-                    useNotification({
+                    useAppNotification({
                       type: 'success',
                       title: 'Tree Key',
                       message: key as string,
@@ -212,7 +211,7 @@
                   text: 'GetCurrentNode',
                   onClick: () => {
                     if (!state.tree1) {
-                      useMessage({
+                      useAppMessage({
                         type: 'info',
                         message: 'Please select one tree node!',
                       })
@@ -221,7 +220,7 @@
 
                     const node = getCurrentNode()
 
-                    useNotification({
+                    useAppNotification({
                       type: 'success',
                       title: 'Tree Node',
                       message: JSON.stringify(node),
@@ -251,7 +250,7 @@
                   text: 'GetNode(key)',
                   onClick: () => {
                     if (!state.tree1) {
-                      useMessage({
+                      useAppMessage({
                         type: 'info',
                         message: 'Please select one tree node!',
                       })
@@ -267,7 +266,7 @@
                   text: 'GetNode(node)',
                   onClick: () => {
                     if (!state.tree1) {
-                      useMessage({
+                      useAppMessage({
                         type: 'info',
                         message: 'Please select one tree node!',
                       })
@@ -359,7 +358,7 @@
                   text: 'GetCheckedNodes',
                   onClick: () => {
                     if (state.tree2.length === 0) {
-                      useMessage({
+                      useAppMessage({
                         type: 'info',
                         message: 'Please select nodes!',
                       })
@@ -387,7 +386,7 @@
                   text: 'GetCheckedKeys',
                   onClick: () => {
                     if (state.tree2.length === 0) {
-                      useMessage({
+                      useAppMessage({
                         type: 'info',
                         message: 'Please select nodes!',
                       })
@@ -428,7 +427,7 @@
                   text: 'GetHalfCheckedNodes',
                   onClick: () => {
                     if (state.tree2.length === 0) {
-                      useMessage({
+                      useAppMessage({
                         type: 'info',
                         message: 'Please select nodes!',
                       })
@@ -445,7 +444,7 @@
                   text: 'GetHalfCheckedKeys',
                   onClick: () => {
                     if (state.tree2.length === 0) {
-                      useMessage({
+                      useAppMessage({
                         type: 'info',
                         message: 'Please select nodes!',
                       })
