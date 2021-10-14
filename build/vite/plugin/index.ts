@@ -10,12 +10,16 @@ import { createVisualizerPlugin } from './visualizer'
 import { createCompressionPlugin } from './compression'
 import { createHTMLPlugin } from './html'
 import { createI18nPlugin } from './i18n'
+import { creatAutoImportPlugin } from './auto-import'
 
 export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   const vitePlugins: (Plugin | Plugin[])[] = [vue(), vueJsx()]
 
   const stage = mode === 'staging'
   const prod = mode === 'production'
+
+  // https://github.com/antfu/unplugin-auto-import
+  vitePlugins.push(creatAutoImportPlugin())
 
   // https://github.com/antfu/unplugin-vue-components
   vitePlugins.push(createComponentPlugin())
