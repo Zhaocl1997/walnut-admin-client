@@ -19,7 +19,6 @@
   import { upperFirst } from 'easy-fns-ts'
 
   import { userActionSignOut } from '/@/store/actions/user'
-  import { useContinue } from '/@/hooks/component/useMessage'
 
   export default defineComponent({
     name: 'HeaderAvatar',

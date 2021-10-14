@@ -1,45 +1,42 @@
 <template>
   <div class="h-full w-full">
     <div id="internal-iframe" class="h-full w-full">
-      <iframe
-        ref="iframeRef"
-        :src="src"
-        frameborder="0"
-        class="h-full w-full"
-      ></iframe>
+      <n-spin :show="show">
+        <iframe
+          ref="iframeRef"
+          :src="src"
+          frameborder="0"
+          class="h-full w-full"
+        ></iframe>
+      </n-spin>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { useLoading } from '/@/hooks/component/useLoading'
-
   export default defineComponent({
     name: 'Link',
 
     setup() {
       const iframeRef = ref(null)
+      const show = ref(false)
 
       const { currentRoute } = useAppRouter()
-      const { startLoading, endLoading } = useLoading({
-        target: '#internal-iframe',
-      })
 
       const src = computed(() => currentRoute.value.meta.url)
 
       onMounted(() => {
-        startLoading()
+        show.value = true
         nextTick(() => {
           ;(iframeRef.value! as any).onload = () => {
-            setTimeout(() => {
-              endLoading()
-            }, 1000)
+            show.value = false
           }
         })
       })
 
       return {
         iframeRef,
+        show,
         src,
       }
     },

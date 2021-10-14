@@ -4,14 +4,14 @@
   </w-demo-card>
 </template>
 
-<script lang="ts">
-  import { NTag, NButton, useMessage } from 'naive-ui'
+<script lang="tsx">
+  import { NTag } from 'naive-ui'
 
   export default defineComponent({
     name: 'BaseTable',
 
     setup() {
-      const message = useMessage()
+      const message = useAppMessage()
 
       return {
         columns: [
@@ -52,14 +52,14 @@
             title: 'Action',
             key: 'actions',
             render(row) {
-              return h(
-                NButton,
-                {
-                  size: 'small',
-                  onClick: () => message.info('send mail to ' + row.name),
-                },
-                { default: () => 'Send Email' }
-              )
+              return h(() => (
+                <n-button
+                  size="small"
+                  onClick={() => message.info('send mail to ' + row.name)}
+                >
+                  Send Email
+                </n-button>
+              ))
             },
           },
         ],

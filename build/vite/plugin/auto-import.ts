@@ -2,7 +2,7 @@ import type { Plugin } from 'vite'
 
 import AutoImport from 'unplugin-auto-import/vite'
 
-// TODO waiting for type auto import
+// TODO waiting for types auto import
 export const creatAutoImportPlugin = (): Plugin => {
   return AutoImport({
     include: [
@@ -12,10 +12,13 @@ export const creatAutoImportPlugin = (): Plugin => {
       /\.md$/, // .md
     ],
     imports: [
+      // presets
       'vue',
       'vue-router',
       'vue-i18n',
       '@vueuse/core',
+
+      // custom
       {
         '/@/App': ['useAppContext'],
         '/@/locales': ['useAppI18n'],
@@ -26,6 +29,12 @@ export const creatAutoImportPlugin = (): Plugin => {
           'useRouterPush',
         ],
         '/@/hooks/core/useContext': ['useContext'],
+        '/@/hooks/component/useMessage': [
+          'useAppMessage',
+          'useAppNotification',
+          'useAppDialog',
+          'useContinue',
+        ],
         '/@/utils/axios': ['AppAxios'],
         '/@/components/UI/Form': ['useForm'],
       },

@@ -1,16 +1,13 @@
-// import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
-import { useDialog } from 'naive-ui'
-
-export const useMessage = (opt) => {
-  // return ElMessage(opt)
+export const useAppMessage = () => {
+  return window.$message
 }
 
-export const useMessageBox = (opt) => {
-  // return ElMessageBox(opt)
+export const useAppNotification = () => {
+  return window.$notification
 }
 
-export const useNotification = (opt) => {
-  // return ElNotification(opt)
+export const useAppDialog = () => {
+  return window.$dialog
 }
 
 /**
@@ -18,10 +15,10 @@ export const useNotification = (opt) => {
  */
 export const useContinue = (msg: string) => {
   const { t } = useAppI18n()
-  const dialog = useDialog()
+  const dialog = useAppDialog()
 
-  const goNext = () => {
-    return new Promise((res) => {
+  const goNext = () =>
+    new Promise((res) => {
       dialog.warning({
         title: t('component.base.message.warning'),
         content: msg,
@@ -35,7 +32,6 @@ export const useContinue = (msg: string) => {
         },
       })
     })
-  }
 
   return {
     goNext,

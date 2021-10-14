@@ -46,7 +46,7 @@
   import { arrToTree, orderTree } from 'easy-fns-ts'
 
   import { menuAPI } from '/@/api/system/menu'
-  import { useMessage, useContinue } from '/@/hooks/component/useMessage'
+  import { useMessage } from '/@/hooks/component/useMessage'
 
   import { useTable } from '/@/components/UI/Table'
   // import { useDialog } from '/@/components/UI/Dialog'
