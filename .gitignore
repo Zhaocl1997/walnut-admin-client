@@ -5,3 +5,5 @@ dist-ssr
 *.local
 report/*
 !report/*.md
+types/auto-import.d.ts
+types/components.d.ts
