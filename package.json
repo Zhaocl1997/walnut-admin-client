@@ -32,7 +32,6 @@
     "axios": "^0.23.0",
     "crypto-js": "^4.1.1",
     "easy-fns-ts": "^1.0.23",
-    "nprogress": "^0.2.0",
     "vue": "^3.2.20",
     "vue-i18n": "^9.1.6",
     "vue-router": "^4.0.8"
@@ -57,7 +56,7 @@
     "@vitejs/plugin-vue-jsx": "^1.2.0",
     "@vue/compiler-sfc": "^3.2.20",
     "chalk": "^4.1.2",
-    "commitizen": "^3.0.0",
+    "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.1.1",
     "cz-customizable": "^5.5.0",
     "eslint": "^8.0.0",

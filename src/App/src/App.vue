@@ -1,7 +1,9 @@
 <template>
   <AppProvider>
     <UIProvider>
-      <RouterView></RouterView>
+      <MsgProvider>
+        <RouterView></RouterView>
+      </MsgProvider>
     </UIProvider>
   </AppProvider>
 </template>
@@ -10,11 +12,12 @@
   import { useAppTitle } from '/@/hooks/core/useTitle'
   import AppProvider from './AppProvider.vue'
   import UIProvider from './UIProvider.vue'
+  import MsgProvider from './MsgProvider.vue'
 
   export default defineComponent({
     name: 'App',
 
-    components: { AppProvider, UIProvider },
+    components: { AppProvider, UIProvider, MsgProvider },
 
     setup() {
       useAppTitle()
