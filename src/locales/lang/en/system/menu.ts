@@ -75,4 +75,6 @@ export default {
       iconify: 'Iconify OWS',
     },
   },
+
+  error: 'Page is under construction...',
 }

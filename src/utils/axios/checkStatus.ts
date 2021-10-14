@@ -1,12 +1,13 @@
-// import { ElNotification } from 'element-plus'
-import { AppI18n } from '/@/locales'
 import { userActionSignOut } from '/@/store/actions/user'
 
+let notiInst: any = undefined
+
 const responseError = (msg: string) => {
-  // ElNotification({
-  //   type: 'error',
-  //   title: msg,
-  // })
+  if (notiInst) {
+    return
+  }
+
+  notiInst = useAppNotification().error({ title: msg })
 }
 
 export const checkReponseErrorStatus = (status?: number, msg?: string) => {

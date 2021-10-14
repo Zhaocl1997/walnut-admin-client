@@ -21,7 +21,7 @@ export const creatAutoImportPlugin = (): Plugin => {
       // custom
       {
         '/@/App': ['useAppContext'],
-        '/@/locales': ['useAppI18n'],
+        '/@/locales': ['useAppI18n', 'AppI18n'],
         '/@/router': [
           'AppRouter',
           'useAppRoute',

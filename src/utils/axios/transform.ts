@@ -1,7 +1,5 @@
 import type { AxiosTransform } from './src/types'
 
-// import { ElNotification } from 'element-plus'
-
 import { getToken } from '../auth'
 import { checkReponseErrorStatus } from './checkStatus'
 
@@ -35,7 +33,7 @@ export const transform: AxiosTransform = {
     if (code === 200) {
       return Promise.resolve(data)
     } else {
-      // ElNotification({ type: 'error', message: msg })
+      useAppNotification().error({ title: msg })
       return Promise.reject()
     }
   },
@@ -48,10 +46,10 @@ export const transform: AxiosTransform = {
     }
 
     if (err.message === 'Demonstrate') {
-      // ElNotification({ type: 'warning', message: 'Demonstrate Only!' })
+      useAppNotification().error({ title: 'Demonstrate Only!' })
     } else {
       const statusCode = (err.response?.data as any).statusCode
-      const msg = (err.response?.data as any).detail.message
+      const msg = (err.response?.data as any).detail?.message
       checkReponseErrorStatus(statusCode, msg)
     }
 

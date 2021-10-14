@@ -66,7 +66,6 @@
 </template>
 
 <script lang="ts">
-  // import { ElMessage } from 'element-plus'
   import {
     setLocal,
     getLocal,

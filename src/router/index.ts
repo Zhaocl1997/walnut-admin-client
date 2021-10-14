@@ -11,7 +11,6 @@ import {
   NetworkErrorRoute,
 } from './constant'
 import { createRouterGuard } from './guard'
-// import { ElMessage } from 'element-plus'
 
 const routes: RouteRecordRaw[] = [
   AuthRoute,
@@ -43,7 +42,8 @@ export const useAppRouter = () => {
 
 export const useRouterPush = (info: RouteLocationRaw) => {
   return AppRouter.push(info).catch(() => {
-    // ElMessage({ type: 'warning', message: 'Page is under construction...' })
+    // maybe error
+    useAppMessage().warning(AppI18n.global.t('system.menu.error'))
 
     // finish the loadingbar
     window.$loadingBar.finish()

@@ -75,4 +75,6 @@ export default {
       iconify: 'Iconify 官网',
     },
   },
+
+  error: '页面正在建设当中...',
 }

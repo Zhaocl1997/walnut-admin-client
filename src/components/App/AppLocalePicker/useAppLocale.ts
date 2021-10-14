@@ -1,7 +1,5 @@
 import type { AppLocaleType } from '/@/App/src/types'
 
-import { AppI18n } from '/@/locales'
-
 /**
  * @link https://vue-i18n-next.intlify.dev/guide/advanced/lazy.html
  */
