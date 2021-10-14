@@ -4,12 +4,8 @@
   import { defineComponent } from 'vue'
   import { props } from './props'
 
-  import WButtonNew from '../../Button'
-
   export default defineComponent({
     name: 'WButtonGroup',
-
-    components: { WButtonNew },
 
     props,
 
@@ -19,7 +15,7 @@
       return () => (
         <n-button-group {...attrs}>
           {props.groups?.map((item) => (
-            <w-button-new {...item}></w-button-new>
+            <w-button {...item}></w-button>
           ))}
         </n-button-group>
       )
