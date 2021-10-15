@@ -3,6 +3,7 @@ export enum PersistentKeysEnum {
   USER = 'USER',
   APP = 'APP',
   TOKEN = 'TOKEN',
+  TAB = 'TAB',
 }
 
 export enum StorageTypeEnum {

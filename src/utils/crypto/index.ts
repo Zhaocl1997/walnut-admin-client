@@ -1,4 +1,4 @@
-import { Encryption, EncryptionOptions } from './src/Crypto'
+import { Encryption, EncryptionOptions } from './Crypto'
 
 const cryptOptions: EncryptionOptions = {
   key: import.meta.env.VITE_CRYRTO_KEY,

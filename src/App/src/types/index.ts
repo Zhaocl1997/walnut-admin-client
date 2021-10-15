@@ -2,44 +2,52 @@ import type { AppTab } from '/@/layout/default/TheTab'
 import type { Menu } from '/@/router/types'
 import type { UserInfoType } from '/@/store/types/user'
 
+export interface AppState {
+  /**
+   * @description App Is Dark, just a symbol for icon display
+   */
+  isDark: boolean
+
+  /**
+   * @description App Dark Mode
+   */
+  darkMode: AppDarkModeType
+
+  /**
+   * @description App Locale
+   */
+  locale: AppLocaleType
+
+  /**
+   * @description App Menu Collapse
+   */
+  collapse: boolean
+
+  /**
+   * @description App Device type
+   */
+  device: AppDevice
+
+  /**
+   * @description App Is Mobile
+   */
+  isMobile: boolean
+
+  /**
+   * @description App Show Aside
+   */
+  showAside: boolean
+}
+
+export interface TabState {
+  tabs: AppTab[]
+
+  currentTabName: string
+}
+
 export interface AppContext {
   // App Relative
-  app: {
-    /**
-     * @description App Is Dark, just a symbol for icon display
-     */
-    isDark: boolean
-
-    /**
-     * @description App Dark Mode
-     */
-    darkMode: AppDarkModeType
-
-    /**
-     * @description App Locale
-     */
-    locale: AppLocaleType
-
-    /**
-     * @description App Menu Collapse
-     */
-    collapse: boolean
-
-    /**
-     * @description App Device type
-     */
-    device: AppDevice
-
-    /**
-     * @description App Is Mobile
-     */
-    isMobile: boolean
-
-    /**
-     * @description App Show Aside
-     */
-    showAside: boolean
-  }
+  app: AppState
 
   // Menu & Route Relative
   menu: {
@@ -56,13 +64,7 @@ export interface AppContext {
   }
 
   // Tab Relative
-  tab: {
-    tabs: AppTab[]
-
-    cachedTabs: Map<symbol, string[]>
-
-    currentTabName: string
-  }
+  tab: TabState & { cachedTabs: Map<symbol, string[]> }
 }
 
 export type AppLocaleType = 'en' | 'zh_CN'

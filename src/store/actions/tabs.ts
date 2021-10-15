@@ -13,7 +13,12 @@ const tabKey = Symbol(SymbolKeyEnum.TABS_KEY)
  */
 const closeMultipleTabs = (lists: string[]) => {
   const { tab } = useAppContext<false>()
-  tab.tabs = tab.tabs.filter((item) => !lists.includes(item.name))
+
+  tab.tabs.map((item, index) => {
+    if (lists.includes(item.name)) {
+      tab.tabs.splice(index, tab.tabs.length - 1)
+    }
+  })
 }
 
 /**

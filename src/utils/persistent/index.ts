@@ -1,7 +1,7 @@
+import type { AppState, TabState } from '/@/App'
+
 import { isProd } from '../constant/vue'
-
 import { storagePrefix } from '../constant/prefix'
-
 import { useAppStorage } from './src/Storage'
 import { Cookie } from './src/Cookie'
 import { PersistentKeysEnum } from '/@/enums/persistent'
@@ -36,6 +36,19 @@ export const STORAGE_AUTH = useAppStorage<{
 
 export const STORAGE_USER = useAppStorage(PersistentKeysEnum.USER, {})
 
-export const STORAGE_APP = useAppStorage(PersistentKeysEnum.APP, {})
+export const STORAGE_APP = useAppStorage<AppState>(PersistentKeysEnum.APP, {
+  isDark: false,
+  darkMode: 'light',
+  locale: 'zh_CN',
+  collapse: false,
+  device: 'desktop',
+  isMobile: false,
+  showAside: false,
+})
 
 export const STORAGE_TOKEN = useAppStorage<string>(PersistentKeysEnum.TOKEN, '')
+
+export const STORAGE_TAB = useAppStorage<TabState>(PersistentKeysEnum.TAB, {
+  tabs: [],
+  currentTabName: '',
+})
