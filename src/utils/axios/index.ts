@@ -19,7 +19,7 @@ const axiosConfig: AxiosRequestConfigExtend = {
   baseURL,
 
   // time out, default is 10s
-  timeout: Number(import.meta.env.VITE_AXIOS_TIMEOUT),
+  timeout: Number(import.meta.env.VITE_AXIOS_TIMEOUT) * 1000,
 
   transform,
 
@@ -40,7 +40,7 @@ const axiosConfig: AxiosRequestConfigExtend = {
 
   // adapter for cache, default is 5s
   adapter: cacheAdapterEnhancer(axios.defaults.adapter!, {
-    maxAge: Number(import.meta.env.VITE_AXIOS_CACHE_MAXAGE),
+    maxAge: Number(import.meta.env.VITE_AXIOS_CACHE_MAXAGE) * 1000,
   }),
 }
 

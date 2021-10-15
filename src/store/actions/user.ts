@@ -1,9 +1,7 @@
 import type { SigninPayloadType } from '../types/user'
 
 import { getUserInfo, signin } from '/@/api/auth'
-import { PersistentKeysEnum } from '/@/enums/persistent'
-import { removeToken, setToken } from '/@/utils/auth'
-import { setLocal } from '/@/utils/persistent'
+import { STORAGE_AUTH, STORAGE_TOKEN } from '/@/utils/persistent'
 import { authName, indexName, rootName } from '/@/router/constant'
 import { tabActionClear } from './tabs'
 import { menuActionPermissions } from './menu'
@@ -12,7 +10,8 @@ const setUserToken = (token: string) => {
   const { user } = useAppContext<false>()
 
   user.token = token
-  setToken(token)
+
+  STORAGE_TOKEN.value = token
 }
 
 const setUserInfo = (userInfo: Recordable) => {
@@ -33,8 +32,12 @@ export const userActionSignin = async (payload: SigninPayloadType) => {
   const { username, password, rememberMe } = payload
 
   if (rememberMe) {
-    setLocal(PersistentKeysEnum.USER_USERNAME, username)
-    setLocal(PersistentKeysEnum.USER_PASSWORD, password)
+    STORAGE_AUTH.value = {
+      username,
+      password,
+    }
+  } else {
+    STORAGE_AUTH.value = {}
   }
 
   // TODO
@@ -55,7 +58,7 @@ export const userActionSignOut = () => {
 
   user.token = ''
 
-  removeToken()
+  STORAGE_TOKEN.value = ''
 
   useRouterPush({ name: authName })
 

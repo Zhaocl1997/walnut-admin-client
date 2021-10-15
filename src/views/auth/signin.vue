@@ -15,8 +15,7 @@
 <script lang="tsx">
   import type { WForm } from '/@/components/UI/Form'
 
-  import { getLocal } from '/@/utils/persistent'
-  import { PersistentKeysEnum } from '/@/enums/persistent'
+  import { STORAGE_AUTH } from '/@/utils/persistent'
   import { userActionSignin } from '/@/store/actions/user'
 
   export default defineComponent({
@@ -126,8 +125,8 @@
       })
 
       onMounted(() => {
-        signinFormData.username = getLocal(PersistentKeysEnum.USER_USERNAME)
-        signinFormData.password = getLocal(PersistentKeysEnum.USER_PASSWORD)
+        signinFormData.username = STORAGE_AUTH.value.username!
+        signinFormData.password = STORAGE_AUTH.value.password!
       })
 
       return {

@@ -1,6 +1,7 @@
 import type { AxiosTransform } from './src/types'
 
-import { getToken } from '../auth'
+import { AppGlobalContext } from '/@/store/ctx'
+
 import { checkReponseErrorStatus } from './checkStatus'
 
 // custom transform for req and res interceptors
@@ -11,7 +12,9 @@ export const transform: AxiosTransform = {
 
     // carry token
     if (mergedCustomOptions.needAuth) {
-      getToken() && (config.headers!['Authorization'] = `Bearer ${getToken()}`)
+      const token = AppGlobalContext.user.token
+
+      token && (config.headers!['Authorization'] = `Bearer ${token}`)
     }
 
     // Demonstrate purpose API

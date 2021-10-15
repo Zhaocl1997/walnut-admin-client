@@ -1,62 +1,13 @@
 import { isProd } from '../constant/vue'
 
-import {
-  getLocalStoragePrefix,
-  getSessionStoragePrefix,
-  getCookiePrefix,
-} from '../constant/prefix'
+import { storagePrefix } from '../constant/prefix'
 
-import { Storage } from './src/Storage'
+import { useAppStorage } from './src/Storage'
 import { Cookie } from './src/Cookie'
-
-const AppLocalStorage = new Storage({
-  storage: localStorage,
-  prefixKey: getLocalStoragePrefix(),
-  encrypt: isProd(),
-})
-
-/* local */
-export const setLocal = (key: string, value: any, expire?: number) => {
-  AppLocalStorage.set(key, value, expire)
-}
-
-export const getLocal = (key: string): Nullable<any> => {
-  return AppLocalStorage.get(key)
-}
-
-export const clearLocal = () => {
-  AppLocalStorage.clear()
-}
-
-export const removeLocal = (key: string) => {
-  AppLocalStorage.remove(key)
-}
-
-const AppSessionStorage = new Storage({
-  storage: sessionStorage,
-  prefixKey: getSessionStoragePrefix(),
-  encrypt: isProd(),
-})
-
-/* session */
-export const setSession = (key: string, value: any, expire?: number) => {
-  AppSessionStorage.set(key, value, expire)
-}
-
-export const getSession = (key: string): Nullable<any> => {
-  return AppSessionStorage.get(key)
-}
-
-export const clearSession = () => {
-  AppSessionStorage.clear()
-}
-
-export const removeSession = (key: string) => {
-  AppSessionStorage.remove(key)
-}
+import { PersistentKeysEnum } from '/@/enums/persistent'
 
 const AppCookie = new Cookie({
-  prefixKey: getCookiePrefix(),
+  prefixKey: storagePrefix,
   encrypt: isProd(),
 })
 
@@ -76,3 +27,15 @@ export const clearCookie = () => {
 export const removeCookie = (key: string) => {
   AppCookie.remove(key)
 }
+
+// entry for storage
+export const STORAGE_AUTH = useAppStorage<{
+  username?: string
+  password?: string
+}>(PersistentKeysEnum.AUTH, {})
+
+export const STORAGE_USER = useAppStorage(PersistentKeysEnum.USER, {})
+
+export const STORAGE_APP = useAppStorage(PersistentKeysEnum.APP, {})
+
+export const STORAGE_TOKEN = useAppStorage<string>(PersistentKeysEnum.TOKEN, '')

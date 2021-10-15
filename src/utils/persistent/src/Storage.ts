@@ -1,63 +1,53 @@
-import { DEFAULT_PERSISTENT_TIME } from './const'
+import type { MaybeRef } from '@vueuse/core'
+import { storagePrefix } from '../../constant/prefix'
+import { isProd } from '../../constant/vue'
 import { AppEncryption } from '/@/utils/crypto'
 
-type StorageType = typeof localStorage | typeof sessionStorage
+// app storage
+// default cache 7 days
+// defualt only encrypt in prod
+export const useAppStorage = <T>(
+  key: string,
+  initialValue: MaybeRef<T>,
+  expire: number = import.meta.env.VITE_APP_CACHE_MAXAGE,
+  storage = localStorage
+) => {
+  const wholeKey = `${storagePrefix}__${key.toLocaleUpperCase()}__`
+  const encrypt = isProd()
 
-export interface StorageOptions {
-  storage: StorageType
-  prefixKey: string
-  encrypt: boolean
-}
+  return useStorage<T>(wholeKey, initialValue, storage, {
+    serializer: {
+      read: (val) => {
+        if (!val) return null
 
-export class Storage {
-  private storage
-  private prefixKey
-  private encrypt
+        const decryptValue = JSON.parse(
+          encrypt ? AppEncryption.decrypt(val) : val
+        )
 
-  constructor({ storage, prefixKey, encrypt }: StorageOptions) {
-    this.storage = storage
-    this.prefixKey = prefixKey
-    this.encrypt = encrypt
-  }
-
-  private getKey(key: string) {
-    return `${this.prefixKey}__${key}__`.toLocaleUpperCase()
-  }
-
-  set(key: string, value: any, expire = DEFAULT_PERSISTENT_TIME) {
-    const stringifiedData = JSON.stringify({
-      value,
-      expire: expire !== null ? new Date().getTime() + expire : null,
-    })
-    const finalValue: any = this.encrypt
-      ? AppEncryption.encrypt(stringifiedData)
-      : stringifiedData
-    this.storage.setItem(this.getKey(key), finalValue)
-  }
-
-  get(key: string, defaultValue = undefined) {
-    const item = this.storage.getItem(this.getKey(key))
-    if (item) {
-      try {
-        const realValue = this.encrypt ? AppEncryption.decrypt(item) : item
-        const parsedData = JSON.parse(realValue)
-        const { value, expire } = parsedData
-        if (expire === null || expire >= new Date().getTime()) {
-          return value
+        if (!decryptValue) {
+          storage.removeItem(wholeKey)
+          return null
         }
-        this.remove(key)
-      } catch (e) {
-        return defaultValue
-      }
-    }
-    return defaultValue
-  }
 
-  remove(key: string) {
-    this.storage.removeItem(this.getKey(key))
-  }
+        const { v, e } = decryptValue
 
-  clear() {
-    this.storage.clear()
-  }
+        // not expire yet
+        if (new Date().getTime() <= e) {
+          return v
+        } else {
+          storage.removeItem(wholeKey)
+          return null
+        }
+      },
+
+      write: (v) => {
+        const str = JSON.stringify({
+          v,
+          e: new Date().getTime() + expire * 1000,
+        })
+
+        return encrypt ? AppEncryption.encrypt(str)! : str
+      },
+    },
+  })
 }

@@ -9,4 +9,5 @@ interface ImportMetaEnv {
   VITE_CRYRTO_IV: string
   VITE_AXIOS_TIMEOUT: number
   VITE_AXIOS_CACHE_MAXAGE: number
+  VITE_APP_CACHE_MAXAGE: number
 }

@@ -1,6 +1,6 @@
 import type { AppContext } from '/@/App'
 
-import { getToken } from '../utils/auth'
+import { STORAGE_TOKEN } from '../utils/persistent'
 
 /**
  * @description Here is where we initial app context.
@@ -24,7 +24,7 @@ export const AppGlobalContext = reactive<AppContext>({
   },
 
   user: {
-    token: getToken(),
+    token: STORAGE_TOKEN.value,
     userInfo: {},
   },
 

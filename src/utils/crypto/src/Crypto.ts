@@ -61,9 +61,7 @@ export class Encryption {
   }
 
   encrypt(value: any) {
-    if (!value) {
-      return
-    }
+    if (!value) return
 
     const encrypted = this.method.encrypt(JSON.stringify(value), this.key, {
       iv: this.iv,
@@ -74,15 +72,18 @@ export class Encryption {
   }
 
   decrypt(encrypted: any) {
-    if (!encrypted) {
-      return
-    }
+    if (!encrypted) return
 
-    const decrypted = this.method.decrypt(encrypted, this.key, {
-      iv: this.iv,
-      mode: CryptoJS.mode[this.mode],
-      padding: CryptoJS.pad[this.padding],
-    })
-    return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8))
+    try {
+      const decrypted = this.method.decrypt(encrypted, this.key, {
+        iv: this.iv,
+        mode: CryptoJS.mode[this.mode],
+        padding: CryptoJS.pad[this.padding],
+      })
+
+      return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8))
+    } catch (error) {
+      return null
+    }
   }
 }
