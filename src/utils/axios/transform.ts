@@ -36,8 +36,9 @@ export const transform: AxiosTransform = {
     if (code === 200) {
       return Promise.resolve(data)
     } else {
-      useAppNotification().error({ title: msg })
-      return Promise.reject()
+      useAppNotification().error({ title: msg, duration: 2000 })
+      // since we have the error message, just resolve so handle logic behind
+      return Promise.resolve()
     }
   },
 
