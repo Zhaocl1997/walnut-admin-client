@@ -19,3 +19,21 @@ export const getEPBooleanValue = (
 
 // handle undefined to defaultValue
 export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
+
+// generate base rules based on schemas
+export const generateBaseRules = (schemas: any[]) => {
+  const ret = {}
+
+  const paths = schemas.map((i) => i?.formProp?.path).filter((i) => i)
+
+  paths.map((i) => {
+    ret[i] = [
+      {
+        required: true,
+        message: 'Required!',
+      },
+    ]
+  })
+
+  return ret
+}
