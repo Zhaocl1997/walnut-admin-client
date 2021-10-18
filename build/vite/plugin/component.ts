@@ -38,7 +38,7 @@ export const createComponentPlugin = (): Plugin => {
   return Components({
     dirs: ['src/components'],
 
-    extensions: ['vue', 'ts', 'md'],
+    extensions: ['vue', 'ts', 'md', 'tsx'],
 
     deep: false,
 
@@ -68,6 +68,11 @@ export const createComponentPlugin = (): Plugin => {
     ],
 
     // allow auto import and register components used in markdown
-    include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+    include: [
+      /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+      /\.vue$/,
+      /\.vue\?vue/, // .vue
+      /\.md$/, // .md
+    ],
   })
 }

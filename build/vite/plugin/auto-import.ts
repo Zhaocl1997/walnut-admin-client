@@ -37,6 +37,7 @@ export const creatAutoImportPlugin = (): Plugin => {
         ],
         '/@/utils/axios': ['AppAxios'],
         '/@/components/UI/Form': ['useForm'],
+        '/@/components/UI/Table': ['useTable'],
       },
     ],
     dts: 'types/auto-import.d.ts',
