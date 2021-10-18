@@ -12,9 +12,10 @@ import type {
   ModalProps,
   DrawerProps,
   DrawerContentProps,
+  TreeSelectProps,
 } from 'naive-ui'
 
-import type { MaybeRefDeep } from '/~/utils'
+import type { MaybeRefDeep, MaybeRefRecord } from '/~/utils'
 
 import type { WTransitionProps } from '/@/components/Extra/Transition'
 import type { useEventParams } from '/@/hooks/component/useEvent'
@@ -67,11 +68,15 @@ export declare namespace WForm {
   }
 
   interface Props<D = any> extends FormProps {
+    baseRules?: boolean
     schemas?: Schema.Item<D>[]
     preset?: preset
     advancedProps?: MaybeRefDeep<
       ModalProps | (DrawerProps & DrawerContentProps)
-    >
+    > & {
+      onYes?: (callback: Fn) => void
+      onNo?: (callback: Fn) => void
+    }
 
     cols?: number
     span?: number
@@ -125,6 +130,8 @@ export declare namespace WForm {
         foldable?: boolean
       }
 
+      'Extend:IconPicker': {}
+
       'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
       }
@@ -135,7 +142,7 @@ export declare namespace WForm {
       'Base:ButtonGroup': WButtonGroupProps
       'Base:Input': WInputProps
       'Base:InputNumber': WInputNumberProps
-      'Base:Select': WSelectProps
+      'Base:Select': MaybeRefRecord<WSelectProps>
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
       'Base:Switch': WSwitchProps & {
@@ -146,6 +153,7 @@ export declare namespace WForm {
       'Base:DatePicker': WDatePickerProps
       'Base:DynamicTags': WDynamicTagsProps
       'Base:Slider': SliderProps
+      'Base:TreeSelect': MaybeRefRecord<TreeSelectProps>
     }
 
     interface DynamicSchemaItemProps<
@@ -182,6 +190,7 @@ export declare namespace WForm {
 
     type DividerSchema<D> = DynamicSchemaItemProps<'Extend:Divider', D>
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
+    type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
 
     type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
     type SlotSchema<D> = DynamicSchemaItemProps<'Base:Slot', D>
@@ -199,10 +208,12 @@ export declare namespace WForm {
     type DatePickerSchema<D> = DynamicSchemaItemProps<'Base:DatePicker', D>
     type DynamicTagsSchema<D> = DynamicSchemaItemProps<'Base:DynamicTags', D>
     type SliderSchema<D> = DynamicSchemaItemProps<'Base:Slider', D>
+    type TreeSelectSchema<D> = DynamicSchemaItemProps<'Base:TreeSelect', D>
 
     type Item<D = any> = MaybeRefDeep<
       | DividerSchema<D>
       | QuerySchema<D>
+      | IconPickerSchema<D>
       | RenderSchema<D>
       | SlotSchema<D>
       | DynamicInputSchema<D>
@@ -218,6 +229,7 @@ export declare namespace WForm {
       | DatePickerSchema<D>
       | DynamicTagsSchema<D>
       | SliderSchema<D>
+      | TreeSelectSchema<D>
     >
   }
 }

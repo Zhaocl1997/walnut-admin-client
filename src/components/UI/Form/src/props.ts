@@ -33,6 +33,11 @@ export const props = {
     default: undefined,
   },
 
+  baseRules: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
+
   advancedProps: {
     type: Object as PropType<ModalProps | (DrawerProps & DrawerContentProps)>,
     default: undefined,

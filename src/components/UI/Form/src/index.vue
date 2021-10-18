@@ -15,6 +15,7 @@
   import { useFormAdvanced } from './hooks/useFormAdvanced'
 
   import { props } from './props'
+  import { generateBaseRules } from './utils'
 
   export default defineComponent({
     name: 'WForm',
@@ -90,6 +91,11 @@
             labelPlacement: attrs.labelPlacement ?? 'left',
           }}
           {...unref(getProps)}
+          rules={
+            getProps.value.baseRules
+              ? generateBaseRules(formSchemas.value)
+              : getProps.value.rules
+          }
         >
           <n-grid
             cols={unref(getProps).cols}

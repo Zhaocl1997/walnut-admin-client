@@ -1,6 +1,6 @@
 import type { WForm } from '../types'
 import type { ComputedRef, Ref } from 'vue'
-import type { ModalProps } from 'naive-ui'
+import type { DialogProps, DrawerProps, ModalProps } from 'naive-ui'
 
 import {
   NModal,
@@ -16,6 +16,7 @@ export const useFormAdvanced = (
   props: ComputedRef<WForm.Props>,
   formRef: Ref<Nullable<WForm.Inst.NFormInst>>
 ) => {
+  const { t } = useAppI18n()
   const show = ref(false)
   const loading = ref(false)
 
@@ -34,26 +35,36 @@ export const useFormAdvanced = (
     await formRef.value!.validate()
 
     loading.value = true
-    setTimeout(() => {
+
+    // if error, we want loading stop, but drawer do not disappear
+    // so `loading.value = false` is always excuting
+    // only when have ret, close drawer and show message
+    const handler = async (
+      baseApi: AnyObject,
+      apiFn: Fn,
+      formData: AnyObject
+    ) => {
+      const ret = await apiFn.call(baseApi, formData)
       loading.value = false
-      onClose()
-    }, 5000)
+
+      if (ret) {
+        onClose()
+        useAppMessage().success('Operation Success!')
+      }
+    }
+
+    props.value.advancedProps?.onYes!(handler)
   }
 
   const onNo = () => {
     formRef.value!.restoreValidation()
-    nextTick(() => {
-      onClose()
-    })
+
+    props.value.advancedProps?.onNo!(onClose)
   }
 
   const renderAdvanced = () => {
     const renderAction = () => (
       <NSpace size="small">
-        <NButton size="small" onClick={onNo} disabled={loading.value}>
-          {(props.value.advancedProps as ModalProps).negativeText}
-        </NButton>
-
         <NButton
           size="small"
           type="primary"
@@ -61,7 +72,13 @@ export const useFormAdvanced = (
           disabled={loading.value}
           loading={loading.value}
         >
-          {(props.value.advancedProps as ModalProps).positiveText}
+          {(props.value.advancedProps as ModalProps).positiveText ??
+            t('component.base.action.confirm')}
+        </NButton>
+
+        <NButton size="small" onClick={onNo} disabled={loading.value}>
+          {(props.value.advancedProps as ModalProps).negativeText ??
+            t('component.base.action.cancel')}
         </NButton>
       </NSpace>
     )
@@ -93,7 +110,8 @@ export const useFormAdvanced = (
         <NDrawer
           v-model={[show.value, 'show']}
           maskClosable={props.value.advancedProps!.maskClosable as boolean}
-          width={400}
+          width={(props.value.advancedProps! as DrawerProps).width}
+          onMaskClick={onNo}
         >
           <NDrawerContent
             title={props.value.advancedProps?.title as string}
