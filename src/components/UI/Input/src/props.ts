@@ -34,9 +34,9 @@ export const props = {
   // Just add your own modifiers here!
   valueModifiers: {
     type: Object as PropType<{
-      trim: boolean
-      capitalize: boolean
-      uppercase: boolean
+      trim?: boolean
+      capitalize?: boolean
+      uppercase?: boolean
     }>,
 
     default: () => ({
