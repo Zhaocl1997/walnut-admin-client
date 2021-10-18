@@ -24,13 +24,10 @@ export interface Menu {
   icon?: string
 
   /* menu displat order */
-  order?: string
+  order?: number
 
-  /* external status */
-  external?: boolean
-
-  /* internal status */
-  internal?: boolean
+  /* external/internal/none status */
+  ternal?: 'none' | 'external' | 'internal'
 
   /* external/internal url */
   url?: string
