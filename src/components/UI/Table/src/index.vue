@@ -26,6 +26,13 @@
 
       const { columns } = useTableColumns(getProps)
 
+      const renderNDataTable = () => (
+        <n-data-table
+          {...unref(getProps)}
+          columns={unref(columns)}
+        ></n-data-table>
+      )
+
       onEvent({
         name: 'hook',
         params: {
@@ -33,12 +40,7 @@
         },
       })
 
-      return () => (
-        <n-data-table
-          {...unref(getProps)}
-          columns={unref(columns)}
-        ></n-data-table>
-      )
+      return () => renderNDataTable()
     },
   })
 </script>
