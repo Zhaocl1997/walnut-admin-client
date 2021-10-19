@@ -111,7 +111,9 @@ export const useFormAdvanced = (
           v-model={[show.value, 'show']}
           maskClosable={props.value.advancedProps!.maskClosable as boolean}
           width={(props.value.advancedProps! as DrawerProps).width}
-          onMaskClick={onNo}
+          onUpdateShow={(show) => {
+            !show && onNo()
+          }}
         >
           <NDrawerContent
             title={props.value.advancedProps?.title as string}

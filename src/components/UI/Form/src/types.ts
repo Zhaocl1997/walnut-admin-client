@@ -140,7 +140,7 @@ export declare namespace WForm {
 
       'Base:Button': WButtonProps
       'Base:ButtonGroup': WButtonGroupProps
-      'Base:Input': WInputProps
+      'Base:Input': MaybeRefRecord<WInputProps>
       'Base:InputNumber': WInputNumberProps
       'Base:Select': MaybeRefRecord<WSelectProps>
       'Base:Radio': WRadioProps
