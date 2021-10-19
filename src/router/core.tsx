@@ -49,7 +49,7 @@ export const createRoutes = (menus: Menu[]) => {
       // handle menu
       if (node.type === MenuTypeEnum.MENU) {
         // handle internal menu
-        if (node.internal) {
+        if (node.ternal === 'internal') {
           return {
             ...createCommonRoute(node),
             component: resolveIFrameComponent(node.name),
