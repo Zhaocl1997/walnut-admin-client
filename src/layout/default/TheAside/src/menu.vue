@@ -21,12 +21,17 @@
       const { t } = useAppI18n()
 
       const getTranslatedMenus = computed(() =>
-        formatTree(props.menus, {
+        formatTree<Menu>(props.menus, {
           format: (node) =>
             ({
               key: node.name,
               label: t(node.title),
               icon: () => <w-icon icon={node.icon}></w-icon>,
+              meta: {
+                type: node.type,
+                ternal: node.ternal,
+                url: node.url,
+              },
               // extra: () => (node.badge && <n-badge value="hot"></n-badge>)
             } as MenuOption),
         })
@@ -54,18 +59,23 @@
           app.value.showAside = false
         }
 
-        // If external, open new tab and go
-        // if (item.external) {
-        //   window.open(item.url, '_blank')
-        // } else
-        //  {
+        if ((item.meta as Menu).type === 'catalog') {
+          useAppMessage().info('Catalog Menu has no page!')
+          return
+        }
+
+        if ((item.meta as Menu).ternal === 'external') {
+          window.open((item.meta as Menu).url, '_blank')
+          return
+        }
+
         useRouterPush({ name: key })
-        // }
       }
 
       return () => (
         <w-scrollbar height="100%">
           <n-menu
+            accordion
             indent={15}
             options={getTranslatedMenus.value}
             collapsed={app.value.collapse}
