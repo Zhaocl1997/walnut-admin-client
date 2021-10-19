@@ -61,19 +61,18 @@ export default {
 
   link: {
     title: '外链/内链',
-    children: {
-      external: '外链百度',
-      internal: '内链百度',
-      vite: 'Vite 官网',
-      vue3: 'Vue Next 官网',
-      vuex: 'Vuex Next 官网',
-      vueRouter: 'Vue Router Next 官网',
-      vueI18n: 'Vue I18n Next 官网',
-      elementPlus: 'ElementPlus 官网',
-      tailwindcss: 'Tailwindcss 官网',
-      windicss: 'Windicss 官网',
-      iconify: 'Iconify 官网',
-    },
+    external: '外链',
+    internal: '内链',
+    bilibili: '哔哩哔哩',
+    douyu: '斗鱼',
+    pianku: '片库',
+
+    vite: 'Vite',
+    vue3: 'Vue Next',
+    vueRouter: 'Vue Router Next',
+    vueI18n: 'Vue I18n Next',
+    naiveui: 'Naive UI',
+    vueuse: 'Vueuse',
   },
 
   error: '页面正在建设当中...',

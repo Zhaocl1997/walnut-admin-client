@@ -61,19 +61,18 @@ export default {
 
   link: {
     title: 'External/Internal Link',
-    children: {
-      external: 'External Link',
-      internal: 'Internal Link',
-      vite: 'Vite OWS',
-      vue3: 'Vue Next OWS',
-      vuex: 'Vuex Next OWS',
-      vueRouter: 'Vue Router Next OWS',
-      vueI18n: 'Vue I18n Next OWS',
-      elementPlus: 'ElementPlus OWS',
-      tailwindcss: 'Tailwindcss OWS',
-      windicss: 'Windicss OWS',
-      iconify: 'Iconify OWS',
-    },
+    external: 'External',
+    internal: 'External',
+    bilibili: 'Bilibili',
+    douyu: 'Douyu',
+    pianku: 'Pianku',
+
+    vite: 'Vite',
+    vue3: 'Vue Next',
+    vueRouter: 'Vue Router Next',
+    vueI18n: 'Vue I18n Next',
+    naiveui: 'Naive UI',
+    vueuse: 'Vueuse',
   },
 
   error: 'Page is under construction...',
