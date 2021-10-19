@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="h-12 whitespace-nowrap cursor-pointer bg-primary"
-    @click="onGoIndex"
-  >
+  <div class="h-12 whitespace-nowrap cursor-pointer" @click="onGoIndex">
     <div
       v-if="app.collapse"
       class="flex flex-row flex-nowrap justify-evenly items-center"
@@ -24,7 +21,7 @@
       <div
         class="
           font-sans
-          text-xl text-primary
+          text-xl
           subpixel-antialiased
           not-italic
           font-bold

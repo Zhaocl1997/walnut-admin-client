@@ -1,5 +1,5 @@
 <template>
-  <IconifyVueComponent class="dark:text-primary" />
+  <IconifyVueComponent class="dark:text-white" />
 </template>
 
 <script lang="ts">

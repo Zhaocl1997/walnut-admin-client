@@ -2,11 +2,7 @@
   <div class="w-default-layout-aside select-none">
     <AsideLogo />
 
-    <AsideMenu
-      :menus="menu.menus"
-      :style="{ height: 'calc(100vh - 3rem)' }"
-      class="bg-primary text-primary"
-    />
+    <AsideMenu :menus="menu.menus" :style="{ height: 'calc(100vh - 3rem)' }" />
   </div>
 </template>
 

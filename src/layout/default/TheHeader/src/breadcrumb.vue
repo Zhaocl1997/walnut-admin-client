@@ -15,9 +15,7 @@
         <n-breadcrumb>
           {getChildren.value.map((item) => (
             <n-breadcrumb-item>
-              <span class="text-base text-primary">
-                {getMaybeI18nMsg(item.meta.title)}
-              </span>
+              <span class="text-base">{getMaybeI18nMsg(item.meta.title)}</span>
             </n-breadcrumb-item>
           ))}
         </n-breadcrumb>

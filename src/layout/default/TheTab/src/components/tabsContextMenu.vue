@@ -3,15 +3,10 @@
     <div
       ref="tabsContextMenu"
       v-if="ctxMenuVisible"
-      class="
-        border border-solid border-gray-600 border-opacity-50
-        rounded
-        bg-primary
-        p-1
-      "
+      class="border border-solid border-gray-600 border-opacity-50 rounded p-1"
       :style="getCtxMenuStyle"
     >
-      <ul class="flex flex-col flex-wrap bg-primary">
+      <ul class="flex flex-col flex-wrap">
         <li
           v-for="(item, index) in methodLists"
           :key="index"
@@ -31,7 +26,7 @@
             class="
               whitespace-nowrap
               font-sans
-              text-base text-primary
+              text-base
               antialiased
               m-1
               select-none
