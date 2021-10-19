@@ -2,8 +2,6 @@ import type { ComputedRef } from 'vue'
 import type { WTable } from '../types'
 import type { InternalRowData } from 'naive-ui/lib/data-table/src/interface'
 
-import { NSpace, NPopconfirm } from 'naive-ui'
-
 export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
   const columns = ref<WTable.Column[]>([])
   const { t } = useAppI18n()
@@ -31,7 +29,7 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
 
           render(rowData: InternalRowData, rowIndex: number) {
             return (
-              <NSpace size="small">
+              <n-space size="small">
                 <w-button
                   icon="ant-design:plus-outlined"
                   onClick={() =>
@@ -74,7 +72,7 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
                     ),
                   }}
                 </n-popconfirm>
-              </NSpace>
+              </n-space>
             )
           },
         }
