@@ -13,13 +13,13 @@
         :style="{ width: '500px', position: 'relative', right: '200px' }"
       >
         <template #header>
-          <n-text type="success" strong>Choose your favorite Icon !</n-text>
+          <n-h6 prefix="bar">Choose your favorite Icon !</n-h6>
         </template>
 
         <template #trigger>
           <w-icon
             class="cursor-pointer"
-            :icon="value || 'ant-design:home-outlined'"
+            :icon="value"
             width="24"
             @click="onOpenPopover"
           ></w-icon>
@@ -37,7 +37,7 @@
               ></n-input>
             </div>
 
-            <div class="w-icon-picker-main" style="min-height: 230px;">
+            <div style="min-height: 230px;">
               <w-icon
                 v-for="(icon, index) in lists"
                 :key="index"
@@ -82,7 +82,7 @@
   import type { PropType } from 'vue'
 
   import { mockListApi } from '/@/utils/mockListApi'
-  import iconLists from '../../UI/Icon/src/utils/list'
+  import iconLists from '/@/components/UI/Icon/src/utils/list'
 
   export default defineComponent({
     name: 'WIconPicker',
@@ -90,7 +90,10 @@
     inheritAttrs: false,
 
     props: {
-      value: String as PropType<string>,
+      value: {
+        type: String as PropType<string>,
+        default: 'ant-design:home-outlined',
+      },
     },
 
     emits: ['update:value'],
