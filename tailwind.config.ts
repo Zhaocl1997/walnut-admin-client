@@ -3,17 +3,29 @@ import { defineConfig } from 'vite-plugin-windicss'
 export default defineConfig({
   darkMode: 'class',
 
+  alias: {
+    hstack: 'flex flex-row flex-nowrap',
+    vstack: 'flex flex-col flex-nowrap',
+    appText: 'font-sans subpixel-antialiased',
+  },
+
   attributify: {
     prefix: 'w:',
   },
 
   theme: {
     extend: {
-      transitionProperty: {
-        width: 'width',
+      // usage `text-primary`
+      textColor: {
+        primary: 'var(--primary-color)',
+        primaryHover: 'var(--primary-color-hover)',
+        error: 'var(--error-color)',
+        errorHover: 'var(--error-color-hover)',
       },
-      zIndex: {
-        2000: 2000,
+      // usage `bg-primary`
+      backgroundColor: {
+        primary: 'var(--primary-color)',
+        primaryHover: 'var(--primary-color-hover)',
       },
     },
   },
