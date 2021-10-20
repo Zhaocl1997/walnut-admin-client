@@ -17,16 +17,19 @@
         >Scroll to index 20</n-button
       >
 
-      <n-button @click="scrollRef?.scrollToIndex(100)"
-        >Scroll to index 100</n-button
+      <n-button @click="scrollRef?.scrollToIndex(60)"
+        >Scroll to index 60</n-button
       >
     </n-space>
 
     <div class="mt-2 border border-2 border-gray-600 rounded-sm">
-      <w-scrollbar ref="scrollRef" v-model="position">
-        <div v-for="i in 100" :key="i" class="text-3xl my-3">
-          Horizontal-{{ i }}
-        </div>
+      <w-scrollbar
+        ref="scrollRef"
+        v-model="position"
+        height="500px"
+        :el-size="36"
+      >
+        <div v-for="i in 100" :key="i" class="text-3xl">Horizontal-{{ i }}</div>
       </w-scrollbar>
     </div>
 
@@ -51,16 +54,21 @@
         >Scroll to index 40</n-button
       >
 
-      <n-button @click="scrollVerticalRef?.scrollToIndex(100)"
-        >Scroll to index 100</n-button
+      <n-button @click="scrollVerticalRef?.scrollToIndex(80)"
+        >Scroll to index 80</n-button
       >
     </n-space>
 
     <div class="mt-2 border border-2 border-gray-600 rounded-sm h-12">
-      <w-scrollbar ref="scrollVerticalRef" v-model="positionVertival" vertical>
-        <div class="flex flex-row flex-nowrap whitespace-nowrap">
-          <div v-for="(i, index) in 100" :key="i" class="text-3xl mx-3">
-            Vertical-{{ index }}
+      <w-scrollbar
+        ref="scrollVerticalRef"
+        v-model="positionVertival"
+        vertical
+        height="100px"
+      >
+        <div class="*hstack whitespace-nowrap">
+          <div v-for="i in 100" :key="i" class="text-3xl mx-3">
+            Vertical-{{ i }}
           </div>
         </div>
       </w-scrollbar>

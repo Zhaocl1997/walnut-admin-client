@@ -1,25 +1,10 @@
 <script lang="tsx">
   import type { PropType } from 'vue'
-  import type { ScrollbarInst } from 'naive-ui'
+  import type { ScrollbarInst } from 'naive-ui/lib/_internal'
+  import type { WScrollbarRef } from './index'
 
   import { useExpose } from '/@/hooks/core/useExpose'
-
-  type ScrollBarMode = 'horizontal' | 'vertical'
-
-  enum ScrollModeEnum {
-    HORIZONTAL = 'horizontal',
-    VERTICAL = 'vertical',
-  }
-
-  enum ScrollPropEnum {
-    SCROLLTOP = 'scrollTop',
-    SCROLLLEFT = 'scrollLeft',
-  }
-
-  enum ScrollFieldEnum {
-    OFFSETLEFT = 'offsetLeft',
-    OFFSETTOP = 'offsetTop',
-  }
+  import { genString } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WScrollbar',
@@ -29,7 +14,7 @@
       vertical: Boolean as PropType<boolean>,
       height: {
         type: String as PropType<string>,
-        default: '500px',
+        default: '0',
       },
       width: {
         type: String as PropType<string>,
@@ -39,16 +24,16 @@
         type: String as PropType<ScrollBehavior>,
         default: 'smooth',
       },
+      elSize: Number as PropType<number>,
     },
 
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'scroll'],
 
     setup(props, { attrs, slots, emit, expose }) {
-      const scrollRef = ref<Nullable<ScrollbarInst>>(null)
+      const id = ref(genString(8))
 
-      const field = props.vertical
-        ? ScrollFieldEnum.OFFSETLEFT
-        : ScrollFieldEnum.OFFSETTOP
+      const scrollRef =
+        ref<Nullable<ScrollbarInst & { scrollbarInstRef: Recordable }>>(null)
 
       const onScroll = useDebounceFn((e: WheelEvent) => {
         emit(
@@ -59,66 +44,100 @@
         )
       }, 300)
 
-      const methods = {
-        scrollTo: (opt: any) => {
-          scrollRef.value?.scrollTo({ ...opt, behavior: props.behavior })
+      const methods: WScrollbarRef = {
+        scrollTo: (opt) => {
+          scrollRef.value!.scrollTo({
+            ...(opt as any),
+            behavior: props.behavior,
+          })
         },
 
         scrollToStart: () => {
-          scrollRef.value!.scrollTo(
-            props.vertical
-              ? { left: 0, behavior: props.behavior }
-              : { top: 0, behavior: props.behavior }
-          )
+          scrollRef.value!.scrollTo({
+            position: 'top',
+            behavior: props.behavior,
+          })
         },
 
         scrollToEnd: () => {
           scrollRef.value!.scrollTo(
             props.vertical
               ? {
-                  left: scrollRef.value!.containerRef?.scrollWidth,
+                  left: scrollRef.value!.scrollbarInstRef.containerRef
+                    ?.scrollWidth,
                   behavior: props.behavior,
                 }
               : {
-                  top: scrollRef.value!.containerRef?.scrollHeight,
+                  top: scrollRef.value!.scrollbarInstRef.containerRef
+                    ?.scrollHeight,
                   behavior: props.behavior,
                 }
           )
         },
 
-        scrollToIndex: (index: number) => {
-          if (index <= 0) return
+        scrollToIndex: (index) => {
+          if (index < 0) return
 
-          if (props.vertical) {
-            let val = 0
+          const node =
+            scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
+              ?.children[index] ??
+            scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
+              ?.children[0]?.children[index]
 
-            // TODO
-            // stupid way currently
-            try {
-              val =
-                scrollRef.value!.containerRef!.children[0]?.children[index - 1][
-                  field
-                ]
-            } catch (e) {
-              console.log(index)
-
-              val =
-                scrollRef.value!.containerRef!.children[0]?.children[0]
-                  ?.children[index - 1][field]
-            }
-
-            scrollRef.value?.scrollTo({ left: val, behavior: props.behavior })
-
-            return
-          }
-
-          scrollRef.value!.scrollTo({
-            index: index - 1,
-            elSize: 48,
-            behavior: props.behavior,
-          })
+          scrollRef.value!.scrollTo(
+            props.vertical
+              ? {
+                  left: node['offsetLeft'],
+                  behavior: props.behavior,
+                }
+              : {
+                  top: node['offsetTop'],
+                  behavior: props.behavior,
+                }
+          )
         },
       }
+
+      /**
+       * @description Capture wheel event so be able to handle x axias scroll
+       */
+      const onVerticalScroll = (event: WheelEvent) => {
+        // get scroll direction
+        const detail = (event as any).wheelDelta || event.detail
+
+        // define direction
+        const moveForwardStep = 1
+        const moveBackStep = -1
+
+        // define step
+        let step = 0
+
+        // nagative means scroll to right, positive means scroll to left
+        if (detail < 0) {
+          step = moveForwardStep * 100
+        } else {
+          step = moveBackStep * 100
+        }
+
+        // move action
+        scrollRef.value!.scrollbarInstRef.containerRef.scrollLeft += step
+
+        emit('scroll')
+      }
+
+      onMounted(() => {
+        props.vertical &&
+          useEventListener(
+            document.getElementById(id.value),
+            'wheel',
+            onVerticalScroll,
+            {
+              passive: true,
+              once: false,
+              capture: true,
+            }
+          )
+      })
 
       useExpose({
         apis: methods,
@@ -127,6 +146,7 @@
 
       return () => (
         <n-scrollbar
+          id={id.value}
           ref={scrollRef}
           onScroll={onScroll}
           containerStyle={{

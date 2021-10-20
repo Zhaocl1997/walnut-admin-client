@@ -1,8 +1,10 @@
-export { default } from './index.vue'
+import type { ScrollTo } from 'naive-ui/lib/_internal/scrollbar/src/ScrollBar'
 
 export interface WScrollbarRef {
-  scrollTo: (args: any) => void
+  scrollTo: ScrollTo
   scrollToStart: () => void
   scrollToEnd: () => void
   scrollToIndex: (index: number) => void
 }
+
+export { default } from './index.vue'
