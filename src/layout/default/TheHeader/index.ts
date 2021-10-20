@@ -1,3 +1,1 @@
-import Header from './src/index.vue'
-
-export default Header
+export { default } from './src/index.vue'

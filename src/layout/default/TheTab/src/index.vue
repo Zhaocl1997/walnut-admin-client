@@ -1,11 +1,9 @@
 <template>
-  <div class="flex flex-nowrap flex-row justify-between">
-    <!-- left action -->
-    <div class="flex flex-nowrap flex-row flex-none justify-start">
-      <TabsContentLeft />
+  <div class="*hstack justify-between p-1">
+    <div class="*hstack flex-none justify-start">
+      <TabsUtils :lists="leftUtils"></TabsUtils>
     </div>
 
-    <!-- main content -->
     <div
       class="flex flex-grow h-10"
       :style="{ width: 'calc(100vw - 14rem - 300px)' }"
@@ -13,84 +11,61 @@
       <TabsContentMain></TabsContentMain>
     </div>
 
-    <!-- right action -->
-    <div class="flex flex-nowrap flex-row flex-none justify-end">
-      <TabsContentRight />
+    <div class="*hstack flex-none justify-end">
+      <TabsUtils :lists="rightUtils"></TabsUtils>
     </div>
 
-    <!-- context menu -->
     <TabsContextMenu />
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
   import TabsContentMain from './components/tabsContentMain.vue'
-  import TabsContentLeft from './components/tabsContentLeft.vue'
-  import TabsContentRight from './components/tabsContentRight.vue'
   import TabsContextMenu from './components/tabsContextMenu.vue'
+  import TabsUtils from './components/tabsUtils.vue'
 
   import { useTabs } from './hooks/useTabs'
   import { useTabsActions } from './hooks/useTabsActions'
   import { useTabsContextMenu } from './hooks/useTabsContextMenu'
-  import { useTabsMethods } from './hooks/useTabsMethods'
+  import { useTabsUtils } from './hooks/useTabsUtils'
 
   import { setTabsContext } from './hooks/useTabsContext'
 
-  export default defineComponent({
-    name: 'Tabs',
+  const { scrollRef, getTabs, getCurrentRouteTabIndex } = useTabs()
 
-    components: {
-      TabsContentMain,
-      TabsContentLeft,
-      TabsContentRight,
-      TabsContextMenu,
-    },
+  const { onTabClick, onTabRemove } = useTabsActions()
 
-    setup() {
-      const { scrollRef, getTabs, currentRouteTabIndex } = useTabs()
+  const {
+    ctxMenuVisible,
+    targetTabName,
+    targetTabIndex,
 
-      const { onTabClick, onTabRemove } = useTabsActions()
+    getCtxMenuStyle,
 
-      const {
-        ctxMenuVisible,
-        currentTabName,
-        currentTabIndex,
+    onCtxMenu,
+    onCloseCtxMenu,
+  } = useTabsContextMenu()
 
-        getCtxMenuStyle,
+  const { leftUtils, rightUtils } = useTabsUtils(
+    scrollRef,
+    getCurrentRouteTabIndex.value
+  )
 
-        onCtxMenu,
-        onCloseCtxMenu,
-      } = useTabsContextMenu()
+  // set context
+  setTabsContext({
+    scrollRef,
+    getTabs,
 
-      const { leftMethods, rightMethods } = useTabsMethods({
-        scrollRef,
-        currentRouteTabIndex,
-      })
+    onTabClick,
+    onTabRemove,
 
-      // set context
-      setTabsContext({
-        scrollRef,
-        getTabs,
+    ctxMenuVisible,
+    targetTabName,
+    targetTabIndex,
 
-        onTabClick,
-        onTabRemove,
+    getCtxMenuStyle,
 
-        ctxMenuVisible,
-        currentTabName,
-        currentTabIndex,
-
-        getCtxMenuStyle,
-
-        onCtxMenu,
-        onCloseCtxMenu,
-
-        leftMethods,
-        rightMethods,
-      })
-
-      return {}
-    },
+    onCtxMenu,
+    onCloseCtxMenu,
   })
 </script>
-
-<style lang="scss" scoped></style>

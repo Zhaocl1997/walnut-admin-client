@@ -11,28 +11,15 @@
   ></w-icon>
 </template>
 
-<script lang="ts">
-  export default defineComponent({
-    name: 'HeaderCollapse',
+<script lang="ts" setup>
+  const { app } = useAppContext()
 
-    setup() {
-      const { app } = useAppContext()
-
-      const onClick = () => {
-        if (app.value.isMobile) {
-          app.value.showAside = !app.value.showAside
-          app.value.collapse = false
-        } else {
-          app.value.collapse = !app.value.collapse
-        }
-      }
-
-      return {
-        onClick,
-        app,
-      }
-    },
-  })
+  const onClick = () => {
+    if (app.value.isMobile) {
+      app.value.showAside = !app.value.showAside
+      app.value.collapse = false
+    } else {
+      app.value.collapse = !app.value.collapse
+    }
+  }
 </script>
-
-<style lang="scss" scoped></style>

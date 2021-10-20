@@ -1,7 +1,7 @@
 export const useTabsContextMenu = () => {
   const ctxMenuVisible = ref(false)
-  const currentTabName = ref('')
-  const currentTabIndex = ref(0)
+  const targetTabName = ref('')
+  const targetTabIndex = ref(0)
 
   const position = reactive({
     x: 0,
@@ -24,8 +24,8 @@ export const useTabsContextMenu = () => {
     position.y = event.clientY
 
     // get current tab name and index
-    currentTabName.value = name
-    currentTabIndex.value = index
+    targetTabName.value = name
+    targetTabIndex.value = index
 
     onOpenCtxMenu()
   }
@@ -40,8 +40,8 @@ export const useTabsContextMenu = () => {
 
   return {
     ctxMenuVisible,
-    currentTabName,
-    currentTabIndex,
+    targetTabName,
+    targetTabIndex,
 
     getCtxMenuStyle,
 

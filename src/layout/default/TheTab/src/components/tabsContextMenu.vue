@@ -1,17 +1,22 @@
 <template>
-  <transition name="zoom-out" mode="out-in">
+  <w-transition name="zoom-fade">
     <div
       ref="tabsContextMenu"
       v-if="ctxMenuVisible"
-      class="border border-solid border-gray-600 border-opacity-50 rounded p-1"
+      class="
+        bg-gray-800
+        border border-solid border-gray-600 border-opacity-50
+        rounded
+        p-1
+      "
       :style="getCtxMenuStyle"
     >
-      <ul class="flex flex-col flex-wrap">
+      <ul class="*vstack">
         <li
           v-for="(item, index) in methodLists"
           :key="index"
           :class="[
-            'flex flex-row flex-nowrap items-center mx-1 px-0.5 my-0.5 cursor-pointer',
+            '*hstack items-center mx-1 px-0.5 my-0.5 cursor-pointer',
             {
               'cursor-not-allowed text-gray-400': item.disabled,
               'hover:bg-blue-200': !item.disabled,
@@ -20,23 +25,19 @@
           ]"
           @click="!item.disabled ? item.event() : emptyFunction()"
         >
-          <w-icon :icon="item.icon" height="22"></w-icon>
+          <w-icon
+            :icon="item.icon"
+            :disabled="item.disabled"
+            height="22"
+          ></w-icon>
 
-          <span
-            class="
-              whitespace-nowrap
-              font-sans
-              text-base
-              antialiased
-              m-1
-              select-none
-            "
-            >{{ item.name }}</span
-          >
+          <span class="app-text whitespace-nowrap text-base m-1 select-none">{{
+            item.name
+          }}</span>
         </li>
       </ul>
     </div>
-  </transition>
+  </w-transition>
 </template>
 
 <script lang="ts">
@@ -62,24 +63,24 @@
         getTabs,
         onTabRemove,
         ctxMenuVisible,
-        currentTabName,
-        currentTabIndex,
+        targetTabName,
+        targetTabIndex,
         getCtxMenuStyle,
         onCloseCtxMenu,
       } = getTabsContext()
 
-      const getCloseDisabled = computed(() => currentTabIndex.value === 0)
+      const getCloseDisabled = computed(() => targetTabIndex.value === 0)
       const getCloseLeftDisabled = computed(
-        () => currentTabIndex.value === 1 || currentTabIndex.value === 0
+        () => targetTabIndex.value === 1 || targetTabIndex.value === 0
       )
       const getCloseRightDisabled = computed(
         () =>
-          currentTabIndex.value === getTabs.value.length - 1 ||
-          currentTabIndex.value === 0
+          targetTabIndex.value === getTabs.value.length - 1 ||
+          targetTabIndex.value === 0
       )
       const getCloseOtherDisabled = computed(() => getTabs.value.length === 2)
       const getOtherDisabled = computed(
-        () => currentRoute.value.name !== currentTabName.value
+        () => currentRoute.value.name !== targetTabName.value
       )
 
       onClickOutside(tabsContextMenu, () => {
@@ -92,7 +93,7 @@
             name: t('layout.tab.close'),
             icon: 'ant-design:close-outlined',
             event: () => {
-              onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_SELF)
+              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_SELF)
 
               onCloseCtxMenu()
             },
@@ -102,7 +103,7 @@
             name: t('layout.tab.closeLeft'),
             icon: 'ant-design:vertical-right-outlined',
             event: () => {
-              onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_LEFT)
+              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_LEFT)
 
               onCloseCtxMenu()
             },
@@ -112,7 +113,7 @@
             name: t('layout.tab.closeRight'),
             icon: 'ant-design:vertical-left-outlined',
             event: () => {
-              onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_RIGHT)
+              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_RIGHT)
 
               onCloseCtxMenu()
             },
@@ -122,7 +123,7 @@
             name: t('layout.tab.closeOther'),
             icon: 'ant-design:column-width-outlined',
             event: () => {
-              onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_OTHER)
+              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_OTHER)
 
               onCloseCtxMenu()
             },
@@ -132,7 +133,7 @@
             name: t('layout.tab.closeAll'),
             icon: 'ant-design:border-outlined',
             event: () => {
-              onTabRemove(currentTabName.value, DeleteTabTypeEnum.TAB_ALL)
+              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_ALL)
 
               onCloseCtxMenu()
             },
@@ -155,7 +156,7 @@
             icon: 'ant-design:fullscreen-outlined',
             event: () => {
               const { toggleFullScreen } = useAppFullScreen({
-                target: `#${currentTabName.value}`,
+                target: `#${targetTabName.value}`,
               })
 
               toggleFullScreen()

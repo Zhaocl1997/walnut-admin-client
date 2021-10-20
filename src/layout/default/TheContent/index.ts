@@ -1,3 +1,1 @@
-import Content from './src/index.vue'
-
-export default Content
+export { default } from './src/index.vue'

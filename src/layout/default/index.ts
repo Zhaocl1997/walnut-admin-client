@@ -1,3 +1,1 @@
-import DefaultLayout from './index.vue'
-
-export default DefaultLayout
+export { default } from './index.vue'

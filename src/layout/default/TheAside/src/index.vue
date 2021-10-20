@@ -1,28 +1,29 @@
 <template>
-  <div class="w-default-layout-aside select-none">
-    <AsideLogo />
+  <n-layout-sider
+    :width="240"
+    :collapsed-width="60"
+    bordered
+    show-trigger="bar"
+    collapse-mode="width"
+    :collapsed="app.collapse"
+    @update:collapsed="onUpdateCollapse"
+    inverted
+  >
+    <div class="select-none">
+      <AsideLogo />
 
-    <AsideMenu :menus="menu.menus" :style="{ height: 'calc(100vh - 3rem)' }" />
-  </div>
+      <AsideMenu />
+    </div>
+  </n-layout-sider>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
   import AsideMenu from './menu.vue'
   import AsideLogo from './logo.vue'
 
-  export default defineComponent({
-    name: 'Aside',
+  const { app } = useAppContext()
 
-    components: { AsideMenu, AsideLogo },
-
-    setup() {
-      const { menu } = useAppContext()
-
-      return {
-        menu,
-      }
-    },
-  })
+  const onUpdateCollapse = (collapse: boolean) => {
+    app.value.collapse = collapse
+  }
 </script>
-
-<style lang="scss" scoped></style>

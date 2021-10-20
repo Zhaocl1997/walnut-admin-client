@@ -2,18 +2,14 @@ import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import type { AppTab } from '../types'
 
 /**
- * @description Calc the index to scroll to
+ * @description Leave a room for the tabs, otherwise will not be able to click tabs in front
  */
-export const calcIndex = (index: number) => {
+export const onLeaveRoomForTabs = (index: number) => {
   // to keep current tab close to center
-  if (index > 5) {
-    return index - 4
-  }
+  if (index > 5) return index - 4
 
   // first ten tabs just don't scroll anyway
-  if (index < 10) {
-    return 0
-  }
+  if (index < 10) return 0
 
   return index
 }

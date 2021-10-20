@@ -1,3 +1,1 @@
-import ParentComponent from './src/index.vue'
-
-export default ParentComponent
+export { default } from './src/index.vue'

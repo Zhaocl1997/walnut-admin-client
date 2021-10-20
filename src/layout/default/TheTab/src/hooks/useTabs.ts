@@ -1,11 +1,10 @@
 import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
-import type { AppTab } from '../types'
 
-import { calcIndex, createTab } from '../utils'
+import { onLeaveRoomForTabs, createTab } from '../utils'
 import { tabActionCreate } from '/@/store/actions/tabs'
 
 /**
- * @description use watchEffect to build tabs
+ * @description App Tab Core Function
  */
 export const useTabs = () => {
   const scrollRef = ref<Nullable<WScrollbarRef>>(null)
@@ -13,21 +12,32 @@ export const useTabs = () => {
   const { app, tab } = useAppContext()
 
   const route = useAppRoute()
-
   const { currentRoute } = useAppRouter()
 
-  /**
-   * @description Computed tabs
-   */
   const getTabs = computed(() => tab.value.tabs)
 
-  /**
-   * @description Computed current tab index
-   */
-  const currentRouteTabIndex = computed(() =>
-    getTabs.value.findIndex(
-      (item: AppTab) => item.name === currentRoute.value.name
-    )
+  const getCurrentRouteTabIndex = computed(() =>
+    getTabs.value.findIndex((item) => item.name === currentRoute.value.name)
+  )
+
+  const onScrollToCurrentTab = () => {
+    // scroll by index
+    nextTick(() => {
+      // If is mobile, just scroll to current route tab index
+      scrollRef.value?.scrollToIndex(
+        app.value.isMobile
+          ? getCurrentRouteTabIndex.value
+          : onLeaveRoomForTabs(getCurrentRouteTabIndex.value)
+      )
+    })
+  }
+
+  // reactive scroll
+  watch(
+    () => app.value.isMobile,
+    () => {
+      onScrollToCurrentTab()
+    }
   )
 
   watchEffect(
@@ -35,22 +45,15 @@ export const useTabs = () => {
       // Build tab
       tabActionCreate(createTab(route))
 
-      // scroll by index
-      nextTick(() => {
-        // If is mobile, just scroll to current route tab index
-        // Others leave a room for index
-        scrollRef.value?.scrollToIndex(
-          app.value.isMobile
-            ? currentRouteTabIndex.value
-            : calcIndex(currentRouteTabIndex.value)
-        )
-      })
+      // Scroll
+      onScrollToCurrentTab()
     },
     // This is important
     // If no flush: 'post', this effect will trigger in instance for the first time which cause an null error.
     // With flush: 'post', make sure triggered not in a instance
+    // You can try comment out thie line and see the error
     { flush: 'post' }
   )
 
-  return { scrollRef, getTabs, currentRouteTabIndex }
+  return { scrollRef, getTabs, getCurrentRouteTabIndex }
 }

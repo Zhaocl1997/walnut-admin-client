@@ -1,5 +1,3 @@
-import Tabs from './src/index.vue'
-
 export * from './src/types'
 
-export default Tabs
+export { default } from './src/index.vue'

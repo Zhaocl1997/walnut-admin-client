@@ -1,31 +1,22 @@
 <script lang="tsx">
-  import type { PropType } from 'vue'
   import type { Menu } from '/@/router/types'
   import type { MenuOption } from 'naive-ui'
 
-  import { findPath, formatTree } from 'easy-fns-ts'
+  import { formatTree } from 'easy-fns-ts'
 
   export default defineComponent({
-    name: 'AsideMenu',
+    setup() {
+      const { currentRoute } = useAppRouter()
+      const { app, menu } = useAppContext()
 
-    props: {
-      menus: {
-        type: Array as PropType<Menu[]>,
-        required: true,
-      },
-    },
+      const expandedKeys = ref()
 
-    setup(props) {
-      const router = useAppRouter()
-      const { app } = useAppContext()
-      const { t } = useAppI18n()
-
-      const getTranslatedMenus = computed(() =>
-        formatTree<Menu>(props.menus, {
+      const getMenu = computed(() =>
+        formatTree<Menu>(menu.value.menus, {
           format: (node) =>
             ({
               key: node.name,
-              label: t(node.title),
+              label: node.title,
               icon: () => <w-icon icon={node.icon}></w-icon>,
               meta: {
                 type: node.type,
@@ -37,23 +28,18 @@
         })
       )
 
-      const defaultExpandedKeys = computed(() => {
-        const paths = findPath(
-          props.menus,
-          (node) => node.name === router.currentRoute.value.name,
-          { id: '_id' }
-        ) as Menu[]
+      const getExpandedKeys = computed(
+        () => currentRoute.value.matched?.map((i) => i.name).splice(1) ?? []
+      )
 
-        if (!paths) {
-          return []
+      watch(
+        () => currentRoute.value.fullPath,
+        () => {
+          expandedKeys.value = undefined
         }
+      )
 
-        paths.pop()
-
-        return paths.map((i) => i.name)
-      })
-
-      const onChange = (key: string, item: MenuOption) => {
+      const onUpdateValue = (key: string, item: MenuOption) => {
         // If isMobile and showAside true, set showAside to false to close drawer
         if (app.value.isMobile && app.value.showAside) {
           app.value.showAside = false
@@ -72,16 +58,20 @@
         useRouterPush({ name: key })
       }
 
+      const onUpdateExpandedKeys = (keys: string[]) => {
+        expandedKeys.value = keys
+      }
+
       return () => (
         <w-scrollbar height="100%">
           <n-menu
-            accordion
             indent={15}
-            options={getTranslatedMenus.value}
+            options={getMenu.value}
             collapsed={app.value.collapse}
-            value={router.currentRoute.value.name}
-            on-update:value={onChange}
-            default-expanded-keys={defaultExpandedKeys.value}
+            value={currentRoute.value.name}
+            on-update:value={onUpdateValue}
+            expanded-keys={expandedKeys.value ?? getExpandedKeys.value}
+            on-update:expanded-keys={onUpdateExpandedKeys}
           ></n-menu>
         </w-scrollbar>
       )

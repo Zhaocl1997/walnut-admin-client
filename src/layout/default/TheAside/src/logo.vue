@@ -1,58 +1,32 @@
 <template>
   <div class="h-12 whitespace-nowrap cursor-pointer" @click="onGoIndex">
-    <div
-      v-if="app.collapse"
-      class="flex flex-row flex-nowrap justify-evenly items-center"
-    >
-      <img
-        src="../../../../assets/images/logo.png"
-        alt="Walnut Admin Logo"
-        class="h-9 w-9 m-1"
-      />
-    </div>
-
-    <div v-else class="flex flex-row flex-nowrap justify-evenly items-center">
+    <div class="*hstack justify-evenly items-center">
       <img
         src="../../../../assets/images/logo.png"
         alt="Walnut Admin Logo"
         class="h-9 w-9 m-1"
       />
 
-      <div
-        class="
-          font-sans
-          text-xl
-          subpixel-antialiased
-          not-italic
-          font-bold
-          text-center
-        "
-      >
-        Walnut Admin
-      </div>
+      <w-transition name="scale">
+        <span
+          v-show="!app.collapse"
+          class="app-text text-xl not-italic font-bold text-center"
+        >
+          {{ getAppTitle }}
+        </span>
+      </w-transition>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
   import { indexName } from '/@/router/constant'
 
-  export default defineComponent({
-    name: 'AsideLogo',
+  const { app } = useAppContext()
 
-    setup() {
-      const { app } = useAppContext()
+  const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
-      const onGoIndex = () => {
-        useRouterPush({ name: indexName })
-      }
-
-      return {
-        app,
-        onGoIndex,
-      }
-    },
-  })
+  const onGoIndex = () => {
+    useRouterPush({ name: indexName })
+  }
 </script>
-
-<style lang="scss" scoped></style>
