@@ -3,7 +3,7 @@ import type { Ref, ComputedRef } from 'vue'
 /**
  * @description Maybe it's a ref, or not.
  */
-declare type MaybeRef<T> = T | Ref<T>
+declare type MaybeRef<T> = T | Ref<T> | ComputedRef<T>
 
 /**
  * @description Maybe deep version
@@ -19,7 +19,7 @@ declare type MaybeRefDeep<T> = T extends Ref<infer V>
   : MaybeRef<T>
 
 /**
- * @description Maybe it's an object
+ * @description Maybe it's a simple object
  */
 declare type MaybeRefRecord<T> = {
   [P in keyof T]: MaybeRef<T[P]>
