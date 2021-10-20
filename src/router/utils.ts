@@ -14,10 +14,11 @@ export const createCommonRoute = (node: Menu): RouteRecordRaw | any => {
     path: node.path,
     name: node.name,
     meta: {
-      cache: node.cache,
       title: node.title,
       icon: node.icon,
+      cache: node.cache,
       url: node.url,
+      affix: node.affix,
     },
   }
 }
@@ -33,28 +34,26 @@ export const createKeepAliveRouteNameList = (menus: Menu[]): string[] =>
 /**
  * @description Resolve `catalog` type menu with self name
  */
-export const resolveParentComponent = (
-  name: string | symbol | undefined
-) => () =>
-  new Promise((resolve) => {
-    resolve({
-      ...ParentComponent,
-      name,
+export const resolveParentComponent =
+  (name: string | symbol | undefined) => () =>
+    new Promise((resolve) => {
+      resolve({
+        ...ParentComponent,
+        name,
+      })
     })
-  })
 
 /**
  * @description Resolve `menu` type menu which is internal with self name
  */
-export const resolveIFrameComponent = (
-  name: string | symbol | undefined
-) => () =>
-  new Promise((resolve) => {
-    resolve({
-      ...IFrameComponent,
-      name,
+export const resolveIFrameComponent =
+  (name: string | symbol | undefined) => () =>
+    new Promise((resolve) => {
+      resolve({
+        ...IFrameComponent,
+        name,
+      })
     })
-  })
 
 /**
  * @description Resolve `views` dynamically base on `node.component` which equal to `path`

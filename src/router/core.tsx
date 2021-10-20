@@ -25,9 +25,7 @@ export const createMenus = (menus: Menu[]) => {
   const menuTree = arrToTree(menus, { id: '_id' })
 
   // order tree
-  const orderedTree = orderTree(menuTree, {
-    order: 'order',
-  })[0].children
+  const orderedTree = orderTree(menuTree)[0].children
 
   return orderedTree
 }

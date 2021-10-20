@@ -33,7 +33,7 @@ export const tabActionCreate = (newTab: AppTab) => {
   }
 
   // set the current tab name
-  tab.currentTabName = newTab.name
+  tab.targetTabName = newTab.name
 
   const index = tab.tabs.findIndex((item) => item.name === newTab.name)
 
@@ -68,7 +68,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
         index !== -1 && tab.tabs.splice(index, 1)
 
         // close current tab
-        if (tab.currentTabName === name) {
+        if (tab.targetTabName === name) {
           const next = tab.tabs[index]
           const previous = tab.tabs[index - 1]
 
@@ -90,7 +90,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
         })
 
         // If left include current page, we need to push to target route
-        if (nameList.includes(tab.currentTabName)) {
+        if (nameList.includes(tab.targetTabName)) {
           useRouterPush({ name })
         }
 
@@ -111,7 +111,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
         })
 
         // If right include current page, we need to push to target route
-        if (nameList.includes(tab.currentTabName)) {
+        if (nameList.includes(tab.targetTabName)) {
           useRouterPush({ name })
         }
 
@@ -132,7 +132,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
         })
 
         // If the closed one is not current route, we need to push to target route
-        if (tab.currentTabName !== name) {
+        if (tab.targetTabName !== name) {
           useRouterPush({ name })
         }
 

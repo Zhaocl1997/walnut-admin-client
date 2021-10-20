@@ -42,7 +42,7 @@ export interface AppState {
 export interface TabState {
   tabs: AppTab[]
 
-  currentTabName: string
+  targetTabName: string
 }
 
 export interface AppContext {

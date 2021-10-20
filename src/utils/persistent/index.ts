@@ -50,5 +50,5 @@ export const STORAGE_TOKEN = useAppStorage<string>(PersistentKeysEnum.TOKEN, '')
 
 export const STORAGE_TAB = useAppStorage<TabState>(PersistentKeysEnum.TAB, {
   tabs: [],
-  currentTabName: '',
+  targetTabName: '',
 })

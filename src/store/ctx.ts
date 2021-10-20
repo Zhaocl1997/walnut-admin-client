@@ -23,6 +23,6 @@ export const AppGlobalContext = reactive<AppContext>({
   tab: {
     tabs: STORAGE_TAB.value.tabs,
     cachedTabs: new Map(),
-    currentTabName: STORAGE_TAB.value.currentTabName,
+    targetTabName: STORAGE_TAB.value.targetTabName,
   },
 })

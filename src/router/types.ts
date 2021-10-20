@@ -32,14 +32,17 @@ export interface Menu {
   /* external/internal url */
   url?: string
 
-  /* weather to display in the aside menu */
+  /* display in the aside menu */
   show?: boolean
 
-  /* weather to cache */
+  /* keep alive */
   cache?: boolean
 
-  /* weather disabled */
+  /* disabled, won't be able to get from backend */
   status?: boolean
+
+  /* affix menu, for tab use */
+  affix?: boolean
 
   /* created at */
   createdAt?: Date

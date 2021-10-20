@@ -1,5 +1,5 @@
 <template>
-  <div>Index</div>
+  <div v-for="i in 3000" :key="i" class="inline-block">Index {{ i }} --</div>
 </template>
 
 <script lang="ts">

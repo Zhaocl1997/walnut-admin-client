@@ -11,7 +11,7 @@ export const useAppDialog = () => {
 }
 
 /**
- * @description operations to confirm weather to continue, like delete or other important operations
+ * @description operations to confirm to continue, like delete or other important operations
  */
 export const useContinue = (msg: string) => {
   const { t } = useAppI18n()

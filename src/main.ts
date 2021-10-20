@@ -1,5 +1,3 @@
-import { createApp } from 'vue'
-
 import 'virtual:windi.css'
 import 'virtual:windi-devtools'
 import './assets/styles/main.scss'
