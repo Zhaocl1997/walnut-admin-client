@@ -1,14 +1,16 @@
 <template>
-  <n-popselect v-model:value="app.darkMode" :options="darkModeOptions">
-    <w-icon
-      :icon="
-        app.isDark
-          ? 'emojione:waxing-crescent-moon'
-          : 'emojione:waxing-gibbous-moon'
-      "
-      width="24"
-    ></w-icon>
-  </n-popselect>
+  <div>
+    <n-popselect v-model:value="app.darkMode" :options="darkModeOptions">
+      <w-icon
+        :icon="
+          app.isDark
+            ? 'emojione:waxing-crescent-moon'
+            : 'emojione:waxing-gibbous-moon'
+        "
+        width="24"
+      ></w-icon>
+    </n-popselect>
+  </div>
 </template>
 
 <script lang="ts">

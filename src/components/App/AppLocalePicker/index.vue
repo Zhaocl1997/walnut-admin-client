@@ -1,11 +1,9 @@
 <template>
-  <n-popselect :options="langLists" v-model:value="app.locale">
-    <w-icon
-      icon="ant-design:dribbble-outlined"
-      width="24"
-      class="cursor-pointer"
-    ></w-icon>
-  </n-popselect>
+  <div>
+    <n-popselect :options="langLists" v-model:value="app.locale">
+      <w-icon icon="ant-design:dribbble-outlined" width="24"></w-icon>
+    </n-popselect>
+  </div>
 </template>
 
 <script lang="ts">

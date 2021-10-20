@@ -25,15 +25,17 @@
       const { isFullscreen, toggleFullScreen } = useAppFullScreen(props)
 
       return () => (
-        <w-icon
-          icon={
-            isFullscreen.value
-              ? 'ant-design:fullscreen-exit-outlined'
-              : 'ant-design:fullscreen-outlined'
-          }
-          width={width}
-          onClick={toggleFullScreen}
-        ></w-icon>
+        <div>
+          <w-icon
+            icon={
+              isFullscreen.value
+                ? 'ant-design:fullscreen-exit-outlined'
+                : 'ant-design:fullscreen-outlined'
+            }
+            width={width}
+            onClick={toggleFullScreen}
+          ></w-icon>
+        </div>
       )
     },
   })
