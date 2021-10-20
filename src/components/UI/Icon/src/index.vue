@@ -1,5 +1,7 @@
 <template>
-  <IconifyVueComponent class="dark:text-white" />
+  <IconifyVueComponent
+    :style="{ color: $attrs.disabled ? 'var(--icon-color-disabled)' : '' }"
+  />
 </template>
 
 <script lang="ts">
@@ -13,5 +15,3 @@
     setup() {},
   })
 </script>
-
-<style scoped></style>
