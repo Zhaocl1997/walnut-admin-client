@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-  const { app } = useAppContext()
+  const { app } = useAppState()
 
   const onClick = () => {
     if (app.value.isMobile) {

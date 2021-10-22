@@ -35,5 +35,5 @@
   import HeaderAvatar from './avatar.vue'
   import AppSettings from '/@/components/App/AppSettings'
 
-  const { app } = useAppContext()
+  const { app } = useAppState()
 </script>

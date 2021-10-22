@@ -12,8 +12,6 @@
 </script>
 
 <script lang="ts" setup>
-  import type { Menu } from '/@/router/types'
-
   import {
     arrToTree,
     formatTime,
@@ -71,7 +69,8 @@
     stateRef: formData,
     setState,
     resetState,
-  } = useInitialState<Menu>({
+  } = useInitialState<AppMenu>({
+    path: '',
     type: 'catalog',
     ternal: 'none',
     order: 0,
@@ -82,12 +81,12 @@
   })
 
   // ref
-  const coreData = ref<TreeDataItem<Menu>[]>([])
+  const coreData = ref<TreeDataItem<AppMenu>[]>([])
   const actionType = ref<'create' | 'update'>('create')
 
   // computed
   const getLocaleCoreData = computed(() =>
-    formatTree<Menu>(coreData.value, {
+    formatTree<AppMenu>(coreData.value, {
       format: (node) => ({ ...node, title: t(node.title) }),
     })
   )
@@ -100,15 +99,15 @@
     )
   )
   const getCurrentNode = computed(() =>
-    findPath<Menu>(unref(coreData), (n) => n._id === formData.value.pid)
+    findPath<AppMenu>(unref(coreData), (n) => n._id === formData.value.pid)
   )
   const getTreeSelectExpandedKeys = computed(() =>
-    (getCurrentNode.value as Menu[])?.map((i) => i._id!)
+    (getCurrentNode.value as AppMenu[])?.map((i) => i._id!)
   )
   const getRoutePathPrefix = computed(() =>
     !getCurrentNode.value
       ? '/'
-      : (getCurrentNode.value as Menu[]).map((item) => item.path).join('/') +
+      : (getCurrentNode.value as AppMenu[]).map((item) => item.path).join('/') +
         '/'
   )
 
@@ -117,8 +116,8 @@
     const res = await menuAPI.list()
 
     // build, order and format
-    const data = formatTree<Menu>(
-      orderTree<Menu>(arrToTree<Menu>(res.data, { id: '_id' })),
+    const data = formatTree<AppMenu>(
+      orderTree<AppMenu>(arrToTree<AppMenu>(res.data, { id: '_id' })),
       {
         format: (node) =>
           node.children.length === 0
@@ -166,7 +165,7 @@
     onGetList()
   })
 
-  const [registerTable] = useTable<Menu>({
+  const [registerTable] = useTable<AppMenu>({
     rowKey: (row) => row._id,
 
     columns: [
@@ -246,7 +245,7 @@
     data: getTableData,
   })
 
-  const [registerForm, { onOpen }] = useForm<Menu>({
+  const [registerForm, { onOpen }] = useForm<AppMenu>({
     preset: 'drawer',
 
     labelWidth: '140px',

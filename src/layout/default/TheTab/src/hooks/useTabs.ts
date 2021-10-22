@@ -7,17 +7,15 @@ import { tabActionCreate } from '/@/store/actions/tabs'
  * @description App Tab Core Function
  */
 export const useTabs = () => {
-  const scrollRef = ref<Nullable<WScrollbarRef>>(null)
-
-  const { app, tab } = useAppContext()
+  const { app, tab } = useAppState()
 
   const route = useAppRoute()
   const { currentRoute } = useAppRouter()
 
-  const getTabs = computed(() => tab.value.tabs)
+  const scrollRef = ref<Nullable<WScrollbarRef>>(null)
 
   const getCurrentRouteTabIndex = computed(() =>
-    getTabs.value.findIndex((item) => item.name === currentRoute.value.name)
+    tab.tabs.findIndex((item) => item.name === currentRoute.value.name)
   )
 
   const onScrollToCurrentTab = () => {
@@ -48,5 +46,5 @@ export const useTabs = () => {
     { flush: 'post' }
   )
 
-  return { scrollRef, getTabs, getCurrentRouteTabIndex }
+  return { scrollRef, getCurrentRouteTabIndex }
 }

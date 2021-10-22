@@ -2,7 +2,7 @@
   <w-scrollbar ref="scrollRef" @scroll="onCloseCtxMenu" vertical height="2rem">
     <ul id="tabSortable" class="*hstack">
       <li
-        v-for="(tab, index) in getTabs"
+        v-for="(tab, index) in tab.tabs"
         :key="tab.name"
         :class="[
           'tab-li *hstack space-x-1 items-center w-auto border border-solid border-blue-500 rounded-md shadow mx-0.5 px-2 p-px select-none cursor-pointer all:hover:inline-block',
@@ -46,16 +46,10 @@
   import { useTabsSortable } from '../hooks/useTabsSortable'
 
   const { t } = useAppI18n()
-  const { app } = useAppContext()
+  const { app, tab } = useAppState()
 
-  const {
-    scrollRef,
-    getTabs,
-    onTabClick,
-    onTabRemove,
-    onOpenCtxMenu,
-    onCloseCtxMenu,
-  } = getTabsContext()
+  const { scrollRef, onTabClick, onTabRemove, onOpenCtxMenu, onCloseCtxMenu } =
+    getTabsContext()
 
   useTabsSortable()
 </script>

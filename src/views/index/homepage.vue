@@ -5,6 +5,7 @@
     <pre>{{ app }}</pre>
 
     <n-switch v-model:value="app.isDark"></n-switch>
+    <n-button @click="() => (token = '')">Clear Token</n-button>
   </div>
 </template>
 
@@ -19,9 +20,9 @@
     emits: [],
 
     setup(props, ctx) {
-      const { app } = useAppState()
+      const { app, token } = useAppState()
 
-      return { app }
+      return { app, token }
     },
   })
 </script>

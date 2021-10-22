@@ -16,7 +16,7 @@
     parentView: true,
 
     setup() {
-      const { menu } = useAppContext()
+      const { menu } = useAppState()
       const getOpenKeepAlive = computed(() => true)
 
       const getKey = (comp: VNode, route: RouteLocationNormalized) => {

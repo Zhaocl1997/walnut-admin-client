@@ -1,4 +1,3 @@
-import type { Menu } from '/@/router/types'
 import type { SigninPayloadType } from '/@/store/types/user'
 import type { BaseListResponse } from '/@/utils/axios'
 
@@ -26,7 +25,7 @@ export const signin = (params: SigninPayloadType) => {
  * @description Signin user permissions api
  */
 export const getPermissions = () => {
-  return AppAxios.get<BaseListResponse<Menu>>({
+  return AppAxios.get<BaseListResponse<AppMenu>>({
     url: AuthEnum.PERMISSION,
   })
 }

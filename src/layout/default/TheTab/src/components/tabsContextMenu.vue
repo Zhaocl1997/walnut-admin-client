@@ -20,12 +20,11 @@
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { tab } = useAppContext()
+  const { tab } = useAppState()
 
   const {
     x,
     y,
-    getTabs,
     targetTab,
     targetTabIndex,
     ctxMenuVisible,
@@ -34,9 +33,9 @@
     onCloseCtxMenu,
   } = getTabsContext()
 
-  const getTabsLength = computed(() => tab.value.tabs.length)
+  const getTabsLength = computed(() => tab.tabs.length)
   const getAffixedTabsLength = computed(
-    () => tab.value.tabs.filter((i) => i.meta.affix).length
+    () => tab.tabs.filter((i) => i.meta.affix).length
   )
 
   const getCloseDisabled = computed(() => targetTab.value?.meta.affix)

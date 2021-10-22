@@ -8,9 +8,9 @@ import { langLists, fallbackLocale, availableLocales } from './utils'
  * @description Get locale from store. Lazy load locale messages
  */
 const createI18nOptions = async (): Promise<I18nOptions> => {
-  const appContext = useAppContext<false>()
+  const { app } = useAppState()
 
-  const locale = appContext.app.locale
+  const locale = app.value.locale
 
   const messages = await import(`./lang/${locale}.ts`)
 

@@ -15,7 +15,6 @@
 <script lang="tsx">
   import type { WForm } from '/@/components/UI/Form'
 
-  import { STORAGE_AUTH } from '/@/utils/persistent'
   import { userActionSignin } from '/@/store/actions/user'
 
   export default defineComponent({
@@ -25,6 +24,7 @@
 
     setup() {
       const { t } = useAppI18n()
+      const { auth } = useAppState()
 
       const buttonLoading = ref(false)
 
@@ -125,8 +125,8 @@
       })
 
       onMounted(() => {
-        signinFormData.username = STORAGE_AUTH.value.username!
-        signinFormData.password = STORAGE_AUTH.value.password!
+        signinFormData.username = auth.value.username!
+        signinFormData.password = auth.value.password!
       })
 
       return {

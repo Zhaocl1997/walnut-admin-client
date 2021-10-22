@@ -51,7 +51,5 @@
   import TheContent from './TheContent'
   import TheTab from './TheTab'
 
-  import { useAppResize } from '/@/App'
-
-  const { app } = useAppResize()
+  const { app } = useAppState()
 </script>

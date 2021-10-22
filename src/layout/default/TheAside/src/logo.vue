@@ -16,11 +16,11 @@
 </template>
 
 <script lang="ts" setup>
-  const { app, menu } = useAppContext()
+  const { app, menu } = useAppState()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
   const onGoIndex = () => {
-    useRouterPush({ name: menu.value.indexMenuName })
+    useRouterPush({ name: menu.indexMenuName })
   }
 </script>

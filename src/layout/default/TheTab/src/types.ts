@@ -1,12 +1,4 @@
-import type { RouteMeta } from 'vue-router'
-
 import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
-
-export interface AppTab {
-  name: string
-  path: string
-  meta: RouteMeta
-}
 
 export interface AppTabUtilListItem {
   icon: string
@@ -15,7 +7,6 @@ export interface AppTabUtilListItem {
 
 export interface AppTabContext {
   scrollRef: Ref<Nullable<WScrollbarRef>>
-  getTabs: ComputedRef<AppTab[]>
 
   x: Ref<number>
   y: Ref<number>

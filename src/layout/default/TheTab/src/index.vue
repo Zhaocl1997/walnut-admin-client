@@ -31,7 +31,7 @@
 
   import { setTabsContext } from './hooks/useTabsContext'
 
-  const { scrollRef, getTabs, getCurrentRouteTabIndex } = useTabs()
+  const { scrollRef, getCurrentRouteTabIndex } = useTabs()
 
   const { onTabClick, onTabRemove } = useTabsActions()
 
@@ -53,7 +53,6 @@
   // set context
   setTabsContext({
     scrollRef,
-    getTabs,
 
     onTabClick,
     onTabRemove,

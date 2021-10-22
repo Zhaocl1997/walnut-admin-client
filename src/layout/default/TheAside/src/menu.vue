@@ -1,22 +1,22 @@
 <script lang="tsx">
-  import type { Menu } from '/@/router/types'
   import type { MenuOption } from 'naive-ui'
 
   import { formatTree } from 'easy-fns-ts'
 
   export default defineComponent({
     setup() {
+      const { app, menu } = useAppState()
+      const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
-      const { app, menu } = useAppContext()
 
       const expandedKeys = ref()
 
       const getMenu = computed(() =>
-        formatTree<Menu>(menu.value.menus, {
+        formatTree<AppMenu>(menu.menus, {
           format: (node) =>
             ({
               key: node.name,
-              label: node.title,
+              label: t(node.title),
               icon: () => <w-icon icon={node.icon}></w-icon>,
               meta: {
                 type: node.type,
@@ -45,13 +45,13 @@
           app.value.showAside = false
         }
 
-        if ((item.meta as Menu).type === 'catalog') {
+        if ((item.meta as AppMenu).type === 'catalog') {
           useAppMessage().info('Catalog Menu has no page!')
           return
         }
 
-        if ((item.meta as Menu).ternal === 'external') {
-          window.open((item.meta as Menu).url, '_blank')
+        if ((item.meta as AppMenu).ternal === 'external') {
+          window.open((item.meta as AppMenu).url, '_blank')
           return
         }
 

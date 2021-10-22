@@ -19,7 +19,7 @@
   import { upperFirst } from 'easy-fns-ts'
   import { userActionSignOut } from '/@/store/actions/user'
 
-  const { user } = useAppContext()
+  const { user } = useAppState()
 
   const { goNext } = useContinue('Are you sure to sign out?')
 
@@ -30,7 +30,7 @@
     },
   ])
 
-  const getUserName = computed(() => upperFirst(user.value.userInfo.username!))
+  const getUserName = computed(() => upperFirst(user.userInfo.username!))
 
   const onSelect = async (val: string) => {
     if (val === '1') {
