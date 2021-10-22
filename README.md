@@ -107,6 +107,9 @@ npm i
 - [ ] global comp auto gen 的类型地址有问题
 - [x] 消息提示类的用naive重写
 - [ ] icon 方案重做
+- [ ] tree 相关函数 类型优化
+- [ ] core tab 优化
+
 
 ### 更新日志
 
