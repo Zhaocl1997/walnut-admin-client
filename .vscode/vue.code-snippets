@@ -8,8 +8,6 @@
       "</template>",
       "",
       "<script lang='ts'>",
-      "  import { defineComponent } from 'vue'",
-      "",
       "  export default defineComponent({",
       "    name: 'Component',",
       "",
@@ -25,7 +23,7 @@
       "  })",
       "</script>",
     ],
-    "description": "vue3 template"
+    "description": "vue3 component template"
   },
   "vue-view": {
     "scope": "vue",
@@ -36,8 +34,6 @@
       "</template>",
       "",
       "<script lang='ts'>",
-      "  import { defineComponent } from 'vue'",
-      "",
       "  export default defineComponent({",
       "    name: 'View',",
       "",
@@ -50,15 +46,13 @@
       "<style lang='scss' scoped></style>",
       ""
     ],
-    "description": "vue3 template"
+    "description": "vue3 view template"
   },
   "vue-tsx": {
     "scope": "vue",
     "prefix": "vue3-tsx",
     "body": [
       "<script lang='tsx'>",
-      "  import { defineComponent } from 'vue'",
-      "",
       "  export default defineComponent({",
       "    name: 'Component',",
       "",
@@ -74,6 +68,26 @@
       "  })",
       "</script>",
     ],
-    "description": "vue3 template"
+    "description": "vue3 tsx template"
+  },
+  "vue-setup": {
+    "scope": "vue",
+    "prefix": "vue3-setup",
+    "body": [
+      "<template>",
+      "  <div>Vue3-View</div>",
+      "</template>",
+      "",
+      "<script lang='ts' setup>",
+      "  const state = ref()",
+      "</script>",
+      "",
+      "<script lang='ts'>",
+      "  export default defineComponent({",
+      "    name: 'Name',",
+      "  })",
+      "</script>",
+    ],
+    "description": "vue3 setup template"
   },
 }
