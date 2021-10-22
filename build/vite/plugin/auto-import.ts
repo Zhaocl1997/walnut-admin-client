@@ -1,9 +1,7 @@
-import type { Plugin } from 'vite'
-
 import AutoImport from 'unplugin-auto-import/vite'
 
 // TODO waiting for types auto import
-export const creatAutoImportPlugin = (): Plugin => {
+export const creatAutoImportPlugin = (): VitePlugin => {
   return AutoImport({
     include: [
       /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -21,6 +19,19 @@ export const creatAutoImportPlugin = (): Plugin => {
       // custom
       {
         '/@/App': ['useAppContext'],
+
+        '/@/const': [
+          'DarkModeConst',
+          'LocaleConst',
+          'MenuTypeConst',
+          'MenuTernalConst',
+          'PersistentKeysConst',
+          'StorageTypeConst',
+          'SymbolKeyConst',
+          'TransitionNameConst',
+          'DeleteTabConst',
+        ],
+
         '/@/locales': ['useAppI18n', 'AppI18n'],
         '/@/router': [
           'AppRouter',
@@ -28,6 +39,8 @@ export const creatAutoImportPlugin = (): Plugin => {
           'useAppRouter',
           'useRouterPush',
         ],
+        '/@/store': ['useAppStateStorage', 'useAppStateMemory'],
+
         '/@/hooks/core/useContext': ['useContext'],
         '/@/hooks/component/useMessage': [
           'useAppMessage',
@@ -35,7 +48,10 @@ export const creatAutoImportPlugin = (): Plugin => {
           'useAppDialog',
           'useContinue',
         ],
+
         '/@/utils/axios': ['AppAxios'],
+        '/@/utils/persistent': ['useAppStorage'],
+
         '/@/components/UI/Form': ['useForm'],
         '/@/components/UI/Table': ['useTable'],
       },
