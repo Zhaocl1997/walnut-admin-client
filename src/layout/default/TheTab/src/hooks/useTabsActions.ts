@@ -1,4 +1,3 @@
-import { DeleteTabTypeEnum } from '/@/enums/tab'
 import { tabActionDelete } from '/@/store/actions/tabs'
 
 export const useTabsActions = () => {
@@ -9,7 +8,7 @@ export const useTabsActions = () => {
 
   const onTabRemove = (
     name: string,
-    type: DeleteTabTypeEnum = DeleteTabTypeEnum.TAB_SELF
+    type: ValueOfDeleteTabConst = 'TAB_SELF'
   ) => {
     // remove tab
     tabActionDelete(name, type)

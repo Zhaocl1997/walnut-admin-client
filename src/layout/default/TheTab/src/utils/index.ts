@@ -1,6 +1,3 @@
-import type { RouteLocationNormalizedLoaded } from 'vue-router'
-import type { AppTab } from '../types'
-
 /**
  * @description Leave a room for the tabs, otherwise will not be able to click tabs in front
  */

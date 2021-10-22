@@ -36,13 +36,12 @@
   const { onTabClick, onTabRemove } = useTabsActions()
 
   const {
-    ctxMenuVisible,
-    targetTabName,
+    x,
+    y,
+    targetTab,
     targetTabIndex,
-
-    getCtxMenuStyle,
-
-    onCtxMenu,
+    ctxMenuVisible,
+    onOpenCtxMenu,
     onCloseCtxMenu,
   } = useTabsContextMenu()
 
@@ -59,13 +58,12 @@
     onTabClick,
     onTabRemove,
 
-    ctxMenuVisible,
-    targetTabName,
+    x,
+    y,
+    targetTab,
     targetTabIndex,
-
-    getCtxMenuStyle,
-
-    onCtxMenu,
+    ctxMenuVisible,
+    onOpenCtxMenu,
     onCloseCtxMenu,
   })
 </script>

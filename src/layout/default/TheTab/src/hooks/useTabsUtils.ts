@@ -1,4 +1,3 @@
-import type { Ref } from 'vue'
 import type { AppTabUtilListItem } from '../types'
 import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
 

@@ -1,25 +1,31 @@
 <template>
   <w-scrollbar ref="scrollRef" @scroll="onCloseCtxMenu" vertical height="2rem">
-    <ul class="*hstack">
+    <ul id="tabSortable" class="*hstack">
       <li
         v-for="(tab, index) in getTabs"
+        :key="tab.name"
         :class="[
-          '*hstack space-x-1 items-center w-auto border border-solid border-blue-500 rounded-md shadow mx-0.5 px-2 p-px select-none cursor-pointer all:hover:inline-block',
+          'tab-li *hstack space-x-1 items-center w-auto border border-solid border-blue-500 rounded-md shadow mx-0.5 px-2 p-px select-none cursor-pointer all:hover:inline-block',
           {
             'text-primary hover:text-primaryHover': $route.name === tab.name,
           },
         ]"
         @click="onTabClick(tab.name)"
-        @contextmenu.prevent.native="onCtxMenu($event, tab.name, index)"
+        @contextmenu.prevent.native="onOpenCtxMenu($event, tab, index)"
+        :data-affix="tab.meta.affix"
       >
         <div
           v-show="!app.isMobile && $route.name === tab.name"
           class="bg-primary hover:bg-primaryHover rounded-full h-4 w-4"
+          :data-affix="tab.meta.affix"
         ></div>
 
-        <span class="app-text text-sm whitespace-nowrap">{{
-          t(tab.meta.title!)
-        }}</span>
+        <span
+          class="app-text text-sm whitespace-nowrap"
+          :data-affix="tab.meta.affix"
+        >
+          {{ t(tab.meta.title!)  }}
+        </span>
 
         <w-transition name="zoom-out">
           <w-icon
@@ -37,17 +43,19 @@
 
 <script lang="ts" setup>
   import { getTabsContext } from '../hooks/useTabsContext'
+  import { useTabsSortable } from '../hooks/useTabsSortable'
 
   const { t } = useAppI18n()
   const { app } = useAppContext()
 
-  // TODO menu data and tab redo
   const {
     scrollRef,
     getTabs,
     onTabClick,
     onTabRemove,
-    onCtxMenu,
+    onOpenCtxMenu,
     onCloseCtxMenu,
   } = getTabsContext()
+
+  useTabsSortable()
 </script>

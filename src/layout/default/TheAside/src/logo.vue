@@ -1,11 +1,7 @@
 <template>
   <div class="h-12 whitespace-nowrap cursor-pointer" @click="onGoIndex">
     <div class="*hstack justify-evenly items-center">
-      <img
-        src="../../../../assets/images/logo.png"
-        alt="Walnut Admin Logo"
-        class="h-9 w-9 m-1"
-      />
+      <img src="/assets/logo.png" alt="Walnut Admin Logo" class="h-9 w-9 m-1" />
 
       <w-transition name="scale">
         <span
@@ -20,13 +16,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { indexName } from '/@/router/constant'
-
-  const { app } = useAppContext()
+  const { app, menu } = useAppContext()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
   const onGoIndex = () => {
-    useRouterPush({ name: indexName })
+    useRouterPush({ name: menu.value.indexMenuName })
   }
 </script>

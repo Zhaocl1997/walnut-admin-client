@@ -23,6 +23,7 @@
         <WAppLocalePicker />
         <WAppDarkMode />
         <HeaderAvatar />
+        <AppSettings />
       </div>
     </div>
   </div>
@@ -32,6 +33,7 @@
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
   import HeaderAvatar from './avatar.vue'
+  import AppSettings from '/@/components/App/AppSettings'
 
   const { app } = useAppContext()
 </script>

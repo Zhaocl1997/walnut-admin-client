@@ -9,7 +9,6 @@
 </template>
 
 <script lang="ts" setup>
-  import type { PropType } from 'vue'
   import type { AppTabUtilListItem } from '../types'
 
   defineProps({

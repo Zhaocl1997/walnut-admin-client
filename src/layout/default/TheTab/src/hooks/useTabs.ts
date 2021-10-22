@@ -32,21 +32,14 @@ export const useTabs = () => {
     })
   }
 
-  // reactive scroll
-  watch(
-    () => app.value.isMobile,
-    () => {
-      onScrollToCurrentTab()
-    }
-  )
-
   watchEffect(
     () => {
       // Build tab
       tabActionCreate(createTab(route))
 
       // Scroll
-      onScrollToCurrentTab()
+      // Trick to trigger the scroll
+      app.value.device && onScrollToCurrentTab()
     },
     // This is important
     // If no flush: 'post', this effect will trigger in instance for the first time which cause an null error.

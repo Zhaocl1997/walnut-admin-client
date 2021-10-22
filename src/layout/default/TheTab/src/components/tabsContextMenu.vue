@@ -1,182 +1,152 @@
 <template>
-  <w-transition name="zoom-fade">
-    <div
-      ref="tabsContextMenu"
-      v-if="ctxMenuVisible"
-      class="
-        bg-gray-800
-        border border-solid border-gray-600 border-opacity-50
-        rounded
-        p-1
-      "
-      :style="getCtxMenuStyle"
-    >
-      <ul class="*vstack">
-        <li
-          v-for="(item, index) in methodLists"
-          :key="index"
-          :class="[
-            '*hstack items-center mx-1 px-0.5 my-0.5 cursor-pointer',
-            {
-              'cursor-not-allowed text-gray-400': item.disabled,
-              'hover:bg-blue-200': !item.disabled,
-              'border-b-1 border-gray-300': item.divider,
-            },
-          ]"
-          @click="!item.disabled ? item.event() : emptyFunction()"
-        >
-          <w-icon
-            :icon="item.icon"
-            :disabled="item.disabled"
-            height="22"
-          ></w-icon>
-
-          <span class="app-text whitespace-nowrap text-base m-1 select-none">{{
-            item.name
-          }}</span>
-        </li>
-      </ul>
-    </div>
-  </w-transition>
+  <n-dropdown
+    placement="bottom-start"
+    @select="onSelect"
+    trigger="manual"
+    size="medium"
+    :x="x"
+    :y="y"
+    :options="options"
+    :show="ctxMenuVisible"
+    :on-clickoutside="onCloseCtxMenu"
+  ></n-dropdown>
 </template>
 
-<script lang="ts">
-  import { emptyFunction } from '/@/utils'
-  import { DeleteTabTypeEnum } from '/@/enums/tab'
+<script lang="tsx" setup>
   import { useRedirect } from '/@/hooks/core/useRedirect'
 
   import { getTabsContext } from '../hooks/useTabsContext'
   import { useAppFullScreen } from '/@/components/App/AppFullScreen/useAppFullScreen'
 
-  export default defineComponent({
-    name: 'TabsContextMenu',
+  const { t } = useAppI18n()
+  const { currentRoute } = useAppRouter()
+  const { tab } = useAppContext()
 
-    inheritAttrs: false,
+  const {
+    x,
+    y,
+    getTabs,
+    targetTab,
+    targetTabIndex,
+    ctxMenuVisible,
 
-    setup() {
-      const { t } = useAppI18n()
-      const { currentRoute } = useAppRouter()
+    onTabRemove,
+    onCloseCtxMenu,
+  } = getTabsContext()
 
-      const tabsContextMenu = ref(null)
+  const getTabsLength = computed(() => tab.value.tabs.length)
+  const getAffixedTabsLength = computed(
+    () => tab.value.tabs.filter((i) => i.meta.affix).length
+  )
 
-      const {
-        getTabs,
-        onTabRemove,
-        ctxMenuVisible,
-        targetTabName,
-        targetTabIndex,
-        getCtxMenuStyle,
-        onCloseCtxMenu,
-      } = getTabsContext()
+  const getCloseDisabled = computed(() => targetTab.value?.meta.affix)
+  const getCloseLeftDisabled = computed(
+    () =>
+      getAffixedTabsLength.value === targetTabIndex.value ||
+      targetTab.value?.meta.affix
+  )
+  const getCloseRightDisabled = computed(
+    () =>
+      getTabsLength.value - 1 === targetTabIndex.value ||
+      targetTab.value?.meta.affix
+  )
+  const getCloseOtherDisabled = computed(
+    () => getTabsLength.value - 1 === getAffixedTabsLength.value
+  )
 
-      const getCloseDisabled = computed(() => targetTabIndex.value === 0)
-      const getCloseLeftDisabled = computed(
-        () => targetTabIndex.value === 1 || targetTabIndex.value === 0
-      )
-      const getCloseRightDisabled = computed(
-        () =>
-          targetTabIndex.value === getTabs.value.length - 1 ||
-          targetTabIndex.value === 0
-      )
-      const getCloseOtherDisabled = computed(() => getTabs.value.length === 2)
-      const getOtherDisabled = computed(
-        () => currentRoute.value.name !== targetTabName.value
-      )
+  const getOtherDisabled = computed(
+    () =>
+      currentRoute.value.name !==
+      (targetTab.value?.name ?? currentRoute.value.name)
+  )
 
-      onClickOutside(tabsContextMenu, () => {
-        onCloseCtxMenu()
+  const onSelect = async (
+    key: ValueOfDeleteTabConst & 'Refresh' & 'Screen Full'
+  ) => {
+    if (Object.values(DeleteTabConst).includes(key)) {
+      onTabRemove(targetTab.value?.name!, key)
+    }
+
+    if (key === 'Refresh') {
+      const { redirect } = useRedirect()
+      await redirect()
+    }
+
+    if (key === 'Screen Full') {
+      const { toggleFullScreen } = useAppFullScreen({
+        target: `#${targetTab.value?.name}`,
       })
+      toggleFullScreen()
+    }
 
-      const methodLists = computed(() => {
-        return [
-          {
-            name: t('layout.tab.close'),
-            icon: 'ant-design:close-outlined',
-            event: () => {
-              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_SELF)
+    onCloseCtxMenu()
+  }
 
-              onCloseCtxMenu()
-            },
-            disabled: getCloseDisabled.value,
-          },
-          {
-            name: t('layout.tab.closeLeft'),
-            icon: 'ant-design:vertical-right-outlined',
-            event: () => {
-              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_LEFT)
-
-              onCloseCtxMenu()
-            },
-            disabled: getCloseLeftDisabled.value,
-          },
-          {
-            name: t('layout.tab.closeRight'),
-            icon: 'ant-design:vertical-left-outlined',
-            event: () => {
-              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_RIGHT)
-
-              onCloseCtxMenu()
-            },
-            disabled: getCloseRightDisabled.value,
-          },
-          {
-            name: t('layout.tab.closeOther'),
-            icon: 'ant-design:column-width-outlined',
-            event: () => {
-              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_OTHER)
-
-              onCloseCtxMenu()
-            },
-            disabled: getCloseOtherDisabled.value,
-          },
-          {
-            name: t('layout.tab.closeAll'),
-            icon: 'ant-design:border-outlined',
-            event: () => {
-              onTabRemove(targetTabName.value, DeleteTabTypeEnum.TAB_ALL)
-
-              onCloseCtxMenu()
-            },
-            divider: true,
-          },
-          {
-            name: t('layout.tab.refresh'),
-            icon: 'ant-design:sync-outlined',
-            event: async () => {
-              const { redirect } = useRedirect()
-
-              await redirect()
-
-              onCloseCtxMenu()
-            },
-            disabled: getOtherDisabled.value,
-          },
-          {
-            name: t('layout.tab.screenfull'),
-            icon: 'ant-design:fullscreen-outlined',
-            event: () => {
-              const { toggleFullScreen } = useAppFullScreen({
-                target: `#${targetTabName.value}`,
-              })
-
-              toggleFullScreen()
-
-              onCloseCtxMenu()
-            },
-            disabled: getOtherDisabled.value,
-          },
-        ]
-      })
-
-      return {
-        tabsContextMenu,
-        ctxMenuVisible,
-        getCtxMenuStyle,
-        methodLists,
-        emptyFunction,
-      }
+  const options = computed(() => [
+    {
+      key: DeleteTabConst.TAB_SELF,
+      label: t('layout.tab.close'),
+      icon: () => (
+        <w-icon height="24" icon="ant-design:close-outlined"></w-icon>
+      ),
+      disabled: getCloseDisabled.value,
     },
-  })
-</script>
 
-<style lang="scss" scoped></style>
+    {
+      key: DeleteTabConst.TAB_LEFT,
+      label: t('layout.tab.closeLeft'),
+      icon: () => (
+        <w-icon height="24" icon="ant-design:vertical-right-outlined"></w-icon>
+      ),
+      disabled: getCloseLeftDisabled.value,
+    },
+
+    {
+      key: DeleteTabConst.TAB_RIGHT,
+      label: t('layout.tab.closeRight'),
+      icon: () => (
+        <w-icon height="24" icon="ant-design:vertical-left-outlined"></w-icon>
+      ),
+      disabled: getCloseRightDisabled.value,
+    },
+
+    {
+      key: DeleteTabConst.TAB_OTHER,
+      label: t('layout.tab.closeOther'),
+      icon: () => (
+        <w-icon height="24" icon="ant-design:column-width-outlined"></w-icon>
+      ),
+      disabled: getCloseOtherDisabled.value,
+    },
+
+    {
+      key: DeleteTabConst.TAB_ALL,
+      label: t('layout.tab.closeAll'),
+      icon: () => (
+        <w-icon height="24" icon="ant-design:border-outlined"></w-icon>
+      ),
+      disabled: getCloseOtherDisabled.value,
+    },
+
+    {
+      key: 'd1',
+      type: 'divider',
+    },
+
+    {
+      key: 'Refresh',
+      label: t('layout.tab.refresh'),
+      icon: () => <w-icon height="24" icon="ant-design:sync-outlined"></w-icon>,
+      disabled: getOtherDisabled.value,
+    },
+
+    {
+      key: 'Screen Full',
+      label: t('layout.tab.screenfull'),
+      icon: () => (
+        <w-icon height="24" icon="ant-design:fullscreen-outlined"></w-icon>
+      ),
+      disabled: getOtherDisabled.value,
+    },
+  ])
+</script>

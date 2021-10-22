@@ -1,9 +1,6 @@
 import type { RouteMeta } from 'vue-router'
-import type { ComputedRef, Ref } from 'vue'
 
 import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
-
-import { DeleteTabTypeEnum } from '/@/enums/tab'
 
 export interface AppTab {
   name: string
@@ -19,12 +16,16 @@ export interface AppTabUtilListItem {
 export interface AppTabContext {
   scrollRef: Ref<Nullable<WScrollbarRef>>
   getTabs: ComputedRef<AppTab[]>
-  onTabClick: (name: string) => void
-  onTabRemove: (name: string, type?: DeleteTabTypeEnum) => void
-  ctxMenuVisible: Ref<boolean>
-  targetTabName: Ref<string>
+
+  x: Ref<number>
+  y: Ref<number>
+  targetTab: Ref<Nullable<AppTab>>
   targetTabIndex: Ref<number>
-  getCtxMenuStyle: ComputedRef
-  onCtxMenu: (event: MouseEvent, name: string, index: number) => void
+  ctxMenuVisible: Ref<boolean>
+
+  onTabClick: (name: string) => void
+  onTabRemove: (name: string, type?: ValueOfDeleteTabConst) => void
+
+  onOpenCtxMenu: (event: MouseEvent, tab: AppTab, index: number) => void
   onCloseCtxMenu: () => void
 }
