@@ -1,5 +1,3 @@
-import type { Plugin } from 'vite'
-
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
@@ -21,6 +19,7 @@ const comp = {
     'ButtonGroup',
     'Checkbox',
     'DatePicker',
+    'Drawer',
     'DynamicTags',
     'Form',
     'Icon',
@@ -34,7 +33,7 @@ const comp = {
   ],
 }
 
-export const createComponentPlugin = (): Plugin => {
+export const createComponentPlugin = (): VitePlugin => {
   return Components({
     dirs: ['src/components'],
 

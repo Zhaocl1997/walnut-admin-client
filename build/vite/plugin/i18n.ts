@@ -1,9 +1,7 @@
-import type { Plugin } from 'vite'
-
 import vueI18n from '@intlify/vite-plugin-vue-i18n'
 import { resolve } from 'path'
 
-export const createI18nPlugin = (): Plugin => {
+export const createI18nPlugin = (): VitePlugin => {
   return vueI18n({
     include: resolve(__dirname, '../../../src/locales/**'),
     // If you need on-demand compilation with Message compiler, you need to set the runtimeOnly option to false.

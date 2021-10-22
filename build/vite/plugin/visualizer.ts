@@ -1,10 +1,8 @@
-import type { Plugin } from 'vite'
-
 import visualizer from 'rollup-plugin-visualizer'
 
 import { bundleSizeStatsLogPath } from '../../utils/paths'
 
-export const createVisualizerPlugin = (): Plugin => {
+export const createVisualizerPlugin = (): VitePlugin => {
   return visualizer({
     filename: bundleSizeStatsLogPath,
     title: 'Bundle Size Stats',

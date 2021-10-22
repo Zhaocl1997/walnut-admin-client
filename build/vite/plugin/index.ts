@@ -1,5 +1,3 @@
-import type { Plugin } from 'vite'
-
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
@@ -13,7 +11,7 @@ import { createI18nPlugin } from './i18n'
 import { creatAutoImportPlugin } from './auto-import'
 
 export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
-  const vitePlugins: (Plugin | Plugin[])[] = [vue(), vueJsx()]
+  const vitePlugins: (VitePlugin | VitePlugin[])[] = [vue(), vueJsx()]
 
   const stage = mode === 'staging'
   const prod = mode === 'production'

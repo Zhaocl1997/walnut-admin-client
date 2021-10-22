@@ -1,8 +1,6 @@
-import type { Plugin } from 'vite'
-
 import compressPlugin from 'vite-plugin-compression'
 
-export const createCompressionPlugin = (): Plugin => {
+export const createCompressionPlugin = (): VitePlugin => {
   return compressPlugin({
     ext: '.br',
     algorithm: 'brotliCompress',
