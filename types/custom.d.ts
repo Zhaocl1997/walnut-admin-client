@@ -11,6 +11,7 @@ declare global {
 
   // vue-router
   type Router = import('vue-router').Router
+  type _RouteRecordBase = import('vue-router')._RouteRecordBase
   type RouteRecordRaw = import('vue-router').RouteRecordRaw
   type RouteLocationRaw = import('vue-router').RouteLocationRaw
   type RouteLocationNormalized = import('vue-router').RouteLocationNormalized
@@ -33,9 +34,6 @@ declare global {
 
   // vite
   type VitePlugin = import('vite').Plugin
-
-  // app
-  type AppTab = import('/@/layout/default/TheTab').AppTab
 }
 
 export {}
