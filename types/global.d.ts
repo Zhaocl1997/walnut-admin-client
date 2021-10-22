@@ -2,9 +2,9 @@ declare interface Fn<T = any, R = T> {
   (...arg: T[]): R
 }
 
-declare type Recordable<T extends any = any> = Record<string, T>
+declare type Recordable<T = any> = Record<string, T>
 
-declare type ReadonlyRecordable<T extends any = any> = {
+declare type ReadonlyRecordable<T = any> = {
   readonly [key: string]: T
 }
 
@@ -37,6 +37,11 @@ declare type EmptyObject = Record<string, never>
  * @description type for any object
  */
 declare type AnyObject = Record<string, unknown>
+
+/**
+ * @description type usage for const
+ */
+declare type ValueOf<T> = T[keyof T]
 
 /**
  * @description used for setup prop type

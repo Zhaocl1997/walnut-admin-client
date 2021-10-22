@@ -4,7 +4,6 @@ import type {
   NotificationApiInjection,
   DialogApiInjection,
 } from 'naive-ui'
-import type { App } from 'vue'
 
 declare global {
   declare interface Window {
