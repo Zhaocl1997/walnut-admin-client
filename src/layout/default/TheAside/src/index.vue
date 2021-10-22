@@ -21,7 +21,7 @@
   import AsideMenu from './menu.vue'
   import AsideLogo from './logo.vue'
 
-  const { app } = useAppContext()
+  const { app } = useAppState()
 
   const onUpdateCollapse = (collapse: boolean) => {
     app.value.collapse = collapse

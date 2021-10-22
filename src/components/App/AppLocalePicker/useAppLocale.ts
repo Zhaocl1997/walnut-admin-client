@@ -1,9 +1,7 @@
-import type { AppLocaleType } from '/@/App/src/types'
-
 /**
  * @link https://vue-i18n-next.intlify.dev/guide/advanced/lazy.html
  */
-export const useLocale = (locale: AppLocaleType) => {
+export const useLocale = (locale: ValueOfLocaleConst) => {
   const setI18nLanguage = () => {
     if (AppI18n.mode === 'legacy') {
       AppI18n.global.locale = locale

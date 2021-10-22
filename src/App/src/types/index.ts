@@ -1,4 +1,3 @@
-import type { AppTab } from '/@/layout/default/TheTab'
 import type { Menu } from '/@/router/types'
 import type { UserInfoType } from '/@/store/types/user'
 
@@ -52,6 +51,8 @@ export interface AppContext {
   // Menu & Route Relative
   menu: {
     menus: Menu[]
+
+    indexMenuName: string
 
     keepAliveRouteNames: string[]
   }

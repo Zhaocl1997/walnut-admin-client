@@ -28,7 +28,7 @@
     },
 
     setup(props) {
-      const { app } = useAppContext()
+      const { app } = useAppState()
 
       watchEffect(async () => {
         const { loadLocaleMessages, setI18nLanguage } = useLocale(

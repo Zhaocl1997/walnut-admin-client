@@ -21,6 +21,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/App': ['useAppContext'],
 
         '/@/const': [
+          'DevideConst',
           'DarkModeConst',
           'LocaleConst',
           'MenuTypeConst',
@@ -39,7 +40,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
           'useAppRouter',
           'useRouterPush',
         ],
-        '/@/store': ['useAppStateStorage', 'useAppStateMemory'],
+        '/@/store': ['useAppState', 'useAppStateStorage', 'useAppStateMemory'],
 
         '/@/hooks/core/useContext': ['useContext'],
         '/@/hooks/component/useMessage': [

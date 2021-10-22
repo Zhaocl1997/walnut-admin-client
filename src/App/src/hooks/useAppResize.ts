@@ -2,7 +2,7 @@ import { useResize } from '/@/hooks/core/useResize'
 import { useBreakpoints } from '/@/hooks/core/useBreakpoints'
 
 export const useAppResize = () => {
-  const { app } = useAppContext()
+  const { app } = useAppState()
   const breakpoints = useBreakpoints()
 
   const handler = () => {

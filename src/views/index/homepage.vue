@@ -1,5 +1,11 @@
 <template>
-  <div>Homepage</div>
+  <div>
+    Homepage
+
+    <pre>{{ app }}</pre>
+
+    <n-switch v-model:value="app.isDark"></n-switch>
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,8 +18,10 @@
 
     emits: [],
 
-    setup(props: any, ctx) {
-      return {}
+    setup(props, ctx) {
+      const { app } = useAppState()
+
+      return { app }
     },
   })
 </script>

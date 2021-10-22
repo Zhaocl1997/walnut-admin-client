@@ -71,17 +71,14 @@ npm i
 
 ### 接下来的计划  
 
-- [ ] ElementPlus 国际化响应式切换，暗色主题适配（暂时搁置）  
-- [x] ElementPlus 按需加载
+- [x] 移除ElementPlus， 采用naiveui
 - [ ] Layout 优化，目前只是最基本的左侧菜单布局  
 - [ ] vue-tsc 错误全部消除  
-- [x] 虚拟滚动
 - [x] 屏幕断点优化
-- [ ] 带有options API 的组件 统一加 valueFormat 和 valueType
-- [x] table 重构优化(WIP)
-- [x] table 自定义表头迁移优化，按钮组，操作列
+- [ ] table 重构优化(WIP)
+- [ ] table 自定义表头迁移优化，按钮组，操作列
 - [ ] table 自定义导出导入，打印
-- [x] table state loading/empty
+- [ ] table state loading/empty
 - [ ] form 重构优化(WIP)
 - [ ] form 添加更复杂的表单用例，添加tsx语法支持(WIP)
 - [ ] dialog 重构优化
@@ -92,7 +89,6 @@ npm i
 - [ ] layout tsx重写
 - [x] hook抽离，尽量可脱离组件逻辑
 - [ ] 权限处理
-- [x] 环境变量优化
 - [ ] 打包优化
 - [ ] 部署，自动化部署
 - [ ] icon 扩展 支持更多方法使用icon
@@ -103,6 +99,14 @@ npm i
 - [x] easy-fns-ts 类型优化
 - [ ] 组件类型partial和MaybeRef优化(WIP)
 - [ ] 组件内部getBindValue时Omit掉自定义的prop，要不然自定义的那些prop会在html节点上被看见(WIP)
+
+
+- [x] 移除nprogress，采用naive
+- [x] encrypt参数移到env
+- [ ] storage 缓存重写 同时优化类型
+- [ ] global comp auto gen 的类型地址有问题
+- [x] 消息提示类的用naive重写
+- [ ] icon 方案重做
 
 ### 更新日志
 

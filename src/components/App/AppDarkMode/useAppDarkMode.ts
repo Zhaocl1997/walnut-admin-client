@@ -1,5 +1,5 @@
 export const useDarkMode = () => {
-  const { app } = useAppContext()
+  const { app } = useAppState()
 
   const isSystemDark = usePreferredDark()
 

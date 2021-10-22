@@ -18,6 +18,7 @@ declare global {
     import('vue-router').RouteLocationNormalizedLoaded
 
   // value of const
+  type ValueOfDevideConst = import('/@/const').ValueOfDevideConst
   type ValueOfDeleteTabConst = import('/@/const').ValueOfDeleteTabConst
   type ValueOfDarkModeConst = import('/@/const').ValueOfDarkModeConst
   type ValueOfLocaleConst = import('/@/const').ValueOfLocaleConst

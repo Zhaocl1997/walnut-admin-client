@@ -7,7 +7,7 @@
     name: 'UIProvider',
 
     setup(_, { slots }) {
-      const { app } = useAppContext()
+      const { app } = useAppState()
 
       const getTheme = computed(() =>
         !app.value.isDark ? undefined : darkTheme
