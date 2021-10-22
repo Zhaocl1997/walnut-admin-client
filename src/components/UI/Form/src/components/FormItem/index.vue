@@ -1,5 +1,4 @@
 <script lang="tsx">
-  import type { PropType } from 'vue'
   import type { WForm } from '../../types'
 
   import { isFunction } from 'easy-fns-ts'

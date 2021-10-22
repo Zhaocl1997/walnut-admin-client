@@ -14,7 +14,6 @@
 </template>
 
 <script lang="ts">
-  import { DarkModeEnum } from '/@/enums/dark'
   import { useDarkMode } from './useAppDarkMode'
 
   export default defineComponent({
@@ -26,22 +25,20 @@
       const { t } = useAppI18n()
       const { app } = useDarkMode()
 
-      const darkModeOptions = computed(() => {
-        return [
-          {
-            value: DarkModeEnum.LIGHT,
-            label: t('system.global.darkMode.light'),
-          },
-          {
-            value: DarkModeEnum.DARK,
-            label: t('system.global.darkMode.dark'),
-          },
-          {
-            value: DarkModeEnum.SYSTEM,
-            label: t('system.global.darkMode.system'),
-          },
-        ]
-      })
+      const darkModeOptions = computed(() => [
+        {
+          value: DarkModeConst.LIGHT,
+          label: t('system.global.darkMode.light'),
+        },
+        {
+          value: DarkModeConst.DARK,
+          label: t('system.global.darkMode.dark'),
+        },
+        {
+          value: DarkModeConst.SYSTEM,
+          label: t('system.global.darkMode.system'),
+        },
+      ])
 
       return {
         app,

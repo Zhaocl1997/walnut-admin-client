@@ -1,5 +1,4 @@
 <script lang="tsx">
-  import type { PropType } from 'vue'
   import type { ScrollbarInst } from 'naive-ui/lib/_internal'
   import type { WScrollbarRef } from './index'
 

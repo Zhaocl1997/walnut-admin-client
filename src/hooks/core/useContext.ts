@@ -1,5 +1,3 @@
-import type { InjectionKey } from 'vue'
-
 /**
  * @description Integrate entry context, expose `setContext` and `getContext` two functions
  */

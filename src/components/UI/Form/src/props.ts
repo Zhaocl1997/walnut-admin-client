@@ -1,4 +1,3 @@
-import type { PropType } from 'vue'
 import type { ModalProps, DrawerProps, DrawerContentProps } from 'naive-ui'
 import type { WForm } from './types'
 

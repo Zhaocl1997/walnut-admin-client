@@ -1,6 +1,4 @@
 <script lang="tsx">
-  import type { PropType } from 'vue'
-
   export default defineComponent({
     name: 'WMessage',
 

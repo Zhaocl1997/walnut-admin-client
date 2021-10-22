@@ -1,14 +1,11 @@
 import { storagePrefix } from '../constant/prefix'
-import { StorageTypeEnum } from '/@/enums/persistent'
 
-export type StorageType = 'localStorage' | 'sessionStorage' | 'cookies'
-
-export const getAllKeys = (storage: StorageType): string[] => {
+export const getAllKeys = (storage: ValueOfStorageTypeConst): string[] => {
   const ret: string[] = []
   const prefix = storagePrefix
 
   switch (storage) {
-    case StorageTypeEnum.LOCAL_STORAGE:
+    case StorageTypeConst.LOCAL_STORAGE:
       Object.keys(localStorage).map((key) => {
         const originalKey = key
           .replace(prefix.toLocaleUpperCase(), '')
@@ -18,7 +15,7 @@ export const getAllKeys = (storage: StorageType): string[] => {
       })
       break
 
-    case StorageTypeEnum.SESSION_STORAGE:
+    case StorageTypeConst.SESSION_STORAGE:
       Object.keys(sessionStorage).map((key) => {
         const originalKey = key
           .replace(prefix.toLocaleUpperCase(), '')
@@ -28,7 +25,7 @@ export const getAllKeys = (storage: StorageType): string[] => {
       })
       break
 
-    case StorageTypeEnum.COOKIES:
+    case StorageTypeConst.COOKIES:
       const arr = document.cookie.match(/[^ =;]+(?==)/g)
 
       arr &&

@@ -1,8 +1,5 @@
-import type { App } from 'vue'
-
 import { setupI18n } from '/@/locales'
 import { setupRouter } from '/@/router'
-import { setupDirectives } from '/@/directives'
 
 import { appError, appWarning } from '/@/utils/log'
 import { isDev } from '/@/utils/constant/vue'
@@ -26,8 +23,6 @@ export const setupApp = async (app: App) => {
   await setupI18n(app)
 
   setupRouter(app)
-
-  setupDirectives(app)
 
   setupErrorhandler(app)
 

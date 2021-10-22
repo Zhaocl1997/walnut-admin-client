@@ -1,6 +1,11 @@
 import type { AppContext } from '/@/App'
 
-import { STORAGE_APP, STORAGE_TAB, STORAGE_TOKEN } from '../utils/persistent'
+import {
+  STORAGE_APP,
+  STORAGE_MENU,
+  STORAGE_TAB,
+  STORAGE_TOKEN,
+} from '../utils/persistent'
 
 /**
  * @description Here is where we initial app context.
@@ -12,6 +17,7 @@ export const AppGlobalContext = reactive<AppContext>({
 
   menu: {
     menus: [],
+    indexMenuName: STORAGE_MENU.value.indexMenuName,
     keepAliveRouteNames: [],
   },
 

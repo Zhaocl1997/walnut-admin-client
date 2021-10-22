@@ -1,12 +1,7 @@
-import type { AppTab } from '/@/layout/default/TheTab'
-
-import { indexName, notFoundName, redirectName } from '/@/router/constant'
-
-import { SymbolKeyEnum } from '/@/enums/symbol'
-import { DeleteTabTypeEnum } from '/@/enums/tab'
+import { notFoundName, redirectName } from '/@/router/constant'
 
 const nameBlackList: string[] = [notFoundName, redirectName]
-const tabKey = Symbol(SymbolKeyEnum.TABS_KEY)
+const tabKey = Symbol(SymbolKeyConst.TABS_KEY)
 
 /**
  * @description Action - Tab - Close multiple tabs
@@ -24,13 +19,14 @@ const closeMultipleTabs = (lists: string[]) => {
 /**
  * @description Action - Tab - Create tab
  */
-export const tabActionCreate = (newTab: AppTab) => {
+export const tabActionCreate = (
+  newTab: AppTab,
+  method: keyof typeof Array.prototype = 'push'
+) => {
   const { tab } = useAppContext<false>()
 
   // redirect/404 etc pages do not need to add into tab
-  if (nameBlackList.includes(newTab.name)) {
-    return
-  }
+  if (nameBlackList.includes(newTab.name)) return
 
   // set the current tab name
   tab.targetTabName = newTab.name
@@ -42,7 +38,7 @@ export const tabActionCreate = (newTab: AppTab) => {
     const cached = tab.cachedTabs.get(tabKey)
 
     if (!cached || (cached && !cached.includes(newTab.name))) {
-      tab.tabs.push(newTab)
+      tab.tabs[method as string](newTab)
     }
   }
 
@@ -56,13 +52,13 @@ export const tabActionCreate = (newTab: AppTab) => {
 /**
  * @description Action - Tab - Delete tab
  */
-export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
-  const { tab } = useAppContext<false>()
+export const tabActionDelete = (name: string, type: ValueOfDeleteTabConst) => {
+  const { tab, menu } = useAppContext<false>()
 
   const index = tab.tabs.findIndex((item) => item.name === name)
 
   switch (type) {
-    case DeleteTabTypeEnum.TAB_SELF:
+    case DeleteTabConst.TAB_SELF:
       {
         // find and splice
         index !== -1 && tab.tabs.splice(index, 1)
@@ -78,7 +74,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
       }
       break
 
-    case DeleteTabTypeEnum.TAB_LEFT:
+    case DeleteTabConst.TAB_LEFT:
       {
         const nameList: string[] = []
 
@@ -99,7 +95,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
       }
       break
 
-    case DeleteTabTypeEnum.TAB_RIGHT:
+    case DeleteTabConst.TAB_RIGHT:
       {
         const nameList: string[] = []
 
@@ -120,7 +116,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
       }
       break
 
-    case DeleteTabTypeEnum.TAB_OTHER:
+    case DeleteTabConst.TAB_OTHER:
       {
         const nameList: string[] = []
 
@@ -141,7 +137,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
       }
       break
 
-    case DeleteTabTypeEnum.TAB_ALL:
+    case DeleteTabConst.TAB_ALL:
       {
         const nameList: string[] = []
 
@@ -153,7 +149,7 @@ export const tabActionDelete = (name: string, type: DeleteTabTypeEnum) => {
         })
 
         // Just back to index page
-        useRouterPush({ name: indexName })
+        useRouterPush({ name: menu.indexMenuName })
 
         // close right tabs
         closeMultipleTabs(nameList)
@@ -172,4 +168,15 @@ export const tabActionClear = () => {
   const { tab } = useAppContext<false>()
   tab.tabs.length = 0
   tab.cachedTabs.clear()
+}
+
+/**
+ * @description Action - Tab - Sort tab
+ */
+export const tabActionSort = (oldIndex: number, newIndex: number) => {
+  const { tab } = useAppContext<false>()
+
+  const currentTab = tab.tabs[oldIndex]
+  tab.tabs.splice(oldIndex, 1)
+  tab.tabs.splice(newIndex, 0, currentTab)
 }

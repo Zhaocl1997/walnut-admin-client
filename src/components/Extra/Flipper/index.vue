@@ -36,8 +36,6 @@
    */
   const isCSSTime = isPattern(/^\+?(\d*\.)?\d+(ms|s)$/i)
 
-  import type { PropType } from 'vue'
-
   export default defineComponent({
     name: 'WFlipper',
 

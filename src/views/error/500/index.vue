@@ -3,8 +3,6 @@
 </template>
 
 <script lang="ts">
-  import type { SetupContext } from 'vue'
-
   export default defineComponent({
     name: '500',
 
@@ -18,7 +16,7 @@
 
     emits: [],
 
-    setup(props: any, ctx: SetupContext) {},
+    setup(props, ctx) {},
   })
 </script>
 

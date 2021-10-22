@@ -56,18 +56,18 @@
 
 <style lang="scss" scoped>
   .w-auth {
-    background: transparent url('/@/assets/images/auth/auth_bg.jpg') no-repeat
-      center center fixed;
+    background: transparent url('/assets/facebook-1200.png') no-repeat center
+      center fixed;
     background-size: cover;
 
     &-card {
       &__front {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/@/assets/images/auth/auth_signin.jpg') no-repeat center center;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/auth_signin.jpg') no-repeat center center;
         background-size: cover;
       }
 
       &__back {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/@/assets/images/auth/auth_signup.jpg') no-repeat center center;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/auth_signup.jpg') no-repeat center center;
         background-size: cover;
       }
     }

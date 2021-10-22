@@ -1,11 +1,9 @@
 import type { Menu } from './types'
-import type { RouteRecordRaw } from 'vue-router'
 
 import { arrToTree, formatTree, orderTree } from 'easy-fns-ts'
 
 import { getPermissions } from '../api/auth'
-import { MenuTypeEnum } from '../enums/menu'
-import { notFoundRoute } from './constant'
+import { notFoundRoute } from './routes'
 import {
   createKeepAliveRouteNameList,
   createCommonRoute,
@@ -13,16 +11,24 @@ import {
   resolveParentComponent,
   resolveViewModules,
 } from './utils'
+import { tabActionCreate } from '../store/actions/tabs'
+import { MenuTypeConst } from '../const'
 
 /**
  * @description Get menu data to display aside, build and order into tree structure.
  */
 export const createMenus = (menus: Menu[]) => {
   // filter menus which are visible aside
-  const visibleMenus = menus.filter((i) => i.show)
+  const visibled = menus.filter((i) => i.show)
+
+  // unshift the affixed-visibled-ordered tab into tab store
+  visibled
+    .filter((i) => i.affix)
+    .sort((a, b) => b.order! - a.order!)
+    .map((i) => tabActionCreate(createCommonRoute(i), 'unshift'))
 
   // build tree
-  const menuTree = arrToTree(menus, { id: '_id' })
+  const menuTree = arrToTree(visibled, { id: '_id' })
 
   // order tree
   const orderedTree = orderTree(menuTree)[0].children
@@ -37,7 +43,7 @@ export const createRoutes = (menus: Menu[]) => {
   const routes = formatTree(menus, {
     format: (node: Menu): RouteRecordRaw | undefined => {
       // handle catelog
-      if (node.type === MenuTypeEnum.CATALOG) {
+      if (node.type === MenuTypeConst.CATALOG) {
         return {
           ...createCommonRoute(node),
           component: resolveParentComponent(node.name),
@@ -45,7 +51,7 @@ export const createRoutes = (menus: Menu[]) => {
       }
 
       // handle menu
-      if (node.type === MenuTypeEnum.MENU) {
+      if (node.type === MenuTypeConst.MENU) {
         // handle internal menu
         if (node.ternal === 'internal') {
           return {

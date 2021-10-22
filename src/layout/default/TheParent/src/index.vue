@@ -12,9 +12,6 @@
 </template>
 
 <script lang="ts">
-  import type { VNode } from 'vue'
-  import type { RouteLocationNormalized } from 'vue-router'
-
   export default defineComponent({
     parentView: true,
 

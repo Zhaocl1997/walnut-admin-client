@@ -11,8 +11,6 @@
 </script>
 
 <script lang="ts" setup>
-  import { useAppStorage } from '/@/utils/persistent/src/Storage'
-
   const formData = ref({
     type: 'localStorage',
     key: '',

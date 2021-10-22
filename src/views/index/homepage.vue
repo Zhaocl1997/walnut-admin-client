@@ -1,12 +1,18 @@
 <template>
-  <div>Role</div>
+  <div>Homepage</div>
 </template>
 
 <script lang="ts">
   export default defineComponent({
-    name: 'Role',
+    name: 'Homepage',
 
-    setup() {
+    inheritAttrs: false,
+
+    props: {},
+
+    emits: [],
+
+    setup(props: any, ctx) {
       return {}
     },
   })

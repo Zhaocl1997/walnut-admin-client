@@ -1,23 +1,8 @@
-import type { App } from 'vue'
-import type { RouteLocationRaw, RouteRecordRaw } from 'vue-router'
-
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { isInSetup } from '../utils/shared'
-import {
-  AuthRoute,
-  RootRoute,
-  redirectRoute,
-  NetworkErrorRoute,
-} from './constant'
+import { routes } from './routes'
 import { createRouterGuard } from './guard'
-
-const routes: RouteRecordRaw[] = [
-  AuthRoute,
-  RootRoute,
-  redirectRoute,
-  NetworkErrorRoute,
-]
 
 export const AppRouter = createRouter({
   history: createWebHistory(),

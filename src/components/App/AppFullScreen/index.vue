@@ -1,6 +1,4 @@
 <script lang="tsx">
-  import type { PropType } from 'vue'
-
   import { useAppFullScreen } from './useAppFullScreen'
 
   export default defineComponent({

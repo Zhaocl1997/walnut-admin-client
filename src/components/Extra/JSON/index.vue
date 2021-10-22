@@ -1,6 +1,4 @@
 <script lang="tsx">
-  import type { PropType } from 'vue'
-
   import { genString } from 'easy-fns-ts'
   import { highlightSyntax } from './utils'
 

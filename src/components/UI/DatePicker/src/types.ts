@@ -1,5 +1,4 @@
 import type { DatePickerProps } from 'naive-ui'
-import type { ExtractPropTypes } from 'vue'
 
 import { props } from './props'
 

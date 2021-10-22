@@ -1,4 +1,3 @@
-import type { ExtractPropTypes } from 'vue'
 import type { DataTableProps, DataTableColumn, DataTableInst } from 'naive-ui'
 import type { InternalRowData } from 'naive-ui/lib/data-table/src/interface'
 import type { useEventParams } from '/@/hooks/component/useEvent'

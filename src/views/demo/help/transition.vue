@@ -9,9 +9,7 @@
 </template>
 
 <script lang="ts">
-  import { TransitionEnum } from '/@/components/Extra/Transition'
-
-  const options: OptionDataItem[] = Object.entries(TransitionEnum).map(
+  const options: OptionDataItem[] = Object.entries(TransitionNameConst).map(
     ([key, value]) => ({
       value: value,
       label: key,

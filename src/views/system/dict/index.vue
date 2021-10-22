@@ -1,14 +1,14 @@
 <template>
-  <div>Role</div>
+  <div>Dict</div>
 </template>
 
 <script lang="ts">
   export default defineComponent({
-    name: 'Role',
+    name: 'Dict',
 
-    setup() {
-      return {}
-    },
+    components: {},
+
+    setup() {},
   })
 </script>
 

@@ -1,5 +1,3 @@
-import type { PropType, ExtractPropTypes } from 'vue'
-
 const props = {
   valueType: {
     type: String as PropType<'string' | 'number'>,

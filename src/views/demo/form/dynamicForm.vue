@@ -9,11 +9,6 @@
 </template>
 
 <script lang="ts">
-  import {
-    TransitionEnum,
-    TransitionName,
-  } from '/@/components/Extra/Transition'
-
   export default defineComponent({
     name: 'DynamicForm',
 
@@ -21,8 +16,8 @@
       const configFormData = ref({
         vIf: true,
         vShow: true,
-        transition1: 'fade' as TransitionName,
-        transition2: 'fade' as TransitionName,
+        transition1: 'fade' as ValueOfTransitionNameConst,
+        transition2: 'fade' as ValueOfTransitionNameConst,
         disabled: false,
         labelHelpMessage: true,
         labelWidth: 80,
@@ -42,7 +37,7 @@
         input6: undefined,
       })
 
-      const transitionOptions = Object.entries(TransitionEnum).map(
+      const transitionOptions = Object.entries(TransitionNameConst).map(
         ([key, value]) => ({
           label: value,
           value: value,

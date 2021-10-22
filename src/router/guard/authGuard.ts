@@ -1,4 +1,3 @@
-import type { Router } from 'vue-router'
 import { easyIsEmpty } from 'easy-fns-ts'
 
 import { authPath, rootName, networkErrorPath } from '../constant'

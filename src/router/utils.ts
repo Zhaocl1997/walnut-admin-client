@@ -1,10 +1,8 @@
 import type { Menu } from './types'
-import type { RouteRecordRaw } from 'vue-router'
 
 import ParentComponent from '/@/layout/default/TheParent'
 import IFrameComponent from '/@/layout/iframe/index.vue'
-
-import { MenuTypeEnum } from '../enums/menu'
+import { MenuTypeConst } from '../const'
 
 /**
  * @description Build route object through menu node
@@ -28,7 +26,7 @@ export const createCommonRoute = (node: Menu): RouteRecordRaw | any => {
  */
 export const createKeepAliveRouteNameList = (menus: Menu[]): string[] =>
   menus
-    .filter((i) => i.type === MenuTypeEnum.MENU && i.cache)
+    .filter((i) => i.type === MenuTypeConst.MENU && i.cache)
     .map((i) => i.name as string)
 
 /**

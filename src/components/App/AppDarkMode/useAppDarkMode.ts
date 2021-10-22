@@ -1,5 +1,3 @@
-import { DarkModeEnum } from '/@/enums/dark'
-
 export const useDarkMode = () => {
   const { app } = useAppContext()
 
@@ -9,13 +7,13 @@ export const useDarkMode = () => {
     const root = document.querySelector('html')
 
     if (dark) {
-      root?.classList.add(DarkModeEnum.DARK)
-      root?.classList.remove(DarkModeEnum.LIGHT)
+      root?.classList.add(DarkModeConst.DARK)
+      root?.classList.remove(DarkModeConst.LIGHT)
 
       app.value.isDark = true
     } else {
-      root?.classList.add(DarkModeEnum.LIGHT)
-      root?.classList.remove(DarkModeEnum.DARK)
+      root?.classList.add(DarkModeConst.LIGHT)
+      root?.classList.remove(DarkModeConst.DARK)
 
       app.value.isDark = false
     }
@@ -23,15 +21,15 @@ export const useDarkMode = () => {
 
   watchEffect(() => {
     switch (app.value.darkMode) {
-      case DarkModeEnum.LIGHT:
+      case DarkModeConst.LIGHT:
         setIsDark(false)
         break
 
-      case DarkModeEnum.DARK:
+      case DarkModeConst.DARK:
         setIsDark(true)
         break
 
-      case DarkModeEnum.SYSTEM:
+      case DarkModeConst.SYSTEM:
         setIsDark(unref(isSystemDark))
         break
 

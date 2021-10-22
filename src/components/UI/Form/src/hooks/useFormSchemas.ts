@@ -1,5 +1,4 @@
 import type { WForm } from '../types'
-import type { ComputedRef } from 'vue'
 
 export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
   const formSchemas = ref<WForm.Schema.Item<any>[]>([])

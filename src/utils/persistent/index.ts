@@ -4,7 +4,7 @@ import { isProd } from '../constant/vue'
 import { storagePrefix } from '../constant/prefix'
 import { useAppStorage } from './src/Storage'
 import { Cookie } from './src/Cookie'
-import { PersistentKeysEnum } from '/@/enums/persistent'
+import { authName } from '/@/router/constant'
 
 const AppCookie = new Cookie({
   prefixKey: storagePrefix,
@@ -32,11 +32,11 @@ export const removeCookie = (key: string) => {
 export const STORAGE_AUTH = useAppStorage<{
   username?: string
   password?: string
-}>(PersistentKeysEnum.AUTH, {})
+}>(PersistentKeysConst.AUTH, {})
 
-export const STORAGE_USER = useAppStorage(PersistentKeysEnum.USER, {})
+export const STORAGE_USER = useAppStorage(PersistentKeysConst.USER, {})
 
-export const STORAGE_APP = useAppStorage<AppState>(PersistentKeysEnum.APP, {
+export const STORAGE_APP = useAppStorage<AppState>(PersistentKeysConst.APP, {
   isDark: false,
   darkMode: 'light',
   locale: 'zh_CN',
@@ -46,9 +46,18 @@ export const STORAGE_APP = useAppStorage<AppState>(PersistentKeysEnum.APP, {
   showAside: false,
 })
 
-export const STORAGE_TOKEN = useAppStorage<string>(PersistentKeysEnum.TOKEN, '')
+export const STORAGE_TOKEN = useAppStorage<string>(
+  PersistentKeysConst.TOKEN,
+  ''
+)
 
-export const STORAGE_TAB = useAppStorage<TabState>(PersistentKeysEnum.TAB, {
+export const STORAGE_TAB = useAppStorage<TabState>(PersistentKeysConst.TAB, {
   tabs: [],
   targetTabName: '',
 })
+
+export const STORAGE_MENU = useAppStorage(PersistentKeysConst.MENU, {
+  indexMenuName: authName,
+})
+
+export { useAppStorage }

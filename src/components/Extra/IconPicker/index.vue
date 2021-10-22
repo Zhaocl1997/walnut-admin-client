@@ -40,7 +40,7 @@
             <div style="min-height: 230px;">
               <w-icon
                 v-for="(icon, index) in lists"
-                :key="index"
+                :key="icon"
                 :icon="icon"
                 width="36"
                 :class="[
@@ -79,8 +79,6 @@
 </template>
 
 <script lang="ts">
-  import type { PropType } from 'vue'
-
   import { mockListApi } from '/@/utils/mockListApi'
   import iconLists from '/@/components/UI/Icon/src/utils/list'
 

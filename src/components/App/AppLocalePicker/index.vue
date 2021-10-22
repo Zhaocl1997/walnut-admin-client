@@ -7,8 +7,6 @@
 </template>
 
 <script lang="ts">
-  import type { PropType } from 'vue'
-
   import { langLists } from '/@/locales'
   import { useLocale } from './useAppLocale'
 

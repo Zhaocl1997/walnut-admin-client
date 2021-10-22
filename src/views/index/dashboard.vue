@@ -1,10 +1,10 @@
 <template>
-  <div v-for="i in 3000" :key="i" class="inline-block">Index {{ i }} --</div>
+  <div>Dashboard</div>
 </template>
 
 <script lang="ts">
   export default defineComponent({
-    name: 'Index',
+    name: 'Dashboard',
 
     inheritAttrs: false,
 

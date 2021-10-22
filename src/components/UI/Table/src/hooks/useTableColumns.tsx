@@ -1,4 +1,3 @@
-import type { ComputedRef } from 'vue'
 import type { WTable } from '../types'
 import type { InternalRowData } from 'naive-ui/lib/data-table/src/interface'
 

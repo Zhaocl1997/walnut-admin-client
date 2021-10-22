@@ -1,5 +1,3 @@
-import type { Router } from 'vue-router'
-
 export const createProgressGuard = (router: Router) => {
   router.beforeEach(() => {
     window.$loadingBar.start()

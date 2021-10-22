@@ -2,7 +2,7 @@ import type { SigninPayloadType } from '../types/user'
 
 import { getUserInfo, signin } from '/@/api/auth'
 import { STORAGE_AUTH, STORAGE_TOKEN } from '/@/utils/persistent'
-import { authName, indexName, rootName } from '/@/router/constant'
+import { authName, rootName } from '/@/router/constant'
 import { tabActionClear } from './tabs'
 import { menuActionPermissions } from './menu'
 
@@ -24,8 +24,10 @@ const setUserInfo = (userInfo: Recordable) => {
  * @description Action - User - Signin
  */
 export const userActionSignin = async (payload: SigninPayloadType) => {
-  const res = await signin(payload)
   const { addRoute } = AppRouter
+  const { menu } = useAppContext<false>()
+
+  const res = await signin(payload)
 
   setUserToken(res.token)
 
@@ -47,7 +49,7 @@ export const userActionSignin = async (payload: SigninPayloadType) => {
     addRoute(rootName, route)
   })
 
-  await useRouterPush({ name: indexName })
+  await useRouterPush({ name: menu.indexMenuName })
 }
 
 /**

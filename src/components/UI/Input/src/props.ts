@@ -1,5 +1,3 @@
-import type { PropType } from 'vue'
-
 export const props = {
   blackList: {
     type: Array as PropType<string[]>,
