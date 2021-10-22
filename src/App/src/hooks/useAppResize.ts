@@ -38,7 +38,7 @@ export const useAppResize = () => {
       app.value.collapse = false
     }
 
-    if (breakpoints.isGreater('2xl')) {
+    if (breakpoints.isInBetween('xl', '2xl')) {
       // when desktop
       // 1.isMobile => false
       // 2.device => 'desktop'
