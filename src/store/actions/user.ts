@@ -1,53 +1,33 @@
 import type { SigninPayloadType } from '../types/user'
 
 import { getUserInfo, signin } from '/@/api/auth'
-import { STORAGE_AUTH, STORAGE_TOKEN } from '/@/utils/persistent'
-import { authName, rootName } from '/@/router/constant'
+import { authName } from '/@/router/constant'
 import { tabActionClear } from './tabs'
-import { menuActionPermissions } from './menu'
+import { AppCoreFn1 } from '/@/core'
 
-const setUserToken = (token: string) => {
-  const { user } = useAppContext<false>()
-
-  user.token = token
-
-  STORAGE_TOKEN.value = token
-}
-
-const setUserInfo = (userInfo: Recordable) => {
-  const { user } = useAppContext<false>()
-
-  user.userInfo = userInfo
-}
+const { menu, token, user, auth } = useAppState()
 
 /**
  * @description Action - User - Signin
  */
 export const userActionSignin = async (payload: SigninPayloadType) => {
-  const { addRoute } = AppRouter
-  const { menu } = useAppContext<false>()
-
   const res = await signin(payload)
 
-  setUserToken(res.token)
+  // set token
+  token.value = res.token
 
   const { username, password, rememberMe } = payload
 
   if (rememberMe) {
-    STORAGE_AUTH.value = {
+    auth.value = {
       username,
       password,
     }
   } else {
-    STORAGE_AUTH.value = {}
+    auth.value = {}
   }
 
-  // TODO
-  const routes = await menuActionPermissions()
-
-  routes.forEach((route) => {
-    addRoute(rootName, route)
-  })
+  await AppCoreFn1()
 
   await useRouterPush({ name: menu.indexMenuName })
 }
@@ -55,15 +35,14 @@ export const userActionSignin = async (payload: SigninPayloadType) => {
 /**
  * @description Action - User - Signout
  */
-export const userActionSignOut = () => {
-  const { user } = useAppContext<false>()
+export const userActionSignOut = async () => {
+  // clear token
+  token.value = ''
 
-  user.token = ''
+  // push
+  await useRouterPush({ name: authName })
 
-  STORAGE_TOKEN.value = ''
-
-  useRouterPush({ name: authName })
-
+  // clear tab
   setTimeout(() => {
     tabActionClear()
   }, 200)
@@ -75,5 +54,5 @@ export const userActionSignOut = () => {
 export const userActionInfo = async () => {
   const res = await getUserInfo()
 
-  setUserInfo(res)
+  user.userInfo = res
 }

@@ -1,7 +1,8 @@
 import * as constant from './constant'
 
-import { STORAGE_MENU } from '../utils/persistent'
 import { t } from '/@/locales/utils'
+
+const { menu } = useAppState()
 
 export const AuthRoute: RouteRecordRaw = {
   name: constant.authName,
@@ -15,7 +16,7 @@ export const AuthRoute: RouteRecordRaw = {
 export const RootRoute: RouteRecordRaw = {
   name: constant.rootName,
   path: constant.rootPath,
-  redirect: { name: STORAGE_MENU.value.indexMenuName },
+  redirect: { name: menu.indexMenuName },
   component: () => import('../layout/default'),
   children: [],
 }

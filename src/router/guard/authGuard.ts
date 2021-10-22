@@ -1,15 +1,14 @@
 import { easyIsEmpty } from 'easy-fns-ts'
 
-import { authPath, rootName, networkErrorPath } from '../constant'
-import { menuActionPermissions } from '/@/store/actions/menu'
+import { authPath, networkErrorPath } from '../constant'
+import { AppCoreFn1 } from '/@/core'
 import { userActionInfo } from '/@/store/actions/user'
 
 const whiteLists: string[] = [authPath, networkErrorPath]
 
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
-    const { user, menu } = useAppContext<false>()
-    const { addRoute } = AppRouter
+    const { token, menu, user } = useAppState()
 
     // Paths in `whiteLists` will enter directly
     if (whiteLists.includes(to.path)) {
@@ -18,7 +17,7 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // No token, next to auth page and return
-    if (!user.token) {
+    if (!token.value) {
       const redirectData = {
         path: authPath,
         replace: true,
@@ -40,11 +39,8 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // At this step, user has login but didn't got dynamic routes generated
-    // Below we use menu action to get routes and add into root route
-    const routes = await menuActionPermissions()
-    routes.forEach((route: any) => {
-      addRoute(rootName, route)
-    })
+    // Below we call app core fn1 to handle logic
+    await AppCoreFn1()
 
     // Refresh the page, router will not be found, need to redirect
     const redirectPath: string = from.query.redirect || (to.path as any)

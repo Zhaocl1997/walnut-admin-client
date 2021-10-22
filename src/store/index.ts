@@ -1,5 +1,4 @@
 import type { RemoveableRef } from '@vueuse/core'
-import { Menu } from '../router/types'
 import { UserInfoType } from './types/user'
 
 type RemoveableRefRecord<T> = {
@@ -18,11 +17,16 @@ interface AppStorage {
   }
 
   token: string
+
+  auth: {
+    username?: string
+    password?: string
+  }
 }
 
 interface AppMemory {
   menu: {
-    menus: Menu[]
+    menus: AppMenu[]
     keepAliveRouteNames: string[]
     indexMenuName: string
   }
@@ -37,22 +41,23 @@ interface AppMemory {
   }
 }
 
-export const useAppStateStorage = createGlobalState<
-  RemoveableRefRecord<AppStorage>
->(() => ({
-  app: useAppStorage('app__global', {
-    isDark: false,
-    darkMode: 'light',
-    locale: 'zh_CN',
-    collapse: false,
-    device: 'desktop',
-    isMobile: false,
-    showAside: false,
-  }),
-  token: useAppStorage('app__token', ''),
-}))
+const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
+  () => ({
+    app: useAppStorage(PersistentKeysConst.APP, {
+      isDark: false,
+      darkMode: 'light',
+      locale: 'zh_CN',
+      collapse: false,
+      device: 'desktop',
+      isMobile: false,
+      showAside: false,
+    }),
+    token: useAppStorage(PersistentKeysConst.TOKEN, ''),
+    auth: useAppStorage(PersistentKeysConst.AUTH, {}),
+  })
+)
 
-export const useAppStateMemory = createGlobalState<AppMemory>(() => ({
+const useAppStateMemory = createGlobalState<AppMemory>(() => ({
   menu: {
     menus: [],
     keepAliveRouteNames: [],

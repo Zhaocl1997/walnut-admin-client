@@ -1,13 +1,12 @@
 import { notFoundName, redirectName } from '/@/router/constant'
 
 const nameBlackList: string[] = [notFoundName, redirectName]
-const tabKey = Symbol(SymbolKeyConst.TABS_KEY)
 
 /**
  * @description Action - Tab - Close multiple tabs
  */
 const closeMultipleTabs = (lists: string[]) => {
-  const { tab } = useAppContext<false>()
+  const { tab } = useAppState()
 
   tab.tabs.map((item, index) => {
     if (lists.includes(item.name)) {
@@ -23,37 +22,40 @@ export const tabActionCreate = (
   newTab: AppTab,
   method: keyof typeof Array.prototype = 'push'
 ) => {
-  const { tab } = useAppContext<false>()
+  const { tab } = useAppState()
 
   // redirect/404 etc pages do not need to add into tab
   if (nameBlackList.includes(newTab.name)) return
 
   // set the current tab name
-  tab.targetTabName = newTab.name
+  // tab.targetTabName = newTab.name
 
   const index = tab.tabs.findIndex((item) => item.name === newTab.name)
 
   // not found
   if (index === -1) {
-    const cached = tab.cachedTabs.get(tabKey)
+    const cached = tab.visitedTabs
 
-    if (!cached || (cached && !cached.includes(newTab.name))) {
+    if (cached.length === 0 || (cached && !cached.includes(newTab.name))) {
       tab.tabs[method as string](newTab)
     }
   }
 
   // set cached tabs
-  tab.cachedTabs.set(
-    tabKey,
-    tab.tabs.map((item) => item.name)
-  )
+  // tab.cachedTabs.set(
+  //   tabKey,
+  //   tab.tabs.map((item) => item.name)
+  // )
+
+  tab.visitedTabs = tab.tabs.map((item) => item.name)
 }
 
 /**
  * @description Action - Tab - Delete tab
  */
 export const tabActionDelete = (name: string, type: ValueOfDeleteTabConst) => {
-  const { tab, menu } = useAppContext<false>()
+  const { tab, menu } = useAppState()
+  const { currentRoute } = useAppRouter()
 
   const index = tab.tabs.findIndex((item) => item.name === name)
 
@@ -64,7 +66,7 @@ export const tabActionDelete = (name: string, type: ValueOfDeleteTabConst) => {
         index !== -1 && tab.tabs.splice(index, 1)
 
         // close current tab
-        if (tab.targetTabName === name) {
+        if (currentRoute.value.name === name) {
           const next = tab.tabs[index]
           const previous = tab.tabs[index - 1]
 
@@ -86,7 +88,7 @@ export const tabActionDelete = (name: string, type: ValueOfDeleteTabConst) => {
         })
 
         // If left include current page, we need to push to target route
-        if (nameList.includes(tab.targetTabName)) {
+        if (nameList.includes(currentRoute.value.name as string)) {
           useRouterPush({ name })
         }
 
@@ -107,7 +109,7 @@ export const tabActionDelete = (name: string, type: ValueOfDeleteTabConst) => {
         })
 
         // If right include current page, we need to push to target route
-        if (nameList.includes(tab.targetTabName)) {
+        if (nameList.includes(currentRoute.value.name as string)) {
           useRouterPush({ name })
         }
 
@@ -128,7 +130,7 @@ export const tabActionDelete = (name: string, type: ValueOfDeleteTabConst) => {
         })
 
         // If the closed one is not current route, we need to push to target route
-        if (tab.targetTabName !== name) {
+        if (currentRoute.value.name !== name) {
           useRouterPush({ name })
         }
 
@@ -165,16 +167,17 @@ export const tabActionDelete = (name: string, type: ValueOfDeleteTabConst) => {
  * @description Action - Tab - Clear tab
  */
 export const tabActionClear = () => {
-  const { tab } = useAppContext<false>()
+  const { tab } = useAppState()
   tab.tabs.length = 0
-  tab.cachedTabs.clear()
+  // tab.cachedTabs.clear()
+  tab.visitedTabs.length = 0
 }
 
 /**
  * @description Action - Tab - Sort tab
  */
 export const tabActionSort = (oldIndex: number, newIndex: number) => {
-  const { tab } = useAppContext<false>()
+  const { tab } = useAppState()
 
   const currentTab = tab.tabs[oldIndex]
   tab.tabs.splice(oldIndex, 1)
