@@ -1,21 +1,21 @@
 <template>
-  <AppProvider>
-    <UIProvider>
-      <ThemeProvider>
-        <MsgProvider>
-          <RouterView></RouterView>
-        </MsgProvider>
-      </ThemeProvider>
-    </UIProvider>
-  </AppProvider>
+  <UIProvider>
+    <ThemeProvider>
+      <MsgProvider>
+        <RouterView></RouterView>
+      </MsgProvider>
+    </ThemeProvider>
+  </UIProvider>
 </template>
 
 <script lang="ts" setup>
-  import { useAppTitle } from '/@/hooks/core/useTitle'
-  import AppProvider from './AppProvider.vue'
   import UIProvider from './UIProvider.vue'
   import MsgProvider from './MsgProvider.vue'
   import ThemeProvider from './AppTheme.vue'
 
+  import { useAppTitle } from '/@/hooks/core/useAppTitle'
+  import { useAppResize } from '/@/hooks/core/useAppResize'
+
   useAppTitle()
+  useAppResize()
 </script>

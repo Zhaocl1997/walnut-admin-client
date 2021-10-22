@@ -1,5 +1,5 @@
-import { useResize } from '/@/hooks/core/useResize'
-import { useBreakpoints } from '/@/hooks/core/useBreakpoints'
+import { useResize } from './useResize'
+import { useBreakpoints } from './useBreakpoints'
 
 export const useAppResize = () => {
   const { app } = useAppState()
@@ -52,6 +52,4 @@ export const useAppResize = () => {
   useResize(handler)
 
   tryOnMounted(() => handler())
-
-  return { app }
 }
