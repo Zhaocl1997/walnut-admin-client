@@ -1,10 +1,7 @@
 export const PersistentKeysConst = {
   AUTH: 'AUTH',
-  USER: 'USER',
   APP: 'APP',
   TOKEN: 'TOKEN',
-  TAB: 'TAB',
-  MENU: ' MENU',
 } as const
 
 export const StorageTypeConst = {
