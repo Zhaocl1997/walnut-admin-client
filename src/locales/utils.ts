@@ -1,7 +1,5 @@
 import { easyDeepSet } from 'easy-fns-ts'
 
-import { LocaleEnum } from '/@/enums/locale'
-
 /**
  * @description Get locale messages include ElementPlus locale
  */
@@ -28,11 +26,11 @@ export const getLocaleMessages = (locale: string) => {
   let targetModule: Recordable = {}
 
   switch (locale) {
-    case LocaleEnum.EN:
+    case LocaleConst.EN:
       targetModule = import.meta.globEager('./lang/en/**/*.ts')
       break
 
-    case LocaleEnum.ZH_CN:
+    case LocaleConst.ZH_CN:
       targetModule = import.meta.globEager('./lang/zh_CN/**/*.ts')
       break
 
@@ -46,18 +44,18 @@ export const getLocaleMessages = (locale: string) => {
 // Locale list
 export const langLists = [
   {
-    value: LocaleEnum.EN,
+    value: LocaleConst.EN,
     label: 'English',
   },
   {
-    value: LocaleEnum.ZH_CN,
+    value: LocaleConst.ZH_CN,
     label: '简体中文',
   },
 ]
 
 // some options
-export const fallbackLocale = LocaleEnum.EN
-export const availableLocales = [LocaleEnum.EN, LocaleEnum.ZH_CN]
+export const fallbackLocale = LocaleConst.EN
+export const availableLocales = [LocaleConst.EN, LocaleConst.ZH_CN]
 
 export const t = (key: string) => key
 

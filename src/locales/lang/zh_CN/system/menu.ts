@@ -1,11 +1,13 @@
 export default {
-  index: '首页',
+  homepage: '我的主页',
+  dashboard: '概要面板',
   auth: '认证',
 
   system: '系统管理',
   role: '角色管理',
   user: '用户管理',
   menu: '菜单管理',
+  dict: '字典管理',
 
   comp: {
     title: '组件库',

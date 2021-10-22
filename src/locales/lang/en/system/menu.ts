@@ -1,11 +1,13 @@
 export default {
-  index: 'Index',
+  homepage: 'Homepage',
+  dashboard: 'Dashboard',
   auth: 'Authentication',
 
-  system: 'System Board',
-  role: 'Role Board',
-  user: 'User Board',
-  menu: 'Menu Board',
+  system: 'SM',
+  role: 'RM',
+  user: 'UM',
+  menu: 'MM',
+  dict: 'DM',
 
   comp: {
     title: 'Components',
