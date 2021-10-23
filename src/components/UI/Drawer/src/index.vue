@@ -1,26 +1,7 @@
 <template>
   <n-drawer>
-    <n-drawer-content
-      :native-scrollbar="false"
-      :header-style="
-        headerFixed
-          ? {
-              position: 'absolute',
-              width: '100%',
-            }
-          : {}
-      "
-      :footer-style="
-        footerFixed
-          ? {
-              position: 'absolute',
-              bottom: 0,
-              width: '100%',
-            }
-          : {}
-      "
-    >
-      <n-spin :show="$props.loading">
+    <n-drawer-content :native-scrollbar="false">
+      <n-spin :show="loading">
         <slot></slot>
       </n-spin>
 
@@ -32,8 +13,8 @@
             size="small"
             type="primary"
             :onClick="() => $emit('yes')"
-            :disabled="$props.loading"
-            :loading="$props.loading"
+            :disabled="loading"
+            :loading="loading"
           >
             {{ t('component.base.action.confirm') }}
           </n-button>
@@ -41,7 +22,7 @@
           <n-button
             size="small"
             :onClick="() => $emit('no')"
-            :disabled="$props.loading"
+            :disabled="loading"
           >
             {{ t('component.base.action.cancel') }}
           </n-button>
@@ -58,7 +39,7 @@
   export default defineComponent({
     name: 'WDrawer',
 
-    props: props,
+    props,
 
     emits: ['yes', 'no'],
 

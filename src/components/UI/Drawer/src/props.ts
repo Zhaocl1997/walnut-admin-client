@@ -1,14 +1,4 @@
 export const props = {
-  headerFixed: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-
-  footerFixed: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-
   closable: {
     type: Boolean as PropType<boolean>,
     default: false,
