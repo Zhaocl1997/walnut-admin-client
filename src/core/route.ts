@@ -8,7 +8,7 @@ import { notFoundRoute } from '/@/router/routes'
 /**
  * @description Util Function 1 - Build route object through menu object
  */
-export const createCommonRoute = (node: AppMenu): AppTab => {
+export const buildCommonRoute = (node: AppMenu): AppTab => {
   return {
     path: node.path!,
     name: node.name!,
@@ -69,7 +69,7 @@ export const buildRoutes = (payload: AppMenu[]) => {
       // handle catelog
       if (node.type === MenuTypeConst.CATALOG) {
         return {
-          ...createCommonRoute(node),
+          ...buildCommonRoute(node),
           component: resolveParentComponent(node.name!),
         }
       }
@@ -79,7 +79,7 @@ export const buildRoutes = (payload: AppMenu[]) => {
         // handle internal menu
         if (node.ternal === 'internal') {
           return {
-            ...createCommonRoute(node),
+            ...buildCommonRoute(node),
             component: resolveIFrameComponent(node.name!),
           }
         }
@@ -90,7 +90,7 @@ export const buildRoutes = (payload: AppMenu[]) => {
 
         // common view route
         return {
-          ...createCommonRoute(node),
+          ...buildCommonRoute(node),
           component: resolveViewModules(node.component),
         }
       }

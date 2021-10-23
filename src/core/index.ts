@@ -20,17 +20,17 @@ export const AppCoreFn1 = async () => {
   const res = await getPermissions()
 
   // set menus state
-  menu.menus = buildMenus(res.data)!
+  menu.value.menus = buildMenus(res.data)!
 
   // set index menu name, use for home page
-  menu.indexMenuName = menu.menus[0].name!
+  menu.value.indexMenuName = menu.value.menus[0].name!
 
   // set keep alive route name
-  menu.keepAliveRouteNames = buildKeepAliveRouteNameList(res.data)
+  menu.value.keepAliveRouteNames = buildKeepAliveRouteNameList(res.data)
 
   // build routes and add into root route
-  const routes = buildRoutes(res.data)
-  routes.forEach((route: any) => {
+  const routes = buildRoutes(menu.value.menus)
+  routes.forEach((route) => {
     addRoute(rootName, route)
   })
 }

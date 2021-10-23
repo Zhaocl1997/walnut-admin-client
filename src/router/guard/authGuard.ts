@@ -28,12 +28,12 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // Get user info
-    if (easyIsEmpty(user.userInfo)) {
+    if (easyIsEmpty(user.value.userInfo)) {
       await userActionInfo()
     }
 
     // Got menus, next and return
-    if (menu.menus && menu.menus.length !== 0) {
+    if (menu.value.menus && menu.value.menus.length !== 0) {
       next()
       return true
     }

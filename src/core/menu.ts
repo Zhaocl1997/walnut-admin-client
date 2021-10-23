@@ -1,8 +1,8 @@
 import { arrToTree, orderTree } from 'easy-fns-ts'
 
-import { tabActionCreate } from '/@/store/actions/tabs'
+import { buildTabs } from './tab'
 
-import { createCommonRoute } from './route'
+import { buildCommonRoute } from './route'
 
 /**
  * @description Build Menus Core Function
@@ -15,7 +15,7 @@ export const buildMenus = (payload: AppMenu[]) => {
   visibled
     .filter((i) => i.affix)
     .sort((a, b) => b.order! - a.order!)
-    .map((i) => tabActionCreate(createCommonRoute(i), 'unshift'))
+    .map((i) => buildTabs(buildCommonRoute(i), 'unshift'))
 
   // build tree
   const menuTree = arrToTree(visibled, { id: '_id' })

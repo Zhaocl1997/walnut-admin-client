@@ -2,7 +2,7 @@ import type { SigninPayloadType } from '../types/user'
 
 import { getUserInfo, signin } from '/@/api/auth'
 import { authName } from '/@/router/constant'
-import { tabActionClear } from './tabs'
+import { clearTabs } from '/@/core/tab'
 import { AppCoreFn1 } from '/@/core'
 
 const { menu, token, user, auth } = useAppState()
@@ -29,7 +29,7 @@ export const userActionSignin = async (payload: SigninPayloadType) => {
 
   await AppCoreFn1()
 
-  await useRouterPush({ name: menu.indexMenuName })
+  await useRouterPush({ name: menu.value.indexMenuName })
 }
 
 /**
@@ -44,7 +44,7 @@ export const userActionSignOut = async () => {
 
   // clear tab
   setTimeout(() => {
-    tabActionClear()
+    clearTabs()
   }, 200)
 }
 
@@ -54,5 +54,5 @@ export const userActionSignOut = async () => {
 export const userActionInfo = async () => {
   const res = await getUserInfo()
 
-  user.userInfo = res
+  user.value.userInfo = res
 }
