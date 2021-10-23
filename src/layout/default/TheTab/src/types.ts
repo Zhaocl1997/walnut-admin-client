@@ -10,8 +10,6 @@ export interface AppTabContext {
 
   x: Ref<number>
   y: Ref<number>
-  targetTab: Ref<Nullable<AppTab>>
-  targetTabIndex: Ref<number>
   ctxMenuVisible: Ref<boolean>
 
   onTabClick: (name: string) => void

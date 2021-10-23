@@ -1,7 +1,7 @@
 import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
 
 import { onLeaveRoomForTabs, createTab } from '../utils'
-import { tabActionCreate } from '/@/store/actions/tabs'
+import { buildTabs } from '/@/core/tab'
 
 /**
  * @description App Tab Core Function
@@ -15,7 +15,7 @@ export const useTabs = () => {
   const scrollRef = ref<Nullable<WScrollbarRef>>(null)
 
   const getCurrentRouteTabIndex = computed(() =>
-    tab.tabs.findIndex((item) => item.name === currentRoute.value.name)
+    tab.value.tabs.findIndex((item) => item.name === currentRoute.value.name)
   )
 
   const onScrollToCurrentTab = () => {
@@ -30,21 +30,24 @@ export const useTabs = () => {
     })
   }
 
-  watchEffect(
-    () => {
-      // Build tab
-      tabActionCreate(createTab(route))
+  watchEffect(() => {
+    // Build tab
+    buildTabs(createTab(route))
 
-      // Scroll
-      // Trick to trigger the scroll
-      app.value.device && onScrollToCurrentTab()
-    },
-    // This is important
-    // If no flush: 'post', this effect will trigger in instance for the first time which cause an null error.
-    // With flush: 'post', make sure triggered not in a instance
-    // You can try comment out thie line and see the error
-    { flush: 'post' }
-  )
+    // set currentRouteName
+    tab.value.currentRouteName = route.name as string
+
+    // Scroll
+    // Trick to trigger the scroll
+    app.value.device && onScrollToCurrentTab()
+  })
+
+  onMounted(() => {
+    tab.value.targetTab = createTab(route)
+    tab.value.targetTabIndex = tab.value.tabs.findIndex(
+      (i) => i.name === tab.value.targetTab?.name
+    )
+  })
 
   return { scrollRef, getCurrentRouteTabIndex }
 }

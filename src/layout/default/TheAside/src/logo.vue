@@ -21,6 +21,6 @@
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
   const onGoIndex = () => {
-    useRouterPush({ name: menu.indexMenuName })
+    useRouterPush({ name: menu.value.indexMenuName })
   }
 </script>

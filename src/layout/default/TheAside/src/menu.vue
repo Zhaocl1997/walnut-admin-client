@@ -12,7 +12,7 @@
       const expandedKeys = ref()
 
       const getMenu = computed(() =>
-        formatTree<AppMenu>(menu.menus, {
+        formatTree<AppMenu>(menu.value.menus, {
           format: (node) =>
             ({
               key: node.name,

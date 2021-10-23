@@ -35,15 +35,8 @@
 
   const { onTabClick, onTabRemove } = useTabsActions()
 
-  const {
-    x,
-    y,
-    targetTab,
-    targetTabIndex,
-    ctxMenuVisible,
-    onOpenCtxMenu,
-    onCloseCtxMenu,
-  } = useTabsContextMenu()
+  const { x, y, ctxMenuVisible, onOpenCtxMenu, onCloseCtxMenu } =
+    useTabsContextMenu()
 
   const { leftUtils, rightUtils } = useTabsUtils(
     scrollRef,
@@ -59,8 +52,6 @@
 
     x,
     y,
-    targetTab,
-    targetTabIndex,
     ctxMenuVisible,
     onOpenCtxMenu,
     onCloseCtxMenu,

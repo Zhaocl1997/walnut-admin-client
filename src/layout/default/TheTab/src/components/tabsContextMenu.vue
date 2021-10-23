@@ -22,32 +22,23 @@
   const { currentRoute } = useAppRouter()
   const { tab } = useAppState()
 
-  const {
-    x,
-    y,
-    targetTab,
-    targetTabIndex,
-    ctxMenuVisible,
+  const { x, y, ctxMenuVisible, onTabRemove, onCloseCtxMenu } = getTabsContext()
 
-    onTabRemove,
-    onCloseCtxMenu,
-  } = getTabsContext()
-
-  const getTabsLength = computed(() => tab.tabs.length)
+  const getTabsLength = computed(() => tab.value.tabs.length)
   const getAffixedTabsLength = computed(
-    () => tab.tabs.filter((i) => i.meta.affix).length
+    () => tab.value.tabs.filter((i) => i.meta.affix).length
   )
 
-  const getCloseDisabled = computed(() => targetTab.value?.meta.affix)
+  const getCloseDisabled = computed(() => tab.value.targetTab?.meta.affix)
   const getCloseLeftDisabled = computed(
     () =>
-      getAffixedTabsLength.value === targetTabIndex.value ||
-      targetTab.value?.meta.affix
+      getAffixedTabsLength.value === tab.value.targetTabIndex ||
+      tab.value.targetTab?.meta.affix
   )
   const getCloseRightDisabled = computed(
     () =>
-      getTabsLength.value - 1 === targetTabIndex.value ||
-      targetTab.value?.meta.affix
+      getTabsLength.value - 1 === tab.value.targetTabIndex ||
+      tab.value.targetTab?.meta.affix
   )
   const getCloseOtherDisabled = computed(
     () => getTabsLength.value - 1 === getAffixedTabsLength.value
@@ -56,14 +47,14 @@
   const getOtherDisabled = computed(
     () =>
       currentRoute.value.name !==
-      (targetTab.value?.name ?? currentRoute.value.name)
+      (tab.value.targetTab?.name ?? currentRoute.value.name)
   )
 
   const onSelect = async (
     key: ValueOfDeleteTabConst & 'Refresh' & 'Screen Full'
   ) => {
     if (Object.values(DeleteTabConst).includes(key)) {
-      onTabRemove(targetTab.value?.name!, key)
+      onTabRemove(tab.value.targetTab?.name!, key)
     }
 
     if (key === 'Refresh') {
@@ -73,7 +64,7 @@
 
     if (key === 'Screen Full') {
       const { toggleFullScreen } = useAppFullScreen({
-        target: `#${targetTab.value?.name}`,
+        target: `#${tab.value.targetTab?.name}`,
       })
       toggleFullScreen()
     }
@@ -83,7 +74,7 @@
 
   const options = computed(() => [
     {
-      key: DeleteTabConst.TAB_SELF,
+      key: DeleteTabConst.TAB_SINGLE,
       label: t('layout.tab.close'),
       icon: () => (
         <w-icon height="24" icon="ant-design:close-outlined"></w-icon>

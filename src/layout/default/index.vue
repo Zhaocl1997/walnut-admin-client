@@ -35,7 +35,7 @@
         </n-layout-header>
       </div>
 
-      <n-layout-content bordered>
+      <n-layout-content bordered :native-scrollbar="false">
         <TheContent class="flex-1 p-4 mt-20" />
       </n-layout-content>
     </div>

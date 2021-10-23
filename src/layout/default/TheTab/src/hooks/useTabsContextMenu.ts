@@ -1,19 +1,19 @@
 export const useTabsContextMenu = () => {
+  const { tab } = useAppState()
+
   const x = ref(0)
   const y = ref(0)
 
-  const targetTab = ref()
-  const targetTabIndex = ref(0)
   const ctxMenuVisible = ref(false)
 
-  const onOpenCtxMenu = (event: MouseEvent, tab: AppTab, index: number) => {
-    // set ctx positionF
+  const onOpenCtxMenu = (event: MouseEvent, payload: AppTab, index: number) => {
+    // set ctx position
     x.value = event.clientX
     y.value = event.clientY
 
-    // set target tab
-    targetTab.value = tab
-    targetTabIndex.value = index
+    // set target tab and index
+    tab.value.targetTab = payload
+    tab.value.targetTabIndex = index
 
     ctxMenuVisible.value = true
   }
@@ -24,8 +24,7 @@ export const useTabsContextMenu = () => {
   return {
     x,
     y,
-    targetTab,
-    targetTabIndex,
+
     ctxMenuVisible,
     onOpenCtxMenu,
     onCloseCtxMenu,

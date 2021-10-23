@@ -1,5 +1,5 @@
 import { useSortable } from '/@/hooks/component/useSortable'
-import { tabActionSort } from '/@/store/actions/tabs'
+import { sortTabs } from '/@/core/tab'
 
 export const useTabsSortable = () => {
   onMounted(() => {
@@ -10,7 +10,7 @@ export const useTabsSortable = () => {
       onEnd: (evt) => {
         const { oldIndex, newIndex } = evt
 
-        tabActionSort(oldIndex!, newIndex!)
+        sortTabs(oldIndex!, newIndex!)
       },
     })
   })

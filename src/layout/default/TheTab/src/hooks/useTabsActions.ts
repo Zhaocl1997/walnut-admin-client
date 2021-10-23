@@ -1,4 +1,4 @@
-import { tabActionDelete } from '/@/store/actions/tabs'
+import { removeTabs } from '/@/core/tab'
 
 export const useTabsActions = () => {
   const onTabClick = (name: string) => {
@@ -8,10 +8,10 @@ export const useTabsActions = () => {
 
   const onTabRemove = (
     name: string,
-    type: ValueOfDeleteTabConst = 'TAB_SELF'
+    type: ValueOfDeleteTabConst = 'TAB_SINGLE'
   ) => {
     // remove tab
-    tabActionDelete(name, type)
+    removeTabs(name, type)
   }
 
   return {

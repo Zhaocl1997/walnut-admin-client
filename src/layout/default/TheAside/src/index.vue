@@ -8,6 +8,7 @@
     :collapsed="app.collapse"
     @update:collapsed="onUpdateCollapse"
     inverted
+    :native-scrollbar="false"
   >
     <div class="select-none">
       <AsideLogo />
