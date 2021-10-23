@@ -37,7 +37,10 @@ interface AppMemory {
 
   tab: {
     tabs: AppTab[]
-    visitedTabs: string[]
+    visitedTabs: Map<string, string[]>
+    targetTab?: AppTab
+    targetTabIndex?: number
+    currentRouteName?: string
   }
 }
 
@@ -57,20 +60,27 @@ const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
   })
 )
 
-const useAppStateMemory = createGlobalState<AppMemory>(() => ({
-  menu: {
-    menus: [],
-    keepAliveRouteNames: [],
-    indexMenuName: '',
-  },
-  user: {
-    userInfo: {},
-  },
-  tab: {
-    tabs: [],
-    visitedTabs: [],
-  },
-}))
+const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
+  toRefs(
+    reactive({
+      menu: {
+        menus: [],
+        keepAliveRouteNames: [],
+        indexMenuName: '',
+      },
+      user: {
+        userInfo: {},
+      },
+      tab: {
+        tabs: [],
+        visitedTabs: new Map(),
+        targetTab: undefined,
+        targetTabIndex: 0,
+        currentRouteName: undefined,
+      },
+    })
+  )
+)
 
 useAppStateStorage()
 useAppStateMemory()
