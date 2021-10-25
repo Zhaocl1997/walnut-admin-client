@@ -1,24 +1,27 @@
 import type { MaybeElementRef } from '@vueuse/core'
 import { toggleClass } from 'easy-fns-ts'
 
-export interface useFullScreenOptions {
-  /**
-   * @description Target to full screen
-   */
-  target?: string
-}
+const { app } = useAppState()
 
-export const useAppFullScreen = (opt: useFullScreenOptions) => {
-  const el = document.querySelector(opt.target!) as MaybeElementRef
-  const { isFullscreen, toggle } = useFullscreen(el)
+export const useFullScreenExtend = () => {
+  const el = computed(
+    () => document.querySelector(app.value.fullscreenTarget) as MaybeElementRef
+  )
+  const { isFullscreen, toggle, enter } = useFullscreen(el as Ref<HTMLElement>)
+
+  watchEffect(() => {
+    if (app.value.fullscreenTarget !== '#app') {
+      toggleClass(
+        el.value as HTMLElement,
+        'bg-body-color p-4',
+        app.value.isFullScreen
+      )
+    }
+  })
 
   return {
     isFullscreen,
-    toggleFullScreen: () => {
-      toggle()
-      if (opt.target !== '#app') {
-        toggleClass(el as HTMLElement, 'bg-white p-4', !isFullscreen.value)
-      }
-    },
+    toggle,
+    enter,
   }
 }

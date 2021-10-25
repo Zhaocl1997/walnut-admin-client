@@ -24,6 +24,7 @@ export default defineConfig({
       },
       // usage `bg-primary`
       backgroundColor: {
+        bodyColor: 'var(--body-color)',
         primary: 'var(--primary-color)',
         primaryHover: 'var(--primary-color-hover)',
       },

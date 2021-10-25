@@ -14,6 +14,8 @@ interface AppStorage {
     device: ValueOfDevideConst
     isMobile: boolean
     showAside: boolean
+    isFullScreen: boolean
+    fullscreenTarget: string
   }
 
   token: string
@@ -54,6 +56,8 @@ const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
       device: 'desktop',
       isMobile: false,
       showAside: false,
+      isFullScreen: false,
+      fullscreenTarget: '',
     }),
     token: useAppStorage(PersistentKeysConst.TOKEN, ''),
     auth: useAppStorage(PersistentKeysConst.AUTH, {}),

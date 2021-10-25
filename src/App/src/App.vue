@@ -15,7 +15,9 @@
 
   import { useAppTitle } from '/@/hooks/core/useAppTitle'
   import { useAppResize } from '/@/hooks/core/useAppResize'
+  import { useAppFullScreen } from '/@/hooks/core/useAppFullScreen'
 
   useAppTitle()
   useAppResize()
+  useAppFullScreen()
 </script>

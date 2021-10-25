@@ -1,5 +1,5 @@
 <script lang="tsx">
-  import { useAppFullScreen } from './useAppFullScreen'
+  import { useFullScreenExtend } from './useAppFullScreen'
 
   export default defineComponent({
     name: 'AppFullScreen',
@@ -7,11 +7,6 @@
     inheritAttrs: false,
 
     props: {
-      target: {
-        type: String as PropType<string>,
-        default: '#app',
-      },
-
       width: {
         type: String as PropType<string>,
         default: '24',
@@ -19,8 +14,9 @@
     },
 
     setup(props) {
+      const { app } = useAppState()
       const { width } = props
-      const { isFullscreen, toggleFullScreen } = useAppFullScreen(props)
+      const { isFullscreen, toggle } = useFullScreenExtend()
 
       return () => (
         <div>
@@ -31,7 +27,10 @@
                 : 'ant-design:fullscreen-outlined'
             }
             width={width}
-            onClick={toggleFullScreen}
+            onClick={() => {
+              app.value.fullscreenTarget = '#app'
+              toggle()
+            }}
           ></w-icon>
         </div>
       )

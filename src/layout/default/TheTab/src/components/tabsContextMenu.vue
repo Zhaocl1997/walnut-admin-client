@@ -16,11 +16,11 @@
   import { useRedirect } from '/@/hooks/core/useRedirect'
 
   import { getTabsContext } from '../hooks/useTabsContext'
-  import { useAppFullScreen } from '/@/components/App/AppFullScreen/useAppFullScreen'
+  import { useFullScreenExtend } from '/@/components/App/AppFullScreen/useAppFullScreen'
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { tab } = useAppState()
+  const { tab, app } = useAppState()
 
   const { x, y, ctxMenuVisible, onTabRemove, onCloseCtxMenu } = getTabsContext()
 
@@ -50,6 +50,8 @@
       (tab.value.targetTab?.name ?? currentRoute.value.name)
   )
 
+  const { enter } = useFullScreenExtend()
+
   const onSelect = async (
     key: ValueOfDeleteTabConst & 'Refresh' & 'Screen Full'
   ) => {
@@ -63,10 +65,10 @@
     }
 
     if (key === 'Screen Full') {
-      const { toggleFullScreen } = useAppFullScreen({
-        target: `#${tab.value.targetTab?.name}`,
+      app.value.fullscreenTarget = `#${tab.value.targetTab?.name!}`
+      nextTick(() => {
+        enter()
       })
-      toggleFullScreen()
     }
 
     onCloseCtxMenu()

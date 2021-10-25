@@ -3,9 +3,14 @@
     <template #default="{ Component, route }">
       <transition name="fade" mode="out-in" appear>
         <keep-alive v-if="getOpenKeepAlive" :include="menu.keepAliveRouteNames">
-          <component :is="Component" v-bind="getKey(Component, route)" />
+          <div :id="route.name">
+            <component :is="Component" v-bind="getKey(Component, route)" />
+          </div>
         </keep-alive>
-        <component :is="Component" v-else v-bind="getKey(Component, route)" />
+
+        <div v-else :id="route.name">
+          <component :is="Component" v-bind="getKey(Component, route)" />
+        </div>
       </transition>
     </template>
   </router-view>
@@ -21,10 +26,7 @@
 
       const getKey = (comp: VNode, route: RouteLocationNormalized) => {
         // @ts-ignore
-        return comp.type.parentView
-          ? {}
-          : // use name as page id to screen full
-            { key: route.fullPath, id: route.name }
+        return comp.type.parentView ? {} : { key: route.fullPath }
       }
 
       return {
