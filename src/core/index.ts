@@ -1,6 +1,6 @@
 import { getPermissions } from '/@/api/auth'
 
-import { rootName } from '/@/router/constant'
+import { rootName, rootPath } from '/@/router/constant'
 
 import { buildMenus, buildKeepAliveRouteNameList } from './menu'
 import { buildRoutes } from './route'
@@ -14,7 +14,7 @@ const { menu } = useAppState()
  * 2. route guard protection
  */
 export const AppCoreFn1 = async () => {
-  const { addRoute } = AppRouter
+  const { addRoute, getRoutes } = AppRouter
 
   // Here is where we request from back end to get login user permissions.
   const res = await getPermissions()
@@ -33,4 +33,9 @@ export const AppCoreFn1 = async () => {
   routes.forEach((route) => {
     addRoute(rootName, route)
   })
+
+  // set root redirect since we do not prepare root page
+  getRoutes()[getRoutes().findIndex((i) => i.path === rootPath)].redirect = {
+    name: menu.value.indexMenuName,
+  }
 }

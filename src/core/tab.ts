@@ -8,11 +8,7 @@ const nameBlackList: string[] = [notFoundName, redirectName]
  * @description Util Function 1 - Close multiple tabs
  */
 const closeMultipleTabs = (lists: string[]) => {
-  tab.value.tabs.map((item, index) => {
-    if (lists.includes(item.name)) {
-      tab.value.tabs.splice(index, tab.value.tabs.length - 1)
-    }
-  })
+  tab.value.tabs = tab.value.tabs.filter((i) => !lists.includes(i.name))
 }
 
 /**
