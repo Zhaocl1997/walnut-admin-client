@@ -16,7 +16,7 @@
   import { useRedirect } from '/@/hooks/core/useRedirect'
 
   import { getTabsContext } from '../hooks/useTabsContext'
-  import { useFullScreenExtend } from '/@/components/App/AppFullScreen/useAppFullScreen'
+  import { useFullScreenExtend } from '/@/components/App/AppFullScreen'
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()

@@ -1,5 +1,5 @@
 <script lang="tsx">
-  import { useFullScreenExtend } from './useAppFullScreen'
+  import { useFullScreenExtend } from './useFullScreenExtend'
 
   export default defineComponent({
     name: 'AppFullScreen',
