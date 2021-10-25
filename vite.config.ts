@@ -10,6 +10,11 @@ function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
 }
 
+const getServerHost = (env: ImportMetaEnv) => {
+  const host = env.VITE_PROXY_HOST
+  return host.includes('http') ? host.slice(7) : ''
+}
+
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfig => {
   const envPath = 'env'
@@ -42,11 +47,13 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     css: {},
 
     server: {
+      host: getServerHost(env),
+
       port: env.VITE_PORT,
 
       proxy: createViteProxy(mode, env),
 
-      open: '/index',
+      open: '/',
 
       hmr: {
         overlay: false,

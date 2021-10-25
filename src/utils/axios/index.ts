@@ -10,7 +10,9 @@ import { transform } from './transform'
 import { getApiPrefix } from '../index'
 
 // api url
-const baseURL = `${import.meta.env.VITE_PROXY}${getApiPrefix(
+const baseURL = `${import.meta.env.VITE_PROXY_HOST}:${Number(
+  import.meta.env.VITE_PROXY_PORT
+)}${getApiPrefix(
   import.meta.env.VITE_API_PREFIX,
   import.meta.env.VITE_API_VERSION
 )}`
