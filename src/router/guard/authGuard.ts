@@ -43,11 +43,12 @@ export const createAuthGuard = (router: Router) => {
     await AppCoreFn1()
 
     // Refresh the page, router will not be found, need to redirect
-    const redirectPath: string = from.query.redirect || (to.path as any)
-    const redirect = decodeURIComponent(redirectPath)
-    const nextData =
-      to.path === redirect ? { ...to, replace: true } : { path: redirect }
+    // const redirectPath: string = from.query.redirect || (to.path as any)
+    // const redirect = decodeURIComponent(redirectPath)
+    // const nextData =
+    //   to.path === redirect ? { ...to, replace: true } : { path: redirect }
+    // next(nextData)
 
-    next(nextData)
+    next({ ...to, replace: true })
   })
 }

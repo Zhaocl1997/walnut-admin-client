@@ -16,7 +16,6 @@ export const AuthRoute: RouteRecordRaw = {
 export const RootRoute: RouteRecordRaw = {
   name: constant.rootName,
   path: constant.rootPath,
-  redirect: { name: menu.indexMenuName },
   component: () => import('../layout/default'),
   children: [],
 }
