@@ -29,6 +29,8 @@ export const creatAutoImportPlugin = (): VitePlugin => {
           'SymbolKeyConst',
           'TransitionNameConst',
           'DeleteTabConst',
+          'MenuCollapseModeConst',
+          'TabStyleModeConst',
         ],
 
         '/@/locales': ['useAppI18n', 'AppI18n'],

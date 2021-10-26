@@ -31,6 +31,9 @@ declare global {
   type ValueOfSymbolKeyConst = import('/@/const').ValueOfSymbolKeyConst
   type ValueOfTransitionNameConst =
     import('/@/const').ValueOfTransitionNameConst
+  type ValueOfMenuCollapseModeConst =
+    import('/@/const').ValueOfMenuCollapseModeConst
+  type ValueOfTabStyleModeConst = import('/@/const').ValueOfTabStyleModeConst
 
   // vite
   type VitePlugin = import('vite').Plugin
