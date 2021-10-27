@@ -20,6 +20,8 @@
 
 </p>
 
+**main分支的element-plus版本不再继续开发，重点已转移至naive-ui分支，具体请看naive-ui分支**
+
 ## 序言
 
 Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。主要是前台，后台和数据库仅供学习！现仍在开发阶段中。技术栈使用了 `Vue3`, `ElementPlus`, `Vite2`, `Typescript` 等, 用于学习和交流！
