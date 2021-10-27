@@ -40,7 +40,7 @@
 
   const { leftUtils, rightUtils } = useTabsUtils(
     scrollRef,
-    getCurrentRouteTabIndex.value
+    getCurrentRouteTabIndex
   )
 
   // set context

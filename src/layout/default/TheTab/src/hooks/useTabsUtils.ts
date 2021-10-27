@@ -5,7 +5,7 @@ import { useRedirect } from '/@/hooks/core/useRedirect'
 
 export const useTabsUtils = (
   scrollRef: Ref<Nullable<WScrollbarRef>>,
-  targetTabIndex: number
+  targetTabIndex: Ref<number>
 ) => {
   const leftUtils: AppTabUtilListItem[] = [
     {
@@ -17,7 +17,7 @@ export const useTabsUtils = (
     {
       icon: 'ant-design:aim-outlined',
       event: () => {
-        scrollRef.value?.scrollToIndex(targetTabIndex)
+        scrollRef.value?.scrollToIndex(targetTabIndex.value)
       },
     },
   ]
