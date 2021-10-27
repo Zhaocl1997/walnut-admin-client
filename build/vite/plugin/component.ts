@@ -2,7 +2,14 @@ import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 const comp = {
-  App: ['AppDarkMode', 'AppFullScreen', 'AppLocalePicker'],
+  App: [
+    'AppDarkMode',
+    'AppFullScreen',
+    'AppLocalePicker',
+    'AppLock',
+    'AppSearch',
+    'AppSettings',
+  ],
   Extra: [
     'Arrow',
     'DemoCard',
@@ -35,7 +42,7 @@ const comp = {
 
 export const createComponentPlugin = (): VitePlugin => {
   return Components({
-    dirs: ['src/components'],
+    dirs: ['/@/components'],
 
     extensions: ['vue', 'ts', 'md', 'tsx'],
 
