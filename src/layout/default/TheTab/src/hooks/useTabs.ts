@@ -34,20 +34,28 @@ export const useTabs = () => {
     // Build tab
     buildTabs(createTab(route))
 
-    // set currentRouteName
-    tab.value.currentRouteName = route.name as string
-
     // Scroll
     // Trick to trigger the scroll
     app.value.device && onScrollToCurrentTab()
   })
 
-  onMounted(() => {
-    tab.value.targetTab = createTab(route)
-    tab.value.targetTabIndex = tab.value.tabs.findIndex(
-      (i) => i.name === tab.value.targetTab?.name
-    )
-  })
+  watch(
+    () => route,
+    (v) => {
+      // set currentRouteName
+      tab.value.currentRouteName = v.name as string
+
+      // set target tab
+      tab.value.targetTab = createTab(v)
+      tab.value.targetTabIndex = tab.value.tabs.findIndex(
+        (i) => i.name === tab.value.targetTab?.name
+      )
+    },
+    {
+      deep: true,
+      immediate: true,
+    }
+  )
 
   return { scrollRef, getCurrentRouteTabIndex }
 }
