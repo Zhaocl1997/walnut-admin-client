@@ -34,7 +34,7 @@
       const scrollRef =
         ref<Nullable<ScrollbarInst & { scrollbarInstRef: Recordable }>>(null)
 
-      const onScroll = useDebounceFn((e: WheelEvent) => {
+      const onScroll = useThrottleFn((e: WheelEvent) => {
         emit(
           'update:modelValue',
           props.vertical
@@ -46,7 +46,7 @@
       const methods: WScrollbarRef = {
         scrollTo: (opt) => {
           scrollRef.value!.scrollTo({
-            ...(opt as any),
+            ...(opt as Object),
             behavior: props.behavior,
           })
         },
@@ -102,7 +102,7 @@
        */
       const onVerticalScroll = (event: WheelEvent) => {
         // get scroll direction
-        const detail = (event as any).wheelDelta || event.detail
+        const detail = event.deltaY || event.detail
 
         // define direction
         const moveForwardStep = 1

@@ -23,15 +23,18 @@ export const WithValue = (
     emits: ['update:value'],
 
     setup(prop, { attrs, emit }) {
-      const { value = '', multiple = false } = attrs as any
+      const { value = '', multiple = false } = attrs as Record<
+        string,
+        string | string[] | boolean
+      >
       const v = ref()
 
       const formateDefaultValue = (fn: Fn) => {
         !prop.valueSeparator
-          ? (v.value = value.map((ov: any) => fn(ov)))
-          : (v.value = value
+          ? (v.value = (value as string[]).map((ov) => fn(ov)))
+          : (v.value = (value as string)
               .split(prop.valueSeparator)
-              .map((ov: any) => fn(ov)))
+              .map((ov) => fn(ov)))
       }
 
       onMounted(() => {

@@ -11,20 +11,23 @@
 </script>
 
 <script lang="ts" setup>
+  import { RemoveableRef } from '@vueuse/core'
+
   const formData = ref({
     type: 'localStorage',
     key: '',
-    value: '' as any,
+    value: '',
     maxAge: 0,
   })
 
   const onChange = () => {
-    formData.value.value = useAppStorage(
-      formData.value.key,
-      formData.value.value,
-      formData.value.maxAge,
-      formData.value.type === 'sessionStorage' ? sessionStorage : localStorage
-    )
+    ;(formData.value.value as unknown as RemoveableRef<string>) =
+      useAppStorage<string>(
+        formData.value.key,
+        formData.value.value,
+        formData.value.maxAge,
+        formData.value.type === 'sessionStorage' ? sessionStorage : localStorage
+      )
   }
 
   const [register] = useForm({

@@ -51,8 +51,8 @@ export const transform: AxiosTransform = {
     if (err.message === 'Demonstrate') {
       useAppNotification().error({ title: 'Demonstrate Only!' })
     } else {
-      const statusCode = (err.response?.data as any).statusCode
-      const msg = (err.response?.data as any).detail?.message
+      const statusCode = err.response?.data.statusCode
+      const msg = err.response?.data.detail?.message
       checkReponseErrorStatus(statusCode, msg)
     }
 

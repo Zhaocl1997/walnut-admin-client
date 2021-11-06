@@ -6,7 +6,7 @@ export const useLocale = (locale: ValueOfLocaleConst) => {
     if (AppI18n.mode === 'legacy') {
       AppI18n.global.locale = locale
     } else {
-      ;(AppI18n.global.locale as any).value = locale
+      ;(AppI18n.global.locale as unknown as Ref<string>).value = locale
     }
 
     /**
@@ -21,7 +21,11 @@ export const useLocale = (locale: ValueOfLocaleConst) => {
 
   const loadLocaleMessages = async () => {
     // Don't load again if has been loaded
-    if (Object.keys((AppI18n.global.messages as any).value).includes(locale)) {
+    if (
+      Object.keys(
+        (AppI18n.global.messages as unknown as Ref<string[]>).value
+      ).includes(locale)
+    ) {
       return
     }
 

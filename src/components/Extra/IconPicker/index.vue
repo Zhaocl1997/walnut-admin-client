@@ -17,12 +17,9 @@
         </template>
 
         <template #trigger>
-          <w-icon
-            class="cursor-pointer"
-            :icon="value"
-            width="24"
-            @click="onOpenPopover"
-          ></w-icon>
+          <div class="cursor-pointer -mb-2">
+            <w-icon :icon="value" width="24" @click="onOpenPopover"></w-icon>
+          </div>
         </template>
 
         <template #default>
@@ -37,7 +34,7 @@
               ></n-input>
             </div>
 
-            <div style="min-height: 230px;">
+            <div style="min-height: 230px">
               <w-icon
                 v-for="(icon, index) in lists"
                 :key="icon"
@@ -79,6 +76,7 @@
 </template>
 
 <script lang="ts">
+  import type { InputInst } from 'naive-ui'
   import { mockListApi } from '/@/utils/mockListApi'
   import iconLists from '/@/components/UI/Icon/src/utils/list'
 
@@ -90,7 +88,7 @@
     props: {
       value: {
         type: String as PropType<string>,
-        default: 'ant-design:home-outlined',
+        default: '',
       },
     },
 
@@ -100,13 +98,13 @@
       const { emit } = ctx
 
       const state = reactive({
-        lists: [],
+        lists: [] as string[],
         total: 0,
         pageNum: 1,
         pageSize: 55,
         show: false,
         filters: '',
-        searchInputRef: null as any,
+        searchInputRef: null as Nullable<InputInst>,
         loading: false,
       })
 
@@ -126,7 +124,7 @@
         }
 
         const filtered = iconLists.filter((i) => i.includes(state.filters))
-        const filterdRes = mockListApi(filtered)(params) as any
+        const filterdRes = mockListApi(filtered)(params)
 
         setTimeout(() => {
           state.total = filterdRes.total

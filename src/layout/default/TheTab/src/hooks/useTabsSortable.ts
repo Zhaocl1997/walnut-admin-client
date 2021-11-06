@@ -13,7 +13,7 @@ export const useTabsSortable = (isSortable: boolean) => {
   const el = document.getElementById('tabSortable')!
 
   const instance = useSortable(el, {
-    filter: (e) => (e.target! as any).dataset.affix === 'true',
+    filter: (e) => (e.target! as HTMLDivElement).dataset.affix === 'true',
     onEnd: (evt) => {
       const { oldIndex, newIndex } = evt
 
