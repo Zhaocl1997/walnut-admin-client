@@ -28,6 +28,11 @@ export default defineConfig({
         primary: 'var(--primary-color)',
         primaryHover: 'var(--primary-color-hover)',
       },
+      // usage `border-primary`
+      borderColor: {
+        primary: 'var(--primary-color) !important',
+        primaryHover: 'var(--primary-color-hover) !important',
+      },
     },
   },
 })
