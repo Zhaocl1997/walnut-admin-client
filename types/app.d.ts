@@ -63,6 +63,7 @@ declare global {
       cache?: boolean
       affix?: boolean
       url?: string
+      type?: ValueOfMenuTypeConst
     }
   }
 }
