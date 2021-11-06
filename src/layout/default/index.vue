@@ -2,41 +2,45 @@
   <n-layout has-sider>
     <!-- <div class="flex h-screen"> -->
 
-    <TheAside
-      v-if="!app.isMobile"
-      :class="['h-screen w-56 ', { 'w-16': app.collapse }]"
-    />
+    <!-- v-if="!app.isMobile" -->
+    <TheAside v-if="getShowAside" />
 
-    <n-drawer v-else v-model:show="app.showAside" width="60%" placement="left">
+    <!-- <n-drawer v-else v-model:show="app.showAside" width="60%" placement="left">
       <TheAside :class="['h-screen w-56 ', { 'w-16': app.collapse }]" />
-    </n-drawer>
+    </n-drawer> -->
 
     <div
       id="w-main-layout"
-      class="*vstack flex-1 h-screen w-full overflow-x-hidden overflow-y-auto"
+      class="*vstack flex-1 h-screen w-full overflow-x-hidden"
     >
-      <div
-        class="fixed"
+      <!-- <div
+        :class="{ fixed: setting.app.fixHeader }"
         :style="{
-          width: app.isMobile
-            ? '100vw'
-            : app.collapse
-            ? 'calc(100vw - 60px)'
-            : 'calc(100vw - 240px)',
-          zIndex: 1,
+          width: getContentWidth,
         }"
       >
-        <n-layout-header bordered inverted>
-          <TheHeader class="flex-none h-12 px-2" />
+        <n-layout-header v-if="setting.app.showHeader" bordered inverted>
+          <TheHeader
+            class="flex-none px-2"
+            :style="{ height: setting.header.height + 'px' }"
+          />
         </n-layout-header>
 
-        <n-layout-header bordered inverted>
-          <TheTab class="flex-none h-8 px-2" />
+        <n-layout-header v-if="setting.app.showTabs" bordered inverted>
+          <TheTab
+            class="flex-none px-2"
+            :style="{ height: setting.tab.height + 'px' }"
+          />
         </n-layout-header>
-      </div>
+      </div> -->
+      <MainHeader v-if="setting.app.fixHeader" />
 
       <n-layout-content bordered :native-scrollbar="false">
-        <TheContent class="flex-1 p-4 mt-20" />
+        <MainHeader v-if="!setting.app.fixHeader" />
+
+        <TheContent class="flex-1 p-4" />
+
+        <WAppSettings />
       </n-layout-content>
     </div>
 
@@ -45,11 +49,39 @@
   </n-layout>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
   import TheAside from './TheAside'
   import TheHeader from './TheHeader'
   import TheContent from './TheContent'
   import TheTab from './TheTab'
+  import { getShowAside, getContentWidth } from '/@/settings'
 
-  const { app } = useAppState()
+  const { app, settings } = useAppState()
+  const setting = settings.value.ForDevelopers
+
+  const MainHeader = defineComponent({
+    setup() {
+      return () => (
+        <div style={{ width: getContentWidth.value }}>
+          {setting.app.showHeader && (
+            <n-layout-header bordered inverted>
+              <TheHeader
+                class="flex-none px-2"
+                style={{ height: setting.header.height + 'px' }}
+              />
+            </n-layout-header>
+          )}
+
+          {setting.app.showTabs && (
+            <n-layout-header bordered inverted>
+              <TheTab
+                class="flex-none px-2"
+                style={{ height: setting.tab.height + 'px' }}
+              />
+            </n-layout-header>
+          )}
+        </div>
+      )
+    },
+  })
 </script>

@@ -2,8 +2,8 @@
   <div class="select-none">
     <div class="*hstack justify-between h-full items-center">
       <div class="*hstack justify-start space-x-2">
-        <HeaderCollapse />
-        <HeaderBreadCrumb v-if="!app.isMobile" />
+        <HeaderCollapse v-if="getShowMenuCollpaseIcon" />
+        <HeaderBreadCrumb v-if="headerSettings.showBreadcrumb" />
       </div>
 
       <div
@@ -19,11 +19,12 @@
           h-full)
         "
       >
-        <WAppFullScreen v-if="!app.isMobile" />
-        <WAppLocalePicker />
-        <WAppDarkMode />
+        <WAppFullScreen v-if="headerSettings.showFullScreen" />
+        <WAppLock v-if="headerSettings.showLock" />
+        <WAppSearch v-if="headerSettings.showSearch" />
+        <WAppLocalePicker v-if="headerSettings.showLocale" />
+        <WAppDarkMode v-if="headerSettings.showDarkMode" />
         <HeaderAvatar />
-        <AppSettings />
       </div>
     </div>
   </div>
@@ -33,7 +34,8 @@
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
   import HeaderAvatar from './avatar.vue'
-  import AppSettings from '/@/components/App/AppSettings'
+  import { getShowMenuCollpaseIcon } from '/@/settings'
 
-  const { app } = useAppState()
+  const { app, settings } = useAppState()
+  const headerSettings = settings.value.ForDevelopers.header
 </script>

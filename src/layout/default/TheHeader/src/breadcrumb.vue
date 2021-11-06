@@ -1,6 +1,10 @@
 <script lang="tsx">
+  import type { RouteLocationMatched } from 'vue-router'
+
   export default defineComponent({
     setup() {
+      const { settings } = useAppState()
+      const breadcrumb = settings.value.ForDevelopers.breadcrumb
       const route = useAppRoute()
       const { t } = useAppI18n()
 
@@ -8,11 +12,56 @@
         route.matched.filter((item) => item.meta && item.meta.title)
       )
 
+      const renderBase = (item: RouteLocationMatched) => (
+        <div class="inline">
+          {breadcrumb.showIcon && (
+            <w-icon
+              icon={item.meta.icon}
+              height="20"
+              class="-mb-1 mr-1"
+            ></w-icon>
+          )}
+          <span class="app-text">{t(item.meta.title!)}</span>
+        </div>
+      )
+
+      const genOptions = (children?: RouteRecordRaw[]): unknown => {
+        if (!children || children?.length === 0) {
+          return undefined
+        } else {
+          return children?.map((i) => ({
+            key: i.name,
+            label: t(i.meta?.title!),
+            icon: () => <w-icon icon={i.meta?.icon} height="20"></w-icon>,
+            children: genOptions(i.children),
+          }))
+        }
+      }
+
+      const renderDropdown = (item: RouteLocationMatched) => (
+        <n-dropdown
+          onSelect={(key: string) => {
+            useRouterPush({ name: key })
+          }}
+          show-arrow
+          options={item.children.map((i) => ({
+            key: i.name,
+            label: t(i.meta?.title!),
+            icon: () => <w-icon icon={i.meta?.icon} height="20"></w-icon>,
+            children: genOptions(i.children),
+          }))}
+        >
+          {renderBase(item)}
+        </n-dropdown>
+      )
+
       return () => (
-        <n-breadcrumb>
+        <n-breadcrumb separator={breadcrumb.separator}>
           {getChildren.value.map((item) => (
             <n-breadcrumb-item>
-              <span class="text-base">{t(item.meta.title!)}</span>
+              {breadcrumb.showDropdown
+                ? renderDropdown(item)
+                : renderBase(item)}
             </n-breadcrumb-item>
           ))}
         </n-breadcrumb>

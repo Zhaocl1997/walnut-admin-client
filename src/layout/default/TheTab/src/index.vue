@@ -1,21 +1,23 @@
 <template>
   <div class="*hstack justify-between p-1">
-    <div class="*hstack flex-none justify-start">
+    <div v-if="tabSettings.showUtils" class="*hstack flex-none justify-start">
       <TabsUtils :lists="leftUtils"></TabsUtils>
     </div>
 
     <div
-      class="flex flex-grow h-10"
-      :style="{ width: 'calc(100vw - 14rem - 300px)' }"
+      class="flex flex-grow"
+      :style="{
+        width: `calc(100vw - ${settings.ForDevelopers.menu.width}px - 300px)`,
+      }"
     >
       <TabsContentMain></TabsContentMain>
     </div>
 
-    <div class="*hstack flex-none justify-end">
+    <div v-if="tabSettings.showUtils" class="*hstack flex-none justify-end">
       <TabsUtils :lists="rightUtils"></TabsUtils>
     </div>
 
-    <TabsContextMenu />
+    <TabsContextMenu v-if="tabSettings.contextMenu" />
   </div>
 </template>
 
@@ -30,6 +32,9 @@
   import { useTabsUtils } from './hooks/useTabsUtils'
 
   import { setTabsContext } from './hooks/useTabsContext'
+
+  const { settings } = useAppState()
+  const tabSettings = settings.value.ForDevelopers.tab
 
   const { scrollRef, getCurrentRouteTabIndex } = useTabs()
 

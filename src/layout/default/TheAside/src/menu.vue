@@ -5,7 +5,8 @@
 
   export default defineComponent({
     setup() {
-      const { app, menu } = useAppState()
+      const { app, menu, settings } = useAppState()
+      const menuSettings = settings.value.ForDevelopers.menu
       const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
 
@@ -65,7 +66,11 @@
       return () => (
         <w-scrollbar height="100%">
           <n-menu
-            indent={15}
+            collapsedWidth={menuSettings.collapsedWidth}
+            accordion={menuSettings.accordion}
+            collapsedIconSize={menuSettings.collapsedIconSize}
+            iconSize={menuSettings.iconSize}
+            indent={menuSettings.indent}
             options={getMenu.value}
             collapsed={app.value.collapse}
             value={currentRoute.value.name}

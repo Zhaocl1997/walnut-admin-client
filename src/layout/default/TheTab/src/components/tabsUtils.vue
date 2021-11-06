@@ -2,7 +2,14 @@
   <div v-for="item in lists" :key="item.icon" @click="item.event">
     <w-icon
       height="24"
-      class="border border-solid border-blue-500 cursor-pointer my-auto mr-1"
+      class="
+        border border-primary
+        cursor-pointer
+        my-auto
+        mr-1
+        hover:(border-primaryHover
+        text-primaryHover)
+      "
       :icon="item.icon"
     ></w-icon>
   </div>

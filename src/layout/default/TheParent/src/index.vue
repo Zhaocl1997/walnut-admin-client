@@ -1,41 +1,54 @@
 <template>
   <router-view>
-    <template #default="{ Component, route }">
-      <transition name="fade" mode="out-in" appear>
-        <keep-alive v-if="getOpenKeepAlive" :include="menu.keepAliveRouteNames">
-          <div :id="route.name">
-            <component :is="Component" v-bind="getKey(Component, route)" />
-          </div>
-        </keep-alive>
-
-        <div v-else :id="route.name">
-          <component :is="Component" v-bind="getKey(Component, route)" />
-        </div>
-      </transition>
+    <template #="{ Component, route }">
+      <RenderWrapper>
+        <component :is="Component" v-bind="getKey(Component, route)" />
+      </RenderWrapper>
     </template>
   </router-view>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
   export default defineComponent({
     parentView: true,
-
-    setup() {
-      const { menu } = useAppState()
-      const getOpenKeepAlive = computed(() => true)
-
-      const getKey = (comp: VNode, route: RouteLocationNormalized) => {
-        // @ts-ignore
-        return comp.type.parentView ? {} : { key: route.fullPath }
-      }
-
-      return {
-        menu,
-        getOpenKeepAlive,
-        getKey,
-      }
-    },
   })
 </script>
 
-<style lang="scss" scoped></style>
+<script lang="tsx" setup>
+  import { KeepAlive } from 'vue'
+
+  const { menu, settings } = useAppState()
+  const appSettings = settings.value.ForDevelopers.app
+
+  const getKey = (comp: VNode, route: RouteLocationNormalized) => {
+    // @ts-ignore
+    return comp.type.parentView ? {} : { key: route.fullPath }
+  }
+
+  const RenderKeepAlive = defineComponent({
+    setup(_, { slots }) {
+      return () =>
+        appSettings.keepAlive ? (
+          <KeepAlive include={menu.value.keepAliveRouteNames}>
+            {{ default: () => slots.default!() }}
+          </KeepAlive>
+        ) : (
+          // TODO this div cause transition not working
+          <div>{{ default: () => slots.default!() }}</div>
+        )
+    },
+  })
+
+  const RenderWrapper = defineComponent({
+    setup(_, { slots }) {
+      return () =>
+        appSettings.showAnimation ? (
+          <w-transition name={appSettings.animationName}>
+            <RenderKeepAlive v-slots={slots}></RenderKeepAlive>
+          </w-transition>
+        ) : (
+          <RenderKeepAlive v-slots={slots}></RenderKeepAlive>
+        )
+    },
+  })
+</script>
