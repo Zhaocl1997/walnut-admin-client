@@ -9,15 +9,18 @@ export const useFullScreenExtend = () => {
   )
   const { isFullscreen, toggle, enter } = useFullscreen(el as Ref<HTMLElement>)
 
-  watchEffect(() => {
-    if (app.value.fullscreenTarget !== '#app') {
-      toggleClass(
-        el.value as HTMLElement,
-        'bg-body-color p-4',
-        app.value.isFullScreen
-      )
-    }
-  })
+  watchEffect(
+    () => {
+      if (app.value.fullscreenTarget !== '#app') {
+        toggleClass(
+          el.value as HTMLElement,
+          'bg-body-color p-4',
+          app.value.isFullScreen
+        )
+      }
+    },
+    { flush: 'post' }
+  )
 
   return {
     isFullscreen,

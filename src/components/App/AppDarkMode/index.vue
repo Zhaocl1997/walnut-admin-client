@@ -1,12 +1,12 @@
 <template>
   <div>
-    <n-popselect v-model:value="app.darkMode" :options="darkModeOptions">
+    <n-popselect
+      v-model:value="app.darkMode"
+      :options="darkModeOptions"
+      trigger="click"
+    >
       <w-icon
-        :icon="
-          app.isDark
-            ? 'emojione:waxing-crescent-moon'
-            : 'emojione:waxing-gibbous-moon'
-        "
+        :icon="app.isDark ? 'carbon:moon' : 'carbon:sun'"
         width="24"
       ></w-icon>
     </n-popselect>
