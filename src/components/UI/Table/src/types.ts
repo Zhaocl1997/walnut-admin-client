@@ -1,15 +1,20 @@
 import type { DataTableProps, DataTableColumn, DataTableInst } from 'naive-ui'
-import type { InternalRowData } from 'naive-ui/lib/data-table/src/interface'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import { props } from './props'
 
 export declare namespace WTable {
+  interface RowData {
+    [key: string]: unknown
+  }
+
+  type RenderFn<T, R = void> = (rowData: T, rowIndex?: number) => R
+
   namespace Inst {
     type NDataTableInst = DataTableInst
 
     interface WTableInst extends NDataTableInst {
-      setProps: Fn
+      setProps: (props: MaybeRef<Props<any>>) => void
     }
   }
 
@@ -25,29 +30,27 @@ export declare namespace WTable {
       extendType?: E
     }
 
-    interface Action<T = InternalRowData> extends BaseExtend<'action'> {
+    interface Action<T = RowData> extends BaseExtend<'action'> {
       extendActionType?: ('create' | 'read' | 'delete')[]
-      onCreate?: (rowData: T, rowIndex?: number) => void
-      onRead?: (rowData: T, rowIndex?: number) => void
-      onDelete?: (rowData: T, rowIndex?: number) => void
+      onCreate?: RenderFn<T>
+      onRead?: RenderFn<T>
+      onDelete?: RenderFn<T>
     }
 
-    interface Icon<T = InternalRowData> extends BaseExtend<'icon'> {
-      extendIconName: string | ((rowData: T, rowIndex?: number) => string)
+    interface Icon<T = RowData> extends BaseExtend<'icon'> {
+      extendIconName: string | RenderFn<T, string>
     }
 
-    interface Formatter<T = InternalRowData> extends BaseExtend<'formatter'> {
-      formatter: (rowData: T, rowIndex?: number) => string
+    interface Formatter<T = RowData> extends BaseExtend<'formatter'> {
+      formatter: RenderFn<T, string>
     }
   }
 
-  type Column<T = InternalRowData> =
-    | DataTableColumn<T>
-    | (DataTableColumn<T> & ExtendType.Action<T>)
-    | (DataTableColumn<T> & ExtendType.Icon<T>)
-    | (DataTableColumn<T> & ExtendType.Formatter<T>)
+  type Column<T = RowData> =
+    | DataTableColumn<T> &
+        (ExtendType.Action<T> | ExtendType.Icon<T> | ExtendType.Formatter<T>)
 
-  interface Props<T = InternalRowData>
+  interface Props<T = RowData>
     extends Omit<DataTableProps, 'columns'>,
       ExtractPropTypes<typeof props> {
     columns: Column<T>[]

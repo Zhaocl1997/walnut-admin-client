@@ -1,10 +1,9 @@
 import type { WTable } from '../types'
-import type { MaybeRefRecord } from '/~/utils'
 
 import { isInSetup } from '/@/utils/shared'
 
 export const useTable = <T>(
-  props: MaybeRefRecord<WTable.Props<T>>
+  props: MaybeRef<WTable.Props<T>>
 ): WTable.Hook.useTableReturnType => {
   isInSetup()
 

@@ -31,11 +31,13 @@
             key: 'address',
           },
           {
-            extendType: 'action',
-          },
-          {
+            key: 'icon',
             extendType: 'icon',
             extendIconName: 'ant-design:home-outlined',
+          },
+          {
+            key: 'action',
+            extendType: 'action',
           },
         ],
         data: [

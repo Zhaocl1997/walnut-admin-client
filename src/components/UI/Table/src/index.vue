@@ -17,9 +17,8 @@
 
     emits: ['hook'],
 
-    setup(props: WTable.Props, ctx) {
-      const { attrs, emit, expose, slots } = ctx
-
+    // @ts-ignore
+    setup(props: WTable.Props, { attrs, emit, expose, slots }) {
       const { setProps, getProps } = useProps<WTable.Props>(props)
 
       const { onEvent } = useTableEvents(getProps.value)
