@@ -44,6 +44,64 @@ interface AppMemory {
     targetTabIndex?: number
     currentRouteName?: string
   }
+
+  settings: {
+    ForDevelopers: {
+      app: {
+        showLogo: boolean
+        showMenu: boolean
+        showHeader: boolean
+        showTabs: boolean
+        showFooter: boolean
+
+        fixLogo: boolean
+        fixHeader: boolean
+
+        showAnimation: boolean
+        animationName: ValueOfTransitionNameConst
+
+        keepAlive: boolean
+      }
+
+      menu: {
+        showCollapse: boolean
+        collapseMode: ValueOfMenuCollapseModeConst
+        width: number
+        collapsedWidth: number
+        accordion: boolean
+        collapsedIconSize: number
+        iconSize: number
+        indent: number
+      }
+
+      header: {
+        height: number
+        showBreadcrumb: boolean
+        showFullScreen: boolean
+        showLocale: boolean
+        showDarkMode: boolean
+        showLock: boolean
+        showSearch: boolean
+      }
+
+      tab: {
+        height: number
+        showIcon: boolean
+        showUtils: boolean
+        contextMenu: boolean
+        sortable: boolean
+        styleMode: ValueOfTabStyleModeConst
+      }
+
+      breadcrumb: {
+        showIcon: boolean
+        showDropdown: boolean
+        separator: string
+      }
+    }
+
+    ForUsers: {}
+  }
 }
 
 const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
@@ -81,6 +139,64 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
         targetTab: undefined,
         targetTabIndex: 0,
         currentRouteName: undefined,
+      },
+
+      settings: {
+        ForDevelopers: {
+          app: {
+            showLogo: true,
+            showMenu: true,
+            showHeader: true,
+            showTabs: true,
+            showFooter: true,
+
+            fixLogo: true,
+            fixHeader: true,
+
+            showAnimation: true,
+            animationName: 'fade',
+
+            keepAlive: true,
+          },
+
+          menu: {
+            showCollapse: true,
+            collapseMode: 'bar',
+            width: 240,
+            collapsedWidth: 64,
+            accordion: false,
+            collapsedIconSize: 24,
+            iconSize: 26,
+            indent: 16,
+          },
+
+          header: {
+            height: 48,
+            showBreadcrumb: true,
+            showFullScreen: true,
+            showLocale: true,
+            showDarkMode: true,
+            showLock: true,
+            showSearch: true,
+          },
+
+          tab: {
+            height: 32,
+            showIcon: false,
+            showUtils: true,
+            contextMenu: true,
+            sortable: false,
+            styleMode: 'card',
+          },
+
+          breadcrumb: {
+            showIcon: true,
+            showDropdown: true,
+            separator: '>',
+          },
+        },
+
+        ForUsers: {},
       },
     })
   )
