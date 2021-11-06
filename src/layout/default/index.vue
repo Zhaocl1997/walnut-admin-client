@@ -35,7 +35,11 @@
       </div> -->
       <MainHeader v-if="setting.app.fixHeader" />
 
-      <n-layout-content bordered :native-scrollbar="false">
+      <n-layout-content
+        bordered
+        :native-scrollbar="false"
+        :content-style="{ height: '100%' }"
+      >
         <MainHeader v-if="!setting.app.fixHeader" />
 
         <TheContent class="flex-1 p-4" />
