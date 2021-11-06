@@ -9,20 +9,13 @@
 </template>
 
 <script lang="ts">
-  const options: OptionDataItem[] = Object.entries(TransitionNameConst).map(
-    ([key, value]) => ({
-      value: value,
-      label: key,
-    })
-  )
-
   export default defineComponent({
     name: 'TransitionDemo',
 
     setup() {
       const show = ref(true)
       const formData = ref({
-        name: 'fade',
+        name: 'fade' as ValueOfTransitionNameConst,
       })
 
       const onStart = () => {
@@ -41,7 +34,12 @@
               path: 'name',
             },
             componentProp: {
-              options: options,
+              options: Object.entries(TransitionNameConst).map(
+                ([key, value]) => ({
+                  value: value,
+                  label: key,
+                })
+              ),
             },
           },
           {
@@ -57,8 +55,6 @@
       return {
         formData,
         show,
-        options,
-        onStart,
         register,
       }
     },

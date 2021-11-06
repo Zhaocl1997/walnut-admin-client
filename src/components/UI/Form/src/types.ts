@@ -208,7 +208,7 @@ export declare namespace WForm {
     type SliderSchema<D> = DynamicSchemaItemProps<'Base:Slider', D>
     type TreeSelectSchema<D> = DynamicSchemaItemProps<'Base:TreeSelect', D>
 
-    type Item<D = any> = MaybeRefDeep<
+    type Item<D = any> =
       | DividerSchema<D>
       | QuerySchema<D>
       | IconPickerSchema<D>
@@ -228,6 +228,5 @@ export declare namespace WForm {
       | DynamicTagsSchema<D>
       | SliderSchema<D>
       | TreeSelectSchema<D>
-    >
   }
 }

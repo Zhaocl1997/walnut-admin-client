@@ -5,7 +5,7 @@ import chalk from 'chalk'
 
 import { stagingBuildLogPath } from './utils/paths'
 
-const prefix = (msg, emoji) =>
+const prefix = (msg: string, emoji: string) =>
   `
 /**
  * ==============================================
