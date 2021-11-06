@@ -7,5 +7,6 @@ declare module 'vue-router' {
     cache?: boolean
     affix?: boolean
     url?: string
+    type?: ValueOfMenuTypeConst
   }
 }
