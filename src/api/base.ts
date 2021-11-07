@@ -1,5 +1,4 @@
 import type { BaseListResponse } from '/@/utils/axios'
-import type { MaybeRef } from '/~/utils'
 
 import { isProd } from '/@/utils/constant/vue'
 
@@ -17,7 +16,7 @@ export class BaseAPI<T> {
     })
   }
 
-  create(data: MaybeRef<T>) {
+  create(data: T) {
     return AppAxios.post(
       {
         url: `${this.baseAPI}`,
@@ -29,13 +28,13 @@ export class BaseAPI<T> {
     )
   }
 
-  read(id: MaybeRef<StringOrNumber>) {
+  read(id: StringOrNumber) {
     return AppAxios.get<T>({
       url: `${this.baseAPI}/${id}`,
     })
   }
 
-  update(data: MaybeRef<T>) {
+  update(data: T) {
     return AppAxios.put<T>(
       {
         url: `${this.baseAPI}`,
@@ -47,7 +46,7 @@ export class BaseAPI<T> {
     )
   }
 
-  delete(id: MaybeRef<StringOrNumber>) {
+  delete(id: StringOrNumber) {
     return AppAxios.delete(
       {
         url: `${this.baseAPI}/${id}`,

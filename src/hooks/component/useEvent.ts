@@ -1,5 +1,3 @@
-import type { MaybeRef } from '/~/utils'
-
 import { capitalize } from 'vue'
 
 export interface useEventParams<N = string, P = any> {

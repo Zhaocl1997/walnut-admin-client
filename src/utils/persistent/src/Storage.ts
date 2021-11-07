@@ -1,4 +1,3 @@
-import type { MaybeRef } from '@vueuse/core'
 import { storagePrefix } from '../../constant/prefix'
 import { isProd } from '../../constant/vue'
 import { AppEncryption } from '/@/utils/crypto'

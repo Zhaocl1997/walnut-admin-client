@@ -1,5 +1,4 @@
 import type { Options } from 'sortablejs'
-import type { MaybeRef } from '@vueuse/core'
 
 import Sortable from 'sortablejs'
 
