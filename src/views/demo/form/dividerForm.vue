@@ -15,7 +15,7 @@
     setup() {
       const configData = ref({
         title: '',
-        titlePlacement: 'center' as 'left' | 'center' | 'right',
+        titlePlacement: 'center' as 'left' | 'right' | 'center',
         foldable: false,
         helpMessage: '',
         startIndex: 0,
@@ -151,7 +151,7 @@
         input6: undefined,
       })
 
-      const [register2] = useForm({
+      const [register2] = useForm<typeof formData.value>({
         span: 8,
         xGap: 20,
         schemas: [

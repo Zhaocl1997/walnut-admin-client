@@ -1,14 +1,7 @@
 import type { WForm } from '../types'
 import type { DialogProps, DrawerProps, ModalProps } from 'naive-ui'
 
-import {
-  NModal,
-  NDrawer,
-  NDrawerContent,
-  NButton,
-  NSpace,
-  NSpin,
-} from 'naive-ui'
+import { NDrawer, NDrawerContent } from 'naive-ui'
 
 export const useFormAdvanced = (
   render: Fn,
@@ -19,7 +12,9 @@ export const useFormAdvanced = (
   const show = ref(false)
   const loading = ref(false)
 
-  const onOpen = () => (show.value = true)
+  const onOpen = () => {
+    show.value = true
+  }
   const onClose = () => {
     if (loading.value) {
       return
@@ -52,19 +47,19 @@ export const useFormAdvanced = (
       }
     }
 
-    props.value.advancedProps?.onYes!(handler)
+    props.value.advancedProps?.onYes(handler)
   }
 
   const onNo = () => {
     formRef.value!.restoreValidation()
 
-    props.value.advancedProps?.onNo!(onClose)
+    props.value.advancedProps?.onNo(onClose)
   }
 
   const renderAdvanced = () => {
     const renderAction = () => (
-      <NSpace size="small">
-        <NButton
+      <n-space size="small">
+        <n-button
           size="small"
           type="primary"
           onClick={onYes}
@@ -73,18 +68,18 @@ export const useFormAdvanced = (
         >
           {(props.value.advancedProps as ModalProps).positiveText ??
             t('component.base.action.confirm')}
-        </NButton>
+        </n-button>
 
-        <NButton size="small" onClick={onNo} disabled={loading.value}>
+        <n-button size="small" onClick={onNo} disabled={loading.value}>
           {(props.value.advancedProps as ModalProps).negativeText ??
             t('component.base.action.cancel')}
-        </NButton>
-      </NSpace>
+        </n-button>
+      </n-space>
     )
 
     if (props.value.preset === 'modal') {
       return (
-        <NModal
+        <n-modal
           v-model={[show.value, 'show']}
           {...(props.value.advancedProps as ModalProps)}
           preset="dialog"
@@ -95,35 +90,49 @@ export const useFormAdvanced = (
           {{
             default: () => (
               <div class="border-t-1 border-b-1 p-4 border-gray-300">
-                <NSpin show={loading.value}>{render()}</NSpin>
+                <n-spin show={loading.value}>{render()}</n-spin>
               </div>
             ),
             action: () => renderAction(),
           }}
-        </NModal>
+        </n-modal>
       )
     }
 
     if (props.value.preset === 'drawer') {
       return (
-        <NDrawer
+        <w-drawer
           v-model={[show.value, 'show']}
-          maskClosable={props.value.advancedProps!.maskClosable as boolean}
+          title={props.value.advancedProps?.title}
           width={(props.value.advancedProps! as DrawerProps).width}
-          onUpdateShow={(show) => {
+          maskClosable={props.value.advancedProps!.maskClosable}
+          onUpdateShow={(show: boolean) => {
             !show && onNo()
           }}
+          onYes={onYes}
+          onNo={onNo}
+          loading={loading.value}
         >
-          <NDrawerContent
-            title={props.value.advancedProps?.title as string}
-            closable={!loading.value}
-          >
-            {{
-              default: () => <NSpin show={loading.value}>{render()}</NSpin>,
-              footer: () => renderAction(),
-            }}
-          </NDrawerContent>
-        </NDrawer>
+          {render()}
+        </w-drawer>
+        // <NDrawer
+        //   v-model={[show.value, 'show']}
+        //   maskClosable={props.value.advancedProps!.maskClosable as boolean}
+        //   width={(props.value.advancedProps! as DrawerProps).width}
+        //   onUpdateShow={(show) => {
+        //     !show && onNo()
+        //   }}
+        // >
+        //   <NDrawerContent
+        //     title={props.value.advancedProps?.title as string}
+        //     closable={!loading.value}
+        //   >
+        //     {{
+        //       default: () => <n-spin show={loading.value}>{render()}</n-spin>,
+        //       footer: () => renderAction(),
+        //     }}
+        //   </NDrawerContent>
+        // </NDrawer>
       )
     }
   }
@@ -132,6 +141,7 @@ export const useFormAdvanced = (
     onOpen,
     onClose,
     onYes,
+    onNo,
     renderAdvanced,
   }
 }

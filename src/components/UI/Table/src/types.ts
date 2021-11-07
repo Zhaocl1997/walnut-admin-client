@@ -14,7 +14,7 @@ export declare namespace WTable {
     type NDataTableInst = DataTableInst
 
     interface WTableInst extends NDataTableInst {
-      setProps: (props: MaybeRef<Props<any>>) => void
+      setProps: Fn
     }
   }
 

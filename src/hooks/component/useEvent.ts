@@ -6,7 +6,7 @@ export interface useEventParams<N = string, P = any> {
 }
 
 export const useEvents = <T extends useEventParams>(
-  props: MaybeRef<any>,
+  props: MaybeRefSelf<any>,
   pool?: string[]
 ) => {
   const instance = getCurrentInstance()!

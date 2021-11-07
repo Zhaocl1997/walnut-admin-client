@@ -3,40 +3,13 @@
     title="Query Form"
     description="Normally used in table search area."
   >
-    <w-form
-      :span="12"
-      :x-gap="20"
-      :model="configData"
-      :schemas="[
-        {
-          type: 'Base:Switch',
-          formProp: {
-            label: 'Foldable',
-            path: 'foldable',
-          },
-        },
-        {
-          type: 'Base:Slider',
-          formProp: {
-            label: 'Count to fold',
-            path: 'countToFold',
-          },
-          componentProp: {
-            min: 1,
-            max: 6,
-          },
-          extraProp: {
-            vShow: ({ formData }) => !!formData.foldable,
-          },
-        },
-      ]"
-    ></w-form>
+    <w-form :model="configData" @hook="register1"></w-form>
 
     <w-JSON :value="formData"></w-JSON>
 
     <w-form
       :model="formData"
-      @hook="register"
+      @hook="register2"
       @reset="onReset"
       @query="onQuery"
     ></w-form>
@@ -59,7 +32,35 @@
         input6: undefined,
       })
 
-      const [register] = useForm<typeof formData.value>({
+      const [register1] = useForm<typeof configData.value>({
+        span: 12,
+        xGap: 20,
+        schemas: [
+          {
+            type: 'Base:Switch',
+            formProp: {
+              label: 'Foldable',
+              path: 'foldable',
+            },
+          },
+          {
+            type: 'Base:Slider',
+            formProp: {
+              label: 'Count to fold',
+              path: 'countToFold',
+            },
+            componentProp: {
+              min: 1,
+              max: 6,
+            },
+            extraProp: {
+              vShow: ({ formData }) => !!formData.foldable,
+            },
+          },
+        ],
+      })
+
+      const [register2] = useForm<typeof formData.value>({
         span: 8,
         xGap: 20,
         schemas: [
@@ -119,7 +120,8 @@
         configData,
         formData,
 
-        register,
+        register1,
+        register2,
 
         onReset: (v: any) => {
           console.log('reset', v)

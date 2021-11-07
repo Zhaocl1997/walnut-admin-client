@@ -70,7 +70,11 @@
                     textProp: 'Validate',
                     onClick: async () => {
                       const valid = await formRef.value?.validate()
-                      console.log(valid)
+                      if (valid) {
+                        useAppMessage().success('Success')
+                      } else {
+                        useAppMessage().error('Error')
+                      }
                     },
                   },
                   {

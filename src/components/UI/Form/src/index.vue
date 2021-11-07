@@ -30,6 +30,7 @@
 
     emits: ['reset', 'query', 'hook'],
 
+    // @ts-ignore
     setup(props: WForm.Props, { attrs, slots, emit, expose }) {
       const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
 
@@ -37,8 +38,9 @@
 
       const { formSchemas } = useFormSchemas(getProps)
 
-      const { onEvent } = useFormEvents(getProps.value)
+      const { onEvent } = useFormEvents(getProps)
 
+      // @ts-ignore
       setFormContext({
         formRef,
         formProps: { ...unref(getProps), ...attrs },
@@ -90,11 +92,10 @@
             labelAlign: attrs.labelAlign ?? 'right',
             labelPlacement: attrs.labelPlacement ?? 'left',
           }}
-          {...unref(getProps)}
           rules={
-            getProps.value.baseRules
+            unref(getProps).baseRules
               ? generateBaseRules(formSchemas.value)
-              : getProps.value.rules
+              : unref(getProps).rules
           }
         >
           <n-grid
@@ -113,11 +114,25 @@
         formRef
       )
 
+      const methods = {
+        validate: () => {
+          return new Promise<boolean>((reslove) => {
+            formRef.value?.validate((err) => {
+              if (!err) {
+                reslove(true)
+              } else {
+                reslove(false)
+              }
+            })
+          })
+        },
+        restoreValidation: () => formRef.value?.restoreValidation(),
+      }
+
       // expose
       useExpose({
         apis: {
-          validate: () => formRef.value?.validate(),
-          restoreValidation: () => formRef.value?.restoreValidation(),
+          ...methods,
           ...advancedMethods,
         },
         expose,
@@ -127,8 +142,7 @@
       onEvent({
         name: 'hook',
         params: {
-          validate: () => formRef.value?.validate(),
-          restoreValidation: () => formRef.value?.restoreValidation(),
+          ...methods,
           ...advancedMethods,
           setProps,
         },

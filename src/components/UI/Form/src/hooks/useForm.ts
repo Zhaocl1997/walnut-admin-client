@@ -1,10 +1,9 @@
 import type { WForm } from '../types'
-import type { MaybeRefRecord } from '/~/utils'
 
 import { isInSetup } from '/@/utils/shared'
 
 export const useForm = <T>(
-  props: MaybeRefRecord<WForm.Props<T>>
+  props: DeepMaybeRefSelf<WForm.Props<T>>
 ): WForm.Hook.useFormReturnType => {
   isInSetup()
 
@@ -19,11 +18,9 @@ export const useForm = <T>(
   }
 
   const methods = {
-    validate: async () => await wFormRef.value?.validate(),
+    validate: () => wFormRef.value?.validate(),
     restoreValidation: () => wFormRef.value?.restoreValidation(),
     onOpen: () => wFormRef.value?.onOpen(),
-    onClose: () => wFormRef.value?.onClose(),
-    onYes: () => wFormRef.value?.onYes(),
   }
 
   return [register, methods]

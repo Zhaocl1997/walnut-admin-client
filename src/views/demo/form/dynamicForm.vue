@@ -22,7 +22,7 @@
         labelHelpMessage: true,
         labelWidth: 80,
         span: 8,
-        xGap: 0,
+        xGap: 20,
         yGap: 0,
         inputOneLabel: 'Input 1',
         inputOneSpan: 8,
@@ -47,6 +47,7 @@
       const [register1] = useForm({
         labelWidth: 200,
         span: 12,
+        xGap: 20,
         schemas: [
           {
             type: 'Base:Switch',
@@ -210,7 +211,7 @@
               labelHelpMessage: computed(() =>
                 configFormData.value.labelHelpMessage
                   ? 'Input 4 will show once Input 3 has value.'
-                  : undefined
+                  : ''
               ),
             },
             componentProp: {
@@ -227,9 +228,7 @@
               clearable: true,
             },
             extraProp: {
-              vShow: ({ formData }) => {
-                return !!formData.input3
-              },
+              vShow: ({ formData }) => !!formData.input3,
             },
           },
           {

@@ -13,8 +13,6 @@ import type {
   TreeSelectProps,
 } from 'naive-ui'
 
-import type { MaybeRefDeep, MaybeRefRecord } from '/~/utils'
-
 import type { WTransitionProps } from '/@/components/Extra/Transition'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
@@ -46,10 +44,13 @@ export enum BUILTIN_FORM_TYPE {
 
 export declare namespace WForm {
   type preset = 'modal' | 'drawer'
+
   namespace Inst {
     type NFormInst = FormInst
 
-    interface WFormInst extends NFormInst {
+    interface WFormInst {
+      validate: () => Promise<boolean> | undefined
+      restoreValidation: Fn
       setProps: Fn
       onOpen: Fn
       onClose: Fn
@@ -61,33 +62,29 @@ export declare namespace WForm {
   namespace Hook {
     type useFormReturnType = [
       (instance: Inst.WFormInst) => void,
-      Partial<Inst.WFormInst>
+      Pick<Inst.WFormInst, 'validate' | 'restoreValidation' | 'onOpen'>
     ]
   }
 
   interface Props<D = any> extends FormProps {
-    baseRules?: boolean
     schemas?: Schema.Item<D>[]
+
     preset?: preset
-    advancedProps?: MaybeRefDeep<
-      ModalProps | (DrawerProps & DrawerContentProps)
-    > & {
-      onYes?: (callback: Fn) => void
-      onNo?: (callback: Fn) => void
-    }
+    advancedProps?: Partial<ModalProps | (DrawerProps & DrawerContentProps)> &
+      Pick<Inst.WFormInst, 'onYes' | 'onNo'>
 
     cols?: number
     span?: number
     xGap?: number
     yGap?: number
+
+    baseRules?: boolean
   }
 
   interface Context {
     formRef: Ref<Nullable<Inst.NFormInst>>
     formProps: Props
-    // TODO too deep instance
-    // formSchemas: Ref<Schema.Item[]>
-    formSchemas: any
+    formSchemas: Ref<Schema.Item[]>
     formEvent: (val: Params.Entry) => void
     setProps: (val: Props) => void
   }
@@ -100,7 +97,7 @@ export declare namespace WForm {
     type Entry =
       | useEventParams<'query', any>
       | useEventParams<'reset', any>
-      | useEventParams<'hook', any>
+      | useEventParams<'hook', Inst.WFormInst>
   }
 
   namespace Events {
@@ -138,20 +135,21 @@ export declare namespace WForm {
 
       'Base:Button': WButtonProps
       'Base:ButtonGroup': WButtonGroupProps
-      'Base:Input': MaybeRefRecord<WInputProps>
+      'Base:Input': WInputProps
       'Base:InputNumber': WInputNumberProps
-      'Base:Select': MaybeRefRecord<WSelectProps>
+      'Base:Select': WSelectProps
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
       'Base:Switch': WSwitchProps & {
         checkedText?: string
         uncheckedText?: string
       }
+
       'Base:TimePicker': WTimePickerProps
       'Base:DatePicker': WDatePickerProps
       'Base:DynamicTags': WDynamicTagsProps
       'Base:Slider': SliderProps
-      'Base:TreeSelect': MaybeRefRecord<TreeSelectProps>
+      'Base:TreeSelect': TreeSelectProps
     }
 
     interface DynamicSchemaItemProps<
@@ -171,18 +169,18 @@ export declare namespace WForm {
 
       gridProp?: GridItemProps
 
-      transitionProp?: Omit<WTransitionProps, 'group'>
+      transitionProp?: Omit<Partial<WTransitionProps>, 'group'>
 
       extraProp?: Partial<EP> & {
         /**
          * @description v-if control visible
          */
-        vIf?: Events.Callback<D, boolean>
+        vIf?: boolean | Events.Callback<D, boolean>
 
         /**
          * @description v-show control visible
          */
-        vShow?: Events.Callback<D, boolean>
+        vShow?: boolean | Events.Callback<D, boolean>
       }
     }
 

@@ -46,82 +46,76 @@
         }
       }
 
-      const signinFormSchemas = computed(
-        (): WForm.Schema.Item<typeof signinFormData>[] => {
-          return [
-            {
-              type: 'Base:Input',
-              formProp: {
-                path: 'username',
-                showRequireMark: false,
-                rule: [
-                  {
-                    required: true,
-                    message: t('system.auth.rules.username'),
-                    trigger: ['input', 'blur'],
-                  },
-                ],
-              },
-              componentProp: {
-                placeholder: computed(() => t('system.auth.username')),
-                clearable: true,
-              },
-            },
-            {
-              type: 'Base:Input',
-              formProp: {
-                path: 'password',
-                showRequireMark: false,
-                rule: [
-                  {
-                    required: true,
-                    message: t('system.auth.rules.password'),
-                    trigger: ['input', 'blur'],
-                  },
-                ],
-              },
-              componentProp: {
-                placeholder: computed(() => t('system.auth.password')),
-                clearable: true,
-                type: 'password',
-                showPasswordOn: 'mousedown',
-                onKeyup: (e) => {
-                  if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-                    onSignin()
-                  }
+      const [register, { validate }] = useForm<typeof signinFormData>({
+        schemas: [
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'username',
+              showRequireMark: false,
+              rule: [
+                {
+                  required: true,
+                  message: t('system.auth.rules.username'),
+                  trigger: ['input', 'blur'],
                 },
-              },
+              ],
             },
-            {
-              type: 'Base:Render',
-              componentProp: {
-                render: ({ formData }) => (
-                  <n-checkbox vModel={[formData.rememberMe, 'checked']}>
-                    {t('system.auth.remember')}
-                  </n-checkbox>
-                ),
-              },
+            componentProp: {
+              placeholder: computed(() => t('system.auth.username')),
+              clearable: true,
             },
-            {
-              type: 'Base:Button',
-              componentProp: {
-                textProp: computed(() => t('system.auth.signin')),
-                loading: buttonLoading.value,
-                style: {
-                  background: 'transparent',
-                  width: '100%',
-                  fontSize: '16px',
-                  fontWeight: '900',
+          },
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'password',
+              showRequireMark: false,
+              rule: [
+                {
+                  required: true,
+                  message: t('system.auth.rules.password'),
+                  trigger: ['input', 'blur'],
                 },
-                onClick: onSignin,
+              ],
+            },
+            componentProp: {
+              placeholder: computed(() => t('system.auth.password')),
+              clearable: true,
+              type: 'password',
+              showPasswordOn: 'mousedown',
+              onKeyup: (e) => {
+                if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+                  onSignin()
+                }
               },
             },
-          ]
-        }
-      )
-
-      const [register, { validate }] = useForm({
-        schemas: signinFormSchemas,
+          },
+          {
+            type: 'Base:Render',
+            componentProp: {
+              render: ({ formData }) => (
+                <n-checkbox vModel={[formData.rememberMe, 'checked']}>
+                  {t('system.auth.remember')}
+                </n-checkbox>
+              ),
+            },
+          },
+          {
+            type: 'Base:Button',
+            componentProp: {
+              textProp: computed(() => t('system.auth.signin')),
+              loading: buttonLoading.value,
+              style: {
+                background: 'transparent',
+                width: '100%',
+                fontSize: '16px',
+                fontWeight: '900',
+              },
+              onClick: onSignin,
+            },
+          },
+        ],
       })
 
       onMounted(() => {
