@@ -25,11 +25,11 @@
         </div>
       )
 
-      const genOptions = (children?: RouteRecordRaw[]): unknown => {
-        if (!children || children?.length === 0) {
+      const genOptions = (arr?: RouteRecordRaw[]): unknown => {
+        if (!arr || arr?.length === 0) {
           return undefined
         } else {
-          return children?.map((i) => ({
+          return arr?.map((i) => ({
             key: i.name,
             label: t(i.meta?.title!),
             icon: () => <w-icon icon={i.meta?.icon} height="20"></w-icon>,
@@ -44,12 +44,7 @@
             useRouterPush({ name: key })
           }}
           show-arrow
-          options={item.children.map((i) => ({
-            key: i.name,
-            label: t(i.meta?.title!),
-            icon: () => <w-icon icon={i.meta?.icon} height="20"></w-icon>,
-            children: genOptions(i.children),
-          }))}
+          options={genOptions(item.children)}
         >
           {renderBase(item)}
         </n-dropdown>
