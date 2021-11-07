@@ -113,3 +113,23 @@ declare type ComponentPlacement =
   | 'bottom-end'
 
 declare type ComponentTrigger = 'hover' | 'click' | 'contentmenu'
+
+declare type MaybeRefSelf<T> = T | Ref<T> | ComputedRef<T>
+
+declare type DeepMaybeRefSelf<T> = T extends Ref<infer V>
+  ? MaybeRefSelf<V>
+  : T extends Fn // function
+  ? T
+  : T extends boolean // boolean
+  ? MaybeRefSelf<boolean>
+  : T extends string // string
+  ? MaybeRefSelf<string>
+  : T extends Array<any> | object
+  ? {
+      [K in keyof T]: DeepMaybeRefSelf<T[K]>
+    }
+  : MaybeRefSelf<T>
+
+declare type MaybeRefRecord<T> = {
+  [P in keyof T]: MaybeRefSelf<T[P]>
+}

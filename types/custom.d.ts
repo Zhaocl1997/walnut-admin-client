@@ -37,6 +37,10 @@ declare global {
 
   // vite
   type VitePlugin = import('vite').Plugin
+
+  // Utils
+  type MaybeRef<T> = import('@vueuse/core').MaybeRef<T>
+  type DeepMaybeRef<T> = import('@vueuse/core').DeepMaybeRef<T>
 }
 
 export {}
