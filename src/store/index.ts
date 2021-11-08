@@ -72,6 +72,7 @@ interface AppMemory {
         collapsedIconSize: number
         iconSize: number
         indent: number
+        inverted: boolean
       }
 
       header: {
@@ -82,6 +83,7 @@ interface AppMemory {
         showDarkMode: boolean
         showLock: boolean
         showSearch: boolean
+        inverted: boolean
       }
 
       tab: {
@@ -168,6 +170,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             collapsedIconSize: 24,
             iconSize: 26,
             indent: 16,
+            inverted: true,
           },
 
           header: {
@@ -178,6 +181,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             showDarkMode: true,
             showLock: true,
             showSearch: true,
+            inverted: true,
           },
 
           tab: {
