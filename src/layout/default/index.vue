@@ -7,6 +7,7 @@
       v-model:show="app.showAside"
       :width="settings.ForDevelopers.menu.width + 'px'"
       placement="left"
+      :native-scrollbar="false"
     >
       <TheAside />
     </n-drawer>
