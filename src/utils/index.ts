@@ -1,8 +1,3 @@
-// Get Api prefix like `/api/v1/`
-export const getApiPrefix = (base: string, version: number) => {
-  return `/${base}/v${version}`
-}
-
 /**
  * @description normalize the state usage and manegement, only work for shallow object
  */

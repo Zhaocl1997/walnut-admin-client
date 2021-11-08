@@ -7,18 +7,12 @@ export * from './src/types'
 import { Axios } from './src/Axios'
 import { cacheAdapterEnhancer } from './src/adapter'
 import { transform } from './transform'
-import { getApiPrefix } from '../index'
-
-// api url
-const baseURL = `${import.meta.env.VITE_PROXY_HOST}:${Number(
-  import.meta.env.VITE_PROXY_PORT
-)}${getApiPrefix(
-  import.meta.env.VITE_API_PREFIX,
-  import.meta.env.VITE_API_VERSION
-)}`
+import { isDev } from '../constant/vue'
 
 const axiosConfig: AxiosRequestConfigExtend = {
-  baseURL,
+  baseURL: isDev()
+    ? import.meta.env.VITE_PROXY_PREFIX
+    : import.meta.env.VITE_API_TARGET + import.meta.env.VITE_API_PREFIX,
 
   // time out, default is 10s
   timeout: Number(import.meta.env.VITE_AXIOS_TIMEOUT) * 1000,
