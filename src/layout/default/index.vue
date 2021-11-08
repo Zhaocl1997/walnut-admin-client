@@ -1,38 +1,20 @@
 <template>
   <n-layout has-sider>
-    <!-- <div class="flex h-screen"> -->
+    <TheAside v-if="!app.isMobile && getShowAside" />
 
-    <!-- v-if="!app.isMobile" -->
-    <TheAside v-if="getShowAside" />
-
-    <!-- <n-drawer v-else v-model:show="app.showAside" width="60%" placement="left">
-      <TheAside :class="['h-screen w-56 ', { 'w-16': app.collapse }]" />
-    </n-drawer> -->
+    <n-drawer
+      v-else
+      v-model:show="app.showAside"
+      :width="settings.ForDevelopers.menu.width + 'px'"
+      placement="left"
+    >
+      <TheAside />
+    </n-drawer>
 
     <div
       id="w-main-layout"
       class="*vstack flex-1 h-screen w-full overflow-x-hidden"
     >
-      <!-- <div
-        :class="{ fixed: setting.app.fixHeader }"
-        :style="{
-          width: getContentWidth,
-        }"
-      >
-        <n-layout-header v-if="setting.app.showHeader" bordered inverted>
-          <TheHeader
-            class="flex-none px-2"
-            :style="{ height: setting.header.height + 'px' }"
-          />
-        </n-layout-header>
-
-        <n-layout-header v-if="setting.app.showTabs" bordered inverted>
-          <TheTab
-            class="flex-none px-2"
-            :style="{ height: setting.tab.height + 'px' }"
-          />
-        </n-layout-header>
-      </div> -->
       <MainHeader v-if="setting.app.fixHeader" />
 
       <n-layout-content
@@ -45,11 +27,10 @@
         <TheContent class="flex-1 p-4" />
 
         <WAppSettings />
+
+        <n-back-top />
       </n-layout-content>
     </div>
-
-    <!-- <el-backtop target="#w-main-layout" /> -->
-    <!-- </div> -->
   </n-layout>
 </template>
 

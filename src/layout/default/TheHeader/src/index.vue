@@ -2,24 +2,27 @@
   <div class="select-none">
     <div class="*hstack justify-between h-full items-center">
       <div class="*hstack justify-start space-x-2">
-        <HeaderCollapse v-if="getShowMenuCollpaseIcon" />
-        <HeaderBreadCrumb v-if="headerSettings.showBreadcrumb" />
+        <img
+          v-if="app.isMobile"
+          src="/assets/logo.png"
+          alt="Walnut Admin Logo"
+          class="h-9 w-9 m-1"
+          @click="() => (app.showAside = true)"
+        />
+
+        <template v-else>
+          <HeaderCollapse v-if="getShowMenuCollpaseIcon" />
+          <HeaderBreadCrumb v-if="headerSettings.showBreadcrumb" />
+        </template>
       </div>
 
       <div
-        class="
-          *hstack
-          justify-end
-          space-x-2
-          h-full
-          children:(cursor-pointer
-          flex
-          items-center
-          px-0.5
-          h-full)
-        "
+        :class="[
+          '*hstack justify-end space-x-2 h-full children:(cursor-pointer flex items-center px-0.5 h-full)',
+          { 'space-x-1': app.isMobile },
+        ]"
       >
-        <WAppFullScreen v-if="headerSettings.showFullScreen" />
+        <WAppFullScreen v-if="!app.isMobile && headerSettings.showFullScreen" />
         <WAppLock v-if="headerSettings.showLock" />
         <WAppSearch v-if="headerSettings.showSearch" />
         <WAppLocalePicker v-if="headerSettings.showLocale" />
