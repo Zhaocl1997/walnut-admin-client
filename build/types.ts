@@ -17,7 +17,11 @@ import { typesCheckLogPath } from './utils/paths'
 
     const cost = new Date(end - start).getSeconds()
 
-    console.log(chalk.blue(`Typing checks done in ${cost}s`))
+    console.log(
+      chalk.blue(
+        `Types check done in ${cost}s, see more in ${typesCheckLogPath}`
+      )
+    )
 
     log_file.write(stdout)
   })

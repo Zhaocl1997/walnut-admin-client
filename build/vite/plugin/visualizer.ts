@@ -7,7 +7,7 @@ export const createVisualizerPlugin = (): VitePlugin => {
     filename: bundleSizeStatsLogPath,
     title: 'Bundle Size Stats',
     open: true,
-    template: 'treemap',
+    template: 'sunburst',
     gzipSize: true,
     brotliSize: true,
   })

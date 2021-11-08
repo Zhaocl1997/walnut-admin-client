@@ -42,7 +42,7 @@ const prefix = (msg: string, emoji: string) =>
 
           console.log(
             chalk.red.bgBlack(
-              'Staging Build Failed, See more in report/stage.log'
+              `Staging Build Failed, see more in ${stagingBuildLogPath}`
             )
           )
         }
@@ -57,7 +57,7 @@ const prefix = (msg: string, emoji: string) =>
       log_file.write(prefix('Std Out', '✨✨✨✨✨') + stdout, () => {
         console.log(
           chalk.magenta.bgBlack(
-            'Staging Build Std out, See more in report/stage.log'
+            `Staging Build Std out, see more in ${stagingBuildLogPath}`
           )
         )
       })
@@ -67,7 +67,7 @@ const prefix = (msg: string, emoji: string) =>
       log_file.write(prefix('Std Err', '💊💊💊💊💊') + stderr, () => {
         console.log(
           chalk.yellow.bgBlack(
-            'Staging Build Std Error, See more in report/stage.log'
+            `Staging Build Std Error, see more in ${stagingBuildLogPath}`
           )
         )
       })

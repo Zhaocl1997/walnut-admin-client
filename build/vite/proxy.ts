@@ -1,16 +1,15 @@
 import type { HttpProxy } from 'vite'
-import { getApiPrefix } from '/@/utils'
 
 export const createViteProxy = (mode: string, env: ImportMetaEnv) => {
   const ret = {}
 
-  const apiPrefix = getApiPrefix(env.VITE_API_PREFIX, env.VITE_API_VERSION)
+  const prefix = env.VITE_PROXY_PREFIX
 
-  ret[apiPrefix] = {
-    target: env.VITE_PORT,
+  ret[prefix] = {
+    target: env.VITE_API_TARGET,
     changeOrigin: true,
-    ws: true,
-    rewrite: (path: string) => path.replace(new RegExp(`^${apiPrefix}`), ''),
+    rewrite: (path: string) =>
+      path.replace(new RegExp(`^${prefix}`), env.VITE_API_PREFIX),
   } as HttpProxy.ServerOptions
 
   return ret
