@@ -1,10 +1,14 @@
 interface ImportMetaEnv {
   VITE_APP_TITLE: string
+
   VITE_PORT: number
-  VITE_PROXY_HOST: string
-  VITE_PROXY_PORT: number
+  VITE_HOST: string
+
+  VITE_API_TARGET: string
   VITE_API_PREFIX: string
-  VITE_API_VERSION: number
+
+  VITE_PROXY_PREFIX: string
+
   VITE_PUBLIC_PATH: string
   VITE_CRYRTO_KEY: string
   VITE_CRYRTO_IV: string
