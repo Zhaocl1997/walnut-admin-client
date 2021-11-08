@@ -234,6 +234,13 @@
           label: 'Indent',
         },
       },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'inverted',
+          label: 'Inverted',
+        },
+      },
     ],
   })
 
@@ -296,6 +303,13 @@
         formProp: {
           path: 'showSearch',
           label: 'Search',
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'inverted',
+          label: 'Inverted',
         },
       },
     ],

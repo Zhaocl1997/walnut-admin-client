@@ -7,7 +7,7 @@
     collapse-mode="width"
     :collapsed="app.collapse"
     @update:collapsed="onUpdateCollapse"
-    inverted
+    :inverted="settings.ForDevelopers.menu.inverted"
     :native-scrollbar="false"
     class="h-screen"
   >
