@@ -14,7 +14,7 @@ export const useFullScreenExtend = () => {
       if (app.value.fullscreenTarget !== '#app') {
         toggleClass(
           el.value as HTMLElement,
-          'bg-body-color p-4',
+          'bg-bodyColor p-4',
           app.value.isFullScreen
         )
       }
