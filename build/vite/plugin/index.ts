@@ -7,7 +7,6 @@ import { createComponentPlugin } from './component'
 import { createVisualizerPlugin } from './visualizer'
 import { createCompressionPlugin } from './compression'
 import { createHTMLPlugin } from './html'
-import { createI18nPlugin } from './i18n'
 import { creatAutoImportPlugin } from './auto-import'
 
 export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
@@ -27,9 +26,6 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
 
   // https://github.com/anncwb/vite-plugin-html
   vitePlugins.push(createHTMLPlugin(env.VITE_APP_TITLE))
-
-  // https://github.com/intlify/vite-plugin-vue-i18n
-  vitePlugins.push(createI18nPlugin())
 
   // https://github.com/btd/rollup-plugin-visualizer
   stage && vitePlugins.push(createVisualizerPlugin())
