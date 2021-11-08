@@ -13,8 +13,6 @@
 </template>
 
 <script lang="tsx">
-  import type { WForm } from '/@/components/UI/Form'
-
   import { userActionSignin } from '/@/store/actions/user'
 
   export default defineComponent({
@@ -37,7 +35,7 @@
       const onSignin = async () => {
         const valid = await validate!()
 
-        if (!valid) {
+        if (valid) {
           buttonLoading.value = true
 
           await userActionSignin(signinFormData)
