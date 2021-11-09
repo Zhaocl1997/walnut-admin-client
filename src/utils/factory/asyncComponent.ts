@@ -1,10 +1,8 @@
-// TODO still need to improve
 // loading component
 const loadingComponent = () => {
   return h('div', {}, 'Loading...')
 }
 
-// TODO still need to improve
 // error component
 const ErrorComponent = () => {
   return h('div', {}, 'Error...')

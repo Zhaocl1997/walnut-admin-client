@@ -1,3 +1,5 @@
+// https://jkchao.github.io/typescript-book-chinese/
+
 declare interface Fn<T = any, R = T> {
   (...arg: T[]): R
 }
@@ -116,6 +118,7 @@ declare type ComponentTrigger = 'hover' | 'click' | 'contentmenu'
 
 declare type MaybeRefSelf<T> = T | Ref<T> | ComputedRef<T>
 
+// TODO type need to optimise liter string not working
 declare type DeepMaybeRefSelf<T> = T extends Ref<infer V>
   ? MaybeRefSelf<V>
   : T extends Fn // function

@@ -1,6 +1,5 @@
 import AutoImport from 'unplugin-auto-import/vite'
 
-// TODO waiting for types auto import
 export const creatAutoImportPlugin = (): VitePlugin => {
   return AutoImport({
     include: [
