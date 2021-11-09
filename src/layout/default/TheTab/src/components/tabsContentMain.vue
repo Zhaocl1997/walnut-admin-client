@@ -32,7 +32,7 @@
               $route.name === item.name && tabSettings.styleMode === 'round',
           },
         ]"
-        @click="onTabClick(item.name)"
+        @mouseup="(e) => onMouseUp(e, item.name)"
         @contextmenu.prevent.native="onOpenCtxMenu($event, item, index)"
         :data-affix="item.meta.affix"
       >
@@ -81,6 +81,26 @@
 
   const { scrollRef, onTabClick, onTabRemove, onOpenCtxMenu, onCloseCtxMenu } =
     getTabsContext()
+
+  const onMouseUp = (e: MouseEvent, name: string) => {
+    const isRemoveable = !tab.value.tabs
+      .filter((i) => i.meta.affix)
+      .map((i) => i.name)
+      .includes(name)
+
+    switch (e.button) {
+      case 0:
+        onTabClick(name)
+        break
+
+      case 1:
+        isRemoveable && onTabRemove(name)
+        break
+
+      default:
+        break
+    }
+  }
 
   watchEffect(() => {
     useTabsSortable(tabSettings.sortable)
