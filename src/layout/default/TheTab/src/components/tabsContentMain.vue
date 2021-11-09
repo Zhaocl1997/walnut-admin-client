@@ -32,7 +32,8 @@
               $route.name === item.name && tabSettings.styleMode === 'round',
           },
         ]"
-        @mouseup="(e) => onMouseUp(e, item.name)"
+        @click="onTabClick(item.name)"
+        @mouseup="onMouseUp($event, item.name)"
         @contextmenu.prevent.native="onOpenCtxMenu($event, item, index)"
         :data-affix="item.meta.affix"
       >
@@ -57,7 +58,6 @@
           {{ t(item.meta.title!)  }}
         </span>
 
-        <!-- <w-transition name="fade"> -->
         <w-icon
           v-if="!item.meta.affix"
           icon="ant-design:close-outlined"
@@ -65,7 +65,6 @@
           class="hover:text-error hover:scale-125 rounded-full transform"
           @click.prevent.stop="onTabRemove(item.name)"
         ></w-icon>
-        <!-- </w-transition> -->
       </li>
     </ul>
   </w-scrollbar>
@@ -83,22 +82,14 @@
     getTabsContext()
 
   const onMouseUp = (e: MouseEvent, name: string) => {
-    const isRemoveable = !tab.value.tabs
-      .filter((i) => i.meta.affix)
-      .map((i) => i.name)
-      .includes(name)
+    // middle button close
+    if (e.button === 1) {
+      const isRemoveable = !tab.value.tabs
+        .filter((i) => i.meta.affix)
+        .map((i) => i.name)
+        .includes(name)
 
-    switch (e.button) {
-      case 0:
-        onTabClick(name)
-        break
-
-      case 1:
-        isRemoveable && onTabRemove(name)
-        break
-
-      default:
-        break
+      isRemoveable && onTabRemove(name)
     }
   }
 
