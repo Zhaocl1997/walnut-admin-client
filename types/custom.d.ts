@@ -1,4 +1,10 @@
 declare global {
+  interface MyVNode extends import('vue').VNode {
+    type: {
+      parentView?: boolean
+    }
+  }
+
   // vue
   type App = import('vue').App
   type Ref<T> = import('vue').Ref<T>
