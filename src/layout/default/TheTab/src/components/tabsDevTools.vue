@@ -13,7 +13,7 @@
       <n-list-item>
         <n-button @click="onOpenFile">
           Open vue file related to this tab in
-          <span class="text-red-500">&ensp;VSCODE</span>
+          <span class="text-red-500">&ensp;VScode</span>
         </n-button>
       </n-list-item>
     </n-list>

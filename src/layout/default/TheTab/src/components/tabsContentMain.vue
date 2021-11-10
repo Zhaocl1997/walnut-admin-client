@@ -34,7 +34,7 @@
         ]"
         @click="onTabClick(item.name)"
         @mouseup="onMouseUp($event, item.name)"
-        @contextmenu.prevent.native="onOpenCtxMenu($event, item, index)"
+        @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
         @mouseenter="onOpenDevTool(item)"
         :data-affix="item.meta.affix"
       >
@@ -86,10 +86,16 @@
     onOpenCtxMenu,
     onCloseCtxMenu,
     onOpenDevTool,
+    timeoutId,
   } = getTabsContext()
 
+  const onOpenContextMenu = (e: MouseEvent, item: AppTab, index: number) => {
+    clearTimeout(timeoutId.value!)
+    onOpenCtxMenu(e, item, index)
+  }
+
+  // middle button close
   const onMouseUp = (e: MouseEvent, name: string) => {
-    // middle button close
     if (e.button === 1) {
       const isRemoveable = !tab.value.tabs
         .filter((i) => i.meta.affix)
@@ -100,6 +106,7 @@
     }
   }
 
+  // tab sortable
   watchEffect(() => {
     useTabsSortable(tabSettings.sortable)
   })

@@ -49,7 +49,7 @@
   const { x, y, ctxMenuShow, onOpenCtxMenu, onCloseCtxMenu } =
     useTabsContextMenu()
 
-  const { currentMouseTab, devToolShow, onOpenDevTool, onOpenFile } =
+  const { currentMouseTab, devToolShow, timeoutId, onOpenDevTool, onOpenFile } =
     useTabsDevTools()
 
   const { leftUtils, rightUtils } = useTabsUtils(
@@ -72,6 +72,7 @@
 
     currentMouseTab,
     devToolShow,
+    timeoutId,
     onOpenDevTool,
     onOpenFile,
   })

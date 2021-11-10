@@ -20,6 +20,7 @@ export interface AppTabContext {
 
   currentMouseTab: Ref<AppTab | undefined>
   devToolShow: Ref<boolean>
+  timeoutId: Ref<NodeJS.Timeout | undefined>
   onOpenDevTool: (payload: AppTab) => void
   onOpenFile: Fn
 }
