@@ -64,6 +64,7 @@ declare global {
       affix?: boolean
       url?: string
       type?: ValueOfMenuTypeConst
+      component?: string
     }
   }
 }

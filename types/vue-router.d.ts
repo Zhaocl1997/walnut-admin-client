@@ -8,5 +8,6 @@ declare module 'vue-router' {
     affix?: boolean
     url?: string
     type?: ValueOfMenuTypeConst
+    component?: string
   }
 }
