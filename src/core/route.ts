@@ -1,6 +1,6 @@
 import { formatTree } from 'easy-fns-ts'
 
-import ParentComponent from '/@/layout/default/TheParent'
+import ParentComponent from '/@/layout/default/TheContent'
 import IFrameComponent from '/@/layout/iframe/index.vue'
 
 import { notFoundRoute } from '/@/router/routes'
@@ -31,6 +31,7 @@ const resolveParentComponent = (name: string) => () =>
     resolve({
       ...ParentComponent,
       name,
+      parentView: true,
     })
   })
 

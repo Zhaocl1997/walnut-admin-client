@@ -25,7 +25,9 @@
       >
         <MainHeader v-if="!setting.app.fixHeader" />
 
-        <TheContent class="flex-1 p-4" />
+        <div class="flex-1 p-4">
+          <TheContent />
+        </div>
 
         <WAppSettings />
 
