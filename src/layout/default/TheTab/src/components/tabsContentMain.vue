@@ -35,6 +35,7 @@
         @click="onTabClick(item.name)"
         @mouseup="onMouseUp($event, item.name)"
         @contextmenu.prevent.native="onOpenCtxMenu($event, item, index)"
+        @mouseenter="onOpenDevTool(item)"
         :data-affix="item.meta.affix"
       >
         <div
@@ -78,8 +79,14 @@
   const { app, tab, settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
 
-  const { scrollRef, onTabClick, onTabRemove, onOpenCtxMenu, onCloseCtxMenu } =
-    getTabsContext()
+  const {
+    scrollRef,
+    onTabClick,
+    onTabRemove,
+    onOpenCtxMenu,
+    onCloseCtxMenu,
+    onOpenDevTool,
+  } = getTabsContext()
 
   const onMouseUp = (e: MouseEvent, name: string) => {
     // middle button close

@@ -19,6 +19,7 @@ export const buildCommonRoute = (node: AppMenu): AppTab => {
       url: node.url,
       affix: node.affix,
       type: node.type,
+      component: node.component,
     },
   }
 }

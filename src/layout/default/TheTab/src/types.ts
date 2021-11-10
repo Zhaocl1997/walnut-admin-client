@@ -10,11 +10,16 @@ export interface AppTabContext {
 
   x: Ref<number>
   y: Ref<number>
-  ctxMenuVisible: Ref<boolean>
+  ctxMenuShow: Ref<boolean>
 
   onTabClick: (name: string) => void
   onTabRemove: (name: string, type?: ValueOfDeleteTabConst) => void
 
   onOpenCtxMenu: (event: MouseEvent, tab: AppTab, index: number) => void
   onCloseCtxMenu: () => void
+
+  currentMouseTab: Ref<AppTab | undefined>
+  devToolShow: Ref<boolean>
+  onOpenDevTool: (payload: AppTab) => void
+  onOpenFile: Fn
 }

@@ -7,7 +7,7 @@
     :x="x"
     :y="y"
     :options="options"
-    :show="ctxMenuVisible"
+    :show="ctxMenuShow"
     :on-clickoutside="onCloseCtxMenu"
   ></n-dropdown>
 </template>
@@ -22,7 +22,7 @@
   const { currentRoute } = useAppRouter()
   const { tab, app } = useAppState()
 
-  const { x, y, ctxMenuVisible, onTabRemove, onCloseCtxMenu } = getTabsContext()
+  const { x, y, ctxMenuShow, onTabRemove, onCloseCtxMenu } = getTabsContext()
 
   const getTabsLength = computed(() => tab.value.tabs.length)
   const getAffixedTabsLength = computed(

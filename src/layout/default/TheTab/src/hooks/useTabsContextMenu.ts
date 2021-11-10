@@ -4,7 +4,7 @@ export const useTabsContextMenu = () => {
   const x = ref(0)
   const y = ref(0)
 
-  const ctxMenuVisible = ref(false)
+  const ctxMenuShow = ref(false)
 
   const onOpenCtxMenu = (event: MouseEvent, payload: AppTab, index: number) => {
     // set ctx position
@@ -15,17 +15,17 @@ export const useTabsContextMenu = () => {
     tab.value.targetTab = payload
     tab.value.targetTabIndex = index
 
-    ctxMenuVisible.value = true
+    ctxMenuShow.value = true
   }
   const onCloseCtxMenu = () => {
-    ctxMenuVisible.value = false
+    ctxMenuShow.value = false
   }
 
   return {
     x,
     y,
 
-    ctxMenuVisible,
+    ctxMenuShow,
     onOpenCtxMenu,
     onCloseCtxMenu,
   }
