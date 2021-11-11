@@ -54,10 +54,16 @@
   const tabRelatives = ref(settings.value.ForDevelopers.tab)
 
   const [register1] = useForm<typeof appRelatives.value>({
+    showFeedback: false,
+    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
     schemas: [
       {
         type: 'Base:Render',
+        formProp: {
+          showLabel: false,
+        },
         componentProp: {
           render: () => (
             <n-text class="text-center w-full">For Developers</n-text>
@@ -114,12 +120,18 @@
           path: 'fixLogo',
           label: 'Fix logo',
         },
+        componentProp: {
+          disabled: computed(() => !appRelatives.value.showLogo),
+        },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'fixHeader',
           label: 'Fix header',
+        },
+        componentProp: {
+          disabled: computed(() => !appRelatives.value.showHeader),
         },
       },
       {
@@ -154,7 +166,11 @@
   })
 
   const [register2] = useForm<typeof menuRelatives.value>({
+    showFeedback: false,
+    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
+    disabled: computed(() => !appRelatives.value.showMenu),
     schemas: [
       {
         type: 'Extend:Divider',
@@ -184,7 +200,8 @@
             label: i,
           })),
           disabled: computed(
-            () => !settings.value.ForDevelopers.menu.showCollapse
+            () =>
+              !appRelatives.value.showMenu || !menuRelatives.value.showCollapse
           ),
         },
       },
@@ -245,7 +262,11 @@
   })
 
   const [register3] = useForm<typeof headerRelatives.value>({
+    showFeedback: false,
+    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
+    disabled: computed(() => !appRelatives.value.showHeader),
     schemas: [
       {
         type: 'Extend:Divider',
@@ -316,7 +337,14 @@
   })
 
   const [register4] = useForm<typeof breadcrumbRelatives.value>({
+    showFeedback: false,
+    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
+    disabled: computed(
+      () =>
+        !appRelatives.value.showHeader || !headerRelatives.value.showBreadcrumb
+    ),
     schemas: [
       {
         type: 'Extend:Divider',
@@ -355,7 +383,11 @@
   })
 
   const [register5] = useForm<typeof tabRelatives.value>({
+    showFeedback: false,
+    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
+    disabled: computed(() => !appRelatives.value.showTabs),
     schemas: [
       {
         type: 'Extend:Divider',
