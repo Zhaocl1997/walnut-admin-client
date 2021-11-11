@@ -7,3 +7,5 @@ export const bundlePath = 'src/components/UI/Icon/src/utils/bundle.ts'
 
 export const listCopyPath = 'src/components/UI/Icon/src/utils/list-copy.ts'
 export const bundleCopyPath = 'src/components/UI/Icon/src/utils/bundle-copy.ts'
+
+export const projectPath = 'build/projectPath.ts'

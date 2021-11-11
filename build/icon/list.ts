@@ -1,6 +1,3 @@
-// @ts-nocheck
-/* eslint-disable */
-
 import fs from 'fs'
 import fg from 'fast-glob'
 
@@ -18,14 +15,14 @@ const iconLists = genIconLists(iconCollections)
 /**
  * @description Read file
  */
-const readFile = (src) => {
+const readFile = (src: string) => {
   return fs.readFileSync(src, { encoding: 'utf-8' })
 }
 
 /**
  * @description Write file
  */
-const writeFile = (data) => {
+const writeFile = (data: any) => {
   fs.writeFileSync(listPath, `export default ${JSON.stringify(data)}`)
 }
 
