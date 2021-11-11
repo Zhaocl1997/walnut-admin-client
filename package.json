@@ -2,6 +2,7 @@
   "name": "walnut-admin",
   "version": "0.0.0",
   "scripts": {
+    "predev": "esno build/utils/genProjectPath.ts",
     "dev": "vite",
     "commit": "git-cz",
     "postinstall": "is-ci || husky install config/husky",
