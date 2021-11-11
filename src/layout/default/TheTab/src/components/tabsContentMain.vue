@@ -35,7 +35,8 @@
         @click="onTabClick(item.name)"
         @mouseup="onMouseUp($event, item.name)"
         @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
-        @mouseenter="onOpenDevTool(item)"
+        @mouseenter="onOpenDevTool($event, item, ctxMenuShow)"
+        @mouseleave="onCloseDevTool"
         :data-affix="item.meta.affix"
       >
         <div
@@ -87,11 +88,18 @@
     onCloseCtxMenu,
     onOpenDevTool,
     timeoutId,
+    ctxMenuShow,
   } = getTabsContext()
 
+  // clear time out id for devTool when open ctxMenu
   const onOpenContextMenu = (e: MouseEvent, item: AppTab, index: number) => {
     clearTimeout(timeoutId.value!)
     onOpenCtxMenu(e, item, index)
+  }
+
+  // clear the setTimeout for devTool when mouse leave
+  const onCloseDevTool = () => {
+    clearTimeout(timeoutId.value!)
   }
 
   // middle button close

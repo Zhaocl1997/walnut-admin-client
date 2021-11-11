@@ -1,10 +1,16 @@
 <template>
-  <n-modal
-    v-model:show="devToolShow"
-    preset="dialog"
-    type="warning"
-    title=" This will only appear in dev mode"
+  <n-popover
+    title="This will only appear in dev mode."
+    :show="devToolShow"
+    :show-arrow="false"
+    :x="devToolX"
+    :y="devToolY"
+    :on-clickoutside="() => (devToolShow = false)"
   >
+    <template #header>
+      <n-text strong depth="1">This will only appear in dev mode.</n-text>
+    </template>
+
     <n-list>
       <n-list-item>
         <w-JSON :value="currentMouseTab" height="300" />
@@ -17,11 +23,12 @@
         </n-button>
       </n-list-item>
     </n-list>
-  </n-modal>
+  </n-popover>
 </template>
 
 <script lang="tsx" setup>
   import { getTabsContext } from '../hooks/useTabsContext'
 
-  const { currentMouseTab, devToolShow, onOpenFile } = getTabsContext()
+  const { devToolX, devToolY, currentMouseTab, devToolShow, onOpenFile } =
+    getTabsContext()
 </script>

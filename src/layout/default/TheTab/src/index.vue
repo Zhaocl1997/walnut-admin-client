@@ -7,7 +7,7 @@
     <div
       class="flex flex-grow"
       :style="{
-        width: `calc(100vw - ${settings.ForDevelopers.menu.width}px - 300px)`,
+        width: `calc(100vw - ${settings.ForDevelopers.menu.width}px)`,
       }"
     >
       <TabsContentMain></TabsContentMain>
@@ -49,8 +49,15 @@
   const { x, y, ctxMenuShow, onOpenCtxMenu, onCloseCtxMenu } =
     useTabsContextMenu()
 
-  const { currentMouseTab, devToolShow, timeoutId, onOpenDevTool, onOpenFile } =
-    useTabsDevTools()
+  const {
+    devToolX,
+    devToolY,
+    currentMouseTab,
+    devToolShow,
+    timeoutId,
+    onOpenDevTool,
+    onOpenFile,
+  } = useTabsDevTools()
 
   const { leftUtils, rightUtils } = useTabsUtils(
     scrollRef,
@@ -70,6 +77,8 @@
     onOpenCtxMenu,
     onCloseCtxMenu,
 
+    devToolX,
+    devToolY,
     currentMouseTab,
     devToolShow,
     timeoutId,

@@ -18,9 +18,15 @@ export interface AppTabContext {
   onOpenCtxMenu: (event: MouseEvent, tab: AppTab, index: number) => void
   onCloseCtxMenu: () => void
 
+  devToolX: Ref<number>
+  devToolY: Ref<number>
   currentMouseTab: Ref<AppTab | undefined>
   devToolShow: Ref<boolean>
   timeoutId: Ref<NodeJS.Timeout | undefined>
-  onOpenDevTool: (payload: AppTab) => void
+  onOpenDevTool: (
+    event: MouseEvent,
+    payload: AppTab,
+    ctxMenuShow: boolean
+  ) => void
   onOpenFile: Fn
 }
