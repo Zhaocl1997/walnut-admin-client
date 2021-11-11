@@ -24,8 +24,9 @@
         ]"
         :style="{
           paddingTop:
-            (appSettings.fixLogo ? settings.ForDevelopers.header.height : 0) +
-            'px',
+            (appSettings.showLogo && appSettings.fixLogo
+              ? settings.ForDevelopers.header.height
+              : 0) + 'px',
         }"
       />
 
