@@ -35,7 +35,7 @@
         @click="onTabClick(item.name)"
         @mouseup="onMouseUp($event, item.name)"
         @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
-        @mouseenter="onOpenDevTool($event, item, ctxMenuShow)"
+        @mouseenter="onOpenDevTool($event, item, index, ctxMenuShow)"
         @mouseleave="onCloseDevTool"
         :data-affix="item.meta.affix"
       >
@@ -89,12 +89,16 @@
     onOpenDevTool,
     timeoutId,
     ctxMenuShow,
+    currentMouseTab,
+    currentMouseTabIndex,
   } = getTabsContext()
 
   // clear time out id for devTool when open ctxMenu
   const onOpenContextMenu = (e: MouseEvent, item: AppTab, index: number) => {
+    currentMouseTab.value = item
+    currentMouseTabIndex.value = index
     clearTimeout(timeoutId.value!)
-    onOpenCtxMenu(e, item, index)
+    onOpenCtxMenu(e)
   }
 
   // clear the setTimeout for devTool when mouse leave
@@ -104,6 +108,7 @@
 
   // middle button close
   const onMouseUp = (e: MouseEvent, name: string) => {
+    // 1 stands for mouse middle button
     if (e.button === 1) {
       const isRemoveable = !tab.value.tabs
         .filter((i) => i.meta.affix)

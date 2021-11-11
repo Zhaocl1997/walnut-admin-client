@@ -1,6 +1,8 @@
 import { removeTabs } from '/@/core/tab'
 
-export const useTabsActions = () => {
+export const useTabsActions = (currentMouseTab: Ref<AppTab | undefined>) => {
+  const { currentRoute } = useAppRouter()
+
   const onTabClick = (name: string) => {
     // push by name
     useRouterPush({ name: name })
@@ -11,7 +13,12 @@ export const useTabsActions = () => {
     type: ValueOfDeleteTabConst = 'TAB_SINGLE'
   ) => {
     // remove tab
-    removeTabs(name, type)
+    removeTabs(
+      name,
+      type,
+      currentMouseTab.value!.name,
+      currentRoute.value.name as string
+    )
   }
 
   return {

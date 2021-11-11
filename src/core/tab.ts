@@ -14,7 +14,12 @@ const closeMultipleTabs = (lists: string[]) => {
 /**
  * @description Action - Tab - Delete tab
  */
-export const removeTabs = (name: string, type: ValueOfDeleteTabConst) => {
+export const removeTabs = (
+  name: string,
+  type: ValueOfDeleteTabConst,
+  currentMouseTabName: string,
+  currentRouteName: string
+) => {
   const index = tab.value.tabs.findIndex((item) => item.name === name)
 
   if (index === -1) return
@@ -26,7 +31,7 @@ export const removeTabs = (name: string, type: ValueOfDeleteTabConst) => {
         tab.value.tabs.splice(index, 1)
 
         // if close current tab, router push forward or backward
-        if (tab.value.targetTab?.name === name) {
+        if (currentMouseTabName === name) {
           const next = tab.value.tabs[index]
           const previous = tab.value.tabs[index - 1]
 
@@ -47,7 +52,7 @@ export const removeTabs = (name: string, type: ValueOfDeleteTabConst) => {
         })
 
         // If left include current page, we need to push to target route
-        if (nameList.includes(tab.value.currentRouteName!)) {
+        if (nameList.includes(currentRouteName)) {
           useRouterPush({ name })
         }
 
@@ -66,7 +71,7 @@ export const removeTabs = (name: string, type: ValueOfDeleteTabConst) => {
         })
 
         // If right include current page, we need to push to target route
-        if (nameList.includes(tab.value.currentRouteName!)) {
+        if (nameList.includes(currentRouteName)) {
           useRouterPush({ name })
         }
 
@@ -86,7 +91,7 @@ export const removeTabs = (name: string, type: ValueOfDeleteTabConst) => {
         })
 
         // If the closed one is not current route, we need to push to target route
-        if (tab.value.currentRouteName! !== name) {
+        if (currentRouteName !== name) {
           useRouterPush({ name })
         }
 

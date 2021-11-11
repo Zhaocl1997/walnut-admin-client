@@ -40,9 +40,6 @@ interface AppMemory {
   tab: {
     tabs: AppTab[]
     visitedTabs: Map<string, string[]>
-    targetTab?: AppTab
-    targetTabIndex?: number
-    currentRouteName?: string
   }
 
   settings: {
@@ -138,9 +135,6 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
       tab: {
         tabs: [],
         visitedTabs: new Map(),
-        targetTab: undefined,
-        targetTabIndex: 0,
-        currentRouteName: undefined,
       },
 
       settings: {

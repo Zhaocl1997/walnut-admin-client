@@ -44,20 +44,21 @@
 
   const { scrollRef, getCurrentRouteTabIndex } = useTabs()
 
-  const { onTabClick, onTabRemove } = useTabsActions()
-
-  const { x, y, ctxMenuShow, onOpenCtxMenu, onCloseCtxMenu } =
-    useTabsContextMenu()
-
   const {
     devToolX,
     devToolY,
     currentMouseTab,
+    currentMouseTabIndex,
     devToolShow,
     timeoutId,
     onOpenDevTool,
     onOpenFile,
   } = useTabsDevTools()
+
+  const { onTabClick, onTabRemove } = useTabsActions(currentMouseTab)
+
+  const { x, y, ctxMenuShow, onOpenCtxMenu, onCloseCtxMenu } =
+    useTabsContextMenu()
 
   const { leftUtils, rightUtils } = useTabsUtils(
     scrollRef,
@@ -80,6 +81,7 @@
     devToolX,
     devToolY,
     currentMouseTab,
+    currentMouseTabIndex,
     devToolShow,
     timeoutId,
     onOpenDevTool,

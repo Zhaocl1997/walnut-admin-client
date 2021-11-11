@@ -13,7 +13,7 @@
 
     <n-list>
       <n-list-item>
-        <w-JSON :value="currentMouseTab" height="300" />
+        <w-JSON :value="currentMouseTab" height="auto" />
       </n-list-item>
 
       <n-list-item>

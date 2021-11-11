@@ -15,17 +15,19 @@ export interface AppTabContext {
   onTabClick: (name: string) => void
   onTabRemove: (name: string, type?: ValueOfDeleteTabConst) => void
 
-  onOpenCtxMenu: (event: MouseEvent, tab: AppTab, index: number) => void
+  onOpenCtxMenu: (event: MouseEvent) => void
   onCloseCtxMenu: () => void
 
   devToolX: Ref<number>
   devToolY: Ref<number>
   currentMouseTab: Ref<AppTab | undefined>
+  currentMouseTabIndex: Ref<number>
   devToolShow: Ref<boolean>
   timeoutId: Ref<NodeJS.Timeout | undefined>
   onOpenDevTool: (
     event: MouseEvent,
     payload: AppTab,
+    index: number,
     ctxMenuShow: boolean
   ) => void
   onOpenFile: Fn

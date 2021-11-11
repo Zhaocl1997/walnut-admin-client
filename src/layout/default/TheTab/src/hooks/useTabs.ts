@@ -39,23 +39,5 @@ export const useTabs = () => {
     app.value.device && onScrollToCurrentTab()
   })
 
-  watch(
-    () => route,
-    (v) => {
-      // set currentRouteName
-      tab.value.currentRouteName = v.name as string
-
-      // set target tab
-      tab.value.targetTab = createTab(v)
-      tab.value.targetTabIndex = tab.value.tabs.findIndex(
-        (i) => i.name === tab.value.targetTab?.name
-      )
-    },
-    {
-      deep: true,
-      immediate: true,
-    }
-  )
-
   return { scrollRef, getCurrentRouteTabIndex }
 }

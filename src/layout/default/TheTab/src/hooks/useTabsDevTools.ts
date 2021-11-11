@@ -2,6 +2,7 @@ import projectPath from '../../../../../../build/projectPath'
 
 export const useTabsDevTools = () => {
   const currentMouseTab = ref<AppTab>()
+  const currentMouseTabIndex = ref<number>(0)
   const devToolShow = ref(false)
   const timeoutId = ref<NodeJS.Timeout>()
   const devToolX = ref(0)
@@ -16,6 +17,7 @@ export const useTabsDevTools = () => {
   const onOpenDevTool = (
     event: MouseEvent,
     payload: AppTab,
+    index: number,
     ctxMenuShow: boolean
   ) => {
     // When ctx menu is show, do not exec any more
@@ -26,6 +28,7 @@ export const useTabsDevTools = () => {
       devToolY.value > event.clientY ? devToolY.value : event.clientY
 
     currentMouseTab.value = payload
+    currentMouseTabIndex.value = index
 
     timeoutId.value = setTimeout(() => {
       devToolShow.value = true
@@ -37,6 +40,7 @@ export const useTabsDevTools = () => {
     devToolX,
     devToolY,
     currentMouseTab,
+    currentMouseTabIndex,
     devToolShow,
     timeoutId,
     onOpenDevTool,

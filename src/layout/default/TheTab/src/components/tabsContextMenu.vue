@@ -22,32 +22,49 @@
   const { currentRoute } = useAppRouter()
   const { tab, app } = useAppState()
 
-  const { x, y, ctxMenuShow, onTabRemove, onCloseCtxMenu } = getTabsContext()
+  const {
+    x,
+    y,
+    ctxMenuShow,
+    onTabRemove,
+    onCloseCtxMenu,
+    currentMouseTab,
+    currentMouseTabIndex,
+  } = getTabsContext()
 
   const getTabsLength = computed(() => tab.value.tabs.length)
   const getAffixedTabsLength = computed(
     () => tab.value.tabs.filter((i) => i.meta.affix).length
   )
 
-  const getCloseDisabled = computed(() => tab.value.targetTab?.meta.affix)
+  // only affixed can not close
+  const getCloseDisabled = computed(() => currentMouseTab.value?.meta.affix)
+
+  // the one closest to the affixed is left disabled
   const getCloseLeftDisabled = computed(
     () =>
-      getAffixedTabsLength.value === tab.value.targetTabIndex ||
-      tab.value.targetTab?.meta.affix
-  )
-  const getCloseRightDisabled = computed(
-    () =>
-      getTabsLength.value - 1 === tab.value.targetTabIndex ||
-      tab.value.targetTab?.meta.affix
-  )
-  const getCloseOtherDisabled = computed(
-    () => getTabsLength.value - 1 === getAffixedTabsLength.value
+      getAffixedTabsLength.value === currentMouseTabIndex.value ||
+      currentMouseTab.value?.meta.affix
   )
 
-  const getOtherDisabled = computed(
+  // the last one tab is right disabled
+  const getCloseRightDisabled = computed(
     () =>
-      currentRoute.value.name !==
-      (tab.value.targetTab?.name ?? currentRoute.value.name)
+      getTabsLength.value - 1 === currentMouseTabIndex.value ||
+      currentMouseTab.value?.meta.affix
+  )
+
+  // affixed, only true when all tabs left are affixed
+  // not affixed, only true when gap is 1, which means only one not affixed tab left
+  const getCloseOtherDisabled = computed(() =>
+    currentMouseTab.value?.meta.affix
+      ? getTabsLength.value === getAffixedTabsLength.value
+      : getTabsLength.value - 1 === getAffixedTabsLength.value
+  )
+
+  // refresh and full screen only work in current route tab
+  const getOtherDisabled = computed(
+    () => currentRoute.value.name !== currentMouseTab.value?.name
   )
 
   const { enter } = useFullScreenExtend()
@@ -56,7 +73,7 @@
     key: ValueOfDeleteTabConst & 'Refresh' & 'Screen Full'
   ) => {
     if (Object.values(DeleteTabConst).includes(key)) {
-      onTabRemove(tab.value.targetTab?.name!, key)
+      onTabRemove(currentMouseTab.value?.name!, key)
     }
 
     if (key === 'Refresh') {
@@ -65,7 +82,7 @@
     }
 
     if (key === 'Screen Full') {
-      app.value.fullscreenTarget = `#${tab.value.targetTab?.name!}`
+      app.value.fullscreenTarget = `#${currentMouseTab.value?.name!}`
       nextTick(() => {
         enter()
       })
