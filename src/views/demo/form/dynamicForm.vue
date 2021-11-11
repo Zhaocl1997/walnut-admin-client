@@ -47,7 +47,6 @@
       const [register1] = useForm({
         labelWidth: 200,
         span: 12,
-        xGap: 20,
         schemas: [
           {
             type: 'Base:Switch',

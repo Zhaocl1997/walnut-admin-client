@@ -26,7 +26,6 @@
 
       const [register1] = useForm<typeof configData.value>({
         span: 12,
-        xGap: 20,
         labelWidth: 100,
         schemas: [
           {
@@ -153,7 +152,6 @@
 
       const [register2] = useForm<typeof formData.value>({
         span: 8,
-        xGap: 20,
         schemas: [
           {
             type: 'Extend:Divider',

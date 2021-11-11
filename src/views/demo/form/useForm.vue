@@ -15,7 +15,6 @@
 
       const [register, { validate, restoreValidation }] = useForm({
         span: 8,
-        xGap: 20,
         labelWidth: 100,
         schemas: [
           {

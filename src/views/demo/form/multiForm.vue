@@ -17,7 +17,6 @@
 
       const [register1] = useForm<typeof configData.value>({
         span: 12,
-        xGap: 20,
         labelWidth: 100,
         schemas: [],
       })
@@ -26,7 +25,6 @@
 
       const [register2] = useForm({
         span: 24,
-        xGap: 20,
         schemas: [
           {
             type: 'Base:DynamicInput',
