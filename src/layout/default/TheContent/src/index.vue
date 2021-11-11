@@ -10,12 +10,16 @@
 
 <script lang="tsx" setup>
   import { KeepAlive } from 'vue'
+  import { genString } from 'easy-fns-ts'
 
   const { menu, settings } = useAppState()
   const appSettings = settings.value.ForDevelopers.app
 
   const getKey = (comp: MyVNode, route: RouteLocationNormalized) => {
-    return comp.type.parentView ? {} : { key: route.fullPath }
+    // TODO key should be path or name, but in dev, for pages under two paths, will cause below error.
+    // So I just use random string as key, do not know if it's cool to do so
+    // https://github.com/vuejs/vue-next/issues/1865
+    return comp.type.parentView ? {} : { key: genString(8) }
   }
 
   const RenderKeepAlive = defineComponent({
