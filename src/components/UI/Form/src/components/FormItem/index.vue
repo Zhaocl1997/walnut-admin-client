@@ -5,7 +5,7 @@
 
   import { componentMap } from './utils'
   import { useFormContext } from '../../hooks/useFormContext'
-  import { getEPBooleanValue, getBoolean } from '../../utils'
+  import { getEPBooleanValue } from '../../utils'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -28,7 +28,7 @@
           ? () =>
               isFunction(item!.componentProp?.render) &&
               item!.componentProp?.render!({
-                formData: formProps?.model!,
+                formData: formProps.value.model!,
               })
           : item?.type === 'Base:Slot'
           ? () => slots.default!()
@@ -40,10 +40,11 @@
                   <component
                     is={component}
                     v-model={[
-                      formProps!.model![item?.formProp?.path! as string],
+                      formProps.value.model![item?.formProp?.path! as string],
                       'value',
                     ]}
                     {...item?.componentProp}
+                    class={formProps.value.formItemComponentClass}
                   ></component>
                 )
               )
@@ -52,8 +53,9 @@
       const renderNFormItem = () => {
         return (
           <n-form-item
-            vShow={getEPBooleanValue(item, formProps!, 'vShow')}
+            vShow={getEPBooleanValue(item, formProps.value, 'vShow')}
             {...item?.formProp}
+            class={formProps.value.formItemClass}
           >
             {{
               default: () => renderBase(),
@@ -74,7 +76,7 @@
 
       const renderContent = () => (
         <w-transition {...item?.transitionProp} appear>
-          {getEPBooleanValue(item, formProps!, 'vIf') && renderNFormItem()}
+          {getEPBooleanValue(item, formProps.value, 'vIf') && renderNFormItem()}
         </w-transition>
       )
 

@@ -1,6 +1,7 @@
 <script lang="tsx">
   import type { WForm } from './types'
   import { renderSlot, renderList } from 'vue'
+  import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
@@ -14,11 +15,13 @@
   import { useFormEvents } from './hooks/useFormEvents'
   import { useFormAdvanced } from './hooks/useFormAdvanced'
 
-  import { props } from './props'
+  import { props, extendProps } from './props'
   import { generateBaseRules } from './utils'
 
   export default defineComponent({
     name: 'WForm',
+
+    inheritAttrs: false,
 
     components: {
       WFormItem,
@@ -30,7 +33,6 @@
 
     emits: ['reset', 'query', 'hook'],
 
-    // @ts-ignore
     setup(props: WForm.Props, { attrs, slots, emit, expose }) {
       const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
 
@@ -43,7 +45,7 @@
       // @ts-ignore
       setFormContext({
         formRef,
-        formProps: { ...unref(getProps), ...attrs },
+        formProps: getProps,
         formSchemas,
         formEvent: onEvent,
         setProps,
@@ -84,14 +86,15 @@
           )
         })
 
+      const getNFormProps = computed(() =>
+        easyOmit(getProps.value, Object.keys(extendProps))
+      )
+
       const renderNForm = () => (
         <n-form
           ref={formRef}
-          {...{
-            ...attrs,
-            labelAlign: attrs.labelAlign ?? 'right',
-            labelPlacement: attrs.labelPlacement ?? 'left',
-          }}
+          {...getNFormProps.value}
+          class={attrs.class}
           rules={
             unref(getProps).baseRules
               ? generateBaseRules(formSchemas.value)
@@ -115,17 +118,12 @@
       )
 
       const methods = {
-        validate: () => {
-          return new Promise<boolean>((reslove) => {
+        validate: () =>
+          new Promise<boolean>((reslove) => {
             formRef.value?.validate((err) => {
-              if (!err) {
-                reslove(true)
-              } else {
-                reslove(false)
-              }
+              reslove(!err ? true : false)
             })
-          })
-        },
+          }),
         restoreValidation: () => formRef.value?.restoreValidation(),
       }
 

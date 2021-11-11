@@ -28,6 +28,8 @@ import type { WTimePickerProps } from '../../TimePicker'
 import type { WDatePickerProps } from '../../DatePicker'
 import type { WDynamicTagsProps } from '../../DynamicTags'
 
+import type { WFormPropType } from './props'
+
 export enum BUILTIN_FORM_TYPE {
   Button,
   ButtonGroup,
@@ -66,24 +68,13 @@ export declare namespace WForm {
     ]
   }
 
-  interface Props<D = any> extends FormProps {
+  interface Props<D = any> extends Partial<Omit<WFormPropType, 'schemas'>> {
     schemas?: Schema.Item<D>[]
-
-    preset?: preset
-    advancedProps?: Partial<ModalProps | (DrawerProps & DrawerContentProps)> &
-      Pick<Inst.WFormInst, 'onYes' | 'onNo'>
-
-    cols?: number
-    span?: number
-    xGap?: number
-    yGap?: number
-
-    baseRules?: boolean
   }
 
   interface Context {
     formRef: Ref<Nullable<Inst.NFormInst>>
-    formProps: Props
+    formProps: ComputedRef<Props>
     formSchemas: Ref<Schema.Item[]>
     formEvent: (val: Params.Entry) => void
     setProps: (val: Props) => void
