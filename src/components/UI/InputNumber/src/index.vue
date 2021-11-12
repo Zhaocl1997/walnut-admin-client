@@ -11,7 +11,7 @@
     emits: [],
 
     setup(props: WInputNumberProps, { attrs, slots, emit, expose }) {
-      return () => <n-input-number class="w-full"></n-input-number>
+      return () => <n-input-number></n-input-number>
     },
   })
 </script>
