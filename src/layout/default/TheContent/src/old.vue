@@ -1,3 +1,5 @@
+<!-- This file will not trigger hmr error. Nested keep alive not working -->
+
 <template>
   <router-view>
     <template #="{ Component, route }">
@@ -21,7 +23,6 @@
 </template>
 
 <script lang="tsx" setup>
-  // TODO
   const { menu, settings } = useAppState()
   const appSettings = settings.value.ForDevelopers.app
 </script>

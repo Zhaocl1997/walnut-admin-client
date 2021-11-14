@@ -45,6 +45,8 @@
       }
 
       const [register, { validate }] = useForm<typeof signinFormData>({
+        showLabel: false,
+        xGap: 0,
         schemas: [
           {
             type: 'Base:Input',

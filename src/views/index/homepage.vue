@@ -6,6 +6,8 @@
 
     <n-switch v-model:value="app.isDark"></n-switch>
     <n-button @click="() => (token = '')">Clear Token</n-button>
+
+    <div v-for="i in 500" :key="i">Homepage</div>
   </div>
 </template>
 

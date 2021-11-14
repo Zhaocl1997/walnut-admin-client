@@ -3,11 +3,13 @@ export default {
   dashboard: 'Dashboard',
   auth: 'Authentication',
 
-  system: 'SM',
-  role: 'RM',
-  user: 'UM',
-  menu: 'MM',
-  dict: 'DM',
+  system: 'System Manage',
+  role: 'Role Manage',
+  user: 'User Manage',
+  menu: 'Menu Manage',
+  dict: 'Dict Manage',
+  lang: 'Language Manage',
+  locale: 'Locale Manage',
 
   comp: {
     title: 'Components',

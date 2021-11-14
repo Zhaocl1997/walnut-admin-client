@@ -1,5 +1,8 @@
 <template>
-  <div>Dashboard</div>
+  <div>
+    Dashboard
+    <n-input v-model:value="value"></n-input>
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,7 +16,9 @@
     emits: [],
 
     setup(props: any, ctx) {
-      return {}
+      return {
+        value: ref(''),
+      }
     },
   })
 </script>

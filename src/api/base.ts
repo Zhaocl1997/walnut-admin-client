@@ -2,6 +2,11 @@ import type { BaseListResponse } from '/@/utils/axios'
 
 import { isProd } from '/@/utils/constant/vue'
 
+interface ListBaseParams {
+  page?: number
+  pageSize?: number
+}
+
 export class BaseAPI<T> {
   private readonly baseAPI: string
 
@@ -9,7 +14,7 @@ export class BaseAPI<T> {
     this.baseAPI = `/${model}/${section}`
   }
 
-  list(data?: any) {
+  list<E>(data?: ListBaseParams & E) {
     return AppAxios.post<BaseListResponse<T>>({
       url: `${this.baseAPI}/list`,
       data,

@@ -7,10 +7,8 @@ import type {
   DividerProps,
   H3Props,
   DynamicInputProps,
-  ModalProps,
-  DrawerProps,
-  DrawerContentProps,
   TreeSelectProps,
+  TreeProps,
 } from 'naive-ui'
 
 import type { WTransitionProps } from '/@/components/Extra/Transition'
@@ -54,7 +52,7 @@ export declare namespace WForm {
       validate: () => Promise<boolean> | undefined
       restoreValidation: Fn
       setProps: Fn
-      onOpen: Fn
+      onOpen: () => { done: Fn }
       onClose: Fn
       onYes: Fn
       onNo: Fn
@@ -141,6 +139,7 @@ export declare namespace WForm {
       'Base:DynamicTags': WDynamicTagsProps
       'Base:Slider': SliderProps
       'Base:TreeSelect': TreeSelectProps
+      'Base:Tree': TreeProps
     }
 
     interface DynamicSchemaItemProps<
@@ -196,6 +195,7 @@ export declare namespace WForm {
     type DynamicTagsSchema<D> = DynamicSchemaItemProps<'Base:DynamicTags', D>
     type SliderSchema<D> = DynamicSchemaItemProps<'Base:Slider', D>
     type TreeSelectSchema<D> = DynamicSchemaItemProps<'Base:TreeSelect', D>
+    type TreeSchema<D> = DynamicSchemaItemProps<'Base:Tree', D>
 
     type Item<D = any> =
       | DividerSchema<D>
@@ -217,5 +217,6 @@ export declare namespace WForm {
       | DynamicTagsSchema<D>
       | SliderSchema<D>
       | TreeSelectSchema<D>
+      | TreeSchema<D>
   }
 }

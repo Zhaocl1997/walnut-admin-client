@@ -4,6 +4,10 @@ import type { useEventParams } from '/@/hooks/component/useEvent'
 import { props } from './props'
 
 export declare namespace WTable {
+  type ColumnActionType = 'create' | 'read' | 'delete'
+
+  type HeaderActionType = 'create' | 'update' | 'delete' | 'export' | 'import'
+
   interface RowData {
     [key: string]: unknown
   }
@@ -31,7 +35,7 @@ export declare namespace WTable {
     }
 
     interface Action<T = RowData> extends BaseExtend<'action'> {
-      extendActionType?: ('create' | 'read' | 'delete')[]
+      extendActionType?: ColumnActionType[]
       onCreate?: RenderFn<T>
       onRead?: RenderFn<T>
       onDelete?: RenderFn<T>
@@ -57,6 +61,13 @@ export declare namespace WTable {
   }
 
   namespace Params {
-    type Entry = useEventParams<'hook', any>
+    type Entry =
+      | useEventParams<'hook', any>
+      | useEventParams<'action', { type: HeaderActionType }>
+  }
+
+  interface Context {
+    onEvent: (params: Params.Entry) => void
+    tableProps: ComputedRef<Props>
   }
 }

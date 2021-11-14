@@ -87,7 +87,9 @@
   // computed
   const getLocaleCoreData = computed(() =>
     formatTree<AppMenu>(coreData.value, {
-      format: (node) => ({ ...node, title: t(node.title) }),
+      format: (node) => {
+        return { ...node, title: t(node.title) }
+      },
     })
   )
   const getTableData = computed(() => getLocaleCoreData.value[0]?.children)
@@ -138,18 +140,23 @@
 
     setState({ pid: id })
 
-    onOpen!()
+    const { done } = onOpen()
+
+    done()
   }
 
   // read by id
   const onRead = async (id: string) => {
+    const { done } = onOpen()
+
     actionType.value = 'update'
 
-    const res = await menuAPI.read(id)
-
-    setState(res)
-
-    onOpen!()
+    try {
+      const res = await menuAPI.read(id)
+      setState(res)
+    } finally {
+      done()
+    }
   }
 
   // delete
@@ -168,11 +175,16 @@
   const [registerTable] = useTable<AppMenu>({
     rowKey: (row) => row._id,
 
+    data: getTableData,
+
     columns: [
       {
         title: 'Name',
         key: 'title',
         width: 200,
+        extendType: 'formatter',
+        formatter: (row) =>
+          row.type === MenuTypeConst.ELEMENT ? row.permission! : row.name!,
       },
 
       {
@@ -241,14 +253,32 @@
         },
       },
     ],
-
-    data: getTableData,
   })
 
   const [registerForm, { onOpen }] = useForm<AppMenu>({
     preset: 'drawer',
 
     labelWidth: '140px',
+
+    baseRules: true,
+
+    advancedProps: {
+      title: computed(() =>
+        actionType.value === 'create'
+          ? 'Create New Menu'
+          : 'Update Existing Menu'
+      ),
+      width: '500',
+      onYes: async (handler) => {
+        await handler(menuAPI, menuAPI[actionType.value], formData.value)
+        resetState()
+        await onGetList()
+      },
+      onNo: (handler) => {
+        resetState()
+        handler()
+      },
+    },
 
     schemas: [
       {
@@ -334,6 +364,9 @@
         componentProp: {
           title: 'Router Base',
         },
+        extraProp: {
+          vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        },
       },
 
       {
@@ -346,6 +379,9 @@
           placeholder: 'Route path field.',
           clearable: true,
           prefix: getRoutePathPrefix,
+        },
+        extraProp: {
+          vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
         },
       },
 
@@ -434,6 +470,9 @@
           filterable: true,
           options: getTitleList,
         },
+        extraProp: {
+          vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        },
       },
 
       {
@@ -505,27 +544,21 @@
           checkedText: 'Affixed',
           uncheckedText: 'Normal',
         },
+        extraProp: {
+          vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        },
+      },
+
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'permission',
+          label: 'Permission',
+        },
+        extraProp: {
+          vIf: ({ formData }) => formData.type !== MenuTypeConst.CATALOG,
+        },
       },
     ],
-
-    baseRules: true,
-
-    advancedProps: {
-      title: computed(() =>
-        actionType.value === 'create'
-          ? 'Create New Menu'
-          : 'Update Existing Menu'
-      ),
-      width: '500',
-      onYes: async (handler) => {
-        await handler(menuAPI, menuAPI[actionType.value], formData.value)
-        resetState()
-        await onGetList()
-      },
-      onNo: (handler) => {
-        resetState()
-        handler()
-      },
-    },
   })
 </script>

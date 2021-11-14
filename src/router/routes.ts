@@ -2,8 +2,6 @@ import * as constant from './constant'
 
 import { t } from '/@/locales/utils'
 
-const { menu } = useAppState()
-
 export const AuthRoute: RouteRecordRaw = {
   name: constant.authName,
   path: constant.authPath,

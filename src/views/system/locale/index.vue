@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <n-button @click="insert">insert</n-button> -->
     <w-table @hook="registerTable"></w-table>
 
     <w-form @hook="registerForm" :model="formData"></w-form>
@@ -9,40 +8,28 @@
 
 <script lang="tsx">
   export default defineComponent({
-    name: 'Role',
+    name: 'Locale',
   })
 </script>
 
 <script lang="tsx" setup>
+  import type { WForm } from '/@/components/UI/Form'
+
   import { formatTime } from 'easy-fns-ts'
 
-  import { roleAPI } from '/@/api/system/role'
+  import { localeAPI } from '/@/api/system/locale'
+  import { langAPI } from '/@/api/system/lang'
 
   import { useInitialState } from '/@/utils'
 
-  import Permission from './permission.vue'
-
-  const roleData = Array.from({ length: 100 }).map(
-    (i, index) =>
-      ({
-        roleName: `testRole${index + 1}`,
-        description: `testDes${index + 1}`,
-      } as AppRole)
-  )
-
-  const insert = () => {
-    roleData.map(async (data) => {
-      await roleAPI.create(data)
-    })
-  }
-
   // main
 
-  const tableData = ref<AppRole[]>([])
+  const tableData = ref<AppLocale[]>([])
   const tableDataTotal = ref(0)
   const tableDataPage = ref(1)
   const tableDataPageSize = ref(10)
   const tableDataLoading = ref(false)
+  const langList = ref<BaseOptionDataItem[]>([])
 
   const actionType = ref<'create' | 'update'>('create')
 
@@ -50,17 +37,14 @@
     stateRef: formData,
     setState,
     resetState,
-  } = useInitialState<AppRole>({
-    roleName: '',
-    description: '',
-    status: true,
-    menus: [],
+  } = useInitialState<AppLocale>({
+    key: '',
   })
 
   const onGetTableData = async () => {
     tableDataLoading.value = true
 
-    const res = await roleAPI.list<AppRole>({
+    const res = await localeAPI.list<AppLocale>({
       page: tableDataPage.value,
       pageSize: tableDataPageSize.value,
     })
@@ -70,8 +54,17 @@
     tableDataLoading.value = false
   }
 
+  const onGetLangList = async () => {
+    const res = await langAPI.list()
+    langList.value = res.data.map((i) => ({
+      label: i.description,
+      value: i._id,
+    }))
+  }
+
   onMounted(() => {
     onGetTableData()
+    onGetLangList()
   })
 
   const onCreate = () => {
@@ -82,12 +75,14 @@
   }
 
   const onOpenDrawer = async (id: string) => {
+    console.log(id, 123)
+
     const { done } = onOpen()
 
     actionType.value = 'update'
 
     try {
-      const res = await roleAPI.read(id)
+      const res = await localeAPI.read(id)
       setState(res)
     } finally {
       done()
@@ -95,7 +90,7 @@
   }
 
   const onDelete = async (id: string) => {
-    const ret = await roleAPI.delete(id)
+    const ret = await localeAPI.delete(id)
     if (ret) {
       useAppMessage().success('Operation Success!')
       await onGetTableData()
@@ -112,7 +107,12 @@
     await onGetTableData()
   }
 
-  const [registerTable] = useTable<AppRole>({
+  const [registerTable] = useTable<
+    Pick<AppLocale, '_id' | 'key' | 'createdAt' | 'updatedAt'> & {
+      isCompleted: boolean
+      process: number
+    }
+  >({
     onAction: ({ type }) => {
       switch (type) {
         case 'create':
@@ -125,7 +125,7 @@
       }
     },
 
-    actionList: ['create', 'delete'],
+    actionList: ['create'],
 
     remote: true,
 
@@ -151,44 +151,28 @@
 
     columns: [
       {
-        type: 'selection',
-      },
-
-      {
-        title: 'Role Name',
-        key: 'roleName',
+        title: 'Locale Key',
+        key: 'key',
         width: 200,
         align: 'center',
       },
 
       {
-        title: 'Description',
-        key: 'description',
-        width: 200,
-        align: 'center',
-      },
-
-      {
-        title: 'Order',
-        key: 'order',
-        width: 80,
-        align: 'center',
-      },
-
-      {
-        title: 'Users Count',
-        key: 'usersCount',
-        width: 120,
-        align: 'center',
-      },
-
-      {
-        title: 'Status',
-        key: 'status',
+        title: 'Process',
+        key: 'process',
         width: 100,
         align: 'center',
         extendType: 'formatter',
-        formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
+        formatter: (row) => row.process * 100 + '%',
+      },
+
+      {
+        title: 'Completed',
+        key: 'isCompleted',
+        width: 120,
+        align: 'center',
+        extendType: 'formatter',
+        formatter: (row) => (row.isCompleted ? 'Finished' : 'Unfinished'),
       },
 
       {
@@ -213,7 +197,7 @@
         title: 'Action',
         key: 'action',
         extendType: 'action',
-        extendActionType: ['read', 'delete'],
+        extendActionType: ['read'],
         onRead: (row) => {
           onOpenDrawer(row._id!)
         },
@@ -224,20 +208,22 @@
     ],
   })
 
-  const [registerForm, { onOpen }] = useForm<AppRole>({
+  const [registerForm, { onOpen }] = useForm<AppLocale>({
     preset: 'drawer',
 
     labelWidth: '140px',
 
-    baseRules: true,
+    // baseRules: true,
 
     advancedProps: {
       title: computed(() =>
-        actionType.value === 'create' ? 'Create Role' : 'Update Existing Role'
+        actionType.value === 'create'
+          ? 'Create Locale Message'
+          : 'Update Existing Locale Message'
       ),
       width: '500',
       onYes: async (handler) => {
-        await handler(roleAPI, roleAPI[actionType.value], formData.value)
+        await handler(localeAPI, localeAPI[actionType.value], formData.value)
         resetState()
         await onGetTableData()
       },
@@ -247,61 +233,29 @@
       },
     },
 
-    schemas: [
+    // TODO type error
+    schemas: computed(() => [
       {
         type: 'Base:Input',
         formProp: {
-          path: 'roleName',
-          label: 'Role Name',
+          path: 'key',
+          label: 'Locale Key',
         },
         componentProp: {
           clearable: true,
         },
       },
-      {
+
+      ...langList.value.map<WForm.Schema.Item>((i) => ({
         type: 'Base:Input',
         formProp: {
-          path: 'description',
-          label: 'Description',
-        },
-        componentProp: {
-          clearable: true,
-          type: 'textarea',
-        },
-      },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'order',
-          label: 'Order',
+          path: i.value as string,
+          label: i.label,
         },
         componentProp: {
           clearable: true,
         },
-      },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'status',
-          label: 'Role status',
-        },
-        componentProp: {
-          checkedText: 'Enabled',
-          uncheckedText: 'Disable',
-        },
-      },
-      {
-        type: 'Base:Render',
-        formProp: {
-          path: 'menus',
-          label: 'Permission',
-        },
-        componentProp: {
-          render: ({ formData }) => (
-            <Permission v-model={[formData.menus, 'value']} />
-          ),
-        },
-      },
-    ],
+      })),
+    ]),
   })
 </script>

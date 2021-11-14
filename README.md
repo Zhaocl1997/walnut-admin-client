@@ -154,3 +154,4 @@ npm i
 [ts-url]: https://www.typescriptlang.org/
 
 [vben-url]: https://github.com/anncwb/vue-vben-admin
+[take-over-mode]: https://github.com/johnsoncodehk/volar/discussions/471

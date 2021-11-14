@@ -8,6 +8,8 @@ export default {
   user: '用户管理',
   menu: '菜单管理',
   dict: '字典管理',
+  lang: '语言管理',
+  locale: '国际化管理',
 
   comp: {
     title: '组件库',

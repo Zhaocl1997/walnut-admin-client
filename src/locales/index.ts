@@ -40,4 +40,13 @@ export const setupI18n = async (app: App) => {
 
 export { langLists }
 
-export const useAppI18n = () => useI18n()
+export const useAppI18n = () => {
+  const t = (l: string, args?: any) => {
+    if (l) return AppI18n.global.t(l, args)
+    return l
+  }
+  return {
+    ...useI18n(),
+    t,
+  }
+}

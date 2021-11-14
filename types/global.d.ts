@@ -77,6 +77,11 @@ declare type OptionDataItem<
   L extends string = 'label'
 > = Record<V, BaseDataType> & Record<L, string> & Partial<E>
 
+declare type BaseOptionDataItem = {
+  label?: string
+  value?: BaseDataType
+}
+
 /**
  * @description Filter wanted type fields
  *

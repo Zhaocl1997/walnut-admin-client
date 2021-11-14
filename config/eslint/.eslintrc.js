@@ -28,5 +28,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 0,
     '@typescript-eslint/ban-types': 0,
     '@typescript-eslint/no-namespace': 0,
+    '@typescript-eslint/no-non-null-asserted-optional-chain': 1,
   },
 }

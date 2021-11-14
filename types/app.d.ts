@@ -20,13 +20,10 @@ declare global {
     /* route component file uri */
     component?: any
 
-    /* route meta title */
     title?: string
 
-    /* route meta icon */
     icon?: string
 
-    /* menu displat order */
     order?: number
 
     /* external/internal/none status */
@@ -47,10 +44,10 @@ declare global {
     /* affix menu, for tab use */
     affix?: boolean
 
-    /* created at */
-    createdAt?: Date
+    /* permission string */
+    permission?: string
 
-    /* updated at */
+    createdAt?: Date
     updatedAt?: Date
   }
 
@@ -66,6 +63,36 @@ declare global {
       type?: ValueOfMenuTypeConst
       component?: string
     }
+  }
+
+  interface AppRole {
+    _id?: string
+    roleName?: string
+    description?: string
+    order?: number
+    menus?: string[]
+    status?: boolean
+    createdAt?: Date
+    updatedAt?: Date
+  }
+
+  interface AppLang {
+    _id?: string
+    lang?: string
+    description?: string
+    order?: number
+    status?: boolean
+    createdAt?: Date
+    updatedAt?: Date
+  }
+
+  interface AppLocale {
+    _id?: string
+    langId?: string
+    key?: string
+    value?: string
+    createdAt?: Date
+    updatedAt?: Date
   }
 }
 

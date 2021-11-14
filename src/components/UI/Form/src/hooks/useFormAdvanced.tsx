@@ -13,7 +13,10 @@ export const useFormAdvanced = (
   const loading = ref(false)
 
   const onOpen = () => {
+    loading.value = true
     show.value = true
+
+    return { done: () => (loading.value = false) }
   }
   const onClose = () => {
     if (loading.value) {
@@ -104,8 +107,8 @@ export const useFormAdvanced = (
         <w-drawer
           v-model={[show.value, 'show']}
           title={props.value.advancedProps?.title}
-          width={(props.value.advancedProps! as DrawerProps).width}
-          maskClosable={props.value.advancedProps!.maskClosable}
+          width={(props.value.advancedProps as DrawerProps)?.width}
+          maskClosable={!loading.value}
           onUpdateShow={(show: boolean) => {
             !show && onNo()
           }}
@@ -115,24 +118,6 @@ export const useFormAdvanced = (
         >
           {render()}
         </w-drawer>
-        // <NDrawer
-        //   v-model={[show.value, 'show']}
-        //   maskClosable={props.value.advancedProps!.maskClosable as boolean}
-        //   width={(props.value.advancedProps! as DrawerProps).width}
-        //   onUpdateShow={(show) => {
-        //     !show && onNo()
-        //   }}
-        // >
-        //   <NDrawerContent
-        //     title={props.value.advancedProps?.title as string}
-        //     closable={!loading.value}
-        //   >
-        //     {{
-        //       default: () => <n-spin show={loading.value}>{render()}</n-spin>,
-        //       footer: () => renderAction(),
-        //     }}
-        //   </NDrawerContent>
-        // </NDrawer>
       )
     }
   }
