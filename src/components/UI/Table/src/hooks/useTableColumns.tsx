@@ -18,6 +18,9 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
       }
 
       if (item.extendType === 'action') {
+        const isShow = (t: WTable.ColumnActionType) =>
+          (item.extendActionType ?? ['create', 'delete', 'read']).includes(t)
+
         return {
           ...item,
 
@@ -26,33 +29,39 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
           render(p) {
             return (
               <n-space size="small">
-                <w-button
-                  icon="ant-design:plus-outlined"
-                  onClick={() => item.onCreate!(p)}
-                >
-                  {t('component.table.buttons.create')}
-                </w-button>
+                {isShow('create') && (
+                  <w-button
+                    icon="ant-design:plus-outlined"
+                    onClick={() => item.onCreate!(p)}
+                  >
+                    {t('component.table.buttons.create')}
+                  </w-button>
+                )}
 
-                <w-button
-                  icon="ant-design:edit-outlined"
-                  onClick={() => item.onRead!(p)}
-                >
-                  {t('component.table.buttons.edit')}
-                </w-button>
+                {isShow('read') && (
+                  <w-button
+                    icon="ant-design:edit-outlined"
+                    onClick={() => item.onRead!(p)}
+                  >
+                    {t('component.table.buttons.edit')}
+                  </w-button>
+                )}
 
-                <n-popconfirm
-                  placement="left"
-                  onPositiveClick={() => item.onDelete!(p)}
-                >
-                  {{
-                    default: () => 'Are you sure to continue?',
-                    trigger: () => (
-                      <w-button icon="ant-design:delete-outlined">
-                        {t('component.table.buttons.delete')}
-                      </w-button>
-                    ),
-                  }}
-                </n-popconfirm>
+                {isShow('delete') && (
+                  <n-popconfirm
+                    placement="left"
+                    onPositiveClick={() => item.onDelete!(p)}
+                  >
+                    {{
+                      default: () => 'Are you sure to continue?',
+                      trigger: () => (
+                        <w-button icon="ant-design:delete-outlined">
+                          {t('component.table.buttons.delete')}
+                        </w-button>
+                      ),
+                    }}
+                  </n-popconfirm>
+                )}
               </n-space>
             )
           },
