@@ -7,7 +7,7 @@ const responseError = (msg: string) => {
     return
   }
 
-  notiInst = useAppNotification().error({ title: msg })
+  notiInst = useAppNotification().error({ title: msg, duration: 10000 })
 }
 
 export const checkReponseErrorStatus = (status?: number, msg?: string) => {
@@ -20,53 +20,53 @@ export const checkReponseErrorStatus = (status?: number, msg?: string) => {
 
     // 401: unauthorized
     case 401:
-      responseError(t('system.api.errMsg401'))
+      responseError(t('sys:ajax:401'))
       userActionSignOut()
       break
 
     case 403:
-      responseError(t('system.api.errMsg403'))
+      responseError(t('sys:ajax:403'))
       break
 
     // 404 not found
     case 404:
-      responseError(t('system.api.errMsg404'))
+      responseError(t('sys:ajax:404'))
       break
 
     case 405:
-      responseError(t('system.api.errMsg405'))
+      responseError(t('sys:ajax:405'))
       break
 
     case 408:
-      responseError(t('system.api.errMsg408'))
+      responseError(t('sys:ajax:408'))
       break
 
     case 500:
-      responseError(t('system.api.errMsg500'))
+      responseError(t('sys:ajax:500'))
       break
 
     case 501:
-      responseError(t('system.api.errMsg501'))
+      responseError(t('sys:ajax:501'))
       break
 
     case 502:
-      responseError(t('system.api.errMsg502'))
+      responseError(t('sys:ajax:502'))
       break
 
     case 503:
-      responseError(t('system.api.errMsg503'))
+      responseError(t('sys:ajax:503'))
       break
 
     case 504:
-      responseError(t('system.api.errMsg504'))
+      responseError(t('sys:ajax:504'))
       break
 
     case 505:
-      responseError(t('system.api.errMsg505'))
+      responseError(t('sys:ajax:505'))
       break
 
     default:
-      responseError(t('system.api.errMsg502'))
+      responseError(t('sys:ajax:502'))
       break
   }
 }
