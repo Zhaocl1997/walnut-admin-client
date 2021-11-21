@@ -90,6 +90,7 @@ interface AppMemory {
         contextMenu: boolean
         sortable: boolean
         styleMode: ValueOfTabStyleModeConst
+        devtool: boolean
       }
 
       breadcrumb: {
@@ -185,6 +186,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             contextMenu: true,
             sortable: false,
             styleMode: 'card',
+            devtool: true,
           },
 
           breadcrumb: {
