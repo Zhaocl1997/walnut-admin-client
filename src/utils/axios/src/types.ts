@@ -97,9 +97,9 @@ export interface BaseResponseStructure<T = any> {
 }
 
 /**
- * @description Back list api structure
+ * @description Back list api response structure
  */
-export interface BaseListResponse<T> {
+export interface BaseListResponse<T = any> {
   /**
    * @description List base structure
    */
@@ -109,4 +109,29 @@ export interface BaseListResponse<T> {
    * @description List total
    */
   total: number
+}
+
+/**
+ * @description Back list api params structure
+ */
+export interface BaseListParams<T = any> {
+  /**
+   * @description page num
+   */
+  page?: number
+
+  /**
+   * @description page size
+   */
+  pageSize?: number
+
+  /**
+   * @description sort field
+   */
+  sortField?: keyof T
+
+  /**
+   * @description sort order
+   */
+  sortOrder?: 'ascend' | 'descend' | false
 }
