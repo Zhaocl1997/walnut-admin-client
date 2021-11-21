@@ -14,10 +14,10 @@
     setup(props, { attrs, slots, emit, expose }) {
       const formatMessage = () =>
         typeof props.msg === 'string'
-          ? props.msg!.includes(' \n ')
-            ? props.msg!.split(' \n ').map((i) => <div>{i}</div>)
+          ? props.msg.includes('\\n')
+            ? props.msg.split('\\n').map((i) => <div>{i}</div>)
             : props.msg
-          : props.msg!.map((i) => <div>{i}</div>)
+          : props.msg?.map((i) => <div>{i}</div>)
 
       return () => (
         <n-tooltip>
