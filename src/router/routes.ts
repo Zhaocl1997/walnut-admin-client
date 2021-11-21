@@ -1,13 +1,11 @@
 import * as constant from './constant'
 
-import { t } from '/@/locales/utils'
-
 export const AuthRoute: RouteRecordRaw = {
   name: constant.authName,
   path: constant.authPath,
   component: () => import('../views/auth/index.vue'),
   meta: {
-    title: t('system.menu.auth'),
+    title: 'sys:menu:auth',
   },
 }
 

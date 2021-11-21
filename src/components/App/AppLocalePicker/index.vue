@@ -11,7 +11,8 @@
 </template>
 
 <script lang="ts">
-  import { langLists } from '/@/locales'
+  import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
+  import { AppI18nGetLangLists } from '/@/locales/backend'
   import { useLocale } from './useAppLocale'
 
   export default defineComponent({
@@ -33,6 +34,17 @@
 
     setup(props) {
       const { app } = useAppState()
+
+      const langLists = ref<SelectBaseOption[]>([])
+
+      const onGetLangList = async () => {
+        const res = await AppI18nGetLangLists()
+        langLists.value = res
+      }
+
+      onMounted(() => {
+        onGetLangList()
+      })
 
       watchEffect(async () => {
         const { loadLocaleMessages, setI18nLanguage } = useLocale(

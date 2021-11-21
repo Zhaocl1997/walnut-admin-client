@@ -28,7 +28,7 @@ export const useAppRouter = () => {
 export const useRouterPush = (info: RouteLocationRaw) => {
   return AppRouter.push(info).catch(() => {
     // maybe error
-    useAppMessage().warning(AppI18n.global.t('system.menu.error'))
+    useAppMessage().warning(AppI18n.global.t('sys:menu:error'))
 
     // finish the loadingbar
     window.$loadingBar.finish()

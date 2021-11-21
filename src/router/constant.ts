@@ -1,7 +1,7 @@
 export const authPath = '/auth'
 export const authName = 'Auth'
 
-export const rootPath = '/layout'
+export const rootPath = '/'
 export const rootName = 'Layout'
 
 export const redirectPath = '/redirect'

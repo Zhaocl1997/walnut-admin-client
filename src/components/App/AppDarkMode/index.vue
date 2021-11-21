@@ -28,15 +28,15 @@
       const darkModeOptions = computed(() => [
         {
           value: DarkModeConst.LIGHT,
-          label: t('system.global.darkMode.light'),
+          label: t('sys:dark:light'),
         },
         {
           value: DarkModeConst.DARK,
-          label: t('system.global.darkMode.dark'),
+          label: t('sys:dark:dark'),
         },
         {
           value: DarkModeConst.SYSTEM,
-          label: t('system.global.darkMode.system'),
+          label: t('sys:dark:sys'),
         },
       ])
 

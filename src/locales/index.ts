@@ -2,17 +2,17 @@ import type { I18nOptions } from 'vue-i18n'
 
 import { createI18n } from 'vue-i18n'
 
-import { langLists, fallbackLocale, availableLocales } from './utils'
+import { AppI18nGetI18nMsg } from './backend'
 
 /**
- * @description Get locale from store. Lazy load locale messages
+ * @description Get locale messages from back end
  */
 const createI18nOptions = async (): Promise<I18nOptions> => {
   const { app } = useAppState()
 
   const locale = app.value.locale
 
-  const messages = await import(`./lang/${locale}.ts`)
+  const backendMsg = await AppI18nGetI18nMsg(locale)
 
   return {
     // you must set `false`, to use Compostion API
@@ -20,13 +20,9 @@ const createI18nOptions = async (): Promise<I18nOptions> => {
 
     locale,
 
-    fallbackLocale,
-
     messages: {
-      [locale]: messages.default,
+      [locale]: backendMsg.data,
     },
-
-    availableLocales,
   }
 }
 
@@ -38,15 +34,4 @@ export const setupI18n = async (app: App) => {
   app.use(AppI18n)
 }
 
-export { langLists }
-
-export const useAppI18n = () => {
-  const t = (l: string, args?: any) => {
-    if (l) return AppI18n.global.t(l, args)
-    return l
-  }
-  return {
-    ...useI18n(),
-    t,
-  }
-}
+export const useAppI18n = () => useI18n()

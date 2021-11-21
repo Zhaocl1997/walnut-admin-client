@@ -5,7 +5,7 @@
         <slot></slot>
       </n-spin>
 
-      <template #header>{{ title }}</template>
+      <template #header>{{ t(title) }}</template>
 
       <template #footer>
         <n-space size="small">
@@ -16,7 +16,7 @@
             :disabled="loading"
             :loading="loading"
           >
-            {{ t('component.base.action.confirm') }}
+            {{ t('app:button:yes') }}
           </n-button>
 
           <n-button
@@ -24,7 +24,7 @@
             :onClick="() => $emit('no')"
             :disabled="loading"
           >
-            {{ t('component.base.action.cancel') }}
+            {{ t('app:button:no') }}
           </n-button>
         </n-space>
       </template>

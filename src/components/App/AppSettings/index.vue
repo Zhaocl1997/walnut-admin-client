@@ -8,7 +8,7 @@
     ></w-icon>
   </div>
 
-  <w-drawer v-model:show="show" :width="350" title="App Settings">
+  <w-drawer v-model:show="show" :width="350" title="app:settings:title">
     <w-form @hook="register1" :model="appRelatives"></w-form>
     <w-form @hook="register2" :model="menuRelatives"></w-form>
     <w-form @hook="register3" :model="headerRelatives"></w-form>
@@ -28,8 +28,8 @@
 
   const el = ref(null)
   const show = ref(false)
-  const myx = ref()
-  const myy = ref()
+  const myX = ref()
+  const myY = ref()
 
   const { width, height } = useWindowSize()
 
@@ -37,14 +37,14 @@
     initialValue: { x: width.value - 50, y: height.value - 50 },
     preventDefault: true,
     onMove: (p) => {
-      myx.value = p.x
-      myy.value = p.y
+      myX.value = p.x
+      myY.value = p.y
     },
   })
 
   watchEffect(() => {
-    x.value = myx.value ?? width.value - 50
-    y.value = myy.value ?? height.value - 50
+    x.value = myX.value ?? width.value - 50
+    y.value = myY.value ?? height.value - 50
   })
 
   const appRelatives = ref(settings.value.ForDevelopers.app)
@@ -54,26 +54,16 @@
   const tabRelatives = ref(settings.value.ForDevelopers.tab)
 
   const [register1] = useForm<typeof appRelatives.value>({
+    localeUniqueKey: 'app:app',
     showFeedback: false,
     formItemClass: 'w-75 flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
     schemas: [
       {
-        type: 'Base:Render',
-        formProp: {
-          showLabel: false,
-        },
-        componentProp: {
-          render: () => (
-            <n-text class="text-center w-full">For Developers</n-text>
-          ),
-        },
-      },
-      {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'App Relatives',
+          title: 'app:settings:app',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -83,42 +73,36 @@
         type: 'Base:Switch',
         formProp: {
           path: 'showLogo',
-          label: 'Show Logo',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showMenu',
-          label: 'Show Menu',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showHeader',
-          label: 'Show Header',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showTabs',
-          label: 'Show Tabs',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showFooter',
-          label: 'Show Footer',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'fixLogo',
-          label: 'Fix logo',
         },
         componentProp: {
           disabled: computed(() => !appRelatives.value.showLogo),
@@ -128,7 +112,6 @@
         type: 'Base:Switch',
         formProp: {
           path: 'fixHeader',
-          label: 'Fix header',
         },
         componentProp: {
           disabled: computed(() => !appRelatives.value.showHeader),
@@ -138,14 +121,12 @@
         type: 'Base:Switch',
         formProp: {
           path: 'showAnimation',
-          label: 'Page Animation',
         },
       },
       {
         type: 'Base:Select',
         formProp: {
           path: 'animationName',
-          label: 'Animation Type',
         },
         componentProp: {
           disabled: computed(() => !appRelatives.value.showAnimation),
@@ -159,13 +140,13 @@
         type: 'Base:Switch',
         formProp: {
           path: 'keepAlive',
-          label: 'Keep Alive Pages',
         },
       },
     ],
   })
 
   const [register2] = useForm<typeof menuRelatives.value>({
+    localeUniqueKey: 'app:menu',
     showFeedback: false,
     formItemClass: 'w-75 flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
@@ -175,7 +156,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'Menu Relatives',
+          title: 'app:settings:menu',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -185,14 +166,12 @@
         type: 'Base:Switch',
         formProp: {
           path: 'showCollapse',
-          label: 'Show Collapse',
         },
       },
       {
         type: 'Base:Select',
         formProp: {
           path: 'collapseMode',
-          label: 'Collapse Mode',
         },
         componentProp: {
           options: Object.values(MenuCollapseModeConst).map((i) => ({
@@ -210,7 +189,6 @@
         type: 'Base:InputNumber',
         formProp: {
           path: 'width',
-          label: 'Width',
         },
         componentProp: {
           step: 10,
@@ -220,48 +198,43 @@
         type: 'Base:InputNumber',
         formProp: {
           path: 'collapsedWidth',
-          label: 'Collapsed Width',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'accordion',
-          label: 'Accordion',
-        },
-      },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'collapsedIconSize',
-          label: 'Collapsed Icon Size',
         },
       },
       {
         type: 'Base:InputNumber',
         formProp: {
           path: 'iconSize',
-          label: 'Icon Size',
+        },
+      },
+      {
+        type: 'Base:InputNumber',
+        formProp: {
+          path: 'collapsedIconSize',
         },
       },
       {
         type: 'Base:InputNumber',
         formProp: {
           path: 'indent',
-          label: 'Indent',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'inverted',
-          label: 'Inverted',
         },
       },
     ],
   })
 
   const [register3] = useForm<typeof headerRelatives.value>({
+    localeUniqueKey: 'app:header',
     showFeedback: false,
     formItemClass: 'w-75 flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
@@ -271,7 +244,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'Header Relatives',
+          title: 'app:settings:header',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -281,62 +254,55 @@
         type: 'Base:InputNumber',
         formProp: {
           path: 'height',
-          label: 'Height',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showBreadcrumb',
-          label: 'Breadcrumb',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showFullScreen',
-          label: 'Full Screen',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showLocale',
-          label: 'Locale',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showDarkMode',
-          label: 'Dark Mode',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showLock',
-          label: 'Lock',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showSearch',
-          label: 'Search',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'inverted',
-          label: 'Inverted',
         },
       },
     ],
   })
 
   const [register4] = useForm<typeof breadcrumbRelatives.value>({
+    localeUniqueKey: 'app:bc',
     showFeedback: false,
     formItemClass: 'w-75 flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
@@ -349,7 +315,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'Breadcrumb Relatives',
+          title: 'app:settings:breadcrumb',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -359,21 +325,18 @@
         type: 'Base:Switch',
         formProp: {
           path: 'showIcon',
-          label: 'Icon',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showDropdown',
-          label: 'Dropdown',
         },
       },
       {
         type: 'Base:Select',
         formProp: {
           path: 'separator',
-          label: 'Separator',
         },
         componentProp: {
           options: ['>', '/'].map((i) => ({ value: i, label: i })),
@@ -383,6 +346,7 @@
   })
 
   const [register5] = useForm<typeof tabRelatives.value>({
+    localeUniqueKey: 'app:tab',
     showFeedback: false,
     formItemClass: 'w-75 flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
@@ -392,7 +356,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'Tab Relatives',
+          title: 'app:settings:tab',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -402,42 +366,43 @@
         type: 'Base:InputNumber',
         formProp: {
           path: 'height',
-          label: 'Height',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showIcon',
-          label: 'Icon',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'showUtils',
-          label: 'Utils',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'contextMenu',
-          label: 'Context Menu',
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'sortable',
-          label: 'Sortable',
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'devtool',
+          labelHelpMessage: true,
         },
       },
       {
         type: 'Base:Select',
         formProp: {
           path: 'styleMode',
-          label: 'Style',
         },
         componentProp: {
           options: Object.values(TabStyleModeConst).map((i) => ({

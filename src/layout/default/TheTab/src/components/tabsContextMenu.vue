@@ -94,7 +94,7 @@
   const options = computed(() => [
     {
       key: DeleteTabConst.TAB_SINGLE,
-      label: t('layout.tab.close'),
+      label: t('sys:tab:ctx:close'),
       icon: () => (
         <w-icon height="24" icon="ant-design:close-outlined"></w-icon>
       ),
@@ -103,7 +103,7 @@
 
     {
       key: DeleteTabConst.TAB_LEFT,
-      label: t('layout.tab.closeLeft'),
+      label: t('sys:tab:ctx:closeLeft'),
       icon: () => (
         <w-icon height="24" icon="ant-design:vertical-right-outlined"></w-icon>
       ),
@@ -112,7 +112,7 @@
 
     {
       key: DeleteTabConst.TAB_RIGHT,
-      label: t('layout.tab.closeRight'),
+      label: t('sys:tab:ctx:closeRight'),
       icon: () => (
         <w-icon height="24" icon="ant-design:vertical-left-outlined"></w-icon>
       ),
@@ -121,7 +121,7 @@
 
     {
       key: DeleteTabConst.TAB_OTHER,
-      label: t('layout.tab.closeOther'),
+      label: t('sys:tab:ctx:closeOther'),
       icon: () => (
         <w-icon height="24" icon="ant-design:column-width-outlined"></w-icon>
       ),
@@ -130,7 +130,7 @@
 
     {
       key: DeleteTabConst.TAB_ALL,
-      label: t('layout.tab.closeAll'),
+      label: t('sys:tab:ctx:closeAll'),
       icon: () => (
         <w-icon height="24" icon="ant-design:border-outlined"></w-icon>
       ),
@@ -144,14 +144,14 @@
 
     {
       key: 'Refresh',
-      label: t('layout.tab.refresh'),
+      label: t('sys:tab:ctx:refresh'),
       icon: () => <w-icon height="24" icon="ant-design:sync-outlined"></w-icon>,
       disabled: getOtherDisabled.value,
     },
 
     {
       key: 'Screen Full',
-      label: t('layout.tab.screenfull'),
+      label: t('sys:tab:ctx:screenfull'),
       icon: () => (
         <w-icon height="24" icon="ant-design:fullscreen-outlined"></w-icon>
       ),
