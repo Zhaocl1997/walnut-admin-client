@@ -137,7 +137,3 @@ declare type DeepMaybeRefSelf<T> = T extends Ref<infer V>
       [K in keyof T]: DeepMaybeRefSelf<T[K]>
     }
   : MaybeRefSelf<T>
-
-declare type MaybeRefRecord<T> = {
-  [P in keyof T]: MaybeRefSelf<T[P]>
-}

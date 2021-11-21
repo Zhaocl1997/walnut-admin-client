@@ -47,6 +47,12 @@ declare global {
   // Utils
   type MaybeRef<T> = import('@vueuse/core').MaybeRef<T>
   type DeepMaybeRef<T> = import('@vueuse/core').DeepMaybeRef<T>
+
+  // App
+  type BaseListParams<T = any> = import('/@/utils/axios').BaseListParams<T>
+  type BaseListResponse<T = any> = import('/@/utils/axios').BaseListResponse<T>
+  type BaseResponseStructure<T = any> =
+    import('/@/utils/axios').BaseResponseStructure<T>
 }
 
 export {}
