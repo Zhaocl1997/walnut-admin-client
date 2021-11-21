@@ -7,7 +7,7 @@
     <div
       class="flex flex-grow"
       :style="{
-        width: `calc(100vw - ${settings.ForDevelopers.menu.width}px)`,
+        width: `calc(100vw - ${settings.ForDevelopers.menu.width}px - 120px)`,
       }"
     >
       <TabsContentMain></TabsContentMain>
@@ -37,10 +37,10 @@
   import { setTabsContext } from './hooks/useTabsContext'
   import { isDev } from '/@/utils/constant/vue'
 
-  const getShowDevTools = computed(() => isDev())
-
   const { settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
+
+  const getShowDevTools = computed(() => isDev() && tabSettings.devtool)
 
   const { scrollRef, getCurrentRouteTabIndex } = useTabs()
 
