@@ -32,7 +32,9 @@
           return arr?.map((i) => ({
             key: i.name,
             label: t(i.meta?.title!),
-            icon: () => <w-icon icon={i.meta?.icon} height="20"></w-icon>,
+            icon: breadcrumb.showIcon
+              ? () => <w-icon icon={i.meta?.icon} height="20"></w-icon>
+              : null,
             children: genOptions(i.children),
           }))
         }
