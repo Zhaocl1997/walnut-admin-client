@@ -1,10 +1,10 @@
 <template>
   <n-layout has-sider>
-    <TheAside v-if="!app.isMobile && getShowAside" />
+    <TheAside v-if="!appMemo.isMobile && getShowAside" />
 
     <n-drawer
       v-else
-      v-model:show="app.showAside"
+      v-model:show="appMemo.showAside"
       :width="settings.ForDevelopers.menu.width + 'px'"
       placement="left"
       :native-scrollbar="false"
@@ -44,7 +44,7 @@
   import TheTab from './TheTab'
   import { getShowAside, getContentWidth } from '/@/settings'
 
-  const { app, settings } = useAppState()
+  const { app, appMemo, settings } = useAppState()
   const setting = settings.value.ForDevelopers
 
   const MainHeader = defineComponent({

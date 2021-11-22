@@ -5,7 +5,7 @@
     :style="{
       height: settings.ForDevelopers.header.height + 'px',
       width:
-        (app.collapse
+        (appMemo.collapse
           ? settings.ForDevelopers.menu.collapsedWidth
           : settings.ForDevelopers.menu.width) + 'px',
     }"
@@ -15,7 +15,7 @@
 
       <w-transition name="slide-up">
         <div
-          v-show="!app.collapse"
+          v-show="!appMemo.collapse"
           class="app-text text-xl not-italic font-bold text-center"
         >
           {{ getAppTitle }}
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-  const { app, menu, settings } = useAppState()
+  const { appMemo, menu, settings } = useAppState()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 

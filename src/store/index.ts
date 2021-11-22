@@ -14,12 +14,6 @@ const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
       isDark: false,
       darkMode: preferredColor.value as ValueOfDarkModeConst,
       locale: preferredLanguages.value[0] as ValueOfLocaleConst,
-      collapse: false,
-      device: 'desktop',
-      isMobile: false,
-      showAside: false,
-      isFullScreen: false,
-      fullscreenTarget: '',
     }),
     token: useAppStorage(PersistentKeysConst.TOKEN, ''),
     auth: useAppStorage(PersistentKeysConst.AUTH, {}),
@@ -29,6 +23,14 @@ const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
 const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
   toRefs(
     reactive({
+      appMemo: {
+        collapse: false,
+        device: 'desktop',
+        isMobile: false,
+        showAside: false,
+        isFullScreen: false,
+        fullscreenTarget: '',
+      },
       menu: {
         menus: [],
         keepAliveRouteNames: [],

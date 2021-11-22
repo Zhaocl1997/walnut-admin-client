@@ -20,7 +20,7 @@
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { tab, app } = useAppState()
+  const { tab, app, appMemo } = useAppState()
 
   const {
     x,
@@ -82,7 +82,7 @@
     }
 
     if (key === 'Screen Full') {
-      app.value.fullscreenTarget = `#${currentMouseTab.value?.name!}`
+      appMemo.value.fullscreenTarget = `#${currentMouseTab.value?.name!}`
       nextTick(() => {
         enter()
       })

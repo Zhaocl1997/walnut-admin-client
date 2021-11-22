@@ -42,7 +42,9 @@
         <TabDot
           :ref="setItemRef"
           v-if="
-            !app.isMobile && !tabSettings.showIcon && $route.name === item.name
+            !appMemo.isMobile &&
+            !tabSettings.showIcon &&
+            $route.name === item.name
           "
           :data-affix="item.meta.affix"
         ></TabDot>
@@ -79,7 +81,7 @@
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { app, tab, settings } = useAppState()
+  const { app, appMemo, tab, settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
 
   const {

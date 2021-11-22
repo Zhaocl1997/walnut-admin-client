@@ -2,7 +2,7 @@ import { useResize } from './useResize'
 import { useBreakpoints } from './useBreakpoints'
 
 export const useAppResize = () => {
-  const { app } = useAppState()
+  const { appMemo } = useAppState()
   const breakpoints = useBreakpoints()
 
   const handler = () => {
@@ -11,9 +11,9 @@ export const useAppResize = () => {
       // 1.isMobile => true
       // 2.device => 'mobile'
       // 3.no more collapse
-      app.value.isMobile = true
-      app.value.device = 'mobile'
-      app.value.collapse = false
+      appMemo.value.isMobile = true
+      appMemo.value.device = 'mobile'
+      appMemo.value.collapse = false
     }
 
     if (breakpoints.isInBetween('sm', 'lg')) {
@@ -21,9 +21,9 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'tablet'
       // 3.auto collapse
-      app.value.isMobile = false
-      app.value.device = 'tablet'
-      app.value.collapse = true
+      appMemo.value.isMobile = false
+      appMemo.value.device = 'tablet'
+      appMemo.value.collapse = true
     }
 
     if (breakpoints.isInBetween('lg', 'xl')) {
@@ -31,9 +31,9 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'laptop'
       // 3.no collapse
-      app.value.isMobile = false
-      app.value.device = 'laptop'
-      app.value.collapse = false
+      appMemo.value.isMobile = false
+      appMemo.value.device = 'laptop'
+      appMemo.value.collapse = false
     }
 
     if (breakpoints.isGreater('xl')) {
@@ -41,9 +41,9 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'desktop'
       // 3.no collapse
-      app.value.isMobile = false
-      app.value.device = 'desktop'
-      app.value.collapse = false
+      appMemo.value.isMobile = false
+      appMemo.value.device = 'desktop'
+      appMemo.value.collapse = false
     }
   }
 

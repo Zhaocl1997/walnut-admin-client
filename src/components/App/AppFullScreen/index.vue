@@ -14,7 +14,7 @@
     },
 
     setup(props) {
-      const { app } = useAppState()
+      const { appMemo } = useAppState()
       const { width } = props
       const { isFullscreen, toggle } = useFullScreenExtend()
 
@@ -28,7 +28,7 @@
             }
             width={width}
             onClick={() => {
-              app.value.fullscreenTarget = '#app'
+              appMemo.value.fullscreenTarget = '#app'
               toggle()
             }}
           ></w-icon>

@@ -7,7 +7,7 @@ import { buildTabs } from '/@/core/tab'
  * @description App Tab Core Function
  */
 export const useTabs = () => {
-  const { app, tab } = useAppState()
+  const { appMemo, tab } = useAppState()
 
   const route = useAppRoute()
   const { currentRoute } = useAppRouter()
@@ -23,7 +23,7 @@ export const useTabs = () => {
     nextTick(() => {
       // If is mobile, just scroll to current route tab index
       scrollRef.value?.scrollToIndex(
-        app.value.isMobile
+        appMemo.value.isMobile
           ? getCurrentRouteTabIndex.value
           : onLeaveRoomForTabs(getCurrentRouteTabIndex.value)
       )
@@ -36,7 +36,7 @@ export const useTabs = () => {
 
     // Scroll
     // Trick to trigger the scroll
-    app.value.device && onScrollToCurrentTab()
+    appMemo.value.device && onScrollToCurrentTab()
   })
 
   return { scrollRef, getCurrentRouteTabIndex }

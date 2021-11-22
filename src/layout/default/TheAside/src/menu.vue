@@ -5,7 +5,7 @@
 
   export default defineComponent({
     setup() {
-      const { app, menu, settings } = useAppState()
+      const { appMemo, menu, settings } = useAppState()
       const menuSettings = settings.value.ForDevelopers.menu
       const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
@@ -42,8 +42,8 @@
 
       const onUpdateValue = (key: string, item: MenuOption) => {
         // If isMobile and showAside true, set showAside to false to close drawer
-        if (app.value.isMobile && app.value.showAside) {
-          app.value.showAside = false
+        if (appMemo.value.isMobile && appMemo.value.showAside) {
+          appMemo.value.showAside = false
         }
 
         if ((item.meta as AppMenu).type === 'catalog') {
@@ -72,7 +72,7 @@
             iconSize={menuSettings.iconSize}
             indent={menuSettings.indent}
             options={getMenu.value}
-            collapsed={app.value.collapse}
+            collapsed={appMemo.value.collapse}
             value={currentRoute.value.name}
             on-update:value={onUpdateValue}
             expanded-keys={expandedKeys.value ?? getExpandedKeys.value}

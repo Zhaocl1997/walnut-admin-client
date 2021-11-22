@@ -5,7 +5,7 @@
     :show-trigger="getShowMenuCollapseBuiltIn"
     bordered
     collapse-mode="width"
-    :collapsed="app.collapse"
+    :collapsed="appMemo.collapse"
     @update:collapsed="onUpdateCollapse"
     :inverted="settings.ForDevelopers.menu.inverted"
     :native-scrollbar="false"
@@ -44,10 +44,10 @@
     getShowMenuCollapseBuiltIn,
   } from '/@/settings'
 
-  const { app, settings } = useAppState()
+  const { appMemo, settings } = useAppState()
   const appSettings = settings.value.ForDevelopers.app
 
   const onUpdateCollapse = (collapse: boolean) => {
-    app.value.collapse = collapse
+    appMemo.value.collapse = collapse
   }
 </script>

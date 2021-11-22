@@ -1,9 +1,9 @@
 export const useAppFullScreen = () => {
-  const { app } = useAppState()
+  const { appMemo } = useAppState()
 
   const { isFullscreen } = useFullscreen()
 
   watchEffect(() => {
-    app.value.isFullScreen = isFullscreen.value
+    appMemo.value.isFullScreen = isFullscreen.value
   })
 }

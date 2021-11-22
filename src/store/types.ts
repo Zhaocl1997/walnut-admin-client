@@ -5,12 +5,6 @@ export interface AppStorage {
     isDark: boolean
     darkMode: ValueOfDarkModeConst
     locale: ValueOfLocaleConst
-    collapse: boolean
-    device: ValueOfDevideConst
-    isMobile: boolean
-    showAside: boolean
-    isFullScreen: boolean
-    fullscreenTarget: string
   }
 
   token: string
@@ -22,6 +16,15 @@ export interface AppStorage {
 }
 
 export interface AppMemory {
+  appMemo: {
+    collapse: boolean
+    device: ValueOfDevideConst
+    isMobile: boolean
+    showAside: boolean
+    isFullScreen: boolean
+    fullscreenTarget: string
+  }
+
   menu: {
     menus: AppMenu[]
     keepAliveRouteNames: string[]

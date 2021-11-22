@@ -5,14 +5,14 @@
     class="absolute bottom-0 w-full bg-base-color"
     :style="{ backgroundColor: 'var(--inverted-color)' }"
     :icon="
-      app.collapse
+      appMemo.collapse
         ? 'ant-design:double-right-outlined'
         : 'ant-design:double-left-outlined'
     "
-    @click="() => (app.collapse = !app.collapse)"
+    @click="() => (appMemo.collapse = !appMemo.collapse)"
   ></w-button>
 </template>
 
 <script lang="ts" setup>
-  const { app } = useAppState()
+  const { appMemo } = useAppState()
 </script>
