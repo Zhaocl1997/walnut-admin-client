@@ -1,7 +1,5 @@
 import type { WForm } from '../types'
-import type { DialogProps, DrawerProps, ModalProps } from 'naive-ui'
-
-import { NDrawer, NDrawerContent } from 'naive-ui'
+import type { DrawerProps, ModalProps } from 'naive-ui'
 
 export const useFormAdvanced = (
   render: Fn,
@@ -12,11 +10,13 @@ export const useFormAdvanced = (
   const show = ref(false)
   const loading = ref(false)
 
+  const done = () => (loading.value = false)
+
   const onOpen = () => {
     loading.value = true
     show.value = true
 
-    return { done: () => (loading.value = false) }
+    return { done }
   }
   const onClose = () => {
     if (loading.value) {
@@ -36,12 +36,8 @@ export const useFormAdvanced = (
     // if error, we want loading stop, but drawer do not disappear
     // so `loading.value = false` is always excuting
     // only when have ret, close drawer and show message
-    const handler = async (
-      baseApi: AnyObject,
-      apiFn: Fn,
-      formData: AnyObject
-    ) => {
-      const ret = await apiFn.call(baseApi, formData)
+    const apiHandler = async (apiFn: Fn, params: AnyObject) => {
+      const ret = await apiFn(params)
       loading.value = false
 
       if (ret) {
@@ -50,7 +46,10 @@ export const useFormAdvanced = (
       }
     }
 
-    props.value.advancedProps?.onYes(handler)
+    props.value.advancedProps?.onYes(apiHandler, () => {
+      done()
+      onClose()
+    })
   }
 
   const onNo = () => {
@@ -70,12 +69,12 @@ export const useFormAdvanced = (
           loading={loading.value}
         >
           {(props.value.advancedProps as ModalProps).positiveText ??
-            t('component.base.action.confirm')}
+            t('app:button:yes')}
         </n-button>
 
         <n-button size="small" onClick={onNo} disabled={loading.value}>
           {(props.value.advancedProps as ModalProps).negativeText ??
-            t('component.base.action.cancel')}
+            t('app:button:no')}
         </n-button>
       </n-space>
     )

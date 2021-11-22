@@ -12,30 +12,34 @@
     setup(props, { attrs, slots, emit, expose }) {
       const { t } = useAppI18n()
 
-      const loading = ref(false)
-
       const active = ref(false)
 
       const getText = computed(() =>
-        active.value ? t('component.form.expand') : t('component.form.fold')
+        active.value ? t('app:button:expand') : t('app:button:collapse')
       )
 
-      const { formEvent, formSchemas, setProps } = useFormContext()
+      const { formEvent, formSchemas, setProps, formProps } = useFormContext()
+
+      const done = () => {
+        setProps({ disabled: false })
+      }
 
       const onReset = () => {
-        formEvent({ name: 'reset' })
+        setProps({ disabled: true })
+        formEvent({
+          name: 'reset',
+          params: {
+            done,
+          },
+        })
       }
 
       const onQuery = () => {
-        loading.value = true
         setProps({ disabled: true })
         formEvent({
           name: 'query',
           params: {
-            done: () => {
-              loading.value = false
-              setProps({ disabled: false })
-            },
+            done,
           },
         })
       }
@@ -53,24 +57,24 @@
           <n-space wrap={false} size="small">
             <n-button
               size="small"
-              type="info"
-              onClick={onReset}
-              disabled={unref(loading)}
+              type="primary"
+              onClick={onQuery}
+              disabled={formProps.value.disabled}
+              loading={formProps.value.disabled}
             >
-              {t('component.form.reset')}
+              {{
+                default: () => t('app:button:query'),
+                icon: () => <w-icon icon="ant-design:search-outlined"></w-icon>,
+              }}
             </n-button>
 
             <n-button
               size="small"
-              type="primary"
-              onClick={onQuery}
-              disabled={unref(loading)}
-              loading={unref(loading)}
+              type="info"
+              onClick={onReset}
+              disabled={formProps.value.disabled}
             >
-              {{
-                default: () => t('component.form.query'),
-                icon: () => <w-icon icon="ant-design:search-outlined"></w-icon>,
-              }}
+              {t('app:button:reset')}
             </n-button>
 
             {props.foldable && (
@@ -79,7 +83,7 @@
                 type="default"
                 icon-placement="right"
                 onClick={onToggle}
-                disabled={unref(loading)}
+                disabled={formProps.value.disabled}
               >
                 {{
                   default: () => unref(getText),

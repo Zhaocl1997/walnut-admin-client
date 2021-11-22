@@ -5,7 +5,7 @@
 
   import { componentMap } from './utils'
   import { useFormContext } from '../../hooks/useFormContext'
-  import { getEPBooleanValue } from '../../utils'
+  import { getBoolean, getEPBooleanValue } from '../../utils'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -21,7 +21,30 @@
     setup(props, { attrs, slots, emit, expose }) {
       const { item } = props
 
+      const { t } = useAppI18n()
+
       const { formProps } = useFormContext()
+
+      const getTranslated = (
+        item: WForm.Schema.Item,
+        helpMsg: boolean = false
+      ) => {
+        const key = formProps.value.localeUniqueKey
+
+        const isLocale = key && getBoolean(item?.formProp?.locale)
+
+        const isLocaleWithTable =
+          getBoolean(item?.formProp?.localeWithTable) &&
+          getBoolean(formProps.value.localeWithTable)
+
+        const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
+
+        return isLocale
+          ? isLocaleWithTable
+            ? t(isHelpMsg(`table:${key}:${item?.formProp?.path}`))
+            : t(isHelpMsg(`form:${key}:${item?.formProp?.path}`))
+          : item?.formProp?.label
+      }
 
       const renderBase =
         item?.type === 'Base:Render'
@@ -50,29 +73,25 @@
               )
             }
 
-      const renderNFormItem = () => {
-        return (
-          <n-form-item
-            vShow={getEPBooleanValue(item, formProps.value, 'vShow')}
-            {...item?.formProp}
-            class={formProps.value.formItemClass}
-          >
-            {{
-              default: () => renderBase(),
-              label: () => (
-                <>
-                  {item?.formProp?.label}{' '}
-                  {item?.formProp?.labelHelpMessage && (
-                    <w-message
-                      msg={item?.formProp?.labelHelpMessage}
-                    ></w-message>
-                  )}
-                </>
-              ),
-            }}
-          </n-form-item>
-        )
-      }
+      const renderNFormItem = () => (
+        <n-form-item
+          vShow={getEPBooleanValue(item, formProps.value, 'vShow')}
+          {...item?.formProp}
+          class={formProps.value.formItemClass}
+        >
+          {{
+            default: () => renderBase(),
+            label: () => (
+              <>
+                {getTranslated(item!)}{' '}
+                {item?.formProp?.labelHelpMessage && (
+                  <w-message msg={getTranslated(item!, true)}></w-message>
+                )}
+              </>
+            ),
+          }}
+        </n-form-item>
+      )
 
       const renderContent = () => (
         <w-transition {...item?.transitionProp} appear>

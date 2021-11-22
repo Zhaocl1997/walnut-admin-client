@@ -1,11 +1,11 @@
 import type { ModalProps, DrawerProps, DrawerContentProps } from 'naive-ui'
-import type { WForm } from './types'
-
 import type {
   LabelAlign,
   LabelPlacement,
   FormRules,
 } from 'naive-ui/lib/form/src/interface'
+
+import type { WForm } from './types'
 
 export const extendProps = {
   schemas: {
@@ -50,9 +50,29 @@ export const extendProps = {
     >,
     default: undefined,
   },
-
+  /**
+   * @description form item class, including the label and content
+   */
   formItemClass: String as PropType<string>,
+
+  /**
+   * @description class only for form item component
+   */
   formItemComponentClass: String as PropType<string>,
+
+  /**
+   * @description locale middle unique key implement with back end messages
+   * @example `form:${uniqueKey}:${path}` used for label locale
+   * @example `form:${uniqueKey}:${path}:helpMsg` built in for label help message
+   * So in this rule, all we need to do is provide a `localeUniqueKey` and config the messages in `Locale Manage`
+   * No need to privide a label property in `schema item formProp`, the built in logic will handle the label properly.
+   */
+  localeUniqueKey: String as PropType<string>,
+
+  /**
+   * @description Used for form related to a localed table
+   */
+  localeWithTable: Boolean as PropType<boolean>,
 }
 
 export const props = {

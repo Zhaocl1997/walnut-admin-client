@@ -24,6 +24,8 @@
 
       const { formSchemas } = useFormContext()
 
+      const { t } = useAppI18n()
+
       const onToggle = () => {
         active.value = !active.value
 
@@ -48,7 +50,7 @@
                   type={props.type}
                   helpMessage={props.helpMessage}
                 >
-                  {props.title}
+                  {t(props.title)}
                 </w-title>
 
                 {props.foldable && (

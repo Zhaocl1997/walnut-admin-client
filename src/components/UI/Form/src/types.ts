@@ -54,7 +54,10 @@ export declare namespace WForm {
       setProps: Fn
       onOpen: () => { done: Fn }
       onClose: Fn
-      onYes: Fn
+      onYes: (
+        apiHandler: (apiFn: Fn, params: AnyObject) => Promise<void>,
+        done: () => void
+      ) => void
       onNo: Fn
     }
   }
@@ -154,7 +157,22 @@ export declare namespace WForm {
       componentProp?: ComponentPropPool<D>[T] & DomProps
 
       formProp?: FormItemProps & {
-        labelHelpMessage?: string | string[]
+        /**
+         * @description normally is string or string array.
+         * But with locale implement, need to specify show help message, which means a boolean.
+         */
+        labelHelpMessage?: string | string[] | boolean
+
+        /**
+         * @description Used for localed form item which do not need to locale with the whole form
+         * TRUE when localeUniqueKey has value, specify FALSE when no need to locale the label or labelHelpMessage.
+         */
+        locale?: boolean
+
+        /**
+         * @description Used for form related to a localed table
+         */
+        localeWithTable?: boolean
       }
 
       gridProp?: GridItemProps

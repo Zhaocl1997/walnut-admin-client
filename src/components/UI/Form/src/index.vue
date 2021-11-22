@@ -6,10 +6,6 @@
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
 
-  import WFormItem from './components/FormItem/index.vue'
-  import WFormItemExtendQuery from './components/Extend/Query.vue'
-  import WFormItemExtendDivider from './components/Extend/Divider.vue'
-
   import { useFormSchemas } from './hooks/useFormSchemas'
   import { setFormContext } from './hooks/useFormContext'
   import { useFormEvents } from './hooks/useFormEvents'
@@ -18,20 +14,18 @@
   import { props, extendProps } from './props'
   import { generateBaseRules } from './utils'
 
+  import WFormItem from './components/FormItem/index.vue'
+  import WFormItemExtendQuery from './components/Extend/Query.vue'
+  import WFormItemExtendDivider from './components/Extend/Divider.vue'
+
   export default defineComponent({
     name: 'WForm',
 
     inheritAttrs: false,
 
-    components: {
-      WFormItem,
-      WFormItemExtendQuery,
-      WFormItemExtendDivider,
-    },
-
     props,
 
-    emits: ['reset', 'query', 'hook'],
+    emits: ['hook', 'reset', 'query'],
 
     setup(props: WForm.Props, { attrs, slots, emit, expose }) {
       const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
@@ -56,7 +50,7 @@
           if (item.type === 'Extend:Query') {
             return (
               <n-gi span={4} suffix={true}>
-                <w-form-item-extend-query {...item.componentProp} />
+                <WFormItemExtendQuery {...item.componentProp} />
               </n-gi>
             )
           }
@@ -64,10 +58,7 @@
           if (item.type === 'Extend:Divider') {
             return (
               <n-gi span={24}>
-                <w-form-item-extend-divider
-                  index={index}
-                  {...item.componentProp}
-                />
+                <WFormItemExtendDivider index={index} {...item.componentProp} />
               </n-gi>
             )
           }
@@ -77,11 +68,11 @@
               {...(item?.gridProp ?? { span: unref(getProps).span })}
               v-show={item.foldShow}
             >
-              <w-form-item item={item}>
+              <WFormItem item={item}>
                 {item.type === 'Base:Slot' &&
                   Object.keys(slots).includes(item.formProp?.path!) &&
                   renderSlot(slots, item.formProp?.path!)}
-              </w-form-item>
+              </WFormItem>
             </n-gi>
           )
         })
