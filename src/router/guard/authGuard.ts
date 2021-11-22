@@ -1,10 +1,10 @@
 import { easyIsEmpty } from 'easy-fns-ts'
 
-import { authPath, networkErrorPath } from '../constant'
+import { authPath, networkErrorPath, rootPath } from '../constant'
 import { AppCoreFn1 } from '/@/core'
 import { userActionInfo } from '/@/store/actions/user'
 
-const whiteLists: string[] = [authPath, networkErrorPath]
+const whiteLists: string[] = [authPath]
 
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
@@ -12,8 +12,13 @@ export const createAuthGuard = (router: Router) => {
 
     // Paths in `whiteLists` will enter directly
     if (whiteLists.includes(to.path)) {
+      // Login and push to auth page, will go index menu
+      if (to.path === authPath && token.value) {
+        next({ name: menu.value.indexMenuName })
+        return
+      }
       next()
-      return true
+      return
     }
 
     // No token, next to auth page and return
@@ -24,7 +29,7 @@ export const createAuthGuard = (router: Router) => {
       }
 
       next(redirectData)
-      return true
+      return
     }
 
     // Get user info
@@ -35,7 +40,7 @@ export const createAuthGuard = (router: Router) => {
     // Got menus, next and return
     if (menu.value.menus && menu.value.menus.length !== 0) {
       next()
-      return true
+      return
     }
 
     // At this step, user has login but didn't got dynamic routes generated
