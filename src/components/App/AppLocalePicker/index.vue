@@ -1,10 +1,6 @@
 <template>
   <div>
-    <n-popselect
-      :options="langLists"
-      v-model:value="app.locale"
-      trigger="click"
-    >
+    <n-popselect :options="langLists" v-model:value="app.locale">
       <w-icon icon="carbon:language" width="24"></w-icon>
     </n-popselect>
   </div>

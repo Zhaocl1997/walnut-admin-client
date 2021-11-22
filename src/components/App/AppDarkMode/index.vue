@@ -1,10 +1,6 @@
 <template>
   <div>
-    <n-popselect
-      v-model:value="app.darkMode"
-      :options="darkModeOptions"
-      trigger="click"
-    >
+    <n-popselect v-model:value="app.darkMode" :options="darkModeOptions">
       <w-icon
         :icon="app.isDark ? 'carbon:moon' : 'carbon:sun'"
         width="24"
