@@ -44,7 +44,7 @@
           disabled.value = true
 
           const intervalId = setInterval(() => {
-            buttonText.value = t('component.base.button.retry', {
+            buttonText.value = t('comp:button:retry', {
               retryDelay: retryDelay.value,
             })
 
