@@ -1,5 +1,9 @@
 <template>
-  <div ref="el" :style="style" class="fixed cursor-pointer hover:text-primary">
+  <div
+    ref="el"
+    :style="style"
+    class="fixed cursor-pointer hover:(text-primary animate-bounce)"
+  >
     <w-icon
       height="32"
       icon="ant-design:setting-outlined"
@@ -8,7 +12,13 @@
     ></w-icon>
   </div>
 
-  <w-drawer v-model:show="show" :width="350" title="app:settings:title">
+  <w-drawer
+    v-model:show="show"
+    :width="350"
+    title="app:settings:title"
+    @yes="() => (show = false)"
+    @no="() => (show = false)"
+  >
     <w-form @hook="register1" :model="appRelatives"></w-form>
     <w-form @hook="register2" :model="menuRelatives"></w-form>
     <w-form @hook="register3" :model="headerRelatives"></w-form>
