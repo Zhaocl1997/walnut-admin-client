@@ -5,7 +5,7 @@
         <w-message msg="This is a help message."></w-message>
 
         <w-message
-          :msg="'This is a help message. \n Wrap by string.'"
+          :msg="'This is a help message. \\n Wrap by string.'"
         ></w-message>
 
         <w-message
