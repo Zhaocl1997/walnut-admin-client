@@ -1,5 +1,5 @@
-const { app: App, settings } = useAppState()
-const { app, menu, header, tab } = settings.value.ForDevelopers
+const { appMemo, settings } = useAppState()
+const { app, menu } = settings.value.ForDevelopers
 
 const getShouwMenuCollpase = computed(() => app.showMenu && menu.showCollapse)
 
@@ -29,9 +29,9 @@ export const getShowMenuCollapseBuiltIn = computed(() => {
 export const getShowAside = computed(() => app.showLogo || app.showMenu)
 
 export const getContentWidth = computed(() =>
-  App.value.isMobile || !getShowAside.value
+  appMemo.value.isMobile || !getShowAside.value
     ? '100vw'
-    : App.value.collapse
+    : appMemo.value.collapse
     ? `calc(100vw - ${menu.collapsedWidth}px)`
     : `calc(100vw - ${menu.width}px)`
 )
