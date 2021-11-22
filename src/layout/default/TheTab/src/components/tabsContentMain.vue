@@ -81,7 +81,7 @@
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { app, appMemo, tab, settings } = useAppState()
+  const { appMemo, tab, settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
 
   const {
@@ -116,7 +116,8 @@
     onOpenDevTool(e, item, index, ctxMenuShow.value)
 
     // start bounce
-    if (item.name === currentRoute.value.name) startBounce()
+    if (!appMemo.value.isMobile && item.name === currentRoute.value.name)
+      startBounce()
   }
 
   const onMouseLeave = (index: number) => {
@@ -124,7 +125,11 @@
     clearTimeout(timeoutId.value!)
 
     // stop bounce
-    if (currentMouseTab.value?.name === currentRoute.value.name) stopBounce()
+    if (
+      !appMemo.value.isMobile &&
+      currentMouseTab.value?.name === currentRoute.value.name
+    )
+      stopBounce()
   }
 
   const onMouseUp = (e: MouseEvent, name: string) => {

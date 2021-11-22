@@ -38,10 +38,12 @@
   import { setTabsContext } from './hooks/useTabsContext'
   import { isDev } from '/@/utils/constant/vue'
 
-  const { settings } = useAppState()
+  const { appMemo, settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
 
-  const getShowDevTools = computed(() => isDev() && tabSettings.devtool)
+  const getShowDevTools = computed(
+    () => isDev() && !appMemo.value.isMobile && tabSettings.devtool
+  )
 
   const { scrollRef, getCurrentRouteTabIndex } = useTabs()
 
