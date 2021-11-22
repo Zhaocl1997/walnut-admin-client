@@ -35,17 +35,17 @@
         @click="onTabClick(item.name)"
         @mouseup="onMouseUp($event, item.name)"
         @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
-        @mouseenter="onOpenDevTool($event, item, index, ctxMenuShow)"
-        @mouseleave="onCloseDevTool"
+        @mouseenter="onMouseEnter($event, item, index)"
+        @mouseleave="onMouseLeave(index)"
         :data-affix="item.meta.affix"
       >
-        <div
+        <TabDot
+          :ref="setItemRef"
           v-if="
             !app.isMobile && !tabSettings.showIcon && $route.name === item.name
           "
-          class="bg-primary hover:bg-primaryHover rounded-full h-4 w-4"
           :data-affix="item.meta.affix"
-        ></div>
+        ></TabDot>
 
         <w-icon
           v-if="tabSettings.showIcon"
@@ -73,10 +73,12 @@
 </template>
 
 <script lang="ts" setup>
+  import TabDot from './dot'
   import { getTabsContext } from '../hooks/useTabsContext'
   import { useTabsSortable } from '../hooks/useTabsSortable'
 
   const { t } = useAppI18n()
+  const { currentRoute } = useAppRouter()
   const { app, tab, settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
 
@@ -91,23 +93,40 @@
     ctxMenuShow,
     currentMouseTab,
     currentMouseTabIndex,
+    setItemRef,
+    startBounce,
+    stopBounce,
   } = getTabsContext()
 
-  // clear time out id for devTool when open ctxMenu
   const onOpenContextMenu = (e: MouseEvent, item: AppTab, index: number) => {
     currentMouseTab.value = item
     currentMouseTabIndex.value = index
+
+    // clear time out id for devTool when open ctxMenu
     clearTimeout(timeoutId.value!)
+
+    // open ctx menu
     onOpenCtxMenu(e)
   }
 
-  // clear the setTimeout for devTool when mouse leave
-  const onCloseDevTool = () => {
-    clearTimeout(timeoutId.value!)
+  const onMouseEnter = (e: MouseEvent, item: AppTab, index: number) => {
+    // open devtool
+    onOpenDevTool(e, item, index, ctxMenuShow.value)
+
+    // start bounce
+    if (item.name === currentRoute.value.name) startBounce()
   }
 
-  // middle button close
+  const onMouseLeave = (index: number) => {
+    // clear the setTimeout for devTool when mouse leave
+    clearTimeout(timeoutId.value!)
+
+    // stop bounce
+    if (currentMouseTab.value?.name === currentRoute.value.name) stopBounce()
+  }
+
   const onMouseUp = (e: MouseEvent, name: string) => {
+    // middle button close
     // 1 stands for mouse middle button
     if (e.button === 1) {
       const isRemoveable = !tab.value.tabs
@@ -119,8 +138,8 @@
     }
   }
 
-  // tab sortable
   watchEffect(() => {
+    // tab sortable
     useTabsSortable(tabSettings.sortable)
   })
 </script>

@@ -33,6 +33,7 @@
   import { useTabsContextMenu } from './hooks/useTabsContextMenu'
   import { useTabsUtils } from './hooks/useTabsUtils'
   import { useTabsDevTools } from './hooks/useTabsDevTools'
+  import { useTabsDot } from './hooks/useTabsDot'
 
   import { setTabsContext } from './hooks/useTabsContext'
   import { isDev } from '/@/utils/constant/vue'
@@ -60,9 +61,13 @@
   const { x, y, ctxMenuShow, onOpenCtxMenu, onCloseCtxMenu } =
     useTabsContextMenu()
 
+  const { setItemRef, startBounce, stopBounce } = useTabsDot()
+
   const { leftUtils, rightUtils } = useTabsUtils(
     scrollRef,
-    getCurrentRouteTabIndex
+    getCurrentRouteTabIndex,
+    startBounce,
+    stopBounce
   )
 
   // set context
@@ -86,5 +91,9 @@
     timeoutId,
     onOpenDevTool,
     onOpenFile,
+
+    setItemRef,
+    startBounce,
+    stopBounce,
   })
 </script>

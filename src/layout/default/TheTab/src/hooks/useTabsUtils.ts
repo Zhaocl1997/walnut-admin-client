@@ -5,7 +5,9 @@ import { useRedirect } from '/@/hooks/core/useRedirect'
 
 export const useTabsUtils = (
   scrollRef: Ref<Nullable<WScrollbarRef>>,
-  currentRouteTabIndex: Ref<number>
+  currentRouteTabIndex: Ref<number>,
+  startBounce: Fn,
+  stopBounce: Fn
 ) => {
   const leftUtils: AppTabUtilListItem[] = [
     {
@@ -18,6 +20,12 @@ export const useTabsUtils = (
       icon: 'ant-design:aim-outlined',
       event: () => {
         scrollRef.value?.scrollToIndex(currentRouteTabIndex.value)
+        nextTick(() => {
+          startBounce()
+          setTimeout(() => {
+            stopBounce()
+          }, 3000)
+        })
       },
     },
   ]

@@ -31,4 +31,8 @@ export interface AppTabContext {
     ctxMenuShow: boolean
   ) => void
   onOpenFile: Fn
+
+  setItemRef: Fn
+  startBounce: Fn
+  stopBounce: Fn
 }
