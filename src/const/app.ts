@@ -16,8 +16,8 @@ export const DarkModeConst = {
 export type ValueOfDarkModeConst = ValueOf<typeof DarkModeConst>
 
 export const LocaleConst = {
-  EN: 'en',
-  ZH_CN: 'zh_CN',
+  EN_US: 'en-US',
+  ZH_CN: 'zh-CN',
 } as const
 
 export type ValueOfLocaleConst = ValueOf<typeof LocaleConst>

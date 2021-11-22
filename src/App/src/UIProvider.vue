@@ -37,8 +37,8 @@
         <n-config-provider
           theme={getTheme.value}
           theme-overrides={getThemeOverrides.value}
-          locale={app.value.locale === 'en' ? {} : zhCN}
-          date-locale={app.value.locale === 'en' ? {} : dateZhCN}
+          locale={app.value.locale === 'en-US' ? {} : zhCN}
+          date-locale={app.value.locale === 'en-US' ? {} : dateZhCN}
         >
           <n-loading-bar-provider>
             <n-dialog-provider>
