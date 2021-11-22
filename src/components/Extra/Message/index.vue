@@ -27,7 +27,7 @@
               <w-icon
                 icon={props.icon}
                 width="16"
-                class="align-middle"
+                class="align-middle inline mb-0.5"
               ></w-icon>
             ),
           }}

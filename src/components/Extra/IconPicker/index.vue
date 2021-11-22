@@ -41,7 +41,7 @@
                 :icon="icon"
                 width="36"
                 :class="[
-                  'm-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
+                  'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
                   {
                     'bg-light-blue-300': icon === value,
                     'hover:bg-warm-gray-300': icon !== value,

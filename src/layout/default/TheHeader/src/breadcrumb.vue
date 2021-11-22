@@ -18,7 +18,7 @@
             <w-icon
               icon={item.meta.icon}
               height="20"
-              class="-mb-1 mr-1"
+              class="mr-1 inline -mt-0.5"
             ></w-icon>
           )}
           <span class="app-text">{t(item.meta.title!)}</span>
