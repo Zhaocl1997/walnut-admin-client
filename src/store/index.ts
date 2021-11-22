@@ -1,115 +1,19 @@
 import type { RemoveableRef } from '@vueuse/core'
-import { UserInfoType } from './types/user'
+import type { AppMemory, AppStorage } from './types'
+
+const preferredLanguages = usePreferredLanguages()
+const preferredColor = usePreferredColorScheme()
 
 type RemoveableRefRecord<T> = {
   [P in keyof T]: RemoveableRef<T[P]>
-}
-
-interface AppStorage {
-  app: {
-    isDark: boolean
-    darkMode: ValueOfDarkModeConst
-    locale: ValueOfLocaleConst
-    collapse: boolean
-    device: ValueOfDevideConst
-    isMobile: boolean
-    showAside: boolean
-    isFullScreen: boolean
-    fullscreenTarget: string
-  }
-
-  token: string
-
-  auth: {
-    username?: string
-    password?: string
-  }
-}
-
-interface AppMemory {
-  menu: {
-    menus: AppMenu[]
-    keepAliveRouteNames: string[]
-    indexMenuName: string
-  }
-
-  user: {
-    userInfo: Partial<UserInfoType>
-  }
-
-  tab: {
-    tabs: AppTab[]
-    visitedTabs: Map<string, string[]>
-  }
-
-  settings: {
-    ForDevelopers: {
-      app: {
-        showLogo: boolean
-        showMenu: boolean
-        showHeader: boolean
-        showTabs: boolean
-        showFooter: boolean
-
-        fixLogo: boolean
-        fixHeader: boolean
-
-        showAnimation: boolean
-        animationName: ValueOfTransitionNameConst
-
-        keepAlive: boolean
-      }
-
-      menu: {
-        showCollapse: boolean
-        collapseMode: ValueOfMenuCollapseModeConst
-        width: number
-        collapsedWidth: number
-        accordion: boolean
-        collapsedIconSize: number
-        iconSize: number
-        indent: number
-        inverted: boolean
-      }
-
-      header: {
-        height: number
-        showBreadcrumb: boolean
-        showFullScreen: boolean
-        showLocale: boolean
-        showDarkMode: boolean
-        showLock: boolean
-        showSearch: boolean
-        inverted: boolean
-      }
-
-      tab: {
-        height: number
-        showIcon: boolean
-        showUtils: boolean
-        contextMenu: boolean
-        sortable: boolean
-        styleMode: ValueOfTabStyleModeConst
-        devtool: boolean
-      }
-
-      breadcrumb: {
-        showIcon: boolean
-        showDropdown: boolean
-        separator: string
-      }
-    }
-
-    ForUsers: {}
-  }
 }
 
 const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
   () => ({
     app: useAppStorage(PersistentKeysConst.APP, {
       isDark: false,
-      darkMode: 'light',
-      locale: 'zh_CN',
+      darkMode: preferredColor.value as ValueOfDarkModeConst,
+      locale: preferredLanguages.value[0] as ValueOfLocaleConst,
       collapse: false,
       device: 'desktop',
       isMobile: false,
