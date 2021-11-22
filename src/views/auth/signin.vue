@@ -1,15 +1,5 @@
 <template>
-  <div @click.stop>
-    <w-form
-      @hook="register"
-      :model="signinFormData"
-      class="abs-center w-8/12"
-    ></w-form>
-
-    <div class="float-right m-3">
-      <WAppLocalePicker></WAppLocalePicker>
-    </div>
-  </div>
+  <w-form @hook="register" :model="signinFormData"></w-form>
 </template>
 
 <script lang="tsx">
@@ -24,7 +14,7 @@
       const { t } = useAppI18n()
       const { auth } = useAppState()
 
-      const buttonLoading = ref(false)
+      const loading = ref(false)
 
       const signinFormData = reactive({
         username: '',
@@ -36,17 +26,18 @@
         const valid = await validate!()
 
         if (valid) {
-          buttonLoading.value = true
+          loading.value = true
 
           await userActionSignin(signinFormData)
 
-          buttonLoading.value = false
+          loading.value = false
         }
       }
 
       const [register, { validate }] = useForm<typeof signinFormData>({
         showLabel: false,
         xGap: 0,
+        disabled: loading,
         schemas: [
           {
             type: 'Base:Input',
@@ -56,13 +47,13 @@
               rule: [
                 {
                   required: true,
-                  message: t('system.auth.rules.username'),
+                  message: t('form:signin:username:rule'),
                   trigger: ['input', 'blur'],
                 },
               ],
             },
             componentProp: {
-              placeholder: computed(() => t('system.auth.username')),
+              placeholder: computed(() => t('form:signin:username')),
               clearable: true,
             },
           },
@@ -74,16 +65,16 @@
               rule: [
                 {
                   required: true,
-                  message: t('system.auth.rules.password'),
+                  message: t('form:signin:password:rule'),
                   trigger: ['input', 'blur'],
                 },
               ],
             },
             componentProp: {
-              placeholder: computed(() => t('system.auth.password')),
+              placeholder: computed(() => t('form:signin:password')),
               clearable: true,
               type: 'password',
-              showPasswordOn: 'mousedown',
+              showPasswordOn: 'click',
               onKeyup: (e) => {
                 if (e.code === 'Enter' || e.code === 'NumpadEnter') {
                   onSignin()
@@ -96,7 +87,7 @@
             componentProp: {
               render: ({ formData }) => (
                 <n-checkbox vModel={[formData.rememberMe, 'checked']}>
-                  {t('system.auth.remember')}
+                  {t('form:signin:remember')}
                 </n-checkbox>
               ),
             },
@@ -104,14 +95,16 @@
           {
             type: 'Base:Button',
             componentProp: {
-              textProp: computed(() => t('system.auth.signin')),
-              loading: buttonLoading.value,
+              textProp: computed(() => t('form:signin:submit')),
+              loading: loading,
+              disabled: loading,
               style: {
                 background: 'transparent',
                 width: '100%',
-                fontSize: '16px',
+                fontSize: '18px',
                 fontWeight: '900',
               },
+              class: 'm-auto uppercase rounded-full',
               onClick: onSignin,
             },
           },

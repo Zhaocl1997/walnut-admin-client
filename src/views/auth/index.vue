@@ -1,31 +1,67 @@
 <template>
-  <div class="w-auth h-screen w-screen">
-    <w-icon
-      icon="ant-design:user-outlined"
-      height="24"
-      color="#F0F8FF"
-      @click="onShowCard"
-      class="cursor-pointer m-0.5 float-right"
-    ></w-icon>
+  <!-- https://tailwindcomponents.com/component/login-register-form-with-image -->
+  <section class="min-h-screen flex items-stretch text-white">
+    <div class="absolute top-8 right-8 cursor-pointer z-50">
+      <WAppLocalePicker></WAppLocalePicker>
+    </div>
 
-    <transition name="el-fade-in-linear">
-      <div v-show="showCard">
-        <WFlipper width="450px" height="500px" class="w-auth-card abs-center">
-          <template #front>
-            <div class="w-auth-card__front h-full rounded-2xl">
-              <SignIn></SignIn>
-            </div>
-          </template>
-
-          <template #back>
-            <div class="w-auth-card__back h-full rounded-2xl">
-              <SignUp></SignUp>
-            </div>
-          </template>
-        </WFlipper>
+    <div
+      class="
+        lg:flex
+        w-1/2
+        hidden
+        bg-gray-500 bg-no-repeat bg-cover
+        relative
+        items-center
+      "
+      style="background-image: url('/assets/auth_bg.jpg')"
+    >
+      <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+      <div class="w-full px-24 z-10">
+        <h1 class="text-5xl font-bold text-left tracking-wide">
+          {{ t('app:signin:h1') }}
+        </h1>
+        <p class="text-3xl my-4">{{ t('app:signin:h2') }}</p>
       </div>
-    </transition>
-  </div>
+    </div>
+
+    <div
+      class="
+        lg:w-1/2
+        w-full
+        flex
+        items-center
+        justify-center
+        text-center
+        md:px-16
+        px-0
+        z-0
+      "
+      style="background-color: #161616"
+    >
+      <div
+        class="
+          absolute
+          lg:hidden
+          z-10
+          inset-0
+          bg-gray-500 bg-no-repeat bg-cover
+          items-center
+        "
+        style="background-image: url('/assets/auth_bg.jpg')"
+      >
+        <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+      </div>
+      <div class="w-full py-6 z-20">
+        <h1 class="my-2 w-auto inline-flex items-center">
+          <img src="/assets/logo.png" :alt="title" class="w-20" />
+          <span class="text-4xl ml-4">{{ title }}</span>
+        </h1>
+
+        <SignIn class="m-auto text-justify w-9/12 sm:w-6/12" />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script lang="ts">
@@ -40,36 +76,15 @@
     components: { SignIn, SignUp },
 
     setup() {
-      const showCard = ref(false)
-
-      const onShowCard = () => {
-        showCard.value = !showCard.value
-      }
+      const { t } = useAppI18n()
+      const title = computed(() => import.meta.env.VITE_APP_TITLE)
 
       return {
-        showCard,
-        onShowCard,
+        t,
+        title,
       }
     },
   })
 </script>
 
-<style lang="scss" scoped>
-  .w-auth {
-    background: transparent url('/assets/facebook-1200.png') no-repeat center
-      center fixed;
-    background-size: cover;
-
-    &-card {
-      &__front {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/auth_signin.jpg') no-repeat center center;
-        background-size: cover;
-      }
-
-      &__back {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/auth_signup.jpg') no-repeat center center;
-        background-size: cover;
-      }
-    }
-  }
-</style>
+<style lang="scss" scoped></style>
