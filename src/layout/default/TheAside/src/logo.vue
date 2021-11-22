@@ -8,10 +8,15 @@
         (appMemo.collapse
           ? settings.ForDevelopers.menu.collapsedWidth
           : settings.ForDevelopers.menu.width) + 'px',
+      zIndex: 999,
     }"
   >
     <div class="*hstack justify-evenly items-center">
-      <img src="/assets/logo.png" alt="Walnut Admin Logo" class="h-9 w-9 m-1" />
+      <img
+        src="/assets/logo.png"
+        :alt="`${getAppTitle} Logo`"
+        class="h-9 w-9 m-1"
+      />
 
       <w-transition name="slide-up">
         <div
