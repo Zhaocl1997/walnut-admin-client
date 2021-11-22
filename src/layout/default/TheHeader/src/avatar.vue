@@ -2,7 +2,7 @@
   <n-dropdown trigger="hover" @select="onSelect" :options="dropdownOptions">
     <div class="*hstack">
       <n-avatar
-        src="https://img0.baidu.com/it/u=1616913770,1917139498&fm=26&fmt=auto&gp=0.jpg"
+        src="/assets/logo.png"
         circle
         alt="avatar"
         size="small"
@@ -19,14 +19,15 @@
   import { upperFirst } from 'easy-fns-ts'
   import { userActionSignOut } from '/@/store/actions/user'
 
+  const { t } = useAppI18n()
   const { user } = useAppState()
 
-  const { goNext } = useContinue('Are you sure to sign out?')
+  const { goNext } = useContinue(() => t('app:user:signout:warning'))
 
-  const dropdownOptions = ref([
+  const dropdownOptions = computed(() => [
     {
       key: '1',
-      label: 'Sign Out',
+      label: t('app:user:signout'),
     },
   ])
 

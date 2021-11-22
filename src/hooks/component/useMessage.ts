@@ -13,17 +13,17 @@ export const useAppDialog = () => {
 /**
  * @description operations to confirm to continue, like delete or other important operations
  */
-export const useContinue = (msg: string) => {
+export const useContinue = (msg: MaybeRefSelf<string> | Fn<any, string>) => {
   const { t } = useAppI18n()
   const dialog = useAppDialog()
 
   const goNext = () =>
-    new Promise((res) => {
+    new Promise<boolean>((res) => {
       dialog.warning({
-        title: t('component.base.message.warning'),
-        content: msg,
-        negativeText: t('component.base.action.cancel'),
-        positiveText: t('component.base.action.confirm'),
+        title: t('app:base:warning'),
+        content: msg as any,
+        negativeText: t('app:button:no'),
+        positiveText: t('app:button:yes'),
         onPositiveClick: () => {
           res(true)
         },
