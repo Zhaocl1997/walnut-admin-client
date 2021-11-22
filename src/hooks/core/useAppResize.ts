@@ -11,11 +11,9 @@ export const useAppResize = () => {
       // 1.isMobile => true
       // 2.device => 'mobile'
       // 3.no more collapse
-      // 4.show aside drawer
       app.value.isMobile = true
       app.value.device = 'mobile'
       app.value.collapse = false
-      app.value.showAside = true
     }
 
     if (breakpoints.isInBetween('sm', 'lg')) {
@@ -38,7 +36,7 @@ export const useAppResize = () => {
       app.value.collapse = false
     }
 
-    if (breakpoints.isInBetween('xl', '2xl')) {
+    if (breakpoints.isGreater('xl')) {
       // when desktop
       // 1.isMobile => false
       // 2.device => 'desktop'
