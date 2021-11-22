@@ -12,6 +12,7 @@
           })
       "
       :text-prop="item.text"
+      :disabled="tableProps.loading"
     >
     </w-button>
   </n-space>
@@ -39,27 +40,27 @@
       {
         type: 'create' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
-        text: t('component.table.buttons.create'),
+        text: t('app:button:create'),
       },
       {
         type: 'update' as WTable.HeaderActionType,
         icon: 'ant-design:edit-outlined',
-        text: t('component.table.buttons.edit'),
+        text: t('app:button:read'),
       },
       {
         type: 'delete' as WTable.HeaderActionType,
         icon: 'ant-design:delete-outlined',
-        text: t('component.table.buttons.delete'),
+        text: t('app:button:delete'),
       },
       {
         type: 'import' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
-        text: t('component.table.buttons.import'),
+        text: t('app:button:import'),
       },
       {
         type: 'export' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
-        text: t('component.table.buttons.export'),
+        text: t('app:button:export'),
       },
     ].filter((i) => isShow(i.type))
   )

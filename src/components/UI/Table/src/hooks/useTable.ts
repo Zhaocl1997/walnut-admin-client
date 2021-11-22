@@ -17,7 +17,9 @@ export const useTable = <T>(
     })
   }
 
-  const methods = {}
+  const methods = {
+    onInit: () => wTableRef.value?.onInit(),
+  } as WTable.Inst.WTableInst
 
   return [register, methods]
 }

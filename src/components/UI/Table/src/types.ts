@@ -1,4 +1,4 @@
-import type { DataTableProps, DataTableColumn, DataTableInst } from 'naive-ui'
+import type { DataTableColumn, DataTableInst } from 'naive-ui'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import { props } from './props'
@@ -7,6 +7,8 @@ export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete'
 
   type HeaderActionType = 'create' | 'update' | 'delete' | 'export' | 'import'
+
+  type SetProps = (p: Partial<Props>) => void
 
   interface RowData {
     [key: string]: unknown
@@ -18,14 +20,15 @@ export declare namespace WTable {
     type NDataTableInst = DataTableInst
 
     interface WTableInst extends NDataTableInst {
-      setProps: Fn
+      setProps: SetProps
+      onInit: Fn
     }
   }
 
   namespace Hook {
     type useTableReturnType = [
       (instance: Inst.WTableInst) => void,
-      Partial<Inst.WTableInst>
+      Inst.WTableInst
     ]
   }
 
@@ -55,9 +58,11 @@ export declare namespace WTable {
         (ExtendType.Action<T> | ExtendType.Icon<T> | ExtendType.Formatter<T>)
 
   interface Props<T = RowData>
-    extends Omit<DataTableProps, 'columns'>,
-      ExtractPropTypes<typeof props> {
-    columns: Column<T>[]
+    extends Partial<Omit<ExtractPropTypes<typeof props>, 'columns'>> {
+    /**
+     * @description rRewrite NDataTable columns type, add our own custom column type
+     */
+    columns?: Column<T>[]
   }
 
   namespace Params {
@@ -67,7 +72,10 @@ export declare namespace WTable {
   }
 
   interface Context {
+    tableRef: Ref<Inst.NDataTableInst | undefined>
     onEvent: (params: Params.Entry) => void
     tableProps: ComputedRef<Props>
+    onInit: (extraParams?: Recordable<any> | undefined) => Promise<void>
+    initParams: Ref<BaseListParams>
   }
 }

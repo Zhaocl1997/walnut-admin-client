@@ -1,42 +1,56 @@
 <script lang="tsx">
   import type { WTable } from '../src/types'
 
+  import { easyOmit } from 'easy-fns-ts'
+
   import { useProps } from '/@/hooks/core/useProps'
 
   import { setTableContext } from './hooks/useTableContext'
   import { useTableEvents } from './hooks/useTableEvents'
   import { useTableColumns } from './hooks/useTableColumns'
+  import { useTableAPI } from './hooks/useTableAPI'
 
-  import { props } from './props'
+  import { props, extendProps } from './props'
 
   import HeaderActions from './components/actions.vue'
+  import QueryForm from './components/queryForm.vue'
 
   export default defineComponent({
     name: 'WTable',
 
-    components: { HeaderActions },
+    inheritAttrs: false,
 
     props,
 
     emits: ['hook', 'action'],
 
-    // @ts-ignore
     setup(props: WTable.Props, { attrs, emit, expose, slots }) {
+      const tableRef = ref<WTable.Inst.NDataTableInst>()
+
       const { setProps, getProps } = useProps<WTable.Props>(props)
 
       const { onEvent } = useTableEvents(getProps)
 
       const { columns } = useTableColumns(getProps)
 
-      const renderNDataTable = () => (
+      const { onInit, initParams } = useTableAPI(getProps, setProps)
+
+      const getNDataTableProps = computed(() =>
+        easyOmit(getProps.value, Object.keys(extendProps))
+      )
+
+      const render = () => (
         <>
+          <QueryForm />
+
           <div class="mb-2">
             <HeaderActions />
           </div>
 
           <n-data-table
-            {...unref(getProps)}
-            columns={unref(columns)}
+            ref={tableRef}
+            {...getNDataTableProps.value}
+            columns={columns.value}
           ></n-data-table>
         </>
       )
@@ -45,15 +59,19 @@
         name: 'hook',
         params: {
           setProps,
+          onInit,
         },
       })
 
       setTableContext({
+        tableRef,
         onEvent,
         tableProps: getProps,
+        onInit,
+        initParams,
       })
 
-      return () => renderNDataTable()
+      return () => render()
     },
   })
 </script>
