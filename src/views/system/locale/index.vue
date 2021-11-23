@@ -23,12 +23,6 @@
   import { useInitialState } from '/@/utils'
 
   // main
-
-  const tableData = ref<AppLocale[]>([])
-  const tableDataTotal = ref(0)
-  const tableDataPage = ref(1)
-  const tableDataPageSize = ref(10)
-  const tableDataLoading = ref(false)
   const langList = ref<BaseOptionDataItem[]>([])
 
   const actionType = ref<'create' | 'update'>('create')
@@ -37,22 +31,10 @@
     stateRef: formData,
     setState,
     resetState,
-  } = useInitialState<AppLocale>({
+  } = useInitialState<AppLocale & { oldKey?: string }>({
     key: '',
+    oldKey: '',
   })
-
-  const onGetTableData = async () => {
-    tableDataLoading.value = true
-
-    const res = await localeAPI.list<AppLocale>({
-      page: tableDataPage.value,
-      pageSize: tableDataPageSize.value,
-    })
-
-    tableData.value = res.data
-    tableDataTotal.value = res.total
-    tableDataLoading.value = false
-  }
 
   const onGetLangList = async () => {
     const res = await langAPI.list()
@@ -63,7 +45,6 @@
   }
 
   onMounted(() => {
-    onGetTableData()
     onGetLangList()
   })
 
@@ -71,53 +52,47 @@
     actionType.value = 'create'
 
     const { done } = onOpen()
+
     done()
   }
 
-  const onOpenDrawer = async (id: string) => {
-    console.log(id, 123)
+  const onOpenDrawer = async (key: string) => {
+    actionType.value = 'update'
 
     const { done } = onOpen()
 
-    actionType.value = 'update'
-
     try {
-      const res = await localeAPI.read(id)
+      const res = await localeAPI.read(key)
       setState(res)
     } finally {
       done()
     }
   }
 
-  const onDelete = async (id: string) => {
-    const ret = await localeAPI.delete(id)
+  const onDelete = async (key: string) => {
+    const ret = await localeAPI.delete(key)
     if (ret) {
       useAppMessage().success('Operation Success!')
-      await onGetTableData()
+      await onInit()
     }
   }
 
-  const onUpdatePage = async (page: number) => {
-    tableDataPage.value = page
-    await onGetTableData()
-  }
-
-  const onUpdatePageSize = async (pageSize: number) => {
-    tableDataPageSize.value = pageSize
-    await onGetTableData()
-  }
-
-  const [registerTable] = useTable<
+  const [registerTable, { onInit }] = useTable<
     Pick<AppLocale, '_id' | 'key' | 'createdAt' | 'updatedAt'> & {
       isCompleted: boolean
       process: number
     }
   >({
+    localeUniqueKey: 'locale',
+
+    maxHeight: 600,
+
+    actionList: ['create'],
+
     onAction: ({ type }) => {
       switch (type) {
         case 'create':
           onCreate()
-
           break
 
         default:
@@ -125,40 +100,58 @@
       }
     },
 
-    actionList: ['create'],
-
-    remote: true,
-
     rowKey: (row) => row._id,
 
-    loading: tableDataLoading,
+    apiProps: {
+      // Table API Solution 1
+      api: localeAPI.list.bind(localeAPI),
+      // Table API Solution 2
+      // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
+    },
 
-    // @ts-ignore
-    data: tableData,
-
-    pagination: {
-      itemCount: tableDataTotal,
-      page: tableDataPage,
-      pageSize: tableDataPageSize,
-      showSizePicker: true,
-      showQuickJumper: true,
-      pageSizes: [10, 30, 50],
-      onChange: onUpdatePage,
-      // TODO naive bug , trigger twice
-      // onUpdatePage,
-      onUpdatePageSize,
+    queryFormProps: {
+      localeUniqueKey: 'locale',
+      localeWithTable: true,
+      span: 8,
+      labelWidth: 100,
+      schemas: [
+        {
+          type: 'Base:Select',
+          formProp: {
+            path: 'key',
+          },
+          componentProp: {
+            clearable: true,
+            options: ['app:', 'sys:', 'form:', 'table:'].map((i) => ({
+              value: i,
+              label: i,
+            })),
+          },
+        },
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'value',
+          },
+          componentProp: {
+            clearable: true,
+          },
+        },
+        {
+          type: 'Extend:Query',
+        },
+      ],
     },
 
     columns: [
       {
-        title: 'Locale Key',
         key: 'key',
-        width: 200,
         align: 'center',
+        width: 400,
+        sorter: true,
       },
 
       {
-        title: 'Process',
         key: 'process',
         width: 100,
         align: 'center',
@@ -167,7 +160,6 @@
       },
 
       {
-        title: 'Completed',
         key: 'isCompleted',
         width: 120,
         align: 'center',
@@ -176,39 +168,45 @@
       },
 
       {
-        title: 'Created At',
         key: 'createdAt',
         width: 200,
+        align: 'center',
         extendType: 'formatter',
         formatter: (row) => formatTime(row.createdAt!),
-        align: 'center',
+        sorter: true,
       },
 
       {
-        title: 'Updated At',
         key: 'updatedAt',
         width: 200,
+        align: 'center',
         extendType: 'formatter',
         formatter: (row) => formatTime(row.updatedAt!),
-        align: 'center',
+        sorter: true,
       },
 
       {
-        title: 'Action',
         key: 'action',
+        align: 'center',
+        width: 100,
         extendType: 'action',
         extendActionType: ['read'],
         onRead: (row) => {
-          onOpenDrawer(row._id!)
+          formData.value.oldKey = row.key
+          onOpenDrawer(row.key!)
         },
         onDelete: (row) => {
-          onDelete(row._id!)
+          onDelete(row.key!)
         },
       },
     ],
   })
 
   const [registerForm, { onOpen }] = useForm<AppLocale>({
+    localeUniqueKey: 'locale',
+
+    localeWithTable: true,
+
     preset: 'drawer',
 
     labelWidth: '140px',
@@ -222,18 +220,25 @@
           : 'Update Existing Locale Message'
       ),
       width: '500',
-      onYes: async (handler) => {
-        await handler(localeAPI, localeAPI[actionType.value], formData.value)
+      onYes: async (apiHandler) => {
+        await apiHandler(
+          // Form API Solution 1
+          localeAPI[actionType.value].bind(localeAPI),
+          // Form API Solution 2
+          // (data) => AppAxios.put({ url: '/system/locale', data }),
+          formData.value
+        )
         resetState()
-        await onGetTableData()
+        await onInit()
       },
-      onNo: (handler) => {
+      onNo: (done) => {
         resetState()
-        handler()
+        done()
       },
     },
 
     // TODO type error
+    // @ts-ignore
     schemas: computed(() => [
       {
         type: 'Base:Input',
@@ -251,9 +256,11 @@
         formProp: {
           path: i.value as string,
           label: i.label,
+          locale: false,
         },
         componentProp: {
           clearable: true,
+          type: 'textarea',
         },
       })),
     ]),

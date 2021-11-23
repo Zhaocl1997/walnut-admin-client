@@ -60,7 +60,7 @@
   const onGetTableData = async () => {
     tableDataLoading.value = true
 
-    const res = await roleAPI.list<AppRole>({
+    const res = await roleAPI.list({
       page: tableDataPage.value,
       pageSize: tableDataPageSize.value,
     })
@@ -237,7 +237,7 @@
       ),
       width: '500',
       onYes: async (handler) => {
-        await handler(roleAPI, roleAPI[actionType.value], formData.value)
+        await handler(roleAPI[actionType.value].bind(roleAPI), formData.value)
         resetState()
         await onGetTableData()
       },

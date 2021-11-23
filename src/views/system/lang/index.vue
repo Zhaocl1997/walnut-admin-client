@@ -43,7 +43,7 @@
   const onGetTableData = async () => {
     tableDataLoading.value = true
 
-    const res = await langAPI.list<AppLang>({
+    const res = await langAPI.list({
       page: tableDataPage.value,
       pageSize: tableDataPageSize.value,
     })
@@ -199,7 +199,7 @@
       ),
       width: '500',
       onYes: async (handler) => {
-        await handler(langAPI, langAPI[actionType.value], formData.value)
+        await handler(langAPI[actionType.value].bind(langAPI), formData.value)
         resetState()
         await onGetTableData()
       },

@@ -24,7 +24,6 @@
 
   import { getViewsOptions, deepKeys } from './utils'
   import { useInitialState } from '/@/utils'
-  import { MenuTernalConst, MenuTypeConst } from '/@/const'
 
   type BaseOptions = { value: string; label: string }[]
 
@@ -87,18 +86,21 @@
   // computed
   const getLocaleCoreData = computed(() =>
     formatTree<AppMenu>(coreData.value, {
-      format: (node) => {
-        return { ...node, title: t(node.title) }
-      },
+      format: (node) => ({
+        ...node,
+        title: node.title ? t(node.title) : node.title,
+      }),
     })
   )
   const getTableData = computed(() => getLocaleCoreData.value[0]?.children)
   const getTitleList = computed(() =>
-    (
-      Array.from(deepKeys(getLocaleMessage(locale.value))) as BaseOptions
-    ).filter(
-      (i) => i.value.includes('system.menu') || i.value.includes('common.base')
-    )
+    Object.entries(getLocaleMessage(locale.value))
+      .map(([k, v]) => {
+        if (k.startsWith('sys:menu:')) {
+          return { value: k, label: v }
+        }
+      })
+      .filter((i) => i)
   )
   const getCurrentNode = computed(() =>
     findPath<AppMenu>(unref(coreData), (n) => n._id === formData.value.pid)
@@ -270,7 +272,7 @@
       ),
       width: '500',
       onYes: async (handler) => {
-        await handler(menuAPI, menuAPI[actionType.value], formData.value)
+        await handler(menuAPI[actionType.value].bind(menuAPI), formData.value)
         resetState()
         await onGetList()
       },
