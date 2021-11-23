@@ -44,11 +44,17 @@ export const createComponentPlugin = (): VitePlugin => {
   return Components({
     dirs: ['/@/components'],
 
-    extensions: ['vue', 'ts', 'md', 'tsx'],
-
-    deep: false,
+    // allow auto import and register components used in markdown
+    include: [
+      /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+      /\.vue$/,
+      /\.vue\?vue/, // .vue
+      /\.md$/, // .md
+    ],
 
     // dts: 'types/components.d.ts',
+
+    deep: false,
 
     resolvers: [
       // Naive
@@ -71,14 +77,6 @@ export const createComponentPlugin = (): VitePlugin => {
           return path
         }
       },
-    ],
-
-    // allow auto import and register components used in markdown
-    include: [
-      /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-      /\.vue$/,
-      /\.vue\?vue/, // .vue
-      /\.md$/, // .md
     ],
   })
 }

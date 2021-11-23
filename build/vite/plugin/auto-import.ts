@@ -8,6 +8,9 @@ export const creatAutoImportPlugin = (): VitePlugin => {
       /\.vue\?vue/, // .vue
       /\.md$/, // .md
     ],
+
+    dts: 'types/auto-import.d.ts',
+
     imports: [
       // presets
       'vue',
@@ -56,6 +59,5 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/components/UI/Table': ['useTable'],
       },
     ],
-    dts: 'types/auto-import.d.ts',
   })
 }
