@@ -28,7 +28,7 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   vitePlugins.push(createHTMLPlugin(env.VITE_APP_TITLE))
 
   // https://github.com/btd/rollup-plugin-visualizer
-  stage && vitePlugins.push(createVisualizerPlugin())
+  stage && vitePlugins.push(createVisualizerPlugin(env.VITE_APP_TITLE))
 
   // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
   prod && vitePlugins.push(legacy())
