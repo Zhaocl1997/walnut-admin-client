@@ -28,9 +28,11 @@
         if (valid) {
           loading.value = true
 
-          await userActionSignin(signinFormData)
-
-          loading.value = false
+          try {
+            await userActionSignin(signinFormData)
+          } finally {
+            loading.value = false
+          }
         }
       }
 
