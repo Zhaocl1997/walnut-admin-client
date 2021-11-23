@@ -66,6 +66,7 @@
       return () => (
         <w-scrollbar height="100%">
           <n-menu
+            inverted={menuSettings.inverted}
             collapsedWidth={menuSettings.collapsedWidth}
             accordion={menuSettings.accordion}
             collapsedIconSize={menuSettings.collapsedIconSize}

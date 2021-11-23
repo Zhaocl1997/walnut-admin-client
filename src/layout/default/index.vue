@@ -44,7 +44,7 @@
   import TheTab from './TheTab'
   import { getShowAside, getContentWidth } from '/@/settings'
 
-  const { app, appMemo, settings } = useAppState()
+  const { appMemo, settings } = useAppState()
   const setting = settings.value.ForDevelopers
 
   const MainHeader = defineComponent({

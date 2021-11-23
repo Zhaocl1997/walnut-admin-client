@@ -18,10 +18,10 @@
             <w-icon
               icon={item.meta.icon}
               height="20"
-              class="mr-1 inline -mt-0.5"
+              class="mr-1 -mb-1 text-color"
             ></w-icon>
           )}
-          <span class="app-text">{t(item.meta.title!)}</span>
+          <span class="app-text text-color">{t(item.meta.title!)}</span>
         </div>
       )
 

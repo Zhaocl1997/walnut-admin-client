@@ -21,6 +21,7 @@ export default defineConfig({
         primaryHover: 'var(--primary-color-hover)',
         error: 'var(--error-color)',
         errorHover: 'var(--error-color-hover)',
+        color: 'var(--item-text-color)',
       },
       // usage `bg-primary`
       backgroundColor: {
