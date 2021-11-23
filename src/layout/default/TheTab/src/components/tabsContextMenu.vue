@@ -13,14 +13,18 @@
 </template>
 
 <script lang="tsx" setup>
+  import type { DropdownOption } from 'naive-ui'
   import { useRedirect } from '/@/hooks/core/useRedirect'
 
   import { getTabsContext } from '../hooks/useTabsContext'
   import { useFullScreenExtend } from '/@/components/App/AppFullScreen'
 
+  // TODO 99
+  import WIcon from '/@/components/UI/Icon'
+
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { tab, app, appMemo } = useAppState()
+  const { tab, appMemo } = useAppState()
 
   const {
     x,
@@ -91,13 +95,11 @@
     onCloseCtxMenu()
   }
 
-  const options = computed(() => [
+  const options = computed<DropdownOption[]>(() => [
     {
       key: DeleteTabConst.TAB_SINGLE,
       label: t('sys:tab:ctx:close'),
-      icon: () => (
-        <w-icon height="24" icon="ant-design:close-outlined"></w-icon>
-      ),
+      icon: () => <WIcon height="24" icon="ant-design:close-outlined"></WIcon>,
       disabled: getCloseDisabled.value,
     },
 
@@ -105,7 +107,7 @@
       key: DeleteTabConst.TAB_LEFT,
       label: t('sys:tab:ctx:closeLeft'),
       icon: () => (
-        <w-icon height="24" icon="ant-design:vertical-right-outlined"></w-icon>
+        <WIcon height="24" icon="ant-design:vertical-right-outlined"></WIcon>
       ),
       disabled: getCloseLeftDisabled.value,
     },
@@ -114,7 +116,7 @@
       key: DeleteTabConst.TAB_RIGHT,
       label: t('sys:tab:ctx:closeRight'),
       icon: () => (
-        <w-icon height="24" icon="ant-design:vertical-left-outlined"></w-icon>
+        <WIcon height="24" icon="ant-design:vertical-left-outlined"></WIcon>
       ),
       disabled: getCloseRightDisabled.value,
     },
@@ -123,7 +125,7 @@
       key: DeleteTabConst.TAB_OTHER,
       label: t('sys:tab:ctx:closeOther'),
       icon: () => (
-        <w-icon height="24" icon="ant-design:column-width-outlined"></w-icon>
+        <WIcon height="24" icon="ant-design:column-width-outlined"></WIcon>
       ),
       disabled: getCloseOtherDisabled.value,
     },
@@ -131,9 +133,7 @@
     {
       key: DeleteTabConst.TAB_ALL,
       label: t('sys:tab:ctx:closeAll'),
-      icon: () => (
-        <w-icon height="24" icon="ant-design:border-outlined"></w-icon>
-      ),
+      icon: () => <WIcon height="24" icon="ant-design:border-outlined"></WIcon>,
       disabled: getCloseOtherDisabled.value,
     },
 
@@ -145,7 +145,7 @@
     {
       key: 'Refresh',
       label: t('sys:tab:ctx:refresh'),
-      icon: () => <w-icon height="24" icon="ant-design:sync-outlined"></w-icon>,
+      icon: () => <WIcon height="24" icon="ant-design:sync-outlined"></WIcon>,
       disabled: getOtherDisabled.value,
     },
 
@@ -153,7 +153,7 @@
       key: 'Screen Full',
       label: t('sys:tab:ctx:screenfull'),
       icon: () => (
-        <w-icon height="24" icon="ant-design:fullscreen-outlined"></w-icon>
+        <WIcon height="24" icon="ant-design:fullscreen-outlined"></WIcon>
       ),
       disabled: getOtherDisabled.value,
     },

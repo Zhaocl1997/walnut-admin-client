@@ -44,6 +44,9 @@
   import TheTab from './TheTab'
   import { getShowAside, getContentWidth } from '/@/settings'
 
+  // TODO 99
+  import { NLayoutHeader } from 'naive-ui'
+
   const { appMemo, settings } = useAppState()
   const setting = settings.value.ForDevelopers
 
@@ -52,21 +55,21 @@
       return () => (
         <div style={{ width: getContentWidth.value }}>
           {setting.app.showHeader && (
-            <n-layout-header bordered inverted={setting.header.inverted}>
+            <NLayoutHeader bordered inverted={setting.header.inverted}>
               <TheHeader
                 class="flex-none px-2"
                 style={{ height: setting.header.height + 'px' }}
               />
-            </n-layout-header>
+            </NLayoutHeader>
           )}
 
           {setting.app.showTabs && (
-            <n-layout-header bordered inverted={setting.header.inverted}>
+            <NLayoutHeader bordered inverted={setting.header.inverted}>
               <TheTab
                 class="flex-none px-2"
                 style={{ height: setting.tab.height + 'px' }}
               />
-            </n-layout-header>
+            </NLayoutHeader>
           )}
         </div>
       )
