@@ -3,7 +3,7 @@ import { formatTree } from 'easy-fns-ts'
 import ParentComponent from '/@/layout/default/TheContent'
 import IFrameComponent from '/@/layout/iframe/index.vue'
 
-import { notFoundRoute } from '/@/router/routes'
+import { App404Route } from '/@/router/routes'
 
 /**
  * @description Util Function 1 - Build route object through menu object
@@ -101,7 +101,7 @@ export const buildRoutes = (payload: AppMenu[]) => {
   })
 
   // finally push the 404
-  routes.push(notFoundRoute)
+  routes.push(App404Route)
 
   return routes
 }

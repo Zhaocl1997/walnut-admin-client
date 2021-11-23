@@ -1,4 +1,4 @@
-import { redirectPath } from '/@/router/constant'
+import { AppRedirectPath } from '/@/router/constant'
 
 /**
  * @description use redirect
@@ -11,7 +11,7 @@ export const useRedirect = () => {
   const redirect = (): Promise<boolean> => {
     return new Promise((resolve) => {
       push({
-        path: redirectPath + currentRoute.value.fullPath,
+        path: AppRedirectPath + currentRoute.value.fullPath,
         query,
         params,
       }).then(() => resolve(true))

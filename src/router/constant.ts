@@ -1,14 +1,17 @@
-export const authPath = '/auth'
-export const authName = 'Auth'
+export const AppAuthPath = '/auth'
+export const AppAuthName = 'Auth'
 
-export const rootPath = '/'
-export const rootName = 'Layout'
+export const AppRootPath = '/'
+export const AppRootName = 'Layout'
 
-export const redirectPath = '/redirect'
-export const redirectName = 'Redirect'
+export const AppRedirectPath = '/redirect'
+export const AppRedirectName = 'Redirect'
 
-export const notFoundPath = '/:path(.*)*'
-export const notFoundName = '404'
+export const App404Path = '/:path(.*)*'
+export const App404Name = '404'
 
-export const networkErrorPath = '/500'
-export const networkErrorName = '500'
+export const App403Path = '/:path(.*)*'
+export const App403Name = '404'
+
+export const App500Path = '/500'
+export const App500Name = '500'

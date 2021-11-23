@@ -1,7 +1,7 @@
 import type { SigninPayloadType } from '../types/user'
 
 import { getUserInfo, signin } from '/@/api/auth'
-import { authName } from '/@/router/constant'
+import { AppAuthName } from '/@/router/constant'
 import { clearTabs } from '/@/core/tab'
 import { AppCoreFn1 } from '/@/core'
 
@@ -40,7 +40,7 @@ export const userActionSignOut = async () => {
   token.value = ''
 
   // push
-  await useRouterPush({ name: authName })
+  await useRouterPush({ name: AppAuthName })
 
   // clear tab
   setTimeout(() => {

@@ -1,6 +1,6 @@
 import { getPermissions } from '/@/api/auth'
 
-import { rootName, rootPath } from '/@/router/constant'
+import { AppRootName, AppRootPath } from '/@/router/constant'
 
 import { buildMenus, buildKeepAliveRouteNameList } from './menu'
 import { buildRoutes } from './route'
@@ -31,11 +31,11 @@ export const AppCoreFn1 = async () => {
   // build routes and add into root route
   const routes = buildRoutes(menu.value.menus)
   routes.forEach((route) => {
-    addRoute(rootName, route)
+    addRoute(AppRootName, route)
   })
 
   // set root redirect since we do not prepare root page
-  getRoutes()[getRoutes().findIndex((i) => i.path === rootPath)].redirect = {
+  getRoutes()[getRoutes().findIndex((i) => i.path === AppRootPath)].redirect = {
     name: menu.value.indexMenuName,
   }
 }
