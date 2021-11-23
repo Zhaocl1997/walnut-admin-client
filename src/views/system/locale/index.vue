@@ -6,13 +6,13 @@
   </div>
 </template>
 
-<script lang="tsx">
+<script lang="ts">
   export default defineComponent({
     name: 'Locale',
   })
 </script>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
   import type { WForm } from '/@/components/UI/Form'
 
   import { formatTime } from 'easy-fns-ts'

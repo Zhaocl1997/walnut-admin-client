@@ -27,13 +27,13 @@
   </w-drawer>
 </template>
 
-<script lang="tsx">
+<script lang="ts">
   export default defineComponent({
     name: 'AppSettings',
   })
 </script>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
   const { settings } = useAppState()
 
   const el = ref(null)

@@ -20,7 +20,7 @@
   </router-view>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
   // TODO
   const { menu, settings } = useAppState()
   const appSettings = settings.value.ForDevelopers.app

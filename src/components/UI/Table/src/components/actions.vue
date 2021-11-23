@@ -18,7 +18,7 @@
   </n-space>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
   import type { WTable } from '../types'
   import { useTableContext } from '../hooks/useTableContext'
 

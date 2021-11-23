@@ -6,13 +6,13 @@
   </div>
 </template>
 
-<script lang="tsx">
+<script lang="ts">
   export default defineComponent({
     name: 'Lang',
   })
 </script>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
   import { formatTime } from 'easy-fns-ts'
 
   import { langAPI } from '/@/api/system/lang'

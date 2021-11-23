@@ -26,7 +26,7 @@
   </n-popover>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
   import { getTabsContext } from '../hooks/useTabsContext'
 
   const { devToolX, devToolY, currentMouseTab, devToolShow, onOpenFile } =
