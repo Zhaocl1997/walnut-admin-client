@@ -34,8 +34,10 @@ if (action === '--recovery') {
     // copy back
     file.pipe(out)
 
-    // remove file
-    fs.unlinkSync(bundleCopyPath)
+    file.on('close', () => {
+      // remove file
+      fs.unlinkSync(bundleCopyPath)
+    })
   })()
   ;(() => {
     const file = fs.createReadStream(listCopyPath)
@@ -44,7 +46,9 @@ if (action === '--recovery') {
     // copy back
     file.pipe(out)
 
-    // remove file
-    fs.unlinkSync(listCopyPath)
+    file.on('close', () => {
+      // remove file
+      fs.unlinkSync(listCopyPath)
+    })
   })()
 }

@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 /**
- * https://docs.iconify.design/sources/bundles/examples/component-full.html
+ * @link https://docs.iconify.design/sources/bundles/examples/component-full.html
  * This is an advanced example for creating icon bundles for Iconify components.
  *
  * It creates a bundle from:
@@ -21,8 +21,11 @@ import iconifyIcons from '../../src/components/UI/Icon/src/utils/list'
 import { bundlePath } from '../utils/paths'
 
 // Iconify component (this changes import statement in generated file)
-// Available options: 'react', 'react-with-api', 'vue' (for Vue 3), 'vue2'
-const component = 'vue'
+// Available options: '@iconify/react' for React, '@iconify/vue' for Vue 3, '@iconify/vue2' for Vue 2, '@iconify/svelte' for Svelte
+const component = '@iconify/vue'
+
+// Set to true to use require() instead of import
+const commoonJS = false
 
 // Various sources. Comment out sources you do not want in a bundle
 const sources = {
@@ -33,14 +36,14 @@ const sources = {
   // prefix: prefix to use for icons
   /* svg: [
     {
-      dir: __dirname + "/svg",
+      dir: __dirname + '/svg',
       monotone: true,
-      prefix: "custom",
+      prefix: 'custom',
     },
     {
-      dir: __dirname + "/emojis",
+      dir: __dirname + '/emojis',
       monotone: false,
-      prefix: "emoji",
+      prefix: 'emoji',
     },
   ], */
 
@@ -49,34 +52,39 @@ const sources = {
 
   // List of full JSON files to import
   // Entire files will be imported with all icons. If you want only few icons, see 'customIcons' below
-  /* json: [
+  /*  json: [
     // Custom JSON file
-    __dirname + "/json/gg.json",
+    __dirname + '/json/gg.json',
     // Iconify JSON file (@iconify/json is a package name, /json/ is directory where files are, then filename)
-    require.resolve("@iconify/json/json/ant-design.json"),
+    require.resolve('@iconify/json/json/tabler.json'),
   ], */
 
   // List of icons to import from custom JSON files
   // Do not put the same files in 'customIcons' and 'json' arrays or icons will be imported twice
   /* customIcons: [
     {
-      json: __dirname + "/json/line-md.json",
+      json: __dirname + '/json/line-md.json',
       icons: [
-        "home-twotone-alt",
-        "github",
-        "document-list",
-        "document-code",
-        "image-twotone",
+        'home-twotone-alt',
+        'github',
+        'document-list',
+        'document-code',
+        'image-twotone',
       ],
     },
   ], */
 }
 
+// File to save bundle to
+const target = bundlePath
+
 /**
  * Do stuff!
  */
 ;(async function () {
-  let bundle = getImport(component) + '\n\n'
+  let bundle = commoonJS
+    ? "const { addCollection } = require('" + component + "');\n\n"
+    : "import { addCollection } from '" + component + "';\n\n"
 
   /**
    * Bundle full JSON files
@@ -146,8 +154,8 @@ const sources = {
   /**
    * Save bundle
    */
-  fs.writeFileSync(bundlePath, bundle, 'utf8')
-  console.log(`Saved ${bundlePath} (${bundle.length} bytes)`)
+  fs.writeFileSync(target, bundle, 'utf8')
+  console.log(`Saved ${target} (${bundle.length} bytes)`)
 
   /**
    * Parse custom SVG
@@ -291,8 +299,8 @@ function organizeIconsList(icons) {
  * - prefix
  * - name
  *
- * This function was copied from @iconify/core/src/icon/name.ts
- * See https://github.com/iconify/iconify/blob/master/packages/core/src/icon/name.ts
+ * This function was copied from @iconify/utils/src/icon/name.ts
+ * See https://github.com/iconify/iconify/blob/dev/packages/utils/src/icon/name.ts
  */
 function stringToIcon(value) {
   let provider = ''
@@ -335,28 +343,4 @@ function stringToIcon(value) {
   }
 
   return null
-}
-
-/**
- * Get import statement for component
- */
-function getImport(component) {
-  const imports = {
-    react: "import { addCollection } from '@iconify/react';",
-    'react-with-api':
-      "import { addCollection } from '@iconify/react-with-api';",
-    vue: "import { addCollection } from '@iconify/vue';",
-    vue2:
-      "import IconifyIcon from '@iconify/vue';\n\nconst addCollection = IconifyIcon.addCollection;",
-  }
-
-  if (imports[component] !== void 0) {
-    return imports[component]
-  }
-
-  throw new Error(
-    `Invalid value for "component" variable. Possible values: '${Object.keys(
-      imports
-    ).join("', '")}'`
-  )
 }
