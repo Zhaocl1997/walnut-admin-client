@@ -1,18 +1,18 @@
 <template>
   <n-result
-    status="500"
-    title="500 服务器错误"
-    description="服务器出错可能说明该雇更多程序员了"
+    status="403"
+    title="403 禁止访问"
+    description="总有些门是对你关闭的"
   >
     <template #footer>
-      <n-button>散财消灾</n-button>
+      <n-button>放轻松</n-button>
     </template>
   </n-result>
 </template>
 
 <script lang="ts">
   export default defineComponent({
-    name: '500',
+    name: '403',
 
     inheritAttrs: false,
 
