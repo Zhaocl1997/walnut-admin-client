@@ -18,14 +18,17 @@
   import { formatTime } from 'easy-fns-ts'
 
   import { localeAPI } from '/@/api/system/locale'
-  import { langAPI } from '/@/api/system/lang'
 
   import { useInitialState } from '/@/utils'
 
-  // main
-  const langList = ref<BaseOptionDataItem[]>([])
+  import { useLangList } from './useLangList'
+  import { useCheckedRowKeys } from './useCheckedRowKeys'
 
+  // main
   const actionType = ref<'create' | 'update'>('create')
+  const { AppSuccess } = useAppMsgSuccess()
+  const { langList } = useLangList()
+  const { checkedRowKeysRef, onUpdateCheckedRowKeys } = useCheckedRowKeys()
 
   const {
     stateRef: formData,
@@ -34,18 +37,6 @@
   } = useInitialState<AppLocale & { oldKey?: string }>({
     key: '',
     oldKey: '',
-  })
-
-  const onGetLangList = async () => {
-    const res = await langAPI.list()
-    langList.value = res.data.map((i) => ({
-      label: i.description,
-      value: i._id,
-    }))
-  }
-
-  onMounted(() => {
-    onGetLangList()
   })
 
   const onCreate = () => {
@@ -72,27 +63,40 @@
   const onDelete = async (key: string) => {
     const ret = await localeAPI.delete(key)
     if (ret) {
-      useAppMessage().success('Operation Success!')
+      AppSuccess()
+      await onInit()
+    }
+  }
+
+  const onDeleteMany = async () => {
+    const ret = await localeAPI.deleteMany(checkedRowKeysRef.value.join(','))
+    if (ret) {
+      AppSuccess()
       await onInit()
     }
   }
 
   const [registerTable, { onInit }] = useTable<
     Pick<AppLocale, '_id' | 'key' | 'createdAt' | 'updatedAt'> & {
-      isCompleted: boolean
-      process: number
+      values: string[]
     }
   >({
     localeUniqueKey: 'locale',
 
     maxHeight: 600,
 
-    actionList: ['create'],
+    actionList: ['create', 'delete'],
+
+    onUpdateCheckedRowKeys,
 
     onAction: ({ type }) => {
       switch (type) {
         case 'create':
           onCreate()
+          break
+
+        case 'delete':
+          onDeleteMany()
           break
 
         default:
@@ -145,6 +149,10 @@
 
     columns: [
       {
+        type: 'selection',
+      },
+
+      {
         key: 'key',
         align: 'center',
         width: 400,
@@ -156,15 +164,11 @@
         width: 100,
         align: 'center',
         extendType: 'formatter',
-        formatter: (row) => row.process * 100 + '%',
-      },
-
-      {
-        key: 'isCompleted',
-        width: 120,
-        align: 'center',
-        extendType: 'formatter',
-        formatter: (row) => (row.isCompleted ? 'Finished' : 'Unfinished'),
+        formatter: (row) =>
+          (
+            (row.values.filter((i) => i).length / langList.value.length) *
+            100
+          ).toFixed(2) + '%',
       },
 
       {
@@ -188,9 +192,9 @@
       {
         key: 'action',
         align: 'center',
-        width: 100,
+        width: 180,
         extendType: 'action',
-        extendActionType: ['read'],
+        extendActionType: ['read', 'delete'],
         onRead: (row) => {
           formData.value.oldKey = row.key
           onOpenDrawer(row.key!)
@@ -209,17 +213,13 @@
 
     preset: 'drawer',
 
-    labelWidth: '140px',
+    labelWidth: 140,
 
-    // baseRules: true,
+    baseRules: true,
 
     advancedProps: {
-      title: computed(() =>
-        actionType.value === 'create'
-          ? 'Create Locale Message'
-          : 'Update Existing Locale Message'
-      ),
-      width: '500',
+      actionType,
+      width: 500,
       onYes: async (apiHandler) => {
         await apiHandler(
           // Form API Solution 1
@@ -237,7 +237,6 @@
       },
     },
 
-    // TODO type error
     // @ts-ignore
     schemas: computed(() => [
       {
@@ -257,6 +256,7 @@
           path: i.value as string,
           label: i.label,
           locale: false,
+          rule: false,
         },
         componentProp: {
           clearable: true,
