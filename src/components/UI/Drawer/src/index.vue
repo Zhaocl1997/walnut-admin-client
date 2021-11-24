@@ -5,7 +5,7 @@
         <slot></slot>
       </n-spin>
 
-      <template #header>{{ t(title) }}</template>
+      <template #header>{{ title }}</template>
 
       <template #footer>
         <n-space size="small">

@@ -15,7 +15,7 @@
   <w-drawer
     v-model:show="show"
     :width="350"
-    title="app:settings:title"
+    :title="t('app:settings:title')"
     @yes="() => (show = false)"
     @no="() => (show = false)"
   >
@@ -35,6 +35,7 @@
 
 <script lang="ts" setup>
   const { settings } = useAppState()
+  const { t } = useAppI18n()
 
   const el = ref(null)
   const show = ref(false)
