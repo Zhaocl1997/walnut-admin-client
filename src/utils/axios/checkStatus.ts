@@ -1,17 +1,11 @@
 import { userActionSignOut } from '/@/store/actions/user'
 
-let notiInst: Pick<ReturnType<typeof useAppNotification>, 'error'>
-
 const responseError = (msg: string) => {
-  if (notiInst) {
-    return
-  }
+  const { t } = AppI18n.global
 
+  // TODO 93
   // @ts-ignore
-  notiInst = useAppNotification().error({
-    title: AppI18n.global.t(msg),
-    duration: 10000,
-  })
+  useAppNotiError(t(msg))
 }
 
 export const checkReponseErrorStatus = (status?: number, msg?: string) => {

@@ -35,7 +35,8 @@ export const transform: AxiosTransform = {
     if (code === 200) {
       return Promise.resolve(data)
     } else {
-      useAppNotification().error({ title: msg, duration: 2000 })
+      useAppNotiError(msg)
+
       // since we have the error message, just resolve so handle logic behind
       return Promise.resolve()
     }
@@ -43,13 +44,17 @@ export const transform: AxiosTransform = {
 
   // Here handle response error
   responseInterceptorsCatch: (err) => {
+    const { t } = AppI18n.global
+
     if (err.message === 'Network Error') {
       useRouterPush({ name: '500' })
       return
     }
 
     if (err.message === 'Demonstrate') {
-      useAppNotification().error({ title: 'Demonstrate Only!' })
+      // TODO 93
+      // @ts-ignore
+      useAppNotiError(t('app:base:demonstrate'))
     } else {
       const statusCode = err.response?.data.statusCode
       const msg = err.response?.data.detail?.message

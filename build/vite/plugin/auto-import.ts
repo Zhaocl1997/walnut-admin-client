@@ -50,6 +50,8 @@ export const creatAutoImportPlugin = (): VitePlugin => {
           'useAppNotification',
           'useAppDialog',
           'useContinue',
+          'useAppMsgSuccess',
+          'useAppNotiError',
         ],
 
         '/@/utils/axios': ['AppAxios'],
