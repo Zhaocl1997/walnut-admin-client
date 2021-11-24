@@ -54,4 +54,15 @@ export class BaseAPI<T> {
       }
     )
   }
+
+  deleteMany(id: string) {
+    return AppAxios.delete(
+      {
+        url: `${this.baseAPI}/deleteMany/${id}`,
+      },
+      {
+        demonstrate: isProd(),
+      }
+    )
+  }
 }
