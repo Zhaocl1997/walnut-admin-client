@@ -22,4 +22,10 @@ export const props = {
     type: Number as PropType<number>,
     default: 0,
   },
+
+  /* confirm type button */
+  confirm: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
 }

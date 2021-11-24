@@ -63,16 +63,35 @@
         emit('click', event)
       }
 
-      return () => (
+      const renderButton = () => (
         <n-button
           onClick={
-            props.debounce ? useDebounceFn(onClick, props.debounce) : onClick
+            props.confirm
+              ? undefined
+              : props.debounce
+              ? useDebounceFn(onClick, props.debounce)
+              : onClick
           }
           disabled={unref(getDisabled)}
         >
           {unref(buttonSlots)}
         </n-button>
       )
+
+      const renderConfirm = () => {
+        return props.confirm ? (
+          <n-popconfirm onPositiveClick={onClick}>
+            {{
+              default: () => t('app:base:confirm'),
+              trigger: () => renderButton(),
+            }}
+          </n-popconfirm>
+        ) : (
+          renderButton()
+        )
+      }
+
+      return () => renderConfirm()
     },
   })
 </script>
