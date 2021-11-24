@@ -71,45 +71,26 @@ npm i
 
 ### 接下来的计划  
 
-- [x] 移除ElementPlus， 采用naiveui
-- [ ] Layout 优化，目前只是最基本的左侧菜单布局  
-- [ ] vue-tsc 错误全部消除  
-- [x] 屏幕断点优化
-- [ ] table 重构优化(WIP)
-- [ ] table 自定义表头迁移优化，按钮组，操作列
-- [ ] table 自定义导出导入，打印
-- [ ] table state loading/empty
-- [ ] form 重构优化(WIP)
-- [ ] form 添加更复杂的表单用例，添加tsx语法支持(WIP)
-- [ ] dialog 重构优化
-- [ ] dialog 全屏，拖拽，弹出效果(WIP)
-- [ ] drawer 组件
-- [ ] drawer 组件，可固定头和尾
-- [ ] help 组件优化
-- [ ] layout tsx重写
-- [x] hook抽离，尽量可脱离组件逻辑
-- [ ] 权限处理
-- [ ] 打包优化
-- [ ] 部署，自动化部署
-- [ ] icon 扩展 支持更多方法使用icon
-- [x] 尝试使用AppContext的方式替代全局的状态管理(已完成，但不是很成熟，可以参考)
-- [ ] title/message 组件优化
-- [x] axios 重构，增加缓存功能
-- [x] axios 类型优化
-- [x] easy-fns-ts 类型优化
-- [ ] 组件类型partial和MaybeRef优化(WIP)
-- [ ] 组件内部getBindValue时Omit掉自定义的prop，要不然自定义的那些prop会在html节点上被看见(WIP)
+- [ ] long vue-tsc 错误全部消除  
+- [ ] long layout 扩展 
+- [ ] long 主题扩展
+- [ ] long 打包优化+自动化部署
+- [ ] long easy-fns-ts 类型优化
+- [ ] long 后台自定义code
+- [ ] long 后台入参校验
+- [ ] long 登录日志/操作日志
+- [ ] long 第三方认证/注册/找回密码
+- [ ] long 模拟各种返回状态的demo页面（就一堆按钮，模拟自定义的各种状态下的错误）
+- [ ] long 错误捕捉模块
+- [ ] long 前端监控
+- [ ] long 权限模块开发
 
-
-- [x] 移除nprogress，采用naive
-- [x] encrypt参数移到env
-- [ ] storage 缓存重写 同时优化类型
-- [ ] global comp auto gen 的类型地址有问题
-- [x] 消息提示类的用naive重写
-- [ ] icon 方案重做
-- [ ] tree 相关函数 类型优化
-- [ ] core tab 优化
-
+- [ ] 99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)
+- [ ] 98 data-table pagination onUpdatePage触发两次 [issue](https://github.com/TuSimple/naive-ui/issues/1666)
+- [ ] 97 icon 使用unocss重构，同时扩展iconify提供的多种使用icon的方式 [issue](https://github.com/antfu/unocss)
+- [ ] 96 keep-alive router 设计貌似有问题，需要重做
+- [ ] 95 global comp auto gen 的类型地址有问题
+- [ ] 94 t 函数类型出错
 
 ### 更新日志
 
