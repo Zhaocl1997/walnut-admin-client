@@ -13,6 +13,7 @@
       "
       :text-prop="item.text"
       :disabled="tableProps.loading"
+      :confirm="item.type === 'delete'"
     >
     </w-button>
   </n-space>

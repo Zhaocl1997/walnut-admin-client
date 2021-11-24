@@ -69,19 +69,13 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
                 )}
 
                 {isShow('delete') && (
-                  <n-popconfirm
-                    placement="left"
-                    onPositiveClick={() => tItem.onDelete!(p)}
+                  <w-button
+                    confirm
+                    icon="ant-design:delete-outlined"
+                    onClick={() => tItem.onDelete!(p)}
                   >
-                    {{
-                      default: () => 'Are you sure to continue?',
-                      trigger: () => (
-                        <w-button icon="ant-design:delete-outlined">
-                          {t('app:button:delete')}
-                        </w-button>
-                      ),
-                    }}
-                  </n-popconfirm>
+                    {t('app:button:delete')}
+                  </w-button>
                 )}
               </div>
             )
