@@ -81,16 +81,18 @@
         easyOmit(getProps.value, Object.keys(extendProps))
       )
 
+      const getNFormRules = computed(() =>
+        unref(getProps).baseRules
+          ? generateBaseRules(formSchemas.value, getProps)
+          : unref(getProps).rules
+      )
+
       const renderNForm = () => (
         <n-form
           ref={formRef}
           {...getNFormProps.value}
           class={attrs.class}
-          rules={
-            unref(getProps).baseRules
-              ? generateBaseRules(formSchemas.value)
-              : unref(getProps).rules
-          }
+          rules={getNFormRules.value}
         >
           <n-grid
             cols={unref(getProps).cols}

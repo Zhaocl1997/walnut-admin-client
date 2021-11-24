@@ -7,6 +7,8 @@ export const useFormAdvanced = (
   formRef: Ref<Nullable<WForm.Inst.NFormInst>>
 ) => {
   const { t } = useAppI18n()
+  const { AppSuccess } = useAppMsgSuccess()
+
   const show = ref(false)
   const loading = ref(false)
 
@@ -19,10 +21,6 @@ export const useFormAdvanced = (
     return { done }
   }
   const onClose = () => {
-    if (loading.value) {
-      return
-    }
-
     show.value = false
 
     return false
@@ -37,12 +35,15 @@ export const useFormAdvanced = (
     // so `loading.value = false` is always excuting
     // only when have ret, close drawer and show message
     const apiHandler = async (apiFn: Fn, params: AnyObject) => {
-      const ret = await apiFn(params)
-      loading.value = false
+      try {
+        const ret = await apiFn(params)
 
-      if (ret) {
-        onClose()
-        useAppMessage().success('Operation Success!')
+        if (ret) {
+          onClose()
+          AppSuccess()
+        }
+      } finally {
+        loading.value = false
       }
     }
 
@@ -56,6 +57,16 @@ export const useFormAdvanced = (
     formRef.value!.restoreValidation()
 
     props.value.advancedProps?.onNo(onClose)
+  }
+
+  const onGetTitle = (title: string) => {
+    const uniqueKey = props.value.localeUniqueKey
+
+    return uniqueKey && props.value?.advancedProps?.actionType
+      ? t(`app:button:${props.value.advancedProps?.actionType}`) +
+          ' ' +
+          t(`table:${uniqueKey}:advancedTitle`)
+      : title
   }
 
   const renderAdvanced = () => {
@@ -105,7 +116,7 @@ export const useFormAdvanced = (
       return (
         <w-drawer
           v-model={[show.value, 'show']}
-          title={props.value.advancedProps?.title}
+          title={onGetTitle(props.value.advancedProps?.title as string)}
           width={(props.value.advancedProps as DrawerProps)?.width}
           maskClosable={!loading.value}
           onUpdateShow={(show: boolean) => {

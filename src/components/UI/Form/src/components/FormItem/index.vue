@@ -1,11 +1,11 @@
 <script lang="tsx">
   import type { WForm } from '../../types'
 
-  import { isFunction } from 'easy-fns-ts'
+  import { easyOmit, isFunction } from 'easy-fns-ts'
 
   import { componentMap } from './utils'
   import { useFormContext } from '../../hooks/useFormContext'
-  import { getBoolean, getEPBooleanValue } from '../../utils'
+  import { getEPBooleanValue, getTranslated } from '../../utils'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -21,30 +21,7 @@
     setup(props, { attrs, slots, emit, expose }) {
       const { item } = props
 
-      const { t } = useAppI18n()
-
       const { formProps } = useFormContext()
-
-      const getTranslated = (
-        item: WForm.Schema.Item,
-        helpMsg: boolean = false
-      ) => {
-        const key = formProps.value.localeUniqueKey
-
-        const isLocale = key && getBoolean(item?.formProp?.locale)
-
-        const isLocaleWithTable =
-          getBoolean(item?.formProp?.localeWithTable) &&
-          getBoolean(formProps.value.localeWithTable)
-
-        const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
-
-        return isLocale
-          ? isLocaleWithTable
-            ? t(isHelpMsg(`table:${key}:${item?.formProp?.path}`))
-            : t(isHelpMsg(`form:${key}:${item?.formProp?.path}`))
-          : item?.formProp?.label
-      }
 
       const renderBase =
         item?.type === 'Base:Render'
@@ -76,16 +53,20 @@
       const renderNFormItem = () => (
         <n-form-item
           vShow={getEPBooleanValue(item, formProps.value, 'vShow')}
-          {...item?.formProp}
+          {...(typeof item?.formProp?.rule === 'boolean'
+            ? easyOmit(item?.formProp, 'rule')
+            : item?.formProp)}
           class={formProps.value.formItemClass}
         >
           {{
             default: () => renderBase(),
             label: () => (
               <>
-                {getTranslated(item!)}{' '}
+                {getTranslated(formProps, item!)}{' '}
                 {item?.formProp?.labelHelpMessage && (
-                  <w-message msg={getTranslated(item!, true)}></w-message>
+                  <w-message
+                    msg={getTranslated(formProps, item!, true)}
+                  ></w-message>
                 )}
               </>
             ),

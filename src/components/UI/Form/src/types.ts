@@ -1,6 +1,5 @@
 import type {
   GridItemProps,
-  FormProps,
   FormItemProps,
   FormInst,
   SliderProps,
@@ -9,6 +8,7 @@ import type {
   DynamicInputProps,
   TreeSelectProps,
   TreeProps,
+  FormItemRule,
 } from 'naive-ui'
 
 import type { WTransitionProps } from '/@/components/Extra/Transition'
@@ -156,7 +156,14 @@ export declare namespace WForm {
 
       componentProp?: ComponentPropPool<D>[T] & DomProps
 
-      formProp?: FormItemProps & {
+      formProp?: Omit<FormItemProps, 'rule'> & {
+        /**
+         * @override
+         * @description add boolean type to rule
+         * Set `rule` false when set `baseRules` true but this form item uses no rule
+         */
+        rule?: FormItemRule | FormItemRule[] | undefined | boolean
+
         /**
          * @description normally is string or string array.
          * But with locale implement, need to specify show help message, which means a boolean.

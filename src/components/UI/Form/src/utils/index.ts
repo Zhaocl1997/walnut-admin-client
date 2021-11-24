@@ -20,20 +20,59 @@ export const getEPBooleanValue = (
 // handle undefined to defaultValue
 export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
 
+/**
+ * @description generate form item label base on different config
+ */
+export const getTranslated = (
+  props: ComputedRef<WForm.Props>,
+  item: WForm.Schema.Item,
+  helpMsg = false
+) => {
+  const { t } = useAppI18n()
+
+  const key = props.value.localeUniqueKey
+
+  const isLocale = key && getBoolean(item?.formProp?.locale)
+
+  const isLocaleWithTable =
+    getBoolean(item?.formProp?.localeWithTable) &&
+    getBoolean(props.value.localeWithTable)
+
+  const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
+
+  return isLocale
+    ? isLocaleWithTable
+      ? t(isHelpMsg(`table:${key}:${item?.formProp?.path}`) as string)
+      : t(isHelpMsg(`form:${key}:${item?.formProp?.path}`))
+    : item?.formProp?.label
+}
+
 // generate base rules based on schemas
-export const generateBaseRules = (schemas: any[]) => {
-  const ret = {}
+export const generateBaseRules = (
+  schemas: WForm.Schema.Item[],
+  props: ComputedRef<WForm.Props>
+) => {
+  const rules = {}
 
-  const paths = schemas.map((i) => i?.formProp?.path).filter((i) => i)
+  const { t } = useAppI18n()
 
-  paths.map((i) => {
-    ret[i] = [
-      {
-        required: true,
-        message: 'Required!',
-      },
-    ]
+  schemas.map((i) => {
+    if (i?.formProp?.path && i?.formProp?.rule !== false) {
+      rules[i?.formProp?.path] = [
+        {
+          trigger: ['change', 'blur'],
+          required: true,
+          message: t('comp:form:rule', {
+            type:
+              i?.type === 'Base:Input'
+                ? t('comp:base:input')
+                : t('comp:base:choose'),
+            label: getTranslated(props, i),
+          }),
+        },
+      ]
+    }
   })
 
-  return ret
+  return rules
 }

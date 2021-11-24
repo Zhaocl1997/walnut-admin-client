@@ -4,6 +4,7 @@ import type {
   LabelPlacement,
   FormRules,
 } from 'naive-ui/lib/form/src/interface'
+import { WTable } from '../../Table'
 
 import type { WForm } from './types'
 
@@ -46,7 +47,9 @@ export const extendProps = {
   advancedProps: {
     type: Object as PropType<
       (ModalProps | (DrawerProps & DrawerContentProps)) &
-        Pick<WForm.Inst.WFormInst, 'onYes' | 'onNo'>
+        Pick<WForm.Inst.WFormInst, 'onYes' | 'onNo'> & {
+          actionType?: WTable.HeaderActionType
+        }
     >,
     default: undefined,
   },
