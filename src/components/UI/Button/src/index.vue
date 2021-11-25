@@ -17,7 +17,9 @@
 
       const buttonText = ref('')
 
-      const getDisabled = computed(() => disabled.value || props.disabled)
+      const getDisabled = computed(
+        () => disabled.value || (props.disabled ?? attrs.disabled)
+      )
 
       const buttonSlots = computed(() => {
         const def: {
@@ -78,8 +80,8 @@
         </n-button>
       )
 
-      const renderConfirm = () => {
-        return props.confirm ? (
+      const renderConfirm = () =>
+        props.confirm ? (
           <n-popconfirm onPositiveClick={onClick}>
             {{
               default: () => t('app:base:confirm'),
@@ -89,7 +91,6 @@
         ) : (
           renderButton()
         )
-      }
 
       return () => renderConfirm()
     },
