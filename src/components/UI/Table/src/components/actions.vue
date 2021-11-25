@@ -12,7 +12,9 @@
           })
       "
       :text-prop="item.text"
-      :disabled="tableProps.loading"
+      :disabled="
+        item.type === 'delete' ? getDeleteDisabled : tableProps.loading
+      "
       :confirm="item.type === 'delete'"
     >
     </w-button>
@@ -25,7 +27,9 @@
 
   const { t } = useI18n()
 
-  const { onEvent, tableProps } = useTableContext()
+  const { onEvent, tableProps, checkedRowKeys } = useTableContext()
+
+  const getDeleteDisabled = computed(() => checkedRowKeys.value.length === 0)
 
   const isShow = (t: WTable.HeaderActionType) =>
     (tableProps.value.actionList ?? ['create', 'update', 'delete']).includes(t)
@@ -35,6 +39,7 @@
       type: WTable.HeaderActionType
       icon: string
       text: string
+      disabled?: boolean
     }[]
   > = computed(() =>
     [
@@ -52,6 +57,7 @@
         type: 'delete' as WTable.HeaderActionType,
         icon: 'ant-design:delete-outlined',
         text: t('app:button:delete'),
+        disabled: getDeleteDisabled.value,
       },
       {
         type: 'import' as WTable.HeaderActionType,
