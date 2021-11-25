@@ -19,6 +19,7 @@ export const useTable = <T>(
 
   const methods = {
     onInit: () => wTableRef.value?.onInit(),
+    onDeleteMany: () => wTableRef.value?.onDeleteMany(),
   } as WTable.Inst.WTableInst
 
   return [register, methods]

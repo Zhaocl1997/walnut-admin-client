@@ -19,10 +19,13 @@ export declare namespace WTable {
   namespace Inst {
     type NDataTableInst = DataTableInst
 
-    interface WTableInst extends NDataTableInst {
+    type ExtendInst = {
       setProps: SetProps
-      onInit: Fn
+      onInit: (extraParams?: Recordable<any>) => Promise<void>
+      onDeleteMany: Fn
     }
+
+    interface WTableInst extends NDataTableInst, ExtendInst {}
   }
 
   namespace Hook {
@@ -67,7 +70,7 @@ export declare namespace WTable {
 
   namespace Params {
     type Entry =
-      | useEventParams<'hook', any>
+      | useEventParams<'hook', Inst.ExtendInst>
       | useEventParams<'action', { type: HeaderActionType }>
   }
 
@@ -77,5 +80,8 @@ export declare namespace WTable {
     tableProps: ComputedRef<Props>
     onInit: (extraParams?: Recordable<any> | undefined) => Promise<void>
     initParams: Ref<BaseListParams>
+    onQuery: PromiseFn
+    onReset: PromiseFn
+    checkedRowKeys: Ref<StringOrNumber[]>
   }
 }

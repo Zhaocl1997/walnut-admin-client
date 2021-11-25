@@ -20,6 +20,7 @@
 
     inheritAttrs: false,
 
+    // @ts-ignore
     props,
 
     emits: ['hook', 'action'],
@@ -33,7 +34,14 @@
 
       const { columns } = useTableColumns(getProps)
 
-      const { onInit, initParams } = useTableAPI(getProps, setProps)
+      const {
+        onInit,
+        initParams,
+        onQuery,
+        onReset,
+        onDeleteMany,
+        checkedRowKeys,
+      } = useTableAPI(tableRef, getProps, setProps)
 
       const getNDataTableProps = computed(() =>
         easyOmit(getProps.value, Object.keys(extendProps))
@@ -60,6 +68,7 @@
         params: {
           setProps,
           onInit,
+          onDeleteMany,
         },
       })
 
@@ -69,6 +78,9 @@
         tableProps: getProps,
         onInit,
         initParams,
+        onQuery,
+        onReset,
+        checkedRowKeys,
       })
 
       return () => render()

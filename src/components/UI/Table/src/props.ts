@@ -14,11 +14,12 @@ export const extendProps = {
   actionList: Array as PropType<WTable.HeaderActionType[]>,
 
   apiProps: Object as PropType<{
-    api: (params: BaseListParams) => Promise<BaseListResponse>
+    listApi: (params: BaseListParams) => Promise<BaseListResponse>
+    deleteManyApi: Fn
   }>,
 
   queryFormProps: Object as PropType<WForm.Props>,
-}
+} as const
 
 export const props = {
   ...(NDataTable.props as DataTableProps),

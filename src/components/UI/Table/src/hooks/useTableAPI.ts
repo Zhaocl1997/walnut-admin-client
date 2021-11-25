@@ -1,26 +1,36 @@
 import type { SortState } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
-import { isUndefined } from 'easy-fns-ts'
+import { isFunction, isUndefined } from 'easy-fns-ts'
+import { useInitialState } from '/@/utils'
 
 export const useTableAPI = (
+  inst: Ref<WTable.Inst.NDataTableInst | undefined>,
   props: ComputedRef<WTable.Props>,
   setProps: WTable.SetProps
 ) => {
   const { t } = useAppI18n()
+  const { AppSuccess } = useAppMsgSuccess()
 
-  const initParams = ref<BaseListParams>({
+  const {
+    stateRef: initParams,
+    resetState: resetParams,
+    setState: setParams,
+  } = useInitialState<BaseListParams>({
     page: 1,
     pageSize: 10,
+    sortField: 'createdAt',
+    sortOrder: 'descend',
   })
 
+  const checkedRowKeys = ref<StringOrNumber[]>([])
+
+  // api list
   const onInit = async () => {
-    if (isUndefined(props.value?.apiProps)) {
-      return
-    }
+    console.log(1)
 
     setProps({ loading: true })
 
-    const res = await props.value.apiProps?.api(initParams.value)!
+    const res = await props.value.apiProps?.listApi(initParams.value)!
 
     setProps({ data: res.data! })
 
@@ -45,38 +55,80 @@ export const useTableAPI = (
     setProps({ loading: false })
   }
 
+  // api deleteMany (default)
+  const onDeleteMany = async () => {
+    const ret = await props.value.apiProps?.deleteManyApi(
+      checkedRowKeys.value.join(',')
+    )
+    if (ret) {
+      AppSuccess()
+      await onInit()
+      checkedRowKeys.value = []
+    }
+  }
+
+  // query event
+  const onQuery = async ({ done }: any) => {
+    setParams({ page: 1 })
+    await onInit()
+    done()
+  }
+
+  // reset event
+  const onReset = async ({ done }: any) => {
+    resetParams()
+    inst.value?.clearSorter()
+    await onInit()
+    done()
+  }
+
   const onUpdatePage = async (p: number) => {
-    initParams.value.page = p
+    setParams({ page: p })
     await onInit()
   }
 
   const onUpdatePageSize = async (p: number) => {
-    initParams.value.page = 1
-    initParams.value.pageSize = p
+    setParams({ page: 1, pageSize: p })
     await onInit()
   }
 
   const onUpdateSorter = async (p: SortState) => {
-    initParams.value.sortField = p.columnKey
-    initParams.value.sortOrder = p.order
+    if (!p) return
+    setParams({ sortField: p.columnKey, sortOrder: p.order })
     await onInit()
+  }
+
+  const onUpdateCheckedRowKeys = (rowKeys: StringOrNumber[]) => {
+    checkedRowKeys.value = rowKeys
   }
 
   onMounted(() => {
     if (!isUndefined(props.value?.apiProps)) {
-      setProps({ remote: true })
+      if (isFunction(props?.value?.apiProps?.listApi)) {
+        setProps({ remote: true })
+        onInit()
+      }
+
+      if (
+        props.value.columns?.map((i) => i.type).includes('selection') &&
+        isFunction(props?.value?.apiProps?.deleteManyApi)
+      ) {
+        setProps({ onUpdateCheckedRowKeys })
+      }
 
       // @ts-ignore
-      if (props.value.columns.map((i) => i.sorter).length !== 0) {
+      if (props.value.columns?.map((i) => i.sorter === true).length !== 0) {
         setProps({ onUpdateSorter })
       }
     }
-
-    onInit()
   })
 
   return {
     onInit,
     initParams,
+    onQuery,
+    onReset,
+    onDeleteMany,
+    checkedRowKeys,
   }
 }
