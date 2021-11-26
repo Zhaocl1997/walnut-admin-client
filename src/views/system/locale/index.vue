@@ -22,13 +22,11 @@
   import { useInitialState } from '/@/utils'
 
   import { useLangList } from './useLangList'
-  import { useCheckedRowKeys } from './useCheckedRowKeys'
 
   // main
   const actionType = ref<'create' | 'update'>('create')
   const { AppSuccess } = useAppMsgSuccess()
   const { langList } = useLangList()
-  const { checkedRowKeysRef, onUpdateCheckedRowKeys } = useCheckedRowKeys()
 
   const {
     stateRef: formData,
@@ -39,7 +37,7 @@
     oldKey: '',
   })
 
-  const onCreate = () => {
+  const onCreateAndOpen = () => {
     actionType.value = 'create'
 
     const { done } = onOpen()
@@ -47,7 +45,7 @@
     done()
   }
 
-  const onOpenDrawer = async (key: string) => {
+  const onReadAndOpen = async (key: string) => {
     actionType.value = 'update'
 
     const { done } = onOpen()
@@ -68,15 +66,7 @@
     }
   }
 
-  const onDeleteMany = async () => {
-    const ret = await localeAPI.deleteMany(checkedRowKeysRef.value.join(','))
-    if (ret) {
-      AppSuccess()
-      await onInit()
-    }
-  }
-
-  const [registerTable, { onInit }] = useTable<
+  const [registerTable, { onInit, onDeleteMany }] = useTable<
     Pick<AppLocale, '_id' | 'key' | 'createdAt' | 'updatedAt'> & {
       values: string[]
     }
@@ -87,12 +77,10 @@
 
     actionList: ['create', 'delete'],
 
-    onUpdateCheckedRowKeys,
-
     onAction: ({ type }) => {
       switch (type) {
         case 'create':
-          onCreate()
+          onCreateAndOpen()
           break
 
         case 'delete':
@@ -108,9 +96,11 @@
 
     apiProps: {
       // Table API Solution 1
-      api: localeAPI.list.bind(localeAPI),
+      listApi: localeAPI.list.bind(localeAPI),
       // Table API Solution 2
       // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
+
+      deleteManyApi: localeAPI.deleteMany.bind(localeAPI),
     },
 
     queryFormProps: {
@@ -197,7 +187,7 @@
         extendActionType: ['read', 'delete'],
         onRead: (row) => {
           formData.value.oldKey = row.key
-          onOpenDrawer(row.key!)
+          onReadAndOpen(row.key!)
         },
         onDelete: (row) => {
           onDelete(row.key!)
