@@ -1,6 +1,6 @@
 {
   "name": "walnut-admin",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scripts": {
     "predev": "esno build/utils/genProjectPath.ts",
     "dev": "vite",
