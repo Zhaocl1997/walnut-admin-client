@@ -1,6 +1,6 @@
 {
   "name": "walnut-admin",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "predev": "esno build/utils/genProjectPath.ts",
     "dev": "vite",
@@ -12,7 +12,8 @@
     "postbuild": "npm run icon:recovery",
     "serve": "vite preview",
     "release": "standard-version && git push --follow-tags origin main",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "publish": "",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "lint:staged": "lint-staged --config config/lintstaged/.lintstagedrc.js",
     "lint:eslint": "eslint --config config/eslint/.eslintrc.js --ignore-pattern config/eslint/.eslintignore --fix",
     "lint:stylelint": "stylelint --config config/stylelint/.stylelintrc.js --fix",
