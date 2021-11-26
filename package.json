@@ -1,6 +1,6 @@
 {
   "name": "walnut-admin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "predev": "esno build/utils/genProjectPath.ts",
     "dev": "vite",
@@ -11,7 +11,7 @@
     "build:stage": "esno build/stage.ts",
     "postbuild": "npm run icon:recovery",
     "serve": "vite preview",
-    "release": "standard-version && git push --follow-tags origin main",
+    "release": "standard-version && git push --follow-tags origin naive-ui",
     "publish": "",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "lint:staged": "lint-staged --config config/lintstaged/.lintstagedrc.js",
