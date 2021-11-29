@@ -8,7 +8,7 @@
   <p align="center">
     面向开发者的中后台管理系统模板
     <br />
-    <a href=""><strong>探索本项目的文档(暂无) »</strong></a>
+    <a href="https://walnut-admin-doc.netlify.app/"><strong>探索本项目的文档(暂无) »</strong></a>
     <!-- <br />
     <br />
     <a href="https://github.com/shaojintian/Best_README_template">查看Demo</a>
@@ -86,7 +86,7 @@ npm i
 - [ ] long 权限模块开发
 
 - [ ] 99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)
-- [ ] 98 data-table pagination onUpdatePage触发两次 [issue](https://github.com/TuSimple/naive-ui/issues/1666)
+- [×] 98 data-table pagination onUpdatePage触发两次 [issue](https://github.com/TuSimple/naive-ui/issues/1666)
 - [ ] 97 icon 使用unocss重构，同时扩展iconify提供的多种使用icon的方式 [issue](https://github.com/antfu/unocss)
 - [ ] 96 keep-alive router 设计貌似有问题，需要重做
 - [ ] 95 global comp auto gen 的类型地址有问题
