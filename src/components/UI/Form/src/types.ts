@@ -165,6 +165,11 @@ export declare namespace WForm {
         rule?: FormItemRule | FormItemRule[] | undefined | boolean
 
         /**
+         * @description Used for render/slot typed item, whether apply the default base rules
+         */
+        baseRuleApplied?: boolean
+
+        /**
          * @description normally is string or string array.
          * But with locale implement, need to specify show help message, which means a boolean.
          */

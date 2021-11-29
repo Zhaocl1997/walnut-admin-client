@@ -40,14 +40,26 @@ export const getTranslated = (
 
   const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
 
-  return isLocale
+  return isLocale && item?.formProp?.path
     ? isLocaleWithTable
       ? t(isHelpMsg(`table:${key}:${item?.formProp?.path}`) as string)
       : t(isHelpMsg(`form:${key}:${item?.formProp?.path}`))
     : item?.formProp?.label
 }
 
-// generate base rules based on schemas
+/**
+ * @description default item type pool which could trigger the validation
+ */
+export const defaultTriggerPool = ['Base:Input', 'Base:Select']
+
+/**
+ * @description default trigger event
+ */
+export const defaultTriggerEvent = ['input', 'change', 'blur']
+
+/**
+ * @description generate base rules based on schemas
+ */
 export const generateBaseRules = (
   schemas: WForm.Schema.Item[],
   props: ComputedRef<WForm.Props>
@@ -59,17 +71,28 @@ export const generateBaseRules = (
   schemas.map((i) => {
     if (i?.formProp?.path && i?.formProp?.rule !== false) {
       rules[i?.formProp?.path] = [
-        {
-          trigger: ['change', 'blur'],
-          required: true,
-          message: t('comp:form:rule', {
-            type:
-              i?.type === 'Base:Input'
-                ? t('comp:base:input')
-                : t('comp:base:choose'),
-            label: getTranslated(props, i),
-          }),
-        },
+        defaultTriggerPool.includes(i?.type) || i?.formProp?.baseRuleApplied
+          ? {
+              trigger: defaultTriggerEvent,
+              required: true,
+              message: t('comp:form:rule', {
+                type:
+                  i?.type === 'Base:Input'
+                    ? t('comp:base:input')
+                    : t('comp:base:choose'),
+                label: getTranslated(props, i),
+              }),
+            }
+          : {
+              required: true,
+              message: t('comp:form:rule', {
+                type:
+                  i?.type === 'Base:Input'
+                    ? t('comp:base:input')
+                    : t('comp:base:choose'),
+                label: getTranslated(props, i),
+              }),
+            },
       ]
     }
   })
