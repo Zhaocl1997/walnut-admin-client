@@ -64,9 +64,7 @@
               <>
                 {getTranslated(formProps, item!)}{' '}
                 {item?.formProp?.labelHelpMessage && (
-                  <w-message
-                    msg={getTranslated(formProps, item!, true)}
-                  ></w-message>
+                  <w-message msg={getTranslated(formProps, item!, true)} />
                 )}
               </>
             ),
@@ -74,13 +72,8 @@
         </n-form-item>
       )
 
-      const renderContent = () => (
-        <w-transition {...item?.transitionProp} appear>
-          {getEPBooleanValue(item, formProps.value, 'vIf') && renderNFormItem()}
-        </w-transition>
-      )
-
-      return () => renderContent()
+      return () =>
+        getEPBooleanValue(item, formProps.value, 'vIf') && renderNFormItem()
     },
   })
 </script>
