@@ -144,7 +144,7 @@
 
     {
       key: 'Refresh',
-      label: t('sys:tab:ctx:refresh'),
+      label: t('app:base:refresh'),
       icon: () => <WIcon height="24" icon="ant-design:sync-outlined"></WIcon>,
       disabled: getOtherDisabled.value,
     },
