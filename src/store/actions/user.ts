@@ -39,6 +39,9 @@ export const userActionSignOut = async () => {
   // clear token
   token.value = ''
 
+  // clear userinfo
+  user.value.userInfo = {}
+
   // push
   await useRouterPush({ name: AppAuthName })
 
