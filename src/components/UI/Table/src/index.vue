@@ -14,6 +14,7 @@
 
   import HeaderActions from './components/actions.vue'
   import QueryForm from './components/queryForm.vue'
+  import Utils from './components/utils.vue'
 
   export default defineComponent({
     name: 'WTable',
@@ -39,6 +40,7 @@
         initParams,
         onQuery,
         onReset,
+        onDelete,
         onDeleteMany,
         checkedRowKeys,
       } = useTableAPI(tableRef, getProps, setProps)
@@ -51,8 +53,9 @@
         <>
           <QueryForm />
 
-          <div class="mb-2">
+          <div class="mb-2 flex justify-between">
             <HeaderActions />
+            <Utils />
           </div>
 
           <n-data-table
@@ -68,6 +71,7 @@
         params: {
           setProps,
           onInit,
+          onDelete,
           onDeleteMany,
         },
       })

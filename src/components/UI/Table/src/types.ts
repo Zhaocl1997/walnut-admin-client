@@ -22,6 +22,7 @@ export declare namespace WTable {
     type ExtendInst = {
       setProps: SetProps
       onInit: (extraParams?: Recordable<any>) => Promise<void>
+      onDelete: (id: StringOrNumber) => Promise<void>
       onDeleteMany: Fn
     }
 

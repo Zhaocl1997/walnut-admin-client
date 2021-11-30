@@ -43,10 +43,7 @@ export const useTableAPI = (
         showQuickJumper: true,
         pageSizes: [10, 30, 50],
         pageSlot: 7,
-        // temporary
-        onChange: onUpdatePage,
-        // TODO naive bug , trigger twice
-        // onUpdatePage,
+        onUpdatePage,
         onUpdatePageSize,
         prefix: () => t('comp:pagination:total', { total: res.total }),
       },
@@ -55,15 +52,25 @@ export const useTableAPI = (
     setProps({ loading: false })
   }
 
+  // api delete (default)
+  const onDelete = async (id: StringOrNumber) => {
+    const ret = await props.value.apiProps?.deleteApi(id)
+    if (ret) {
+      AppSuccess()
+      await onInit()
+    }
+  }
+
   // api deleteMany (default)
   const onDeleteMany = async () => {
     const ret = await props.value.apiProps?.deleteManyApi(
       checkedRowKeys.value.join(',')
     )
+
     if (ret) {
+      checkedRowKeys.value.length = 0
       AppSuccess()
       await onInit()
-      checkedRowKeys.value = []
     }
   }
 
@@ -128,6 +135,7 @@ export const useTableAPI = (
     initParams,
     onQuery,
     onReset,
+    onDelete,
     onDeleteMany,
     checkedRowKeys,
   }

@@ -15,6 +15,7 @@ export const extendProps = {
 
   apiProps: Object as PropType<{
     listApi: (params: BaseListParams) => Promise<BaseListResponse>
+    deleteApi: (id: StringOrNumber) => Promise<unknown>
     deleteManyApi: Fn
   }>,
 
