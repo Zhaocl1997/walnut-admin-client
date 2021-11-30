@@ -4,19 +4,19 @@ enum AuthEnum {
   SIGNIN = '/auth/signin',
   SIGNUP = '/auth/signup',
 
-  PERMISSION = '/auth/permissionMenus',
+  PERMISSION = '/auth/permissions',
   PROFILE = '/auth/profile',
 }
 
 /**
  * @description Sign in
  */
-export const signin = (params: SigninPayloadType) => {
+export const signin = (data: SigninPayloadType) => {
   return AppAxios.post<{
     token: string
   }>({
     url: AuthEnum.SIGNIN,
-    params,
+    data,
   })
 }
 
@@ -24,7 +24,7 @@ export const signin = (params: SigninPayloadType) => {
  * @description Signin user permissions api
  */
 export const getPermissions = () => {
-  return AppAxios.get<BaseListResponse<AppMenu>>({
+  return AppAxios.get<AppMenu[]>({
     url: AuthEnum.PERMISSION,
   })
 }

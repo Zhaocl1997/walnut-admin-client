@@ -17,16 +17,16 @@ export const AppCoreFn1 = async () => {
   const { addRoute, getRoutes } = AppRouter
 
   // Here is where we request from back end to get login user permissions.
-  const res = await getPermissions()
+  const permissions = await getPermissions()
 
   // set menus state
-  menu.value.menus = buildMenus(res.data)!
+  menu.value.menus = buildMenus(permissions)!
 
   // set index menu name, use for home page
   menu.value.indexMenuName = menu.value.menus[0].name!
 
   // set keep alive route name
-  menu.value.keepAliveRouteNames = buildKeepAliveRouteNameList(res.data)
+  menu.value.keepAliveRouteNames = buildKeepAliveRouteNameList(permissions)
 
   // build routes and add into root route
   const routes = buildRoutes(menu.value.menus)
