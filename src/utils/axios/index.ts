@@ -32,6 +32,9 @@ const axiosConfig: AxiosRequestConfigExtend = {
 
     // no cache
     cache: false,
+
+    // filter null value
+    filterNull: true,
   },
 
   // adapter for cache, default is 5s

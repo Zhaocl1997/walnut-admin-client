@@ -1,6 +1,7 @@
 import type { AxiosTransform } from './src/types'
 
 import { checkReponseErrorStatus } from './checkStatus'
+import { filterObjNull } from '../shared'
 
 const { token } = useAppState()
 
@@ -19,6 +20,11 @@ export const transform: AxiosTransform = {
     // Demonstrate purpose API
     if (mergedCustomOptions.demonstrate) {
       return Promise.reject(new Error('Demonstrate'))
+    }
+
+    // filter null value in config.data
+    if (mergedCustomOptions.filterNull) {
+      config.data = filterObjNull(config.data)
     }
 
     return config

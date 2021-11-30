@@ -32,7 +32,7 @@ export interface AxiosTransform {
 /**
  * @description Custom config type
  */
-export interface customConfigType {
+export interface AxiosCustomConfig {
   /**
    * @description Add timestamp in the url
    * @default false
@@ -56,6 +56,12 @@ export interface customConfigType {
    * @default false
    */
   cache?: boolean
+
+  /**
+   * @description filter null value in data
+   * @default true
+   */
+  filterNull?: boolean
 }
 
 /**
@@ -63,7 +69,7 @@ export interface customConfigType {
  */
 export interface AxiosRequestConfigExtend extends AxiosRequestConfig {
   transform?: AxiosTransform
-  customConfig?: customConfigType
+  customConfig?: AxiosCustomConfig
 }
 
 /**

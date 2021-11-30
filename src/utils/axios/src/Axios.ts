@@ -3,7 +3,7 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import type {
   AxiosRequestConfigExtend,
   AxiosTransform,
-  customConfigType,
+  AxiosCustomConfig,
 } from './types'
 
 import axios from 'axios'
@@ -68,7 +68,7 @@ export class Axios {
    */
   request<T>(
     config: AxiosRequestConfig,
-    options?: customConfigType
+    options?: AxiosCustomConfig
   ): Promise<T> {
     // Here merge default customConfig with individual customConfig
     const mergedConfig = easyDeepMerge(config, { customConfig: options })
@@ -91,28 +91,28 @@ export class Axios {
   /**
    * @description Axios Get
    */
-  get<T>(config: AxiosRequestConfig, options?: customConfigType) {
+  get<T>(config: AxiosRequestConfig, options?: AxiosCustomConfig) {
     return this.request<T>({ ...config, method: 'GET' }, options)
   }
 
   /**
    * @description Axios Post
    */
-  post<T>(config: AxiosRequestConfig, options?: customConfigType) {
+  post<T>(config: AxiosRequestConfig, options?: AxiosCustomConfig) {
     return this.request<T>({ ...config, method: 'POST' }, options)
   }
 
   /**
    * @description Axios Put
    */
-  put<T>(config: AxiosRequestConfig, options?: customConfigType) {
+  put<T>(config: AxiosRequestConfig, options?: AxiosCustomConfig) {
     return this.request<T>({ ...config, method: 'PUT' }, options)
   }
 
   /**
    * @description Axios Delete
    */
-  delete<T>(config: AxiosRequestConfig, options?: customConfigType) {
+  delete<T>(config: AxiosRequestConfig, options?: AxiosCustomConfig) {
     return this.request<T>({ ...config, method: 'DELETE' }, options)
   }
 }

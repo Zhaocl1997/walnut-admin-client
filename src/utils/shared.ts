@@ -19,3 +19,13 @@ export const renderSlots = <T extends AnyObject>(slots: Slots) => {
   })
   return ret
 }
+
+export const filterObjNull = (obj: Recordable) =>
+  obj &&
+  Object.keys(obj).reduce((newObj, key) => {
+    const value = obj[key]
+    if (value !== null) {
+      newObj[key] = value
+    }
+    return newObj
+  }, {})
