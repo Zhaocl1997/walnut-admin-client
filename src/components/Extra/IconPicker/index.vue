@@ -1,24 +1,27 @@
 <template>
   <n-input
+    ref="rootInputRef"
     v-model:value="value"
     readonly
-    placeholder="Choose your Icon!"
+    clearable
+    :placeholder="t('comp:iconPicker:title')"
     @click="onOpenPopover"
+    @clear="onClear"
   >
-    <template #suffix>
+    <template #prefix>
       <n-popover
         v-model:show="show"
         placement="top"
         trigger="click"
-        :style="{ width: '500px', position: 'relative', right: '200px' }"
+        :style="{ width: '500px', position: 'relative', right: '0px' }"
       >
         <template #header>
-          <n-h6 prefix="bar">Choose your favorite Icon !</n-h6>
+          <n-text type="info">{{ t('comp:iconPicker:title') }}</n-text>
         </template>
 
         <template #trigger>
-          <div class="cursor-pointer -mb-2">
-            <w-icon :icon="value" width="24" @click="onOpenPopover"></w-icon>
+          <div class="cursor-pointer -mb-3 -ml-1">
+            <w-icon :icon="value" width="24"></w-icon>
           </div>
         </template>
 
@@ -28,8 +31,9 @@
               <n-input
                 ref="searchInputRef"
                 v-model:value="filters"
+                size="small"
                 clearable
-                placeholder="Search for the fav icon!"
+                :placeholder="t('comp:iconPicker:ph')"
                 @input="debouncedInit"
               ></n-input>
             </div>
@@ -47,13 +51,10 @@
                     'hover:bg-warm-gray-300': icon !== value,
                   },
                 ]"
-                @click="onClosePopover(icon)"
+                @click="onChooseIcon(icon)"
               />
 
-              <n-empty
-                description="No Icon Found."
-                v-show="lists.length === 0"
-              />
+              <n-empty v-show="lists.length === 0" />
             </div>
 
             <n-pagination
@@ -62,10 +63,13 @@
               :item-count="total"
               size="small"
               class="text-sm"
+              :page-slot="7"
               @update:page="init(false)"
             >
               <template #suffix>
-                <span class="whitespace-nowrap">Total: {{ total }}</span>
+                <span class="whitespace-nowrap">
+                  {{ t('comp:pagination:total', { total }) }}
+                </span>
               </template>
             </n-pagination>
           </n-spin>
@@ -76,90 +80,95 @@
 </template>
 
 <script lang="ts">
+  export default defineComponent({
+    name: 'WIconPicker',
+  })
+</script>
+
+<script lang="ts" setup>
   import type { InputInst } from 'naive-ui'
   import { mockListApi } from '/@/utils/mockListApi'
   import iconLists from '/@/components/UI/Icon/src/utils/list'
 
-  export default defineComponent({
-    name: 'WIconPicker',
+  const props = defineProps({ value: String as PropType<string> })
+  const emit = defineEmits(['update:value'])
 
-    inheritAttrs: false,
+  const { t } = useAppI18n()
+  const {
+    lists,
+    total,
+    pageNum,
+    pageSize,
+    show,
+    filters,
+    rootInputRef,
+    searchInputRef,
+    loading,
+  } = toRefs(
+    reactive({
+      lists: [] as string[],
+      total: 0,
+      pageNum: 1,
+      pageSize: 55,
+      show: false,
+      filters: '',
+      rootInputRef: null as Nullable<InputInst>,
+      searchInputRef: null as Nullable<InputInst>,
+      loading: false,
+    })
+  )
 
-    props: {
-      value: {
-        type: String as PropType<string>,
-        default: '',
-      },
-    },
+  const init = (needFeedback?: boolean) => {
+    loading.value = true
+    if (props.value && needFeedback) {
+      const index = iconLists.findIndex((item) => item === props.value) + 1
 
-    emits: ['update:value'],
+      const shouldGoPageNum = Math.floor(index / pageSize.value) + 1
 
-    setup(props, ctx) {
-      const { emit } = ctx
+      pageNum.value = shouldGoPageNum
+    }
 
-      const state = reactive({
-        lists: [] as string[],
-        total: 0,
-        pageNum: 1,
-        pageSize: 55,
-        show: false,
-        filters: '',
-        searchInputRef: null as Nullable<InputInst>,
-        loading: false,
-      })
+    const filtered = iconLists.filter((i) => i.includes(filters.value))
+    const filterdRes = mockListApi(filtered)({
+      pageNum: pageNum.value,
+      pageSize: pageSize.value,
+    })
 
-      const init = (needFeedback?: boolean) => {
-        state.loading = true
-        if (props.value && needFeedback) {
-          const index = iconLists.findIndex((item) => item === props.value) + 1
+    setTimeout(() => {
+      total.value = filterdRes.total
+      lists.value = filterdRes.data
+      loading.value = false
+    }, 200)
+  }
 
-          const shouldGoPageNum = Math.floor(index / state.pageSize) + 1
+  const debouncedInit = useDebounceFn(() => {
+    pageNum.value = 1
+    init(false)
+  }, 300)
 
-          state.pageNum = shouldGoPageNum
-        }
+  const onOpenPopover = () => {
+    filters.value = ''
+    show.value = true
+    init(true)
+    nextTick(() => {
+      searchInputRef.value?.focus()
+    })
+  }
 
-        const params = {
-          pageNum: state.pageNum,
-          pageSize: state.pageSize,
-        }
+  const onChooseIcon = (icon: string) => {
+    pageNum.value = 1
+    show.value = false
 
-        const filtered = iconLists.filter((i) => i.includes(state.filters))
-        const filterdRes = mockListApi(filtered)(params)
+    emit('update:value', icon)
 
-        setTimeout(() => {
-          state.total = filterdRes.total
-          state.lists = filterdRes.data
-          state.loading = false
-        }, 200)
-      }
+    // fix not trigger rule in form
+    rootInputRef.value?.focus()
+    nextTick(() => {
+      rootInputRef.value?.blur()
+    })
+  }
 
-      const debouncedInit = useDebounceFn(() => {
-        state.pageNum = 1
-        init(false)
-      }, 300)
-
-      const onOpenPopover = () => {
-        state.filters = ''
-        state.show = true
-        init(true)
-        nextTick(() => {
-          state.searchInputRef!.focus()
-        })
-      }
-
-      const onClosePopover = (icon: string) => {
-        emit('update:value', icon)
-        state.pageNum = 1
-        state.show = false
-      }
-
-      return {
-        ...toRefs(state),
-        init,
-        debouncedInit,
-        onOpenPopover,
-        onClosePopover,
-      }
-    },
-  })
+  const onClear = () => {
+    emit('update:value', '')
+  }
 </script>
