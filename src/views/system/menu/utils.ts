@@ -35,5 +35,40 @@ export const getViewsOptions = () => {
     }
   })
 
-  return { viewOptions }
+  const nameOptions = viewOptions.map((i) => ({
+    value: i.name,
+    label: i.name,
+  }))
+
+  return { viewOptions, nameOptions }
 }
+
+export const menuTypeOptions: BaseOptionDataItem[] = [
+  {
+    value: MenuTypeConst.CATALOG,
+    label: 'Catalog',
+  },
+  {
+    value: MenuTypeConst.MENU,
+    label: 'Menu',
+  },
+  {
+    value: MenuTypeConst.ELEMENT,
+    label: 'Element',
+  },
+]
+
+export const menuTernalOptions: BaseOptionDataItem[] = [
+  {
+    value: MenuTernalConst.NONE,
+    label: 'Normal',
+  },
+  {
+    value: MenuTernalConst.EXTERNAL,
+    label: 'External',
+  },
+  {
+    value: MenuTernalConst.INTERNAL,
+    label: 'Internal',
+  },
+]

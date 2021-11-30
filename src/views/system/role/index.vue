@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <n-button @click="insert">insert</n-button> -->
     <w-table @hook="registerTable"></w-table>
 
     <w-form @hook="registerForm" :model="formData"></w-form>
@@ -20,36 +19,16 @@
 
   import { useInitialState } from '/@/utils'
 
-  import Permission from './permission.vue'
+  import MenuTree from './MenuTree.vue'
 
-  const roleData = Array.from({ length: 100 }).map(
-    (i, index) =>
-      ({
-        roleName: `testRole${index + 1}`,
-        description: `testDes${index + 1}`,
-      } as AppRole)
-  )
+  // ref
+  const actionType = ref<ActionType>('')
 
-  const insert = () => {
-    roleData.map(async (data) => {
-      await roleAPI.create(data)
-    })
-  }
-
-  // main
-
-  const tableData = ref<AppRole[]>([])
-  const tableDataTotal = ref(0)
-  const tableDataPage = ref(1)
-  const tableDataPageSize = ref(10)
-  const tableDataLoading = ref(false)
-
-  const actionType = ref<'create' | 'update'>('create')
-
+  // state
   const {
     stateRef: formData,
-    setState,
-    resetState,
+    setState: setFormData,
+    resetState: resetFormData,
   } = useInitialState<AppRole>({
     roleName: '',
     description: '',
@@ -57,193 +36,205 @@
     menus: [],
   })
 
-  const onGetTableData = async () => {
-    tableDataLoading.value = true
-
-    const res = await roleAPI.list({
-      page: tableDataPage.value,
-      pageSize: tableDataPageSize.value,
-    })
-
-    tableData.value = res.data
-    tableDataTotal.value = res.total
-    tableDataLoading.value = false
-  }
-
-  onMounted(() => {
-    onGetTableData()
-  })
-
-  const onCreate = () => {
+  const onCreateAndOpen = () => {
     actionType.value = 'create'
 
     const { done } = onOpen()
+
     done()
   }
 
-  const onOpenDrawer = async (id: string) => {
-    const { done } = onOpen()
-
+  const onReadAndOpen = async (id: string) => {
     actionType.value = 'update'
+
+    const { done } = onOpen()
 
     try {
       const res = await roleAPI.read(id)
-      setState(res)
+      setFormData(res)
     } finally {
       done()
     }
   }
 
-  const onDelete = async (id: string) => {
-    const ret = await roleAPI.delete(id)
-    if (ret) {
-      useAppMessage().success('Operation Success!')
-      await onGetTableData()
+  // table
+  const [registerTable, { onInit, onDelete, onDeleteMany }] = useTable<AppRole>(
+    {
+      rowKey: (row) => row._id,
+
+      maxHeight: 600,
+
+      striped: true,
+
+      actionList: ['create', 'delete'],
+
+      onAction: ({ type }) => {
+        switch (type) {
+          case 'create':
+            onCreateAndOpen()
+            break
+
+          case 'delete':
+            onDeleteMany()
+            break
+
+          default:
+            break
+        }
+      },
+
+      apiProps: {
+        // Table API Solution 1
+        listApi: roleAPI.list.bind(roleAPI),
+        // Table API Solution 2
+        // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
+
+        deleteApi: roleAPI.delete.bind(roleAPI),
+
+        deleteManyApi: roleAPI.deleteMany.bind(roleAPI),
+      },
+
+      // queryFormProps: {
+      //   localeUniqueKey: 'locale',
+      //   localeWithTable: true,
+      //   span: 8,
+      //   labelWidth: 100,
+      //   schemas: [
+      //     {
+      //       type: 'Base:Select',
+      //       formProp: {
+      //         path: 'key',
+      //       },
+      //       componentProp: {
+      //         clearable: true,
+      //         options: ['app:', 'sys:', 'form:', 'table:'].map((i) => ({
+      //           value: i,
+      //           label: i,
+      //         })),
+      //       },
+      //     },
+      //     {
+      //       type: 'Base:Input',
+      //       formProp: {
+      //         path: 'value',
+      //       },
+      //       componentProp: {
+      //         clearable: true,
+      //       },
+      //     },
+      //     {
+      //       type: 'Extend:Query',
+      //     },
+      //   ],
+      // },
+
+      columns: [
+        {
+          type: 'selection',
+        },
+
+        {
+          title: 'Role Name',
+          key: 'roleName',
+          width: 200,
+          align: 'center',
+        },
+
+        {
+          title: 'Description',
+          key: 'description',
+          width: 200,
+          align: 'center',
+        },
+
+        {
+          title: 'Order',
+          key: 'order',
+          width: 80,
+          align: 'center',
+        },
+
+        {
+          title: 'Users Count',
+          key: 'usersCount',
+          width: 120,
+          align: 'center',
+        },
+
+        {
+          title: 'Status',
+          key: 'status',
+          width: 100,
+          align: 'center',
+          extendType: 'formatter',
+          formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
+        },
+
+        {
+          title: 'Created At',
+          key: 'createdAt',
+          width: 200,
+          extendType: 'formatter',
+          formatter: (row) => formatTime(row.createdAt!),
+          align: 'center',
+        },
+
+        {
+          title: 'Updated At',
+          key: 'updatedAt',
+          width: 200,
+          extendType: 'formatter',
+          formatter: (row) => formatTime(row.updatedAt!),
+          align: 'center',
+        },
+
+        {
+          title: 'Action',
+          key: 'action',
+          align: 'center',
+          width: 180,
+          extendType: 'action',
+          extendActionType: ['read', 'delete'],
+          onRead: (row) => {
+            onReadAndOpen(row._id!)
+          },
+          onDelete: (row) => {
+            onDelete(row._id!)
+          },
+        },
+      ],
     }
-  }
+  )
 
-  const onUpdatePage = async (page: number) => {
-    tableDataPage.value = page
-    await onGetTableData()
-  }
-
-  const onUpdatePageSize = async (pageSize: number) => {
-    tableDataPageSize.value = pageSize
-    await onGetTableData()
-  }
-
-  const [registerTable] = useTable<AppRole>({
-    onAction: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onCreate()
-
-          break
-
-        default:
-          break
-      }
-    },
-
-    actionList: ['create', 'delete'],
-
-    remote: true,
-
-    rowKey: (row) => row._id,
-
-    loading: tableDataLoading,
-
-    // @ts-ignore
-    data: tableData,
-
-    pagination: {
-      itemCount: tableDataTotal,
-      page: tableDataPage,
-      pageSize: tableDataPageSize,
-      showSizePicker: true,
-      showQuickJumper: true,
-      pageSizes: [10, 30, 50],
-      onChange: onUpdatePage,
-      // TODO naive bug , trigger twice
-      // onUpdatePage,
-      onUpdatePageSize,
-    },
-
-    columns: [
-      {
-        type: 'selection',
-      },
-
-      {
-        title: 'Role Name',
-        key: 'roleName',
-        width: 200,
-        align: 'center',
-      },
-
-      {
-        title: 'Description',
-        key: 'description',
-        width: 200,
-        align: 'center',
-      },
-
-      {
-        title: 'Order',
-        key: 'order',
-        width: 80,
-        align: 'center',
-      },
-
-      {
-        title: 'Users Count',
-        key: 'usersCount',
-        width: 120,
-        align: 'center',
-      },
-
-      {
-        title: 'Status',
-        key: 'status',
-        width: 100,
-        align: 'center',
-        extendType: 'formatter',
-        formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
-      },
-
-      {
-        title: 'Created At',
-        key: 'createdAt',
-        width: 200,
-        extendType: 'formatter',
-        formatter: (row) => formatTime(row.createdAt!),
-        align: 'center',
-      },
-
-      {
-        title: 'Updated At',
-        key: 'updatedAt',
-        width: 200,
-        extendType: 'formatter',
-        formatter: (row) => formatTime(row.updatedAt!),
-        align: 'center',
-      },
-
-      {
-        title: 'Action',
-        key: 'action',
-        extendType: 'action',
-        extendActionType: ['read', 'delete'],
-        onRead: (row) => {
-          onOpenDrawer(row._id!)
-        },
-        onDelete: (row) => {
-          onDelete(row._id!)
-        },
-      },
-    ],
-  })
-
+  // form
   const [registerForm, { onOpen }] = useForm<AppRole>({
+    // localeUniqueKey: 'locale',
+
+    // localeWithTable: true,
+
     preset: 'drawer',
 
-    labelWidth: '140px',
+    labelWidth: 140,
 
     baseRules: true,
 
     advancedProps: {
-      title: computed(() =>
-        actionType.value === 'create' ? 'Create Role' : 'Update Existing Role'
-      ),
-      width: '500',
-      onYes: async (handler) => {
-        await handler(roleAPI[actionType.value].bind(roleAPI), formData.value)
-        resetState()
-        await onGetTableData()
+      actionType,
+      width: 500,
+      onYes: async (apiHandler) => {
+        await apiHandler(
+          // Form API Solution 1
+          roleAPI[actionType.value].bind(roleAPI),
+          // Form API Solution 2
+          // (data) => AppAxios.put({ url: '/system/locale', data }),
+          formData.value
+        )
+        resetFormData()
+        await onInit()
       },
-      onNo: (handler) => {
-        resetState()
-        handler()
+      onNo: (done) => {
+        resetFormData()
+        done()
       },
     },
 
@@ -295,10 +286,11 @@
         formProp: {
           path: 'menus',
           label: 'Permission',
+          rule: false,
         },
         componentProp: {
           render: ({ formData }) => (
-            <Permission v-model={[formData.menus, 'value']} />
+            <MenuTree v-model={[formData.menus, 'value']} checkable />
           ),
         },
       },

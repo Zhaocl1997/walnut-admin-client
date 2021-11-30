@@ -23,15 +23,15 @@
 
   import { useLangList } from './useLangList'
 
-  // main
-  const actionType = ref<'create' | 'update'>('create')
-  const { AppSuccess } = useAppMsgSuccess()
+  // ref
+  const actionType = ref<ActionType>('')
   const { langList } = useLangList()
 
+  // state
   const {
     stateRef: formData,
-    setState,
-    resetState,
+    setState: setFormData,
+    resetState: resetFormData,
   } = useInitialState<AppLocale & { oldKey?: string }>({
     key: '',
     oldKey: '',
@@ -52,26 +52,21 @@
 
     try {
       const res = await localeAPI.read(key)
-      setState(res)
+      setFormData(res)
     } finally {
       done()
     }
   }
 
-  const onDelete = async (key: string) => {
-    const ret = await localeAPI.delete(key)
-    if (ret) {
-      AppSuccess()
-      await onInit()
-    }
-  }
-
-  const [registerTable, { onInit, onDeleteMany }] = useTable<
+  // table
+  const [registerTable, { onInit, onDelete, onDeleteMany }] = useTable<
     Pick<AppLocale, '_id' | 'key' | 'createdAt' | 'updatedAt'> & {
       values: string[]
     }
   >({
     localeUniqueKey: 'locale',
+
+    rowKey: (row) => row._id,
 
     maxHeight: 600,
 
@@ -92,13 +87,13 @@
       }
     },
 
-    rowKey: (row) => row._id,
-
     apiProps: {
       // Table API Solution 1
       listApi: localeAPI.list.bind(localeAPI),
       // Table API Solution 2
       // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
+
+      deleteApi: localeAPI.delete.bind(localeAPI),
 
       deleteManyApi: localeAPI.deleteMany.bind(localeAPI),
     },
@@ -196,6 +191,7 @@
     ],
   })
 
+  // form
   const [registerForm, { onOpen }] = useForm<AppLocale>({
     localeUniqueKey: 'locale',
 
@@ -218,11 +214,11 @@
           // (data) => AppAxios.put({ url: '/system/locale', data }),
           formData.value
         )
-        resetState()
+        resetFormData()
         await onInit()
       },
       onNo: (done) => {
-        resetState()
+        resetFormData()
         done()
       },
     },
