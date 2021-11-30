@@ -11,8 +11,9 @@ export const useInitialState = <T extends Recordable>(state: T) => {
   }
 
   const resetState = () => {
-    for (const [k, v] of Object.entries(stateRef.value))
-      stateRef.value[k] = getInitialState()[k] ?? ''
+    for (const [k, _] of Object.entries(stateRef.value)) {
+      stateRef.value[k] = getInitialState()[k] ?? null
+    }
   }
 
   return {
