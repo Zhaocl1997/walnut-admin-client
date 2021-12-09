@@ -10,7 +10,7 @@ export interface useExposeOptions<T> {
   expose: (exposed: Record<string, any>) => void
 
   /**
-   * @description Weather need the original exposed apis
+   * @description Whether need the original exposed apis
    * @default false
    */
   originalProxy?: boolean
