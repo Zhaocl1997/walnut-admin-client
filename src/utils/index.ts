@@ -6,7 +6,7 @@ export const useInitialState = <T extends Recordable>(state: T) => {
 
   const stateRef = ref<T>(getInitialState())
 
-  const setState = (newState: T) => {
+  const setState = (newState: Partial<T>) => {
     Object.assign(stateRef.value, newState)
   }
 

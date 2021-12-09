@@ -4,9 +4,7 @@ declare interface Fn<T = any, R = T> {
   (...arg: T[]): R
 }
 
-declare interface PromiseFn<T = any> {
-  (args: T): Promise<void>
-}
+declare type PromiseFn<T = any> = (args?: T) => Promise<void>
 
 declare type Recordable<T = any> = Record<string, T>
 
@@ -124,6 +122,12 @@ declare type ComponentPlacement =
   | 'bottom-end'
 
 declare type ComponentTrigger = 'hover' | 'click' | 'contentmenu'
+
+declare type ActionType = 'create' | 'update' | ''
+
+declare type RowData = {
+  [key: string]: unknown
+}
 
 declare type MaybeRefSelf<T> = T | Ref<T> | ComputedRef<T>
 

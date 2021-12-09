@@ -1,5 +1,7 @@
 import { isProd } from '/@/utils/constant/vue'
 
+export type BaseAPIType<T> = BaseAPI<T>
+
 export class BaseAPI<T> {
   private readonly baseAPI: string
 

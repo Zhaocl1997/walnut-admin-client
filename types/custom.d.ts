@@ -50,6 +50,7 @@ declare global {
 
   // App
   type BaseListParams<T = any> = import('/@/utils/axios').BaseListParams<T>
+  type BaseSortParams<T = any> = import('/@/utils/axios').BaseSortParams<T>
   type BaseListResponse<T = any> = import('/@/utils/axios').BaseListResponse<T>
   type BaseResponseStructure<T = any> =
     import('/@/utils/axios').BaseResponseStructure<T>

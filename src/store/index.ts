@@ -1,11 +1,11 @@
-import type { RemoveableRef } from '@vueuse/core'
+import type { RemovableRef } from '@vueuse/core'
 import type { AppMemory, AppStorage } from './types'
 
 const preferredLanguages = usePreferredLanguages()
 const preferredColor = usePreferredColorScheme()
 
 type RemoveableRefRecord<T> = {
-  [P in keyof T]: RemoveableRef<T[P]>
+  [P in keyof T]: RemovableRef<T[P]>
 }
 
 const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
@@ -35,6 +35,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
         menus: [],
         keepAliveRouteNames: [],
         indexMenuName: '',
+        permissions: [],
       },
       user: {
         userInfo: {},

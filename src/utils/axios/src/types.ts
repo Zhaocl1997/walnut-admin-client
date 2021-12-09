@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
+import type { SortOrder } from 'naive-ui/lib/data-table/src/interface'
 
 /**
  * @description Custom transform type
@@ -9,7 +10,7 @@ export interface AxiosTransform {
    */
   requestInterceptors?: (
     config: AxiosRequestConfigExtend
-  ) => AxiosRequestConfig | Promise<any>
+  ) => AxiosRequestConfig | Promise<RowData>
 
   /**
    * @description Axios original request error catch
@@ -21,7 +22,7 @@ export interface AxiosTransform {
    */
   responseInterceptors?: (
     res: AxiosResponse<BaseResponseStructure>
-  ) => Promise<any>
+  ) => Promise<RowData>
 
   /**
    * @description Axios original response error catch
@@ -85,7 +86,7 @@ export interface AxiosAdapterOptions {
 /**
  * @description Back end api base result structure
  */
-export interface BaseResponseStructure<T = any> {
+export interface BaseResponseStructure<T = RowData> {
   /**
    * @description request code, not equal to axios `statusCode`. This is customizable code
    */
@@ -105,7 +106,7 @@ export interface BaseResponseStructure<T = any> {
 /**
  * @description Back list api response structure
  */
-export interface BaseListResponse<T = any> {
+export interface BaseListResponse<T = RowData> {
   /**
    * @description List base structure
    */
@@ -120,24 +121,36 @@ export interface BaseListResponse<T = any> {
 /**
  * @description Back list api params structure
  */
-export interface BaseListParams<T = any> {
+export type BaseListParams<T = RowData> = {
   /**
-   * @description page num
+   * @description query object
    */
+  query?: T
+
+  /**
+   * @description sort object
+   */
+  sort?: BaseSortParams<T>
+
+  /**
+   * @description pagination object
+   */
+  page?: BasePageParams
+}
+
+/**
+ * @description base sort params
+ */
+export type BaseSortParams<T = RowData> = {
+  field: keyof T
+  order: SortOrder
+  priority: number
+}[]
+
+/**
+ * @description base page params
+ */
+export type BasePageParams = {
   page?: number
-
-  /**
-   * @description page size
-   */
   pageSize?: number
-
-  /**
-   * @description sort field
-   */
-  sortField?: keyof T
-
-  /**
-   * @description sort order
-   */
-  sortOrder?: 'ascend' | 'descend' | false
 }

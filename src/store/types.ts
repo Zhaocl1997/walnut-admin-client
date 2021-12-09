@@ -29,6 +29,7 @@ export interface AppMemory {
     menus: AppMenu[]
     keepAliveRouteNames: string[]
     indexMenuName: string
+    permissions: string[]
   }
 
   user: {
