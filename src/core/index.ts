@@ -2,7 +2,11 @@ import { getPermissions } from '/@/api/auth'
 
 import { AppRootName, AppRootPath } from '/@/router/constant'
 
-import { buildMenus, buildKeepAliveRouteNameList } from './menu'
+import {
+  buildMenus,
+  buildPermissions,
+  buildKeepAliveRouteNameList,
+} from './menu'
 import { buildRoutes } from './route'
 
 const { menu } = useAppState()
@@ -17,16 +21,19 @@ export const AppCoreFn1 = async () => {
   const { addRoute, getRoutes } = AppRouter
 
   // Here is where we request from back end to get login user permissions.
-  const permissions = await getPermissions()
+  const res = await getPermissions()
 
-  // set menus state
-  menu.value.menus = buildMenus(permissions)!
+  // set aside menu
+  menu.value.menus = buildMenus(res)!
+
+  // set permission string array
+  menu.value.permissions = buildPermissions(res)
+
+  // set keep alive route name
+  menu.value.keepAliveRouteNames = buildKeepAliveRouteNameList(res)
 
   // set index menu name, use for home page
   menu.value.indexMenuName = menu.value.menus[0].name!
-
-  // set keep alive route name
-  menu.value.keepAliveRouteNames = buildKeepAliveRouteNameList(permissions)
 
   // build routes and add into root route
   const routes = buildRoutes(menu.value.menus)

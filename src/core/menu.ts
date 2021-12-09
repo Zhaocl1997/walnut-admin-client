@@ -30,9 +30,15 @@ export const buildMenus = (payload: AppMenu[]) => {
 }
 
 /**
- * @description Generate keep-alive component name lists based on `menu` list.
+ * @description Generate keep-alive component name lists based on `menu`
  */
 export const buildKeepAliveRouteNameList = (payload: AppMenu[]): string[] =>
   payload
     .filter((i) => i.type === MenuTypeConst.MENU && i.cache)
     .map((i) => i.name!)
+
+/**
+ * @description Generate permissions array based on `menu`
+ */
+export const buildPermissions = (payload: AppMenu[]): string[] =>
+  payload.map((i) => i.permission!).filter((i) => i)
