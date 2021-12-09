@@ -2,6 +2,7 @@ import type { DataTableColumn, DataTableInst } from 'naive-ui'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import { props } from './props'
+import { CreateRowKey } from 'naive-ui/lib/data-table/src/interface'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete'
@@ -23,7 +24,7 @@ export declare namespace WTable {
       setProps: SetProps
       onInit: (extraParams?: Recordable<any>) => Promise<void>
       onDelete: (id: StringOrNumber) => Promise<void>
-      onDeleteMany: Fn
+      onDeleteMany: () => Promise<void>
     }
 
     interface WTableInst extends NDataTableInst, ExtendInst {}
@@ -62,11 +63,18 @@ export declare namespace WTable {
         (ExtendType.Action<T> | ExtendType.Icon<T> | ExtendType.Formatter<T>)
 
   interface Props<T = RowData>
-    extends Partial<Omit<ExtractPropTypes<typeof props>, 'columns'>> {
+    extends Partial<
+      Omit<ExtractPropTypes<typeof props>, 'columns' | 'rowKey'>
+    > {
     /**
-     * @description rRewrite NDataTable columns type, add our own custom column type
+     * @description Rewrite NDataTable columns type, add our own custom column type
      */
     columns?: Column<T>[]
+
+    /**
+     * @override
+     */
+    rowKey?: CreateRowKey<T>
   }
 
   namespace Params {

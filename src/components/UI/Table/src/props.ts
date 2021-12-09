@@ -13,11 +13,14 @@ export const extendProps = {
 
   actionList: Array as PropType<WTable.HeaderActionType[]>,
 
-  apiProps: Object as PropType<{
-    listApi: (params: BaseListParams) => Promise<BaseListResponse>
-    deleteApi: (id: StringOrNumber) => Promise<unknown>
-    deleteManyApi: Fn
-  }>,
+  apiProps: Object as PropType<
+    Partial<{
+      onBeforeRequest: (params: Recordable) => BaseListParams & Recordable
+      listApi: (params: BaseListParams) => Promise<BaseListResponse>
+      deleteApi: (id: StringOrNumber) => Promise<unknown>
+      deleteManyApi: Fn
+    }>
+  >,
 
   queryFormProps: Object as PropType<WForm.Props>,
 } as const

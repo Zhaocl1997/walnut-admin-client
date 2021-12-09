@@ -1,7 +1,11 @@
-import type { SortState } from 'naive-ui/lib/data-table/src/interface'
+import type {
+  SorterMultiple,
+  SortState,
+} from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
-import { isFunction, isUndefined } from 'easy-fns-ts'
-import { useInitialState } from '/@/utils'
+
+import { easyDeepClone, isFunction, isNumber, isUndefined } from 'easy-fns-ts'
+import { generateBaseListParams } from '../utils'
 
 export const useTableAPI = (
   inst: Ref<WTable.Inst.NDataTableInst | undefined>,
@@ -14,37 +18,48 @@ export const useTableAPI = (
   const {
     stateRef: initParams,
     resetState: resetParams,
-    setState: setParams,
-  } = useInitialState<BaseListParams>({
-    page: 1,
-    pageSize: 10,
-    sortField: 'createdAt',
-    sortOrder: 'descend',
+    commit: commitParams,
+  } = useState<BaseListParams>({
+    query: {},
+    sort: [],
+    page: {
+      page: 1,
+      pageSize: 10,
+    },
   })
 
   const checkedRowKeys = ref<StringOrNumber[]>([])
 
   // api list
   const onInit = async () => {
-    console.log(1)
-
     setProps({ loading: true })
 
-    const res = await props.value.apiProps?.listApi(initParams.value)!
+    const params = generateBaseListParams(initParams.value)
+
+    // custom query
+    if (isFunction(props?.value?.apiProps?.onBeforeRequest!)) {
+      params.query = props?.value?.apiProps?.onBeforeRequest!(
+        easyDeepClone(params.query)
+      )
+    }
+
+    const res = await props.value.apiProps?.listApi!(params)!
 
     setProps({ data: res.data! })
 
     setProps({
       pagination: {
         itemCount: res.total!,
-        page: initParams.value.page,
-        pageSize: initParams.value.pageSize,
+        page: initParams.value.page?.page,
+        pageSize: initParams.value.page?.pageSize,
         showSizePicker: true,
         showQuickJumper: true,
         pageSizes: [10, 30, 50],
         pageSlot: 7,
         onUpdatePage,
-        onUpdatePageSize,
+        // TODO https://github.com/TuSimple/naive-ui/issues/1774
+        // onUpdatePageSize,
+        onPageSizeChange: onUpdatePageSize,
         prefix: () => t('comp:pagination:total', { total: res.total }),
       },
     })
@@ -54,7 +69,7 @@ export const useTableAPI = (
 
   // api delete (default)
   const onDelete = async (id: StringOrNumber) => {
-    const ret = await props.value.apiProps?.deleteApi(id)
+    const ret = await props.value.apiProps?.deleteApi!(id)
     if (ret) {
       AppSuccess()
       await onInit()
@@ -63,11 +78,12 @@ export const useTableAPI = (
 
   // api deleteMany (default)
   const onDeleteMany = async () => {
-    const ret = await props.value.apiProps?.deleteManyApi(
+    const ret = await props.value.apiProps?.deleteManyApi!(
       checkedRowKeys.value.join(',')
     )
 
     if (ret) {
+      // use `length = 0` can clear the arr
       checkedRowKeys.value.length = 0
       AppSuccess()
       await onInit()
@@ -76,7 +92,7 @@ export const useTableAPI = (
 
   // query event
   const onQuery = async ({ done }: any) => {
-    setParams({ page: 1 })
+    initParams.value.page!.page = 1
     await onInit()
     done()
   }
@@ -90,18 +106,19 @@ export const useTableAPI = (
   }
 
   const onUpdatePage = async (p: number) => {
-    setParams({ page: p })
+    initParams.value.page!.page = p
     await onInit()
   }
 
   const onUpdatePageSize = async (p: number) => {
-    setParams({ page: 1, pageSize: p })
+    initParams.value.page!.page = 1
+    initParams.value.page!.pageSize = p
     await onInit()
   }
 
-  const onUpdateSorter = async (p: SortState) => {
+  const onUpdateSorter = async (p: SortState & SortState[] & null) => {
     if (!p) return
-    setParams({ sortField: p.columnKey, sortOrder: p.order })
+    initParams.value.sort = p
     await onInit()
   }
 
@@ -112,19 +129,37 @@ export const useTableAPI = (
   onMounted(() => {
     if (!isUndefined(props.value?.apiProps)) {
       if (isFunction(props?.value?.apiProps?.listApi)) {
+        const defaultFormData = Object.fromEntries(
+          props.value.queryFormProps?.schemas
+            ?.map<[string, null]>((i) => [i?.formProp?.path!, null])
+            .filter((i) => i[0])!
+        )
+
+        initParams.value.query = easyDeepClone(defaultFormData)
+        commitParams()
+
         setProps({ remote: true })
         onInit()
       }
 
       if (
         props.value.columns?.map((i) => i.type).includes('selection') &&
-        isFunction(props?.value?.apiProps?.deleteManyApi)
+        isFunction(props?.value?.apiProps?.deleteManyApi!)
       ) {
         setProps({ onUpdateCheckedRowKeys })
       }
 
-      // @ts-ignore
-      if (props.value.columns?.map((i) => i.sorter === true).length !== 0) {
+      if (
+        props.value.columns
+          ?.map(
+            (i) =>
+              (i as unknown as SortState).sorter === true ||
+              isNumber(
+                ((i as unknown as SortState).sorter as SorterMultiple)?.multiple
+              )
+          )
+          .filter(Boolean).length !== 0
+      ) {
         setProps({ onUpdateSorter })
       }
     }

@@ -3,7 +3,7 @@
     @hook="register"
     @query="onQuery"
     @reset="onReset"
-    :model="initParams"
+    :model="initParams.query"
   ></w-form>
 </template>
 
