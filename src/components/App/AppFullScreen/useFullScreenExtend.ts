@@ -4,10 +4,13 @@ import { toggleClass } from 'easy-fns-ts'
 const { appMemo } = useAppState()
 
 export const useFullScreenExtend = () => {
-  const el = computed(
-    () =>
-      document.querySelector(appMemo.value.fullscreenTarget) as MaybeElementRef
-  )
+  const el = computed(() => {
+    if (appMemo.value.fullscreenTarget) {
+      return document.querySelector(
+        appMemo.value.fullscreenTarget
+      ) as MaybeElementRef
+    }
+  })
   const { isFullscreen, toggle, enter } = useFullscreen(el as Ref<HTMLElement>)
 
   watchEffect(
