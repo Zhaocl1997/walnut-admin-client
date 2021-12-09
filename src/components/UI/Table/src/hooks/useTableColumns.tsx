@@ -1,4 +1,5 @@
 import type { WTable } from '../types'
+import { defaultAppLocaleMessageKeys } from '../../../shared'
 
 // Extend Naive UI columns
 export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
@@ -8,10 +9,10 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
   const translateItem = (item: WTable.Column) => {
     if (props.value.localeUniqueKey) {
       if (item.type !== 'expand' && item.type !== 'selection') {
-        if (['createdAt', 'updatedAt', 'action'].includes(item.key as string)) {
+        if (defaultAppLocaleMessageKeys.includes(item.key as string)) {
           return {
             ...item,
-            title: () => t(`table:base:${item.key}`),
+            title: () => t(`app:base:${item.key}`),
           }
         }
 

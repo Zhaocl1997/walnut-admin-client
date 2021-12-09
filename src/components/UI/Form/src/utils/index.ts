@@ -1,5 +1,6 @@
 import type { WForm } from '../types'
 import { isUndefined } from 'easy-fns-ts'
+import { defaultAppLocaleMessageKeys } from '../../../shared'
 
 // get target field boolean value
 export const getEPBooleanValue = (
@@ -40,10 +41,14 @@ export const getTranslated = (
 
   const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
 
-  return isLocale && item?.formProp?.path
-    ? isLocaleWithTable
-      ? t(isHelpMsg(`table:${key}:${item?.formProp?.path}`) as string)
-      : t(isHelpMsg(`form:${key}:${item?.formProp?.path}`))
+  const path = item?.formProp?.path
+
+  return isLocale && path
+    ? defaultAppLocaleMessageKeys.includes(path!)
+      ? t(`app:base:${path}`)
+      : isLocaleWithTable
+      ? t(isHelpMsg(`table:${key}:${path}`) as string)
+      : t(isHelpMsg(`form:${key}:${path}`))
     : item?.formProp?.label
 }
 

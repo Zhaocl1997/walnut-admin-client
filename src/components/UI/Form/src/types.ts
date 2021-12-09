@@ -55,7 +55,7 @@ export declare namespace WForm {
       onOpen: () => { done: Fn }
       onClose: Fn
       onYes: (
-        apiHandler: (apiFn: Fn, params: AnyObject) => Promise<void>,
+        apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
         done: () => void
       ) => void
       onNo: Fn
