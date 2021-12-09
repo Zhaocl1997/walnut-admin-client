@@ -45,6 +45,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/store': ['useAppState'],
 
         '/@/hooks/core/useContext': ['useContext'],
+        '/@/hooks/core/useState': ['useState'],
         '/@/hooks/component/useMessage': [
           'useAppMessage',
           'useAppNotification',
@@ -59,6 +60,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
 
         '/@/components/UI/Form': ['useForm'],
         '/@/components/UI/Table': ['useTable'],
+        '/@/components/Advanced/CRUD': ['useCRUD'],
       },
     ],
   })
