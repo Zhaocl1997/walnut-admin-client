@@ -19,20 +19,14 @@
 
   import { useInitialState } from '/@/utils'
 
-  // main
+  // ref
+  const actionType = ref<ActionType>('')
 
-  const tableData = ref<AppLang[]>([])
-  const tableDataTotal = ref(0)
-  const tableDataPage = ref(1)
-  const tableDataPageSize = ref(10)
-  const tableDataLoading = ref(false)
-
-  const actionType = ref<'create' | 'update'>('create')
-
+  // state
   const {
     stateRef: formData,
-    setState,
-    resetState,
+    setState: setFormData,
+    resetState: resetFormData,
   } = useInitialState<AppLang>({
     lang: '',
     description: '',
@@ -40,58 +34,41 @@
     order: 0,
   })
 
-  const onGetTableData = async () => {
-    tableDataLoading.value = true
-
-    const res = await langAPI.list({
-      page: tableDataPage.value,
-      pageSize: tableDataPageSize.value,
-    })
-
-    tableData.value = res.data
-    tableDataTotal.value = res.total
-    tableDataLoading.value = false
-  }
-
-  onMounted(() => {
-    onGetTableData()
-  })
-
-  const onCreate = () => {
+  const onCreateAndOpen = () => {
     actionType.value = 'create'
 
     const { done } = onOpen()
+
     done()
   }
 
-  const onOpenDrawer = async (id: string) => {
-    const { done } = onOpen()
-
+  const onReadAndOpen = async (id: string) => {
     actionType.value = 'update'
+
+    const { done } = onOpen()
 
     try {
       const res = await langAPI.read(id)
-      setState(res)
+      setFormData(res)
     } finally {
       done()
     }
   }
 
-  const onUpdatePage = async (page: number) => {
-    tableDataPage.value = page
-    await onGetTableData()
-  }
+  // table
+  const [registerTable, { onInit, onDelete }] = useTable<AppLang>({
+    // localeUniqueKey: 'locale',
 
-  const onUpdatePageSize = async (pageSize: number) => {
-    tableDataPageSize.value = pageSize
-    await onGetTableData()
-  }
+    rowKey: (row) => row._id,
 
-  const [registerTable] = useTable<AppLang>({
+    maxHeight: 600,
+
+    actionList: ['create'],
+
     onAction: ({ type }) => {
       switch (type) {
         case 'create':
-          onCreate()
+          onCreateAndOpen()
 
           break
 
@@ -100,28 +77,13 @@
       }
     },
 
-    actionList: ['create'],
+    apiProps: {
+      // Table API Solution 1
+      listApi: langAPI.list.bind(langAPI),
+      // Table API Solution 2
+      // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
 
-    remote: true,
-
-    rowKey: (row) => row._id,
-
-    loading: tableDataLoading,
-
-    // @ts-ignore
-    data: tableData,
-
-    pagination: {
-      itemCount: tableDataTotal,
-      page: tableDataPage,
-      pageSize: tableDataPageSize,
-      showSizePicker: true,
-      showQuickJumper: true,
-      pageSizes: [10, 30, 50],
-      onChange: onUpdatePage,
-      // TODO naive bug , trigger twice
-      // onUpdatePage,
-      onUpdatePageSize,
+      deleteApi: langAPI.delete.bind(langAPI),
     },
 
     columns: [
@@ -176,36 +138,43 @@
         title: 'Action',
         key: 'action',
         extendType: 'action',
-        extendActionType: ['read'],
+        extendActionType: ['read', 'delete'],
         onRead: (row) => {
-          onOpenDrawer(row._id!)
+          onReadAndOpen(row._id!)
+        },
+        onDelete: (row) => {
+          onDelete(row._id!)
         },
       },
     ],
   })
 
+  // form
   const [registerForm, { onOpen }] = useForm<AppLang>({
+    // localeUniqueKey: 'locale',
+
+    // localeWithTable: true,
+
     preset: 'drawer',
 
-    labelWidth: '140px',
+    labelWidth: 140,
 
     baseRules: true,
 
     advancedProps: {
-      title: computed(() =>
-        actionType.value === 'create'
-          ? 'Create Language'
-          : 'Update Existing Language'
-      ),
-      width: '500',
-      onYes: async (handler) => {
-        await handler(langAPI[actionType.value].bind(langAPI), formData.value)
-        resetState()
-        await onGetTableData()
+      actionType,
+      width: 500,
+      onYes: async (apiHandler) => {
+        await apiHandler(
+          langAPI[actionType.value].bind(langAPI),
+          formData.value
+        )
+        resetFormData()
+        await onInit()
       },
-      onNo: (handler) => {
-        resetState()
-        handler()
+      onNo: (done) => {
+        resetFormData()
+        done()
       },
     },
 

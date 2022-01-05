@@ -55,8 +55,6 @@
 
   import { menuAPI } from '/@/api/system/menu'
 
-  import { useInitialState } from '/@/utils'
-
   import { useMenuFormSchema } from './useMenuFormSchema'
 
   import MenuTree from '../role/MenuTree.vue'
@@ -75,11 +73,7 @@
   const panelTitle = ref<string>('')
 
   // state
-  const {
-    stateRef: formData,
-    setState: setFormData,
-    resetState: resetFormData,
-  } = useInitialState<AppMenu>({
+  const { stateRef: formData, resetState: resetFormData } = useState<AppMenu>({
     type: 'catalog',
     ternal: 'none',
     order: 0,
@@ -94,7 +88,7 @@
     if (selectedMenuId.value) {
       const res = await menuAPI.read(selectedMenuId.value)
       actionType.value = 'update'
-      setFormData(res)
+      formData.value = res
     } else {
       actionType.value = ''
     }
@@ -176,12 +170,14 @@
         switch (key) {
           case 'root':
             panelTitle.value = t('page:menu:dd1')
-            setFormData({ pid: menuTreeRef.value.onGetRootId() })
+            // setFormData({ pid: menuTreeRef.value.onGetRootId() })
+            formData.value.pid = menuTreeRef.value.onGetRootId()
             break
 
           case 'child':
             panelTitle.value = t('page:menu:dd2')
-            setFormData({ pid })
+            // setFormData({ pid })
+            formData.value.pid = pid
             break
 
           default:

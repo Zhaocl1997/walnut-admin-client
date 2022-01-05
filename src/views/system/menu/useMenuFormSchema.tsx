@@ -77,11 +77,6 @@ export const useMenuFormSchema = ({
       type: 'Base:Switch',
       formProp: {
         path: 'status',
-        labelHelpMessage: true,
-      },
-      componentProp: {
-        checkedText: 'Enabled',
-        uncheckedText: 'Disable',
       },
       extraProp: {
         vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
@@ -256,10 +251,6 @@ export const useMenuFormSchema = ({
         path: 'cache',
         labelHelpMessage: true,
       },
-      componentProp: {
-        checkedText: 'Cached',
-        uncheckedText: 'Uncache',
-      },
       extraProp: {
         vIf: ({ formData }) =>
           formData.type === MenuTypeConst.MENU && formData.ternal === 'none',
@@ -272,10 +263,6 @@ export const useMenuFormSchema = ({
         path: 'show',
         labelHelpMessage: true,
       },
-      componentProp: {
-        checkedText: 'Display',
-        uncheckedText: 'Hidden',
-      },
       extraProp: {
         vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,
       },
@@ -286,10 +273,6 @@ export const useMenuFormSchema = ({
       formProp: {
         path: 'affix',
         labelHelpMessage: true,
-      },
-      componentProp: {
-        checkedText: 'Affixed',
-        uncheckedText: 'Normal',
       },
       extraProp: {
         vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,

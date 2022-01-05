@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <w-table @hook="registerTable"></w-table>
-
-    <w-form @hook="registerForm" :model="formData"></w-form>
-  </div>
+  <WCRUD @hook="register"></WCRUD>
 </template>
 
 <script lang="tsx">
@@ -17,283 +13,254 @@
 
   import { roleAPI } from '/@/api/system/role'
 
-  import { useInitialState } from '/@/utils'
-
   import MenuTree from './MenuTree.vue'
 
-  // ref
-  const actionType = ref<ActionType>('')
+  const [register, { onCreateAndOpen, onReadAndOpen, onDelete, onDeleteMany }] =
+    useCRUD<AppRole>({
+      baseAPI: roleAPI,
 
-  // state
-  const {
-    stateRef: formData,
-    setState: setFormData,
-    resetState: resetFormData,
-  } = useInitialState<AppRole>({
-    roleName: '',
-    description: '',
-    status: true,
-    menus: [],
-  })
+      defaultFormData: {
+        status: true,
+        menus: [],
+      },
 
-  const onCreateAndOpen = () => {
-    actionType.value = 'create'
-
-    const { done } = onOpen()
-
-    done()
-  }
-
-  const onReadAndOpen = async (id: string) => {
-    actionType.value = 'update'
-
-    const { done } = onOpen()
-
-    try {
-      const res = await roleAPI.read(id)
-      setFormData(res)
-    } finally {
-      done()
-    }
-  }
-
-  // table
-  const [registerTable, { onInit, onDelete, onDeleteMany }] = useTable<AppRole>(
-    {
-      rowKey: (row) => row._id,
-
-      maxHeight: 600,
-
-      striped: true,
-
-      actionList: ['create', 'delete'],
-
-      onAction: ({ type }) => {
-        switch (type) {
-          case 'create':
-            onCreateAndOpen()
-            break
-
-          case 'delete':
-            onDeleteMany()
-            break
-
-          default:
-            break
+      onBeforeRequest: (data) => {
+        if ((data.status! as unknown as number) === 1) {
+          data.status = true
         }
+
+        if ((data.status! as unknown as number) === 0) {
+          data.status = false
+        }
+
+        return data
       },
 
-      apiProps: {
-        // Table API Solution 1
-        listApi: roleAPI.list.bind(roleAPI),
-        // Table API Solution 2
-        // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
+      tableProps: {
+        rowKey: (row) => row._id!,
 
-        deleteApi: roleAPI.delete.bind(roleAPI),
+        maxHeight: 600,
 
-        deleteManyApi: roleAPI.deleteMany.bind(roleAPI),
-      },
+        striped: true,
 
-      // queryFormProps: {
-      //   localeUniqueKey: 'locale',
-      //   localeWithTable: true,
-      //   span: 8,
-      //   labelWidth: 100,
-      //   schemas: [
-      //     {
-      //       type: 'Base:Select',
-      //       formProp: {
-      //         path: 'key',
-      //       },
-      //       componentProp: {
-      //         clearable: true,
-      //         options: ['app:', 'sys:', 'form:', 'table:'].map((i) => ({
-      //           value: i,
-      //           label: i,
-      //         })),
-      //       },
-      //     },
-      //     {
-      //       type: 'Base:Input',
-      //       formProp: {
-      //         path: 'value',
-      //       },
-      //       componentProp: {
-      //         clearable: true,
-      //       },
-      //     },
-      //     {
-      //       type: 'Extend:Query',
-      //     },
-      //   ],
-      // },
+        actionList: ['create', 'delete'],
 
-      columns: [
-        {
-          type: 'selection',
+        onAction: ({ type }) => {
+          switch (type) {
+            case 'create':
+              onCreateAndOpen()
+              break
+
+            case 'delete':
+              onDeleteMany()
+              break
+
+            default:
+              break
+          }
         },
 
-        {
-          title: 'Role Name',
-          key: 'roleName',
-          width: 200,
-          align: 'center',
+        queryFormProps: {
+          // localeUniqueKey: 'locale',
+          // localeWithTable: true,
+          span: 8,
+          labelWidth: 100,
+          schemas: [
+            {
+              type: 'Base:Input',
+              formProp: {
+                path: 'roleName',
+                label: 'Role Name',
+              },
+              componentProp: {
+                clearable: true,
+              },
+            },
+
+            {
+              type: 'Base:Select',
+              formProp: {
+                path: 'status',
+                label: 'Status',
+              },
+              componentProp: {
+                clearable: true,
+                options: [
+                  {
+                    value: 1,
+                    label: 'Normal',
+                  },
+                  {
+                    value: 0,
+                    label: 'Disabled',
+                  },
+                ],
+              },
+            },
+
+            {
+              type: 'Extend:Query',
+            },
+          ],
         },
 
-        {
-          title: 'Description',
-          key: 'description',
-          width: 200,
-          align: 'center',
-        },
-
-        {
-          title: 'Order',
-          key: 'order',
-          width: 80,
-          align: 'center',
-        },
-
-        {
-          title: 'Users Count',
-          key: 'usersCount',
-          width: 120,
-          align: 'center',
-        },
-
-        {
-          title: 'Status',
-          key: 'status',
-          width: 100,
-          align: 'center',
-          extendType: 'formatter',
-          formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
-        },
-
-        {
-          title: 'Created At',
-          key: 'createdAt',
-          width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.createdAt!),
-          align: 'center',
-        },
-
-        {
-          title: 'Updated At',
-          key: 'updatedAt',
-          width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.updatedAt!),
-          align: 'center',
-        },
-
-        {
-          title: 'Action',
-          key: 'action',
-          align: 'center',
-          width: 180,
-          extendType: 'action',
-          extendActionType: ['read', 'delete'],
-          onRead: (row) => {
-            onReadAndOpen(row._id!)
+        columns: [
+          {
+            type: 'selection',
           },
-          onDelete: (row) => {
-            onDelete(row._id!)
+
+          {
+            title: 'Role Name',
+            key: 'roleName',
+            width: 200,
+            align: 'center',
+            sorter: {
+              multiple: 4,
+            },
           },
-        },
-      ],
-    }
-  )
 
-  // form
-  const [registerForm, { onOpen }] = useForm<AppRole>({
-    // localeUniqueKey: 'locale',
+          {
+            title: 'Description',
+            key: 'description',
+            width: 200,
+            align: 'center',
+          },
 
-    // localeWithTable: true,
+          {
+            title: 'Order',
+            key: 'order',
+            width: 100,
+            align: 'center',
+            sorter: {
+              multiple: 2,
+            },
+          },
 
-    preset: 'drawer',
+          {
+            title: 'Users Count',
+            key: 'usersCount',
+            width: 120,
+            align: 'center',
+          },
 
-    labelWidth: 140,
+          {
+            title: 'Status',
+            key: 'status',
+            width: 100,
+            align: 'center',
+            extendType: 'formatter',
+            formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
+            sorter: {
+              multiple: 3,
+            },
+          },
 
-    baseRules: true,
+          {
+            title: 'Created At',
+            key: 'createdAt',
+            width: 200,
+            extendType: 'formatter',
+            formatter: (row) => formatTime(row.createdAt!),
+            align: 'center',
+            sorter: {
+              multiple: 1,
+            },
+          },
 
-    advancedProps: {
-      actionType,
-      width: 500,
-      onYes: async (apiHandler) => {
-        await apiHandler(
-          // Form API Solution 1
-          roleAPI[actionType.value].bind(roleAPI),
-          // Form API Solution 2
-          // (data) => AppAxios.put({ url: '/system/locale', data }),
-          formData.value
-        )
-        resetFormData()
-        await onInit()
-      },
-      onNo: (done) => {
-        resetFormData()
-        done()
-      },
-    },
+          {
+            title: 'Updated At',
+            key: 'updatedAt',
+            width: 200,
+            extendType: 'formatter',
+            formatter: (row) => formatTime(row.updatedAt!),
+            align: 'center',
+          },
 
-    schemas: [
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'roleName',
-          label: 'Role Name',
-        },
-        componentProp: {
-          clearable: true,
-        },
+          {
+            title: 'Action',
+            key: 'action',
+            align: 'center',
+            width: 180,
+            extendType: 'action',
+            extendActionType: ['read', 'delete'],
+            onRead: (row) => {
+              onReadAndOpen(row._id!)
+            },
+            onDelete: (row) => {
+              onDelete(row._id!)
+            },
+          },
+        ],
       },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'description',
-          label: 'Description',
-        },
-        componentProp: {
-          clearable: true,
-          type: 'textarea',
-        },
+
+      formProps: {
+        // localeUniqueKey: 'locale',
+
+        // localeWithTable: true,
+
+        preset: 'drawer',
+
+        labelWidth: 140,
+
+        baseRules: true,
+
+        schemas: [
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'roleName',
+              label: 'Role Name',
+            },
+            componentProp: {
+              clearable: true,
+            },
+          },
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'description',
+              label: 'Description',
+            },
+            componentProp: {
+              clearable: true,
+              type: 'textarea',
+            },
+          },
+          {
+            type: 'Base:InputNumber',
+            formProp: {
+              path: 'order',
+              label: 'Order',
+            },
+            componentProp: {
+              clearable: true,
+            },
+          },
+          {
+            type: 'Base:Switch',
+            formProp: {
+              path: 'status',
+              label: 'Role status',
+            },
+            componentProp: {
+              checkedText: 'Enabled',
+              uncheckedText: 'Disable',
+            },
+          },
+          {
+            type: 'Base:Render',
+            formProp: {
+              path: 'menus',
+              label: 'Permission',
+              rule: false,
+            },
+            componentProp: {
+              render: ({ formData }) => (
+                <MenuTree v-model={[formData.menus, 'value']} checkable />
+              ),
+            },
+          },
+        ],
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'order',
-          label: 'Order',
-        },
-        componentProp: {
-          clearable: true,
-        },
-      },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'status',
-          label: 'Role status',
-        },
-        componentProp: {
-          checkedText: 'Enabled',
-          uncheckedText: 'Disable',
-        },
-      },
-      {
-        type: 'Base:Render',
-        formProp: {
-          path: 'menus',
-          label: 'Permission',
-          rule: false,
-        },
-        componentProp: {
-          render: ({ formData }) => (
-            <MenuTree v-model={[formData.menus, 'value']} checkable />
-          ),
-        },
-      },
-    ],
-  })
+    })
 </script>
