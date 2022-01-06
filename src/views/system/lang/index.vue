@@ -35,6 +35,8 @@
     },
 
     tableProps: {
+      localeUniqueKey: 'lang',
+
       rowKey: (row) => row._id!,
 
       maxHeight: 600,
@@ -55,8 +57,9 @@
       },
 
       queryFormProps: {
-        // localeUniqueKey: 'locale',
-        // localeWithTable: true,
+        localeUniqueKey: 'lang',
+        localeWithTable: true,
+
         span: 8,
         labelWidth: 100,
 
@@ -69,7 +72,6 @@
             type: 'Base:Input',
             formProp: {
               path: 'lang',
-              label: 'Lang Name',
             },
             componentProp: {
               clearable: true,
@@ -80,7 +82,6 @@
             type: 'Base:Select',
             formProp: {
               path: 'status',
-              label: 'Status',
             },
             componentProp: {
               clearable: true,
@@ -106,27 +107,23 @@
       // table columns
       columns: [
         {
-          title: 'Language',
           key: 'lang',
           width: 200,
           align: 'center',
         },
 
         {
-          title: 'Description',
           key: 'description',
           width: 200,
           align: 'center',
         },
 
         {
-          title: 'Order',
           key: 'order',
           width: 80,
           align: 'center',
         },
         {
-          title: 'Status',
           key: 'status',
           width: 100,
           align: 'center',
@@ -135,7 +132,6 @@
         },
 
         {
-          title: 'Created At',
           key: 'createdAt',
           width: 200,
           extendType: 'formatter',
@@ -144,7 +140,6 @@
         },
 
         {
-          title: 'Updated At',
           key: 'updatedAt',
           width: 200,
           extendType: 'formatter',
@@ -153,9 +148,9 @@
         },
 
         {
-          title: 'Action',
           key: 'action',
           width: 120,
+          align: 'center',
           extendType: 'action',
           extendActionType: ['read'],
           onRead: (row) => {
@@ -166,9 +161,8 @@
     },
 
     formProps: {
-      // localeUniqueKey: 'locale',
-
-      // localeWithTable: true,
+      localeUniqueKey: 'lang',
+      localeWithTable: true,
 
       preset: 'drawer',
 
