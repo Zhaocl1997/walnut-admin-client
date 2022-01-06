@@ -44,6 +44,8 @@ export const useFormAdvanced = (
         }
       } finally {
         loading.value = false
+
+        return Promise.reject()
       }
     }
 
