@@ -41,11 +41,11 @@ export const useFormAdvanced = (
         if (ret) {
           onClose()
           AppSuccess()
+        } else {
+          return Promise.reject()
         }
       } finally {
         loading.value = false
-
-        return Promise.reject()
       }
     }
 
