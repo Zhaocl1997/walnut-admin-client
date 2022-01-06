@@ -1,5 +1,5 @@
 <template>
-  <div class="*hstack space-x-2 mt-3 children:cursor-pointer">
+  <div class="*hstack space-x-2 children:cursor-pointer">
     <n-tooltip trigger="hover">
       {{ t('app:base:refresh') }}
       <template #trigger>

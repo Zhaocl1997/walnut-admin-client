@@ -51,18 +51,22 @@
 
       const render = () => (
         <>
-          <QueryForm />
+          <n-card class="mb-4">
+            <QueryForm />
+          </n-card>
 
-          <div class="mb-2 flex justify-between">
-            <HeaderActions />
-            <Utils />
-          </div>
+          <n-card>
+            <div class="mb-2 flex justify-between items-center">
+              <HeaderActions />
+              <Utils />
+            </div>
 
-          <n-data-table
-            ref={tableRef}
-            {...getNDataTableProps.value}
-            columns={columns.value}
-          ></n-data-table>
+            <n-data-table
+              ref={tableRef}
+              {...getNDataTableProps.value}
+              columns={columns.value}
+            ></n-data-table>
+          </n-card>
         </>
       )
 

@@ -108,6 +108,17 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
 
       return tItem
     })
+
+    // auto handle scrollX
+    const widths = props.value.columns?.map((i) => i.width).filter((i) => i)
+
+    if (
+      widths?.length !== 0 &&
+      widths?.length === props.value.columns?.length
+    ) {
+      const w = widths?.reduce((p, c) => p! + c!, 0)
+      props.value.scrollX = w
+    }
   })
 
   return { columns }
