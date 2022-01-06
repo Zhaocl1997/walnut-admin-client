@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <w-table @hook="registerTable"></w-table>
-
-    <w-form @hook="registerForm" :model="formData"></w-form>
-  </div>
+  <WCRUD @hook="register"></WCRUD>
 </template>
 
 <script lang="ts">
@@ -17,210 +13,214 @@
 
   import { langAPI } from '/@/api/system/lang'
 
-  import { useInitialState } from '/@/utils'
+  const [register, { onCreateAndOpen, onReadAndOpen }] = useCRUD<AppLang>({
+    baseAPI: langAPI,
 
-  // ref
-  const actionType = ref<ActionType>('')
+    // default value for create form
+    defaultFormData: {
+      status: true,
+      order: 0,
+    },
 
-  // state
-  const {
-    stateRef: formData,
-    setState: setFormData,
-    resetState: resetFormData,
-  } = useInitialState<AppLang>({
-    lang: '',
-    description: '',
-    status: true,
-    order: 0,
-  })
-
-  const onCreateAndOpen = () => {
-    actionType.value = 'create'
-
-    const { done } = onOpen()
-
-    done()
-  }
-
-  const onReadAndOpen = async (id: string) => {
-    actionType.value = 'update'
-
-    const { done } = onOpen()
-
-    try {
-      const res = await langAPI.read(id)
-      setFormData(res)
-    } finally {
-      done()
-    }
-  }
-
-  // table
-  const [registerTable, { onInit, onDelete }] = useTable<AppLang>({
-    // localeUniqueKey: 'locale',
-
-    rowKey: (row) => row._id,
-
-    maxHeight: 600,
-
-    actionList: ['create'],
-
-    onAction: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onCreateAndOpen()
-
-          break
-
-        default:
-          break
+    onBeforeRequest: (data) => {
+      if ((data.status! as unknown as number) === 1) {
+        data.status = true
       }
+
+      if ((data.status! as unknown as number) === 0) {
+        data.status = false
+      }
+
+      return data
     },
 
-    apiProps: {
-      // Table API Solution 1
-      listApi: langAPI.list.bind(langAPI),
-      // Table API Solution 2
-      // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
+    tableProps: {
+      rowKey: (row) => row._id!,
 
-      deleteApi: langAPI.delete.bind(langAPI),
+      maxHeight: 600,
+
+      striped: true,
+
+      actionList: ['create'],
+
+      onAction: ({ type }) => {
+        switch (type) {
+          case 'create':
+            onCreateAndOpen()
+            break
+
+          default:
+            break
+        }
+      },
+
+      queryFormProps: {
+        // localeUniqueKey: 'locale',
+        // localeWithTable: true,
+        span: 8,
+        labelWidth: 100,
+
+        // no rule style
+        showFeedback: false,
+
+        // query form schemas
+        schemas: [
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'lang',
+              label: 'Lang Name',
+            },
+            componentProp: {
+              clearable: true,
+            },
+          },
+
+          {
+            type: 'Base:Select',
+            formProp: {
+              path: 'status',
+              label: 'Status',
+            },
+            componentProp: {
+              clearable: true,
+              options: [
+                {
+                  value: 1,
+                  label: 'Normal',
+                },
+                {
+                  value: 0,
+                  label: 'Disabled',
+                },
+              ],
+            },
+          },
+
+          {
+            type: 'Extend:Query',
+          },
+        ],
+      },
+
+      // table columns
+      columns: [
+        {
+          title: 'Language',
+          key: 'lang',
+          width: 200,
+          align: 'center',
+        },
+
+        {
+          title: 'Description',
+          key: 'description',
+          width: 200,
+          align: 'center',
+        },
+
+        {
+          title: 'Order',
+          key: 'order',
+          width: 80,
+          align: 'center',
+        },
+        {
+          title: 'Status',
+          key: 'status',
+          width: 100,
+          align: 'center',
+          extendType: 'formatter',
+          formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
+        },
+
+        {
+          title: 'Created At',
+          key: 'createdAt',
+          width: 200,
+          extendType: 'formatter',
+          formatter: (row) => formatTime(row.createdAt!),
+          align: 'center',
+        },
+
+        {
+          title: 'Updated At',
+          key: 'updatedAt',
+          width: 200,
+          extendType: 'formatter',
+          formatter: (row) => formatTime(row.updatedAt!),
+          align: 'center',
+        },
+
+        {
+          title: 'Action',
+          key: 'action',
+          width: 120,
+          extendType: 'action',
+          extendActionType: ['read'],
+          onRead: (row) => {
+            onReadAndOpen(row._id!)
+          },
+        },
+      ],
     },
 
-    columns: [
-      {
-        title: 'Language',
-        key: 'lang',
-        width: 200,
-        align: 'center',
-      },
+    formProps: {
+      // localeUniqueKey: 'locale',
 
-      {
-        title: 'Description',
-        key: 'description',
-        width: 200,
-        align: 'center',
-      },
+      // localeWithTable: true,
 
-      {
-        title: 'Order',
-        key: 'order',
-        width: 80,
-        align: 'center',
-      },
-      {
-        title: 'Status',
-        key: 'status',
-        width: 100,
-        align: 'center',
-        extendType: 'formatter',
-        formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
-      },
+      preset: 'drawer',
 
-      {
-        title: 'Created At',
-        key: 'createdAt',
-        width: 200,
-        extendType: 'formatter',
-        formatter: (row) => formatTime(row.createdAt!),
-        align: 'center',
-      },
+      labelWidth: 140,
 
-      {
-        title: 'Updated At',
-        key: 'updatedAt',
-        width: 200,
-        extendType: 'formatter',
-        formatter: (row) => formatTime(row.updatedAt!),
-        align: 'center',
-      },
+      baseRules: true,
 
-      {
-        title: 'Action',
-        key: 'action',
-        extendType: 'action',
-        extendActionType: ['read', 'delete'],
-        onRead: (row) => {
-          onReadAndOpen(row._id!)
+      // create/update form schemas
+      schemas: [
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'lang',
+            label: 'Language',
+          },
+          componentProp: {
+            clearable: true,
+          },
         },
-        onDelete: (row) => {
-          onDelete(row._id!)
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'description',
+            label: 'Description',
+          },
+          componentProp: {
+            clearable: true,
+            type: 'textarea',
+          },
         },
-      },
-    ],
-  })
-
-  // form
-  const [registerForm, { onOpen }] = useForm<AppLang>({
-    // localeUniqueKey: 'locale',
-
-    // localeWithTable: true,
-
-    preset: 'drawer',
-
-    labelWidth: 140,
-
-    baseRules: true,
-
-    advancedProps: {
-      actionType,
-      width: 500,
-      onYes: async (apiHandler) => {
-        await apiHandler(
-          langAPI[actionType.value].bind(langAPI),
-          formData.value
-        )
-        resetFormData()
-        await onInit()
-      },
-      onNo: (done) => {
-        resetFormData()
-        done()
-      },
+        {
+          type: 'Base:InputNumber',
+          formProp: {
+            path: 'order',
+            label: 'Order',
+          },
+          componentProp: {
+            clearable: true,
+          },
+        },
+        {
+          type: 'Base:Switch',
+          formProp: {
+            path: 'status',
+            label: 'Role status',
+          },
+          componentProp: {
+            checkedText: 'Enabled',
+            uncheckedText: 'Disable',
+          },
+        },
+      ],
     },
-
-    schemas: [
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'lang',
-          label: 'Language',
-        },
-        componentProp: {
-          clearable: true,
-        },
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'description',
-          label: 'Description',
-        },
-        componentProp: {
-          clearable: true,
-          type: 'textarea',
-        },
-      },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'order',
-          label: 'Order',
-        },
-        componentProp: {
-          clearable: true,
-        },
-      },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'status',
-          label: 'Role status',
-        },
-        componentProp: {
-          checkedText: 'Enabled',
-          uncheckedText: 'Disable',
-        },
-      },
-    ],
   })
 </script>
