@@ -4,6 +4,7 @@
     @query="onQuery"
     @reset="onReset"
     :model="initParams.query"
+    :disabled="tableProps.loading"
   ></w-form>
 </template>
 
