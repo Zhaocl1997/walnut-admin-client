@@ -2,12 +2,9 @@ import { getPermissions } from '/@/api/auth'
 
 import { AppRootName, AppRootPath } from '/@/router/constant'
 
-import {
-  buildMenus,
-  buildPermissions,
-  buildKeepAliveRouteNameList,
-} from './menu'
-import { buildRoutes } from './route'
+import { buildMenus } from './menu'
+import { buildPermissions } from './permission'
+import { buildRoutes, buildKeepAliveRouteNameList } from './route'
 
 const { menu } = useAppState()
 

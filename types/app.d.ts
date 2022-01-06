@@ -1,7 +1,6 @@
-import { RouteRecord } from 'vue-router'
+import { RouteMeta } from 'vue-router'
 
 declare global {
-  // app base model
   interface BaseAppModel {
     _id?: string
 
@@ -16,7 +15,11 @@ declare global {
 
   // tab
   // almost same as RouteRecord
-  type AppTab = Pick<RouteRecord, 'name' | 'path' | 'meta'>
+  interface AppTab {
+    name: string
+    path: string
+    meta: RouteMeta
+  }
 
   // menu
   interface AppMenu extends BaseAppModel {

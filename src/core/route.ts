@@ -64,6 +64,14 @@ const resolveViewModules = (component: string) => {
 }
 
 /**
+ * @description Generate keep-alive component name lists based on `menu`
+ */
+export const buildKeepAliveRouteNameList = (payload: AppMenu[]): string[] =>
+  payload
+    .filter((i) => i.type === MenuTypeConst.MENU && i.cache)
+    .map((i) => i.name!)
+
+/**
  * @description Build Routes Core Function
  */
 export const buildRoutes = (payload: AppMenu[]) => {
