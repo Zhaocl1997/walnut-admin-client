@@ -51,7 +51,7 @@
 
       const render = () => (
         <>
-          <n-card class="mb-4">
+          <n-card class="mb-1">
             <QueryForm />
           </n-card>
 

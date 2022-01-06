@@ -59,13 +59,8 @@
       queryFormProps: {
         localeUniqueKey: 'lang',
         localeWithTable: true,
-
-        span: 8,
-        labelWidth: 100,
-
-        // no rule style
+        span: 6,
         showFeedback: false,
-
         // query form schemas
         schemas: [
           {

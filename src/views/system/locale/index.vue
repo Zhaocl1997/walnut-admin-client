@@ -59,137 +59,131 @@
   }
 
   // table
-  const [registerTable, { onInit, onDelete, onDeleteMany }] = useTable<
-    Pick<AppLocale, '_id' | 'key' | 'createdAt' | 'updatedAt'> & {
-      values: string[]
-    }
-  >({
-    localeUniqueKey: 'locale',
-
-    rowKey: (row) => row._id,
-
-    maxHeight: 600,
-
-    actionList: ['create', 'delete'],
-
-    onAction: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onCreateAndOpen()
-          break
-
-        case 'delete':
-          onDeleteMany()
-          break
-
-        default:
-          break
-      }
-    },
-
-    apiProps: {
-      // Table API Solution 1
-      listApi: localeAPI.list.bind(localeAPI),
-      // Table API Solution 2
-      // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
-
-      deleteApi: localeAPI.delete.bind(localeAPI),
-
-      deleteManyApi: localeAPI.deleteMany.bind(localeAPI),
-    },
-
-    queryFormProps: {
+  const [registerTable, { onInit, onDelete, onDeleteMany }] =
+    useTable<AppLocale>({
       localeUniqueKey: 'locale',
-      localeWithTable: true,
-      span: 8,
-      labelWidth: 100,
-      schemas: [
+
+      rowKey: (row) => row._id!,
+
+      maxHeight: 600,
+
+      actionList: ['create', 'delete'],
+
+      onAction: ({ type }) => {
+        switch (type) {
+          case 'create':
+            onCreateAndOpen()
+            break
+
+          case 'delete':
+            onDeleteMany()
+            break
+
+          default:
+            break
+        }
+      },
+
+      apiProps: {
+        // Table API Solution 1
+        listApi: localeAPI.list.bind(localeAPI),
+        // Table API Solution 2
+        // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
+
+        deleteApi: localeAPI.delete.bind(localeAPI),
+
+        deleteManyApi: localeAPI.deleteMany.bind(localeAPI),
+      },
+
+      queryFormProps: {
+        localeUniqueKey: 'locale',
+        localeWithTable: true,
+        span: 6,
+        showFeedback: false,
+        // query form schemas
+        schemas: [
+          {
+            type: 'Base:Select',
+            formProp: {
+              path: 'key',
+            },
+            componentProp: {
+              clearable: true,
+              options: ['app:', 'sys:', 'form:', 'table:'].map((i) => ({
+                value: i,
+                label: i,
+              })),
+            },
+          },
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'value',
+            },
+            componentProp: {
+              clearable: true,
+            },
+          },
+          {
+            type: 'Extend:Query',
+          },
+        ],
+      },
+
+      columns: [
         {
-          type: 'Base:Select',
-          formProp: {
-            path: 'key',
-          },
-          componentProp: {
-            clearable: true,
-            options: ['app:', 'sys:', 'form:', 'table:'].map((i) => ({
-              value: i,
-              label: i,
-            })),
-          },
+          type: 'selection',
         },
+
         {
-          type: 'Base:Input',
-          formProp: {
-            path: 'value',
-          },
-          componentProp: {
-            clearable: true,
-          },
+          key: 'key',
+          align: 'center',
+          width: 400,
+          sorter: true,
         },
+
         {
-          type: 'Extend:Query',
+          key: 'process',
+          width: 100,
+          align: 'center',
+          extendType: 'formatter',
+          formatter: (row) => (row.process! * 100).toFixed(2) + '%',
+        },
+
+        {
+          key: 'createdAt',
+          width: 200,
+          align: 'center',
+          extendType: 'formatter',
+          formatter: (row) => formatTime(row.createdAt!),
+          sorter: true,
+        },
+
+        {
+          key: 'updatedAt',
+          width: 200,
+          align: 'center',
+          extendType: 'formatter',
+          formatter: (row) => formatTime(row.updatedAt!),
+          sorter: true,
+        },
+
+        {
+          key: 'action',
+          align: 'center',
+          width: 180,
+          extendType: 'action',
+          extendActionType: ['read', 'delete'],
+          onRead: (row) => {
+            formData.value.oldKey = row.key
+            onReadAndOpen(row.key!)
+          },
+          onDelete: (row) => {
+            onDelete(row.key!)
+          },
         },
       ],
-    },
-
-    columns: [
-      {
-        type: 'selection',
-      },
-
-      {
-        key: 'key',
-        align: 'center',
-        width: 400,
-        sorter: true,
-      },
-
-      {
-        key: 'process',
-        width: 100,
-        align: 'center',
-        extendType: 'formatter',
-        formatter: (row) =>
-          (
-            (row.values.filter((i) => i).length / langList.value.length) *
-            100
-          ).toFixed(2) + '%',
-      },
-
-      {
-        key: 'createdAt',
-        width: 200,
-        align: 'center',
-        extendType: 'formatter',
-        formatter: (row) => formatTime(row.createdAt!),
-        sorter: true,
-      },
-
-      {
-        key: 'updatedAt',
-        width: 200,
-        align: 'center',
-        extendType: 'formatter',
-        formatter: (row) => formatTime(row.updatedAt!),
-        sorter: true,
-      },
-
-      {
-        key: 'action',
-        align: 'center',
-        width: 180,
-        extendType: 'action',
-        extendActionType: ['read', 'delete'],
-        onRead: (row) => {
-          formData.value.oldKey = row.key
-          onReadAndOpen(row.key!)
-        },
-        onDelete: (row) => {
-          onDelete(row.key!)
-        },
-      },
-    ],
-  })
+    })
 
   // form
   const [registerForm, { onOpen }] = useForm<AppLocale>({

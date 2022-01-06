@@ -73,6 +73,7 @@ declare global {
     langId?: string
     key?: string
     value?: string
+    process?: number
   }
 }
 
