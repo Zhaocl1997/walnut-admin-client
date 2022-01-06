@@ -7,6 +7,7 @@
           icon="ant-design:sync-outlined"
           height="20"
           @click="onInit"
+          :disabled="tableProps.loading"
         ></w-icon>
       </template>
     </n-tooltip>
@@ -24,5 +25,5 @@
   import { useTableContext } from '../hooks/useTableContext'
 
   const { t } = useAppI18n()
-  const { onInit } = useTableContext()
+  const { onInit, tableProps } = useTableContext()
 </script>
