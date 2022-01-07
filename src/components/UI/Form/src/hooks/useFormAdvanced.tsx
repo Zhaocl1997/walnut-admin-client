@@ -20,6 +20,7 @@ export const useFormAdvanced = (
 
     return { done }
   }
+
   const onClose = () => {
     show.value = false
 
@@ -71,36 +72,40 @@ export const useFormAdvanced = (
       : title
   }
 
+  const renderAction = () => (
+    <n-space size="small">
+      <n-button
+        size="small"
+        type="primary"
+        onClick={onYes}
+        disabled={loading.value}
+        loading={loading.value}
+      >
+        {(props.value.advancedProps as ModalProps).positiveText ??
+          t('app:button:yes')}
+      </n-button>
+
+      <n-button size="small" onClick={onNo} disabled={loading.value}>
+        {(props.value.advancedProps as ModalProps).negativeText ??
+          t('app:button:no')}
+      </n-button>
+    </n-space>
+  )
+
   const renderAdvanced = () => {
-    const renderAction = () => (
-      <n-space size="small">
-        <n-button
-          size="small"
-          type="primary"
-          onClick={onYes}
-          disabled={loading.value}
-          loading={loading.value}
-        >
-          {(props.value.advancedProps as ModalProps).positiveText ??
-            t('app:button:yes')}
-        </n-button>
-
-        <n-button size="small" onClick={onNo} disabled={loading.value}>
-          {(props.value.advancedProps as ModalProps).negativeText ??
-            t('app:button:no')}
-        </n-button>
-      </n-space>
-    )
-
     if (props.value.preset === 'modal') {
       return (
         <n-modal
-          v-model={[show.value, 'show']}
-          {...(props.value.advancedProps as ModalProps)}
           preset="dialog"
-          loading={loading.value}
-          onClose={onClose}
+          v-model={[show.value, 'show']}
+          title={onGetTitle(props.value.advancedProps?.title as string)}
+          maskClosable={!loading.value}
+          onUpdateShow={(show: boolean) => {
+            !show && onNo()
+          }}
           closable={!loading.value}
+          loading={loading.value}
+          show-icon={false}
         >
           {{
             default: () => (
