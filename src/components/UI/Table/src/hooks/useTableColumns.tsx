@@ -110,13 +110,22 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
     })
 
     // auto handle scrollX
-    const widths = props.value.columns?.map((i) => i.width).filter((i) => i)
+    const widths = props.value.columns
+      ?.map((i) => {
+        if (i.type !== 'expand' && i.type !== 'selection') {
+          return i.width
+        } else {
+          return 80
+        }
+      })
+      .filter((i) => i)
 
     if (
       widths?.length !== 0 &&
       widths?.length === props.value.columns?.length
     ) {
       const w = widths?.reduce((p, c) => p! + c!, 0)
+      // @ts-ignore
       props.value.scrollX = w
     }
   })
