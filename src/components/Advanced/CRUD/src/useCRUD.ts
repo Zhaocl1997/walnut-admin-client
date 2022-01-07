@@ -4,12 +4,12 @@ import { isInSetup } from '/@/utils/shared'
 
 export const useCRUD = <T = RowData>(
   props: WCrud.Props<T>
-): WCrud.useFormReturnType => {
+): WCrud.useFormReturnType<T> => {
   isInSetup()
 
-  const wCrudRef = ref<Nullable<WCrud.Inst.WCrudInst>>(null)
+  const wCrudRef = ref<Nullable<WCrud.Inst.WCrudInst<T>>>(null)
 
-  const register = (instance: WCrud.Inst.WCrudInst) => {
+  const register = (instance: WCrud.Inst.WCrudInst<T>) => {
     wCrudRef.value = instance
 
     watchEffect(() => {
@@ -23,6 +23,7 @@ export const useCRUD = <T = RowData>(
       await wCrudRef.value?.onReadAndOpen(id),
     onDelete: async (id: StringOrNumber) => await wCrudRef.value?.onDelete(id),
     onDeleteMany: async () => await wCrudRef.value?.onDeleteMany(),
+    onGetFormData: () => wCrudRef.value?.onGetFormData()!,
   }
 
   return [register, methods]

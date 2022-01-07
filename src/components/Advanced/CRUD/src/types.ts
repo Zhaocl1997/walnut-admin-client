@@ -3,7 +3,7 @@ import type { WForm } from '/@/components/UI/Form'
 import type { WTable } from '/@/components/UI/Table'
 
 export declare namespace WCrud {
-  type SetProps = (p: Partial<Props>) => void
+  type SetProps<T> = (p: Partial<Props<T>>) => void
 
   type Props<T = RowData> = {
     baseAPI?: BaseAPIType<T>
@@ -14,17 +14,18 @@ export declare namespace WCrud {
   }
 
   namespace Inst {
-    interface WCrudInst {
-      setProps: SetProps
+    interface WCrudInst<T = RowData> {
+      setProps: SetProps<T>
       onCreateAndOpen: () => void
       onReadAndOpen: (id: StringOrNumber) => Promise<void>
       onDelete: (is: StringOrNumber) => Promise<void>
       onDeleteMany: () => Promise<void>
+      onGetFormData: () => Ref<T>
     }
   }
 
-  type useFormReturnType = [
-    (instance: Inst.WCrudInst) => void,
-    Omit<Inst.WCrudInst, 'setProps'>
+  type useFormReturnType<T = RowData> = [
+    (instance: Inst.WCrudInst<T>) => void,
+    Omit<Inst.WCrudInst<T>, 'setProps'>
   ]
 }

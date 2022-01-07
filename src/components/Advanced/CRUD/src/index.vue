@@ -37,7 +37,7 @@
     const { done } = onOpen()
     try {
       const res = await api.read(id)
-      formData.value = res
+      formData.value = Object.assign(formData.value, res)
     } finally {
       done()
     }
@@ -78,6 +78,7 @@
     onReadAndOpen,
     onDelete,
     onDeleteMany,
+    onGetFormData: () => formData,
   })
 
   // form
