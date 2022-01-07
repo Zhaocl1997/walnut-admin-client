@@ -43,28 +43,32 @@ export const useTableAPI = (
       )
     }
 
-    const res = await props.value.apiProps?.listApi!(params)!
+    try {
+      const res = await props.value.apiProps?.listApi!(params)!
 
-    setProps({ data: res.data! })
+      setProps({ data: res.data! })
 
-    setProps({
-      pagination: {
-        itemCount: res.total!,
-        page: initParams.value.page?.page,
-        pageSize: initParams.value.page?.pageSize,
-        showSizePicker: true,
-        showQuickJumper: true,
-        pageSizes: [10, 30, 50],
-        pageSlot: 7,
-        onUpdatePage,
-        // TODO https://github.com/TuSimple/naive-ui/issues/1774
-        // onUpdatePageSize,
-        onPageSizeChange: onUpdatePageSize,
-        prefix: () => t('comp:pagination:total', { total: res.total }),
-      },
-    })
+      setProps({
+        pagination: {
+          itemCount: res.total!,
+          page: initParams.value.page?.page,
+          pageSize: initParams.value.page?.pageSize,
+          showSizePicker: true,
+          showQuickJumper: true,
+          pageSizes: [10, 30, 50],
+          pageSlot: 7,
+          onUpdatePage,
+          // TODO https://github.com/TuSimple/naive-ui/issues/1774
+          // onUpdatePageSize,
+          onPageSizeChange: onUpdatePageSize,
+          prefix: () => t('comp:pagination:total', { total: res.total }),
+        },
+      })
 
-    setProps({ loading: false })
+      setProps({ loading: false })
+    } finally {
+      setProps({ loading: false })
+    }
   }
 
   // api delete (default)
