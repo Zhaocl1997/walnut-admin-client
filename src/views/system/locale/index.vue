@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <w-table @hook="registerTable"></w-table>
-
-    <w-form @hook="registerForm" :model="formData"></w-form>
-  </div>
+  <WCRUD @hook="register"></WCRUD>
 </template>
 
 <script lang="ts">
@@ -19,54 +15,31 @@
 
   import { localeAPI } from '/@/api/system/locale'
 
-  import { useInitialState } from '/@/utils'
-
   import { useLangList } from './useLangList'
 
-  // ref
-  const actionType = ref<ActionType>('')
   const { langList } = useLangList()
 
-  // state
-  const {
-    stateRef: formData,
-    setState: setFormData,
-    resetState: resetFormData,
-  } = useInitialState<AppLocale & { oldKey?: string }>({
-    key: '',
-    oldKey: '',
-  })
+  // locale unique key
+  const key = 'locale'
 
-  const onCreateAndOpen = () => {
-    actionType.value = 'create'
+  const [
+    register,
+    { onCreateAndOpen, onReadAndOpen, onDelete, onDeleteMany, onGetFormData },
+  ] = useCRUD<AppLocale>({
+    baseAPI: localeAPI,
 
-    const { done } = onOpen()
+    // default value for create form
+    defaultFormData: {},
 
-    done()
-  }
+    onBeforeRequest: (data) => {
+      return data
+    },
 
-  const onReadAndOpen = async (key: string) => {
-    actionType.value = 'update'
-
-    const { done } = onOpen()
-
-    try {
-      const res = await localeAPI.read(key)
-      setFormData(res)
-    } finally {
-      done()
-    }
-  }
-
-  // table
-  const [registerTable, { onInit, onDelete, onDeleteMany }] =
-    useTable<AppLocale>({
-      localeUniqueKey: 'locale',
-
+    tableProps: {
+      localeUniqueKey: key,
       rowKey: (row) => row._id!,
-
       maxHeight: 600,
-
+      striped: true,
       actionList: ['create', 'delete'],
 
       onAction: ({ type }) => {
@@ -84,22 +57,12 @@
         }
       },
 
-      apiProps: {
-        // Table API Solution 1
-        listApi: localeAPI.list.bind(localeAPI),
-        // Table API Solution 2
-        // api: (p) => AppAxios.post({ url: '/system/locale/list', data: p }),
-
-        deleteApi: localeAPI.delete.bind(localeAPI),
-
-        deleteManyApi: localeAPI.deleteMany.bind(localeAPI),
-      },
-
       queryFormProps: {
-        localeUniqueKey: 'locale',
+        localeUniqueKey: key,
         localeWithTable: true,
-        span: 6,
+        span: 8,
         showFeedback: false,
+        labelWidth: 100,
         // query form schemas
         schemas: [
           {
@@ -115,6 +78,7 @@
               })),
             },
           },
+
           {
             type: 'Base:Input',
             formProp: {
@@ -124,12 +88,14 @@
               clearable: true,
             },
           },
+
           {
             type: 'Extend:Query',
           },
         ],
       },
 
+      // table columns
       columns: [
         {
           type: 'selection',
@@ -175,7 +141,11 @@
           extendType: 'action',
           extendActionType: ['read', 'delete'],
           onRead: (row) => {
+            const formData = onGetFormData()
+
+            // @ts-ignore
             formData.value.oldKey = row.key
+
             onReadAndOpen(row.key!)
           },
           onDelete: (row) => {
@@ -183,66 +153,42 @@
           },
         },
       ],
-    })
-
-  // form
-  const [registerForm, { onOpen }] = useForm<AppLocale>({
-    localeUniqueKey: 'locale',
-
-    localeWithTable: true,
-
-    preset: 'drawer',
-
-    labelWidth: 140,
-
-    baseRules: true,
-
-    advancedProps: {
-      actionType,
-      width: 500,
-      onYes: async (apiHandler) => {
-        await apiHandler(
-          // Form API Solution 1
-          localeAPI[actionType.value].bind(localeAPI),
-          // Form API Solution 2
-          // (data) => AppAxios.put({ url: '/system/locale', data }),
-          formData.value
-        )
-        resetFormData()
-        await onInit()
-      },
-      onNo: (done) => {
-        resetFormData()
-        done()
-      },
     },
 
     // @ts-ignore
-    schemas: computed(() => [
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'key',
-          label: 'Locale Key',
+    formProps: computed(() => ({
+      localeUniqueKey: key,
+      localeWithTable: true,
+      preset: 'drawer',
+      baseRules: true,
+      labelWidth: 100,
+      xGap: 0,
+      // create/update form schemas
+      schemas: computed<WForm.Schema.Item[]>(() => [
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'key',
+          },
+          componentProp: {
+            clearable: true,
+          },
         },
-        componentProp: {
-          clearable: true,
-        },
-      },
 
-      ...langList.value.map<WForm.Schema.Item>((i) => ({
-        type: 'Base:Input',
-        formProp: {
-          path: i.value as string,
-          label: i.label,
-          locale: false,
-          rule: false,
-        },
-        componentProp: {
-          clearable: true,
-          type: 'textarea',
-        },
-      })),
-    ]),
+        ...langList.value.map<WForm.Schema.Item>((i) => ({
+          type: 'Base:Input',
+          formProp: {
+            path: i.value as string,
+            label: i.label,
+            locale: false,
+            rule: false,
+          },
+          componentProp: {
+            clearable: true,
+            type: 'textarea',
+          },
+        })),
+      ]),
+    })),
   })
 </script>

@@ -13,55 +13,173 @@
 
   import { langAPI } from '/@/api/system/lang'
 
-  const [register, { onCreateAndOpen, onReadAndOpen }] = useCRUD<AppLang>({
-    baseAPI: langAPI,
+  // locale unique key
+  const key = 'lang'
 
-    // default value for create form
-    defaultFormData: {
-      status: true,
-      order: 0,
-    },
+  const [register, { onCreateAndOpen, onReadAndOpen, onDelete }] =
+    useCRUD<AppLang>({
+      baseAPI: langAPI,
 
-    onBeforeRequest: (data) => {
-      if ((data.status! as unknown as number) === 1) {
-        data.status = true
-      }
-
-      if ((data.status! as unknown as number) === 0) {
-        data.status = false
-      }
-
-      return data
-    },
-
-    tableProps: {
-      localeUniqueKey: 'lang',
-
-      rowKey: (row) => row._id!,
-
-      maxHeight: 600,
-
-      striped: true,
-
-      actionList: ['create'],
-
-      onAction: ({ type }) => {
-        switch (type) {
-          case 'create':
-            onCreateAndOpen()
-            break
-
-          default:
-            break
-        }
+      // default value for create form
+      defaultFormData: {
+        status: true,
+        order: 0,
       },
 
-      queryFormProps: {
-        localeUniqueKey: 'lang',
+      onBeforeRequest: (data) => {
+        if ((data.status! as unknown as number) === 1) {
+          data.status = true
+        }
+
+        if ((data.status! as unknown as number) === 0) {
+          data.status = false
+        }
+
+        return data
+      },
+
+      tableProps: {
+        localeUniqueKey: key,
+        rowKey: (row) => row._id!,
+        maxHeight: 600,
+        striped: true,
+        actionList: ['create'],
+
+        onAction: ({ type }) => {
+          switch (type) {
+            case 'create':
+              onCreateAndOpen()
+              break
+
+            default:
+              break
+          }
+        },
+
+        queryFormProps: {
+          localeUniqueKey: key,
+          localeWithTable: true,
+          span: 6,
+          showFeedback: false,
+          labelWidth: 100,
+          // query form schemas
+          schemas: [
+            {
+              type: 'Base:Input',
+              formProp: {
+                path: 'lang',
+              },
+              componentProp: {
+                clearable: true,
+              },
+            },
+
+            {
+              type: 'Base:Select',
+              formProp: {
+                path: 'status',
+              },
+              componentProp: {
+                clearable: true,
+                options: [
+                  {
+                    value: 1,
+                    label: 'Normal',
+                  },
+                  {
+                    value: 0,
+                    label: 'Disabled',
+                  },
+                ],
+              },
+            },
+
+            {
+              type: 'Extend:Query',
+            },
+          ],
+        },
+
+        // table columns
+        columns: [
+          {
+            key: 'lang',
+            width: 200,
+            align: 'center',
+          },
+
+          {
+            key: 'description',
+            width: 200,
+            align: 'center',
+          },
+
+          {
+            key: 'order',
+            width: 80,
+            align: 'center',
+            sorter: {
+              multiple: 1,
+            },
+          },
+
+          {
+            key: 'status',
+            width: 100,
+            align: 'center',
+            extendType: 'formatter',
+            formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
+            sorter: {
+              multiple: 2,
+            },
+          },
+
+          {
+            key: 'createdAt',
+            width: 200,
+            extendType: 'formatter',
+            formatter: (row) => formatTime(row.createdAt!),
+            align: 'center',
+            sorter: {
+              multiple: 3,
+            },
+          },
+
+          {
+            key: 'updatedAt',
+            width: 200,
+            extendType: 'formatter',
+            formatter: (row) => formatTime(row.updatedAt!),
+            align: 'center',
+            sorter: {
+              multiple: 4,
+            },
+          },
+
+          {
+            key: 'action',
+            width: 240,
+            align: 'center',
+            extendType: 'action',
+            extendActionType: ['read', 'delete'],
+            onRead: (row) => {
+              onReadAndOpen(row._id!)
+            },
+            onDelete: (row) => {
+              onDelete(row._id!)
+            },
+          },
+        ],
+      },
+
+      formProps: {
+        localeUniqueKey: key,
         localeWithTable: true,
-        span: 6,
-        showFeedback: false,
-        // query form schemas
+        preset: 'modal',
+        baseRules: true,
+        labelWidth: 100,
+        xGap: 0,
+        // create/update form schemas
         schemas: [
           {
             type: 'Base:Input',
@@ -72,144 +190,32 @@
               clearable: true,
             },
           },
-
           {
-            type: 'Base:Select',
+            type: 'Base:Input',
             formProp: {
-              path: 'status',
+              path: 'description',
             },
             componentProp: {
               clearable: true,
-              options: [
-                {
-                  value: 1,
-                  label: 'Normal',
-                },
-                {
-                  value: 0,
-                  label: 'Disabled',
-                },
-              ],
+              type: 'textarea',
             },
           },
-
           {
-            type: 'Extend:Query',
+            type: 'Base:InputNumber',
+            formProp: {
+              path: 'order',
+            },
+            componentProp: {
+              clearable: true,
+            },
+          },
+          {
+            type: 'Base:Switch',
+            formProp: {
+              path: 'status',
+            },
           },
         ],
       },
-
-      // table columns
-      columns: [
-        {
-          key: 'lang',
-          width: 200,
-          align: 'center',
-        },
-
-        {
-          key: 'description',
-          width: 200,
-          align: 'center',
-        },
-
-        {
-          key: 'order',
-          width: 80,
-          align: 'center',
-        },
-        {
-          key: 'status',
-          width: 100,
-          align: 'center',
-          extendType: 'formatter',
-          formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
-        },
-
-        {
-          key: 'createdAt',
-          width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.createdAt!),
-          align: 'center',
-        },
-
-        {
-          key: 'updatedAt',
-          width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.updatedAt!),
-          align: 'center',
-        },
-
-        {
-          key: 'action',
-          width: 120,
-          align: 'center',
-          extendType: 'action',
-          extendActionType: ['read'],
-          onRead: (row) => {
-            onReadAndOpen(row._id!)
-          },
-        },
-      ],
-    },
-
-    formProps: {
-      localeUniqueKey: 'lang',
-      localeWithTable: true,
-
-      preset: 'drawer',
-
-      labelWidth: 140,
-
-      baseRules: true,
-
-      // create/update form schemas
-      schemas: [
-        {
-          type: 'Base:Input',
-          formProp: {
-            path: 'lang',
-            label: 'Language',
-          },
-          componentProp: {
-            clearable: true,
-          },
-        },
-        {
-          type: 'Base:Input',
-          formProp: {
-            path: 'description',
-            label: 'Description',
-          },
-          componentProp: {
-            clearable: true,
-            type: 'textarea',
-          },
-        },
-        {
-          type: 'Base:InputNumber',
-          formProp: {
-            path: 'order',
-            label: 'Order',
-          },
-          componentProp: {
-            clearable: true,
-          },
-        },
-        {
-          type: 'Base:Switch',
-          formProp: {
-            path: 'status',
-            label: 'Role status',
-          },
-          componentProp: {
-            checkedText: 'Enabled',
-            uncheckedText: 'Disable',
-          },
-        },
-      ],
-    },
-  })
+    })
 </script>
