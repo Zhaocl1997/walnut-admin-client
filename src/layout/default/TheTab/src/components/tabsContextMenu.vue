@@ -17,14 +17,14 @@
   import { useRedirect } from '/@/hooks/core/useRedirect'
 
   import { getTabsContext } from '../hooks/useTabsContext'
-  import { useFullScreenExtend } from '/@/components/App/AppFullScreen'
 
   // TODO 99
   import WIcon from '/@/components/UI/Icon'
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { tab, appMemo } = useAppState()
+  const { tab, settings } = useAppState()
+  const { enter } = useFullscreen()
 
   const {
     x,
@@ -71,8 +71,6 @@
     () => currentRoute.value.name !== currentMouseTab.value?.name
   )
 
-  const { enter } = useFullScreenExtend()
-
   const onSelect = async (
     key: ValueOfDeleteTabConst & 'Refresh' & 'Screen Full'
   ) => {
@@ -86,10 +84,11 @@
     }
 
     if (key === 'Screen Full') {
-      appMemo.value.fullscreenTarget = `#${currentMouseTab.value?.name!}`
-      nextTick(() => {
-        enter()
-      })
+      settings.value.ForDevelopers.app.showHeader = false
+      settings.value.ForDevelopers.app.showLogo = false
+      settings.value.ForDevelopers.app.showMenu = false
+      settings.value.ForDevelopers.app.showTabs = false
+      enter()
     }
 
     onCloseCtxMenu()

@@ -21,8 +21,6 @@ export interface AppMemory {
     device: ValueOfDevideConst
     isMobile: boolean
     showAside: boolean
-    isFullScreen: boolean
-    fullscreenTarget: string
   }
 
   menu: {

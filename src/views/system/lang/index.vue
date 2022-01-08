@@ -61,7 +61,7 @@
           localeWithTable: true,
           span: 6,
           showFeedback: false,
-          labelWidth: 100,
+          labelWidth: 80,
           // query form schemas
           schemas: [
             {
@@ -177,7 +177,7 @@
         localeWithTable: true,
         preset: 'modal',
         baseRules: true,
-        labelWidth: 100,
+        labelWidth: 80,
         xGap: 0,
         // create/update form schemas
         schemas: [

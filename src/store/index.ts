@@ -28,8 +28,6 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
         device: 'desktop',
         isMobile: false,
         showAside: false,
-        isFullScreen: false,
-        fullscreenTarget: '',
       },
       menu: {
         menus: [],
@@ -108,9 +106,6 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
     })
   )
 )
-
-useAppStateStorage()
-useAppStateMemory()
 
 export const useAppState = () =>
   Object.assign(useAppStateStorage(), useAppStateMemory())

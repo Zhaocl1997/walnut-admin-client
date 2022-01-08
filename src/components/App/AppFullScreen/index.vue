@@ -1,6 +1,4 @@
 <script lang="tsx">
-  import { useFullScreenExtend } from './useFullScreenExtend'
-
   export default defineComponent({
     name: 'AppFullScreen',
 
@@ -14,9 +12,8 @@
     },
 
     setup(props) {
-      const { appMemo } = useAppState()
       const { width } = props
-      const { isFullscreen, toggle } = useFullScreenExtend()
+      const { isFullscreen, enter } = useFullscreen()
 
       return () => (
         <div>
@@ -27,10 +24,7 @@
                 : 'ant-design:fullscreen-outlined'
             }
             width={width}
-            onClick={() => {
-              appMemo.value.fullscreenTarget = '#app'
-              toggle()
-            }}
+            onClick={enter}
           ></w-icon>
         </div>
       )
