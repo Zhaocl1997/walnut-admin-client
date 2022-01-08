@@ -55,7 +55,7 @@
           (item, index) => {
             if (item.type === 'Extend:Query') {
               return (
-                <n-gi key="query" span={4} suffix={true}>
+                <n-gi v-show={item.foldShow} key="query" span={4} suffix={true}>
                   <WFormItemExtendQuery {...item.componentProp} />
                 </n-gi>
               )
@@ -63,7 +63,11 @@
 
             if (item.type === 'Extend:Divider') {
               return (
-                <n-gi key={item.componentProp?.title} span={24}>
+                <n-gi
+                  v-show={item.foldShow}
+                  key={item.componentProp?.title}
+                  span={24}
+                >
                   <WFormItemExtendDivider
                     index={index}
                     {...item.componentProp}
