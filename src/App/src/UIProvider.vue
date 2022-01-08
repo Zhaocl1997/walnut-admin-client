@@ -1,33 +1,63 @@
 <script lang="tsx">
+  import type { ThemeCommonVars } from 'naive-ui/lib/_styles/common'
   import type { GlobalThemeOverrides } from 'naive-ui'
   import { darkTheme } from 'naive-ui'
   import { zhCN, dateZhCN } from 'naive-ui'
+  import { adjustColor } from '/@/utils/color'
 
   export default defineComponent({
     name: 'UIProvider',
 
     setup(_, { slots }) {
-      const { app } = useAppState()
+      const { app, settings } = useAppState()
+      const customThemes = settings.value.ForDevelopers.themes
 
       const getTheme = computed(() =>
         !app.value.isDark ? undefined : darkTheme
       )
+
+      const sharedTheme = computed(
+        (): Partial<ThemeCommonVars> => ({
+          primaryColor: customThemes.primaryColor,
+          primaryColorHover: adjustColor(customThemes.primaryColor, 40),
+          primaryColorPressed: adjustColor(customThemes.primaryColor, 20),
+          primaryColorSuppl: adjustColor(customThemes.primaryColor, -20),
+          infoColor: customThemes.infoColor,
+          infoColorHover: adjustColor(customThemes.infoColor, 40),
+          infoColorPressed: adjustColor(customThemes.infoColor, 20),
+          infoColorSuppl: adjustColor(customThemes.infoColor, -20),
+          successColor: customThemes.primaryColor,
+          successColorHover: adjustColor(customThemes.primaryColor, 40),
+          successColorPressed: adjustColor(customThemes.primaryColor, 20),
+          successColorSuppl: adjustColor(customThemes.primaryColor, -20),
+          warningColor: customThemes.warningColor,
+          warningColorHover: adjustColor(customThemes.warningColor, 40),
+          warningColorPressed: adjustColor(customThemes.warningColor, 20),
+          warningColorSuppl: adjustColor(customThemes.warningColor, -20),
+          errorColor: customThemes.errorColor,
+          errorColorHover: adjustColor(customThemes.errorColor, 40),
+          errorColorPressed: adjustColor(customThemes.errorColor, 20),
+          errorColorSuppl: adjustColor(customThemes.errorColor, -20),
+
+          bodyColor: customThemes.bodyColor,
+        })
+      )
+
       const getThemeOverrides = computed(
         (): GlobalThemeOverrides =>
           !app.value.isDark
             ? // light
               {
                 common: {
-                  baseColor: 'rgb(250, 250 ,250)',
-                  bodyColor: 'rgb(234, 234, 234)',
+                  ...sharedTheme.value,
+
                   invertedColor: 'rgb(0, 16, 32)',
                 },
               }
             : // dark
               {
                 common: {
-                  baseColor: 'rgb(16, 16, 16)',
-                  bodyColor: 'rgb(32, 32, 32)',
+                  ...sharedTheme.value,
                   invertedColor: 'rgb(20, 20, 20)',
                 },
               }

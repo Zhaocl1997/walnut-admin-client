@@ -1,5 +1,7 @@
 import type { RemovableRef } from '@vueuse/core'
 import type { AppMemory, AppStorage } from './types'
+import { defaultTheme } from '../settings/theme'
+import { easyDeepClone } from 'easy-fns-ts'
 
 const preferredLanguages = usePreferredLanguages()
 const preferredColor = usePreferredColorScheme()
@@ -11,7 +13,7 @@ type RemoveableRefRecord<T> = {
 const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
   () => ({
     app: useAppStorage(PersistentKeysConst.APP, {
-      isDark: false,
+      isDark: preferredColor.value === 'dark' ? true : false,
       darkMode: preferredColor.value as ValueOfDarkModeConst,
       locale: preferredLanguages.value[0] as ValueOfLocaleConst,
     }),
@@ -45,6 +47,8 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
 
       settings: {
         ForDevelopers: {
+          themes: easyDeepClone(defaultTheme.light),
+
           app: {
             showLogo: true,
             showMenu: true,

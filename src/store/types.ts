@@ -41,6 +41,8 @@ export interface AppMemory {
 
   settings: {
     ForDevelopers: {
+      themes: AppThemeColors
+
       app: {
         showLogo: boolean
         showMenu: boolean

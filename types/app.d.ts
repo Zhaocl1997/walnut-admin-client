@@ -1,6 +1,19 @@
 import { RouteMeta } from 'vue-router'
 
 declare global {
+  interface AppThemeColors {
+    primaryColor: string
+    infoColor: string
+    warningColor: string
+    errorColor: string
+    bodyColor: string
+  }
+
+  interface AppTheme {
+    light: AppThemeColors
+    dark: AppThemeColors
+  }
+
   interface BaseAppModel {
     _id?: string
 

@@ -19,6 +19,7 @@
     @yes="() => (show = false)"
     @no="() => (show = false)"
   >
+    <w-form @hook="register0" :model="themeRelatives"></w-form>
     <w-form @hook="register1" :model="appRelatives"></w-form>
     <w-form @hook="register2" :model="menuRelatives"></w-form>
     <w-form @hook="register3" :model="headerRelatives"></w-form>
@@ -27,14 +28,19 @@
   </w-drawer>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
   export default defineComponent({
     name: 'AppSettings',
   })
 </script>
 
-<script lang="ts" setup>
-  const { settings } = useAppState()
+<script lang="tsx" setup>
+  import WIcon from '/@/components/UI/Icon'
+  import AppColors from './colors.vue'
+  import { getThemeColors } from '/@/utils/color'
+  import { defaultTheme } from '/@/settings/theme'
+
+  const { app, settings } = useAppState()
   const { t } = useAppI18n()
 
   const el = ref(null)
@@ -58,16 +64,188 @@
     y.value = myY.value ?? height.value - 50
   })
 
+  const themeRelatives = ref(settings.value.ForDevelopers.themes)
   const appRelatives = ref(settings.value.ForDevelopers.app)
   const menuRelatives = ref(settings.value.ForDevelopers.menu)
   const headerRelatives = ref(settings.value.ForDevelopers.header)
   const breadcrumbRelatives = ref(settings.value.ForDevelopers.breadcrumb)
   const tabRelatives = ref(settings.value.ForDevelopers.tab)
 
+  const [register0] = useForm<typeof themeRelatives.value>({
+    showFeedback: false,
+    xGap: 0,
+    formItemClass: 'mb-2',
+    formItemComponentClass: '',
+    size: 'small',
+    schemas: [
+      {
+        type: 'Extend:Divider',
+        componentProp: {
+          title: 'app:settings:theme',
+          prefix: 'bar',
+          titlePlacement: 'left',
+          foldable: true,
+        },
+      },
+
+      {
+        type: 'Extend:Divider',
+        componentProp: {
+          title: 'app:settings:theme:primary',
+          titlePlacement: 'center',
+        },
+      },
+
+      {
+        type: 'Base:Render',
+        formProp: {
+          path: 'primaryColor',
+        },
+        componentProp: {
+          render: ({ formData }) => (
+            <AppColors
+              colors={
+                getThemeColors(
+                  app.value.isDark
+                    ? defaultTheme.dark.primaryColor
+                    : defaultTheme.light.primaryColor
+                )[1]
+              }
+              formDataColor={formData.primaryColor}
+              clickEvent={(color) => (formData.primaryColor = color)}
+            />
+          ),
+        },
+      },
+
+      {
+        type: 'Extend:Divider',
+        componentProp: {
+          title: 'app:settings:theme:info',
+          titlePlacement: 'center',
+        },
+      },
+
+      {
+        type: 'Base:Render',
+        formProp: {
+          path: 'infoColor',
+        },
+        componentProp: {
+          render: ({ formData }) => (
+            <AppColors
+              colors={
+                getThemeColors(
+                  app.value.isDark
+                    ? defaultTheme.dark.infoColor
+                    : defaultTheme.light.infoColor
+                )[1]
+              }
+              formDataColor={formData.infoColor}
+              clickEvent={(color) => (formData.infoColor = color)}
+            />
+          ),
+        },
+      },
+
+      {
+        type: 'Extend:Divider',
+        componentProp: {
+          title: 'app:settings:theme:warning',
+          titlePlacement: 'center',
+        },
+      },
+
+      {
+        type: 'Base:Render',
+        formProp: {
+          path: 'warningColor',
+        },
+        componentProp: {
+          render: ({ formData }) => (
+            <AppColors
+              colors={
+                getThemeColors(
+                  app.value.isDark
+                    ? defaultTheme.dark.warningColor
+                    : defaultTheme.light.warningColor
+                )[1]
+              }
+              formDataColor={formData.warningColor}
+              clickEvent={(color) => (formData.warningColor = color)}
+            />
+          ),
+        },
+      },
+
+      {
+        type: 'Extend:Divider',
+        componentProp: {
+          title: 'app:settings:theme:error',
+          titlePlacement: 'center',
+        },
+      },
+
+      {
+        type: 'Base:Render',
+        formProp: {
+          path: 'errorColor',
+        },
+        componentProp: {
+          render: ({ formData }) => (
+            <AppColors
+              colors={
+                getThemeColors(
+                  app.value.isDark
+                    ? defaultTheme.dark.errorColor
+                    : defaultTheme.light.errorColor
+                )[1]
+              }
+              formDataColor={formData.errorColor}
+              clickEvent={(color) => (formData.errorColor = color)}
+            />
+          ),
+        },
+      },
+
+      {
+        type: 'Extend:Divider',
+        componentProp: {
+          title: 'app:settings:theme:error',
+          titlePlacement: 'center',
+        },
+      },
+
+      {
+        type: 'Base:Render',
+        formProp: {
+          path: 'bodyColor',
+        },
+        componentProp: {
+          render: ({ formData }) => (
+            <AppColors
+              colors={
+                getThemeColors(
+                  app.value.isDark
+                    ? defaultTheme.dark.bodyColor
+                    : defaultTheme.light.bodyColor,
+                  4
+                )[1]
+              }
+              formDataColor={formData.bodyColor}
+              clickEvent={(color) => (formData.bodyColor = color)}
+            />
+          ),
+        },
+      },
+    ],
+  })
+
   const [register1] = useForm<typeof appRelatives.value>({
     localeUniqueKey: 'app:app',
     showFeedback: false,
-    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    xGap: 0,
+    formItemClass: 'flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
     schemas: [
@@ -159,7 +337,8 @@
   const [register2] = useForm<typeof menuRelatives.value>({
     localeUniqueKey: 'app:menu',
     showFeedback: false,
-    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    xGap: 0,
+    formItemClass: 'flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
     disabled: computed(() => !appRelatives.value.showMenu),
@@ -247,7 +426,8 @@
   const [register3] = useForm<typeof headerRelatives.value>({
     localeUniqueKey: 'app:header',
     showFeedback: false,
-    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    xGap: 0,
+    formItemClass: 'flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
     disabled: computed(() => !appRelatives.value.showHeader),
@@ -315,7 +495,8 @@
   const [register4] = useForm<typeof breadcrumbRelatives.value>({
     localeUniqueKey: 'app:bc',
     showFeedback: false,
-    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    xGap: 0,
+    formItemClass: 'flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
     disabled: computed(
@@ -359,7 +540,8 @@
   const [register5] = useForm<typeof tabRelatives.value>({
     localeUniqueKey: 'app:tab',
     showFeedback: false,
-    formItemClass: 'w-75 flex flex-row justify-between mb-2',
+    xGap: 0,
+    formItemClass: 'flex flex-row justify-between mb-2',
     formItemComponentClass: 'w-32 flex justify-end',
     size: 'small',
     disabled: computed(() => !appRelatives.value.showTabs),
