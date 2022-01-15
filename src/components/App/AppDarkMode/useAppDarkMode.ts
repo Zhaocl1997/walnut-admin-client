@@ -1,6 +1,6 @@
 import { defaultTheme } from '/@/settings/theme'
 
-export const useDarkMode = () => {
+export const useAppDarkMode = () => {
   const { app, settings } = useAppState()
 
   const isSystemDark = usePreferredDark()

@@ -101,7 +101,6 @@
               loading: loading,
               disabled: loading,
               style: {
-                background: 'transparent',
                 width: '100%',
                 fontSize: '18px',
                 fontWeight: '900',

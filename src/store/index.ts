@@ -74,7 +74,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             collapsedIconSize: 24,
             iconSize: 26,
             indent: 16,
-            inverted: true,
+            inverted: false,
           },
 
           header: {
@@ -85,7 +85,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             showDarkMode: true,
             showLock: true,
             showSearch: true,
-            inverted: true,
+            inverted: false,
           },
 
           tab: {

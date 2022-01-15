@@ -55,10 +55,7 @@
           height="16"
         ></w-icon>
 
-        <span
-          class="app-text text-sm whitespace-nowrap"
-          :data-affix="item.meta.affix"
-        >
+        <span class="text-sm whitespace-nowrap" :data-affix="item.meta.affix">
           {{ t(item.meta.title!)  }}
         </span>
 

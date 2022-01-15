@@ -16,8 +16,12 @@
   import { useAppTitle } from '/@/hooks/core/useAppTitle'
   import { useAppResize } from '/@/hooks/core/useAppResize'
   import { useAppFullScreen } from '/@/hooks/core/useAppFullScreen'
+  import { useAppDarkMode } from '/@/components/App/AppDarkMode/useAppDarkMode'
+  import { useAppLocale } from '/@/components/App/AppLocalePicker/useAppLocale'
 
   useAppTitle()
   useAppResize()
   useAppFullScreen()
+  useAppDarkMode()
+  useAppLocale()
 </script>

@@ -9,7 +9,6 @@
 <script lang="ts">
   import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
   import { AppI18nGetLangLists } from '/@/locales/backend'
-  import { useLocale } from './useAppLocale'
 
   export default defineComponent({
     name: 'AppLocalePicker',
@@ -17,11 +16,6 @@
     inheritAttrs: false,
 
     props: {
-      reload: {
-        type: Boolean as PropType<boolean>,
-        default: false,
-      },
-
       showText: {
         type: Boolean as PropType<boolean>,
         default: false,
@@ -40,15 +34,6 @@
 
       onMounted(() => {
         onGetLangList()
-      })
-
-      watchEffect(async () => {
-        const { loadLocaleMessages, setI18nLanguage } = useLocale(
-          app.value.locale
-        )
-        await loadLocaleMessages()
-        setI18nLanguage()
-        props.reload && location.reload()
       })
 
       return {

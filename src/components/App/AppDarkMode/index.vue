@@ -10,8 +10,6 @@
 </template>
 
 <script lang="ts">
-  import { useDarkMode } from './useAppDarkMode'
-
   export default defineComponent({
     name: 'AppDarkMode',
 
@@ -19,7 +17,7 @@
 
     setup() {
       const { t } = useAppI18n()
-      const { app } = useDarkMode()
+      const { app } = useAppState()
 
       const darkModeOptions = computed(() => [
         {

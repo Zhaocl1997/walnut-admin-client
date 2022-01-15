@@ -11,17 +11,17 @@
       zIndex: 999,
     }"
   >
-    <div class="*hstack justify-evenly items-center">
+    <div class="*hstack justify-between items-center h-14 w-full">
       <img
         src="/assets/logo.png"
         :alt="`${getAppTitle} Logo`"
-        class="h-9 w-9 m-1"
+        class="h-9 w-9 ml-3"
       />
 
-      <w-transition name="slide-up">
+      <w-transition name="slide-left">
         <div
           v-show="!appMemo.collapse"
-          class="app-text text-xl not-italic font-bold text-center"
+          class="text-xl not-italic font-bold text-center mr-8"
         >
           {{ getAppTitle }}
         </div>

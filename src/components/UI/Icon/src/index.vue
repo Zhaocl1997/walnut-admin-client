@@ -1,6 +1,10 @@
 <template>
   <IconifyVueComponent
-    :style="{ color: $attrs.disabled ? 'var(--icon-color-disabled)' : '' }"
+    :style="{
+      color: $attrs.disabled
+        ? 'var(--icon-color-disabled)'
+        : 'var(--text-color-base)',
+    }"
   />
 </template>
 

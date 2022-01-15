@@ -8,7 +8,7 @@
         size="small"
       ></n-avatar>
 
-      <div class="app-text text-base font-semibold pl-1 my-auto">
+      <div class="text-base font-semibold pl-1 my-auto">
         {{ getUserName }}
       </div>
     </div>

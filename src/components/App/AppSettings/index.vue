@@ -419,6 +419,9 @@
         formProp: {
           path: 'inverted',
         },
+        componentProp: {
+          disabled: true,
+        },
       },
     ],
   })
@@ -487,6 +490,9 @@
         type: 'Base:Switch',
         formProp: {
           path: 'inverted',
+        },
+        componentProp: {
+          disabled: true,
         },
       },
     ],
