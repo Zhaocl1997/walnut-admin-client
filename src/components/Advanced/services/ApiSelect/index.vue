@@ -16,9 +16,8 @@
 
 <script lang="ts" setup>
   const props = defineProps({
-    value: [String, Number, Array] as PropType<
-      string | number | string[] | number[] | (string & number)[]
-    >,
+    ...WithValueProps,
+
     listFn: {
       type: Function as PropType<
         (data?: BaseListParams<any>) => Promise<BaseListResponse<any>>
@@ -29,8 +28,7 @@
       type: Function as PropType<(id: StringOrNumber) => any>,
       required: true,
     },
-    multiple: Boolean as PropType<boolean>,
-    valueSeparator: String as PropType<string>,
+
     valueField: String as PropType<string>,
     labelField: String as PropType<string>,
   })
@@ -184,6 +182,7 @@
 
 <script lang="ts">
   import { isFunction } from '@vueuse/core'
+  import { WithValueProps } from '/@/components/HOC/WithValue'
 
   export default defineComponent({
     name: 'ApiSelect',

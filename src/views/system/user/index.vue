@@ -191,6 +191,9 @@
             formProp: {
               path: 'role',
             },
+            componentProp: {
+              multiple: true,
+            },
           },
         ],
       },

@@ -1,4 +1,4 @@
-const WithValueProps = {
+export const WithValueProps = {
   value: [String, Number, Array] as PropType<
     string | number | string[] | number[] | (string & number)[]
   >,
@@ -66,7 +66,7 @@ export const WithValue = (
 
       return () => (
         <WrappedComponent
-          {...attrs}
+          {...props}
           value={v.value}
           onUpdateValue={onUpdateValue}
         />

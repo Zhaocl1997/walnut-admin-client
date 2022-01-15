@@ -6,18 +6,17 @@
     @update:value="onUpdateValue"
     value-field="_id"
     label-field="roleName"
+    :multiple="multiple"
+    :valueSeparator="valueSeparator"
   />
 </template>
 
 <script lang="ts" setup>
   import ApiSelect from '../ApiSelect'
   import { roleAPI } from '/@/api/system/role'
+  import { WithValueProps } from '/@/components/HOC/WithValue'
 
-  defineProps({
-    value: [String, Number, Array] as PropType<
-      string | number | string[] | number[] | (string & number)[]
-    >,
-  })
+  defineProps(WithValueProps)
 
   const emit = defineEmits(['update:value'])
 

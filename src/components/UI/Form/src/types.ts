@@ -118,7 +118,11 @@ export declare namespace WForm {
       }
 
       'Extend:IconPicker': {}
-      'Extend:RoleSelect': {}
+      'Extend:RoleSelect': {
+        multiple?: boolean
+        valueSeparator?: string
+        valueType?: 'string' | 'number'
+      }
 
       'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
