@@ -15,10 +15,14 @@
 
   import MenuTree from './MenuTree.vue'
 
+  // locale unique key
+  const key = 'role'
+
   const [register, { onCreateAndOpen, onReadAndOpen, onDelete, onDeleteMany }] =
     useCRUD<AppRole>({
       baseAPI: roleAPI,
 
+      // default value for create form
       defaultFormData: {
         status: true,
         menus: [],
@@ -37,12 +41,10 @@
       },
 
       tableProps: {
+        localeUniqueKey: key,
         rowKey: (row) => row._id!,
-
         maxHeight: 600,
-
         striped: true,
-
         actionList: ['create', 'delete'],
 
         onAction: ({ type }) => {
@@ -61,16 +63,16 @@
         },
 
         queryFormProps: {
-          // localeUniqueKey: 'locale',
-          // localeWithTable: true,
+          localeUniqueKey: key,
+          localeWithTable: true,
           span: 8,
+          showFeedback: false,
           labelWidth: 100,
           schemas: [
             {
               type: 'Base:Input',
               formProp: {
                 path: 'roleName',
-                label: 'Role Name',
               },
               componentProp: {
                 clearable: true,
@@ -81,7 +83,6 @@
               type: 'Base:Select',
               formProp: {
                 path: 'status',
-                label: 'Status',
               },
               componentProp: {
                 clearable: true,
@@ -104,13 +105,13 @@
           ],
         },
 
+        // table columns
         columns: [
           {
             type: 'selection',
           },
 
           {
-            title: 'Role Name',
             key: 'roleName',
             width: 200,
             align: 'center',
@@ -120,14 +121,12 @@
           },
 
           {
-            title: 'Description',
             key: 'description',
             width: 200,
             align: 'center',
           },
 
           {
-            title: 'Order',
             key: 'order',
             width: 100,
             align: 'center',
@@ -137,14 +136,12 @@
           },
 
           {
-            title: 'Users Count',
             key: 'usersCount',
             width: 120,
             align: 'center',
           },
 
           {
-            title: 'Status',
             key: 'status',
             width: 100,
             align: 'center',
@@ -156,7 +153,6 @@
           },
 
           {
-            title: 'Created At',
             key: 'createdAt',
             width: 200,
             extendType: 'formatter',
@@ -168,7 +164,6 @@
           },
 
           {
-            title: 'Updated At',
             key: 'updatedAt',
             width: 200,
             extendType: 'formatter',
@@ -177,10 +172,9 @@
           },
 
           {
-            title: 'Action',
             key: 'action',
             align: 'center',
-            width: 180,
+            width: 240,
             extendType: 'action',
             extendActionType: ['read', 'delete'],
             onRead: (row) => {
@@ -194,22 +188,18 @@
       },
 
       formProps: {
-        // localeUniqueKey: 'locale',
-
-        // localeWithTable: true,
-
+        localeUniqueKey: key,
+        localeWithTable: true,
         preset: 'drawer',
-
-        labelWidth: 140,
-
         baseRules: true,
+        labelWidth: 140,
+        xGap: 0,
 
         schemas: [
           {
             type: 'Base:Input',
             formProp: {
               path: 'roleName',
-              label: 'Role Name',
             },
             componentProp: {
               clearable: true,
@@ -219,7 +209,6 @@
             type: 'Base:Input',
             formProp: {
               path: 'description',
-              label: 'Description',
             },
             componentProp: {
               clearable: true,
@@ -230,7 +219,6 @@
             type: 'Base:InputNumber',
             formProp: {
               path: 'order',
-              label: 'Order',
             },
             componentProp: {
               clearable: true,
@@ -240,18 +228,12 @@
             type: 'Base:Switch',
             formProp: {
               path: 'status',
-              label: 'Role status',
-            },
-            componentProp: {
-              checkedText: 'Enabled',
-              uncheckedText: 'Disable',
             },
           },
           {
             type: 'Base:Render',
             formProp: {
               path: 'menus',
-              label: 'Permission',
               rule: false,
             },
             componentProp: {

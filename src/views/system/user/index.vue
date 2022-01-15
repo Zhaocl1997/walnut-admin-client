@@ -13,10 +13,14 @@
 
   import { userAPI } from '/@/api/system/user'
 
+  // locale unique key
+  const key = 'user'
+
   const [register, { onCreateAndOpen, onReadAndOpen, onDelete, onDeleteMany }] =
     useCRUD<AppUser>({
       baseAPI: userAPI,
 
+      // default value for create form
       defaultFormData: {
         status: true,
       },
@@ -34,12 +38,10 @@
       },
 
       tableProps: {
+        localeUniqueKey: key,
         rowKey: (row) => row._id!,
-
         maxHeight: 600,
-
         striped: true,
-
         actionList: ['create', 'delete'],
 
         onAction: ({ type }) => {
@@ -58,19 +60,39 @@
         },
 
         queryFormProps: {
-          // localeUniqueKey: 'locale',
-          // localeWithTable: true,
+          localeUniqueKey: key,
+          localeWithTable: true,
           span: 8,
+          showFeedback: false,
           labelWidth: 100,
           schemas: [
             {
               type: 'Base:Input',
               formProp: {
                 path: 'username',
-                label: 'User Name',
               },
               componentProp: {
                 clearable: true,
+              },
+            },
+
+            {
+              type: 'Base:Select',
+              formProp: {
+                path: 'status',
+              },
+              componentProp: {
+                clearable: true,
+                options: [
+                  {
+                    value: 1,
+                    label: 'Normal',
+                  },
+                  {
+                    value: 0,
+                    label: 'Disabled',
+                  },
+                ],
               },
             },
 
@@ -80,20 +102,19 @@
           ],
         },
 
+        // table columns
         columns: [
           {
             type: 'selection',
           },
 
           {
-            title: 'User Name',
             key: 'username',
             width: 100,
             align: 'center',
           },
 
           {
-            title: 'Status',
             key: 'status',
             width: 100,
             align: 'center',
@@ -105,7 +126,6 @@
           },
 
           {
-            title: 'Created At',
             key: 'createdAt',
             width: 200,
             extendType: 'formatter',
@@ -117,7 +137,6 @@
           },
 
           {
-            title: 'Updated At',
             key: 'updatedAt',
             width: 200,
             extendType: 'formatter',
@@ -126,7 +145,6 @@
           },
 
           {
-            title: 'Action',
             key: 'action',
             align: 'center',
             width: 180,
@@ -143,22 +161,18 @@
       },
 
       formProps: {
-        // localeUniqueKey: 'locale',
-
-        // localeWithTable: true,
-
+        localeUniqueKey: key,
+        localeWithTable: true,
         preset: 'drawer',
-
-        labelWidth: 140,
-
         baseRules: true,
+        labelWidth: 140,
+        xGap: 0,
 
         schemas: [
           {
             type: 'Base:Input',
             formProp: {
               path: 'username',
-              label: 'User Name',
             },
             componentProp: {
               clearable: true,
@@ -169,15 +183,13 @@
             type: 'Base:Switch',
             formProp: {
               path: 'status',
-              label: 'Status',
             },
           },
 
           {
-            type: 'Base:Input',
+            type: 'Extend:RoleSelect',
             formProp: {
               path: 'role',
-              label: 'Role',
             },
           },
         ],
