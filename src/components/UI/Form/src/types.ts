@@ -52,7 +52,7 @@ export declare namespace WForm {
       validate: () => Promise<boolean> | undefined
       restoreValidation: Fn
       setProps: Fn
-      onOpen: () => { done: Fn }
+      onOpen: (beforeHook?: Fn) => void
       onClose: Fn
       onYes: (
         apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
@@ -118,6 +118,7 @@ export declare namespace WForm {
       }
 
       'Extend:IconPicker': {}
+      'Extend:RoleSelect': {}
 
       'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
@@ -207,6 +208,7 @@ export declare namespace WForm {
     type DividerSchema<D> = DynamicSchemaItemProps<'Extend:Divider', D>
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
     type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
+    type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
 
     type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
     type SlotSchema<D> = DynamicSchemaItemProps<'Base:Slot', D>
@@ -231,6 +233,7 @@ export declare namespace WForm {
       | DividerSchema<D>
       | QuerySchema<D>
       | IconPickerSchema<D>
+      | RoleSelectSchema<D>
       | RenderSchema<D>
       | SlotSchema<D>
       | DynamicInputSchema<D>

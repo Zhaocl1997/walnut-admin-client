@@ -26,27 +26,29 @@
   // ref
   const actionType = ref<ActionType>('')
 
-  const onCreateAndOpen = () => {
-    actionType.value = 'create'
-    const { done } = onOpen()
-    done()
-  }
-
-  const onReadAndOpen = async (id: string) => {
-    actionType.value = 'update'
-    const { done } = onOpen()
-    try {
-      const res = await api.read(id)
-      formData.value = Object.assign(formData.value, res)
-    } finally {
-      done()
-    }
-  }
-
   // state
   const { stateRef: formData, resetState: resetFormData } = useState(
     getProps.value.defaultFormData ?? {}
   )
+
+  const onCreateAndOpen = () => {
+    actionType.value = 'create'
+
+    onOpen((done) => done())
+  }
+
+  const onReadAndOpen = async (id: string) => {
+    actionType.value = 'update'
+
+    onOpen(async (done) => {
+      try {
+        const res = await api.read(id)
+        formData.value = Object.assign(formData.value, res)
+      } finally {
+        done()
+      }
+    })
+  }
 
   // api
   const api = getProps.value.baseAPI!

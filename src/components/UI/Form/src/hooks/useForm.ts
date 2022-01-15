@@ -20,7 +20,7 @@ export const useForm = <T>(
   const methods = {
     validate: () => wFormRef.value?.validate(),
     restoreValidation: () => wFormRef.value?.restoreValidation(),
-    onOpen: () => wFormRef.value?.onOpen()!,
+    onOpen: (beforeHook?: Fn) => wFormRef.value?.onOpen(beforeHook)!,
   }
 
   return [register, methods]
