@@ -1,54 +1,57 @@
-const props = {
+const WithValueProps = {
+  value: [String, Number, Array] as PropType<
+    string | number | string[] | number[] | (string & number)[]
+  >,
+
+  multiple: Boolean as PropType<boolean>,
+
   valueType: {
     type: String as PropType<'string' | 'number'>,
     default: 'string',
   },
 
-  valueSeparator: {
-    type: String as PropType<string>,
-    default: '',
-  },
+  valueSeparator: String as PropType<string>,
 }
 
-export type WithValueProp = Partial<ExtractPropTypes<typeof props>>
+export type WithValueProp = Partial<ExtractPropTypes<typeof WithValueProps>>
 
 export const WithValue = (
   WrappedComponent: ReturnType<typeof defineComponent>
 ) => {
   return defineComponent({
-    inheritAttrs: false,
+    name: 'WithValue',
 
-    props,
+    props: WithValueProps,
 
     emits: ['update:value'],
 
-    setup(prop, { attrs, emit }) {
-      const { value = '', multiple = false } = attrs as Record<
-        string,
-        string | string[] | boolean
-      >
+    setup(props, { attrs, emit }) {
       const v = ref()
 
       const formateDefaultValue = (fn: Fn) => {
-        !prop.valueSeparator
-          ? (v.value = (value as string[]).map((ov) => fn(ov)))
-          : (v.value = (value as string)
-              .split(prop.valueSeparator)
-              .map((ov) => fn(ov)))
+        !props.valueSeparator
+          ? (v.value = (props.value as string[]).map((ov) => fn(ov)))
+          : (v.value =
+              props.value &&
+              (props.value as string)
+                .split(props.valueSeparator)
+                .map((ov) => fn(ov)))
       }
 
       onMounted(() => {
-        if (multiple === true || multiple === '') {
-          if (prop.valueType === 'string') {
+        if (!props.value) return
+
+        if (props.multiple === true) {
+          if (props.valueType === 'string') {
             formateDefaultValue((ov) => ov.toString())
           } else {
             formateDefaultValue((ov) => +ov)
           }
         } else {
-          if (prop.valueType === 'string') {
-            v.value = value + ''
+          if (props.valueType === 'string') {
+            v.value = props.value + ''
           } else {
-            v.value = +value
+            v.value = +props.value!
           }
         }
       })
@@ -57,7 +60,7 @@ export const WithValue = (
         v.value = val
         emit(
           'update:value',
-          !prop.valueSeparator ? val : val.join(prop.valueSeparator)
+          !props.valueSeparator ? val : val.join(props.valueSeparator)
         )
       }
 

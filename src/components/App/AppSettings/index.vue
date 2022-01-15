@@ -211,7 +211,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme:error',
+          title: 'app:settings:theme:body',
           titlePlacement: 'center',
         },
       },

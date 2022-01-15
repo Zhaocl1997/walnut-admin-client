@@ -3,6 +3,7 @@ import { createAsyncComponent } from '/@/utils/factory/asyncComponent'
 
 import { NSlider, NDynamicInput, NTreeSelect, NTree } from 'naive-ui'
 import WIconPicker from '/@/components/Extra/IconPicker'
+import WRoleSelect from '/@/components/Advanced/services/RoleSelect'
 
 /**
  * @description Generate all usable components through `BUILTIN_FORM_TYPE`.
@@ -31,6 +32,7 @@ componentMap.set('DynamicInput', NDynamicInput)
 componentMap.set('TreeSelect', NTreeSelect)
 componentMap.set('Tree', NTree)
 componentMap.set('IconPicker', WIconPicker)
+componentMap.set('RoleSelect', WRoleSelect)
 
 Object.values(BUILTIN_FORM_TYPE).map((value) => {
   componentMap.set(value, allComponents[value])
