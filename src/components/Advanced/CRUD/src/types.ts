@@ -21,6 +21,7 @@ export declare namespace WCrud {
       onDelete: (is: StringOrNumber) => Promise<void>
       onDeleteMany: () => Promise<void>
       onGetFormData: () => Ref<T>
+      onGetActionType: () => Ref<ActionType>
     }
   }
 

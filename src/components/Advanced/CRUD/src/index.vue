@@ -81,6 +81,7 @@
     onDelete,
     onDeleteMany,
     onGetFormData: () => formData,
+    onGetActionType: () => actionType,
   })
 
   // form

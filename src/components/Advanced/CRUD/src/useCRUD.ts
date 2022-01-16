@@ -24,6 +24,7 @@ export const useCRUD = <T = RowData>(
     onDelete: async (id: StringOrNumber) => await wCrudRef.value?.onDelete(id),
     onDeleteMany: async () => await wCrudRef.value?.onDeleteMany(),
     onGetFormData: () => wCrudRef.value?.onGetFormData()!,
+    onGetActionType: () => wCrudRef.value?.onGetActionType()!,
   }
 
   return [register, methods]

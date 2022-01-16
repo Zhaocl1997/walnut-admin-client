@@ -2,6 +2,7 @@
   <n-tree
     :cascade="checkable"
     :checkable="checkable"
+    :disabled="disabled"
     block-line
     virtual-scroll
     :data="treeData"
@@ -25,6 +26,7 @@
   const props = defineProps({
     value: [String, Array] as PropType<string | string[]>,
     checkable: Boolean as PropType<boolean>,
+    disabled: Boolean as PropType<boolean>,
   })
 
   const emit = defineEmits(['update:value'])

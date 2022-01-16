@@ -190,6 +190,7 @@
             type: 'Extend:RoleSelect',
             formProp: {
               path: 'role',
+              labelHelpMessage: true,
             },
             componentProp: {
               multiple: true,
