@@ -15,7 +15,7 @@
     @update:checked-keys="onUpdateCheckedKeys"
     @update:expanded-keys="onUpdateExpandedKeys"
     @update:selected-keys="onUpdateSelectedKeys"
-    style="height: 400px"
+    style="max-height: 600px"
   />
 </template>
 
