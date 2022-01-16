@@ -371,6 +371,15 @@
       {
         type: 'Base:Switch',
         formProp: {
+          path: 'fixFooter',
+        },
+        componentProp: {
+          disabled: computed(() => !appRelatives.value.showFooter),
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
           path: 'showAnimation',
         },
       },

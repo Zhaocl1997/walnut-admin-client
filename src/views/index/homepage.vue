@@ -15,6 +15,10 @@
     <WAppAuthorize value="system:user:create">
       <div class="bg-red-800">test authorize</div>
     </WAppAuthorize>
+
+    <div v-for="i in 300" :key="i">
+      {{ i }}
+    </div>
   </div>
 </template>
 

@@ -58,6 +58,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
 
             fixLogo: true,
             fixHeader: true,
+            fixFooter: true,
 
             showAnimation: true,
             animationName: 'fade',

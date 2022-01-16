@@ -1,0 +1,26 @@
+<template>
+  <n-layout-footer bordered :inverted="setting.header.inverted">
+    <div class="py-0.5">
+      <div
+        class="flex flex-row flex-nowrap space-x-1 items-center justify-center"
+      >
+        <span>Copyright</span>
+
+        <w-icon
+          class=""
+          height="16"
+          icon="ant-design:copyright-circle-outlined"
+        ></w-icon>
+
+        <span> 2020-present Walnut Admin </span>
+      </div>
+    </div>
+  </n-layout-footer>
+</template>
+
+<script lang="ts" setup>
+  import { NLayoutFooter } from 'naive-ui'
+
+  const { settings } = useAppState()
+  const setting = settings.value.ForDevelopers
+</script>

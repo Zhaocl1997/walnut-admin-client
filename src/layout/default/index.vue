@@ -12,10 +12,7 @@
       <TheAside />
     </n-drawer>
 
-    <div
-      id="w-main-layout"
-      class="*vstack flex-1 h-screen w-full overflow-x-hidden"
-    >
+    <div class="*vstack flex-1 h-screen w-full overflow-x-hidden">
       <MainHeader v-if="setting.app.fixHeader" />
 
       <n-layout-content
@@ -29,10 +26,14 @@
           <TheContent />
         </div>
 
+        <TheFooter v-if="setting.app.showFooter && !setting.app.fixFooter" />
+
         <WAppSettings />
 
         <n-back-top />
       </n-layout-content>
+
+      <TheFooter v-if="setting.app.showFooter && setting.app.fixFooter" />
     </div>
   </n-layout>
 </template>
@@ -42,6 +43,7 @@
   import TheHeader from './TheHeader'
   import TheContent from './TheContent'
   import TheTab from './TheTab'
+  import TheFooter from './TheFooter'
   import { getShowAside, getContentWidth } from '/@/settings'
 
   // TODO 99

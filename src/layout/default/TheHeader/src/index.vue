@@ -41,6 +41,6 @@
   import HeaderAvatar from './avatar.vue'
   import { getShowMenuCollpaseIcon } from '/@/settings'
 
-  const { app, appMemo, settings } = useAppState()
+  const { appMemo, settings } = useAppState()
   const headerSettings = settings.value.ForDevelopers.header
 </script>

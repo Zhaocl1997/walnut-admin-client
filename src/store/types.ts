@@ -52,6 +52,7 @@ export interface AppMemory {
 
         fixLogo: boolean
         fixHeader: boolean
+        fixFooter: boolean
 
         showAnimation: boolean
         animationName: ValueOfTransitionNameConst
