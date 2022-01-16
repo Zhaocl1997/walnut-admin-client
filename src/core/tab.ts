@@ -17,7 +17,6 @@ const closeMultipleTabs = (lists: string[]) => {
 export const removeTabs = (
   name: string,
   type: ValueOfDeleteTabConst,
-  currentMouseTabName: string,
   currentRouteName: string
 ) => {
   const index = tab.value.tabs.findIndex((item) => item.name === name)
@@ -31,7 +30,7 @@ export const removeTabs = (
         tab.value.tabs.splice(index, 1)
 
         // if close current tab, router push forward or backward
-        if (currentMouseTabName === name) {
+        if (currentRouteName === name) {
           const next = tab.value.tabs[index]
           const previous = tab.value.tabs[index - 1]
 

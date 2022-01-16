@@ -58,7 +58,7 @@
     onOpenFile,
   } = useTabsDevTools()
 
-  const { onTabClick, onTabRemove } = useTabsActions(currentMouseTab)
+  const { onTabClick, onTabRemove } = useTabsActions()
 
   const { x, y, ctxMenuShow, onOpenCtxMenu, onCloseCtxMenu } =
     useTabsContextMenu()
