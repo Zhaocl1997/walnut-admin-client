@@ -105,7 +105,7 @@ export declare namespace WForm {
     interface ComponentPropPool<D = any> {
       'Extend:Divider': {
         title?: string
-        helpMessage?: string
+        helpMessage?: string | boolean
         foldable?: boolean
         startIndex?: number
         endIndex?: number

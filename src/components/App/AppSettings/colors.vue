@@ -20,6 +20,7 @@
               onClick={() => props.clickEvent!(color)}
               class="h-5 w-5 rounded cursor-pointer border-1 border-primary"
               style={{ background: color }}
+              title={color}
             >
               {props.formDataColor === color && (
                 <WIcon height="18" icon="ant-design:check-outlined" />

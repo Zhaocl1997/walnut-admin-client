@@ -4,9 +4,11 @@ declare global {
   interface AppThemeColors {
     primaryColor: string
     infoColor: string
+    successColor: string
     warningColor: string
     errorColor: string
     bodyColor: string
+    invertedColor: string
   }
 
   interface AppTheme {

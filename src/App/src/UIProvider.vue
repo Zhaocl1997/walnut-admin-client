@@ -26,10 +26,10 @@
           infoColorHover: adjustColor(customThemes.infoColor, 40),
           infoColorPressed: adjustColor(customThemes.infoColor, 20),
           infoColorSuppl: adjustColor(customThemes.infoColor, -20),
-          successColor: customThemes.primaryColor,
-          successColorHover: adjustColor(customThemes.primaryColor, 40),
-          successColorPressed: adjustColor(customThemes.primaryColor, 20),
-          successColorSuppl: adjustColor(customThemes.primaryColor, -20),
+          successColor: customThemes.successColor,
+          successColorHover: adjustColor(customThemes.successColor, 40),
+          successColorPressed: adjustColor(customThemes.successColor, 20),
+          successColorSuppl: adjustColor(customThemes.successColor, -20),
           warningColor: customThemes.warningColor,
           warningColorHover: adjustColor(customThemes.warningColor, 40),
           warningColorPressed: adjustColor(customThemes.warningColor, 20),
@@ -40,6 +40,7 @@
           errorColorSuppl: adjustColor(customThemes.errorColor, -20),
 
           bodyColor: customThemes.bodyColor,
+          invertedColor: customThemes.invertedColor,
         })
       )
 
@@ -50,15 +51,12 @@
               {
                 common: {
                   ...sharedTheme.value,
-
-                  invertedColor: 'rgb(0, 16, 32)',
                 },
               }
             : // dark
               {
                 common: {
                   ...sharedTheme.value,
-                  invertedColor: 'rgb(20, 20, 20)',
                 },
               }
       )

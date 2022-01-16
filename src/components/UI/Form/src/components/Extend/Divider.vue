@@ -7,7 +7,7 @@
 
     props: {
       title: String as PropType<string>,
-      helpMessage: String as PropType<string>,
+      helpMessage: [String, Boolean] as PropType<string | boolean>,
       prefix: String as PropType<string>,
       type: String as PropType<string>,
       foldable: Boolean as PropType<boolean>,
@@ -40,6 +40,13 @@
         }
       }
 
+      const getHelpMsg = () => {
+        if (props.helpMessage === true) {
+          return t(`${props.title}:helpMsg`)
+        }
+        return props.helpMessage === false ? '' : props.helpMessage
+      }
+
       return () =>
         props.title ? (
           <n-divider class="my-1">
@@ -48,7 +55,7 @@
                 <w-title
                   prefix={props.prefix}
                   type={props.type}
-                  helpMessage={props.helpMessage}
+                  helpMessage={getHelpMsg()}
                 >
                   {t(props.title)}
                 </w-title>

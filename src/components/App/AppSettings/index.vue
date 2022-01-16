@@ -151,6 +151,36 @@
       {
         type: 'Extend:Divider',
         componentProp: {
+          title: 'app:settings:theme:success',
+          titlePlacement: 'center',
+        },
+      },
+
+      {
+        type: 'Base:Render',
+        formProp: {
+          path: 'successColor',
+        },
+        componentProp: {
+          render: ({ formData }) => (
+            <AppColors
+              colors={
+                getThemeColors(
+                  app.value.isDark
+                    ? defaultTheme.dark.successColor
+                    : defaultTheme.light.successColor
+                )[1]
+              }
+              formDataColor={formData.successColor}
+              clickEvent={(color) => (formData.successColor = color)}
+            />
+          ),
+        },
+      },
+
+      {
+        type: 'Extend:Divider',
+        componentProp: {
           title: 'app:settings:theme:warning',
           titlePlacement: 'center',
         },
@@ -234,6 +264,38 @@
               }
               formDataColor={formData.bodyColor}
               clickEvent={(color) => (formData.bodyColor = color)}
+            />
+          ),
+        },
+      },
+
+      {
+        type: 'Extend:Divider',
+        componentProp: {
+          title: 'app:settings:theme:inverted',
+          titlePlacement: 'center',
+          helpMessage: true,
+        },
+      },
+
+      {
+        type: 'Base:Render',
+        formProp: {
+          path: 'invertedColor',
+        },
+        componentProp: {
+          render: ({ formData }) => (
+            <AppColors
+              colors={
+                getThemeColors(
+                  app.value.isDark
+                    ? defaultTheme.dark.invertedColor
+                    : defaultTheme.light.invertedColor,
+                  4
+                )[1]
+              }
+              formDataColor={formData.invertedColor}
+              clickEvent={(color) => (formData.invertedColor = color)}
             />
           ),
         },
@@ -419,9 +481,6 @@
         formProp: {
           path: 'inverted',
         },
-        componentProp: {
-          disabled: true,
-        },
       },
     ],
   })
@@ -490,9 +549,6 @@
         type: 'Base:Switch',
         formProp: {
           path: 'inverted',
-        },
-        componentProp: {
-          disabled: true,
         },
       },
     ],
