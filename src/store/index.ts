@@ -63,7 +63,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             showAnimation: true,
             animationName: 'fade',
 
-            keepAlive: true,
+            keepAlive: false,
           },
 
           menu: {

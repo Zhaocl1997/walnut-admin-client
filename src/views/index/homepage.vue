@@ -2,6 +2,8 @@
   <div>
     Homepage
 
+    <n-input v-model:value="value"></n-input>
+
     <n-space>
       <n-button>Default</n-button>
       <n-button type="tertiary">Tertiary</n-button>
@@ -35,7 +37,7 @@
     setup(props, ctx) {
       const { app, token } = useAppState()
 
-      return {}
+      return { value: ref('') }
     },
   })
 </script>

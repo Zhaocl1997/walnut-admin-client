@@ -27,7 +27,10 @@ export const AppCoreFn1 = async () => {
   menu.value.permissions = buildPermissions(res)
 
   // set keep alive route name
-  menu.value.keepAliveRouteNames = buildKeepAliveRouteNameList(res)
+  menu.value.keepAliveRouteNames = buildKeepAliveRouteNameList(
+    res,
+    menu.value.menus
+  )
 
   // set index menu name, use for home page
   menu.value.indexMenuName = menu.value.menus[0].name!

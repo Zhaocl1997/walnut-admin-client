@@ -1,6 +1,6 @@
 import { Transition, TransitionGroup, renderSlot } from 'vue'
 
-export type TransitionMode = 'in-out' | 'out-in' | 'default'
+export type TransitionMode = 'in-out' | 'out-in'
 
 const props = {
   name: {
@@ -9,7 +9,7 @@ const props = {
   },
   mode: {
     type: String as PropType<TransitionMode>,
-    default: 'default',
+    default: 'out-in',
   },
   group: {
     type: Boolean as PropType<boolean>,

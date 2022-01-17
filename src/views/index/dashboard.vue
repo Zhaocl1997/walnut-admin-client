@@ -15,7 +15,7 @@
 
     emits: [],
 
-    setup(props: any, ctx) {
+    setup(props, ctx) {
       return {
         value: ref(''),
       }

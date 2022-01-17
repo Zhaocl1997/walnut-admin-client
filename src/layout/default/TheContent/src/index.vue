@@ -1,27 +1,26 @@
 <template>
-  <router-view>
-    <template #="{ Component, route }">
-      <div :id="Component.type.parentView ? null : route.name">
-        <w-transition
-          :name="appSettings.showAnimation ? appSettings.animationName : null"
-          appear
-        >
-          <keep-alive
-            v-if="appSettings.keepAlive"
-            :include="menu.keepAliveRouteNames"
-          >
-            <component :is="Component" :key="route.fullPath" />
-          </keep-alive>
-
-          <component v-else :is="Component" :key="route.fullPath" />
-        </w-transition>
-      </div>
-    </template>
+  <router-view v-slot="{ Component, route }">
+    <w-transition
+      :name="appSettings.showAnimation ? appSettings.animationName : null"
+      mode="out-in"
+      appear
+    >
+      <keep-alive v-if="appSettings.keepAlive" :include="getKeepAliveInclude">
+        <component :is="Component" :key="route.fullPath" />
+      </keep-alive>
+      <component v-else :is="Component" :key="route.fullPath" />
+    </w-transition>
   </router-view>
 </template>
 
-<script lang="ts" setup>
-  // TODO
+<script lang="tsx" setup>
   const { menu, settings } = useAppState()
   const appSettings = settings.value.ForDevelopers.app
+
+  const getKeepAliveInclude = computed(() => {
+    if (!appSettings.keepAlive) return []
+    console.log(menu.value.keepAliveRouteNames)
+
+    return menu.value.keepAliveRouteNames
+  })
 </script>

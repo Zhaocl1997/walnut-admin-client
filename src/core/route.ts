@@ -1,4 +1,4 @@
-import { formatTree } from 'easy-fns-ts'
+import { formatTree, findPath } from 'easy-fns-ts'
 
 import ParentComponent from '/@/layout/default/TheContent'
 import IFrameComponent from '/@/layout/iframe/index.vue'
@@ -8,21 +8,19 @@ import { App404Route } from '/@/router/routes'
 /**
  * @description Util Function 1 - Build route object through menu object
  */
-export const buildCommonRoute = (node: AppMenu): AppTab => {
-  return {
-    path: node.path!,
-    name: node.name!,
-    meta: {
-      title: node.title,
-      icon: node.icon,
-      cache: node.cache,
-      url: node.url,
-      affix: node.affix,
-      type: node.type,
-      component: node.component,
-    },
-  }
-}
+export const buildCommonRoute = (node: AppMenu): AppTab => ({
+  path: node.path!,
+  name: node.name!,
+  meta: {
+    title: node.title,
+    icon: node.icon,
+    cache: node.cache,
+    url: node.url,
+    affix: node.affix,
+    type: node.type,
+    component: node.component,
+  },
+})
 
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
@@ -32,7 +30,6 @@ const resolveParentComponent = (name: string) => () =>
     resolve({
       ...ParentComponent,
       name,
-      parentView: true,
     })
   })
 
@@ -47,12 +44,12 @@ const resolveIFrameComponent = (name: string) => () =>
     })
   })
 
+const allViewModules = import.meta.glob('../views/**/*.vue')
+
 /**
  * @description Util Function 4 - Resolve `views` dynamically base on `node.component` which equal to `path`
  */
 const resolveViewModules = (component: string) => {
-  const allViewModules = import.meta.glob('../views/**/*.vue')
-
   const keys = Object.keys(allViewModules)
 
   // find the file location same index
@@ -65,11 +62,26 @@ const resolveViewModules = (component: string) => {
 
 /**
  * @description Generate keep-alive component name lists based on `menu`
+ * Need to mention, when nested routes wants to be kept-alive, it's parent name also need to be in the `include` array as well
+ * So below we use `findPath` to map the name list
+ * @link https://github.com/vuejs/vue-router-next/issues/626
  */
-export const buildKeepAliveRouteNameList = (payload: AppMenu[]): string[] =>
-  payload
-    .filter((i) => i.type === MenuTypeConst.MENU && i.cache)
-    .map((i) => i.name!)
+export const buildKeepAliveRouteNameList = (
+  menus: AppMenu[],
+  payload: AppMenu[]
+): string[] => {
+  const res: string[] = []
+
+  menus.map((i) => {
+    if (i.cache) {
+      const path = findPath<AppMenu>(payload, (n) => n._id === i._id)
+
+      res.push(...(path as AppMenu[]).map((i) => i.name!))
+    }
+  })
+
+  return [...new Set(res)]
+}
 
 /**
  * @description Build Routes Core Function
