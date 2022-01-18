@@ -5,5 +5,5 @@ export const publishConfig = {
   // the IP of your cloud server
   cloudServerIPAddress: '152.136.25.175',
   // the final location of your bundle files in the cloud server
-  cloudServerClientFolderPath: '/home/ubuntu/clientTest',
+  cloudServerClientFolderPath: '/home/ubuntu/client',
 }
