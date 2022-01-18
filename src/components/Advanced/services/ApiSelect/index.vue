@@ -139,7 +139,7 @@
   const onFeedback = async () => {
     if (props.multiple) {
       if (props.valueSeparator) {
-        for await (const item of (props.value as string).split(
+        for (const item of (props.value as string).split(
           props.valueSeparator
         ) as StringOrNumber[]) {
           const isExisted = options.value.some((i) => i.value == item)
@@ -150,7 +150,7 @@
           }
         }
       } else {
-        for await (const item of props.value as StringOrNumber[]) {
+        for (const item of props.value as StringOrNumber[]) {
           const isExisted = options.value.some((i) => i.value == item)
 
           if (!isExisted) {
