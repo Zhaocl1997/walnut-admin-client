@@ -39,6 +39,7 @@ const comp = {
     'Switch',
     'Table',
     'TimePicker',
+    'Descriptions',
   ],
 }
 
