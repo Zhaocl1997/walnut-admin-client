@@ -23,6 +23,9 @@
   import { arrToTree, orderTree, formatTree } from 'easy-fns-ts'
   import { menuAPI } from '/@/api/system/menu'
 
+  // TODO 99
+  import WIcon from '/@/components/UI/Icon'
+
   const props = defineProps({
     value: [String, Array] as PropType<string | string[]>,
     checkable: Boolean as PropType<boolean>,
@@ -75,7 +78,7 @@
     option.type === MenuTypeConst.ELEMENT ? option.permission : t(option.title!)
 
   const onRenderPrefix = ({ option }: { option: AppMenu }) => (
-    <w-icon icon={option.icon} height="18"></w-icon>
+    <WIcon icon={option.icon} height="18"></WIcon>
   )
 
   const onCheckAll = () => {
