@@ -1,12 +1,13 @@
 <template>
-  <div>
-    <n-card
+  <div class="space-y-2">
+    <w-card
       title="相关信息"
       size="small"
       :segmented="{
         content: true,
         footer: 'soft',
       }"
+      collapse
     >
       <w-descriptions
         size="small"
@@ -15,15 +16,16 @@
         :column="2"
         :items="infoItems"
       ></w-descriptions>
-    </n-card>
+    </w-card>
 
-    <n-card
+    <w-card
       title="生产依赖"
       size="small"
       :segmented="{
         content: true,
         footer: 'soft',
       }"
+      collapse
     >
       <w-descriptions
         size="small"
@@ -32,15 +34,16 @@
         :column="2"
         :items="DepItems"
       ></w-descriptions>
-    </n-card>
+    </w-card>
 
-    <n-card
+    <w-card
       title="开发依赖"
       size="small"
       :segmented="{
         content: true,
         footer: 'soft',
       }"
+      collapse
     >
       <w-descriptions
         size="small"
@@ -49,7 +52,7 @@
         :column="3"
         :items="DevDepItems"
       ></w-descriptions>
-    </n-card>
+    </w-card>
   </div>
 </template>
 
@@ -57,9 +60,11 @@
   import { WDescriptionsItem } from '/@/components/UI/Descriptions'
   import pkg from '/package.json'
 
-  const infoItems = ref<WDescriptionsItem[]>([
+  const { t } = useAppI18n()
+
+  const infoItems = computed<WDescriptionsItem[]>(() => [
     {
-      label: '版本',
+      label: t('desc:about:info:version'),
       value: pkg.version,
       type: 'tag',
       typeProps: {
@@ -67,8 +72,8 @@
       },
     },
     {
-      label: '文档',
-      value: '文档',
+      label: t('desc:about:info:doc'),
+      value: t('desc:about:info:doc'),
       type: 'link',
       typeProps: {
         type: 'primary',
@@ -76,8 +81,8 @@
       },
     },
     {
-      label: '预览',
-      value: '预览',
+      label: t('desc:about:info:preview'),
+      value: t('desc:about:info:preview'),
       type: 'link',
       typeProps: {
         type: 'primary',
@@ -85,8 +90,8 @@
       },
     },
     {
-      label: '源码',
-      value: '源码',
+      label: t('desc:about:info:code'),
+      value: t('desc:about:info:code'),
       type: 'link',
       typeProps: {
         type: 'primary',

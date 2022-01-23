@@ -26,8 +26,10 @@ const comp = {
   UI: [
     'Button',
     'ButtonGroup',
+    'Card',
     'Checkbox',
     'DatePicker',
+    'Descriptions',
     'Drawer',
     'DynamicTags',
     'Form',
@@ -39,7 +41,6 @@ const comp = {
     'Switch',
     'Table',
     'TimePicker',
-    'Descriptions',
   ],
 }
 
