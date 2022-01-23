@@ -12,7 +12,7 @@
           icon="ant-design:copyright-circle-outlined"
         ></w-icon>
 
-        <span> 2020-present Walnut Admin </span>
+        <span> 2020-present {{ getAppTitle }} </span>
       </div>
     </div>
   </n-layout-footer>
@@ -23,4 +23,6 @@
 
   const { settings } = useAppState()
   const setting = settings.value.ForDevelopers
+
+  const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 </script>

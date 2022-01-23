@@ -46,12 +46,12 @@
           appMemo.value.showAside = false
         }
 
-        if ((item.meta as AppMenu).type === 'catalog') {
+        if ((item.meta as AppMenu).type === MenuTypeConst.CATALOG) {
           useAppMessage().info('Catalog Menu has no page!')
           return
         }
 
-        if ((item.meta as AppMenu).ternal === 'external') {
+        if ((item.meta as AppMenu).ternal === MenuTernalConst.EXTERNAL) {
           window.open((item.meta as AppMenu).url, '_blank')
           return
         }
@@ -66,6 +66,12 @@
       return () => (
         <w-scrollbar height="100%">
           <n-menu
+            mode={
+              settings.value.ForDevelopers.app.layout ===
+              AppLayoutModeConst.LEFT_MENU
+                ? 'vertical'
+                : 'horizontal'
+            }
             inverted={menuSettings.inverted}
             collapsedWidth={menuSettings.collapsedWidth}
             accordion={menuSettings.accordion}

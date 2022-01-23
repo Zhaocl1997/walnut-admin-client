@@ -1,19 +1,32 @@
 <template>
   <div class="select-none">
     <div class="*hstack justify-between h-full items-center">
-      <div class="*hstack justify-start space-x-2">
+      <div class="*hstack items-center justify-between space-x-2">
         <img
           v-if="appMemo.isMobile"
           src="/assets/logo.png"
-          alt="Walnut Admin Logo"
+          :alt="`${getAppTitle} Logo`"
           class="h-9 w-9 m-1"
           @click="() => (appMemo.showAside = true)"
         />
 
         <template v-else>
           <HeaderCollapse v-if="getShowMenuCollpaseIcon" />
-          <HeaderBreadCrumb v-if="headerSettings.showBreadcrumb" />
+
+          <w-transition name="slide-left">
+            <HeaderBreadCrumb v-if="headerSettings.showBreadcrumb" />
+          </w-transition>
         </template>
+
+        <w-transition name="slide-up">
+          <div
+            v-if="settings.ForDevelopers.app.layout === 'top-menu'"
+            class="*hstack items-center justify-between"
+          >
+            <TheLogo class="mr-16" />
+            <TheMenu />
+          </div>
+        </w-transition>
       </div>
 
       <div
@@ -39,8 +52,12 @@
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
   import HeaderAvatar from './avatar.vue'
+  import TheMenu from '../../TheAside/src/menu.vue'
+  import TheLogo from '../../TheAside/src/logo.vue'
   import { getShowMenuCollpaseIcon } from '/@/settings'
 
   const { appMemo, settings } = useAppState()
   const headerSettings = settings.value.ForDevelopers.header
+
+  const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 </script>

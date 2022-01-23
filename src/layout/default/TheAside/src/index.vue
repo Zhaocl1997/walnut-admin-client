@@ -14,7 +14,7 @@
     <div class="select-none overflow-hidden">
       <AsideLogo
         v-if="appSettings.showLogo"
-        :class="{ fixed: appSettings.fixLogo }"
+        :class="['pl-4', { fixed: appSettings.fixLogo }]"
       />
 
       <AsideMenu

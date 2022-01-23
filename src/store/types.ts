@@ -58,6 +58,8 @@ export interface AppMemory {
         animationName: ValueOfTransitionNameConst
 
         keepAlive: boolean
+
+        layout: ValueOfAppLayoutModeConst
       }
 
       menu: {

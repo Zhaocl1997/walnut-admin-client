@@ -1,9 +1,11 @@
 <template>
   <n-layout has-sider>
-    <TheAside v-if="!appMemo.isMobile && getShowAside" />
+    <w-transition name="slide-left">
+      <TheAside v-if="getShowNormalAside" />
+    </w-transition>
 
     <n-drawer
-      v-else
+      v-if="!getShowNormalAside"
       v-model:show="appMemo.showAside"
       :width="settings.ForDevelopers.menu.width + 'px'"
       placement="left"
@@ -44,13 +46,28 @@
   import TheContent from './TheContent'
   import TheTab from './TheTab'
   import TheFooter from './TheFooter'
-  import { getShowAside, getContentWidth } from '/@/settings'
+  import { getContentWidth, getShowNormalAside } from '/@/settings'
 
   // TODO 99
   import { NLayoutHeader } from 'naive-ui'
 
   const { appMemo, settings } = useAppState()
   const setting = settings.value.ForDevelopers
+
+  watchEffect(() => {
+    if (setting.app.layout === AppLayoutModeConst.LEFT_MENU) {
+      setting.app.showLogo = true
+      setting.app.showMenu = true
+      setting.header.showBreadcrumb = true
+    }
+
+    if (setting.app.layout === AppLayoutModeConst.TOP_MENU) {
+      setting.app.showLogo = false
+      setting.app.showMenu = false
+      setting.header.showBreadcrumb = false
+      appMemo.value.collapse = false
+    }
+  })
 
   const MainHeader = defineComponent({
     setup() {

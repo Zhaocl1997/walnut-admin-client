@@ -2,7 +2,8 @@ import { useResize } from './useResize'
 import { useBreakpoints } from './useBreakpoints'
 
 export const useAppResize = () => {
-  const { appMemo } = useAppState()
+  const { appMemo, settings } = useAppState()
+  const appSetting = settings.value.ForDevelopers.app
   const breakpoints = useBreakpoints()
 
   const handler = () => {
@@ -11,9 +12,11 @@ export const useAppResize = () => {
       // 1.isMobile => true
       // 2.device => 'mobile'
       // 3.no more collapse
+      // 4.mobile only show `left-menu` layout
       appMemo.value.isMobile = true
-      appMemo.value.device = 'mobile'
+      appMemo.value.device = DevideConst.MOBILE
       appMemo.value.collapse = false
+      appSetting.layout = AppLayoutModeConst.LEFT_MENU
     }
 
     if (breakpoints.isInBetween('sm', 'lg')) {
@@ -22,7 +25,7 @@ export const useAppResize = () => {
       // 2.device => 'tablet'
       // 3.auto collapse
       appMemo.value.isMobile = false
-      appMemo.value.device = 'tablet'
+      appMemo.value.device = DevideConst.TABLET
       appMemo.value.collapse = true
     }
 
@@ -32,7 +35,7 @@ export const useAppResize = () => {
       // 2.device => 'laptop'
       // 3.no collapse
       appMemo.value.isMobile = false
-      appMemo.value.device = 'laptop'
+      appMemo.value.device = DevideConst.LAPTOP
       appMemo.value.collapse = false
     }
 
@@ -42,7 +45,7 @@ export const useAppResize = () => {
       // 2.device => 'desktop'
       // 3.no collapse
       appMemo.value.isMobile = false
-      appMemo.value.device = 'desktop'
+      appMemo.value.device = DevideConst.DESKTOP
       appMemo.value.collapse = false
     }
   }

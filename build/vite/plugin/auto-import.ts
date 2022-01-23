@@ -33,6 +33,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
           'DeleteTabConst',
           'MenuCollapseModeConst',
           'TabStyleModeConst',
+          'AppLayoutModeConst',
         ],
 
         '/@/locales': ['useAppI18n', 'AppI18n'],

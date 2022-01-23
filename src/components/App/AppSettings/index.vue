@@ -405,6 +405,18 @@
           disabled: true,
         },
       },
+      {
+        type: 'Base:Select',
+        formProp: {
+          path: 'layout',
+        },
+        componentProp: {
+          options: Object.values(AppLayoutModeConst).map((i) => ({
+            value: i,
+            label: i,
+          })),
+        },
+      },
     ],
   })
 

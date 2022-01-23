@@ -37,3 +37,10 @@ export const TabStyleModeConst = {
 }
 
 export type ValueOfTabStyleModeConst = ValueOf<typeof TabStyleModeConst>
+
+export const AppLayoutModeConst = {
+  LEFT_MENU: 'left-menu',
+  TOP_MENU: 'top-menu',
+} as const
+
+export type ValueOfAppLayoutModeConst = ValueOf<typeof AppLayoutModeConst>
