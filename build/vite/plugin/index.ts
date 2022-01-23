@@ -8,9 +8,14 @@ import { createVisualizerPlugin } from './visualizer'
 import { createCompressionPlugin } from './compression'
 import { createHTMLPlugin } from './html'
 import { creatAutoImportPlugin } from './auto-import'
+import { createUnoCSSPlugin } from './unocss'
 
 export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
-  const vitePlugins: (VitePlugin | VitePlugin[])[] = [vue(), vueJsx()]
+  const vitePlugins: (VitePlugin | VitePlugin[])[] = [
+    vue(),
+    vueJsx(),
+    // createUnoCSSPlugin()
+  ]
 
   const stage = mode === 'staging'
   const prod = mode === 'production'
