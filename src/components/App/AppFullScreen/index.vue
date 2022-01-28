@@ -13,7 +13,7 @@
 
     setup(props) {
       const { width } = props
-      const { isFullscreen, enter } = useFullscreen()
+      const { isFullscreen, toggle } = useFullscreen()
 
       return () => (
         <div>
@@ -24,7 +24,7 @@
                 : 'ant-design:fullscreen-outlined'
             }
             width={width}
-            onClick={enter}
+            onClick={toggle}
           ></w-icon>
         </div>
       )
