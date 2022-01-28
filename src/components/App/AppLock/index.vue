@@ -42,6 +42,8 @@
           <Network />
         </div>
 
+        <div class="absolute top-2 left-2">{{ fps }}</div>
+
         <div
           class="h-full w-full flex items-center justify-center self-center space-x-8"
           w:children="w-2/5 h-2/5 bg-gray-900 rounded-3xl text-9xl font-bold flex items-center justify-center 2xl:(w-2/9 h-3/5 text-[18rem])"
@@ -64,6 +66,7 @@
   const { appMemo } = useAppState()
 
   const now = useNow()
+  const fps = useFps()
 
   const enterLockModalShow = ref(false)
   const lockShow = ref(false)
