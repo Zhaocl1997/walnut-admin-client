@@ -70,7 +70,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             layout: AppLayoutModeConst.LEFT_MENU,
 
             pageLeaveLock: false,
-            idleMS: 1000 * 5,
+            idleMS: 1000 * 60,
           },
 
           menu: {

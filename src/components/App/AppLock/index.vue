@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <n-config-provider :theme="darkTheme">
     <w-icon
       icon="ant-design:lock-outlined"
       height="24"
@@ -12,7 +12,7 @@
 
     <n-modal
       :show="app.isLock"
-      class="h-screen w-screen relative bg-black bg-opacity-90"
+      class="h-screen w-screen relative bg-black bg-opacity-{99}"
     >
       <div class="absolute top-0 left-0 bottom-0 right-0">
         <n-button
@@ -58,10 +58,12 @@
         </div>
       </div>
     </n-modal>
-  </div>
+  </n-config-provider>
 </template>
 
 <script lang="ts" setup>
+  import { darkTheme } from 'naive-ui'
+
   import Battery from './src/Battery.vue'
   import Network from './src/Network.vue'
 
