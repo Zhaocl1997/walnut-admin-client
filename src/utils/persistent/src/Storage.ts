@@ -40,9 +40,17 @@ export const useAppStorage = <T>(
       },
 
       write: (v) => {
+        let ex
+
+        const target = storage.getItem(wholeKey)
+
+        if (target) {
+          ex = JSON.parse(target).e
+        }
+
         const str = JSON.stringify({
           v,
-          e: new Date().getTime() + expire * 1000,
+          e: ex ?? new Date().getTime() + expire * 1000,
         })
 
         return encrypt ? AppEncryption.encrypt(str)! : str
