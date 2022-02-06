@@ -417,6 +417,25 @@
           })),
         },
       },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'pageLeaveLock',
+        },
+      },
+      {
+        type: 'Base:InputNumber',
+        formProp: {
+          path: 'idleMS',
+        },
+        componentProp: {
+          step: 5000,
+          min: 0,
+          suffix: 'ms',
+          showButton: false,
+          disabled: true,
+        },
+      },
     ],
   })
 

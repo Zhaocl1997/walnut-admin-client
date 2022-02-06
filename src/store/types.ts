@@ -5,6 +5,7 @@ export interface AppStorage {
     isDark: boolean
     darkMode: ValueOfDarkModeConst
     locale: ValueOfLocaleConst
+    isLock: boolean
   }
 
   token: string
@@ -60,6 +61,9 @@ export interface AppMemory {
         keepAlive: boolean
 
         layout: ValueOfAppLayoutModeConst
+
+        pageLeaveLock: boolean
+        idleMS: number
       }
 
       menu: {

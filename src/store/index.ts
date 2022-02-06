@@ -13,9 +13,10 @@ type RemoveableRefRecord<T> = {
 const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
   () => ({
     app: useAppStorage(PersistentKeysConst.APP, {
-      isDark: preferredColor.value === 'dark' ? true : false,
+      isDark: preferredColor.value === DarkModeConst.DARK ? true : false,
       darkMode: preferredColor.value as ValueOfDarkModeConst,
       locale: preferredLanguages.value[0] as ValueOfLocaleConst,
+      isLock: false,
     }),
     token: useAppStorage(PersistentKeysConst.TOKEN, ''),
     auth: useAppStorage(PersistentKeysConst.AUTH, {}),
@@ -27,7 +28,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
     reactive({
       appMemo: {
         collapse: false,
-        device: 'desktop',
+        device: DevideConst.DESKTOP,
         isMobile: false,
         showAside: false,
       },
@@ -61,16 +62,19 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             fixFooter: true,
 
             showAnimation: true,
-            animationName: 'fade',
+            animationName: TransitionNameConst.FADE,
 
             keepAlive: false,
 
-            layout: 'left-menu',
+            layout: AppLayoutModeConst.LEFT_MENU,
+
+            pageLeaveLock: false,
+            idleMS: 1000 * 60,
           },
 
           menu: {
             showCollapse: true,
-            collapseMode: 'bar',
+            collapseMode: MenuCollapseModeConst.BAR,
             width: 240,
             collapsedWidth: 64,
             accordion: false,
@@ -97,7 +101,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             showUtils: true,
             contextMenu: true,
             sortable: false,
-            styleMode: 'card',
+            styleMode: TabStyleModeConst.CARD,
             devtool: true,
           },
 

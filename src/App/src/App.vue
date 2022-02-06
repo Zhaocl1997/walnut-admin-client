@@ -18,10 +18,16 @@
   import { useAppFullScreen } from '/@/hooks/core/useAppFullScreen'
   import { useAppDarkMode } from '/@/components/App/AppDarkMode/useAppDarkMode'
   import { useAppLocale } from '/@/components/App/AppLocalePicker/useAppLocale'
+  import { useAppPageLeave } from '/@/hooks/core/useAppPageLeave'
+  import { useAppLock } from '/@/hooks/core/useAppLock'
+  import { useAppTextSelection } from '/@/hooks/core/useAppTextSelection'
 
   useAppTitle()
   useAppResize()
   useAppFullScreen()
   useAppDarkMode()
   useAppLocale()
+  useAppPageLeave()
+  useAppLock()
+  useAppTextSelection()
 </script>

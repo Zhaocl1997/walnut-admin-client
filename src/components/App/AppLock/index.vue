@@ -11,16 +11,17 @@
     </n-modal>
 
     <n-modal
-      :show="lockShow"
+      :show="app.isLock"
       class="h-screen w-screen relative bg-black bg-opacity-90"
     >
       <div class="absolute top-0 left-0 bottom-0 right-0">
         <n-button
+          text
           @click="onUnlock"
           class="absolute top-8 left-1/2"
           style="transform: translateX(-50%)"
         >
-          unlock
+          <w-icon icon="ant-design:unlock-outlined" height="24"></w-icon>
         </n-button>
 
         <div
@@ -46,7 +47,7 @@
 
         <div
           class="h-full w-full flex items-center justify-center self-center space-x-8"
-          w:children="w-2/5 h-2/5 bg-gray-900 rounded-3xl text-9xl font-bold flex items-center justify-center 2xl:(w-2/9 h-3/5 text-[18rem])"
+          w:children=" bg-gray-900 rounded-3xl font-bold flex items-center justify-center w-2/5 h-2/5 text-9xl md:(w-1/4 h-2/5 text-[10rem]) lg:(w-1/4 h-3/5 text-[14rem]) xl:(w-1/4 h-3/5 text-[16rem]) 2xl:(w-2/9 h-3/5 text-[18rem])"
         >
           <n-time :time="now" format="HH"></n-time>
 
@@ -63,25 +64,25 @@
   import Battery from './src/Battery.vue'
   import Network from './src/Network.vue'
 
-  const { appMemo } = useAppState()
+  const { appMemo, app } = useAppState()
 
   const now = useNow()
   const fps = useFps()
 
   const enterLockModalShow = ref(false)
-  const lockShow = ref(false)
 
   const onOpenEnterLockModal = () => {
-    enterLockModalShow.value = true
+    // enterLockModalShow.value = true
+    app.value.isLock = true
   }
 
   const onLock = () => {
     enterLockModalShow.value = false
-    lockShow.value = true
+    app.value.isLock = true
   }
 
   const onUnlock = () => {
-    lockShow.value = false
+    app.value.isLock = false
   }
 </script>
 

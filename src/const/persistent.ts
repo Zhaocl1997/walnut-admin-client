@@ -2,6 +2,7 @@ export const PersistentKeysConst = {
   AUTH: 'AUTH',
   APP: 'APP',
   TOKEN: 'TOKEN',
+  LOCK: 'LOCK',
 } as const
 
 export const StorageTypeConst = {
