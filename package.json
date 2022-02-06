@@ -27,7 +27,8 @@
     "icon:list": "esno build/icon/list.ts",
     "icon:bundle": "esno build/icon/bundle.ts",
     "icon:recovery": "esno build/icon/index.ts --recovery",
-    "update": "npm-check-updates"
+    "update": "npm-check-updates",
+    "gen:schema": "esno build/generate/genJSONSchemas.ts"
   },
   "dependencies": {
     "@vueuse/core": "^7.5.3",
@@ -82,6 +83,7 @@
     "stylelint-order": "^5.0.0",
     "stylelint-scss": "^4.1.0",
     "typescript": "^4.5.4",
+    "typescript-json-schema": "^0.53.0",
     "unocss": "^0.22.5",
     "unplugin-auto-import": "^0.5.11",
     "unplugin-vue-components": "^0.17.13",
