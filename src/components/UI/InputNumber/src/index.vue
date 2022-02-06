@@ -11,7 +11,9 @@
     emits: [],
 
     setup(props: WInputNumberProps, { attrs, slots, emit, expose }) {
-      return () => <n-input-number></n-input-number>
+      return () => (
+        <n-input-number>{{ suffix: () => props.suffix }}</n-input-number>
+      )
     },
   })
 </script>
