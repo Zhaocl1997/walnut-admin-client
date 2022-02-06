@@ -57,6 +57,9 @@
             componentProp: {
               placeholder: computed(() => t('form:signin:username')),
               clearable: true,
+              inputProps: {
+                autocomplete: 'username',
+              },
             },
           },
           {
@@ -81,6 +84,9 @@
                 if (e.code === 'Enter' || e.code === 'NumpadEnter') {
                   onSignin()
                 }
+              },
+              inputProps: {
+                autocomplete: 'current-password',
               },
             },
           },
