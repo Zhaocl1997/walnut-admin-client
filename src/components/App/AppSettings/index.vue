@@ -25,6 +25,18 @@
     <w-form @hook="register3" :model="headerRelatives"></w-form>
     <w-form @hook="register4" :model="breadcrumbRelatives"></w-form>
     <w-form @hook="register5" :model="tabRelatives"></w-form>
+
+    <n-button
+      type="primary"
+      class="w-full"
+      @click="onCopy"
+      icon-placement="right"
+    >
+      {{ copied ? t('form:app:app:copy:success') : t('form:app:app:copy') }}
+      <template v-if="copied" #icon>
+        <w-message :msg="t('form:app:app:copy:helpMsg')"></w-message>
+      </template>
+    </n-button>
   </w-drawer>
 </template>
 
@@ -70,6 +82,17 @@
   const headerRelatives = ref(settings.value.ForDevelopers.header)
   const breadcrumbRelatives = ref(settings.value.ForDevelopers.breadcrumb)
   const tabRelatives = ref(settings.value.ForDevelopers.tab)
+
+  const { copy, copied } = useClipboard({
+    source: computed(() =>
+      JSON.stringify(settings.value.ForDevelopers, null, 4)
+    ),
+    copiedDuring: 8000,
+  })
+
+  const onCopy = () => {
+    copy()
+  }
 
   const [register0] = useForm<typeof themeRelatives.value>({
     showFeedback: false,
