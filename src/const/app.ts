@@ -27,14 +27,14 @@ export const MenuCollapseModeConst = {
   BAR: 'bar',
   ARROW_CIRCLE: 'arrow-circle',
   BUTTON: 'button',
-}
+} as const
 export type ValueOfMenuCollapseModeConst = ValueOf<typeof MenuCollapseModeConst>
 
 export const TabStyleModeConst = {
   ROUND: 'round',
   FLEX: 'flex',
   CARD: 'card',
-}
+} as const
 
 export type ValueOfTabStyleModeConst = ValueOf<typeof TabStyleModeConst>
 
