@@ -44,3 +44,10 @@ export const AppLayoutModeConst = {
 } as const
 
 export type ValueOfAppLayoutModeConst = ValueOf<typeof AppLayoutModeConst>
+
+export const AppLockModeConst = {
+  MANUAL: 'manual',
+  AUTO: 'auto',
+} as const
+
+export type ValueOfAppLockModeConst = ValueOf<typeof AppLockModeConst>

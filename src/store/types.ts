@@ -6,6 +6,7 @@ export interface AppStorage {
     darkMode: ValueOfDarkModeConst
     locale: ValueOfLocaleConst
     isLock: boolean
+    lockMode: ValueOfAppLockModeConst
   }
 
   token: string

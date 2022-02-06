@@ -17,6 +17,7 @@ const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
       darkMode: preferredColor.value as ValueOfDarkModeConst,
       locale: preferredLanguages.value[0] as ValueOfLocaleConst,
       isLock: false,
+      lockMode: AppLockModeConst.AUTO,
     }),
     token: useAppStorage(PersistentKeysConst.TOKEN, ''),
     auth: useAppStorage(PersistentKeysConst.AUTH, {}),
@@ -69,7 +70,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
             layout: AppLayoutModeConst.LEFT_MENU,
 
             pageLeaveLock: false,
-            idleMS: 1000 * 60,
+            idleMS: 1000 * 5,
           },
 
           menu: {

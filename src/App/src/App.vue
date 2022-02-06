@@ -19,7 +19,7 @@
   import { useAppDarkMode } from '/@/components/App/AppDarkMode/useAppDarkMode'
   import { useAppLocale } from '/@/components/App/AppLocalePicker/useAppLocale'
   import { useAppPageLeave } from '/@/hooks/core/useAppPageLeave'
-  import { useAppLock } from '/@/hooks/core/useAppLock'
+  import { useAppAutoLock } from '../../hooks/core/useAppAutoLock'
   import { useAppTextSelection } from '/@/hooks/core/useAppTextSelection'
 
   useAppTitle()
@@ -28,6 +28,6 @@
   useAppDarkMode()
   useAppLocale()
   useAppPageLeave()
-  useAppLock()
+  useAppAutoLock()
   useAppTextSelection()
 </script>

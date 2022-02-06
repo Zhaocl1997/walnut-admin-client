@@ -35,6 +35,7 @@ declare global {
     import('/@/const').ValueOfMenuCollapseModeConst
   type ValueOfTabStyleModeConst = import('/@/const').ValueOfTabStyleModeConst
   type ValueOfAppLayoutModeConst = import('/@/const').ValueOfAppLayoutModeConst
+  type ValueOfAppLockModeConst = import('/@/const').ValueOfAppLockModeConst
 
   // vite
   type VitePlugin = import('vite').Plugin

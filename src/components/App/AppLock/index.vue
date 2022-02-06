@@ -16,6 +16,7 @@
     >
       <div class="absolute top-0 left-0 bottom-0 right-0">
         <n-button
+          v-if="getShowUnlock"
           text
           @click="onUnlock"
           class="absolute top-8 left-1/2"
@@ -71,18 +72,24 @@
 
   const enterLockModalShow = ref(false)
 
+  const getShowUnlock = computed(
+    () => app.value.lockMode === AppLockModeConst.MANUAL
+  )
+
   const onOpenEnterLockModal = () => {
     // enterLockModalShow.value = true
     app.value.isLock = true
+    app.value.lockMode = AppLockModeConst.MANUAL
   }
 
   const onLock = () => {
-    enterLockModalShow.value = false
+    // enterLockModalShow.value = false
     app.value.isLock = true
   }
 
   const onUnlock = () => {
     app.value.isLock = false
+    app.value.lockMode = AppLockModeConst.AUTO
   }
 </script>
 

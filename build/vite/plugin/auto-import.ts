@@ -34,6 +34,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
           'MenuCollapseModeConst',
           'TabStyleModeConst',
           'AppLayoutModeConst',
+          'AppLockModeConst',
         ],
 
         '/@/locales': ['useAppI18n', 'AppI18n'],
