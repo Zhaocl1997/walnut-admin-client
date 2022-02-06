@@ -1,39 +1,333 @@
 {
-  /* prettier */
-  "prettier.configPath": "config/prettier/.prettierrc.js",
-  "prettier.ignorePath": "config/prettier/.prettierignore",
-  "prettier.jsxBracketSameLine": true,
-  "prettier.jsxSingleQuote": true,
-  "prettier.semi": false,
-  "prettier.singleQuote": true,
-  "prettier.useEditorConfig": false,
-
-  /* eslint */
-  "eslint.options": {
-    // "plugins": ["html", "vue", "typescript"],
-    "extensions": [".ts", ".vue"]
-  },
-  "eslint.validate": ["javascript", "typescript", "vue"],
-  "eslint.alwaysShowStatus": true,
-
-  /* i18n */
-  "i18n-ally.localesPaths": ["src/locales/dev"],
-  "i18n-ally.sortKeys": true,
-  "i18n-ally.keepFulfilled": true,
-  "i18n-ally.enabledParsers": ["ts"],
-  "i18n-ally.sourceLanguage": "zh",
-  "i18n-ally.enabledFrameworks": ["vue"],
-  
-  /* volar */
-  "volar.codeLens.pugTools": false,
-  "volar.takeOverMode.enabled": true,
-
-  /* vscode format default */
-  "[vue]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[ts]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[js]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "i18n-ally.keystyle": "nested",
+    "prettier.configPath": "config/prettier/.prettierrc.js",
+    "prettier.ignorePath": "config/prettier/.prettierignore",
+    "prettier.jsxBracketSameLine": true,
+    "prettier.jsxSingleQuote": true,
+    "prettier.semi": false,
+    "prettier.singleQuote": true,
+    "prettier.useEditorConfig": false,
+    "eslint.options": {
+        "extensions": [
+            ".ts",
+            ".vue"
+        ]
+    },
+    "eslint.validate": [
+        "javascript",
+        "typescript",
+        "vue"
+    ],
+    "eslint.alwaysShowStatus": true,
+    "i18n-ally.localesPaths": [
+        "src/locales/dev"
+    ],
+    "i18n-ally.sortKeys": true,
+    "i18n-ally.keepFulfilled": true,
+    "i18n-ally.enabledParsers": [
+        "ts"
+    ],
+    "i18n-ally.sourceLanguage": "zh",
+    "i18n-ally.enabledFrameworks": [
+        "vue"
+    ],
+    "volar.codeLens.pugTools": false,
+    "volar.takeOverMode.enabled": true,
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[ts]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[js]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "i18n-ally.keystyle": "nested",
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "src/settings.json"
+            ],
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "themes": {
+                        "type": "object",
+                        "properties": {
+                            "primaryColor": {
+                                "type": "string"
+                            },
+                            "infoColor": {
+                                "type": "string"
+                            },
+                            "successColor": {
+                                "type": "string"
+                            },
+                            "warningColor": {
+                                "type": "string"
+                            },
+                            "errorColor": {
+                                "type": "string"
+                            },
+                            "bodyColor": {
+                                "type": "string"
+                            },
+                            "invertedColor": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "bodyColor",
+                            "errorColor",
+                            "infoColor",
+                            "invertedColor",
+                            "primaryColor",
+                            "successColor",
+                            "warningColor"
+                        ]
+                    },
+                    "app": {
+                        "type": "object",
+                        "properties": {
+                            "showLogo": {
+                                "description": "App Logo Visibility",
+                                "type": "boolean"
+                            },
+                            "showMenu": {
+                                "type": "boolean"
+                            },
+                            "showHeader": {
+                                "type": "boolean"
+                            },
+                            "showTabs": {
+                                "type": "boolean"
+                            },
+                            "showFooter": {
+                                "type": "boolean"
+                            },
+                            "fixLogo": {
+                                "type": "boolean"
+                            },
+                            "fixHeader": {
+                                "type": "boolean"
+                            },
+                            "fixFooter": {
+                                "type": "boolean"
+                            },
+                            "showAnimation": {
+                                "type": "boolean"
+                            },
+                            "animationName": {
+                                "enum": [
+                                    "fade",
+                                    "scale",
+                                    "scroll-down",
+                                    "scroll-left",
+                                    "scroll-right",
+                                    "scroll-up",
+                                    "slide-down",
+                                    "slide-left",
+                                    "slide-right",
+                                    "slide-up",
+                                    "zoom-fade",
+                                    "zoom-out"
+                                ],
+                                "type": "string"
+                            },
+                            "keepAlive": {
+                                "type": "boolean"
+                            },
+                            "layout": {
+                                "enum": [
+                                    "left-menu",
+                                    "top-menu"
+                                ],
+                                "type": "string"
+                            },
+                            "pageLeaveLock": {
+                                "type": "boolean"
+                            },
+                            "idleMS": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "animationName",
+                            "fixFooter",
+                            "fixHeader",
+                            "fixLogo",
+                            "idleMS",
+                            "keepAlive",
+                            "layout",
+                            "pageLeaveLock",
+                            "showAnimation",
+                            "showFooter",
+                            "showHeader",
+                            "showLogo",
+                            "showMenu",
+                            "showTabs"
+                        ]
+                    },
+                    "menu": {
+                        "type": "object",
+                        "properties": {
+                            "showCollapse": {
+                                "type": "boolean"
+                            },
+                            "collapseMode": {
+                                "enum": [
+                                    "arrow-circle",
+                                    "bar",
+                                    "button",
+                                    "icon"
+                                ],
+                                "type": "string"
+                            },
+                            "width": {
+                                "type": "number"
+                            },
+                            "collapsedWidth": {
+                                "type": "number"
+                            },
+                            "accordion": {
+                                "type": "boolean"
+                            },
+                            "collapsedIconSize": {
+                                "type": "number"
+                            },
+                            "iconSize": {
+                                "type": "number"
+                            },
+                            "indent": {
+                                "type": "number"
+                            },
+                            "inverted": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "accordion",
+                            "collapseMode",
+                            "collapsedIconSize",
+                            "collapsedWidth",
+                            "iconSize",
+                            "indent",
+                            "inverted",
+                            "showCollapse",
+                            "width"
+                        ]
+                    },
+                    "header": {
+                        "type": "object",
+                        "properties": {
+                            "height": {
+                                "type": "number"
+                            },
+                            "showBreadcrumb": {
+                                "type": "boolean"
+                            },
+                            "showFullScreen": {
+                                "type": "boolean"
+                            },
+                            "showLocale": {
+                                "type": "boolean"
+                            },
+                            "showDarkMode": {
+                                "type": "boolean"
+                            },
+                            "showLock": {
+                                "type": "boolean"
+                            },
+                            "showSearch": {
+                                "type": "boolean"
+                            },
+                            "inverted": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "height",
+                            "inverted",
+                            "showBreadcrumb",
+                            "showDarkMode",
+                            "showFullScreen",
+                            "showLocale",
+                            "showLock",
+                            "showSearch"
+                        ]
+                    },
+                    "tab": {
+                        "type": "object",
+                        "properties": {
+                            "height": {
+                                "type": "number"
+                            },
+                            "showIcon": {
+                                "type": "boolean"
+                            },
+                            "showUtils": {
+                                "type": "boolean"
+                            },
+                            "contextMenu": {
+                                "type": "boolean"
+                            },
+                            "sortable": {
+                                "type": "boolean"
+                            },
+                            "styleMode": {
+                                "enum": [
+                                    "card",
+                                    "flex",
+                                    "round"
+                                ],
+                                "type": "string"
+                            },
+                            "devtool": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "contextMenu",
+                            "devtool",
+                            "height",
+                            "showIcon",
+                            "showUtils",
+                            "sortable",
+                            "styleMode"
+                        ]
+                    },
+                    "breadcrumb": {
+                        "type": "object",
+                        "properties": {
+                            "showIcon": {
+                                "type": "boolean"
+                            },
+                            "showDropdown": {
+                                "type": "boolean"
+                            },
+                            "separator": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "separator",
+                            "showDropdown",
+                            "showIcon"
+                        ]
+                    }
+                },
+                "required": [
+                    "app",
+                    "breadcrumb",
+                    "header",
+                    "menu",
+                    "tab",
+                    "themes"
+                ],
+                "$schema": "http://json-schema.org/draft-07/schema#"
+            }
+        }
+    ]
 }

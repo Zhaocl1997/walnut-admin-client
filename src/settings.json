@@ -1,0 +1,62 @@
+{
+    "themes": {
+        "primaryColor": "#63e2b7",
+        "infoColor": "#70c0e8",
+        "successColor": "#63e2b7",
+        "warningColor": "#f2c97d",
+        "errorColor": "#e88080",
+        "bodyColor": "#202020",
+        "invertedColor": "rgb(20, 20, 20)"
+    },
+    "app": {
+        "showLogo": true,
+        "showMenu": true,
+        "showHeader": true,
+        "showTabs": true,
+        "showFooter": true,
+        "fixLogo": true,
+        "fixHeader": true,
+        "fixFooter": true,
+        "showAnimation": true,
+        "animationName": "fade",
+        "keepAlive": false,
+        "layout": "left-menu",
+        "pageLeaveLock": false,
+        "idleMS": 60000
+    },
+    "menu": {
+        "showCollapse": true,
+        "collapseMode": "bar",
+        "width": 240,
+        "collapsedWidth": 64,
+        "accordion": false,
+        "collapsedIconSize": 24,
+        "iconSize": 26,
+        "indent": 16,
+        "inverted": true
+    },
+    "header": {
+        "height": 48,
+        "showBreadcrumb": true,
+        "showFullScreen": true,
+        "showLocale": true,
+        "showDarkMode": true,
+        "showLock": true,
+        "showSearch": true,
+        "inverted": true
+    },
+    "tab": {
+        "height": 32,
+        "showIcon": false,
+        "showUtils": true,
+        "contextMenu": true,
+        "sortable": false,
+        "styleMode": "card",
+        "devtool": true
+    },
+    "breadcrumb": {
+        "showIcon": true,
+        "showDropdown": true,
+        "separator": ">"
+    }
+}

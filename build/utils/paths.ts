@@ -13,3 +13,7 @@ export const generatedPathsFilePath = 'build/_generated/paths.ts'
 
 // publish.bat
 export const generatedPublishBatFileName = 'build/_generated/publish.bat'
+
+export const VScodeSettingsFilePath = '.vscode/settings.json'
+export const AppSettingsJSONFilePath = 'src/settings.json'
+export const AppSettingsInterfaceFilePath = 'types/appSettings.d.ts'
