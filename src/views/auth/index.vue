@@ -22,7 +22,7 @@
     </div>
 
     <div
-      class="lg:w-1/2 w-full flex items-center justify-center text-center md:px-32 px-0 z-0 bg-bodyColor"
+      class="lg:w-1/2 w-full flex items-center justify-center text-center lg:px-16 xl:px-32 2xl:px-48 px-0 z-0 bg-bodyColor"
     >
       <div
         class="absolute lg:hidden z-10 inset-0 bg-no-repeat bg-cover items-center"
@@ -31,16 +31,25 @@
         <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
       </div>
 
-      <n-card>
+      <n-card
+        style="z-index: 100"
+        class="mx-1/8 sm:mx-1/4 md:mx-1/4 lg:mx-0 xl:mx-0 2xl:mx-0"
+      >
         <div class="w-full py-6 z-20">
           <h1 class="my-2 w-auto inline-flex items-center">
-            <img src="/assets/logo.png" :alt="title" class="w-20" />
-            <span style="color: var(--text-color-base)" class="text-4xl ml-4">
+            <img
+              src="/assets/logo.png"
+              :alt="title"
+              class="w-16 sm:w-12 md:w-16 lg:w-16 xl:w-20 2xl:w-20"
+            />
+            <span
+              class="text-2xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-4xl ml-4 whitespace-nowrap"
+            >
               {{ title }}
             </span>
           </h1>
 
-          <SignIn class="m-auto text-justify w-7/12" />
+          <SignIn class="m-auto text-justify w-full sm:w-7/12" />
         </div>
       </n-card>
     </div>
