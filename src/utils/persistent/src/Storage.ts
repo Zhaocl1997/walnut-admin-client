@@ -45,7 +45,8 @@ export const useAppStorage = <T>(
         const target = storage.getItem(wholeKey)
 
         if (target) {
-          ex = JSON.parse(target).e
+          const d = encrypt ? AppEncryption.decrypt(target) : target
+          ex = d.e
         }
 
         const str = JSON.stringify({
