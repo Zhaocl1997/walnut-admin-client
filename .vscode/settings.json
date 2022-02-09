@@ -120,21 +120,7 @@
                                 "type": "boolean"
                             },
                             "animationName": {
-                                "enum": [
-                                    "fade",
-                                    "scale",
-                                    "scroll-down",
-                                    "scroll-left",
-                                    "scroll-right",
-                                    "scroll-up",
-                                    "slide-down",
-                                    "slide-left",
-                                    "slide-right",
-                                    "slide-up",
-                                    "zoom-fade",
-                                    "zoom-out"
-                                ],
-                                "type": "string"
+                                "$ref": "#/definitions/ValueOfTransitionNameConst"
                             },
                             "keepAlive": {
                                 "type": "boolean"
@@ -326,6 +312,51 @@
                     "tab",
                     "themes"
                 ],
+                "definitions": {
+                    "ValueOfTransitionNameConst": {
+                        "enum": [
+                            "back-down",
+                            "back-left",
+                            "back-right",
+                            "back-up",
+                            "bounce",
+                            "bounce-down",
+                            "bounce-left",
+                            "bounce-right",
+                            "bounce-up",
+                            "fade",
+                            "fade-bottomLeft",
+                            "fade-bottomRight",
+                            "fade-down",
+                            "fade-downBig",
+                            "fade-left",
+                            "fade-leftBig",
+                            "fade-right",
+                            "fade-rightBig",
+                            "fade-topLeft",
+                            "fade-topRight",
+                            "fade-up",
+                            "fade-upBig",
+                            "flip-x",
+                            "flip-y",
+                            "rotate",
+                            "rotate-downLeft",
+                            "rotate-downRight",
+                            "rotate-upLeft",
+                            "rotate-upRight",
+                            "slide-down",
+                            "slide-left",
+                            "slide-right",
+                            "slide-up",
+                            "zoom",
+                            "zoom-down",
+                            "zoom-left",
+                            "zoom-right",
+                            "zoom-up"
+                        ],
+                        "type": "string"
+                    }
+                },
                 "$schema": "http://json-schema.org/draft-07/schema#"
             }
         }

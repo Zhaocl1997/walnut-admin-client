@@ -45,4 +45,5 @@ export const TransitionNameConst = {
   FLIP_Y: 'flip-y',
 } as const
 
-export type ValueOfTransitionNameConst = ValueOf<typeof TransitionNameConst>
+export type ValueOfTransitionNameConst =
+  typeof TransitionNameConst[keyof typeof TransitionNameConst]

@@ -2,6 +2,8 @@
 // this interface is used to generate json schema
 // change this file carefully
 // all types below must be explicit import, no auto-import
+import { ValueOfTransitionNameConst } from '../src/const/transition'
+
 interface AppSettings {
   themes: {
     primaryColor: string
@@ -28,20 +30,7 @@ interface AppSettings {
     fixFooter: boolean
 
     showAnimation: boolean
-    animationName:
-      | 'fade'
-      | 'scale'
-      | 'zoom-out'
-      | 'zoom-fade'
-      | 'slide-up'
-      | 'slide-right'
-      | 'slide-down'
-      | 'slide-left'
-      | 'scroll-up'
-      | 'scroll-right'
-      | 'scroll-down'
-      | 'scroll-left'
-
+    animationName: ValueOfTransitionNameConst
     keepAlive: boolean
 
     layout: 'left-menu' | 'top-menu'
