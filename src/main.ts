@@ -4,6 +4,7 @@ import './assets/styles/main.scss'
 
 import 'vfonts/Lato.css'
 import 'vfonts/FiraCode.css'
+import 'animate.css'
 
 // import 'uno.css'
 
