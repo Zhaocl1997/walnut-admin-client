@@ -42,7 +42,22 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       alias,
     },
 
-    css: {},
+    css: {
+      postcss: {
+        plugins: [
+          {
+            postcssPlugin: 'internal:charset-removal',
+            AtRule: {
+              charset: (atRule) => {
+                if (atRule.name === 'charset') {
+                  atRule.remove()
+                }
+              },
+            },
+          },
+        ],
+      },
+    },
 
     server: {
       host: env.VITE_HOST,
