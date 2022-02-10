@@ -9,17 +9,6 @@ export const adjustColor = (color: string, amount: number) =>
       ).substr(-2)
     )
 
-export const getThemeColors = (
-  color: string,
-  step = 10,
-  count = 9
-): [string, string[]] => [
-  color,
-  Array.from({ length: count }, (_, index: number) =>
-    adjustColor(color, -(index * step))
-  ),
-]
-
 // https://github.com/sindresorhus/rgb-hex
 export const rgb2Hex = (
   red: StringOrNumber,

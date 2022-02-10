@@ -1,7 +1,11 @@
 import type { RemovableRef } from '@vueuse/core'
 import type { AppMemory, AppStorage } from './types'
-import { defaultTheme } from '../settings/theme'
+
 import { easyDeepClone } from 'easy-fns-ts'
+
+import AppCustomSettings from '/@/settings.json'
+
+console.log(AppCustomSettings)
 
 const preferredLanguages = usePreferredLanguages()
 const preferredColor = usePreferredColorScheme()
@@ -48,70 +52,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
       },
 
       settings: {
-        ForDevelopers: {
-          themes: easyDeepClone(defaultTheme.light),
-
-          app: {
-            showLogo: true,
-            showMenu: true,
-            showHeader: true,
-            showTabs: true,
-            showFooter: true,
-
-            fixLogo: true,
-            fixHeader: true,
-            fixFooter: true,
-
-            showAnimation: true,
-            animationName: TransitionNameConst.FADE,
-
-            keepAlive: false,
-
-            layout: AppLayoutModeConst.LEFT_MENU,
-
-            pageLeaveLock: false,
-            idleMS: 1000 * 60,
-          },
-
-          menu: {
-            showCollapse: true,
-            collapseMode: MenuCollapseModeConst.BAR,
-            width: 240,
-            collapsedWidth: 64,
-            accordion: false,
-            collapsedIconSize: 24,
-            iconSize: 26,
-            indent: 16,
-            inverted: true,
-          },
-
-          header: {
-            height: 48,
-            showBreadcrumb: true,
-            showFullScreen: true,
-            showLocale: true,
-            showDarkMode: true,
-            showLock: true,
-            showSearch: true,
-            inverted: true,
-          },
-
-          tab: {
-            height: 32,
-            showIcon: false,
-            showUtils: true,
-            contextMenu: true,
-            sortable: false,
-            styleMode: TabStyleModeConst.CARD,
-            devtool: true,
-          },
-
-          breadcrumb: {
-            showIcon: true,
-            showDropdown: true,
-            separator: '>',
-          },
-        },
+        ForDevelopers: easyDeepClone(AppCustomSettings),
 
         ForUsers: {},
       },

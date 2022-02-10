@@ -1,9 +1,5 @@
 <template>
-  <div
-    ref="el"
-    :style="style"
-    class="fixed cursor-pointer hover:(text-primary animate-bounce)"
-  >
+  <div ref="el" :style="style" class="fixed cursor-pointer hover:text-primary">
     <w-icon
       height="32"
       icon="ant-design:setting-outlined"
@@ -19,7 +15,10 @@
     @yes="() => (show = false)"
     @no="() => (show = false)"
   >
-    <w-form @hook="register0" :model="themeRelatives"></w-form>
+    <w-form
+      @hook="register0"
+      :model="app.isDark ? darkThemeRelatives : lightThemeRelatives"
+    ></w-form>
     <w-form @hook="register1" :model="appRelatives"></w-form>
     <w-form @hook="register2" :model="menuRelatives"></w-form>
     <w-form @hook="register3" :model="headerRelatives"></w-form>
@@ -48,9 +47,7 @@
 
 <script lang="tsx" setup>
   import WIcon from '/@/components/UI/Icon'
-  import AppColors from './colors.vue'
-  import { getThemeColors } from '/@/utils/color'
-  import { defaultTheme } from '/@/settings/theme'
+  import AppColors from './component/colors.vue'
 
   const { app, settings } = useAppState()
   const { t } = useAppI18n()
@@ -76,7 +73,8 @@
     y.value = myY.value ?? height.value - 50
   })
 
-  const themeRelatives = ref(settings.value.ForDevelopers.themes)
+  const lightThemeRelatives = ref(settings.value.ForDevelopers.themes.light)
+  const darkThemeRelatives = ref(settings.value.ForDevelopers.themes.dark)
   const appRelatives = ref(settings.value.ForDevelopers.app)
   const menuRelatives = ref(settings.value.ForDevelopers.menu)
   const headerRelatives = ref(settings.value.ForDevelopers.header)
@@ -94,7 +92,7 @@
     copy()
   }
 
-  const [register0] = useForm<typeof themeRelatives.value>({
+  const [register0] = useForm<typeof lightThemeRelatives.value>({
     showFeedback: false,
     xGap: 0,
     formItemClass: 'mb-2',
@@ -126,17 +124,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors
-              colors={
-                getThemeColors(
-                  app.value.isDark
-                    ? defaultTheme.dark.primaryColor
-                    : defaultTheme.light.primaryColor
-                )[1]
-              }
-              formDataColor={formData.primaryColor}
-              clickEvent={(color) => (formData.primaryColor = color)}
-            />
+            <AppColors v-model={[formData.primaryColor]} />
           ),
         },
       },
@@ -156,17 +144,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors
-              colors={
-                getThemeColors(
-                  app.value.isDark
-                    ? defaultTheme.dark.infoColor
-                    : defaultTheme.light.infoColor
-                )[1]
-              }
-              formDataColor={formData.infoColor}
-              clickEvent={(color) => (formData.infoColor = color)}
-            />
+            <AppColors v-model={[formData.infoColor]} />
           ),
         },
       },
@@ -186,17 +164,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors
-              colors={
-                getThemeColors(
-                  app.value.isDark
-                    ? defaultTheme.dark.successColor
-                    : defaultTheme.light.successColor
-                )[1]
-              }
-              formDataColor={formData.successColor}
-              clickEvent={(color) => (formData.successColor = color)}
-            />
+            <AppColors v-model={[formData.successColor]} />
           ),
         },
       },
@@ -216,17 +184,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors
-              colors={
-                getThemeColors(
-                  app.value.isDark
-                    ? defaultTheme.dark.warningColor
-                    : defaultTheme.light.warningColor
-                )[1]
-              }
-              formDataColor={formData.warningColor}
-              clickEvent={(color) => (formData.warningColor = color)}
-            />
+            <AppColors v-model={[formData.warningColor]} />
           ),
         },
       },
@@ -246,17 +204,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors
-              colors={
-                getThemeColors(
-                  app.value.isDark
-                    ? defaultTheme.dark.errorColor
-                    : defaultTheme.light.errorColor
-                )[1]
-              }
-              formDataColor={formData.errorColor}
-              clickEvent={(color) => (formData.errorColor = color)}
-            />
+            <AppColors v-model={[formData.errorColor]} />
           ),
         },
       },
@@ -276,18 +224,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors
-              colors={
-                getThemeColors(
-                  app.value.isDark
-                    ? defaultTheme.dark.bodyColor
-                    : defaultTheme.light.bodyColor,
-                  4
-                )[1]
-              }
-              formDataColor={formData.bodyColor}
-              clickEvent={(color) => (formData.bodyColor = color)}
-            />
+            <AppColors v-model={[formData.bodyColor]} />
           ),
         },
       },
@@ -309,16 +246,8 @@
         componentProp: {
           render: ({ formData }) => (
             <AppColors
-              colors={
-                getThemeColors(
-                  app.value.isDark
-                    ? defaultTheme.dark.invertedColor
-                    : defaultTheme.light.invertedColor,
-                  4
-                )[1]
-              }
-              formDataColor={formData.invertedColor}
-              clickEvent={(color) => (formData.invertedColor = color)}
+              v-model={[formData.invertedColor]}
+              disabled={app.value.isDark}
             />
           ),
         },

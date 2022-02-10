@@ -10,55 +10,69 @@
 
     setup(_, { slots }) {
       const { app, settings } = useAppState()
-      const customThemes = settings.value.ForDevelopers.themes
 
       const getTheme = computed(() =>
         !app.value.isDark ? undefined : darkTheme
       )
 
-      const sharedTheme = computed(
-        (): Partial<ThemeCommonVars> => ({
-          primaryColor: customThemes.primaryColor,
-          primaryColorHover: adjustColor(customThemes.primaryColor, 40),
-          primaryColorPressed: adjustColor(customThemes.primaryColor, 20),
-          primaryColorSuppl: adjustColor(customThemes.primaryColor, -20),
-          infoColor: customThemes.infoColor,
-          infoColorHover: adjustColor(customThemes.infoColor, 40),
-          infoColorPressed: adjustColor(customThemes.infoColor, 20),
-          infoColorSuppl: adjustColor(customThemes.infoColor, -20),
-          successColor: customThemes.successColor,
-          successColorHover: adjustColor(customThemes.successColor, 40),
-          successColorPressed: adjustColor(customThemes.successColor, 20),
-          successColorSuppl: adjustColor(customThemes.successColor, -20),
-          warningColor: customThemes.warningColor,
-          warningColorHover: adjustColor(customThemes.warningColor, 40),
-          warningColorPressed: adjustColor(customThemes.warningColor, 20),
-          warningColorSuppl: adjustColor(customThemes.warningColor, -20),
-          errorColor: customThemes.errorColor,
-          errorColorHover: adjustColor(customThemes.errorColor, 40),
-          errorColorPressed: adjustColor(customThemes.errorColor, 20),
-          errorColorSuppl: adjustColor(customThemes.errorColor, -20),
+      const getCustomTheme = computed(() =>
+        app.value.isDark
+          ? settings.value.ForDevelopers.themes.dark
+          : settings.value.ForDevelopers.themes.light
+      )
 
-          bodyColor: customThemes.bodyColor,
-          invertedColor: customThemes.invertedColor,
+      const getCommonTheme = computed(
+        (): Partial<ThemeCommonVars> => ({
+          primaryColor: getCustomTheme.value.primaryColor,
+          primaryColorHover: adjustColor(getCustomTheme.value.primaryColor, 40),
+          primaryColorPressed: adjustColor(
+            getCustomTheme.value.primaryColor,
+            20
+          ),
+          primaryColorSuppl: adjustColor(
+            getCustomTheme.value.primaryColor,
+            -20
+          ),
+          infoColor: getCustomTheme.value.infoColor,
+          infoColorHover: adjustColor(getCustomTheme.value.infoColor, 40),
+          infoColorPressed: adjustColor(getCustomTheme.value.infoColor, 20),
+          infoColorSuppl: adjustColor(getCustomTheme.value.infoColor, -20),
+          successColor: getCustomTheme.value.successColor,
+          successColorHover: adjustColor(getCustomTheme.value.successColor, 40),
+          successColorPressed: adjustColor(
+            getCustomTheme.value.successColor,
+            20
+          ),
+          successColorSuppl: adjustColor(
+            getCustomTheme.value.successColor,
+            -20
+          ),
+          warningColor: getCustomTheme.value.warningColor,
+          warningColorHover: adjustColor(getCustomTheme.value.warningColor, 40),
+          warningColorPressed: adjustColor(
+            getCustomTheme.value.warningColor,
+            20
+          ),
+          warningColorSuppl: adjustColor(
+            getCustomTheme.value.warningColor,
+            -20
+          ),
+          errorColor: getCustomTheme.value.errorColor,
+          errorColorHover: adjustColor(getCustomTheme.value.errorColor, 40),
+          errorColorPressed: adjustColor(getCustomTheme.value.errorColor, 20),
+          errorColorSuppl: adjustColor(getCustomTheme.value.errorColor, -20),
+
+          bodyColor: getCustomTheme.value.bodyColor,
+          invertedColor: getCustomTheme.value.invertedColor,
         })
       )
 
       const getThemeOverrides = computed(
-        (): GlobalThemeOverrides =>
-          !app.value.isDark
-            ? // light
-              {
-                common: {
-                  ...sharedTheme.value,
-                },
-              }
-            : // dark
-              {
-                common: {
-                  ...sharedTheme.value,
-                },
-              }
+        (): GlobalThemeOverrides => ({
+          common: {
+            ...getCommonTheme.value,
+          },
+        })
       )
 
       return () => (

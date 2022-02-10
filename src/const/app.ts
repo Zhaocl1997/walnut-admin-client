@@ -5,7 +5,7 @@ export const DevideConst = {
   DESKTOP: 'desktop',
 } as const
 
-export type ValueOfDevideConst = ValueOf<typeof DevideConst>
+export type ValueOfDevideConst = typeof DevideConst[keyof typeof DevideConst]
 
 export const DarkModeConst = {
   LIGHT: 'light',
@@ -13,14 +13,15 @@ export const DarkModeConst = {
   SYSTEM: 'system',
 } as const
 
-export type ValueOfDarkModeConst = ValueOf<typeof DarkModeConst>
+export type ValueOfDarkModeConst =
+  typeof DarkModeConst[keyof typeof DarkModeConst]
 
 export const LocaleConst = {
   EN_US: 'en-US',
   ZH_CN: 'zh-CN',
 } as const
 
-export type ValueOfLocaleConst = ValueOf<typeof LocaleConst>
+export type ValueOfLocaleConst = typeof LocaleConst[keyof typeof LocaleConst]
 
 export const MenuCollapseModeConst = {
   ICON: 'icon',
@@ -28,7 +29,8 @@ export const MenuCollapseModeConst = {
   ARROW_CIRCLE: 'arrow-circle',
   BUTTON: 'button',
 } as const
-export type ValueOfMenuCollapseModeConst = ValueOf<typeof MenuCollapseModeConst>
+export type ValueOfMenuCollapseModeConst =
+  typeof MenuCollapseModeConst[keyof typeof MenuCollapseModeConst]
 
 export const TabStyleModeConst = {
   ROUND: 'round',
@@ -36,18 +38,21 @@ export const TabStyleModeConst = {
   CARD: 'card',
 } as const
 
-export type ValueOfTabStyleModeConst = ValueOf<typeof TabStyleModeConst>
+export type ValueOfTabStyleModeConst =
+  typeof TabStyleModeConst[keyof typeof TabStyleModeConst]
 
 export const AppLayoutModeConst = {
   LEFT_MENU: 'left-menu',
   TOP_MENU: 'top-menu',
 } as const
 
-export type ValueOfAppLayoutModeConst = ValueOf<typeof AppLayoutModeConst>
+export type ValueOfAppLayoutModeConst =
+  typeof AppLayoutModeConst[keyof typeof AppLayoutModeConst]
 
 export const AppLockModeConst = {
   MANUAL: 'manual',
   AUTO: 'auto',
 } as const
 
-export type ValueOfAppLockModeConst = ValueOf<typeof AppLockModeConst>
+export type ValueOfAppLockModeConst =
+  typeof AppLockModeConst[keyof typeof AppLockModeConst]

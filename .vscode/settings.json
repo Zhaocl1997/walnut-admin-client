@@ -54,88 +54,142 @@
                 "type": "object",
                 "properties": {
                     "themes": {
+                        "description": "See more in naive-ui docs",
                         "type": "object",
                         "properties": {
-                            "primaryColor": {
-                                "type": "string"
+                            "light": {
+                                "type": "object",
+                                "properties": {
+                                    "primaryColor": {
+                                        "type": "string"
+                                    },
+                                    "infoColor": {
+                                        "type": "string"
+                                    },
+                                    "successColor": {
+                                        "type": "string"
+                                    },
+                                    "warningColor": {
+                                        "type": "string"
+                                    },
+                                    "errorColor": {
+                                        "type": "string"
+                                    },
+                                    "bodyColor": {
+                                        "type": "string"
+                                    },
+                                    "invertedColor": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "bodyColor",
+                                    "errorColor",
+                                    "infoColor",
+                                    "invertedColor",
+                                    "primaryColor",
+                                    "successColor",
+                                    "warningColor"
+                                ]
                             },
-                            "infoColor": {
-                                "type": "string"
-                            },
-                            "successColor": {
-                                "type": "string"
-                            },
-                            "warningColor": {
-                                "type": "string"
-                            },
-                            "errorColor": {
-                                "type": "string"
-                            },
-                            "bodyColor": {
-                                "type": "string"
-                            },
-                            "invertedColor": {
-                                "type": "string"
+                            "dark": {
+                                "type": "object",
+                                "properties": {
+                                    "primaryColor": {
+                                        "type": "string"
+                                    },
+                                    "infoColor": {
+                                        "type": "string"
+                                    },
+                                    "successColor": {
+                                        "type": "string"
+                                    },
+                                    "warningColor": {
+                                        "type": "string"
+                                    },
+                                    "errorColor": {
+                                        "type": "string"
+                                    },
+                                    "bodyColor": {
+                                        "type": "string"
+                                    },
+                                    "invertedColor": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "bodyColor",
+                                    "errorColor",
+                                    "infoColor",
+                                    "invertedColor",
+                                    "primaryColor",
+                                    "successColor",
+                                    "warningColor"
+                                ]
                             }
                         },
                         "required": [
-                            "bodyColor",
-                            "errorColor",
-                            "infoColor",
-                            "invertedColor",
-                            "primaryColor",
-                            "successColor",
-                            "warningColor"
+                            "dark",
+                            "light"
                         ]
                     },
                     "app": {
                         "type": "object",
                         "properties": {
                             "showLogo": {
-                                "description": "App Logo Visibility",
+                                "description": "App Logo visibility",
                                 "type": "boolean"
                             },
                             "showMenu": {
+                                "description": "App Menu visibility",
                                 "type": "boolean"
                             },
                             "showHeader": {
+                                "description": "App Header visibility",
                                 "type": "boolean"
                             },
                             "showTabs": {
+                                "description": "App Tabs visibility",
                                 "type": "boolean"
                             },
                             "showFooter": {
+                                "description": "App Footer visibility",
                                 "type": "boolean"
                             },
                             "fixLogo": {
+                                "description": "Logo fixed left side",
                                 "type": "boolean"
                             },
                             "fixHeader": {
+                                "description": "Header fixed in top",
                                 "type": "boolean"
                             },
                             "fixFooter": {
+                                "description": "Footer fixed in bottom",
                                 "type": "boolean"
                             },
                             "showAnimation": {
+                                "description": "Page change animation",
                                 "type": "boolean"
                             },
                             "animationName": {
-                                "$ref": "#/definitions/ValueOfTransitionNameConst"
+                                "$ref": "#/definitions/ValueOfTransitionNameConst",
+                                "description": "Page change animation name"
                             },
                             "keepAlive": {
+                                "description": "Keep alive pages",
                                 "type": "boolean"
                             },
                             "layout": {
-                                "enum": [
-                                    "left-menu",
-                                    "top-menu"
-                                ],
-                                "type": "string"
+                                "$ref": "#/definitions/ValueOfAppLayoutModeConst",
+                                "description": "App Layout"
                             },
                             "pageLeaveLock": {
+                                "description": "Mouse leave page, lock app",
                                 "type": "boolean"
                             },
                             "idleMS": {
+                                "description": "User inactive milliseconds to lock app",
                                 "type": "number"
                             }
                         },
@@ -160,36 +214,39 @@
                         "type": "object",
                         "properties": {
                             "showCollapse": {
+                                "description": "Show collapse button",
                                 "type": "boolean"
                             },
                             "collapseMode": {
-                                "enum": [
-                                    "arrow-circle",
-                                    "bar",
-                                    "button",
-                                    "icon"
-                                ],
-                                "type": "string"
+                                "$ref": "#/definitions/ValueOfMenuCollapseModeConst",
+                                "description": "Menu Collapse Mode"
                             },
                             "width": {
+                                "description": "When app layout is `left-menu`, menu width",
                                 "type": "number"
                             },
                             "collapsedWidth": {
+                                "description": "When app layout is `left-menu`, menu collapsed width",
                                 "type": "number"
                             },
                             "accordion": {
+                                "description": "Menu accordion",
                                 "type": "boolean"
                             },
                             "collapsedIconSize": {
+                                "description": "Menu collapsed icon size",
                                 "type": "number"
                             },
                             "iconSize": {
+                                "description": "Menu icon size",
                                 "type": "number"
                             },
                             "indent": {
+                                "description": "Menu indent",
                                 "type": "number"
                             },
                             "inverted": {
+                                "description": "Menu inverted color",
                                 "type": "boolean"
                             }
                         },
@@ -209,27 +266,35 @@
                         "type": "object",
                         "properties": {
                             "height": {
+                                "description": "Header height",
                                 "type": "number"
                             },
                             "showBreadcrumb": {
+                                "description": "Header breadcrumb visibility",
                                 "type": "boolean"
                             },
                             "showFullScreen": {
+                                "description": "Header utils - full screen visibility",
                                 "type": "boolean"
                             },
                             "showLocale": {
+                                "description": "Header utils - locale picker visibility",
                                 "type": "boolean"
                             },
                             "showDarkMode": {
+                                "description": "Header utils - dark mode visibility",
                                 "type": "boolean"
                             },
                             "showLock": {
+                                "description": "Header utils - lock visibility",
                                 "type": "boolean"
                             },
                             "showSearch": {
+                                "description": "Header utils - search visibility",
                                 "type": "boolean"
                             },
                             "inverted": {
+                                "description": "Header inverted color",
                                 "type": "boolean"
                             }
                         },
@@ -248,29 +313,31 @@
                         "type": "object",
                         "properties": {
                             "height": {
+                                "description": "Tab height",
                                 "type": "number"
                             },
                             "showIcon": {
+                                "description": "Tab icon visibility",
                                 "type": "boolean"
                             },
                             "showUtils": {
+                                "description": "Tab aside utils visibility",
                                 "type": "boolean"
                             },
                             "contextMenu": {
+                                "description": "Tab context menu visibility",
                                 "type": "boolean"
                             },
                             "sortable": {
+                                "description": "Tab sortable",
                                 "type": "boolean"
                             },
                             "styleMode": {
-                                "enum": [
-                                    "card",
-                                    "flex",
-                                    "round"
-                                ],
-                                "type": "string"
+                                "$ref": "#/definitions/ValueOfTabStyleModeConst",
+                                "description": "Tab style mode"
                             },
                             "devtool": {
+                                "description": "Tab devtool, only work in dev env",
                                 "type": "boolean"
                             }
                         },
@@ -288,12 +355,15 @@
                         "type": "object",
                         "properties": {
                             "showIcon": {
+                                "description": "Breadcrumb icon visibility",
                                 "type": "boolean"
                             },
                             "showDropdown": {
+                                "description": "Breadcrumb dropdown visibility",
                                 "type": "boolean"
                             },
                             "separator": {
+                                "description": "Breadcrumb custom separator",
                                 "type": "string"
                             }
                         },
@@ -353,6 +423,30 @@
                             "zoom-left",
                             "zoom-right",
                             "zoom-up"
+                        ],
+                        "type": "string"
+                    },
+                    "ValueOfAppLayoutModeConst": {
+                        "enum": [
+                            "left-menu",
+                            "top-menu"
+                        ],
+                        "type": "string"
+                    },
+                    "ValueOfMenuCollapseModeConst": {
+                        "enum": [
+                            "arrow-circle",
+                            "bar",
+                            "button",
+                            "icon"
+                        ],
+                        "type": "string"
+                    },
+                    "ValueOfTabStyleModeConst": {
+                        "enum": [
+                            "card",
+                            "flex",
+                            "round"
                         ],
                         "type": "string"
                     }
