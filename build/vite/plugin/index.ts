@@ -1,6 +1,7 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
+import Terminal from 'vite-plugin-terminal'
 
 import { createWindicssPlugin } from './windicss'
 import { createComponentPlugin } from './component'
@@ -14,6 +15,7 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   const vitePlugins: (VitePlugin | VitePlugin[])[] = [
     vue(),
     vueJsx(),
+    Terminal() as unknown as VitePlugin,
     // createUnoCSSPlugin()
   ]
 

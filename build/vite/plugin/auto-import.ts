@@ -60,6 +60,20 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/utils/axios': ['AppAxios'],
         '/@/utils/persistent': ['useAppStorage'],
 
+        '/@/utils/log/terminal': [
+          'AppTerminalLog',
+          'AppTerminalInfo',
+          'AppTerminalWarn',
+          'AppTerminalError',
+        ],
+        '/@/utils/log/browser': [
+          'AppBrowserLog',
+          'AppBrowserInfo',
+          'AppBrowserWarn',
+          'AppBrowserError',
+        ],
+        '/@/utils/log/combine': ['AppLog', 'AppInfo', 'AppWarn', 'AppError'],
+
         '/@/components/UI/Form': ['useForm'],
         '/@/components/UI/Table': ['useTable'],
         '/@/components/Advanced/CRUD': ['useCRUD'],
