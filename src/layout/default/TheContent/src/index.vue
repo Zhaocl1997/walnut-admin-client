@@ -8,7 +8,9 @@
       <keep-alive v-if="appSettings.keepAlive" :include="getKeepAliveInclude">
         <component :is="Component" :key="route.fullPath" />
       </keep-alive>
-      <component v-else :is="Component" :key="route.fullPath" />
+      <div v-else :id="route.name" class="m-4 h-full">
+        <component :is="Component" :key="route.fullPath" />
+      </div>
     </w-transition>
   </router-view>
 </template>
