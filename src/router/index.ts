@@ -13,6 +13,7 @@ export const AppRouter = createRouter({
 export const setupRouter = (app: App) => {
   app.use(AppRouter)
   createRouterGuard(AppRouter)
+  AppTerminalLog('Router Initialized!')
 }
 
 export const useAppRoute = () => {

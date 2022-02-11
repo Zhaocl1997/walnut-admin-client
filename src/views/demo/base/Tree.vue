@@ -3,10 +3,6 @@
 </template>
 
 <script lang="ts">
-  import { appInfo, appTable } from '/@/utils/log'
-
-  import { getTreeData } from '../data'
-
   export default defineComponent({
     name: 'TreeDemo',
 

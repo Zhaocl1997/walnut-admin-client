@@ -5,8 +5,6 @@ import { easyDeepClone } from 'easy-fns-ts'
 
 import AppCustomSettings from '/@/settings.json'
 
-console.log(AppCustomSettings)
-
 const preferredLanguages = usePreferredLanguages()
 const preferredColor = usePreferredColorScheme()
 

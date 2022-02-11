@@ -1,19 +1,18 @@
 import { setupI18n } from '/@/locales'
 import { setupRouter } from '/@/router'
 
-import { appError, appWarning } from '/@/utils/log'
 import { isDev } from '/@/utils/constant/vue'
 
 import '/@/components/UI/Icon/src/utils/bundle'
 import '/@/store'
 
 const setupErrorhandler = (app: App) => {
-  app.config.errorHandler = (err, vm, info) => {
-    appError({ err, vm, info })
+  app.config.errorHandler = (error) => {
+    AppBrowserError(error)
   }
 
   app.config.warnHandler = (warn) => {
-    appWarning('App Capture', warn)
+    AppBrowserWarn(warn)
   }
 }
 
@@ -30,4 +29,6 @@ export const setupApp = async (app: App) => {
   if (isDev()) {
     app.config.performance = true
   }
+
+  AppTerminalLog('App Initialized!')
 }

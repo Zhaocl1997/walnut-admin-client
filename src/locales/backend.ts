@@ -25,7 +25,7 @@ export const AppI18nGetI18nMsg = async (lang: string) => {
     url: `/system/locale/message/${lang}`,
   })
 
-  console.log(messages)
+  AppInfo(messages)
 
   return messages
 }
