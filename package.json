@@ -1,6 +1,13 @@
 {
   "name": "walnut-admin",
   "version": "0.0.1",
+  "description": "An admin template, using `vue3`,`ts`,`vite`,`naive-ui`. Continuously updating...",
+  "author": {
+    "name": "zhaocl97",
+    "email": "zhaocl97@foxmail.com",
+    "url": "https://github.com/Zhaocl1997"
+  },
+  "homepage": "https://github.com/Zhaocl1997/walnut-admin-client",
   "scripts": {
     "predev": "esno build/generate/index.ts",
     "dev": "vite",
@@ -90,6 +97,7 @@
     "unplugin-vue-components": "^0.17.13",
     "vfonts": "^0.1.0",
     "vite": "^2.7.13",
+    "vite-plugin-banner": "^0.2.0",
     "vite-plugin-compression": "^0.4.0",
     "vite-plugin-html": "^2.1.2",
     "vite-plugin-terminal": "^0.0.12",

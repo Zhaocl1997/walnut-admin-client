@@ -10,6 +10,7 @@ import { createCompressionPlugin } from './compression'
 import { createHTMLPlugin } from './html'
 import { creatAutoImportPlugin } from './auto-import'
 import { createUnoCSSPlugin } from './unocss'
+import { createBannerPlugin } from './banner'
 
 export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   const vitePlugins: (VitePlugin | VitePlugin[])[] = [
@@ -42,6 +43,9 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
 
   // https://github.com/anncwb/vite-plugin-compression
   prod && vitePlugins.push(createCompressionPlugin())
+
+  // https://github.com/chengpeiquan/vite-plugin-banner
+  prod && vitePlugins.push(createBannerPlugin())
 
   return vitePlugins
 }
