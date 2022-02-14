@@ -10,9 +10,9 @@
   import { setFormContext } from './hooks/useFormContext'
   import { useFormEvents } from './hooks/useFormEvents'
   import { useFormAdvanced } from './hooks/useFormAdvanced'
+  import { useFormBaseRules } from './hooks/useFormBaseRules'
 
   import { props, extendProps } from './props'
-  import { generateBaseRules, getEPBooleanValue } from './utils'
 
   import WFormItem from './components/FormItem/index.vue'
   import WFormItemExtendQuery from './components/Extend/Query.vue'
@@ -36,6 +36,8 @@
 
       const { onEvent } = useFormEvents(getProps)
 
+      const baseRules = useFormBaseRules(getProps, formSchemas)
+
       // @ts-ignore
       setFormContext({
         formRef,
@@ -46,62 +48,46 @@
       })
 
       const renderItem = () =>
-        renderList(
-          formSchemas.value.filter(
-            (i) =>
-              getEPBooleanValue(i, getProps.value, 'vIf') &&
-              getEPBooleanValue(i, getProps.value, 'vShow')
-          ),
-          (item, index) => {
-            if (item.type === 'Extend:Query') {
-              return (
-                <n-gi v-show={item.foldShow} key="query" span={4} suffix={true}>
-                  <WFormItemExtendQuery {...item.componentProp} />
-                </n-gi>
-              )
-            }
-
-            if (item.type === 'Extend:Divider') {
-              return (
-                <n-gi
-                  v-show={item.foldShow}
-                  key={item.componentProp?.title}
-                  span={24}
-                >
-                  <WFormItemExtendDivider
-                    index={index}
-                    {...item.componentProp}
-                  />
-                </n-gi>
-              )
-            }
-
+        renderList(formSchemas.value, (item, index) => {
+          if (item.type === 'Extend:Query') {
             return (
-              <n-gi
-                key={item.formProp?.path}
-                {...(item?.gridProp ?? { span: unref(getProps).span })}
-                v-show={item.foldShow}
-              >
-                <w-transition {...item?.transitionProp} appear>
-                  <WFormItem item={item}>
-                    {item.type === 'Base:Slot' &&
-                      Object.keys(slots).includes(item.formProp?.path!) &&
-                      renderSlot(slots, item.formProp?.path!)}
-                  </WFormItem>
-                </w-transition>
+              <n-gi key="query" span={4} suffix={true}>
+                <WFormItemExtendQuery {...item.componentProp} />
               </n-gi>
             )
           }
-        )
+
+          if (item.type === 'Extend:Divider') {
+            return (
+              <n-gi
+                v-show={item.foldShow}
+                key={item.componentProp?.title}
+                span={24}
+              >
+                <WFormItemExtendDivider index={index} {...item.componentProp} />
+              </n-gi>
+            )
+          }
+
+          return (
+            <n-gi
+              key={item.formProp?.path}
+              {...(item?.gridProp ?? { span: unref(getProps).span })}
+              v-show={item.foldShow}
+            >
+              <w-transition {...item?.transitionProp} appear>
+                <WFormItem item={item}>
+                  {item.type === 'Base:Slot' &&
+                    Object.keys(slots).includes(item.formProp?.path!) &&
+                    renderSlot(slots, item.formProp?.path!)}
+                </WFormItem>
+              </w-transition>
+            </n-gi>
+          )
+        })
 
       const getNFormProps = computed(() =>
         easyOmit(getProps.value, Object.keys(extendProps))
-      )
-
-      const getNFormRules = computed(() =>
-        unref(getProps).baseRules
-          ? generateBaseRules(formSchemas.value, getProps)
-          : unref(getProps).rules
       )
 
       const renderNForm = () => (
@@ -109,7 +95,7 @@
           ref={formRef}
           {...getNFormProps.value}
           class={attrs.class}
-          rules={getNFormRules.value}
+          rules={baseRules.value}
         >
           <n-grid
             cols={unref(getProps).cols}
