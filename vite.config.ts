@@ -99,27 +99,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           // https://rollupjs.org/guide/en/#outputmanualchunks
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('naive-ui')) {
-                return 'naive-ui'
-              }
-
-              if (id.includes('easy-fns-ts')) {
-                return 'easy-fns-ts'
-              }
-
-              if (id.includes('lodash-es')) {
-                return 'lodash-es'
-              }
-
-              if (id.includes('date-fns')) {
-                return 'date-fns'
-              }
-
-              if (id.includes('crypto-js')) {
-                return 'crypto-js'
-              }
-
-              return 'vendor'
+              return id
+                .toString()
+                .split('node_modules/')[1]
+                .split('/')[0]
+                .toString()
             }
 
             if (id.includes('src/')) {
