@@ -10,6 +10,7 @@
       :model="formData"
       :schemas="schemas"
       label-width="120px"
+      base-rules
     >
       <template #formSlot>
         <n-input v-model:value="formData.formSlot"></n-input>
@@ -95,13 +96,6 @@
               formProp: {
                 label: 'Input',
                 path: 'formInput',
-                rule: [
-                  {
-                    required: true,
-                    message: 'Invalid!',
-                    trigger: ['input', 'blur'],
-                  },
-                ],
                 labelHelpMessage: [
                   '1. Set `whitespace` in `formProp` true, it will treat whitespace as invalid input.',
                   '2. Set `trim` in `componentProp.valueModifiers` true, it will force to disable input whitespace.',
@@ -118,16 +112,6 @@
               formProp: {
                 label: 'InputNumber',
                 path: 'formInputNumber',
-                rule: [
-                  {
-                    type: 'number',
-                    min: 3,
-                    max: 10,
-                    required: true,
-                    message: 'Invalid!',
-                    trigger: ['change'],
-                  },
-                ],
               },
               componentProp: {
                 min: 3,
@@ -139,14 +123,6 @@
               formProp: {
                 label: 'Select',
                 path: 'formSelect',
-                rule: [
-                  {
-                    type: 'number',
-                    required: true,
-                    message: 'Invalid!',
-                    trigger: ['change'],
-                  },
-                ],
               },
               componentProp: {
                 options: options,
@@ -157,14 +133,6 @@
               formProp: {
                 label: 'Radio',
                 path: 'formRadio',
-                rule: [
-                  {
-                    type: 'number',
-                    required: true,
-                    message: 'Invalid!',
-                    trigger: ['change'],
-                  },
-                ],
               },
               componentProp: {
                 options: options,
@@ -175,14 +143,6 @@
               formProp: {
                 label: 'Checkbox',
                 path: 'formCheckbox',
-                rule: [
-                  {
-                    required: true,
-                    message: 'Invalid!',
-                    type: 'array',
-                    trigger: ['change'],
-                  },
-                ],
               },
               componentProp: {
                 options: options,
@@ -193,14 +153,7 @@
               formProp: {
                 label: 'Switch',
                 path: 'formSwitch',
-                rule: [
-                  {
-                    type: 'boolean',
-                    required: true,
-                    trigger: ['change'],
-                    message: 'Invalid!',
-                  },
-                ],
+
                 first: true,
               },
               componentProp: {},
@@ -210,14 +163,6 @@
               formProp: {
                 label: 'TimePicker',
                 path: 'formTimePicker',
-                rule: [
-                  {
-                    type: 'number',
-                    required: true,
-                    trigger: ['blur', 'change'],
-                    message: 'Invalid!',
-                  },
-                ],
               },
               componentProp: {
                 format: 'HH:mm:ss',
@@ -228,14 +173,6 @@
               formProp: {
                 label: 'DatePicker',
                 path: 'formDatePicker',
-                rule: [
-                  {
-                    type: 'number',
-                    required: true,
-                    trigger: ['blur', 'change'],
-                    message: 'Invalid!',
-                  },
-                ],
               },
               componentProp: {
                 type: 'datetime',
@@ -246,14 +183,6 @@
               formProp: {
                 label: 'DynamicTags',
                 path: 'formDynamicTags',
-                rule: [
-                  {
-                    type: 'array',
-                    required: true,
-                    message: 'Invalid!',
-                    trigger: ['change'],
-                  },
-                ],
               },
               componentProp: {
                 round: true,
@@ -264,14 +193,6 @@
               formProp: {
                 label: 'Slider',
                 path: 'formSlider',
-                rule: [
-                  {
-                    type: 'number',
-                    required: true,
-                    message: 'Invalid!',
-                    trigger: ['change'],
-                  },
-                ],
               },
               componentProp: {
                 max: 24,
@@ -283,13 +204,6 @@
               formProp: {
                 label: 'Slot',
                 path: 'formSlot',
-                rule: [
-                  {
-                    required: true,
-                    message: 'Invalid!',
-                    trigger: ['input', 'blur'],
-                  },
-                ],
               },
             },
             {
@@ -297,13 +211,6 @@
               formProp: {
                 label: 'Render',
                 path: 'formRender',
-                rule: [
-                  {
-                    required: true,
-                    message: 'Invalid!',
-                    trigger: ['input', 'blur'],
-                  },
-                ],
               },
               componentProp: {
                 render: ({ formData }) => (

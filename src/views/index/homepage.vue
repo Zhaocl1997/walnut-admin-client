@@ -6,7 +6,7 @@
 
     <n-button @click="onScreenShot">screen shot</n-button>
 
-    <img :src="src" alt="" class="w-32 h-32" />
+    <n-image :src="src" alt="" class="w-32 h-32" />
 
     <div v-show="show" class="w-32 h-32 text-green-600">123</div>
 
@@ -63,9 +63,9 @@
         })
       }, 500)
 
-      setInterval(() => {
-        show.value = !show.value
-      }, 1000)
+      // setInterval(() => {
+      //   show.value = !show.value
+      // }, 1000)
 
       onUpdated(() => {
         onScreenShot()

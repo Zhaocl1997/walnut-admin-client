@@ -24,7 +24,9 @@
       >
         <MainHeader v-if="!setting.app.fixHeader" />
 
-        <TheContent />
+        <div class="flex-1 p-4 h-full">
+          <TheContent />
+        </div>
 
         <TheFooter v-if="setting.app.showFooter && !setting.app.fixFooter" />
 
