@@ -52,6 +52,7 @@
   import { NLayoutHeader } from 'naive-ui'
 
   const { appMemo, settings } = useAppState()
+  const { currentRoute } = useAppRouter()
   const setting = settings.value.ForDevelopers
 
   watchEffect(() => {
@@ -66,6 +67,13 @@
       setting.app.showMenu = false
       setting.header.showBreadcrumb = false
       appMemo.value.collapse = false
+    }
+
+    if (currentRoute.value.query.full) {
+      settings.value.ForDevelopers.app.showHeader = false
+      settings.value.ForDevelopers.app.showLogo = false
+      settings.value.ForDevelopers.app.showMenu = false
+      settings.value.ForDevelopers.app.showTabs = false
     }
   })
 

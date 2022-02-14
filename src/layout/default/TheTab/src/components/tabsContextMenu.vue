@@ -3,7 +3,7 @@
     placement="bottom-start"
     @select="onSelect"
     trigger="manual"
-    size="medium"
+    size="small"
     :x="x"
     :y="y"
     :options="options"
@@ -14,7 +14,11 @@
 
 <script lang="tsx" setup>
   import type { DropdownOption } from 'naive-ui'
+
+  import { toJpeg } from 'html-to-image'
+
   import { useRedirect } from '/@/hooks/core/useRedirect'
+  import { sortTab } from '/@/core/tab'
 
   import { getTabsContext } from '../hooks/useTabsContext'
 
@@ -72,7 +76,12 @@
   )
 
   const onSelect = async (
-    key: ValueOfDeleteTabConst & 'Refresh' & 'Screen Full'
+    key: ValueOfDeleteTabConst &
+      'Refresh' &
+      'Screen Full' &
+      'Fix' &
+      'Snapshot' &
+      'NewWindow'
   ) => {
     if (Object.values(DeleteTabConst).includes(key)) {
       onTabRemove(currentMouseTab.value?.name!, key)
@@ -91,10 +100,60 @@
       enter()
     }
 
+    if (key === 'Fix') {
+      currentMouseTab.value!.meta.affix = !currentMouseTab.value?.meta.affix
+
+      sortTab()
+    }
+
+    if (key === 'Snapshot') {
+      const target = document.getElementById(currentMouseTab.value?.name!)
+
+      toJpeg(target!, {
+        width: target?.scrollWidth! + 32,
+        height: target?.scrollHeight,
+        canvasWidth: target?.scrollWidth! + 32,
+        canvasHeight: target?.scrollHeight,
+        style: {
+          margin: '1rem',
+        },
+      }).then(function (dataUrl) {
+        const windowOpen = window.open('about:blank', 'image from canvas')
+        windowOpen!.document.write(
+          `<img src='${dataUrl}' alt='${currentMouseTab.value?.name}'>`
+        )
+      })
+    }
+
+    if (key === 'NewWindow') {
+      window.open(currentRoute.value.fullPath + '?full=1')
+    }
+
     onCloseCtxMenu()
   }
 
   const options = computed<DropdownOption[]>(() => [
+    {
+      key: 'Refresh',
+      label: t('app:base:refresh'),
+      icon: () => <WIcon height="24" icon="ant-design:sync-outlined"></WIcon>,
+      disabled: getOtherDisabled.value,
+    },
+
+    {
+      key: 'Screen Full',
+      label: t('sys:tab:ctx:screenfull'),
+      icon: () => (
+        <WIcon height="24" icon="ant-design:fullscreen-outlined"></WIcon>
+      ),
+      disabled: getOtherDisabled.value,
+    },
+
+    {
+      key: 'd1',
+      type: 'divider',
+    },
+
     {
       key: DeleteTabConst.TAB_SINGLE,
       label: t('sys:tab:ctx:close'),
@@ -142,18 +201,31 @@
     },
 
     {
-      key: 'Refresh',
-      label: t('app:base:refresh'),
-      icon: () => <WIcon height="24" icon="ant-design:sync-outlined"></WIcon>,
+      key: 'Fix',
+      label: currentMouseTab.value?.meta.affix ? 'Unfix' : 'Fixed',
+      icon: () => (
+        <WIcon
+          height="24"
+          icon={
+            currentMouseTab.value?.meta.affix
+              ? 'ant-design:pushpin-filled'
+              : 'ant-design:pushpin-outlined'
+          }
+        ></WIcon>
+      ),
+    },
+
+    {
+      key: 'Snapshot',
+      label: 'Snapshot',
+      icon: () => <WIcon height="24" icon="mdi:fit-to-screen"></WIcon>,
       disabled: getOtherDisabled.value,
     },
 
     {
-      key: 'Screen Full',
-      label: t('sys:tab:ctx:screenfull'),
-      icon: () => (
-        <WIcon height="24" icon="ant-design:fullscreen-outlined"></WIcon>
-      ),
+      key: 'NewWindow',
+      label: 'Open in window',
+      icon: () => <WIcon height="24" icon="mdi:dock-window"></WIcon>,
       disabled: getOtherDisabled.value,
     },
   ])

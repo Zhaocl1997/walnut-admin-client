@@ -130,12 +130,21 @@ export const clearTabs = () => {
 }
 
 /**
- * @description Action - Tab - Sort tab
+ * @description Action - Tab - Change tab order
  */
-export const sortTabs = (oldIndex: number, newIndex: number) => {
+export const changeTabOrder = (oldIndex: number, newIndex: number) => {
   const currentTab = tab.value.tabs[oldIndex]
   tab.value.tabs.splice(oldIndex, 1)
   tab.value.tabs.splice(newIndex, 0, currentTab)
+}
+
+/**
+ * @description Action - Tab - Sort tab, affix first
+ */
+export const sortTab = () => {
+  tab.value.tabs = tab.value.tabs.sort(
+    (a, b) => Number(b.meta.affix) - Number(a.meta.affix)
+  )
 }
 
 /**
