@@ -39,20 +39,20 @@
             </div>
 
             <div style="min-height: 230px">
-              <w-icon
-                v-for="(icon, index) in lists"
-                :key="icon"
-                :icon="icon"
-                width="36"
-                :class="[
-                  'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
-                  {
-                    'bg-light-blue-300': icon === value,
-                    'hover:bg-warm-gray-300': icon !== value,
-                  },
-                ]"
-                @click="onChooseIcon(icon)"
-              />
+              <span v-for="(icon, index) in lists" :key="icon" :title="icon">
+                <w-icon
+                  :icon="icon"
+                  width="36"
+                  :class="[
+                    'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
+                    {
+                      'bg-light-blue-300': icon === value,
+                      'hover:bg-warm-gray-300': icon !== value,
+                    },
+                  ]"
+                  @click="onChooseIcon(icon)"
+                />
+              </span>
 
               <n-empty v-show="lists.length === 0" />
             </div>
