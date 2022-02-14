@@ -19,6 +19,7 @@
 
   import { useRedirect } from '/@/hooks/core/useRedirect'
   import { sortTab } from '/@/core/tab'
+  import { hideLayout } from '/@/settings'
 
   import { getTabsContext } from '../hooks/useTabsContext'
 
@@ -27,7 +28,7 @@
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { tab, settings } = useAppState()
+  const { tab } = useAppState()
   const { enter } = useFullscreen()
 
   const {
@@ -93,10 +94,7 @@
     }
 
     if (key === 'Screen Full') {
-      settings.value.ForDevelopers.app.showHeader = false
-      settings.value.ForDevelopers.app.showLogo = false
-      settings.value.ForDevelopers.app.showMenu = false
-      settings.value.ForDevelopers.app.showTabs = false
+      hideLayout()
       enter()
     }
 

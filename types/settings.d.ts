@@ -229,6 +229,11 @@ declare global {
      * Tab devtool, only work in dev env
      */
     devtool: boolean
+
+    /**
+     * With persistent support
+     */
+    persistent: boolean
   }
 
   interface AppSettingsBreadcrumb {

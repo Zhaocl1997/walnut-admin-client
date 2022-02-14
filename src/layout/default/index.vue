@@ -46,7 +46,7 @@
   import TheContent from './TheContent'
   import TheTab from './TheTab'
   import TheFooter from './TheFooter'
-  import { getContentWidth, getShowNormalAside } from '/@/settings'
+  import { getContentWidth, getShowNormalAside, hideLayout } from '/@/settings'
 
   // TODO 99
   import { NLayoutHeader } from 'naive-ui'
@@ -68,12 +68,11 @@
       setting.header.showBreadcrumb = false
       appMemo.value.collapse = false
     }
+  })
 
+  watchEffect(() => {
     if (currentRoute.value.query.full) {
-      settings.value.ForDevelopers.app.showHeader = false
-      settings.value.ForDevelopers.app.showLogo = false
-      settings.value.ForDevelopers.app.showMenu = false
-      settings.value.ForDevelopers.app.showTabs = false
+      hideLayout()
     }
   })
 

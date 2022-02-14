@@ -661,6 +661,12 @@
           })),
         },
       },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'persistent',
+        },
+      },
     ],
   })
 </script>

@@ -63,7 +63,8 @@
     "contextMenu": true,
     "sortable": true,
     "styleMode": "card",
-    "devtool": true
+    "devtool": true,
+    "persistent": true
   },
   "breadcrumb": {
     "showIcon": true,

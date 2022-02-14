@@ -45,7 +45,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
         userInfo: {},
       },
       tab: {
-        tabs: [],
+        tabs: (JSON.parse(localStorage.getItem('tab')!) as AppTab[]) ?? [],
         visitedTabs: new Map(),
       },
 

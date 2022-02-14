@@ -38,8 +38,16 @@
   import { setTabsContext } from './hooks/useTabsContext'
   import { isDev } from '/@/utils/constant/vue'
 
-  const { appMemo, settings } = useAppState()
+  const { appMemo, settings, tab } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
+
+  watchEffect(() => {
+    if (tabSettings.persistent) {
+      localStorage.setItem('tab', JSON.stringify(tab.value.tabs))
+    } else {
+      localStorage.removeItem('tab')
+    }
+  })
 
   const getShowDevTools = computed(
     () => isDev() && !appMemo.value.isMobile && tabSettings.devtool

@@ -39,3 +39,10 @@ export const getContentWidth = computed(() =>
     ? `calc(100vw - ${menu.collapsedWidth}px)`
     : `calc(100vw - ${menu.width}px)`
 )
+
+export const hideLayout = () => {
+  app.showHeader = false
+  app.showLogo = false
+  app.showMenu = false
+  app.showTabs = false
+}
