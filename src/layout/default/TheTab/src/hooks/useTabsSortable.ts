@@ -1,6 +1,6 @@
 import type Sortable from 'sortablejs'
 import { useSortable } from '/@/hooks/component/useSortable'
-import { sortTabs } from '/@/core/tab'
+import { changeTabOrder } from '/@/core/tab'
 
 let inst: Sortable
 
@@ -13,11 +13,11 @@ export const useTabsSortable = (isSortable: boolean) => {
   const el = document.getElementById('tabSortable')!
 
   const instance = useSortable(el, {
-    filter: (e) => (e.target! as HTMLDivElement).dataset.affix === 'true',
+    draggable: '.tab-draggable',
     onEnd: (evt) => {
       const { oldIndex, newIndex } = evt
 
-      sortTabs(oldIndex!, newIndex!)
+      changeTabOrder(oldIndex!, newIndex!)
     },
   })
 

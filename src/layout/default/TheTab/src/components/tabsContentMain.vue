@@ -11,25 +11,9 @@
         :key="item.name"
         :class="[
           '*hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
+          getTabStyle(item),
           {
-            'text-primary hover:text-primaryHover': $route.name === item.name,
-            /* card */
-            'border border-gray-400 hover:(border-primaryHover text-primaryHover)':
-              tabSettings.styleMode === 'card',
-            'border-primary':
-              $route.name === item.name && tabSettings.styleMode === 'card',
-
-            /* flex */
-            'bg-green-50 bg-opacity-5 hover:(bg-green-100 bg-opacity-10)':
-              tabSettings.styleMode === 'flex',
-            'bg-green-200 bg-opacity-10 border-b-2 border-primary':
-              $route.name === item.name && tabSettings.styleMode === 'flex',
-
-            /* round */
-            'bg-green-50 bg-opacity-5 hover:(bg-green-100 bg-opacity-10) rounded-t-xl':
-              tabSettings.styleMode === 'round',
-            'bg-green-200 bg-opacity-10 border-l-1 border-primary':
-              $route.name === item.name && tabSettings.styleMode === 'round',
+            'tab-draggable': !item.meta.affix,
           },
         ]"
         @click="onTabClick(item.name)"
@@ -37,16 +21,20 @@
         @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
         @mouseenter="onMouseEnter($event, item, index)"
         @mouseleave="onMouseLeave(index)"
-        :data-affix="item.meta.affix"
       >
+        <w-icon
+          v-if="!appMemo.isMobile && !tabSettings.showIcon && item.meta.affix"
+          height="16"
+          icon="ant-design:pushpin-filled"
+        ></w-icon>
+
         <TabDot
           :ref="setItemRef"
-          v-if="
+          v-else-if="
             !appMemo.isMobile &&
             !tabSettings.showIcon &&
             $route.name === item.name
           "
-          :data-affix="item.meta.affix"
         ></TabDot>
 
         <w-icon
@@ -55,7 +43,7 @@
           height="16"
         ></w-icon>
 
-        <span class="text-sm whitespace-nowrap" :data-affix="item.meta.affix">
+        <span class="text-sm whitespace-nowrap">
           {{ t(item.meta.title!)  }}
         </span>
 
@@ -75,11 +63,14 @@
   import TabDot from './dot'
   import { getTabsContext } from '../hooks/useTabsContext'
   import { useTabsSortable } from '../hooks/useTabsSortable'
+  import { useTabStyle } from '../hooks/useTabStyle'
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
   const { appMemo, tab, settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
+
+  const { getTabStyle } = useTabStyle(tabSettings)
 
   const {
     scrollRef,
@@ -143,7 +134,9 @@
   }
 
   watchEffect(() => {
-    // tab sortable
-    useTabsSortable(tabSettings.sortable)
+    nextTick(() => {
+      // tab sortable
+      useTabsSortable(tabSettings.sortable)
+    })
   })
 </script>

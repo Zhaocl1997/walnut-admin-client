@@ -61,7 +61,7 @@
     "showIcon": false,
     "showUtils": true,
     "contextMenu": true,
-    "sortable": false,
+    "sortable": true,
     "styleMode": "card",
     "devtool": true
   },
