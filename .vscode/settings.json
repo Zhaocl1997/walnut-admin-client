@@ -191,10 +191,15 @@
                             "idleMS": {
                                 "description": "User inactive milliseconds to lock app",
                                 "type": "number"
+                            },
+                            "contentPadding": {
+                                "description": "Content padding, default 1rem",
+                                "type": "number"
                             }
                         },
                         "required": [
                             "animationName",
+                            "contentPadding",
                             "fixFooter",
                             "fixHeader",
                             "fixLogo",
@@ -339,12 +344,17 @@
                             "devtool": {
                                 "description": "Tab devtool, only work in dev env",
                                 "type": "boolean"
+                            },
+                            "persistent": {
+                                "description": "With persistent support",
+                                "type": "boolean"
                             }
                         },
                         "required": [
                             "contextMenu",
                             "devtool",
                             "height",
+                            "persistent",
                             "showIcon",
                             "showUtils",
                             "sortable",

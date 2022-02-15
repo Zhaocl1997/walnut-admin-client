@@ -33,7 +33,8 @@
     "keepAlive": false,
     "layout": "left-menu",
     "pageLeaveLock": false,
-    "idleMS": 60000
+    "idleMS": 60000,
+    "contentPadding": 16
   },
   "menu": {
     "showCollapse": true,
