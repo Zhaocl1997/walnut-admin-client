@@ -24,7 +24,7 @@
       >
         <MainHeader v-if="!setting.app.fixHeader" />
 
-        <div class="flex-1 p-4 h-full">
+        <div class="flex-1 p-4">
           <TheContent />
         </div>
 
