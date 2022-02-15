@@ -124,7 +124,7 @@
     }
 
     if (key === 'NewWindow') {
-      window.open(currentRoute.value.fullPath + '?full=1')
+      window.open(currentMouseTab.value?.path + '?full=1')
     }
 
     onCloseCtxMenu()
@@ -200,7 +200,9 @@
 
     {
       key: 'Fix',
-      label: currentMouseTab.value?.meta.affix ? 'Unfix' : 'Fixed',
+      label: currentMouseTab.value?.meta.affix
+        ? t('sys:tab:ctx:unfix')
+        : t('sys:tab:ctx:fixed'),
       icon: () => (
         <WIcon
           height="24"
@@ -215,16 +217,15 @@
 
     {
       key: 'Snapshot',
-      label: 'Snapshot',
+      label: t('sys:tab:ctx:snapshot'),
       icon: () => <WIcon height="24" icon="mdi:fit-to-screen"></WIcon>,
       disabled: getOtherDisabled.value,
     },
 
     {
       key: 'NewWindow',
-      label: 'Open in window',
+      label: t('sys:tab:ctx:newWindow'),
       icon: () => <WIcon height="24" icon="mdi:dock-window"></WIcon>,
-      disabled: getOtherDisabled.value,
     },
   ])
 </script>
