@@ -20,7 +20,7 @@
         @mouseup="onMouseUp($event, item.name)"
         @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
         @mouseenter="onMouseEnter($event, item, index)"
-        @mouseleave="onMouseLeave(index)"
+        @mouseleave="onMouseLeave(item)"
       >
         <w-icon
           v-if="!appMemo.isMobile && !tabSettings.showIcon && item.meta.affix"
@@ -104,20 +104,29 @@
     onOpenDevTool(e, item, index, ctxMenuShow.value)
 
     // start bounce
-    if (!appMemo.value.isMobile && item.name === currentRoute.value.name)
+    if (
+      !tabSettings.showIcon &&
+      !appMemo.value.isMobile &&
+      !item.meta.affix &&
+      item.name === currentRoute.value.name
+    ) {
       startBounce()
+    }
   }
 
-  const onMouseLeave = (index: number) => {
+  const onMouseLeave = (item: AppTab) => {
     // clear the setTimeout for devTool when mouse leave
     clearTimeout(timeoutId.value!)
 
     // stop bounce
     if (
+      !tabSettings.showIcon &&
       !appMemo.value.isMobile &&
+      !item.meta.affix &&
       currentMouseTab.value?.name === currentRoute.value.name
-    )
+    ) {
       stopBounce()
+    }
   }
 
   const onMouseUp = (e: MouseEvent, name: string) => {
