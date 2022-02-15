@@ -19,7 +19,7 @@
 
   import { useRedirect } from '/@/hooks/core/useRedirect'
   import { sortTab } from '/@/core/tab'
-  import { hideLayout } from '/@/settings'
+  import { getCustomTheme, toggleLeftMenuLayout } from '/@/settings'
 
   import { getTabsContext } from '../hooks/useTabsContext'
 
@@ -94,7 +94,7 @@
     }
 
     if (key === 'Screen Full') {
-      hideLayout()
+      toggleLeftMenuLayout()
       enter()
     }
 
@@ -107,13 +107,15 @@
     if (key === 'Snapshot') {
       const target = document.getElementById(currentMouseTab.value?.name!)
 
+      // TODO where lost the width?
       toJpeg(target!, {
         width: target?.scrollWidth! + 32,
         height: target?.scrollHeight,
         canvasWidth: target?.scrollWidth! + 32,
         canvasHeight: target?.scrollHeight,
         style: {
-          margin: '1rem',
+          padding: '1rem',
+          backgroundColor: getCustomTheme.value.bodyColor,
         },
       }).then(function (dataUrl) {
         const windowOpen = window.open('about:blank', 'image from canvas')

@@ -1,14 +1,11 @@
-export const useAppFullScreen = () => {
-  const { settings } = useAppState()
+import { toggleLeftMenuLayout } from '/@/settings'
 
+export const useAppFullScreen = () => {
   const { isFullscreen } = useFullscreen()
 
   watchEffect(() => {
     if (!isFullscreen.value) {
-      settings.value.ForDevelopers.app.showHeader = true
-      settings.value.ForDevelopers.app.showLogo = true
-      settings.value.ForDevelopers.app.showMenu = true
-      settings.value.ForDevelopers.app.showTabs = true
+      toggleLeftMenuLayout(true)
     }
   })
 }

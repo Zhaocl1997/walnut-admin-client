@@ -46,7 +46,11 @@
   import TheContent from './TheContent'
   import TheTab from './TheTab'
   import TheFooter from './TheFooter'
-  import { getContentWidth, getShowNormalAside, hideLayout } from '/@/settings'
+  import {
+    getContentWidth,
+    getShowNormalAside,
+    toggleLeftMenuLayout,
+  } from '/@/settings'
 
   // TODO 99
   import { NLayoutHeader } from 'naive-ui'
@@ -72,7 +76,7 @@
 
   watchEffect(() => {
     if (currentRoute.value.query.full) {
-      hideLayout()
+      toggleLeftMenuLayout()
     }
   })
 
