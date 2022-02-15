@@ -24,7 +24,10 @@
       >
         <MainHeader v-if="!setting.app.fixHeader" />
 
-        <div class="flex-1 p-4">
+        <div
+          class="flex-1"
+          :style="{ padding: setting.app.contentPadding + 'px' }"
+        >
           <TheContent />
         </div>
 

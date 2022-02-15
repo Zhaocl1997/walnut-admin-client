@@ -70,7 +70,7 @@
   const { appMemo, tab, settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
 
-  const { getTabStyle } = useTabStyle(tabSettings)
+  const { getTabStyle } = useTabStyle(settings.value.ForDevelopers)
 
   const {
     scrollRef,

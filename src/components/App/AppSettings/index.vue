@@ -388,6 +388,18 @@
           disabled: true,
         },
       },
+      {
+        type: 'Base:InputNumber',
+        formProp: {
+          path: 'contentPadding',
+        },
+        componentProp: {
+          step: 1,
+          min: 0,
+          suffix: 'px',
+          showButton: false,
+        },
+      },
     ],
   })
 

@@ -28,7 +28,7 @@
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { tab } = useAppState()
+  const { tab, settings } = useAppState()
   const { enter } = useFullscreen()
 
   const {
@@ -107,15 +107,16 @@
     if (key === 'Snapshot') {
       const target = document.getElementById(currentMouseTab.value?.name!)
 
-      // TODO where lost the width?
+      const padding = settings.value.ForDevelopers.app.contentPadding
+
       toJpeg(target!, {
-        width: target?.scrollWidth! + 32,
-        height: target?.scrollHeight,
-        canvasWidth: target?.scrollWidth! + 32,
-        canvasHeight: target?.scrollHeight,
+        width: target?.scrollWidth! + padding * 2,
+        height: target?.scrollHeight! + padding * 2,
+        canvasWidth: target?.scrollWidth! + padding * 2,
+        canvasHeight: target?.scrollHeight! + padding * 2,
+        backgroundColor: getCustomTheme.value.bodyColor,
         style: {
-          padding: '1rem',
-          backgroundColor: getCustomTheme.value.bodyColor,
+          margin: padding + 'px',
         },
       }).then(function (dataUrl) {
         const windowOpen = window.open('about:blank', 'image from canvas')

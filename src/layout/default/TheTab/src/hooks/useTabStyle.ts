@@ -1,5 +1,7 @@
-export const useTabStyle = (tabSettings: AppSettingsTab) => {
+export const useTabStyle = (settings: AppSettings) => {
   const { currentRoute } = useAppRouter()
+
+  const tabSettings = settings.tab
 
   const getTabStyle = (item: AppTab) => ({
     'text-primary hover:text-primaryHover':
