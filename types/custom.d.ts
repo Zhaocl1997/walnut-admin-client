@@ -50,6 +50,7 @@ declare global {
   type BaseListResponse<T = any> = import('/@/utils/axios').BaseListResponse<T>
   type BaseResponseStructure<T = any> =
     import('/@/utils/axios').BaseResponseStructure<T>
+  type AppSettings = import('./settings').AppSettings
 }
 
 export {}

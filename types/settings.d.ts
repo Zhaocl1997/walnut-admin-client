@@ -11,8 +11,11 @@ import {
   ValueOfTabStyleModeConst,
 } from '../src/const/app'
 
-declare global {
-  interface AppSettingsThemes {
+interface AppSettings {
+  /**
+   * See more in naive-ui docs
+   */
+  themes: {
     light: {
       primaryColor: string
       infoColor: string
@@ -33,7 +36,7 @@ declare global {
     }
   }
 
-  interface AppSettingsMain {
+  app: {
     /**
      * App Logo visibility
      */
@@ -103,9 +106,14 @@ declare global {
      * User inactive milliseconds to lock app
      */
     idleMS: number
+
+    /**
+     * Content padding, default 1rem
+     */
+    contentPadding: number
   }
 
-  interface AppSettingsMenu {
+  menu: {
     /**
      * Show collapse button
      */
@@ -152,7 +160,7 @@ declare global {
     inverted: boolean
   }
 
-  interface AppSettingsHeader {
+  header: {
     /**
      * Header height
      */
@@ -194,7 +202,7 @@ declare global {
     inverted: boolean
   }
 
-  interface AppSettingsTab {
+  tab: {
     /**
      * Tab height
      */
@@ -236,7 +244,7 @@ declare global {
     persistent: boolean
   }
 
-  interface AppSettingsBreadcrumb {
+  breadcrumb: {
     /**
      * Breadcrumb icon visibility
      */
@@ -252,23 +260,4 @@ declare global {
      */
     separator: string
   }
-
-  interface AppSettings {
-    /**
-     * See more in naive-ui docs
-     */
-    themes: AppSettingsThemes
-
-    app: AppSettingsMain
-
-    menu: AppSettingsMenu
-
-    header: AppSettingsHeader
-
-    tab: AppSettingsTab
-
-    breadcrumb: AppSettingsBreadcrumb
-  }
 }
-
-export {}
