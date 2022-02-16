@@ -14,10 +14,10 @@ export const useFormAdvanced = (
 
   const done = () => (loading.value = false)
 
-  const onOpen = async (beforeHook: Fn) => {
+  const onOpen = async (beforeHook?: Fn) => {
     loading.value = true
 
-    await beforeHook(done)
+    await beforeHook!(done)
 
     show.value = true
   }
