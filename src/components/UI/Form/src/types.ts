@@ -52,7 +52,7 @@ export declare namespace WForm {
       validate: () => Promise<boolean> | undefined
       restoreValidation: Fn
       setProps: Fn
-      onOpen: (beforeHook?: Fn) => void
+      onOpen: (beforeHook?: Fn) => Promise<void>
       onClose: Fn
       onYes: (
         apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
@@ -209,7 +209,15 @@ export declare namespace WForm {
       }
     }
 
-    type DividerSchema<D> = DynamicSchemaItemProps<'Extend:Divider', D>
+    type DividerSchema<D> = DynamicSchemaItemProps<
+      'Extend:Divider',
+      D,
+      {
+        // since sticky element will got a transparent background, so we need to provide a bgColor
+        sticky: boolean
+        bgColor: string
+      }
+    >
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
     type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
     type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>

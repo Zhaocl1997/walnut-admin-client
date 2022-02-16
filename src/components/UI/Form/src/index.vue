@@ -63,6 +63,12 @@
                 v-show={item.foldShow}
                 key={item.componentProp?.title}
                 span={24}
+                class={item.extraProp?.sticky ? 'sticky top-0 z-10' : ''}
+                style={
+                  item.extraProp?.sticky
+                    ? { backgroundColor: item.extraProp.bgColor }
+                    : {}
+                }
               >
                 <WFormItemExtendDivider index={index} {...item.componentProp} />
               </n-gi>

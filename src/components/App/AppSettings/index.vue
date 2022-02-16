@@ -48,6 +48,7 @@
 <script lang="tsx" setup>
   import WIcon from '/@/components/UI/Icon'
   import AppColors from './component/colors.vue'
+  import { getTheme } from '/@/App/src/naive'
 
   const { app, settings } = useAppState()
   const { t } = useAppI18n()
@@ -81,6 +82,8 @@
   const breadcrumbRelatives = ref(settings.value.ForDevelopers.breadcrumb)
   const tabRelatives = ref(settings.value.ForDevelopers.tab)
 
+  const modalColor = getTheme.value?.Drawer.common?.modalColor
+
   const { copy, copied } = useClipboard({
     source: computed(() =>
       JSON.stringify(settings.value.ForDevelopers, null, 4)
@@ -106,6 +109,10 @@
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
+        },
+        extraProp: {
+          sticky: true,
+          bgColor: modalColor,
         },
       },
 
@@ -271,6 +278,10 @@
           titlePlacement: 'left',
           foldable: true,
         },
+        extraProp: {
+          sticky: true,
+          bgColor: modalColor,
+        },
       },
       {
         type: 'Base:Switch',
@@ -420,6 +431,10 @@
           titlePlacement: 'left',
           foldable: true,
         },
+        extraProp: {
+          sticky: true,
+          bgColor: modalColor,
+        },
       },
       {
         type: 'Base:Switch',
@@ -509,6 +524,10 @@
           titlePlacement: 'left',
           foldable: true,
         },
+        extraProp: {
+          sticky: true,
+          bgColor: modalColor,
+        },
       },
       {
         type: 'Base:InputNumber',
@@ -581,6 +600,10 @@
           titlePlacement: 'left',
           foldable: true,
         },
+        extraProp: {
+          sticky: true,
+          bgColor: modalColor,
+        },
       },
       {
         type: 'Base:Switch',
@@ -622,6 +645,10 @@
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
+        },
+        extraProp: {
+          sticky: true,
+          bgColor: modalColor,
         },
       },
       {

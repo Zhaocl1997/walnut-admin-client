@@ -19,7 +19,8 @@
 
   import { useRedirect } from '/@/hooks/core/useRedirect'
   import { sortTab } from '/@/core/tab'
-  import { getCustomTheme, toggleLeftMenuLayout } from '/@/settings'
+  import { getCustomTheme } from '/@/App/src/naive'
+  import { toggleLeftMenuLayout } from '/@/settings'
 
   import { getTabsContext } from '../hooks/useTabsContext'
 

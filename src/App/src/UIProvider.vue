@@ -1,18 +1,13 @@
 <script lang="tsx">
   import type { GlobalThemeOverrides } from 'naive-ui'
-  import { darkTheme } from 'naive-ui'
   import { zhCN, dateZhCN } from 'naive-ui'
-  import { getCommonTheme } from '/@/settings'
+  import { getCommonTheme, getTheme } from './naive'
 
   export default defineComponent({
     name: 'UIProvider',
 
     setup(_, { slots }) {
       const { app } = useAppState()
-
-      const getTheme = computed(() =>
-        !app.value.isDark ? undefined : darkTheme
-      )
 
       const getThemeOverrides = computed(
         (): GlobalThemeOverrides => ({
