@@ -1,6 +1,6 @@
 <template>
-  <div class="*hstack justify-between p-1">
-    <div v-if="tabSettings.showUtils" class="*hstack flex-none justify-start">
+  <div class="hstack justify-between p-1">
+    <div v-if="tabSettings.showUtils" class="hstack flex-none justify-start">
       <TabsUtils :lists="leftUtils"></TabsUtils>
     </div>
 
@@ -13,7 +13,7 @@
       <TabsContentMain></TabsContentMain>
     </div>
 
-    <div v-if="tabSettings.showUtils" class="*hstack flex-none justify-end">
+    <div v-if="tabSettings.showUtils" class="hstack flex-none justify-end">
       <TabsUtils :lists="rightUtils"></TabsUtils>
     </div>
 

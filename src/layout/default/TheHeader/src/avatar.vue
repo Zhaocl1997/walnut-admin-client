@@ -1,6 +1,6 @@
 <template>
   <n-dropdown trigger="hover" @select="onSelect" :options="dropdownOptions">
-    <div class="*hstack">
+    <div class="hstack">
       <n-avatar
         src="/assets/logo.png"
         circle

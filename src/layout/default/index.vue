@@ -14,7 +14,7 @@
       <TheAside />
     </n-drawer>
 
-    <div class="*vstack flex-1 h-screen w-full overflow-x-hidden">
+    <div class="vstack flex-1 h-screen w-full overflow-x-hidden">
       <MainHeader v-if="setting.app.fixHeader" />
 
       <n-layout-content

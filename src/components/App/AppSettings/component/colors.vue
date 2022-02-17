@@ -18,7 +18,7 @@
       const colors = getThemeColors(props.modelValue!)
 
       return () => (
-        <div class="flex flex-row flex-nowrap space-x-3">
+        <div class="hstack space-x-3">
           {colors?.map((color) => (
             <span
               onClick={() =>

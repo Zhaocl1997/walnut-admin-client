@@ -5,12 +5,12 @@
     vertical
     :height="settings.ForDevelopers.tab.height + 'px'"
   >
-    <ul id="tabSortable" class="*hstack">
+    <ul id="tabSortable" class="hstack">
       <li
         v-for="(item, index) in tab.tabs"
         :key="item.name"
         :class="[
-          '*hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
+          'hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
           getTabStyle(item),
           {
             'tab-draggable': !item.meta.affix,
@@ -43,7 +43,7 @@
           height="16"
         ></w-icon>
 
-        <span class="text-sm whitespace-nowrap">
+        <span class="text-sm whitespace-nowrap hover:text-primaryHover">
           {{ t(item.meta.title!)  }}
         </span>
 

@@ -48,7 +48,11 @@
 
         <div
           class="h-full w-full flex items-center justify-center self-center space-x-8"
-          w:children=" bg-gray-900 rounded-3xl font-bold flex items-center justify-center w-2/5 h-2/5 text-9xl md:(w-1/4 h-2/5 text-[10rem]) lg:(w-1/4 h-3/5 text-[14rem]) xl:(w-1/4 h-3/5 text-[16rem]) 2xl:(w-2/9 h-3/5 text-[18rem])"
+          w:children="bg-gray-900 rounded-3xl font-bold flex items-center justify-center w-2/5 h-2/5 text-9xl"
+          w:children:md="w-1/4 h-2/5 text-[10rem]"
+          w:children:lg="w-1/4 h-3/5 text-[14rem]"
+          w:children:xl="w-1/4 h-3/5 text-[16rem]"
+          w:children:2xl="w-2/9 h-3/5 text-[18rem]"
         >
           <n-time :time="now" format="HH"></n-time>
 

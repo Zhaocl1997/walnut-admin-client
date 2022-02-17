@@ -11,7 +11,7 @@
       zIndex: 999,
     }"
   >
-    <div class="*hstack justify-between items-center h-full w-full">
+    <div class="hstack justify-between items-center h-full w-full">
       <img
         src="/assets/logo.png"
         :alt="`${getAppTitle} Logo`"

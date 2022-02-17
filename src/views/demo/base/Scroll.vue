@@ -66,7 +66,7 @@
         vertical
         height="100px"
       >
-        <div class="*hstack whitespace-nowrap">
+        <div class="hstack whitespace-nowrap">
           <div v-for="i in 100" :key="i" class="text-3xl mx-3">
             Vertical-{{ i }}
           </div>

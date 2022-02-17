@@ -1,9 +1,7 @@
 <template>
   <n-layout-footer bordered :inverted="setting.header.inverted">
     <div class="py-0.5">
-      <div
-        class="flex flex-row flex-nowrap space-x-1 items-center justify-center"
-      >
+      <div class="hstack space-x-1 items-center justify-center">
         <span>Copyright</span>
 
         <w-icon

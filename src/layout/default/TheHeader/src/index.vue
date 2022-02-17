@@ -1,7 +1,7 @@
 <template>
   <div class="select-none">
-    <div class="*hstack justify-between h-full items-center">
-      <div class="*hstack items-center justify-between space-x-2">
+    <div class="hstack justify-between h-full items-center">
+      <div class="hstack items-center justify-between space-x-2">
         <img
           v-if="appMemo.isMobile"
           src="/assets/logo.png"
@@ -21,7 +21,7 @@
         <w-transition name="slide-up">
           <div
             v-if="settings.ForDevelopers.app.layout === 'top-menu'"
-            class="*hstack items-center justify-between"
+            class="hstack items-center justify-between"
           >
             <TheLogo class="mr-16" />
             <TheMenu />
@@ -31,9 +31,10 @@
 
       <div
         :class="[
-          '*hstack justify-end space-x-2 h-full children:(cursor-pointer flex items-center px-0.5 h-full)',
+          'hstack justify-end space-x-2 h-full',
           { 'space-x-1': appMemo.isMobile },
         ]"
+        w:children="cursor-pointer flex items-center px-0.5 h-full"
       >
         <WAppFullScreen
           v-if="!appMemo.isMobile && headerSettings.showFullScreen"

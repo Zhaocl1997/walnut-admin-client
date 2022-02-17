@@ -2,7 +2,7 @@
   <!-- https://tailwindcomponents.com/component/login-register-form-with-image -->
   <section class="min-h-screen flex items-stretch">
     <div
-      class="*hstack space-x-4 absolute top-8 right-8 z-50 children:cursor-pointer"
+      class="hstack space-x-4 absolute top-8 right-8 z-50 children:cursor-pointer"
     >
       <WAppLocalePicker />
       <WAppDarkMode />

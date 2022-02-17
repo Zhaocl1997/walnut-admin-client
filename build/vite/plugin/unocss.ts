@@ -15,6 +15,9 @@ export const createUnoCSSPlugin = (): VitePlugin[] => {
         primary: 'var(--primary-color)',
         primaryHover: 'var(--primary-color-hover)',
 
+        info: 'var(--info-color)',
+        infoHover: 'var(--info-color-hover)',
+
         error: 'var(--error-color)',
         errorHover: 'var(--error-color-hover)',
 
