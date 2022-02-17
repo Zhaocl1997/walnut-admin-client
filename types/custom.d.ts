@@ -38,7 +38,7 @@ declare global {
   type ValueOfAppLockModeConst = import('/@/const').ValueOfAppLockModeConst
 
   // vite
-  type VitePlugin = import('vite').Plugin
+  type VitePlugin = import('vite').PluginOption
 
   // Utils
   type MaybeRef<T> = import('@vueuse/core').MaybeRef<T>

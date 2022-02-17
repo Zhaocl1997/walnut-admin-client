@@ -1,9 +1,10 @@
-import html from 'vite-plugin-html'
+import { createHtmlPlugin as CHP } from 'vite-plugin-html'
 
 export const createHTMLPlugin = (title: string): VitePlugin[] => {
-  return html({
+  return CHP({
+    minify: true,
     inject: {
-      injectData: {
+      data: {
         title: title,
       },
     },
