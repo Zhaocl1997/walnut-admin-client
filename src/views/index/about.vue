@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-2">
     <w-card
-      title="相关信息"
+      :title="t('about:title:info')"
       size="small"
       :segmented="{
         content: true,
@@ -19,7 +19,7 @@
     </w-card>
 
     <w-card
-      title="生产依赖"
+      :title="t('about:title:deps')"
       size="small"
       :segmented="{
         content: true,
@@ -37,7 +37,7 @@
     </w-card>
 
     <w-card
-      title="开发依赖"
+      :title="t('about:title:devdeps')"
       size="small"
       :segmented="{
         content: true,
@@ -101,15 +101,21 @@
   ])
 
   const DepItems = ref<WDescriptionsItem[]>(
-    Object.entries(pkg.dependencies).map(([k, v]) => {
-      return { label: k, value: v }
-    }) as WDescriptionsItem[]
+    Object.entries(pkg.dependencies).map(([k, v]) => ({
+      label: k,
+      value: v,
+      type: 'link',
+      typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
+    })) as WDescriptionsItem[]
   )
 
   const DevDepItems = ref<WDescriptionsItem[]>(
-    Object.entries(pkg.devDependencies).map(([k, v]) => {
-      return { label: k, value: v }
-    }) as WDescriptionsItem[]
+    Object.entries(pkg.devDependencies).map(([k, v]) => ({
+      label: k,
+      value: v,
+      type: 'link',
+      typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
+    })) as WDescriptionsItem[]
   )
 </script>
 
