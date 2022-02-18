@@ -10,7 +10,7 @@
           icon="ant-design:copyright-circle-outlined"
         ></w-icon>
 
-        <span> 2020-present {{ getAppTitle }} </span>
+        <span> 2020-PRESENT {{ getAppTitle }} </span>
       </div>
     </div>
   </n-layout-footer>
