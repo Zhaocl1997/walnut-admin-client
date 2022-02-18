@@ -4,9 +4,6 @@ export const useTabStyle = (settings: AppSettings) => {
   const tabSettings = settings.tab
 
   const getTabStyle = (item: AppTab) => ({
-    'text-primary hover:text-primaryHover':
-      currentRoute.value.name === item.name,
-
     /* card */
     'border border-gray-400 hover:border-primaryHover hover:text-primaryHover':
       tabSettings.styleMode === TabStyleModeConst.CARD,
@@ -27,6 +24,9 @@ export const useTabStyle = (settings: AppSettings) => {
     'bg-green-200 bg-opacity-10 border-l-1 border-primary':
       currentRoute.value.name === item.name &&
       tabSettings.styleMode === TabStyleModeConst.ROUND,
+
+    'text-primary hover:text-primaryHover':
+      currentRoute.value.name === item.name,
   })
 
   return { getTabStyle }
