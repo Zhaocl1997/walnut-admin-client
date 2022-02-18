@@ -347,16 +347,12 @@
         },
       },
       {
-        type: 'Base:Select',
+        type: 'Extend:TransitionSelect',
         formProp: {
           path: 'animationName',
         },
         componentProp: {
           disabled: computed(() => !appRelatives.value.showAnimation),
-          options: Object.values(TransitionNameConst).map((i) => ({
-            value: i,
-            label: i,
-          })),
         },
       },
       {

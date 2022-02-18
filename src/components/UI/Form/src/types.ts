@@ -118,6 +118,7 @@ export declare namespace WForm {
       }
 
       'Extend:IconPicker': {}
+      'Extend:TransitionSelect': {}
       'Extend:RoleSelect': {
         multiple?: boolean
         valueSeparator?: string
@@ -220,6 +221,10 @@ export declare namespace WForm {
     >
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
     type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
+    type TransitionSelectSchema<D> = DynamicSchemaItemProps<
+      'Extend:TransitionSelect',
+      D
+    >
     type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
 
     type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
@@ -245,6 +250,7 @@ export declare namespace WForm {
       | DividerSchema<D>
       | QuerySchema<D>
       | IconPickerSchema<D>
+      | TransitionSelectSchema<D>
       | RoleSelectSchema<D>
       | RenderSchema<D>
       | SlotSchema<D>

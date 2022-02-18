@@ -22,24 +22,16 @@
         show.value = false
         setTimeout(() => {
           show.value = true
-        }, 500)
+        }, 1000)
       }
 
       const [register] = useForm({
         span: 6,
         schemas: [
           {
-            type: 'Base:Select',
+            type: 'Extend:TransitionSelect',
             formProp: {
               path: 'name',
-            },
-            componentProp: {
-              options: Object.entries(TransitionNameConst).map(
-                ([key, value]) => ({
-                  value: value,
-                  label: key,
-                })
-              ),
             },
           },
           {

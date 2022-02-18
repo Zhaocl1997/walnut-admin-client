@@ -37,13 +37,6 @@
         input6: undefined,
       })
 
-      const transitionOptions = Object.entries(TransitionNameConst).map(
-        ([key, value]) => ({
-          label: value,
-          value: value,
-        })
-      )
-
       const [register1] = useForm({
         labelWidth: 200,
         span: 12,
@@ -56,13 +49,10 @@
             },
           },
           {
-            type: 'Base:Select',
+            type: 'Extend:TransitionSelect',
             formProp: {
               label: 'Transition for Input 1',
               path: 'transition1',
-            },
-            componentProp: {
-              options: transitionOptions,
             },
           },
           {
@@ -73,13 +63,10 @@
             },
           },
           {
-            type: 'Base:Select',
+            type: 'Extend:TransitionSelect',
             formProp: {
               label: 'Transition for Input 2',
               path: 'transition2',
-            },
-            componentProp: {
-              options: transitionOptions,
             },
           },
           {
