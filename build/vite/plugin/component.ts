@@ -48,6 +48,8 @@ export const createComponentPlugin = (): VitePlugin => {
   return Components({
     dirs: ['/@/components'],
 
+    extensions: ['vue', 'ts', 'tsx'],
+
     // allow auto import and register components used in markdown
     include: [
       /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
