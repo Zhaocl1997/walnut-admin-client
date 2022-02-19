@@ -4,7 +4,6 @@ export const defaultAppLocaleMessageKeys = [
   'updatedAt',
   'action',
   'icon',
-  'type',
   'order',
   'status',
   'description',
