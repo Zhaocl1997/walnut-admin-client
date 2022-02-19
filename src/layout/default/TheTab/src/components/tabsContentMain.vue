@@ -10,8 +10,8 @@
         v-for="(item, index) in tab.tabs"
         :key="item.name"
         :class="[
-          'hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
           getTabStyle(item),
+          'hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
           {
             'tab-draggable': !item.meta.affix,
           },
@@ -43,7 +43,7 @@
           height="16"
         ></w-icon>
 
-        <span class="text-sm whitespace-nowrap hover:text-primaryHover">
+        <span class="text-sm whitespace-nowrap">
           {{ t(item.meta.title!)  }}
         </span>
 
