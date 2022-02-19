@@ -133,14 +133,16 @@ export const useTableAPI = (
   onMounted(() => {
     if (!isUndefined(props.value?.apiProps)) {
       if (isFunction(props?.value?.apiProps?.listApi)) {
-        const defaultFormData = Object.fromEntries(
-          props.value.queryFormProps?.schemas
-            ?.map<[string, null]>((i) => [i?.formProp?.path!, null])
-            .filter((i) => i[0])!
-        )
+        if (props.value.queryFormProps) {
+          const defaultFormData = Object.fromEntries(
+            props.value.queryFormProps?.schemas
+              ?.map<[string, null]>((i) => [i?.formProp?.path!, null])
+              .filter((i) => i[0])!
+          )
 
-        initParams.value.query = easyDeepClone(defaultFormData)
-        commitParams()
+          initParams.value.query = easyDeepClone(defaultFormData)
+          commitParams()
+        }
 
         setProps({ remote: true })
         onInit()

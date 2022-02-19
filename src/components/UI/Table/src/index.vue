@@ -51,9 +51,11 @@
 
       const render = () => (
         <>
-          <n-card class="mb-1">
-            <QueryForm />
-          </n-card>
+          {getProps.value.queryFormProps && (
+            <n-card class="mb-1">
+              <QueryForm />
+            </n-card>
+          )}
 
           <n-card>
             <div class="mb-2 flex justify-between items-center">
