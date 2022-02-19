@@ -109,11 +109,7 @@ export const useFormAdvanced = (
           show-icon={false}
         >
           {{
-            default: () => (
-              <div class="border-t-1 border-b-1 p-4 border-gray-300">
-                <n-spin show={loading.value}>{render()}</n-spin>
-              </div>
-            ),
+            default: () => <n-spin show={loading.value}>{render()}</n-spin>,
             action: () => renderAction(),
           }}
         </n-modal>
