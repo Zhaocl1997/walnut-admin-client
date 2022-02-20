@@ -28,7 +28,7 @@ export class Cookie {
     value = isString(value) ? value : JSON.stringify(value)
     const finalValue = this.encrypt ? AppEncryption.encrypt(value) : value
     const exp = new Date()
-    exp.setTime(exp.getTime() + expire * 1000)
+    exp.setTime(exp.getTime() + expire)
     document.cookie = `${this.getKey(key)}=${escape(
       finalValue
     )};path=${path};expires=${exp.toUTCString()}`

@@ -51,7 +51,7 @@ export const useAppStorage = <T>(
 
         const str = JSON.stringify({
           v,
-          e: ex ?? new Date().getTime() + expire * 1000,
+          e: ex ?? new Date().getTime() + expire,
         })
 
         return encrypt ? AppEncryption.encrypt(str)! : str
