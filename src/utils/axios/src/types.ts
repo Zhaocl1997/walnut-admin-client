@@ -59,6 +59,12 @@ export interface AxiosCustomConfig {
   cache?: boolean
 
   /**
+   * @description cached time, default is 5 seconds
+   * @default 5000
+   */
+  cachedMiliseconds?: number
+
+  /**
    * @description filter null value in data
    * @default true
    */
