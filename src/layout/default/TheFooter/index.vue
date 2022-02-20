@@ -10,7 +10,7 @@
           icon="ant-design:copyright-circle-outlined"
         ></w-icon>
 
-        <span> 2020-PRESENT {{ getAppTitle }} </span>
+        <span> 2020-PRESENT {{ getAppTitle }} All Rights Reserved.</span>
       </div>
     </div>
   </n-layout-footer>
