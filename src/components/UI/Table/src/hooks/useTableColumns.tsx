@@ -2,7 +2,6 @@ import type { WTable } from '../types'
 import type { TableBaseColumn } from 'naive-ui/lib/data-table/src/interface'
 
 import { defaultAppLocaleMessageKeys } from '../../../shared'
-import { useDict, dictDataMap } from '/@/hooks/core/useDict'
 
 // Extend Naive UI columns
 export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
@@ -72,7 +71,7 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
           ...tItem,
 
           render(p) {
-            const dictData = dictDataMap.get(tItem.dictType)
+            const dictData = AppDictMap.get(tItem.dictType)
 
             const target = dictData?.find(
               (i) =>

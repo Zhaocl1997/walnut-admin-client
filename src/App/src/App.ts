@@ -8,7 +8,8 @@ import '/@/store'
 
 const setupErrorhandler = (app: App) => {
   app.config.errorHandler = (error) => {
-    AppBrowserError(error)
+    // AppBrowserError(error)
+    console.error(error)
   }
 
   app.config.warnHandler = (warn) => {
