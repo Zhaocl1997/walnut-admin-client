@@ -40,7 +40,7 @@ export const useDictDataRegister = (typeId: string) => {
           {
             key: 'label',
             width: 120,
-            align: 'center',
+
             extendType: 'formatter',
             formatter: (row) => t(row.label!),
           },
@@ -48,25 +48,22 @@ export const useDictDataRegister = (typeId: string) => {
           {
             key: 'value',
             width: 120,
-            align: 'center',
           },
 
           {
             key: 'order',
             width: 100,
-            align: 'center',
           },
 
           {
             key: 'description',
             width: 200,
-            align: 'center',
           },
 
           {
             key: 'status',
             width: 100,
-            align: 'center',
+
             extendType: 'dict',
             dictType: 'sys_shared_status',
             tagProps: (row) => ({
@@ -82,7 +79,7 @@ export const useDictDataRegister = (typeId: string) => {
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.createdAt!),
-            align: 'center',
+
             sorter: {
               multiple: 3,
             },
@@ -93,7 +90,7 @@ export const useDictDataRegister = (typeId: string) => {
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.updatedAt!),
-            align: 'center',
+
             sorter: {
               multiple: 4,
             },
@@ -102,7 +99,7 @@ export const useDictDataRegister = (typeId: string) => {
           {
             key: 'action',
             width: 240,
-            align: 'center',
+
             extendType: 'action',
             extendActionType: ['read', 'delete'],
             onRead: (row) => {

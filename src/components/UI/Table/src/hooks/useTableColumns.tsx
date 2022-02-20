@@ -29,6 +29,7 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
   }
 
   watchEffect(async () => {
+    // cached for dict column
     await Promise.all(
       props.value.columns?.map(
         async (i) => i.extendType === 'dict' && (await useDict(i.dictType))
@@ -37,6 +38,9 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
 
     // @ts-ignore
     columns.value = props.value.columns?.map((item) => {
+      // default value override
+      item.align = item.align ?? 'center'
+
       const tItem = props.value.localeUniqueKey ? translateItem(item) : item
 
       // formatter

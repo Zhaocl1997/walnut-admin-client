@@ -111,13 +111,12 @@
           {
             key: 'username',
             width: 100,
-            align: 'center',
           },
 
           {
             key: 'status',
             width: 100,
-            align: 'center',
+
             extendType: 'formatter',
             formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
             sorter: {
@@ -130,7 +129,7 @@
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.createdAt!),
-            align: 'center',
+
             sorter: {
               multiple: 1,
             },
@@ -141,12 +140,11 @@
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.updatedAt!),
-            align: 'center',
           },
 
           {
             key: 'action',
-            align: 'center',
+
             width: 180,
             extendType: 'action',
             extendActionType: ['read', 'delete'],

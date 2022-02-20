@@ -32,13 +32,12 @@ export const useDictTypeRegister = () => {
           {
             key: 'name',
             width: 120,
-            align: 'center',
           },
 
           {
             key: 'type',
             width: 140,
-            align: 'center',
+
             extendType: 'link',
             onClick: (p) => {
               // TODO make menu can pass dynamic params
@@ -53,13 +52,12 @@ export const useDictTypeRegister = () => {
           {
             key: 'description',
             width: 200,
-            align: 'center',
           },
 
           {
             key: 'status',
             width: 100,
-            align: 'center',
+
             extendType: 'dict',
             dictType: 'sys_shared_status',
             tagProps: (row) => ({
@@ -75,7 +73,7 @@ export const useDictTypeRegister = () => {
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.createdAt!),
-            align: 'center',
+
             sorter: {
               multiple: 3,
             },
@@ -86,7 +84,7 @@ export const useDictTypeRegister = () => {
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.updatedAt!),
-            align: 'center',
+
             sorter: {
               multiple: 4,
             },
@@ -95,7 +93,7 @@ export const useDictTypeRegister = () => {
           {
             key: 'action',
             width: 240,
-            align: 'center',
+
             extendType: 'action',
             extendActionType: ['read', 'delete'],
             onRead: (row) => {

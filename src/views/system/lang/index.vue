@@ -105,19 +105,17 @@
           {
             key: 'lang',
             width: 200,
-            align: 'center',
           },
 
           {
             key: 'description',
             width: 200,
-            align: 'center',
           },
 
           {
             key: 'order',
             width: 80,
-            align: 'center',
+
             sorter: {
               multiple: 1,
             },
@@ -126,7 +124,7 @@
           {
             key: 'status',
             width: 100,
-            align: 'center',
+
             extendType: 'formatter',
             formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
             sorter: {
@@ -139,7 +137,7 @@
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.createdAt!),
-            align: 'center',
+
             sorter: {
               multiple: 3,
             },
@@ -150,7 +148,7 @@
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.updatedAt!),
-            align: 'center',
+
             sorter: {
               multiple: 4,
             },
@@ -159,7 +157,7 @@
           {
             key: 'action',
             width: 240,
-            align: 'center',
+
             extendType: 'action',
             extendActionType: ['read', 'delete'],
             onRead: (row) => {

@@ -116,7 +116,7 @@
         {
           key: 'roleName',
           width: 200,
-          align: 'center',
+
           sorter: {
             multiple: 4,
           },
@@ -125,13 +125,12 @@
         {
           key: 'description',
           width: 200,
-          align: 'center',
         },
 
         {
           key: 'order',
           width: 100,
-          align: 'center',
+
           sorter: {
             multiple: 2,
           },
@@ -140,13 +139,12 @@
         {
           key: 'usersCount',
           width: 120,
-          align: 'center',
         },
 
         {
           key: 'status',
           width: 100,
-          align: 'center',
+
           extendType: 'formatter',
           formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
           sorter: {
@@ -159,7 +157,7 @@
           width: 200,
           extendType: 'formatter',
           formatter: (row) => formatTime(row.createdAt!),
-          align: 'center',
+
           sorter: {
             multiple: 1,
           },
@@ -170,12 +168,11 @@
           width: 200,
           extendType: 'formatter',
           formatter: (row) => formatTime(row.updatedAt!),
-          align: 'center',
         },
 
         {
           key: 'action',
-          align: 'center',
+
           width: 240,
           extendType: 'action',
           extendActionType: ['read', 'delete'],
