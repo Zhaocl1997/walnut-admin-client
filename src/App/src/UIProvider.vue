@@ -14,6 +14,11 @@
           common: {
             ...getCommonTheme.value,
           },
+
+          // change some default style
+          Dialog: {
+            contentMargin: '8px 0',
+          },
         })
       )
 
