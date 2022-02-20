@@ -1,5 +1,3 @@
-import { formatTime } from 'easy-fns-ts'
-
 import { dictDataAPI } from '/@/api/system/dict'
 
 export const useDictDataRegister = (typeId: string) => {
@@ -50,8 +48,10 @@ export const useDictDataRegister = (typeId: string) => {
           },
 
           {
-            key: 'order',
-            width: 100,
+            ...WTablePresetOrderColumn,
+            sorter: {
+              multiple: 1,
+            },
           },
 
           {
@@ -60,33 +60,21 @@ export const useDictDataRegister = (typeId: string) => {
           },
 
           {
-            key: 'status',
-            width: 100,
-            extendType: 'dict',
-            dictType: 'sys_shared_status',
-            tagProps: (row) => ({
-              type: row.status ? 'primary' : 'error',
-            }),
+            ...WTablePresetStatusColumn,
+            sorter: {
+              multiple: 2,
+            },
+          },
+
+          {
+            ...WTablePresetCreatedAtColumn,
             sorter: {
               multiple: 3,
             },
           },
 
           {
-            key: 'createdAt',
-            width: 200,
-            extendType: 'formatter',
-            formatter: (row) => formatTime(row.createdAt!),
-            sorter: {
-              multiple: 3,
-            },
-          },
-
-          {
-            key: 'updatedAt',
-            width: 200,
-            extendType: 'formatter',
-            formatter: (row) => formatTime(row.updatedAt!),
+            ...WTablePresetUpdatedAtColumn,
             sorter: {
               multiple: 4,
             },

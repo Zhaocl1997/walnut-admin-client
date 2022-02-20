@@ -78,6 +78,14 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/components/UI/Form': ['useForm'],
         '/@/components/UI/Table': ['useTable'],
         '/@/components/Advanced/CRUD': ['useCRUD'],
+
+        // table preset columns
+        '/@/components/UI/Table/src/utils/presetColumns': [
+          'WTablePresetOrderColumn',
+          'WTablePresetStatusColumn',
+          'WTablePresetCreatedAtColumn',
+          'WTablePresetUpdatedAtColumn',
+        ],
       },
     ],
   })

@@ -9,8 +9,6 @@
 </script>
 
 <script lang="ts" setup>
-  import { formatTime } from 'easy-fns-ts'
-
   import { userAPI } from '/@/api/system/user'
 
   // locale unique key
@@ -114,30 +112,21 @@
           },
 
           {
-            key: 'status',
-            width: 100,
-            extendType: 'formatter',
-            formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
+            ...WTablePresetStatusColumn,
             sorter: {
               multiple: 3,
             },
           },
 
           {
-            key: 'createdAt',
-            width: 200,
-            extendType: 'formatter',
-            formatter: (row) => formatTime(row.createdAt!),
+            ...WTablePresetCreatedAtColumn,
             sorter: {
               multiple: 1,
             },
           },
 
           {
-            key: 'updatedAt',
-            width: 200,
-            extendType: 'formatter',
-            formatter: (row) => formatTime(row.updatedAt!),
+            ...WTablePresetUpdatedAtColumn,
           },
 
           {

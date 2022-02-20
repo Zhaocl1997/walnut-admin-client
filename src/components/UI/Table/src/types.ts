@@ -67,15 +67,14 @@ export declare namespace WTable {
     }
   }
 
-  type Column<T = RowData> =
-    | DataTableColumn<T> &
-        (
-          | ExtendType.Action<T>
-          | ExtendType.Icon<T>
-          | ExtendType.Formatter<T>
-          | ExtendType.Link<T>
-          | ExtendType.Dictionary<T>
-        )
+  type Column<T = RowData> = DataTableColumn<T> &
+    (
+      | ExtendType.Action<T>
+      | ExtendType.Icon<T>
+      | ExtendType.Formatter<T>
+      | ExtendType.Link<T>
+      | ExtendType.Dictionary<T>
+    )
 
   interface Props<T = RowData>
     extends Partial<

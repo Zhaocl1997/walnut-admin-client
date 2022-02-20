@@ -9,8 +9,6 @@
 </script>
 
 <script lang="tsx" setup>
-  import { formatTime } from 'easy-fns-ts'
-
   import { roleAPI } from '/@/api/system/role'
 
   import MenuTree from './MenuTree.vue'
@@ -116,7 +114,6 @@
         {
           key: 'roleName',
           width: 200,
-
           sorter: {
             multiple: 4,
           },
@@ -128,44 +125,33 @@
         },
 
         {
-          key: 'order',
-          width: 100,
+          key: 'usersCount',
+          width: 120,
+        },
 
+        {
+          ...WTablePresetOrderColumn,
           sorter: {
             multiple: 2,
           },
         },
 
         {
-          key: 'usersCount',
-          width: 120,
-        },
-
-        {
-          key: 'status',
-          width: 100,
-          extendType: 'formatter',
-          formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
+          ...WTablePresetStatusColumn,
           sorter: {
             multiple: 3,
           },
         },
 
         {
-          key: 'createdAt',
-          width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.createdAt!),
+          ...WTablePresetCreatedAtColumn,
           sorter: {
             multiple: 1,
           },
         },
 
         {
-          key: 'updatedAt',
-          width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.updatedAt!),
+          ...WTablePresetUpdatedAtColumn,
         },
 
         {

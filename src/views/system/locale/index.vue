@@ -11,8 +11,6 @@
 <script lang="ts" setup>
   import type { WForm } from '/@/components/UI/Form'
 
-  import { formatTime } from 'easy-fns-ts'
-
   import { localeAPI } from '/@/api/system/locale'
 
   import { useLangList } from './useLangList'
@@ -115,18 +113,12 @@
         },
 
         {
-          key: 'createdAt',
-          width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.createdAt!),
+          ...WTablePresetCreatedAtColumn,
           sorter: true,
         },
 
         {
-          key: 'updatedAt',
-          width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.updatedAt!),
+          ...WTablePresetUpdatedAtColumn,
           sorter: true,
         },
 

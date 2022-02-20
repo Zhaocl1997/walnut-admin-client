@@ -1,5 +1,3 @@
-import { formatTime } from 'easy-fns-ts'
-
 import { dictTypeAPI } from '/@/api/system/dict'
 
 export const useDictTypeRegister = () => {
@@ -54,33 +52,21 @@ export const useDictTypeRegister = () => {
           },
 
           {
-            key: 'status',
-            width: 100,
-            extendType: 'dict',
-            dictType: 'sys_shared_status',
-            tagProps: (row) => ({
-              type: row.status ? 'primary' : 'error',
-            }),
+            ...WTablePresetStatusColumn,
             sorter: {
               multiple: 2,
             },
           },
 
           {
-            key: 'createdAt',
-            width: 200,
-            extendType: 'formatter',
-            formatter: (row) => formatTime(row.createdAt!),
+            ...WTablePresetCreatedAtColumn,
             sorter: {
               multiple: 3,
             },
           },
 
           {
-            key: 'updatedAt',
-            width: 200,
-            extendType: 'formatter',
-            formatter: (row) => formatTime(row.updatedAt!),
+            ...WTablePresetUpdatedAtColumn,
             sorter: {
               multiple: 4,
             },
