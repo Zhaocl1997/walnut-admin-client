@@ -19,6 +19,8 @@ declare global {
     name: string
     path: string
     meta: RouteMeta
+    query?: Recordable
+    params: Recordable
   }
 
   // menu
@@ -74,6 +76,24 @@ declare global {
     key?: string
     value?: string
     process?: number
+  }
+
+  // dict type
+  interface AppDictType extends BaseAppModel {
+    name?: string
+    type?: string
+    status?: boolean
+    description?: string
+  }
+
+  // dict data
+  interface AppDictData extends BaseAppModel {
+    typeId?: string
+    label?: string
+    value?: string
+    order?: number
+    status?: boolean
+    description?: string
   }
 }
 
