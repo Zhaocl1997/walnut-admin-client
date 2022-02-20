@@ -116,7 +116,6 @@
           {
             key: 'status',
             width: 100,
-
             extendType: 'formatter',
             formatter: (row) => (row.status ? 'Normal' : 'Disabled'),
             sorter: {
@@ -129,7 +128,6 @@
             width: 200,
             extendType: 'formatter',
             formatter: (row) => formatTime(row.createdAt!),
-
             sorter: {
               multiple: 1,
             },
@@ -144,7 +142,6 @@
 
           {
             key: 'action',
-
             width: 180,
             extendType: 'action',
             extendActionType: ['read', 'delete'],

@@ -103,7 +103,6 @@
 
         {
           key: 'key',
-
           width: 400,
           sorter: true,
         },
@@ -111,7 +110,6 @@
         {
           key: 'process',
           width: 100,
-
           extendType: 'formatter',
           formatter: (row) => (row.process! * 100).toFixed(2) + '%',
         },
@@ -119,7 +117,6 @@
         {
           key: 'createdAt',
           width: 200,
-
           extendType: 'formatter',
           formatter: (row) => formatTime(row.createdAt!),
           sorter: true,
@@ -128,7 +125,6 @@
         {
           key: 'updatedAt',
           width: 200,
-
           extendType: 'formatter',
           formatter: (row) => formatTime(row.updatedAt!),
           sorter: true,
@@ -136,7 +132,6 @@
 
         {
           key: 'action',
-
           width: 180,
           extendType: 'action',
           extendActionType: ['read', 'delete'],
