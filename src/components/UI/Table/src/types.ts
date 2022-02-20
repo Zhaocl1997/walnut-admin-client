@@ -1,4 +1,4 @@
-import type { DataTableColumn, DataTableInst } from 'naive-ui'
+import type { DataTableColumn, DataTableInst, TagProps } from 'naive-ui'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import { props } from './props'
@@ -56,11 +56,26 @@ export declare namespace WTable {
     interface Formatter<T = RowData> extends BaseExtend<'formatter'> {
       formatter: RenderFn<T, string>
     }
+
+    interface Link<T = RowData> extends BaseExtend<'link'> {
+      onClick: RenderFn<T, void>
+    }
+
+    interface Dictionary<T = RowData> extends BaseExtend<'dict'> {
+      dictType: string
+      tagProps?: RenderFn<T, TagProps>
+    }
   }
 
   type Column<T = RowData> =
     | DataTableColumn<T> &
-        (ExtendType.Action<T> | ExtendType.Icon<T> | ExtendType.Formatter<T>)
+        (
+          | ExtendType.Action<T>
+          | ExtendType.Icon<T>
+          | ExtendType.Formatter<T>
+          | ExtendType.Link<T>
+          | ExtendType.Dictionary<T>
+        )
 
   interface Props<T = RowData>
     extends Partial<
