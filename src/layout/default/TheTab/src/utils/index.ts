@@ -19,5 +19,7 @@ export const createTab = (route: RouteLocationNormalizedLoaded): AppTab => {
     name: route.name as string,
     path: route.path,
     meta: route.meta,
+    query: route.query,
+    params: route.params,
   }
 }

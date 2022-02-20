@@ -151,21 +151,24 @@ export const sortTab = () => {
  * @description Action - Tab - Create tab
  */
 export const buildTabs = (
-  paayload: AppTab,
+  payload: AppTab,
   method: 'push' | 'unshift' = 'push'
 ) => {
   // redirect/404 etc pages do not need to add into tab
-  if (nameBlackList.includes(paayload.name)) return
+  if (nameBlackList.includes(payload.name)) return
 
-  const index = tab.value.tabs.findIndex((item) => item.name === paayload.name)
+  const index = tab.value.tabs.findIndex((item) => item.name === payload.name)
 
   // not found
   if (index === -1) {
     const cached = tab.value.visitedTabs.get(SymbolKeyConst.TABS_KEY)
 
-    if (!cached || (cached && !cached.includes(paayload.name))) {
-      tab.value.tabs[method](paayload)
+    if (!cached || (cached && !cached.includes(payload.name))) {
+      tab.value.tabs[method](payload)
     }
+  } else {
+    // if found, update tab
+    tab.value.tabs[index] = payload
   }
 
   // set cached tabs
