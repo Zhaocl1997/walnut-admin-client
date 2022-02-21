@@ -22,7 +22,7 @@ export interface AxiosTransform {
    */
   responseInterceptors?: (
     res: AxiosResponse<BaseResponseStructure>
-  ) => Promise<RowData>
+  ) => Promise<RowData | void>
 
   /**
    * @description Axios original response error catch

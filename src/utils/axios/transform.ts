@@ -1,7 +1,7 @@
 import type { AxiosTransform } from './src/types'
 
 import { checkReponseErrorStatus } from './checkStatus'
-import { filterObjNull } from '../shared'
+import { FilterObjectFalsyValueDeep } from '../shared'
 
 const { token } = useAppState()
 
@@ -23,8 +23,8 @@ export const transform: AxiosTransform = {
     }
 
     // filter null value in config.data
-    if (mergedCustomOptions.filterNull) {
-      config.data = filterObjNull(config.data)
+    if (mergedCustomOptions.filterNull && config.data) {
+      config.data = FilterObjectFalsyValueDeep(config.data)
     }
 
     return config
