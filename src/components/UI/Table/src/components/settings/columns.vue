@@ -22,7 +22,7 @@
             :indeterminate="getIndeterminate"
             @update-checked="onUpdateCheckAllChecked"
           >
-            Check All
+            {{ t('table:base:settings:column:checkAll') }}
           </n-checkbox>
         </template>
 
@@ -43,14 +43,14 @@
                     ></w-icon>
                   </template>
 
-                  Drag to sort
+                  {{ t('table:base:settings:column:drag') }}
                 </n-tooltip>
 
                 <n-checkbox
                   :checked="!item.className?.includes('hidden')"
                   @update-checked="onUpdateItemChecked(index)"
                 >
-                  {{ item.title }}
+                  {{ getTitle(item) }}
                 </n-checkbox>
               </div>
 
@@ -71,7 +71,11 @@
                     ></w-icon>
                   </template>
 
-                  Fix in left
+                  {{
+                    item.fixed === 'left'
+                      ? t('table:base:settings:column:unfix')
+                      : t('table:base:settings:column:fixLeft')
+                  }}
                 </n-tooltip>
 
                 <div
@@ -94,7 +98,11 @@
                     ></w-icon>
                   </template>
 
-                  Fix in right
+                  {{
+                    item.fixed === 'right'
+                      ? t('table:base:settings:column:unfix')
+                      : t('table:base:settings:column:fixRight')
+                  }}
                 </n-tooltip>
               </div>
             </div>
@@ -107,6 +115,7 @@
 
 <script lang="ts" setup>
   import type Sortable from 'sortablejs'
+  import type { WTable } from '../../types'
 
   import { useSortable } from '/@/hooks/component/useSortable'
   import { useTableContext } from '../../hooks/useTableContext'
@@ -128,11 +137,6 @@
   const getIndeterminate = computed(() =>
     tableColumns.value.some((i) => i.className?.includes('hidden'))
   )
-
-  watchEffect(() => {
-    // console.log(getChecked.value)
-    console.log(getIndeterminate.value)
-  })
 
   let inst: Sortable
 
@@ -191,6 +195,18 @@
     } else {
       current.fixed = undefined
     }
+  }
+
+  const getTitle = (item: WTable.Column) => {
+    if (typeof item.title === 'string') {
+      return item.title
+    }
+
+    if (typeof item.title === 'function') {
+      return item.title()
+    }
+
+    return undefined
   }
 </script>
 
