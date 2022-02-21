@@ -91,6 +91,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
 
       rollupOptions: {
+        external: ['virtual:terminal'],
         output: {
           assetFileNames: '[ext]/[name].[hash].[ext]',
           chunkFileNames: 'js/[name].[hash].js',
@@ -98,10 +99,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
           // https://rollupjs.org/guide/en/#outputmanualchunks
           manualChunks(id) {
-            if (id.includes('node_modules')) {
+            if (id.includes('node_modules/.pnpm')) {
               return id
                 .toString()
-                .split('node_modules/')[1]
+                .split('node_modules/.pnpm/')[1]
                 .split('/')[0]
                 .toString()
             }
