@@ -22,12 +22,6 @@
   ] = useCRUD<AppRole>({
     baseAPI: roleAPI,
 
-    // default value for create form
-    defaultFormData: {
-      status: true,
-      menus: [],
-    },
-
     onBeforeRequest: (data) => {
       if ((data.status! as unknown as number) === 1) {
         data.status = true
@@ -186,9 +180,7 @@
           },
           componentProp: {
             clearable: true,
-            disabled: computed(
-              (): boolean => onGetActionType().value === 'update'
-            ),
+            disabled: computed(() => onGetActionType().value === 'update'),
           },
         },
         {
@@ -208,12 +200,16 @@
           },
           componentProp: {
             clearable: true,
+            defaultValue: 0,
           },
         },
         {
           type: 'Base:Switch',
           formProp: {
             path: 'status',
+          },
+          componentProp: {
+            defaultValue: true,
           },
         },
         {

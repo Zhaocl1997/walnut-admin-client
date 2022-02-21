@@ -26,9 +26,6 @@
   ] = useCRUD<AppLocale>({
     baseAPI: localeAPI,
 
-    // default value for create form
-    defaultFormData: {},
-
     onBeforeRequest: (data) => {
       return data
     },

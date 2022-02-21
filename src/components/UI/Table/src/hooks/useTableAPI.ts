@@ -6,6 +6,7 @@ import type { WTable } from '../types'
 
 import { easyDeepClone, isFunction, isNumber, isUndefined } from 'easy-fns-ts'
 import { generateBaseListParams } from '../utils'
+import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'
 
 export const useTableAPI = (
   inst: Ref<WTable.Inst.NDataTableInst | undefined>,
@@ -134,13 +135,11 @@ export const useTableAPI = (
     if (!isUndefined(props.value?.apiProps)) {
       if (isFunction(props?.value?.apiProps?.listApi)) {
         if (props.value.queryFormProps) {
-          const defaultFormData = Object.fromEntries(
-            props.value.queryFormProps?.schemas
-              ?.map<[string, null]>((i) => [i?.formProp?.path!, null])
-              .filter((i) => i[0])!
+          const defaultQueryFormData = extractDefaultFormDataFromSchemas(
+            props.value.queryFormProps?.schemas!
           )
 
-          initParams.value.query = easyDeepClone(defaultFormData)
+          initParams.value.query = easyDeepClone(defaultQueryFormData)
           commitParams()
         }
 

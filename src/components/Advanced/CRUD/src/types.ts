@@ -7,7 +7,6 @@ export declare namespace WCrud {
 
   type Props<T = RowData> = {
     baseAPI?: BaseAPIType<T>
-    defaultFormData?: T
     onBeforeRequest?: (data: T) => T
     tableProps?: Omit<WTable.Props<T>, 'apiProps'>
     formProps?: Omit<WForm.Props<T>, 'advancedProps'>

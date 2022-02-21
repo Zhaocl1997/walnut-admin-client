@@ -160,7 +160,13 @@ export declare namespace WForm {
 
       type: T
 
-      componentProp?: ComponentPropPool<D>[T] & DomProps
+      componentProp?: ComponentPropPool<D>[T] &
+        DomProps & {
+          /**
+           * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
+           */
+          defaultValue?: BaseDataType | BaseDataType[] | undefined | null
+        }
 
       formProp?: Omit<FormItemProps, 'rule'> & {
         /**

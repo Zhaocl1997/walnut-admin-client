@@ -11,6 +11,7 @@
 
   import { isFunction } from 'easy-fns-ts'
   import { useProps } from '/@/hooks/core/useProps'
+  import { extractDefaultFormDataFromSchemas } from '/@/components/UI/Form/src/utils'
 
   interface InternalProps extends WCrud.Props {}
 
@@ -27,8 +28,12 @@
   const actionType = ref<ActionType>('')
 
   // state
+  const defaultCreateAndUpdateFormData = extractDefaultFormDataFromSchemas(
+    getProps.value.formProps?.schemas!
+  )
+
   const { stateRef: formData, resetState: resetFormData } = useState(
-    getProps.value.defaultFormData ?? {}
+    defaultCreateAndUpdateFormData
   )
 
   const onCreateAndOpen = () => {

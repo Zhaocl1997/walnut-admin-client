@@ -10,12 +10,6 @@ export const useDictDataRegister = (typeId: string) => {
     useCRUD<AppDictData>({
       baseAPI: dictDataAPI,
 
-      defaultFormData: {
-        typeId,
-        order: 0,
-        status: true,
-      },
-
       tableProps: {
         localeUniqueKey: key,
         rowKey: (row) => row._id!,
@@ -32,6 +26,53 @@ export const useDictDataRegister = (typeId: string) => {
             default:
               break
           }
+        },
+
+        queryFormProps: {
+          localeUniqueKey: key,
+          localeWithTable: true,
+          span: 8,
+          showFeedback: false,
+          labelWidth: 100,
+          // query form schemas
+          schemas: [
+            {
+              type: 'Base:Input',
+              formProp: {
+                path: 'typeId',
+              },
+              componentProp: {
+                defaultValue: typeId,
+              },
+              extraProp: {
+                vIf: false,
+              },
+            },
+
+            {
+              type: 'Base:Input',
+              formProp: {
+                path: 'value',
+              },
+              componentProp: {
+                clearable: true,
+              },
+            },
+
+            {
+              type: 'Base:Input',
+              formProp: {
+                path: 'description',
+              },
+              componentProp: {
+                clearable: true,
+              },
+            },
+
+            {
+              type: 'Extend:Query',
+            },
+          ],
         },
 
         columns: [
@@ -112,6 +153,7 @@ export const useDictDataRegister = (typeId: string) => {
             },
             componentProp: {
               clearable: true,
+              defaultValue: typeId,
             },
             extraProp: {
               vShow: false,
@@ -145,6 +187,7 @@ export const useDictDataRegister = (typeId: string) => {
             },
             componentProp: {
               clearable: true,
+              defaultValue: 0,
             },
           },
 
@@ -152,6 +195,9 @@ export const useDictDataRegister = (typeId: string) => {
             type: 'Base:Switch',
             formProp: {
               path: 'status',
+            },
+            componentProp: {
+              defaultValue: true,
             },
           },
 

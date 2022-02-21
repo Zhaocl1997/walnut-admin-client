@@ -18,11 +18,6 @@
     useCRUD<AppUser>({
       baseAPI: userAPI,
 
-      // default value for create form
-      defaultFormData: {
-        status: true,
-      },
-
       onBeforeRequest: (data) => {
         if ((data.status! as unknown as number) === 1) {
           data.status = true
@@ -167,6 +162,9 @@
             type: 'Base:Switch',
             formProp: {
               path: 'status',
+            },
+            componentProp: {
+              defaultValue: true,
             },
           },
 

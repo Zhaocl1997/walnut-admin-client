@@ -104,3 +104,16 @@ export const generateBaseRules = (
 
   return rules
 }
+
+export const extractDefaultFormDataFromSchemas = (
+  scheams: WForm.Schema.Item[]
+) => {
+  return Object.fromEntries(
+    unref(scheams)
+      ?.map<[string, BaseDataType | BaseDataType[] | null]>((i) => [
+        i?.formProp?.path!,
+        i?.componentProp?.defaultValue ?? null,
+      ])
+      .filter((i) => i[0])!
+  )
+}
