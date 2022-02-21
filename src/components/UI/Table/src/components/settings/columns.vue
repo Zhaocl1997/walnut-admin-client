@@ -1,0 +1,201 @@
+<template>
+  <n-tooltip trigger="hover">
+    {{ t('table:base:settings') }}
+    <template #trigger>
+      <n-popover
+        v-model:show="show"
+        placement="bottom"
+        trigger="manual"
+        @clickoutside="show = false"
+      >
+        <template #trigger>
+          <w-icon
+            icon="ant-design:setting-outlined"
+            height="20"
+            @click="onOpenPopover"
+          ></w-icon>
+        </template>
+
+        <template #header>
+          <n-checkbox
+            :checked="!getIndeterminate"
+            :indeterminate="getIndeterminate"
+            @update-checked="onUpdateCheckAllChecked"
+          >
+            Check All
+          </n-checkbox>
+        </template>
+
+        <template #default>
+          <div id="tableSortable">
+            <div
+              v-for="(item, index) in tableColumns"
+              :key="item.key"
+              class="hstack justify-between my-2 mx-1"
+            >
+              <div class="hstack items-center mr-8">
+                <n-tooltip trigger="hover" placement="left">
+                  <template #trigger>
+                    <w-icon
+                      icon="ant-design:drag-outlined"
+                      height="20"
+                      class="cursor-move mr-2"
+                    ></w-icon>
+                  </template>
+
+                  Drag to sort
+                </n-tooltip>
+
+                <n-checkbox
+                  :checked="!item.className?.includes('hidden')"
+                  @update-checked="onUpdateItemChecked(index)"
+                >
+                  {{ item.title }}
+                </n-checkbox>
+              </div>
+
+              <div class="hstack items-center justify-center">
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <w-icon
+                      icon="mdi:arrow-collapse-left"
+                      height="20"
+                      class="cursor-pointer"
+                      :style="{
+                        color:
+                          item.fixed === 'left'
+                            ? `${getCommonTheme.infoColor} !important`
+                            : 'currentColor',
+                      }"
+                      @click="onSetFix(item.fixed, 'left', index)"
+                    ></w-icon>
+                  </template>
+
+                  Fix in left
+                </n-tooltip>
+
+                <div
+                  class="w-[1px] h-4/5 bg-black-300 dark:bg-gray-300 mx-1"
+                ></div>
+
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <w-icon
+                      icon="mdi:arrow-collapse-right"
+                      height="20"
+                      class="cursor-pointer"
+                      :style="{
+                        color:
+                          item.fixed === 'right'
+                            ? `${getCommonTheme.infoColor} !important`
+                            : 'currentColor',
+                      }"
+                      @click="onSetFix(item.fixed, 'right', index)"
+                    ></w-icon>
+                  </template>
+
+                  Fix in right
+                </n-tooltip>
+              </div>
+            </div>
+          </div>
+        </template>
+      </n-popover>
+    </template>
+  </n-tooltip>
+</template>
+
+<script lang="ts" setup>
+  import type Sortable from 'sortablejs'
+
+  import { useSortable } from '/@/hooks/component/useSortable'
+  import { useTableContext } from '../../hooks/useTableContext'
+  import { getCommonTheme } from '/@/App/src/naive'
+
+  const { t } = useAppI18n()
+  const { tableColumns } = useTableContext()
+
+  const show = ref(false)
+
+  // each one not include `hidden` => true
+  const getChecked = computed(() =>
+    tableColumns.value.every(
+      (i) => !(i.className || i.className?.includes('hidden'))
+    )
+  )
+
+  // as long as one has `hidden` => true
+  const getIndeterminate = computed(() =>
+    tableColumns.value.some((i) => i.className?.includes('hidden'))
+  )
+
+  watchEffect(() => {
+    // console.log(getChecked.value)
+    console.log(getIndeterminate.value)
+  })
+
+  let inst: Sortable
+
+  // open column setting popover
+  const onOpenPopover = () => {
+    show.value = true
+
+    nextTick(() => {
+      if (inst) {
+        inst.destroy()
+      }
+
+      const el = document.getElementById('tableSortable')!
+      inst = useSortable(el, {
+        onEnd: (evt) => {
+          const { oldIndex, newIndex } = evt
+
+          const current = tableColumns.value![oldIndex!]
+          tableColumns.value?.splice(oldIndex!, 1)
+          tableColumns.value?.splice(newIndex!, 0, current)
+        },
+      })
+    })
+  }
+
+  // through className to controll visibility
+  const onUpdateItemChecked = (index: number) => {
+    const current = tableColumns.value![index!]
+
+    if (current.className?.includes('hidden')) {
+      current.className = current.className!.replace('hidden', '')
+    } else {
+      if (!current.className) {
+        current.className = 'hidden'
+      } else {
+        current.className += 'hidden'
+      }
+    }
+  }
+
+  // check all
+  const onUpdateCheckAllChecked = () => {
+    tableColumns.value.map((_, index) => onUpdateItemChecked(index))
+  }
+
+  // set column fix state
+  const onSetFix = (
+    itemPosition: 'left' | 'right' | undefined,
+    position: 'left' | 'right',
+    index: number
+  ) => {
+    const current = tableColumns.value![index!]
+
+    if (!itemPosition) {
+      current.fixed = position
+    } else {
+      current.fixed = undefined
+    }
+  }
+</script>
+
+<script lang="ts">
+  export default defineComponent({
+    name: 'WTableSettingsColumns',
+  })
+</script>

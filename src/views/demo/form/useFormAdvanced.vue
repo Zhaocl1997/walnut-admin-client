@@ -21,8 +21,6 @@
     preset: false,
     maskClosable: true,
     title: 'Title',
-    negativeText: 'No',
-    positiveText: 'Yes',
   })
 
   const formData = ref({})
@@ -60,26 +58,6 @@
           clearable: true,
         },
       },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'negativeText',
-          label: 'No Text',
-        },
-        componentProp: {
-          clearable: true,
-        },
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'positiveText',
-          label: 'Yes Text',
-        },
-        componentProp: {
-          clearable: true,
-        },
-      },
     ],
   })
 
@@ -87,8 +65,6 @@
     preset: computed(() => (configData.value.preset ? 'drawer' : 'modal')),
     advancedProps: {
       maskClosable: computed(() => configData.value.maskClosable),
-      negativeText: computed(() => configData.value.negativeText),
-      positiveText: computed(() => configData.value.positiveText),
       title: computed(() => configData.value.title),
       onYes: (_, done) => {
         setTimeout(() => {
@@ -120,10 +96,10 @@
   })
 
   const onOpenAdvacned = () => {
-    const { done } = onOpen()
-
-    setTimeout(() => {
-      done()
-    }, 2000)
+    onOpen((done) => {
+      setTimeout(() => {
+        done()
+      }, 2000)
+    })
   }
 </script>

@@ -10,17 +10,21 @@
 
     setup() {
       const [register] = useTable({
+        scrollX: 800,
         columns: [
           {
             type: 'selection',
+            key: 'selection',
           },
           {
             type: 'expand',
             renderExpand: (row) => 1,
+            key: 'expand',
           },
           {
             title: 'Name',
             key: 'name',
+            fixed: 'left',
           },
           {
             title: 'Age',
@@ -31,13 +35,16 @@
             key: 'address',
           },
           {
+            title: 'Icon',
             key: 'icon',
             extendType: 'icon',
             extendIconName: 'ant-design:home-outlined',
           },
           {
+            title: 'Action',
             key: 'action',
             extendType: 'action',
+            fixed: 'right',
           },
         ],
         data: [

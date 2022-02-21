@@ -12,16 +12,12 @@
       </template>
     </n-tooltip>
 
-    <n-tooltip trigger="hover">
-      {{ t('table:base:settings') }}
-      <template #trigger>
-        <w-icon icon="ant-design:setting-outlined" height="20"></w-icon>
-      </template>
-    </n-tooltip>
+    <WTableSettingsColumns />
   </div>
 </template>
 
 <script lang="ts" setup>
+  import WTableSettingsColumns from './settings/columns.vue'
   import { useTableContext } from '../hooks/useTableContext'
 
   const { t } = useAppI18n()

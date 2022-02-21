@@ -91,6 +91,7 @@
         onQuery,
         onReset,
         checkedRowKeys,
+        tableColumns: columns,
       })
 
       return () => render()
