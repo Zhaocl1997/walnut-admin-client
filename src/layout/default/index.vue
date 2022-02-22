@@ -25,8 +25,10 @@
         <MainHeader v-if="!setting.app.fixHeader" />
 
         <div
-          class="flex-1"
-          :style="{ padding: setting.app.contentPadding + 'px' }"
+          class="flex-1 h-full"
+          :style="{
+            padding: $route.meta.url ? 0 : setting.app.contentPadding + 'px',
+          }"
         >
           <TheContent />
         </div>
