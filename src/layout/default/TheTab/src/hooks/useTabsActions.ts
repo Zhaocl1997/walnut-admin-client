@@ -1,19 +1,17 @@
 import { removeTabs } from '/@/core/tab'
 
 export const useTabsActions = () => {
-  const { currentRoute } = useAppRouter()
-
-  const onTabClick = (name: string, query: Recordable) => {
+  const onTabClick = (item: AppTab) => {
     // push by name
-    useRouterPush({ name: name, query })
+    useRouterPush({ name: item.name, query: item.query, params: item.params })
   }
 
   const onTabRemove = (
     name: string,
-    type: ValueOfDeleteTabConst = 'TAB_SINGLE'
+    type: ValueOfDeleteTabConst = DeleteTabConst.TAB_SINGLE
   ) => {
     // remove tab
-    removeTabs(name, type, currentRoute.value.name as string)
+    removeTabs(name, type)
   }
 
   return {

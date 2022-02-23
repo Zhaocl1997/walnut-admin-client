@@ -16,7 +16,7 @@
             'tab-draggable': !item.meta.affix,
           },
         ]"
-        @click="onTabClick(item.name, item.query!)"
+        @click="onTabClick(item)"
         @mouseup="onMouseUp($event, item.name)"
         @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
         @mouseenter="onMouseEnter($event, item, index)"
