@@ -36,7 +36,7 @@ export const AppCoreFn1 = async () => {
   menu.value.indexMenuName = menu.value.menus[0].name!
 
   // build routes and add into root route
-  const routes = buildRoutes(menu.value.menus)
+  const routes = buildRoutes(res)
   routes.forEach((route) => {
     addRoute(AppRootName, route)
   })

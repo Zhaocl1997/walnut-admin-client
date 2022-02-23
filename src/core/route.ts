@@ -1,4 +1,4 @@
-import { formatTree, findPath } from 'easy-fns-ts'
+import { formatTree, findPath, arrToTree, orderTree } from 'easy-fns-ts'
 
 import ParentComponent from '/@/layout/default/TheContent'
 import IFrameComponent from '/@/layout/iframe/index.vue'
@@ -19,6 +19,8 @@ export const buildCommonRoute = (node: AppMenu): AppTab => ({
     affix: node.affix,
     type: node.type,
     component: node.component,
+    menuActiveName: node.menuActiveName,
+    menuActiveSameTab: node.menuActiveSameTab,
   },
 })
 
@@ -87,7 +89,16 @@ export const buildKeepAliveRouteNameList = (
  * @description Build Routes Core Function
  */
 export const buildRoutes = (payload: AppMenu[]) => {
-  const routes = formatTree(payload, {
+  // filter `catalog` and `menu`
+  const filtered = payload.filter((i) => i.type !== MenuTypeConst.ELEMENT)
+
+  // build tree
+  const menuTree = arrToTree(filtered, { id: '_id' })
+
+  // just pick the root children
+  const menus = orderTree(menuTree)[0].children
+
+  const routes = formatTree(menus!, {
     format: (node: AppMenu): RouteRecordRaw | undefined => {
       // handle catelog
       if (node.type === MenuTypeConst.CATALOG) {
@@ -100,7 +111,7 @@ export const buildRoutes = (payload: AppMenu[]) => {
       // handle menu
       if (node.type === MenuTypeConst.MENU) {
         // handle internal menu
-        if (node.ternal === 'internal') {
+        if (node.ternal === MenuTernalConst.INTERNAL) {
           return {
             ...buildCommonRoute(node),
             component: resolveIFrameComponent(node.name!),
