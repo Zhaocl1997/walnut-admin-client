@@ -9,5 +9,8 @@ declare module 'vue-router' {
     url?: string
     type?: ValueOfMenuTypeConst
     component?: string
+    badge?: string
+    menuActiveName?: string
+    menuActiveSameTab?: boolean
   }
 }

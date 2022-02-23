@@ -20,7 +20,7 @@ declare global {
     path: string
     meta: RouteMeta
     query?: Recordable
-    params: Recordable
+    params?: Recordable
   }
 
   // menu
@@ -40,6 +40,9 @@ declare global {
     status?: boolean
     affix?: boolean
     permission?: string
+    badge?: string
+    menuActiveName?: string
+    menuActiveSameTab?: boolean
   }
 
   // role

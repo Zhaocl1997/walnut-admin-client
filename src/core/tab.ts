@@ -16,12 +16,16 @@ const closeMultipleTabs = (lists: string[]) => {
  */
 export const removeTabs = (
   name: string,
-  type: ValueOfDeleteTabConst,
-  currentRouteName: string
+  type: ValueOfDeleteTabConst = DeleteTabConst.TAB_SINGLE
 ) => {
+  const { currentRoute } = AppRouter
+  const currentRouteName = currentRoute.value.name as string
+
   const index = tab.value.tabs.findIndex((item) => item.name === name)
 
   if (index === -1) return
+
+  const currentTab = tab.value.tabs[index]
 
   switch (type) {
     case DeleteTabConst.TAB_SINGLE:
@@ -35,7 +39,11 @@ export const removeTabs = (
           const previous = tab.value.tabs[index - 1]
 
           // Got next tab, push to next. Else push to previous one
-          useRouterPush({ name: next ? next.name : previous.name })
+          useRouterPush({
+            name: next ? next.name : previous.name,
+            query: next ? next.query : previous.query,
+            params: next ? next.params : previous.params,
+          })
         }
       }
       break
@@ -52,7 +60,11 @@ export const removeTabs = (
 
         // If left include current page, we need to push to target route
         if (nameList.includes(currentRouteName)) {
-          useRouterPush({ name })
+          useRouterPush({
+            name,
+            query: currentTab.query,
+            params: currentTab.params,
+          })
         }
 
         closeMultipleTabs(nameList)
@@ -71,7 +83,11 @@ export const removeTabs = (
 
         // If right include current page, we need to push to target route
         if (nameList.includes(currentRouteName)) {
-          useRouterPush({ name })
+          useRouterPush({
+            name,
+            query: currentTab.query,
+            params: currentTab.params,
+          })
         }
 
         closeMultipleTabs(nameList)
@@ -91,7 +107,11 @@ export const removeTabs = (
 
         // If the closed one is not current route, we need to push to target route
         if (currentRouteName !== name) {
-          useRouterPush({ name })
+          useRouterPush({
+            name,
+            query: currentTab.query,
+            params: currentTab.params,
+          })
         }
 
         closeMultipleTabs(nameList)
@@ -110,7 +130,11 @@ export const removeTabs = (
         })
 
         // Just back to index page
-        useRouterPush({ name: menu.value.indexMenuName })
+        useRouterPush({
+          name: menu.value.indexMenuName,
+          query: currentTab.query,
+          params: currentTab.params,
+        })
 
         closeMultipleTabs(nameList)
       }
@@ -162,6 +186,28 @@ export const buildTabs = (
   // not found
   if (index === -1) {
     const cached = tab.value.visitedTabs.get(SymbolKeyConst.TABS_KEY)
+
+    // TODO what if detail page multiple ? cannot just use name as a key, maybe should use fullPath
+
+    // use payload.name to splice the existed one in tabs
+    const index1 = tab.value.tabs.findIndex(
+      (i) => i.meta.menuActiveName === payload.name
+    )
+
+    if (index1 !== -1 && tab.value.tabs[index1].meta.menuActiveSameTab) {
+      tab.value.tabs.splice(index1, 1, payload)
+      return
+    }
+
+    // use payload.meta.menuActiveName to splice the existed one in tabs
+    const index2 = tab.value.tabs.findIndex(
+      (i) => i.name === payload.meta.menuActiveName
+    )
+
+    if (index2 !== -1 && payload.meta.menuActiveSameTab) {
+      tab.value.tabs.splice(index2, 1, payload)
+      return
+    }
 
     if (!cached || (cached && !cached.includes(payload.name))) {
       tab.value.tabs[method](payload)

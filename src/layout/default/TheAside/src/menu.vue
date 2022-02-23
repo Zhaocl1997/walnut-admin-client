@@ -80,7 +80,11 @@
             indent={menuSettings.indent}
             options={getMenu.value}
             collapsed={appMemo.value.collapse}
-            value={currentRoute.value.name}
+            value={
+              currentRoute.value.meta.menuActiveName
+                ? currentRoute.value.meta.menuActiveName
+                : currentRoute.value.name
+            }
             on-update:value={onUpdateValue}
             expanded-keys={expandedKeys.value ?? getExpandedKeys.value}
             on-update:expanded-keys={onUpdateExpandedKeys}
