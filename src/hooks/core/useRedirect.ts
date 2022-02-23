@@ -14,6 +14,7 @@ export const useRedirect = () => {
         path: AppRedirectPath + currentRoute.value.fullPath,
         query,
         params,
+        replace: true,
       }).then(() => resolve(true))
     })
   }
