@@ -8,6 +8,7 @@ export const AppRouter = createRouter({
   history: createWebHistory(),
   routes,
   strict: true,
+  // https://github.com/wukang0718/vueRouterEncryption
 })
 
 export const setupRouter = (app: App) => {

@@ -36,6 +36,50 @@
           }
         },
 
+        queryFormProps: {
+          localeUniqueKey: key,
+          localeWithTable: true,
+          span: 6,
+          showFeedback: false,
+          labelWidth: 100,
+          // query form schemas
+          schemas: [
+            {
+              type: 'Base:Input',
+              formProp: {
+                path: 'name',
+              },
+              componentProp: {
+                clearable: true,
+              },
+            },
+
+            {
+              type: 'Base:Input',
+              formProp: {
+                path: 'type',
+              },
+              componentProp: {
+                clearable: true,
+              },
+            },
+
+            {
+              type: 'Base:Input',
+              formProp: {
+                path: 'description',
+              },
+              componentProp: {
+                clearable: true,
+              },
+            },
+
+            {
+              type: 'Extend:Query',
+            },
+          ],
+        },
+
         columns: [
           {
             key: 'name',
