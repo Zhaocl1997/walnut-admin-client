@@ -19,6 +19,14 @@
   />
 </template>
 
+<script lang="tsx">
+  export default defineComponent({
+    name: 'MenuTree',
+
+    defaultView: false,
+  })
+</script>
+
 <script lang="tsx" setup>
   import { arrToTree, orderTree, formatTree } from 'easy-fns-ts'
   import { menuAPI } from '/@/api/system/menu'
