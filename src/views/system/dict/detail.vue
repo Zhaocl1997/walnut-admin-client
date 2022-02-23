@@ -1,12 +1,30 @@
-import { dictDataAPI } from '/@/api/system/dict'
+<template>
+  <n-card>
+    <n-page-header :title="$route.query.name" @back="onBack"></n-page-header>
+  </n-card>
+  <WCRUD @hook="register"></WCRUD>
+</template>
 
-export const useDictDataRegister = (typeId: string) => {
+<script lang="ts">
+  export default defineComponent({
+    name: 'DictDetail',
+  })
+</script>
+
+<script lang="ts" setup>
+  import { dictDataAPI } from '/@/api/system/dict'
+
   const { t } = useAppI18n()
+  const { currentRoute } = useAppRouter()
 
   // locale unique key
   const key = 'dictData'
 
-  const [registerDictData, { onCreateAndOpen, onReadAndOpen, onDelete }] =
+  const onBack = () => {
+    useRouterPush({ name: 'Dict', replace: true })
+  }
+
+  const [register, { onCreateAndOpen, onReadAndOpen, onDelete }] =
     useCRUD<AppDictData>({
       baseAPI: dictDataAPI,
 
@@ -42,7 +60,7 @@ export const useDictDataRegister = (typeId: string) => {
                 path: 'typeId',
               },
               componentProp: {
-                defaultValue: typeId,
+                defaultValue: currentRoute.value.params.id as string,
               },
               extraProp: {
                 vIf: false,
@@ -153,7 +171,7 @@ export const useDictDataRegister = (typeId: string) => {
             },
             componentProp: {
               clearable: true,
-              defaultValue: typeId,
+              defaultValue: currentRoute.value.params.id as string,
             },
             extraProp: {
               vShow: false,
@@ -215,6 +233,6 @@ export const useDictDataRegister = (typeId: string) => {
         ],
       },
     })
+</script>
 
-  return registerDictData
-}
+<style lang="scss" scoped></style>

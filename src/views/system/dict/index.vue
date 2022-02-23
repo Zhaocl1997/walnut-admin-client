@@ -1,11 +1,5 @@
 <template>
-  <WCRUD v-if="!hasQuery" @hook="register"></WCRUD>
-  <div v-else>
-    <n-card>
-      <n-page-header :title="$route.query.name" @back="onBack"></n-page-header>
-    </n-card>
-    <WCRUD @hook="register"></WCRUD>
-  </div>
+  <WCRUD @hook="register"></WCRUD>
 </template>
 
 <script lang="ts">
@@ -15,24 +9,137 @@
 </script>
 
 <script lang="ts" setup>
-  import { useRouterQuery } from '/@/hooks/core/useRouterQuery'
+  import { dictTypeAPI } from '/@/api/system/dict'
 
-  import { useDictTypeRegister } from './dictType'
-  import { useDictDataRegister } from './dictData'
+  // locale unique key
+  const key = 'dictType'
 
-  const { query, hasQuery } = useRouterQuery()
+  const [register, { onCreateAndOpen, onReadAndOpen, onDelete }] =
+    useCRUD<AppDictType>({
+      baseAPI: dictTypeAPI,
 
-  let register: Fn
+      tableProps: {
+        localeUniqueKey: key,
+        rowKey: (row) => row._id!,
+        maxHeight: 600,
+        striped: true,
+        actionList: ['create'],
 
-  if (!hasQuery) {
-    register = useDictTypeRegister()
-  } else {
-    register = useDictDataRegister(query.id as string)
-  }
+        onAction: ({ type }) => {
+          switch (type) {
+            case 'create':
+              onCreateAndOpen()
+              break
 
-  const onBack = () => {
-    useRouterPush({ name: 'Dict' })
-  }
+            default:
+              break
+          }
+        },
+
+        columns: [
+          {
+            key: 'name',
+            width: 120,
+          },
+
+          {
+            key: 'type',
+            width: 140,
+            extendType: 'link',
+            onClick: (p) => {
+              // TODO simple encode
+              useRouterPush({
+                name: 'DictDetail',
+                params: { id: p._id },
+                query: { name: p.name },
+              })
+            },
+          },
+
+          {
+            key: 'description',
+            width: 200,
+          },
+
+          {
+            ...WTablePresetStatusColumn,
+            sorter: {
+              multiple: 2,
+            },
+          },
+
+          {
+            ...WTablePresetCreatedAtColumn,
+            sorter: {
+              multiple: 3,
+            },
+          },
+
+          {
+            ...WTablePresetUpdatedAtColumn,
+            sorter: {
+              multiple: 4,
+            },
+          },
+
+          {
+            key: 'action',
+            width: 240,
+            extendType: 'action',
+            extendActionType: ['read', 'delete'],
+            onRead: (row) => {
+              onReadAndOpen(row._id!)
+            },
+            onDelete: (row) => {
+              onDelete(row._id!)
+            },
+          },
+        ],
+      },
+
+      formProps: {
+        localeUniqueKey: key,
+        localeWithTable: true,
+        preset: 'modal',
+        baseRules: true,
+        labelWidth: 100,
+        xGap: 0,
+        // create/update form schemas
+        schemas: [
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'name',
+            },
+            componentProp: {
+              clearable: true,
+            },
+          },
+
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'type',
+            },
+            componentProp: {
+              clearable: true,
+            },
+          },
+
+          {
+            type: 'Base:Input',
+            formProp: {
+              path: 'description',
+              rule: false,
+            },
+            componentProp: {
+              clearable: true,
+              type: 'textarea',
+            },
+          },
+        ],
+      },
+    })
 </script>
 
 <style lang="scss" scoped></style>
