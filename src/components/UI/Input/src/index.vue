@@ -9,7 +9,7 @@
 
     props,
 
-    emits: ['update:value', 'search'],
+    emits: ['update:value'],
 
     setup(props: WInputProps, { attrs, slots, emit, expose }) {
       const inputSlots = computed(() => {
