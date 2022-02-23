@@ -18,13 +18,14 @@ export const useMenuFormSchema = ({
   const { viewOptions, nameOptions } = getViewsOptions()
 
   const getTitleList = computed(() =>
-    Object.entries(getLocaleMessage(locale.value))
+    Object.entries<string>(getLocaleMessage(locale.value))
       .map(([k, v]) => {
         if (k.startsWith('sys:menu:')) {
           return { value: k, label: v }
         }
+        return { value: undefined, label: undefined }
       })
-      .filter((i) => i)
+      .filter((i) => i.value)
   )
   const getCurrentNode = computed(() => {
     const treeData = menuTreeRef.value?.onGetTreeData()
@@ -147,6 +148,9 @@ export const useMenuFormSchema = ({
           }
         },
       },
+      extraProp: {
+        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+      },
     },
 
     // Auto bump `views` children vue file
@@ -169,7 +173,8 @@ export const useMenuFormSchema = ({
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === MenuTypeConst.MENU && formData.ternal === 'none',
+          formData.type === MenuTypeConst.MENU &&
+          formData.ternal === MenuTernalConst.NONE,
       },
     },
 
@@ -241,7 +246,8 @@ export const useMenuFormSchema = ({
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === MenuTypeConst.MENU && formData.ternal !== 'none',
+          formData.type === MenuTypeConst.MENU &&
+          formData.ternal !== MenuTernalConst.NONE,
       },
     },
 
@@ -250,10 +256,12 @@ export const useMenuFormSchema = ({
       formProp: {
         path: 'cache',
         labelHelpMessage: true,
+        rule: false,
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === MenuTypeConst.MENU && formData.ternal === 'none',
+          formData.type === MenuTypeConst.MENU &&
+          formData.ternal === MenuTernalConst.NONE,
       },
     },
 
@@ -262,6 +270,7 @@ export const useMenuFormSchema = ({
       formProp: {
         path: 'show',
         labelHelpMessage: true,
+        rule: false,
       },
       extraProp: {
         vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,
@@ -273,6 +282,7 @@ export const useMenuFormSchema = ({
       formProp: {
         path: 'affix',
         labelHelpMessage: true,
+        rule: false,
       },
       extraProp: {
         vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,
@@ -287,6 +297,32 @@ export const useMenuFormSchema = ({
       },
       extraProp: {
         vIf: ({ formData }) => formData.type === MenuTypeConst.ELEMENT,
+      },
+    },
+
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'menuActiveName',
+        rule: false,
+      },
+      componentProp: {
+        options: nameOptions,
+        filterable: true,
+      },
+      extraProp: {
+        vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,
+      },
+    },
+
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'menuActiveSameTab',
+        rule: false,
+      },
+      extraProp: {
+        vIf: ({ formData }) => !!formData.menuActiveName,
       },
     },
   ]
