@@ -93,7 +93,9 @@ export declare namespace WForm {
   }
 
   namespace Events {
-    type Callback<T = any, R = void> = (params: Params.Callback<T>) => R
+    type Callback<T = any, R = void> = (
+      params: Params.Callback<T>
+    ) => R | undefined
   }
 
   namespace Schema {
