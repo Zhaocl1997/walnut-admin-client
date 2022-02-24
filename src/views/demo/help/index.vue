@@ -112,6 +112,7 @@
 
       <w-icon icon="w-svg:svg-sample-1" height="24"></w-icon>
       <w-icon icon="w-svg:svg-sample-3" height="24"></w-icon>
+      <w-icon icon="w-svg:svg-sample-9" height="24"></w-icon>
     </w-demo-card>
   </div>
 </template>
