@@ -34,8 +34,9 @@
     "icon:list": "esno build/icon/list.ts",
     "icon:bundle": "esno build/icon/bundle.ts",
     "icon:recovery": "esno build/icon/index.ts --recovery",
-    "update": "npm-check-updates",
-    "gen:schema": "esno build/generate/genJSONSchemas.ts"
+    "check:deps:update": "npm-check-updates",
+    "gen:schema": "esno build/generate/genJSONSchemas.ts",
+    "gen:icon:svg": "esno build/icon/svg.ts"
   },
   "dependencies": {
     "@vueuse/core": "^7.6.2",
