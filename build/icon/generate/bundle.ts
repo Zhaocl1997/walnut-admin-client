@@ -25,9 +25,11 @@ import {
 } from '@iconify/tools'
 import { getIcons, stringToIcon, minifyIconSet } from '@iconify/utils'
 
-import iconifyIcons from '../../src/components/UI/Icon/src/utils/list'
-import { bundlePath, svgJSONFilePath } from '../utils/paths'
-import { WSvgPrefix } from '../utils/svg'
+import iconifyIcons from '../../../src/components/UI/Icon/src/utils/list'
+import { bundlePath, svgJSONFilePath } from '../../utils/paths'
+import { WSvgPrefix } from '../../utils/svg'
+import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils/fs'
+import { BuildUtilsLog } from '../../utils/log'
 
 /**
  * Script configuration
@@ -161,7 +163,7 @@ const target = bundlePath
       // Load icon set
       const filename = typeof item === 'string' ? item : item.filename
       let content = JSON.parse(
-        await fs.readFile(filename, 'utf8')
+        await BuildUtilsReadFile(filename)
       ) as IconifyJSON
 
       // Filter icons
@@ -177,7 +179,7 @@ const target = bundlePath
       removeMetaData(content)
       minifyIconSet(content)
       bundle += 'addCollection(' + JSON.stringify(content) + ');\n'
-      console.log(`Bundled icons from ${filename}`)
+      BuildUtilsLog(`Bundled icons from ${filename}`)
     }
   }
 
@@ -244,9 +246,9 @@ const target = bundlePath
   }
 
   // Save to file
-  await fs.writeFile(target, bundle, 'utf8')
+  await BuildUtilsWriteFile(target, bundle)
 
-  console.log(`Saved ${target} (${bundle.length} bytes)`)
+  BuildUtilsLog(`Saved bundle icons at: ${target} (${bundle.length} bytes)`)
 })().catch((err) => {
   console.error(err)
 })

@@ -1,4 +1,3 @@
-import { promises as fs } from 'fs'
 import {
   importDirectory,
   cleanupSVG,
@@ -7,8 +6,10 @@ import {
   isEmptyColor,
 } from '@iconify/tools'
 
-import { svgJSONFilePath } from '../utils/paths'
-import { WSvgPrefix } from '../utils/svg'
+import { svgJSONFilePath } from '../../utils/paths'
+import { WSvgPrefix } from '../../utils/svg'
+import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils/fs'
+import { BuildUtilsLog } from 'build/utils/log'
 ;(async () => {
   // Import icons
   const iconSet = await importDirectory('.svg', {
@@ -68,17 +69,23 @@ import { WSvgPrefix } from '../utils/svg'
   //   console.log(`Saved .svg/${name}.svg (${svg.length} bytes)`)
   // })
 
+  BuildUtilsLog(`Detecting custom svg icon number: ${iconSet.count()}`)
+
   // Generate to icon list
   await iconSet.forEach(async (name) => {
-    const data = await fs.readFile(svgJSONFilePath)
+    const data = await BuildUtilsReadFile(svgJSONFilePath)
 
     const svgObj = JSON.parse(data.toString())
 
-    // TODO auto remove width and height
+    // auto remove width and height
+    const body = String(iconSet.toString(name))
+      .replaceAll(/width="(.[0-9]*)"/gi, '')
+      .replaceAll(/height="(.[0-9]*)"/gi, '')
+
     svgObj.icons[name] = {
-      body: iconSet.toString(name),
+      body,
     }
 
-    await fs.writeFile(svgJSONFilePath, JSON.stringify(svgObj, null, 2), 'utf8')
+    await BuildUtilsWriteFile(svgJSONFilePath, JSON.stringify(svgObj, null, 2))
   })
 })()
