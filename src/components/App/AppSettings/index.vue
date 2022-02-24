@@ -82,7 +82,7 @@
   const breadcrumbRelatives = ref(settings.value.ForDevelopers.breadcrumb)
   const tabRelatives = ref(settings.value.ForDevelopers.tab)
 
-  const modalColor = getTheme.value?.Drawer.common?.modalColor
+  const modalColor = computed(() => getTheme.value?.Drawer.common?.modalColor)
 
   const { copy, copied } = useClipboard({
     source: computed(() =>

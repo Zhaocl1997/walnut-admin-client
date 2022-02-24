@@ -1,7 +1,7 @@
 import type { ThemeCommonVars } from 'naive-ui/lib/_styles/common'
 import { adjustColor } from '/@/utils/color'
 
-import { darkTheme } from 'naive-ui'
+import { darkTheme, lightTheme } from 'naive-ui'
 
 const { app, settings } = useAppState()
 
@@ -41,5 +41,5 @@ export const getCommonTheme = computed(
 
 // TODO change to useTheme, merge override theme with original
 export const getTheme = computed(() =>
-  !app.value.isDark ? undefined : darkTheme
+  !app.value.isDark ? lightTheme : darkTheme
 )

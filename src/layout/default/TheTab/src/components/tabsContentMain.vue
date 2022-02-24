@@ -27,8 +27,8 @@
           /* round */
           tabSettings.styleMode === TabStyleModeConstInside.ROUND &&
             ($route.name === item.name
-              ? 'rounded-t-xl bg-primary text-light-100'
-              : 'rounded-t-xl hover:bg-primaryHover hover:text-bodyColor'),
+              ? 'rounded-xl bg-primary text-light-100'
+              : 'rounded-xl hover:bg-primaryHover hover:text-bodyColor'),
 
           'hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
           {
