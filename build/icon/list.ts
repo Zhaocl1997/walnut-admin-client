@@ -27,10 +27,10 @@ const writeFile = (data: any) => {
 }
 
 /**
- * @description Use fast glob to scan all vue file under src, then filter the icon used, write into list file, used for icon picker and bundle
+ * @description Use fast glob to scan all vue/ts/tsx file under src, then filter the icon used, write into list file, used for icon picker and bundle
  */
 ;(async () => {
-  const files = await fg('src/**/*.vue', { dot: true })
+  const files = await fg('src/**/*.{vue,ts,tsx}', { dot: true })
 
   const buffers = files.map((i) => readFile(i))
 

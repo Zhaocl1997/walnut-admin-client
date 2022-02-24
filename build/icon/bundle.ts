@@ -26,7 +26,8 @@ import {
 import { getIcons, stringToIcon, minifyIconSet } from '@iconify/utils'
 
 import iconifyIcons from '../../src/components/UI/Icon/src/utils/list'
-import { bundlePath } from '../utils/paths'
+import { bundlePath, svgJSONFilePath } from '../utils/paths'
+import { WSvgPrefix } from '../utils/svg'
 
 /**
  * Script configuration
@@ -68,7 +69,7 @@ const sources: BundleScriptConfig = {
   //   {
   //     dir: 'svg',
   //     monotone: true,
-  //     prefix: 'custom',
+  //     prefix: 'svg',
   //   },
   //   {
   //     dir: 'emojis',
@@ -135,11 +136,18 @@ const target = bundlePath
     // Sort icons by prefix
     const organizedList = organizeIconsList(sources.icons)
     for (const prefix in organizedList) {
-      const filename = require.resolve(`@iconify/json/json/${prefix}.json`)
-      sourcesJSON.push({
-        filename,
-        icons: organizedList[prefix],
-      })
+      if (prefix !== WSvgPrefix) {
+        const filename = require.resolve(`@iconify/json/json/${prefix}.json`)
+        sourcesJSON.push({
+          filename,
+          icons: organizedList[prefix],
+        })
+      } else {
+        sourcesJSON.push({
+          filename: svgJSONFilePath,
+          icons: organizedList[prefix],
+        })
+      }
     }
   }
 
