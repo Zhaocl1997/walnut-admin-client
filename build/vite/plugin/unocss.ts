@@ -25,6 +25,15 @@ export const createUnoCSSPlugin = (): VitePlugin[] => {
       },
     },
 
+    rules: [
+      [
+        'tab-flex',
+        {
+          'border-bottom': '1px solid var(--primary-color)',
+        },
+      ],
+    ],
+
     presets: [
       presetUno({
         dark: 'class',

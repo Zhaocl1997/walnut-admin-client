@@ -10,7 +10,26 @@
         v-for="(item, index) in tab.tabs"
         :key="item.name"
         :class="[
-          getTabStyle(item),
+          { 'text-primary hover:text-primaryHover': $route.name === item.name },
+
+          /* card */
+          tabSettings.styleMode === TabStyleModeConstInside.CARD &&
+            ($route.name === item.name
+              ? 'border border-primary'
+              : 'border border-gray-400 hover:border-primaryHover hover:text-primaryHover'),
+
+          /* flex */
+          tabSettings.styleMode === TabStyleModeConstInside.FLEX &&
+            ($route.name === item.name
+              ? 'tab-flex border-primary'
+              : 'hover:border-primaryHover hover:text-primaryHover hover:tab-flex'),
+
+          /* round */
+          tabSettings.styleMode === TabStyleModeConstInside.ROUND &&
+            ($route.name === item.name
+              ? 'rounded-t-xl bg-primary text-light-100'
+              : 'rounded-t-xl hover:bg-primaryHover hover:text-bodyColor'),
+
           'hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
           {
             'tab-draggable': !item.meta.affix,
@@ -63,14 +82,13 @@
   import TabDot from './dot'
   import { getTabsContext } from '../hooks/useTabsContext'
   import { useTabsSortable } from '../hooks/useTabsSortable'
-  import { useTabStyle } from '../hooks/useTabStyle'
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
   const { appMemo, tab, settings } = useAppState()
   const tabSettings = settings.value.ForDevelopers.tab
 
-  const { getTabStyle } = useTabStyle(settings.value.ForDevelopers)
+  const TabStyleModeConstInside = TabStyleModeConst
 
   const {
     scrollRef,
