@@ -43,7 +43,7 @@
     "animate.css": "^4.1.1",
     "axios": "^0.26.0",
     "crypto-js": "^4.1.1",
-    "easy-fns-ts": "^1.0.23",
+    "easy-fns-ts": "1.1.0",
     "html-to-image": "^1.9.0",
     "sortablejs": "^1.14.0",
     "vue": "^3.2.31",

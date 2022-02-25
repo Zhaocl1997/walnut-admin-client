@@ -29,7 +29,7 @@ specifiers:
   conventional-changelog-cli: ^2.2.2
   crypto-js: ^4.1.1
   cz-customizable: ^6.3.0
-  easy-fns-ts: ^1.0.23
+  easy-fns-ts: 1.1.0
   eslint: ^8.9.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-vue: ^8.4.1
@@ -74,7 +74,7 @@ dependencies:
   animate.css: 4.1.1
   axios: 0.26.0
   crypto-js: 4.1.1
-  easy-fns-ts: 1.0.23
+  easy-fns-ts: 1.1.0
   html-to-image: 1.9.0
   sortablejs: 1.14.0
   vue: 3.2.31
@@ -2922,8 +2922,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /easy-fns-ts/1.0.23:
-    resolution: {integrity: sha512-Y+MlWhhNApSE4YDmw+fCn6BHB/afpIL5/bmszqzNBg8acX3z2YiMDjwG4VG4G2IHkrw8ddkfDgmE8A5fo6U07A==}
+  /easy-fns-ts/1.1.0:
+    resolution: {integrity: sha512-aqv8ltMr/K8eQx4Z4+eb4QFGwCyQW40EGSZpJOzCcNhu1w2J3eSQtfiqn5UhSYtLMqqi0uph4QeIVnC96C4DJw==}
     dev: false
 
   /editor/1.0.0:
