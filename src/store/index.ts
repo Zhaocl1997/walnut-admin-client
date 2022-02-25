@@ -50,7 +50,7 @@ const useAppStateMemory = createGlobalState<ToRefs<AppMemory>>(() =>
       },
 
       settings: {
-        ForDevelopers: easyDeepClone(AppCustomSettings),
+        ForDevelopers: easyDeepClone<AppSettings>(AppCustomSettings),
 
         ForUsers: {},
       },

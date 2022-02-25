@@ -67,7 +67,7 @@
       orderTree<AppMenu>(arrToTree<AppMenu>(res.data, { id: '_id' })),
       {
         format: (node) =>
-          node.children.length === 0
+          node.children!.length === 0
             ? {
                 ...node,
                 children: null,
@@ -76,7 +76,7 @@
       }
     )
 
-    treeData.value = data[0].children
+    treeData.value = data[0].children!
     rootId.value = data[0]._id
 
     resData.value = res.data.filter((i) => i._id !== data[0]._id)

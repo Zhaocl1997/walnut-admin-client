@@ -98,8 +98,8 @@ export const buildRoutes = (payload: AppMenu[]) => {
   // just pick the root children
   const menus = orderTree(menuTree)[0].children
 
-  const routes = formatTree(menus!, {
-    format: (node: AppMenu): RouteRecordRaw | undefined => {
+  const routes = formatTree<AppMenu, RouteRecordRaw>(menus!, {
+    format: (node) => {
       // handle catelog
       if (node.type === MenuTypeConst.CATALOG) {
         return {

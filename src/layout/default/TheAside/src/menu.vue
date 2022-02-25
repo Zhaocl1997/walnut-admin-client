@@ -13,19 +13,18 @@
       const expandedKeys = ref()
 
       const getMenu = computed(() =>
-        formatTree<AppMenu>(menu.value.menus, {
-          format: (node) =>
-            ({
-              key: node.name,
-              label: t(node.title),
-              icon: () => <w-icon icon={node.icon}></w-icon>,
-              meta: {
-                type: node.type,
-                ternal: node.ternal,
-                url: node.url,
-              },
-              // extra: () => (node.badge && <n-badge value="hot"></n-badge>)
-            } as MenuOption),
+        formatTree<AppMenu, MenuOption>(menu.value.menus, {
+          format: (node) => ({
+            key: node.name,
+            label: t(node.title!),
+            icon: () => <w-icon icon={node.icon}></w-icon>,
+            meta: {
+              type: node.type,
+              ternal: node.ternal,
+              url: node.url,
+            },
+            // extra: () => (node.badge && <n-badge value="hot"></n-badge>)
+          }),
         })
       )
 

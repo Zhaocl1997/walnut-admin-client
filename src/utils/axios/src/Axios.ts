@@ -71,11 +71,13 @@ export class Axios {
     options?: AxiosCustomConfig
   ): Promise<T> {
     // Here merge default customConfig with individual customConfig
-    const mergedConfig = easyDeepMerge(config, { customConfig: options })
+    const mergedConfig = easyDeepMerge<AxiosRequestConfig>(config, {
+      customConfig: options,
+    })
 
     return new Promise((resolve, reject) => {
       this.instance
-        .request<T, T>(mergedConfig)
+        .request<T, T>(mergedConfig!)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
     })
