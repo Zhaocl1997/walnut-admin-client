@@ -1,4 +1,4 @@
-import { arrToTree, orderTree } from 'easy-fns-ts'
+import { arrToTree, easyDeepClone, orderTree } from 'easy-fns-ts'
 
 import { buildTabs } from './tab'
 
@@ -10,7 +10,7 @@ import { buildCommonRoute } from './route'
 export const buildMenus = (payload: AppMenu[]) => {
   // filter `catalog` and `menu`
   // filter `catalog` and `menu` which are visible
-  const filtered = payload
+  const filtered = easyDeepClone(payload)
     .filter((i) => i.type !== MenuTypeConst.ELEMENT)
     .filter((i) => i.show)
 
