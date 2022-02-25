@@ -40,11 +40,20 @@ declare global {
   // vite
   type VitePlugin = import('vite').PluginOption
 
-  // Utils
+  // easy-fns-ts
+  type Nullable<T> = import('easy-fns-ts').Nullable<T>
+  type StringOrNumber = import('easy-fns-ts').StringOrNumber
+  type BaseDataType = import('easy-fns-ts').BaseDataType
+  type IndexType = import('easy-fns-ts').IndexType
+  type OptionDataItem<T = any> = import('easy-fns-ts').OptionDataItem<T>
+  type TreeDataItem<T = any> = import('easy-fns-ts').TreeDataItem<T>
+
+  // vueuse
   type MaybeRef<T> = import('@vueuse/core').MaybeRef<T>
   type DeepMaybeRef<T> = import('@vueuse/core').DeepMaybeRef<T>
+  type ValueOf<T> = import('@vueuse/core').ValueOf<T>
 
-  // App
+  // App Relatives
   type BaseListParams<T = any> = import('/@/utils/axios').BaseListParams<T>
   type BaseSortParams<T = any> = import('/@/utils/axios').BaseSortParams<T>
   type BaseListResponse<T = any> = import('/@/utils/axios').BaseListResponse<T>

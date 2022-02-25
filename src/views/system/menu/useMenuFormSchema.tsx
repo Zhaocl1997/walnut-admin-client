@@ -163,7 +163,7 @@ export const useMenuFormSchema = ({
       },
       componentProp: {
         clearable: true,
-        options: viewOptions as BaseOptionDataItem[],
+        options: viewOptions,
         filterable: true,
         onUpdateValue: (val: string) => {
           // Get the name property automatically from vue `name` property
@@ -194,7 +194,7 @@ export const useMenuFormSchema = ({
       componentProp: {
         clearable: true,
         filterable: true,
-        options: getTitleList,
+        options: getTitleList.value,
       },
       extraProp: {
         vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,

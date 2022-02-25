@@ -1,3 +1,5 @@
+import type { SelectGroupOptionBase } from 'naive-ui/lib/select/src/interface'
+
 export default defineComponent({
   name: 'WTransitionSelect',
 
@@ -14,7 +16,7 @@ export default defineComponent({
         }))
         .filter((i) => i.value.startsWith(group))
 
-    const options = ref<BaseOptionDataItem[]>(
+    const options = ref<SelectGroupOptionBase[]>(
       ['fade', 'zoom', 'bounce', 'rotate', 'slide', 'back', 'flip'].map(
         (group) => ({
           type: 'group',

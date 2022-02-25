@@ -43,7 +43,7 @@ export const getViewsOptions = () => {
   return { viewOptions, nameOptions }
 }
 
-export const menuTypeOptions: BaseOptionDataItem[] = [
+export const menuTypeOptions: OptionDataItem[] = [
   {
     value: MenuTypeConst.CATALOG,
     label: 'Catalog',
@@ -58,7 +58,7 @@ export const menuTypeOptions: BaseOptionDataItem[] = [
   },
 ]
 
-export const menuTernalOptions: BaseOptionDataItem[] = [
+export const menuTernalOptions: OptionDataItem[] = [
   {
     value: MenuTernalConst.NONE,
     label: 'Normal',

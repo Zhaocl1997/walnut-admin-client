@@ -37,8 +37,8 @@
 
   const loading = ref(false)
   const total = ref(0)
-  const options = ref<BaseOptionDataItem[]>([])
-  const valueOptions = ref<BaseOptionDataItem[]>([])
+  const options = ref<OptionDataItem[]>([])
+  const valueOptions = ref<OptionDataItem[]>([])
 
   const { stateRef: params, resetState } = useState<BaseListParams>({
     page: { page: 1, pageSize: 10 },

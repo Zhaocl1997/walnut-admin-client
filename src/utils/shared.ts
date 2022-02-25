@@ -11,7 +11,7 @@ export const isInSetup = () => {
   }
 }
 
-export const renderSlots = <T extends AnyObject>(slots: Slots) => {
+export const renderSlots = <T extends Recordable>(slots: Slots) => {
   const ret = {}
   Object.keys(slots).map((slotName) => {
     ret[slotName] = (scope: T) => renderSlot(slots, slotName, scope)

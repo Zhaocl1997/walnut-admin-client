@@ -36,7 +36,7 @@ export const useFormAdvanced = (
     // if error, we want loading stop, but drawer do not disappear
     // so `loading.value = false` is always excuting
     // only when have ret, close drawer and show message
-    const apiHandler = async (apiFn: Fn, params: AnyObject) => {
+    const apiHandler = async (apiFn: Fn, params: Recordable) => {
       try {
         const ret = await apiFn(params)
 
