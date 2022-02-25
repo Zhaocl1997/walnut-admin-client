@@ -1,7 +1,7 @@
 <template>
   <n-tooltip trigger="hover">
     <template #trigger>
-      <w-icon :icon="getIcon" height="24"></w-icon>
+      <w-icon :icon="getIcon" height="24" color="white"></w-icon>
     </template>
 
     <template #default> {{ downlink }} Mbps </template>

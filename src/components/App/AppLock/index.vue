@@ -44,10 +44,10 @@
           <Network />
         </div>
 
-        <div class="absolute top-2 left-2">{{ fps }}</div>
+        <div class="text-white absolute top-2 left-2">{{ fps }}</div>
 
         <div
-          class="h-full w-full flex items-center justify-center self-center space-x-8"
+          class="text-white h-full w-full flex items-center justify-center self-center space-x-8"
           w:children="bg-gray-900 rounded-3xl font-bold flex items-center justify-center w-2/5 h-2/5 text-9xl"
           w:children:md="w-1/4 h-2/5 text-[10rem]"
           w:children:lg="w-1/4 h-3/5 text-[14rem]"
