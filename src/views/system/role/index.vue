@@ -22,18 +22,6 @@
   ] = useCRUD<AppRole>({
     baseAPI: roleAPI,
 
-    onBeforeRequest: (data) => {
-      if ((data.status! as unknown as number) === 1) {
-        data.status = true
-      }
-
-      if ((data.status! as unknown as number) === 0) {
-        data.status = false
-      }
-
-      return data
-    },
-
     tableProps: {
       localeUniqueKey: key,
       rowKey: (row) => row._id!,
@@ -59,7 +47,7 @@
       queryFormProps: {
         localeUniqueKey: key,
         localeWithTable: true,
-        span: 8,
+        span: 6,
         showFeedback: false,
         labelWidth: 100,
         schemas: [
@@ -74,26 +62,6 @@
           },
 
           {
-            type: 'Base:Select',
-            formProp: {
-              path: 'status',
-            },
-            componentProp: {
-              clearable: true,
-              options: [
-                {
-                  value: 1,
-                  label: 'Normal',
-                },
-                {
-                  value: 0,
-                  label: 'Disabled',
-                },
-              ],
-            },
-          },
-
-          {
             type: 'Extend:Query',
           },
         ],
@@ -103,6 +71,14 @@
       columns: [
         {
           type: 'selection',
+          fixed: 'left',
+        },
+
+        {
+          key: 'index',
+          extendType: 'index',
+          fixed: 'left',
+          width: 80,
         },
 
         {
@@ -116,6 +92,9 @@
         {
           key: 'description',
           width: 200,
+          ellipsis: {
+            tooltip: true,
+          },
         },
 
         {
@@ -126,7 +105,7 @@
         {
           ...WTablePresetOrderColumn,
           sorter: {
-            multiple: 2,
+            multiple: 4,
           },
         },
 
@@ -135,23 +114,29 @@
           sorter: {
             multiple: 3,
           },
+          filter: true,
+          filterMultiple: false,
         },
 
         {
           ...WTablePresetCreatedAtColumn,
+          sorter: {
+            multiple: 2,
+          },
+        },
+
+        {
+          ...WTablePresetUpdatedAtColumn,
           sorter: {
             multiple: 1,
           },
         },
 
         {
-          ...WTablePresetUpdatedAtColumn,
-        },
-
-        {
           key: 'action',
           width: 240,
           extendType: 'action',
+          fixed: 'right',
           extendActionType: ['read', 'delete'],
           onRead: (row) => {
             onReadAndOpen(row._id!)

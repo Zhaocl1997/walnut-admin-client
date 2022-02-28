@@ -65,6 +65,8 @@ export declare namespace WTable {
       dictType: string
       tagProps?: RenderFn<T, TagProps>
     }
+
+    type Index<T = RowData> = BaseExtend<'index'>
   }
 
   type Column<T = RowData> = DataTableColumn<T> &
@@ -74,6 +76,7 @@ export declare namespace WTable {
       | ExtendType.Formatter<T>
       | ExtendType.Link<T>
       | ExtendType.Dictionary<T>
+      | ExtendType.Index<T>
     )
 
   interface Props<T = RowData>

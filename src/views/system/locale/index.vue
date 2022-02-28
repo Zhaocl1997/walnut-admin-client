@@ -94,6 +94,14 @@
       columns: [
         {
           type: 'selection',
+          fixed: 'left',
+        },
+
+        {
+          key: 'index',
+          extendType: 'index',
+          fixed: 'left',
+          width: 80,
         },
 
         {

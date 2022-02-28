@@ -57,6 +57,22 @@ export const useTableColumns = (
         }
       }
 
+      // index based on initParams
+      if (tItem.extendType === 'index') {
+        return {
+          ...tItem,
+
+          render(_, index) {
+            return (
+              (initParams.value.page?.page! - 1) *
+                initParams.value.page?.pageSize! +
+              index +
+              1
+            )
+          },
+        }
+      }
+
       // link
       if (tItem.extendType === 'link') {
         return {
