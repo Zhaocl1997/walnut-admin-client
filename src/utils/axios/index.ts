@@ -36,6 +36,9 @@ const axiosConfig: AxiosRequestConfigExtend = {
     // filter null value
     filterNull: true,
 
+    // transform "true"/"false"
+    transformStringBoolean: true,
+
     // custom each api cached time
     cachedMiliseconds: Number(import.meta.env.VITE_AXIOS_CACHE_MAXAGE),
   },
