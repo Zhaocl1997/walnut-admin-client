@@ -1,4 +1,4 @@
-import { adjustColor } from '/@/utils/color'
+import { adjustColor } from 'easy-fns-ts'
 
 /**
  * @description according to input color, generate 9 colors, 4 lighter, 4 darker

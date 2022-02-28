@@ -1,7 +1,8 @@
 import type { AxiosTransform } from './src/types'
 
+import { easyFilterEmptyValue } from 'easy-fns-ts'
+
 import { checkReponseErrorStatus } from './checkStatus'
-import { FilterObjectFalsyValueDeep } from '../shared'
 
 const { token } = useAppState()
 
@@ -24,7 +25,7 @@ export const transform: AxiosTransform = {
 
     // filter null value in config.data
     if (mergedCustomOptions.filterNull && config.data) {
-      config.data = FilterObjectFalsyValueDeep(config.data)
+      config.data = easyFilterEmptyValue(config.data)
     }
 
     return config

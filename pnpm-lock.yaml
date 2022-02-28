@@ -29,7 +29,7 @@ specifiers:
   conventional-changelog-cli: ^2.2.2
   crypto-js: ^4.1.1
   cz-customizable: ^6.3.0
-  easy-fns-ts: 1.1.0
+  easy-fns-ts: 1.2.1
   eslint: ^8.9.0
   eslint-config-prettier: ^8.4.0
   eslint-plugin-vue: ^8.5.0
@@ -74,7 +74,7 @@ dependencies:
   animate.css: 4.1.1
   axios: 0.26.0
   crypto-js: 4.1.1
-  easy-fns-ts: 1.1.0
+  easy-fns-ts: 1.2.1
   html-to-image: 1.9.0
   sortablejs: 1.14.0
   vue: 3.2.31
@@ -2964,8 +2964,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /easy-fns-ts/1.1.0:
-    resolution: {integrity: sha512-aqv8ltMr/K8eQx4Z4+eb4QFGwCyQW40EGSZpJOzCcNhu1w2J3eSQtfiqn5UhSYtLMqqi0uph4QeIVnC96C4DJw==}
+  /easy-fns-ts/1.2.1:
+    resolution: {integrity: sha512-6QTm51tFggQb6yQiKBE3/isanLh1VC63zQvNk4U1gSotfeJKSAO1KZttcgXMgv7EeA0LB+c/2/DLTKcwqx87SA==}
     dev: false
 
   /editor/1.0.0:
@@ -3970,7 +3970,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.15.1
+      uglify-js: 3.15.2
     dev: true
 
   /hard-rejection/2.1.0:
@@ -6990,8 +6990,8 @@ packages:
     resolution: {integrity: sha512-YTnDRlE1cIofRqOFN8ioAbz9qenDvkgVMSn0cnxvIDjM9sfEOMKB0ybMr+otSlCXMfQ/X35haYRoI7Nua82RrA==}
     dev: true
 
-  /uglify-js/3.15.1:
-    resolution: {integrity: sha512-FAGKF12fWdkpvNJZENacOH0e/83eG6JyVQyanIJaBXCN1J11TUQv1T1/z8S+Z0CG0ZPk1nPcreF/c7lrTd0TEQ==}
+  /uglify-js/3.15.2:
+    resolution: {integrity: sha512-peeoTk3hSwYdoc9nrdiEJk+gx1ALCtTjdYuKSXMTDqq7n1W7dHPqWDdSi+BPL0ni2YMeHD7hKUSdbj3TZauY2A==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true

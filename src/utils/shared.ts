@@ -18,19 +18,3 @@ export const renderSlots = <T extends Recordable>(slots: Slots) => {
   })
   return ret
 }
-
-export const FilterObjectFalsyValueDeep = (object: Recordable) => {
-  Object.entries(object).forEach(([k, v]) => {
-    if (v && typeof v === 'object') FilterObjectFalsyValueDeep(v)
-    if (
-      (v && typeof v === 'object' && !Object.keys(v).length) ||
-      v === null ||
-      v === undefined ||
-      v.length === 0
-    ) {
-      if (Array.isArray(object)) object.splice(k as unknown as number, 1)
-      else if (!(v instanceof Date)) delete object[k]
-    }
-  })
-  return object
-}

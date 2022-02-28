@@ -1,7 +1,7 @@
 import type { AxiosAdapter, AxiosRequestConfig } from 'axios'
 import type { AxiosAdapterOptions, AxiosRequestConfigExtend } from './types'
 
-import { Memory } from '../../memory'
+import { Memory } from 'easy-fns-ts'
 
 const httpMempry = new Memory<any, any>()
 

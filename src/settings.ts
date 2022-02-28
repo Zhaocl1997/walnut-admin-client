@@ -1,7 +1,4 @@
-import type { ThemeCommonVars } from 'naive-ui/lib/_styles/common'
-import { adjustColor } from '/@/utils/color'
-
-const { appMemo, settings, app: AppPersistent } = useAppState()
+const { appMemo, settings } = useAppState()
 const { app, menu } = settings.value.ForDevelopers
 
 const getShowMenuCollpase = computed(() => app.showMenu && menu.showCollapse)

@@ -1,6 +1,6 @@
 import type { ThemeCommonVars } from 'naive-ui/lib/_styles/common'
-import { adjustColor } from '/@/utils/color'
 
+import { adjustColor } from 'easy-fns-ts'
 import { darkTheme, lightTheme } from 'naive-ui'
 
 const { app, settings } = useAppState()
