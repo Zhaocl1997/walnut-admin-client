@@ -33,8 +33,6 @@
 
       const { onEvent } = useTableEvents(getProps)
 
-      const { columns } = useTableColumns(getProps)
-
       const {
         onInit,
         initParams,
@@ -44,6 +42,8 @@
         onDeleteMany,
         checkedRowKeys,
       } = useTableAPI(tableRef, getProps, setProps)
+
+      const { columns } = useTableColumns(getProps, initParams)
 
       const getNDataTableProps = computed(() =>
         easyOmit(getProps.value, Object.keys(extendProps))

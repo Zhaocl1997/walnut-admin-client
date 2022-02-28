@@ -1,6 +1,7 @@
 import type {
   SorterMultiple,
   SortState,
+  TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
 
@@ -58,10 +59,15 @@ export const useTableAPI = (
           showQuickJumper: true,
           pageSizes: [10, 30, 50],
           pageSlot: 7,
-          onUpdatePage,
-          // TODO https://github.com/TuSimple/naive-ui/issues/1774
-          // onUpdatePageSize,
-          onPageSizeChange: onUpdatePageSize,
+          onUpdatePage: async (p) => {
+            initParams.value.page!.page = p
+            await onInit()
+          },
+          onUpdatePageSize: async (p) => {
+            initParams.value.page!.page = 1
+            initParams.value.page!.pageSize = p
+            await onInit()
+          },
           prefix: () => t('comp:pagination:total', { total: res.total }),
         },
       })
@@ -110,27 +116,6 @@ export const useTableAPI = (
     done()
   }
 
-  const onUpdatePage = async (p: number) => {
-    initParams.value.page!.page = p
-    await onInit()
-  }
-
-  const onUpdatePageSize = async (p: number) => {
-    initParams.value.page!.page = 1
-    initParams.value.page!.pageSize = p
-    await onInit()
-  }
-
-  const onUpdateSorter = async (p: SortState & SortState[] & null) => {
-    if (!p) return
-    initParams.value.sort = p
-    await onInit()
-  }
-
-  const onUpdateCheckedRowKeys = (rowKeys: StringOrNumber[]) => {
-    checkedRowKeys.value = rowKeys
-  }
-
   onMounted(() => {
     if (!isUndefined(props.value?.apiProps)) {
       if (isFunction(props?.value?.apiProps?.listApi)) {
@@ -151,7 +136,11 @@ export const useTableAPI = (
         props.value.columns?.map((i) => i.type).includes('selection') &&
         isFunction(props?.value?.apiProps?.deleteManyApi!)
       ) {
-        setProps({ onUpdateCheckedRowKeys })
+        setProps({
+          onUpdateCheckedRowKeys: (rowKeys: StringOrNumber[]) => {
+            checkedRowKeys.value = rowKeys
+          },
+        })
       }
 
       if (
@@ -165,7 +154,33 @@ export const useTableAPI = (
           )
           .filter(Boolean).length !== 0
       ) {
-        setProps({ onUpdateSorter })
+        setProps({
+          onUpdateSorter: async (p) => {
+            if (!p) return
+            initParams.value.sort = p
+            await onInit()
+          },
+        })
+      }
+
+      if (
+        props.value.columns?.some((i) => i.extendType === 'dict') &&
+        (
+          props.value.columns?.find(
+            (i) => i.extendType === 'dict'
+          ) as TableBaseColumn
+        ).filter === true
+      ) {
+        setProps({
+          onUpdateFilters: async (filters) => {
+            initParams.value.query = Object.assign(
+              initParams.value.query,
+              filters
+            )
+
+            await onInit()
+          },
+        })
       }
     }
   })

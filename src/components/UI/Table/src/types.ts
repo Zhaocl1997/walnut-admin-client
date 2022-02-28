@@ -40,7 +40,6 @@ export declare namespace WTable {
   namespace ExtendType {
     interface BaseExtend<E> {
       extendType?: E
-      show?: boolean
     }
 
     interface Action<T = RowData> extends BaseExtend<'action'> {

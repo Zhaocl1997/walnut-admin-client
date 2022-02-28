@@ -4,7 +4,10 @@ import type { TableBaseColumn } from 'naive-ui/lib/data-table/src/interface'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 
 // Extend Naive UI columns
-export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
+export const useTableColumns = (
+  props: ComputedRef<WTable.Props>,
+  initParams: Ref<BaseListParams>
+) => {
   const columns = ref<WTable.Column[]>([])
   const { t } = useAppI18n()
 
@@ -73,6 +76,18 @@ export const useTableColumns = (props: ComputedRef<WTable.Props>) => {
       if (tItem.extendType === 'dict') {
         return {
           ...tItem,
+
+          filterOptions: computed(() =>
+            (tItem as TableBaseColumn).filter
+              ? AppDictMap.get(tItem.dictType)?.map((i) => ({
+                  value: i.value,
+                  label: t(i.label!),
+                }))
+              : []
+          ),
+
+          filterOptionValue:
+            initParams.value.query[(tItem as TableBaseColumn).key] ?? null,
 
           render(p) {
             const dictData = AppDictMap.get(tItem.dictType)
