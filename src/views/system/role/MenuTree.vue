@@ -1,22 +1,38 @@
 <template>
-  <n-tree
-    :cascade="checkable"
-    :checkable="checkable"
-    :disabled="disabled"
-    block-line
-    virtual-scroll
-    :data="treeData"
-    :render-label="onRenderLabel"
-    :render-prefix="onRenderPrefix"
-    key-field="_id"
-    :expanded-keys="expandedKeys"
-    :checked-keys="checkedKeys"
-    :selected-keys="checkable ? [] : [value]"
-    @update:checked-keys="onUpdateCheckedKeys"
-    @update:expanded-keys="onUpdateExpandedKeys"
-    @update:selected-keys="onUpdateSelectedKeys"
-    style="max-height: 600px"
-  />
+  <div>
+    <n-tree
+      :cascade="checkable"
+      :checkable="checkable"
+      :disabled="disabled"
+      block-line
+      draggable
+      virtual-scroll
+      :data="treeData"
+      :render-label="onRenderLabel"
+      :render-prefix="onRenderPrefix"
+      key-field="_id"
+      :expanded-keys="expandedKeys"
+      :checked-keys="checkedKeys"
+      :selected-keys="checkable ? [] : [value]"
+      :node-props="nodeProps"
+      @update:checked-keys="onUpdateCheckedKeys"
+      @update:expanded-keys="onUpdateExpandedKeys"
+      @update:selected-keys="onUpdateSelectedKeys"
+      @drop="onDrop"
+      style="max-height: 600px"
+    ></n-tree>
+
+    <n-dropdown
+      trigger="manual"
+      placement="bottom-start"
+      :show="showDropdown"
+      :options="dropdownOptions"
+      :x="x"
+      :y="y"
+      @select="onDropdownSelect"
+      @clickoutside="showDropdown = false"
+    ></n-dropdown>
+  </div>
 </template>
 
 <script lang="tsx">
@@ -28,6 +44,8 @@
 </script>
 
 <script lang="tsx" setup>
+  import type { DropdownOption, TreeDropInfo, TreeOption } from 'naive-ui'
+  import type { Key } from 'naive-ui/lib/tree/src/interface'
   import { arrToTree, orderTree, formatTree } from 'easy-fns-ts'
   import { menuAPI } from '/@/api/system/menu'
 
@@ -35,7 +53,7 @@
   import WIcon from '/@/components/UI/Icon'
 
   const props = defineProps({
-    value: [String, Array] as PropType<string | string[]>,
+    value: [String, Array] as PropType<Key | Key[]>,
     checkable: Boolean as PropType<boolean>,
     disabled: Boolean as PropType<boolean>,
   })
@@ -46,6 +64,21 @@
 
   const checkedAll = ref(false)
   const expandAll = ref(false)
+
+  const showDropdown = ref(false)
+  const x = ref(0)
+  const y = ref(0)
+  const dropdownOptions = ref<DropdownOption[]>([
+    {
+      key: 'delete',
+      label: 'Delete',
+    },
+    {
+      key: 'copy',
+      label: 'Copy',
+    },
+  ])
+  const currentCtxNode = ref<AppMenu>({})
 
   const rootId = ref<string>()
   const resData = ref<AppMenu[]>()
@@ -82,13 +115,18 @@
     resData.value = res.data.filter((i) => i._id !== data[0]._id)
   }
 
-  const onRenderLabel = ({ option }: { option: AppMenu }) =>
-    option.type === MenuTypeConst.ELEMENT ? option.permission : t(option.title!)
+  // custom tree label render
+  const onRenderLabel = ({ option }: { option: TreeOption }) =>
+    option.type === MenuTypeConst.ELEMENT
+      ? (option.permission as string)
+      : t(option.title as string)
 
-  const onRenderPrefix = ({ option }: { option: AppMenu }) => (
+  // custom tree node prefix
+  const onRenderPrefix = ({ option }: { option: TreeOption }) => (
     <WIcon icon={option.icon} height="18"></WIcon>
   )
 
+  // check all node when multiple
   const onCheckAll = () => {
     if (!props.checkable) return
 
@@ -103,6 +141,7 @@
     emit('update:value', checkedKeys.value)
   }
 
+  // expand all node
   const onExpandAll = () => {
     if (expandedKeys.value?.length) {
       expandedKeys.value = []
@@ -113,21 +152,62 @@
     }
   }
 
+  // drag menu to change parent node
+  const onDrop = async ({ node, dragNode }: TreeDropInfo) => {
+    const newNode = Object.assign(dragNode, { pid: node._id })
+
+    await menuAPI.update(newNode as AppMenu)
+
+    await onInit()
+  }
+
+  // checked keys update
   const onUpdateCheckedKeys = (keys: string[]) => {
     checkedKeys.value = []
     checkedKeys.value = keys
     emit('update:value', checkedKeys.value)
   }
 
+  // expanded keys update
   const onUpdateExpandedKeys = (keys: string[]) => {
     expandedKeys.value = keys
   }
 
+  // selected keys update
   const onUpdateSelectedKeys = (keys: string[]) => {
     if (props.checkable || !keys) return
     emit('update:value', keys[0])
   }
 
+  // tree node context menu
+  const nodeProps = ({ option }: { option: TreeOption }) => {
+    return {
+      onContextmenu(e: MouseEvent) {
+        currentCtxNode.value = option as AppMenu
+        showDropdown.value = true
+        x.value = e.clientX
+        y.value = e.clientY
+        e.preventDefault()
+      },
+    }
+  }
+
+  // dropdown select
+  const onDropdownSelect = async (key: string) => {
+    if (key === 'delete') {
+      await menuAPI.delete(currentCtxNode.value._id!)
+
+      await onInit()
+    }
+
+    if (key === 'copy') {
+      console.log('copy node', currentCtxNode.value)
+    }
+
+    showDropdown.value = false
+  }
+
+  // expose
   defineExpose({
     onCheckAll,
     onExpandAll,
