@@ -8,7 +8,7 @@
 
     setup(props, { attrs, slots, emit, expose }) {
       return () => (
-        <n-h4>
+        <n-h4 class="m-0 hstack items-center mb-1">
           {() => (
             <>
               {slots.default?.()}{' '}

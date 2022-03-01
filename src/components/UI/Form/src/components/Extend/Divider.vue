@@ -63,7 +63,7 @@
                 {props.foldable && (
                   <w-arrow
                     active={!active.value}
-                    class="mb-4"
+                    class="mb-1 ml-1"
                     onClick={onToggle}
                   ></w-arrow>
                 )}

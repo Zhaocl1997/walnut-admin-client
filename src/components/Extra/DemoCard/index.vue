@@ -1,19 +1,15 @@
 <template>
-  <n-card>
+  <w-card collapse>
     <template #header>
-      <n-alert :title="title" type="info">
-        {{ description }}
-      </n-alert>
+      <w-title :help-message="description">{{ title }}</w-title>
     </template>
     <template #default> <slot></slot> </template>
-  </n-card>
+  </w-card>
 </template>
 
 <script lang="ts">
   export default defineComponent({
     name: 'WDemoCard',
-
-    inheritAttrs: false,
 
     props: {
       title: String as PropType<string>,
