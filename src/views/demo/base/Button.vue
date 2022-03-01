@@ -2,16 +2,16 @@
   <w-demo-card :title="`Button: ${value}`">
     <n-space>
       <w-button @click="onClick">Default</w-button>
-      <w-button @click="onClick" type="primary" icon="ant-design:home-outlined"
-        >Primary
+      <w-button @click="onClick" type="primary" icon="ant-design:home-outlined">
+        Primary
       </w-button>
-      <w-button @click="onClick" type="info" text-prop="Info(prop)"
-        >Info</w-button
-      >
+      <w-button @click="onClick" type="info" text-prop="Info(prop)">
+        Info
+      </w-button>
       <w-button @click="onClick" type="success" :retry="10">Success</w-button>
-      <w-button @click="onClick" type="warning" :debounce="1000"
-        >Warning(debounce)</w-button
-      >
+      <w-button @click="onClick" type="warning" :debounce="1000">
+        Warning(debounce)
+      </w-button>
       <w-button @click="onClick" type="error">Error</w-button>
     </n-space>
 

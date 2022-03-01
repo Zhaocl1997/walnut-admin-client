@@ -67,9 +67,9 @@
         select3: ['1', '3', '5'],
         select4: [1, 3, 5],
         select5: '2,4,6',
-        select6: '618e0224400f699b3d6b2da9',
-        select7: ['618e0224400f699b3d6b2d6f', '618e0224400f699b3d6b2d71'],
-        select8: '618e0224400f699b3d6b2d73|618e0224400f699b3d6b2d75',
+        select6: '',
+        select7: [],
+        select8: '',
       })
 
       const options = []
