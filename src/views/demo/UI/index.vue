@@ -1,16 +1,15 @@
 <template>
-  <div id="demo-base">
+  <div id="demo-ui">
     <div class="float-right w-36">
       <n-anchor
         show-rail
         show-background
         affix
-        listen-to="#demo-base"
+        listen-to="#demo-ui"
         :trigger-top="24"
         :top="120"
         style="z-index: 50"
         type="block"
-        :bound="100"
       >
         <n-anchor-link title="Icon" href="#Icon" />
         <n-anchor-link title="Button" href="#Button" />
@@ -20,7 +19,7 @@
     </div>
 
     <div class="pr-42 vstack space-y-4">
-      <DemoIcon />
+      <DemoIcon id="Icon" />
       <DemoButton id="Button" />
       <DemoInput id="Input" />
       <DemoSelect id="Select" />
@@ -37,6 +36,6 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'DemoBase',
+    name: 'DemoUI',
   })
 </script>

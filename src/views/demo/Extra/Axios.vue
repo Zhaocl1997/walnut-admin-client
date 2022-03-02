@@ -1,9 +1,11 @@
 <template>
-  <w-demo-card title="Axios Demo(watch network tab on devtool)">
+  <w-demo-card title="Axios (watch network tab on devtool)">
     <n-space size="small">
       <n-button @click="onAddNormal">Add Normal Request</n-button>
 
-      <n-button @click="onAddCached" type="info">Add Cached Request</n-button>
+      <n-button @click="onAddCached" type="info"
+        >Add Cached Request (5s)</n-button
+      >
     </n-space>
 
     <div class="m-4">
@@ -14,7 +16,7 @@
   </w-demo-card>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
   import { HelloAPI } from '/@/api'
 
   const Hello = defineComponent({
@@ -35,33 +37,24 @@
     },
   })
 
+  const count = ref(10)
+  const cache = ref(true)
+
+  const onAddCached = () => {
+    cache.value = true
+    count.value += 1
+  }
+
+  const onAddNormal = () => {
+    cache.value = false
+    count.value += 1
+  }
+</script>
+
+<script lang="ts">
   export default defineComponent({
     name: 'AxiosDemo',
 
-    components: { Hello },
-
-    setup() {
-      const count = ref(10)
-      const cache = ref(true)
-
-      const onAddCached = () => {
-        cache.value = true
-        count.value += 1
-      }
-
-      const onAddNormal = () => {
-        cache.value = false
-        count.value += 1
-      }
-
-      return {
-        count,
-        cache,
-        onAddCached,
-        onAddNormal,
-      }
-    },
+    defaultView: false,
   })
 </script>
-
-<style lang="scss" scoped></style>

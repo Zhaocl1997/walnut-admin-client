@@ -19,6 +19,8 @@
   export default defineComponent({
     name: 'CheckboxDemo',
 
+    defaultView: false,
+
     setup() {
       const state = reactive({
         checkbox1: false,
@@ -62,5 +64,3 @@
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

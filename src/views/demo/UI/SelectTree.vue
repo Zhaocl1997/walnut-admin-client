@@ -32,6 +32,8 @@
   export default defineComponent({
     name: 'SelectTreeDemo',
 
+    defaultView: false,
+
     setup() {
       const state = reactive({
         selectTree1: '9',
@@ -51,5 +53,3 @@
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

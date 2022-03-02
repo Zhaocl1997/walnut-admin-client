@@ -1,0 +1,36 @@
+<template>
+  <w-demo-card title="Arrow">
+    <n-form :model="arrow" inline label-placement="left" :label-width="60">
+      <n-form-item label="Active" path="active">
+        <n-switch v-model:value="arrow.active" />
+      </n-form-item>
+
+      <n-form-item label="Left" path="left">
+        <n-switch v-model:value="arrow.left" />
+      </n-form-item>
+
+      <n-form-item label="Right" path="right">
+        <n-switch v-model:value="arrow.right" />
+      </n-form-item>
+    </n-form>
+
+    <w-arrow
+      :active="arrow.active"
+      :left="arrow.left"
+      :right="arrow.right"
+      @click="arrow.active = !arrow.active"
+    ></w-arrow>
+  </w-demo-card>
+</template>
+
+<script lang="ts" setup>
+  const arrow = ref({ active: false, left: false, right: false })
+</script>
+
+<script lang="ts">
+  export default defineComponent({
+    name: 'ArrowDemo',
+
+    defaultView: false,
+  })
+</script>

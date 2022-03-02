@@ -7,6 +7,13 @@
       </n-list-item>
 
       <n-list-item>
+        <w-title prefix="bar">Custom SVG </w-title>
+        <w-icon icon="w-svg:svg-sample-1" height="24"></w-icon>
+        <w-icon icon="w-svg:svg-sample-2" height="24"></w-icon>
+        <w-icon icon="w-svg:svg-sample-3" height="24"></w-icon>
+      </n-list-item>
+
+      <n-list-item>
         <w-title prefix="bar">Color </w-title>
         <w-icon icon="ant-design:home-outlined" color="red" />
         <w-icon icon="ant-design:home-outlined" color="green" />
@@ -162,10 +169,10 @@
   export default defineComponent({
     name: 'IconDemo',
 
+    defaultView: false,
+
     components: {},
 
     setup() {},
   })
 </script>
-
-<style lang="scss" scoped></style>

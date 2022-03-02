@@ -1,1 +1,3 @@
-export const props = undefined
+export const props = {
+  tooltip: Boolean as PropType<boolean>,
+}

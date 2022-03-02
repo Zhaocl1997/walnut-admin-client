@@ -38,6 +38,8 @@
   export default defineComponent({
     name: 'DropdownDemo',
 
+    defaultView: false,
+
     setup() {
       const state = reactive({
         dropdown1: '',
@@ -89,5 +91,3 @@
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

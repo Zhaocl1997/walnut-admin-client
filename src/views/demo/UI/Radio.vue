@@ -27,6 +27,8 @@
   export default defineComponent({
     name: 'RadioDemo',
 
+    defaultView: false,
+
     setup() {
       const state = reactive({
         radio1: '',
@@ -66,5 +68,3 @@
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

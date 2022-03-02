@@ -1,6 +1,6 @@
 <script lang="tsx">
   export default defineComponent({
-    name: 'WHelpArrow',
+    name: 'WArrow',
 
     props: {
       icon: {

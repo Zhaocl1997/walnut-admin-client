@@ -30,6 +30,8 @@
   export default defineComponent({
     name: 'CheckTagDemo',
 
+    defaultView: false,
+
     setup() {
       const state = reactive({
         checkTag1: '',
@@ -69,5 +71,3 @@
     },
   })
 </script>
-
-<style lang="scss" scoped></style>

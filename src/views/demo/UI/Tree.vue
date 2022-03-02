@@ -6,8 +6,8 @@
   export default defineComponent({
     name: 'TreeDemo',
 
+    defaultView: false,
+
     setup() {},
   })
 </script>
-
-<style lang="scss" scoped></style>

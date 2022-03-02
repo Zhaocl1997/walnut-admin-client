@@ -1,6 +1,6 @@
 <template>
   <w-demo-card title="Scrollbar">
-    <w-title prefix="bar">Position: {{ position }}</w-title>
+    <w-title prefix="bar">Horizontal Position: {{ position }}</w-title>
 
     <n-space size="small">
       <n-button @click="scrollRef?.scrollTo({ top: 800 })"
@@ -32,6 +32,8 @@
         <div v-for="i in 100" :key="i" class="text-3xl">Horizontal-{{ i }}</div>
       </w-scrollbar>
     </div>
+
+    <n-divider></n-divider>
 
     <w-title prefix="bar">Vertical Position: {{ positionVertival }}</w-title>
 
@@ -76,28 +78,20 @@
   </w-demo-card>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
   import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
 
-  export default defineComponent({
-    name: 'ScrollDemo',
+  const position = ref(0)
+  const positionVertival = ref(0)
 
-    setup() {
-      const position = ref(0)
-      const positionVertival = ref(0)
-
-      const scrollRef = ref<Nullable<WScrollbarRef>>(null)
-      const scrollVerticalRef = ref<Nullable<WScrollbarRef>>(null)
-
-      return {
-        position,
-        positionVertival,
-
-        scrollRef,
-        scrollVerticalRef,
-      }
-    },
-  })
+  const scrollRef = ref<Nullable<WScrollbarRef>>(null)
+  const scrollVerticalRef = ref<Nullable<WScrollbarRef>>(null)
 </script>
 
-<style lang="scss" scoped></style>
+<script lang="ts">
+  export default defineComponent({
+    name: 'ScrollbarDemo',
+
+    defaultView: false,
+  })
+</script>
