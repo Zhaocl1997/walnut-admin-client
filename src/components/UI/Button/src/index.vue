@@ -91,8 +91,8 @@
                       <w-icon
                         onClick={props.confirm ? () => {} : onClick}
                         icon={props.icon}
-                        height="20"
-                        class="cursor-pointer mt-1"
+                        height={attrs.height ?? '20'}
+                        class="cursor-pointer"
                       ></w-icon>
                     ),
                   }}
@@ -128,7 +128,7 @@
           renderButton()
         )
 
-      return () => hasPermission(props.auth) && <span>{renderConfirm()}</span>
+      return () => hasPermission(props.auth) && renderConfirm()
     },
   })
 </script>

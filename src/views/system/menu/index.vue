@@ -15,7 +15,11 @@
         </template>
 
         <template #>
-          <MenuTree ref="menuTreeRef" v-model:value="selectedMenuId" />
+          <MenuTree
+            ref="menuTreeRef"
+            v-model:value="selectedMenuId"
+            :setFormData="setFormData"
+          />
         </template>
       </n-card>
     </n-gi>
@@ -99,6 +103,11 @@
     }
   })
 
+  const setFormData = (data: AppMenu) => {
+    formData.value = data
+    actionType.value = 'create'
+  }
+
   // schemas
   const schemas = useMenuFormSchema({ actionType, formData, menuTreeRef })
 
@@ -123,7 +132,7 @@
         componentProp: {
           groups: [
             {
-              textProp: computed(() => t('app:button:save')),
+              textProp: () => t('app:button:save'),
               type: 'primary',
               onClick: async () => {
                 const isValid = await validate()
@@ -139,7 +148,7 @@
               },
             },
             {
-              textProp: computed(() => t('app:button:reset')),
+              textProp: () => t('app:button:reset'),
               onClick: () => {
                 restoreValidation()
                 resetFormData()
@@ -249,7 +258,9 @@
           {actionType.value === 'create' && <span>{panelTitle.value}</span>}
           {actionType.value === 'update' && (
             <span>
-              {t('app:button:read')}：{t(formData.value.title!)}
+              {formData.value.title
+                ? `${t('app:button:read')}: ` + `${t(formData.value.title!)}`
+                : 'Permission'}
             </span>
           )}
           {actionType.value === '' && <span>{t('page:menu:defTitle')}</span>}

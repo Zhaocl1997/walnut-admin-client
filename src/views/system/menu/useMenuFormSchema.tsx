@@ -68,7 +68,19 @@ export const useMenuFormSchema = ({
           }
 
           if (actionType.value === 'update') {
-            return <n-text>{formData.type}</n-text>
+            return (
+              <n-tag
+                type={
+                  formData.type === 'menu'
+                    ? 'success'
+                    : formData.type === 'element'
+                    ? 'warning'
+                    : 'info'
+                }
+              >
+                {formData.type}
+              </n-tag>
+            )
           }
         },
       },

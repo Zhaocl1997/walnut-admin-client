@@ -133,7 +133,7 @@ export const useTableColumns = (
 
           render(p) {
             return (
-              <div class="children:mr-2 whitespace-nowrap">
+              <div class="flex items-center justify-center children:mr-2 whitespace-nowrap">
                 {isShow('create') && (
                   <w-button
                     auth={props.value.auths?.create}
