@@ -78,7 +78,9 @@ export const buildKeepAliveRouteNameList = (
     if (i.cache) {
       const path = findPath<AppMenu>(payload, (n) => n._id === i._id)
 
-      res.push(...(path as AppMenu[]).map((i) => i.name!))
+      if (path) {
+        res.push(...(path as AppMenu[]).map((i) => i.name!))
+      }
     }
   })
 
