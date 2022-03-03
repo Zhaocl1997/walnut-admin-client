@@ -23,7 +23,18 @@
         rowKey: (row) => row._id!,
         maxHeight: 600,
         striped: true,
+        bordered: true,
+        singleLine: false,
         actionList: ['create'],
+
+        auths: {
+          list: `system:${key}:list`,
+          create: `system:${key}:create`,
+          read: `system:${key}:read`,
+          update: `system:${key}:update`,
+          delete: `system:${key}:delete`,
+          deleteMany: `system:${key}:deleteMany`,
+        },
 
         onAction: ({ type }) => {
           switch (type) {
@@ -41,7 +52,7 @@
           localeWithTable: true,
           span: 6,
           showFeedback: false,
-          labelWidth: 100,
+          labelWidth: 80,
           // query form schemas
           schemas: [
             {
@@ -128,7 +139,7 @@
 
           {
             key: 'action',
-            width: 240,
+            width: 80,
             extendType: 'action',
             extendActionType: ['read', 'delete'],
             onRead: (row) => {

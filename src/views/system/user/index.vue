@@ -27,6 +27,15 @@
         singleLine: false,
         actionList: ['create', 'delete'],
 
+        auths: {
+          list: `system:${key}:list`,
+          create: `system:${key}:create`,
+          read: `system:${key}:read`,
+          update: `system:${key}:update`,
+          delete: `system:${key}:delete`,
+          deleteMany: `system:${key}:deleteMany`,
+        },
+
         onAction: ({ type }) => {
           switch (type) {
             case 'create':
@@ -98,11 +107,9 @@
 
           {
             key: 'action',
-            width: 100,
+            width: 80,
             extendType: 'action',
             extendActionType: ['read', 'delete'],
-            readAuth: 'system:user:read',
-            deleteAuth: 'system:user:delete',
             onRead: (row) => {
               onReadAndOpen(row._id!)
             },
