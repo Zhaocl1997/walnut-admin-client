@@ -27,6 +27,8 @@
       rowKey: (row) => row._id!,
       maxHeight: 600,
       striped: true,
+      bordered: true,
+      singleLine: false,
       actionList: ['create', 'delete'],
 
       onAction: ({ type }) => {

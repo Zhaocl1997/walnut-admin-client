@@ -3,6 +3,7 @@ import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import { props } from './props'
 import { CreateRowKey } from 'naive-ui/lib/data-table/src/interface'
+import { WButtonProps } from '../../Button'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete'
@@ -47,6 +48,10 @@ export declare namespace WTable {
       onCreate?: RenderFn<T>
       onRead?: RenderFn<T>
       onDelete?: RenderFn<T>
+      createAuth?: string
+      readAuth?: string
+      deleteAuth?: string
+      dropdownButtons?: WButtonProps[]
     }
 
     interface Icon<T = RowData> extends BaseExtend<'icon'> {

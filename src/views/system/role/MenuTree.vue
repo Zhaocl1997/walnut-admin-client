@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="w-full">
     <n-tree
       :cascade="checkable"
       :checkable="checkable"
       :disabled="disabled"
       block-line
-      draggable
+      :draggable="!checkable"
       virtual-scroll
       :data="treeData"
       :render-label="onRenderLabel"
@@ -23,6 +23,7 @@
     ></n-tree>
 
     <n-dropdown
+      v-if="!checkable"
       trigger="manual"
       placement="bottom-start"
       :show="showDropdown"

@@ -18,23 +18,13 @@
     useCRUD<AppUser>({
       baseAPI: userAPI,
 
-      onBeforeRequest: (data) => {
-        if ((data.status! as unknown as number) === 1) {
-          data.status = true
-        }
-
-        if ((data.status! as unknown as number) === 0) {
-          data.status = false
-        }
-
-        return data
-      },
-
       tableProps: {
         localeUniqueKey: key,
         rowKey: (row) => row._id!,
         maxHeight: 600,
         striped: true,
+        bordered: true,
+        singleLine: false,
         actionList: ['create', 'delete'],
 
         onAction: ({ type }) => {
@@ -55,9 +45,9 @@
         queryFormProps: {
           localeUniqueKey: key,
           localeWithTable: true,
-          span: 8,
+          span: 6,
           showFeedback: false,
-          labelWidth: 100,
+          labelWidth: 80,
           schemas: [
             {
               type: 'Base:Input',
@@ -66,26 +56,6 @@
               },
               componentProp: {
                 clearable: true,
-              },
-            },
-
-            {
-              type: 'Base:Select',
-              formProp: {
-                path: 'status',
-              },
-              componentProp: {
-                clearable: true,
-                options: [
-                  {
-                    value: 1,
-                    label: 'Normal',
-                  },
-                  {
-                    value: 0,
-                    label: 'Disabled',
-                  },
-                ],
               },
             },
 
@@ -111,6 +81,8 @@
             sorter: {
               multiple: 3,
             },
+            filter: true,
+            filterMultiple: false,
           },
 
           {
@@ -126,9 +98,11 @@
 
           {
             key: 'action',
-            width: 180,
+            width: 100,
             extendType: 'action',
             extendActionType: ['read', 'delete'],
+            readAuth: 'system:user:read',
+            deleteAuth: 'system:user:delete',
             onRead: (row) => {
               onReadAndOpen(row._id!)
             },
