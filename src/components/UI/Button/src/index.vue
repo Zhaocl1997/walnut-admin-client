@@ -23,6 +23,11 @@
         () => disabled.value || (props.disabled ?? attrs.disabled)
       )
 
+      const getTextProp = computed(() => {
+        if (typeof props.textProp === 'string') return props.textProp
+        return props.textProp!()
+      })
+
       const buttonSlots = computed(() => {
         const def: {
           default?: Fn
@@ -33,7 +38,8 @@
 
         props.icon && (def.icon = () => <w-icon icon={props.icon}></w-icon>)
 
-        props.textProp && (def.default = () => [<div>{props.textProp}</div>])
+        getTextProp.value &&
+          (def.default = () => [<div>{getTextProp.value}</div>])
 
         buttonText.value &&
           (def.default = () => [<div>{buttonText.value}</div>])
@@ -56,7 +62,8 @@
 
             if (retryDelay.value! < 0) {
               retryDelay.value = props.retry
-              buttonText.value = (props.textProp ?? slots.default?.()) as string
+              buttonText.value = (getTextProp.value ??
+                slots.default?.()) as string
               disabled.value = false
 
               clearInterval(intervalId)
@@ -72,14 +79,26 @@
           <n-tooltip placement="bottom">
             {{
               trigger: () => (
-                <w-icon
-                  onClick={props.confirm ? () => {} : onClick}
-                  icon={props.icon}
-                  height="24"
-                  class="cursor-pointer"
-                ></w-icon>
+                <n-button
+                  text
+                  type={attrs.type}
+                  onClick={(e: MouseEvent) => {
+                    e.stopPropagation()
+                  }}
+                >
+                  {{
+                    default: () => (
+                      <w-icon
+                        onClick={props.confirm ? () => {} : onClick}
+                        icon={props.icon}
+                        height="20"
+                        class="cursor-pointer mt-1"
+                      ></w-icon>
+                    ),
+                  }}
+                </n-button>
               ),
-              default: () => props.textProp,
+              default: () => getTextProp.value,
             }}
           </n-tooltip>
         ) : (
@@ -109,7 +128,7 @@
           renderButton()
         )
 
-      return () => hasPermission(props.auth) && renderConfirm()
+      return () => hasPermission(props.auth) && <span>{renderConfirm()}</span>
     },
   })
 </script>

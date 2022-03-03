@@ -7,7 +7,7 @@ export const props = {
 
   /* text(default slot) through prop */
   textProp: {
-    type: String as PropType<string>,
+    type: [String, Function] as PropType<string | Fn>,
     default: '',
   },
 
