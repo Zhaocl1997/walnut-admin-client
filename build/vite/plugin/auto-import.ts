@@ -47,6 +47,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/store': ['useAppState'],
 
         '/@/hooks/core/useContext': ['useContext'],
+        '/@/hooks/core/usePermissions': ['usePermissions'],
         '/@/hooks/core/useState': ['useState'],
         '/@/hooks/core/useDict': ['useDict', 'AppDictMap'],
         '/@/hooks/component/useMessage': [
