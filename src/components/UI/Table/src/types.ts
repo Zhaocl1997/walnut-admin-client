@@ -48,9 +48,7 @@ export declare namespace WTable {
       onCreate?: RenderFn<T>
       onRead?: RenderFn<T>
       onDelete?: RenderFn<T>
-      createAuth?: string
-      readAuth?: string
-      deleteAuth?: string
+
       dropdownButtons?: WButtonProps[]
     }
 

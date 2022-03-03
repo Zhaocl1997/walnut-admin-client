@@ -23,6 +23,17 @@ export const extendProps = {
   >,
 
   queryFormProps: Object as PropType<WForm.Props>,
+
+  auths: Object as PropType<{
+    list?: string
+    create?: string
+    read?: string
+    update?: string
+    delete?: string
+    deleteMany?: string
+    import?: string
+    export?: string
+  }>,
 } as const
 
 export const props = {

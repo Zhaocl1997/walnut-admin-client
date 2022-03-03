@@ -3,12 +3,14 @@
     <n-tooltip trigger="hover">
       {{ t('app:base:refresh') }}
       <template #trigger>
-        <w-icon
-          icon="ant-design:sync-outlined"
-          height="20"
-          @click="onInit"
-          :disabled="tableProps.loading"
-        ></w-icon>
+        <n-button text>
+          <w-icon
+            icon="ant-design:sync-outlined"
+            height="20"
+            @click="onInit"
+            :disabled="tableProps.loading"
+          ></w-icon
+        ></n-button>
       </template>
     </n-tooltip>
 

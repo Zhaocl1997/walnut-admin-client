@@ -16,6 +16,7 @@
         item.type === 'delete' ? getDeleteDisabled : tableProps.loading
       "
       :confirm="item.type === 'delete'"
+      :auth="item.auth"
     >
     </w-button>
   </n-space>
@@ -40,6 +41,7 @@
       icon: string
       text: string
       disabled?: boolean
+      auth?: string
     }[]
   > = computed(() =>
     [
@@ -47,27 +49,32 @@
         type: 'create' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app:button:create'),
+        auth: tableProps.value.auths?.create,
       },
       {
         type: 'update' as WTable.HeaderActionType,
         icon: 'ant-design:edit-outlined',
         text: t('app:button:read'),
+        auth: tableProps.value.auths?.update,
       },
       {
         type: 'delete' as WTable.HeaderActionType,
         icon: 'ant-design:delete-outlined',
         text: t('app:button:delete'),
         disabled: getDeleteDisabled.value,
+        auth: tableProps.value.auths?.deleteMany,
       },
       {
         type: 'import' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app:button:import'),
+        auth: tableProps.value.auths?.import,
       },
       {
         type: 'export' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app:button:export'),
+        auth: tableProps.value.auths?.export,
       },
     ].filter((i) => isShow(i.type))
   )

@@ -16,6 +16,7 @@ export const useTableAPI = (
 ) => {
   const { t } = useAppI18n()
   const { AppSuccess } = useAppMsgSuccess()
+  const { hasPermission } = usePermissions()
 
   const {
     stateRef: initParams,
@@ -34,6 +35,8 @@ export const useTableAPI = (
 
   // api list
   const onInit = async () => {
+    if (!hasPermission(props.value.auths?.list)) return
+
     setProps({ loading: true })
 
     const params = generateBaseListParams(initParams.value)

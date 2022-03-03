@@ -136,32 +136,35 @@ export const useTableColumns = (
               <div class="children:mr-2 whitespace-nowrap">
                 {isShow('create') && (
                   <w-button
-                    auth={tItem.createAuth}
+                    auth={props.value.auths?.create}
                     icon-button
                     icon="ant-design:plus-outlined"
                     text-prop={t('app:button:create')}
                     onClick={() => tItem.onCreate!(p)}
+                    type="success"
                   ></w-button>
                 )}
 
                 {isShow('read') && (
                   <w-button
-                    auth={tItem.readAuth}
+                    auth={props.value.auths?.read}
                     icon-button
                     icon="ant-design:edit-outlined"
                     text-prop={t('app:button:read')}
                     onClick={() => tItem.onRead!(p)}
+                    type="info"
                   ></w-button>
                 )}
 
                 {isShow('delete') && (
                   <w-button
-                    auth={tItem.deleteAuth}
+                    auth={props.value.auths?.delete}
                     confirm
                     icon-button
                     icon="ant-design:delete-outlined"
                     text-prop={t('app:button:delete')}
                     onClick={() => tItem.onDelete!(p)}
+                    type="error"
                   ></w-button>
                 )}
               </div>

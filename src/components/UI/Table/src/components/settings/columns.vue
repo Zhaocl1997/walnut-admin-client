@@ -9,11 +9,13 @@
         @clickoutside="show = false"
       >
         <template #trigger>
-          <w-icon
-            icon="ant-design:setting-outlined"
-            height="20"
-            @click="onOpenPopover"
-          ></w-icon>
+          <n-button text>
+            <w-icon
+              icon="ant-design:setting-outlined"
+              height="20"
+              @click="onOpenPopover"
+            ></w-icon>
+          </n-button>
         </template>
 
         <template #header>
