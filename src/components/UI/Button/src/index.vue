@@ -13,6 +13,8 @@
     setup(props: WButtonProps, { attrs, slots, emit, expose }) {
       const { t } = useAppI18n()
 
+      const { hasPermission } = usePermissions()
+
       const disabled = ref(false)
 
       const buttonText = ref('')
@@ -65,20 +67,35 @@
         emit('click', event)
       }
 
-      const renderButton = () => (
-        <n-button
-          onClick={
-            props.confirm
-              ? undefined
-              : props.debounce
-              ? useDebounceFn(onClick, props.debounce)
-              : onClick
-          }
-          disabled={unref(getDisabled)}
-        >
-          {unref(buttonSlots)}
-        </n-button>
-      )
+      const renderButton = () =>
+        props.iconButton ? (
+          <n-tooltip placement="bottom">
+            {{
+              trigger: () => (
+                <w-icon
+                  onClick={props.confirm ? () => {} : onClick}
+                  icon={props.icon}
+                  height="24"
+                  class="cursor-pointer"
+                ></w-icon>
+              ),
+              default: () => props.textProp,
+            }}
+          </n-tooltip>
+        ) : (
+          <n-button
+            onClick={
+              props.confirm
+                ? undefined
+                : props.debounce
+                ? useDebounceFn(onClick, props.debounce)
+                : onClick
+            }
+            disabled={unref(getDisabled)}
+          >
+            {unref(buttonSlots)}
+          </n-button>
+        )
 
       const renderConfirm = () =>
         props.confirm ? (
@@ -92,7 +109,7 @@
           renderButton()
         )
 
-      return () => renderConfirm()
+      return () => hasPermission(props.auth) && renderConfirm()
     },
   })
 </script>

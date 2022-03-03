@@ -28,4 +28,16 @@ export const props = {
     type: Boolean as PropType<boolean>,
     default: false,
   },
+
+  /* relative to usePermissions */
+  auth: {
+    type: String as PropType<string>,
+    default: '',
+  },
+
+  /* instead of normal button, provide `icon` and `text-prop`, then pass `iconButton` true */
+  iconButton: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
 }
