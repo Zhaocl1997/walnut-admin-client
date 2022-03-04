@@ -79,24 +79,12 @@
           <n-tooltip placement="bottom">
             {{
               trigger: () => (
-                <n-button
-                  text
-                  type={attrs.type}
-                  onClick={(e: MouseEvent) => {
-                    e.stopPropagation()
-                  }}
-                >
-                  {{
-                    default: () => (
-                      <w-icon
-                        onClick={props.confirm ? () => {} : onClick}
-                        icon={props.icon}
-                        height={attrs.height ?? '20'}
-                        class="cursor-pointer"
-                      ></w-icon>
-                    ),
-                  }}
-                </n-button>
+                <w-a-icon
+                  onClick={props.confirm ? () => {} : onClick}
+                  icon={props.icon}
+                  height={attrs.height ?? '20'}
+                  class="cursor-pointer"
+                ></w-a-icon>
               ),
               default: () => getTextProp.value,
             }}

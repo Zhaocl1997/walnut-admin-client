@@ -1,11 +1,11 @@
 <template>
-  <div v-for="item in lists" :key="item.icon" @click="item.event">
-    <w-icon
-      height="24"
-      class="border border-info cursor-pointer my-auto mr-1"
-      w:hover="border-infoHover text-infoHover"
+  <div v-for="item in lists" :key="item.icon" class="flex items-center">
+    <w-a-icon
+      @click="item.event"
+      height="20"
+      class="cursor-pointer my-auto mr-1"
       :icon="item.icon"
-    ></w-icon>
+    ></w-a-icon>
   </div>
 </template>
 

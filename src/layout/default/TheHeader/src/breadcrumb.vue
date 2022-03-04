@@ -1,6 +1,5 @@
 <script lang="tsx">
   import type { RouteLocationMatched } from 'vue-router'
-  import { darkTheme } from 'naive-ui'
 
   export default defineComponent({
     setup() {
@@ -54,17 +53,15 @@
       )
 
       return () => (
-        <n-config-provider theme={darkTheme}>
-          <n-breadcrumb separator={breadcrumb.separator}>
-            {getChildren.value.map((item) => (
-              <n-breadcrumb-item>
-                {breadcrumb.showDropdown
-                  ? renderDropdown(item)
-                  : renderBase(item)}
-              </n-breadcrumb-item>
-            ))}
-          </n-breadcrumb>
-        </n-config-provider>
+        <n-breadcrumb separator={breadcrumb.separator}>
+          {getChildren.value.map((item) => (
+            <n-breadcrumb-item>
+              {breadcrumb.showDropdown
+                ? renderDropdown(item)
+                : renderBase(item)}
+            </n-breadcrumb-item>
+          ))}
+        </n-breadcrumb>
       )
     },
   })
