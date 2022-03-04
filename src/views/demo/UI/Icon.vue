@@ -161,6 +161,36 @@
           class="border border-red-900"
         />
       </n-list-item>
+
+      <n-list-item>
+        <w-title prefix="bar">Advanced Icon (Button) </w-title>
+
+        <w-a-icon icon="ant-design:home-outlined" width="24" @click="onClick" />
+        <w-a-icon
+          icon="ant-design:home-outlined"
+          width="24"
+          type="success"
+          @click="onClick"
+        />
+        <w-a-icon
+          icon="ant-design:home-outlined"
+          width="24"
+          type="info"
+          @click="onClick"
+        />
+        <w-a-icon
+          icon="ant-design:home-outlined"
+          width="24"
+          type="warning"
+          @click="onClick"
+        />
+        <w-a-icon
+          icon="ant-design:home-outlined"
+          width="24"
+          type="error"
+          @click="onClick"
+        />
+      </n-list-item>
     </n-list>
   </w-demo-card>
 </template>
@@ -171,8 +201,12 @@
 
     defaultView: false,
 
-    components: {},
-
-    setup() {},
+    setup() {
+      return {
+        onClick() {
+          console.log('icon clicked')
+        },
+      }
+    },
   })
 </script>

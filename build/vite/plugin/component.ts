@@ -41,6 +41,7 @@ const comp = {
     'Switch',
     'Table',
     'TimePicker',
+    'Tree',
   ],
 }
 
