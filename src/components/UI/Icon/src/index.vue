@@ -1,25 +1,13 @@
 <template>
-  <IconifyVueComponent
-    :style="{
-      color: $attrs.disabled ? 'var(--icon-color-disabled)' : '',
-    }"
-  />
+  <Icon />
 </template>
 
-<script lang="ts">
-  import { Icon as IconifyVueComponent } from '@iconify/vue'
-
-  export default defineComponent({
-    name: 'WIcon',
-
-    components: { IconifyVueComponent },
-
-    setup() {},
-  })
+<script lang="ts" setup>
+  import { Icon } from '@iconify/vue'
 </script>
 
-<style scoped>
-  :focus {
-    outline: none;
-  }
-</style>
+<script lang="ts">
+  export default defineComponent({
+    name: 'WIcon',
+  })
+</script>
