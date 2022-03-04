@@ -12,10 +12,6 @@ export declare namespace WTable {
 
   type SetProps = (p: Partial<Props>) => void
 
-  interface RowData {
-    [key: string]: unknown
-  }
-
   type RenderFn<T, R = void> = (rowData: T, rowIndex?: number) => R
 
   namespace Inst {

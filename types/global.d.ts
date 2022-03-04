@@ -12,6 +12,14 @@ declare type ComponentTrigger = 'hover' | 'click' | 'contentmenu'
 
 declare type ActionType = 'create' | 'update' | ''
 
+declare type NaiveCompType =
+  | 'default'
+  | 'primary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+
 declare type RowData = {
   [key: string]: unknown
 }
