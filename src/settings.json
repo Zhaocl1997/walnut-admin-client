@@ -55,7 +55,7 @@
     "showDarkMode": true,
     "showLock": true,
     "showSearch": true,
-    "inverted": true
+    "inverted": false
   },
   "tab": {
     "height": 32,
