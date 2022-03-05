@@ -11,7 +11,7 @@
         <n-h4 class="m-0 hstack items-center mb-1">
           {() => (
             <>
-              {slots.default?.()}{' '}
+              <span class="mr-1">{slots.default?.()}</span>
               {props.helpMessage && (
                 <w-message msg={props.helpMessage}></w-message>
               )}

@@ -24,7 +24,7 @@
             :indeterminate="getIndeterminate"
             @update-checked="onUpdateCheckAllChecked"
           >
-            {{ t('table:base:settings:column:checkAll') }}
+            {{ t('app:button:check') }}
           </n-checkbox>
         </template>
 
