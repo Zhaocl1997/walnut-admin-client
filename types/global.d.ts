@@ -24,6 +24,10 @@ declare type RowData = {
   [key: string]: unknown
 }
 
+declare type RecordNullable<T> = {
+  [P in keyof T]?: Nullable<T[P]>
+}
+
 declare type MaybeRefSelf<T> = T | Ref<T> | ComputedRef<T>
 
 // TODO type need to optimise liter string not working

@@ -31,6 +31,7 @@ const comp = {
     'DatePicker',
     'Descriptions',
     'Drawer',
+    'Dropdown',
     'DynamicTags',
     'Form',
     'Icon',
