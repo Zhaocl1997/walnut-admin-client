@@ -84,6 +84,7 @@
                   icon={props.icon}
                   height={attrs.height ?? '20'}
                   class="cursor-pointer"
+                  type={attrs.type}
                 ></w-a-icon>
               ),
               default: () => getTextProp.value,
