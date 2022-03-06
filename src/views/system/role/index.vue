@@ -11,14 +11,24 @@
 <script lang="tsx" setup>
   import { roleAPI } from '/@/api/system/role'
 
-  import MenuTree from './MenuTree.vue'
+  import { useMenuTree } from './useMenuTree'
 
   // locale unique key
   const key = 'role'
 
+  const { t } = useAppI18n()
+  const { menuTreeData } = useMenuTree()
+
   const [
     register,
-    { onCreateAndOpen, onReadAndOpen, onDelete, onDeleteMany, onGetActionType },
+    {
+      onCreateAndOpen,
+      onReadAndOpen,
+      onDelete,
+      onDeleteMany,
+      onGetActionType,
+      onGetFormData,
+    },
   ] = useCRUD<AppRole>({
     baseAPI: roleAPI,
 
@@ -209,20 +219,33 @@
           },
         },
         {
-          type: 'Base:Render',
+          type: 'Base:Tree',
           formProp: {
             path: 'menus',
             rule: false,
             labelHelpMessage: true,
           },
           componentProp: {
-            render: ({ formData }) => (
-              <MenuTree
-                v-model={[formData.menus, 'value']}
-                checkable
-                disabled={formData.roleName === 'admin'}
-              />
-            ),
+            presetPrefixIcon: true,
+            toolbar: true,
+            multiple: true,
+            maxHeight: '400px',
+
+            treeProps: {
+              data: menuTreeData,
+              blockLine: true,
+              blockNode: true,
+              keyField: '_id',
+              labelField: 'title',
+              disabled: computed(
+                () => onGetFormData().value.roleName === 'admin'
+              ),
+
+              renderLabel: ({ option }) =>
+                option.type === MenuTypeConst.ELEMENT
+                  ? (option.permission as string)
+                  : t(option.title as string),
+            },
           },
         },
       ],

@@ -18,24 +18,23 @@
     useCRUD<AppLang>({
       baseAPI: langAPI,
 
-      onBeforeRequest: (data) => {
-        if ((data.status! as unknown as number) === 1) {
-          data.status = true
-        }
-
-        if ((data.status! as unknown as number) === 0) {
-          data.status = false
-        }
-
-        return data
-      },
-
       tableProps: {
         localeUniqueKey: key,
         rowKey: (row) => row._id!,
         maxHeight: 600,
         striped: true,
+        bordered: true,
+        singleLine: false,
         actionList: ['create'],
+
+        auths: {
+          list: `system:${key}:list`,
+          create: `system:${key}:create`,
+          read: `system:${key}:read`,
+          update: `system:${key}:update`,
+          delete: `system:${key}:delete`,
+          deleteMany: `system:${key}:deleteMany`,
+        },
 
         onAction: ({ type }) => {
           switch (type) {
@@ -67,26 +66,6 @@
             },
 
             {
-              type: 'Base:Select',
-              formProp: {
-                path: 'status',
-              },
-              componentProp: {
-                clearable: true,
-                options: [
-                  {
-                    value: 1,
-                    label: 'Normal',
-                  },
-                  {
-                    value: 0,
-                    label: 'Disabled',
-                  },
-                ],
-              },
-            },
-
-            {
               type: 'Extend:Query',
             },
           ],
@@ -94,6 +73,13 @@
 
         // table columns
         columns: [
+          {
+            key: 'index',
+            extendType: 'index',
+            fixed: 'left',
+            width: 80,
+          },
+
           {
             key: 'lang',
             width: 200,
@@ -116,6 +102,8 @@
             sorter: {
               multiple: 2,
             },
+            filter: true,
+            filterMultiple: false,
           },
 
           {
@@ -134,7 +122,7 @@
 
           {
             key: 'action',
-            width: 240,
+            width: 80,
             extendType: 'action',
             extendActionType: ['read', 'delete'],
             onRead: (row) => {

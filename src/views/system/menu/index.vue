@@ -1,49 +1,79 @@
 <template>
   <n-grid :x-gap="12">
     <n-gi :span="6">
-      <n-card
+      <w-card
         :segmented="{
-          content: 'soft',
+          content: true,
         }"
       >
         <template #header>
-          <n-space>
-            <PrimaryButton />
+          <WAppAuthorize value="system:menu:create">
+            <n-dropdown
+              trigger="hover"
+              :onSelect="onDropDownSelect"
+              :options="getDropdownOptions"
+            >
+              <template #>
+                <n-button>
+                  {{ t('app:button:create') }}
 
-            <SecondaryButton />
-          </n-space>
+                  <template #icon>
+                    <w-icon icon="ant-design:plus-outlined"></w-icon>
+                  </template>
+                </n-button>
+              </template> </n-dropdown
+          ></WAppAuthorize>
         </template>
 
         <template #>
-          <MenuTree
-            ref="menuTreeRef"
-            v-model:value="selectedMenuId"
-            :setFormData="setFormData"
-          />
+          <w-tree v-model:value="treeMenuValue" @hook="registerTree"></w-tree>
         </template>
-      </n-card>
+      </w-card>
     </n-gi>
 
     <n-gi :span="18">
-      <n-card
+      <w-card
         :segmented="{
-          content: 'soft',
+          content: true,
         }"
       >
         <template #header>
-          <PanelHeader />
+          <div class="flex items-center">
+            <w-icon
+              :icon="
+                actionType === 'create'
+                  ? 'ant-design:plus-outlined'
+                  : actionType === 'update'
+                  ? 'ant-design:edit-outlined'
+                  : 'ant-design:menu-outlined'
+              "
+              height="24"
+              class="mr-1"
+            >
+            </w-icon>
+
+            <span v-show="actionType === 'create'">{{ panelTitle }}</span>
+            <span v-show="actionType === 'update'">
+              {{
+                formData.title
+                  ? t('app:button:read') + ': ' + t(formData.title)
+                  : t('page:menu:permission')
+              }}
+            </span>
+            <span v-show="!actionType">{{ t('page:menu:defTitle') }}</span>
+          </div>
         </template>
 
         <template #>
           <n-alert :title="t('page:menu:alert')" type="info" />
 
           <w-form
-            v-show="selectedMenuId || actionType === 'create'"
+            v-if="treeMenuValue || actionType === 'create'"
             @hook="registerForm"
             :model="formData"
           ></w-form>
         </template>
-      </n-card>
+      </w-card>
     </n-gi>
   </n-grid>
 </template>
@@ -57,59 +87,113 @@
 <script lang="tsx" setup>
   import type { DropdownOption } from 'naive-ui'
 
+  import { omit } from 'lodash-es'
+
   import { menuAPI } from '/@/api/system/menu'
+  import { useTree } from '/@/components/UI/Tree'
 
   import { useMenuFormSchema } from './useMenuFormSchema'
-
-  import MenuTree from '../role/MenuTree.vue'
-
-  // TODO 99
-  import WIcon from '/@/components/UI/Icon'
-  import WArrow from '/@/components/Extra/Arrow'
-  import { NButton, NDropdown } from 'naive-ui'
+  import { useMenuTree } from '../role/useMenuTree'
 
   const { t } = useAppI18n()
   const { AppSuccess } = useAppMsgSuccess()
-
-  // type
-  type DropDownKey = 'root' | 'child'
+  const { hasPermission } = usePermissions()
 
   // ref
   const actionType = ref<ActionType>('')
-  const menuTreeRef = ref()
-
-  const selectedMenuId = ref<string>('')
+  const treeMenuValue = ref<string>('')
   const panelTitle = ref<string>('')
+
+  const { menuTreeData, rootId, onInit } = useMenuTree()
+
+  const [registerTree] = useTree<AppMenu>({
+    presetPrefixIcon: true,
+    presetContextMenu: true,
+    deletable: true,
+    toolbar: true,
+    maxHeight: '600px',
+
+    auths: {
+      delete: 'system:menu:delete',
+      update: 'system:menu:update',
+    },
+
+    onDelete: async (deleted) => {
+      await menuAPI.delete(deleted._id!)
+      AppSuccess()
+      await onInit()
+    },
+
+    onPaste(copy, current) {
+      // paste is just reset the pid, also need to remove some fields
+
+      formData.value = {
+        ...omit(copy, ['_id', 'createdAt', 'updatedAt']),
+        pid: current._id,
+      }
+      actionType.value = 'create'
+    },
+
+    treeProps: {
+      data: menuTreeData,
+      keyField: '_id',
+      blockLine: true,
+      blockNode: true,
+      draggable: true,
+
+      onDrop: async ({ node, dragNode }) => {
+        if (!hasPermission('system:menu:update')) return
+
+        const newNode = Object.assign(dragNode, { pid: node._id })
+
+        await menuAPI.update(newNode as AppMenu)
+
+        await onInit()
+      },
+
+      filter: (pattern, node) => {
+        if (
+          node.title &&
+          t(node.title as string)
+            .toLowerCase()
+            .includes(pattern)
+        ) {
+          return true
+        }
+        return false
+      },
+
+      renderLabel: ({ option }) =>
+        option.type === MenuTypeConst.ELEMENT
+          ? (option.permission as string)
+          : t(option.title as string),
+    },
+  })
 
   // state
   const { stateRef: formData, resetState: resetFormData } = useState<AppMenu>({
     type: 'catalog',
-    ternal: 'none',
-    order: 0,
-    cache: false,
     status: true,
+
+    path: null,
+    name: null,
+    component: null,
+
+    title: null,
+    icon: null,
+    order: 0,
+    ternal: 'none',
+    url: null,
+    cache: false,
     show: true,
     affix: false,
+    permission: null,
+    menuActiveName: null,
+    menuActiveSameTab: false,
   })
-
-  // effect
-  watchEffect(async () => {
-    if (selectedMenuId.value) {
-      const res = await menuAPI.read(selectedMenuId.value)
-      actionType.value = 'update'
-      formData.value = res
-    } else {
-      actionType.value = ''
-    }
-  })
-
-  const setFormData = (data: AppMenu) => {
-    formData.value = data
-    actionType.value = 'create'
-  }
 
   // schemas
-  const schemas = useMenuFormSchema({ actionType, formData, menuTreeRef })
+  const schemas = useMenuFormSchema(actionType, formData, menuTreeData)
 
   // form
   const [registerForm, { validate, restoreValidation }] = useForm<AppMenu>({
@@ -134,6 +218,7 @@
             {
               textProp: () => t('app:button:save'),
               type: 'primary',
+              auth: 'system:menu:update',
               onClick: async () => {
                 const isValid = await validate()
 
@@ -142,16 +227,17 @@
                 await menuAPI[actionType.value](formData.value)
                 AppSuccess()
                 resetFormData()
-                await menuTreeRef.value.onRefresh()
-                selectedMenuId.value = ''
+                await onInit()
+                treeMenuValue.value = ''
                 actionType.value = ''
               },
             },
             {
               textProp: () => t('app:button:reset'),
-              onClick: () => {
-                restoreValidation()
+              onClick: async () => {
+                await restoreValidation()
                 resetFormData()
+                actionType.value = ''
               },
             },
           ],
@@ -160,112 +246,48 @@
     ],
   })
 
-  // components
-  const PrimaryButton = defineComponent({
-    setup() {
-      const getDropdownOptions = computed<DropdownOption[]>(() => [
-        {
-          key: 'root',
-          label: t('page:menu:dd1'),
-          disabled: !!selectedMenuId.value,
-        },
-        {
-          key: 'child',
-          label: t('page:menu:dd2'),
-          disabled: !selectedMenuId.value,
-        },
-      ])
+  // effect
+  watchEffect(async () => {
+    if (treeMenuValue.value) {
+      const res = await menuAPI.read(treeMenuValue.value)
+      actionType.value = 'update'
+      formData.value = Object.assign(formData.value, res)
+    }
 
-      const onDropDownSelect = (key: DropDownKey) => {
-        const pid = formData.value._id
-        actionType.value = 'create'
-        resetFormData()
-
-        switch (key) {
-          case 'root':
-            panelTitle.value = t('page:menu:dd1')
-            // setFormData({ pid: menuTreeRef.value.onGetRootId() })
-            formData.value.pid = menuTreeRef.value.onGetRootId()
-            break
-
-          case 'child':
-            panelTitle.value = t('page:menu:dd2')
-            // setFormData({ pid })
-            formData.value.pid = pid
-            break
-
-          default:
-            break
-        }
-      }
-
-      return () => (
-        <NDropdown
-          trigger="hover"
-          onSelect={onDropDownSelect}
-          options={getDropdownOptions.value}
-        >
-          <NButton>
-            {{
-              default: () => t('app:button:create'),
-              icon: () => <WIcon icon="ant-design:plus-outlined"></WIcon>,
-            }}
-          </NButton>
-        </NDropdown>
-      )
-    },
+    await restoreValidation()
   })
 
-  const SecondaryButton = defineComponent({
-    setup() {
-      const expandAll = ref(false)
-
-      const onExpand = () => {
-        menuTreeRef.value.onExpandAll()
-        expandAll.value = menuTreeRef.value.onGetExpandStatus()
-      }
-
-      return () => (
-        <NButton onClick={onExpand} icon-placement="right">
-          {{
-            default: () =>
-              expandAll.value
-                ? t('app:button:collapseAll')
-                : t('app:button:expandAll'),
-            icon: () => <WArrow active={expandAll.value}></WArrow>,
-          }}
-        </NButton>
-      )
+  const getDropdownOptions = computed<DropdownOption[]>(() => [
+    {
+      key: 'root',
+      label: t('page:menu:dd1'),
+      disabled: !!treeMenuValue.value,
     },
-  })
-
-  const PanelHeader = defineComponent({
-    setup() {
-      return () => (
-        <>
-          <WIcon
-            icon={
-              actionType.value === 'create'
-                ? 'ant-design:plus-outlined'
-                : actionType.value === 'update'
-                ? 'ant-design:edit-outlined'
-                : 'ant-design:menu-outlined'
-            }
-            height="24"
-            class="-mb-1.5 mr-1"
-          />
-
-          {actionType.value === 'create' && <span>{panelTitle.value}</span>}
-          {actionType.value === 'update' && (
-            <span>
-              {formData.value.title
-                ? `${t('app:button:read')}: ` + `${t(formData.value.title!)}`
-                : 'Permission'}
-            </span>
-          )}
-          {actionType.value === '' && <span>{t('page:menu:defTitle')}</span>}
-        </>
-      )
+    {
+      key: 'child',
+      label: t('page:menu:dd2'),
+      disabled: !treeMenuValue.value,
     },
-  })
+  ])
+
+  const onDropDownSelect = (key: string) => {
+    const pid = formData.value._id
+    actionType.value = 'create'
+    resetFormData()
+
+    switch (key) {
+      case 'root':
+        panelTitle.value = t('page:menu:dd1')
+        formData.value.pid = rootId.value
+        break
+
+      case 'child':
+        panelTitle.value = t('page:menu:dd2')
+        formData.value.pid = pid
+        break
+
+      default:
+        break
+    }
+  }
 </script>

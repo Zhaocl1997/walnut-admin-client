@@ -23,19 +23,26 @@
   const [
     register,
     { onCreateAndOpen, onReadAndOpen, onDelete, onDeleteMany, onGetFormData },
-  ] = useCRUD<AppLocale>({
+  ] = useCRUD<AppLocale & { oldKey?: string }>({
     baseAPI: localeAPI,
-
-    onBeforeRequest: (data) => {
-      return data
-    },
 
     tableProps: {
       localeUniqueKey: key,
       rowKey: (row) => row._id!,
       maxHeight: 600,
       striped: true,
+      bordered: true,
+      singleLine: false,
       actionList: ['create', 'delete'],
+
+      auths: {
+        list: `system:${key}:list`,
+        create: `system:${key}:create`,
+        read: `system:${key}:read`,
+        update: `system:${key}:update`,
+        delete: `system:${key}:delete`,
+        deleteMany: `system:${key}:deleteMany`,
+      },
 
       onAction: ({ type }) => {
         switch (type) {
@@ -55,9 +62,9 @@
       queryFormProps: {
         localeUniqueKey: key,
         localeWithTable: true,
-        span: 8,
+        span: 6,
         showFeedback: false,
-        labelWidth: 100,
+        labelWidth: 80,
         // query form schemas
         schemas: [
           {
@@ -129,13 +136,12 @@
 
         {
           key: 'action',
-          width: 180,
+          width: 80,
           extendType: 'action',
           extendActionType: ['read', 'delete'],
           onRead: (row) => {
             const formData = onGetFormData()
 
-            // @ts-ignore
             formData.value.oldKey = row.key
 
             onReadAndOpen(row.key!)

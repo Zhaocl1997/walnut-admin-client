@@ -4,19 +4,17 @@ import { findPath } from 'easy-fns-ts'
 
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 
-export const useMenuFormSchema = ({
-  actionType,
-  formData,
-  menuTreeRef,
-}: {
-  actionType: Ref<ActionType>
-  formData: Ref<AppMenu>
-  menuTreeRef: Ref<any>
-}): DeepMaybeRefSelf<WForm.Schema.Item<AppMenu>[]> => {
+export const useMenuFormSchema = (
+  actionType: Ref<ActionType>,
+  formData: Ref<RecordNullable<AppMenu>>,
+  menuTreeData: Ref<TreeDataItem<AppMenu>[]>
+): DeepMaybeRefSelf<WForm.Schema.Item<AppMenu>[]> => {
   const { getLocaleMessage, locale } = useAppI18n()
 
   const { viewOptions, nameOptions } = getViewsOptions()
 
+  // get title list from locale message
+  // key start with `sys:menu` are all menu title
   const getTitleList = computed(() =>
     Object.entries<string>(getLocaleMessage(locale.value))
       .map(([k, v]) => {
@@ -27,17 +25,20 @@ export const useMenuFormSchema = ({
       })
       .filter((i) => i.value)
   )
-  const getCurrentNode = computed(() => {
-    const treeData = menuTreeRef.value?.onGetTreeData()
-    return (
-      treeData &&
-      findPath<AppMenu>(treeData, (n) => n._id === formData.value.pid)
-    )
-  })
+
+  // get node item from tree data
+  const getCurrentNode = computed(
+    () =>
+      menuTreeData.value &&
+      findPath<AppMenu>(menuTreeData.value, (n) => n._id === formData.value.pid)
+  )
+
+  // for path prefix, better experience
   const getRoutePathPrefix = computed(() =>
     !getCurrentNode.value
       ? '/'
-      : (getCurrentNode.value as AppMenu[]).map((item) => item.path).join('/') +
+      : '/' +
+        (getCurrentNode.value as AppMenu[]).map((item) => item.path).join('/') +
         '/'
   )
 
@@ -56,7 +57,7 @@ export const useMenuFormSchema = ({
       },
       componentProp: {
         render: ({ formData }) => {
-          if (actionType.value === 'create') {
+          if (actionType.value === 'create' || !actionType.value) {
             return (
               <w-radio
                 v-model={[formData.type, 'value']}
