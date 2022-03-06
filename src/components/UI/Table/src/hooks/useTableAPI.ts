@@ -51,9 +51,8 @@ export const useTableAPI = (
     try {
       const res = await props.value.apiProps?.listApi!(params)!
 
-      setProps({ data: res.data! })
-
       setProps({
+        data: res.data!,
         pagination: {
           itemCount: res.total!,
           page: initParams.value.page?.page,
@@ -74,8 +73,6 @@ export const useTableAPI = (
           prefix: () => t('comp:pagination:total', { total: res.total }),
         },
       })
-
-      setProps({ loading: false })
     } finally {
       setProps({ loading: false })
     }
@@ -119,7 +116,7 @@ export const useTableAPI = (
     done()
   }
 
-  onMounted(() => {
+  onMounted(async () => {
     if (!isUndefined(props.value?.apiProps)) {
       if (isFunction(props?.value?.apiProps?.listApi)) {
         if (props.value.queryFormProps) {
@@ -132,7 +129,8 @@ export const useTableAPI = (
         }
 
         setProps({ remote: true })
-        onInit()
+
+        await onInit()
       }
 
       if (
