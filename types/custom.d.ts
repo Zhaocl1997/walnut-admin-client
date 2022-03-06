@@ -46,7 +46,7 @@ declare global {
   type BaseDataType = import('easy-fns-ts').BaseDataType
   type IndexType = import('easy-fns-ts').IndexType
   type OptionDataItem<T = any> = import('easy-fns-ts').OptionDataItem<T>
-  type TreeDataItem<T = any> = import('easy-fns-ts').TreeDataItem<T>
+  type TreeNodeItem<T = any> = import('easy-fns-ts').TreeNodeItem<T>
 
   // vueuse
   type MaybeRef<T> = import('@vueuse/core').MaybeRef<T>

@@ -7,7 +7,7 @@ import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 export const useMenuFormSchema = (
   actionType: Ref<ActionType>,
   formData: Ref<RecordNullable<AppMenu>>,
-  menuTreeData: Ref<TreeDataItem<AppMenu>[]>
+  menuTreeData: Ref<TreeNodeItem<AppMenu>[]>
 ): DeepMaybeRefSelf<WForm.Schema.Item<AppMenu>[]> => {
   const { getLocaleMessage, locale } = useAppI18n()
 

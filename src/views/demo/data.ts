@@ -22,7 +22,7 @@ export const options = [
   },
 ]
 
-export const getTreeData = (): TreeDataItem<{
+export const getTreeData = (): TreeNodeItem<{
   _id: number
   _label: string
   icon: string

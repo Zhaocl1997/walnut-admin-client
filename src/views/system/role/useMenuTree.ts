@@ -3,7 +3,7 @@ import { menuAPI } from '/@/api/system/menu'
 
 export const useMenuTree = () => {
   const rootId = ref<string>()
-  const menuTreeData = ref<TreeDataItem<AppMenu>[]>([])
+  const menuTreeData = ref<TreeNodeItem<AppMenu>[]>([])
 
   const onInit = async () => {
     const res = await menuAPI.list()
