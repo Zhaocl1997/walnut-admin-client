@@ -7,7 +7,6 @@ import type {
   H3Props,
   DynamicInputProps,
   TreeSelectProps,
-  TreeProps,
   FormItemRule,
 } from 'naive-ui'
 
@@ -25,21 +24,23 @@ import type { WSwitchProps } from '../../Switch'
 import type { WTimePickerProps } from '../../TimePicker'
 import type { WDatePickerProps } from '../../DatePicker'
 import type { WDynamicTagsProps } from '../../DynamicTags'
+import type { WTree } from '../../Tree'
 
 import type { WFormPropType } from './props'
 
 export enum BUILTIN_FORM_TYPE {
   Button,
   ButtonGroup,
-  Input,
-  InputNumber,
-  Select,
-  Radio,
   Checkbox,
-  Switch,
-  TimePicker,
   DatePicker,
   DynamicTags,
+  Input,
+  InputNumber,
+  Radio,
+  Select,
+  Switch,
+  TimePicker,
+  Tree,
 }
 
 export declare namespace WForm {
@@ -150,7 +151,7 @@ export declare namespace WForm {
       'Base:DynamicTags': WDynamicTagsProps
       'Base:Slider': SliderProps
       'Base:TreeSelect': TreeSelectProps
-      'Base:Tree': TreeProps
+      'Base:Tree': WTree.Props
     }
 
     interface DynamicSchemaItemProps<

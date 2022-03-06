@@ -1,7 +1,7 @@
 import { BUILTIN_FORM_TYPE } from '../../types'
 import { createAsyncComponent } from '/@/utils/factory/asyncComponent'
 
-import { NSlider, NDynamicInput, NTreeSelect, NTree } from 'naive-ui'
+import { NSlider, NDynamicInput, NTreeSelect } from 'naive-ui'
 
 import WIconPicker from '/@/components/Extra/IconPicker'
 import WTransitionSelect from '/@/components/Extra/TransitionSelect'
@@ -32,7 +32,6 @@ const allComponents = getAllComponents(BUILTIN_FORM_TYPE)
 componentMap.set('Slider', NSlider)
 componentMap.set('DynamicInput', NDynamicInput)
 componentMap.set('TreeSelect', NTreeSelect)
-componentMap.set('Tree', NTree)
 componentMap.set('IconPicker', WIconPicker)
 componentMap.set('TransitionSelect', WTransitionSelect)
 componentMap.set('RoleSelect', WRoleSelect)
