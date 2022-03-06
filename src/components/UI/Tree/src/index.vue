@@ -17,11 +17,11 @@
           show-arrow
           size="small"
         >
-          <w-icon
+          <WIcon
             height="20"
             icon="ant-design:more-outlined"
             class="cursor-pointer"
-          ></w-icon>
+          ></WIcon>
         </n-dropdown>
       </template>
     </n-input>
@@ -70,6 +70,10 @@
   import { treeToArr } from 'easy-fns-ts'
   import { cloneDeep } from 'lodash-es'
 
+  // TODO 99
+  import WIcon from '/@/components/UI/Icon'
+  import WTransition from '/@/components/Extra/Transition'
+
   import { useProps } from '/@/hooks/core/useProps'
   import { useDropdown } from '/@/components/UI/Dropdown'
 
@@ -114,7 +118,7 @@
           key: 'expand',
           label: t('app:button:expand'),
           icon: () => (
-            <w-icon height="20" icon="mdi:arrow-expand-vertical"></w-icon>
+            <WIcon height="20" icon="mdi:arrow-expand-vertical"></WIcon>
           ),
           disabled: state.value.expandAll,
         },
@@ -123,7 +127,7 @@
           key: 'collapse',
           label: t('app:button:collapse'),
           icon: () => (
-            <w-icon height="20" icon="mdi:arrow-collapse-vertical"></w-icon>
+            <WIcon height="20" icon="mdi:arrow-collapse-vertical"></WIcon>
           ),
           disabled: !state.value.expandAll,
         },
@@ -138,13 +142,13 @@
         {
           key: 'check',
           label: t('app:button:check'),
-          icon: () => <w-icon height="20" icon="mdi:select-all"></w-icon>,
+          icon: () => <WIcon height="20" icon="mdi:select-all"></WIcon>,
           disabled: state.value.checkAll || !getProps.value.multiple,
         },
         {
           key: 'inverse',
           label: t('app:button:inverse'),
-          icon: () => <w-icon height="20" icon="mdi:select-inverse"></w-icon>,
+          icon: () => <WIcon height="20" icon="mdi:select-inverse"></WIcon>,
           disabled: !state.value.checkAll || !getProps.value.multiple,
         },
       ],
@@ -159,7 +163,7 @@
           key: 'cascade',
           label: t('app:button:cascade'),
           icon: () => (
-            <w-icon height="20" icon="carbon:checkbox-indeterminate"></w-icon>
+            <WIcon height="20" icon="carbon:checkbox-indeterminate"></WIcon>
           ),
           disabled: getProps.value.treeProps.cascade,
         },
@@ -167,7 +171,7 @@
           key: 'independent',
           label: t('app:button:independent'),
           icon: () => (
-            <w-icon height="20" icon="carbon:checkbox-checked"></w-icon>
+            <WIcon height="20" icon="carbon:checkbox-checked"></WIcon>
           ),
           disabled: !getProps.value.treeProps.cascade,
         },
@@ -180,13 +184,13 @@
       key: 'copy',
       label: t('app:button:copy'),
       disabled: !!state.value.copyTarget[getKeyField.value],
-      icon: () => <w-icon height="20" icon="mdi:content-copy"></w-icon>,
+      icon: () => <WIcon height="20" icon="mdi:content-copy"></WIcon>,
     },
     {
       key: 'paste',
       label: t('app:button:paste'),
       disabled: !state.value.copyTarget[getKeyField.value],
-      icon: () => <w-icon height="20" icon="mdi:content-paste"></w-icon>,
+      icon: () => <WIcon height="20" icon="mdi:content-paste"></WIcon>,
     },
   ])
 
@@ -301,20 +305,20 @@
   }
 
   const onRenderPrefix = ({ option }: { option: TreeOption }) => {
-    return <w-icon icon={option.icon} height="18" class="mb-0.5"></w-icon>
+    return <WIcon icon={option.icon} height="18" class="mb-0.5"></WIcon>
   }
 
   const onRenderSuffix = ({ option }: { option: TreeOption }) => {
     return (
-      <w-transition name="fade-right">
+      <WTransition name="fade-right">
         <div v-show={option.hover} class="flex items-center">
           {getProps.value.treeProps.draggable &&
             hasPermission(getProps.value.auths?.update) && (
-              <w-icon
+              <WIcon
                 height="18"
                 class="cursor-move"
                 icon="ant-design:drag-outlined"
-              ></w-icon>
+              ></WIcon>
             )}
 
           {getProps.value.deletable &&
@@ -332,7 +336,7 @@
               ></w-button>
             )}
         </div>
-      </w-transition>
+      </WTransition>
     )
   }
 
