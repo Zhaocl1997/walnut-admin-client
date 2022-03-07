@@ -75,7 +75,7 @@
   import WButton from '/@/components/UI/Button'
   import WTransition from '/@/components/Extra/Transition'
 
-  import { useProps } from '/@/hooks/core/useProps'
+  import { usePropsAdvanced } from '/@/hooks/core/usePropsAdvanced'
   import { useDropdown } from '/@/components/UI/Dropdown'
 
   // avoid error
@@ -232,7 +232,7 @@
 
   const emit = defineEmits<WTreeEmits>()
 
-  const { setProps, getProps } = useProps<WTree.Props>(
+  const { setProps, getProps } = usePropsAdvanced<WTree.Props>(
     attrs as unknown as WTree.Props
   )
 
