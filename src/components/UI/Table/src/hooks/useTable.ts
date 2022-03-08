@@ -18,9 +18,10 @@ export const useTable = <T>(
   }
 
   const methods = {
-    onInit: () => wTableRef.value?.onInit(),
-    onDelete: (id: StringOrNumber) => wTableRef.value?.onDelete(id),
-    onDeleteMany: () => wTableRef.value?.onDeleteMany(),
+    onApiTableList: () => wTableRef.value?.onApiTableList(),
+    onApiTableDelete: (id: StringOrNumber) =>
+      wTableRef.value?.onApiTableDelete(id),
+    onApiTableDeleteMany: () => wTableRef.value?.onApiTableDeleteMany(),
   } as WTable.Inst.WTableInst
 
   return [register, methods]

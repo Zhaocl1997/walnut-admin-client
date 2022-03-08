@@ -7,12 +7,16 @@ import { NDataTable } from 'naive-ui'
 export const extendProps = {
   localeUniqueKey: String as PropType<string>,
 
-  onAction: Function as PropType<
+  onTableHeaderActions: Function as PropType<
     ({ type }: { type: WTable.HeaderActionType }) => void
   >,
 
-  actionList: Array as PropType<WTable.HeaderActionType[]>,
+  headerActions: {
+    type: Array as PropType<WTable.HeaderActionType[]>,
+    default: () => ['create', 'delete'],
+  },
 
+  // TODO prop and generic, need to make a choice
   apiProps: Object as PropType<
     Partial<{
       onBeforeRequest: (params: Recordable) => BaseListParams & Recordable
@@ -24,16 +28,7 @@ export const extendProps = {
 
   queryFormProps: Object as PropType<WForm.Props>,
 
-  auths: Object as PropType<{
-    list?: string
-    create?: string
-    read?: string
-    update?: string
-    delete?: string
-    deleteMany?: string
-    import?: string
-    export?: string
-  }>,
+  auths: Object as PropType<WTable.Auths>,
 } as const
 
 export const props = {
@@ -41,3 +36,5 @@ export const props = {
 
   ...extendProps,
 } as const
+
+export type WTablePropType = ExtractPropTypes<typeof props>

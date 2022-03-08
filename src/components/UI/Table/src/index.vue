@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type { WTable } from '../src/types'
 
-  import { easyOmit } from 'easy-fns-ts'
+  import { omit } from 'lodash-es'
 
   import { useProps } from '/@/hooks/core/useProps'
 
@@ -24,9 +24,9 @@
     // @ts-ignore
     props,
 
-    emits: ['hook', 'action'],
+    emits: ['hook', 'tableHeaderActions'],
 
-    setup(props: WTable.Props, { attrs, emit, expose, slots }) {
+    setup(props: WTable.Props) {
       const tableRef = ref<WTable.Inst.NDataTableInst>()
 
       const { setProps, getProps } = useProps<WTable.Props>(props)
@@ -34,19 +34,19 @@
       const { onEvent } = useTableEvents(getProps)
 
       const {
-        onInit,
-        initParams,
-        onQuery,
-        onReset,
-        onDelete,
-        onDeleteMany,
+        onApiTableList,
+        ApiTableListParams,
+        onApiTableQuery,
+        onApiTableResetListParams,
+        onApiTableDelete,
+        onApiTableDeleteMany,
         checkedRowKeys,
       } = useTableAPI(tableRef, getProps, setProps)
 
-      const { columns } = useTableColumns(getProps, initParams)
+      const { columns } = useTableColumns(getProps, ApiTableListParams)
 
       const getNDataTableProps = computed(() =>
-        easyOmit(getProps.value, Object.keys(extendProps))
+        omit(getProps.value, Object.keys(extendProps))
       )
 
       const render = () => (
@@ -76,9 +76,9 @@
         name: 'hook',
         params: {
           setProps,
-          onInit,
-          onDelete,
-          onDeleteMany,
+          onApiTableList,
+          onApiTableDelete,
+          onApiTableDeleteMany,
         },
       })
 
@@ -86,10 +86,10 @@
         tableRef,
         onEvent,
         tableProps: getProps,
-        onInit,
-        initParams,
-        onQuery,
-        onReset,
+        onApiTableList,
+        ApiTableListParams,
+        onApiTableQuery,
+        onApiTableResetListParams,
         checkedRowKeys,
         tableColumns: columns,
       })

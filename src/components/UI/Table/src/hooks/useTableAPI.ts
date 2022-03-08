@@ -19,7 +19,7 @@ export const useTableAPI = (
   const { hasPermission } = usePermissions()
 
   const {
-    stateRef: initParams,
+    stateRef: ApiTableListParams,
     resetState: resetParams,
     commit: commitParams,
   } = useState<BaseListParams>({
@@ -34,14 +34,17 @@ export const useTableAPI = (
   const checkedRowKeys = ref<StringOrNumber[]>([])
 
   // api list
-  const onInit = async () => {
+  const onApiTableList = async () => {
+    // no list auth, return
     if (!hasPermission(props.value.auths?.list)) return
 
+    // start table loading
     setProps({ loading: true })
 
-    const params = generateBaseListParams(initParams.value)
+    // used for format sort params, query and page didn't change
+    const params = generateBaseListParams(ApiTableListParams.value)
 
-    // custom query
+    // is got `onBeforeRequest`, then excute it and set query value
     if (isFunction(props?.value?.apiProps?.onBeforeRequest!)) {
       params.query = props?.value?.apiProps?.onBeforeRequest!(
         easyDeepClone(params.query)
@@ -55,20 +58,20 @@ export const useTableAPI = (
         data: res.data!,
         pagination: {
           itemCount: res.total!,
-          page: initParams.value.page?.page,
-          pageSize: initParams.value.page?.pageSize,
+          page: ApiTableListParams.value.page?.page,
+          pageSize: ApiTableListParams.value.page?.pageSize,
           showSizePicker: true,
           showQuickJumper: true,
           pageSizes: [10, 30, 50],
           pageSlot: 7,
           onUpdatePage: async (p) => {
-            initParams.value.page!.page = p
-            await onInit()
+            ApiTableListParams.value.page!.page = p
+            await onApiTableList()
           },
           onUpdatePageSize: async (p) => {
-            initParams.value.page!.page = 1
-            initParams.value.page!.pageSize = p
-            await onInit()
+            ApiTableListParams.value.page!.page = 1
+            ApiTableListParams.value.page!.pageSize = p
+            await onApiTableList()
           },
           prefix: () => t('comp:pagination:total', { total: res.total }),
         },
@@ -79,16 +82,16 @@ export const useTableAPI = (
   }
 
   // api delete (default)
-  const onDelete = async (id: StringOrNumber) => {
+  const onApiTableDelete = async (id: StringOrNumber) => {
     const ret = await props.value.apiProps?.deleteApi!(id)
     if (ret) {
       AppSuccess()
-      await onInit()
+      await onApiTableList()
     }
   }
 
   // api deleteMany (default)
-  const onDeleteMany = async () => {
+  const onApiTableDeleteMany = async () => {
     const ret = await props.value.apiProps?.deleteManyApi!(
       checkedRowKeys.value.join(',')
     )
@@ -97,25 +100,28 @@ export const useTableAPI = (
       // use `length = 0` can clear the arr
       checkedRowKeys.value.length = 0
       AppSuccess()
-      await onInit()
+      await onApiTableList()
     }
   }
 
   // query event
-  const onQuery = async ({ done }: any) => {
-    initParams.value.page!.page = 1
-    await onInit()
+  const onApiTableQuery: WTable.FinishLoadingCallback = async ({ done }) => {
+    ApiTableListParams.value.page!.page = 1
+    await onApiTableList()
     done()
   }
 
   // reset event
-  const onReset = async ({ done }: any) => {
+  const onApiTableResetListParams: WTable.FinishLoadingCallback = async ({
+    done,
+  }) => {
     resetParams()
     inst.value?.clearSorter()
-    await onInit()
+    await onApiTableList()
     done()
   }
 
+  // TODO optimise
   onMounted(async () => {
     if (!isUndefined(props.value?.apiProps)) {
       if (isFunction(props?.value?.apiProps?.listApi)) {
@@ -124,13 +130,13 @@ export const useTableAPI = (
             props.value.queryFormProps?.schemas!
           )
 
-          initParams.value.query = easyDeepClone(defaultQueryFormData)
+          ApiTableListParams.value.query = easyDeepClone(defaultQueryFormData)
           commitParams()
         }
 
         setProps({ remote: true })
 
-        await onInit()
+        await onApiTableList()
       }
 
       if (
@@ -158,8 +164,8 @@ export const useTableAPI = (
         setProps({
           onUpdateSorter: async (p) => {
             if (!p) return
-            initParams.value.sort = p
-            await onInit()
+            ApiTableListParams.value.sort = p
+            await onApiTableList()
           },
         })
       }
@@ -174,12 +180,12 @@ export const useTableAPI = (
       ) {
         setProps({
           onUpdateFilters: async (filters) => {
-            initParams.value.query = Object.assign(
-              initParams.value.query,
+            ApiTableListParams.value.query = Object.assign(
+              ApiTableListParams.value.query,
               filters
             )
 
-            await onInit()
+            await onApiTableList()
           },
         })
       }
@@ -187,12 +193,12 @@ export const useTableAPI = (
   })
 
   return {
-    onInit,
-    initParams,
-    onQuery,
-    onReset,
-    onDelete,
-    onDeleteMany,
+    onApiTableList,
+    ApiTableListParams,
+    onApiTableQuery,
+    onApiTableResetListParams,
+    onApiTableDelete,
+    onApiTableDeleteMany,
     checkedRowKeys,
   }
 }

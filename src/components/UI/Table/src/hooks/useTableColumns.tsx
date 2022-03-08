@@ -6,7 +6,7 @@ import { defaultAppLocaleMessageKeys } from '../../../shared'
 // Extend Naive UI columns
 export const useTableColumns = (
   props: ComputedRef<WTable.Props>,
-  initParams: Ref<BaseListParams>
+  ApiTableListParams: Ref<BaseListParams>
 ) => {
   const columns = ref<WTable.Column[]>([])
   const { t } = useAppI18n()
@@ -57,15 +57,15 @@ export const useTableColumns = (
         }
       }
 
-      // index based on initParams
+      // index based on ApiTableListParams
       if (tItem.extendType === 'index') {
         return {
           ...tItem,
 
           render(_, index) {
             return (
-              (initParams.value.page?.page! - 1) *
-                initParams.value.page?.pageSize! +
+              (ApiTableListParams.value.page?.page! - 1) *
+                ApiTableListParams.value.page?.pageSize! +
               index +
               1
             )
@@ -103,7 +103,8 @@ export const useTableColumns = (
           ),
 
           filterOptionValue:
-            initParams.value.query[(tItem as TableBaseColumn).key] ?? null,
+            ApiTableListParams.value.query[(tItem as TableBaseColumn).key] ??
+            null,
 
           render(p) {
             const dictData = AppDictMap.get(tItem.dictType)
@@ -126,12 +127,12 @@ export const useTableColumns = (
       // action
       if (tItem.extendType === 'action') {
         const isShow = (t: WTable.ColumnActionType) =>
-          (tItem.extendActionType ?? ['create', 'delete', 'read']).includes(t)
+          (tItem.extendActionType ?? ['delete', 'read']).includes(t)
 
         return {
           ...tItem,
 
-          render(p) {
+          render(rowData, rowIndex) {
             return (
               <div class="flex items-center justify-center children:mr-2 whitespace-nowrap">
                 {isShow('create') && (
@@ -140,7 +141,13 @@ export const useTableColumns = (
                     icon-button
                     icon="ant-design:plus-outlined"
                     text-prop={t('app:button:create')}
-                    onClick={() => tItem.onCreate!(p)}
+                    onClick={() =>
+                      tItem.onExtendActionType!({
+                        type: 'create',
+                        rowData,
+                        rowIndex,
+                      })
+                    }
                     type="success"
                   ></w-button>
                 )}
@@ -151,7 +158,13 @@ export const useTableColumns = (
                     icon-button
                     icon="ant-design:edit-outlined"
                     text-prop={t('app:button:read')}
-                    onClick={() => tItem.onRead!(p)}
+                    onClick={() =>
+                      tItem.onExtendActionType!({
+                        type: 'read',
+                        rowData,
+                        rowIndex,
+                      })
+                    }
                     type="info"
                   ></w-button>
                 )}
@@ -163,7 +176,13 @@ export const useTableColumns = (
                     icon-button
                     icon="ant-design:delete-outlined"
                     text-prop={t('app:button:delete')}
-                    onClick={() => tItem.onDelete!(p)}
+                    onClick={() =>
+                      tItem.onExtendActionType!({
+                        type: 'delete',
+                        rowData,
+                        rowIndex,
+                      })
+                    }
                     type="error"
                   ></w-button>
                 )}

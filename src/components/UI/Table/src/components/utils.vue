@@ -7,7 +7,7 @@
           <w-icon
             icon="ant-design:sync-outlined"
             height="20"
-            @click="onInit"
+            @click="onApiTableList"
             :disabled="tableProps.loading"
           ></w-icon
         ></n-button>
@@ -23,5 +23,5 @@
   import { useTableContext } from '../hooks/useTableContext'
 
   const { t } = useAppI18n()
-  const { onInit, tableProps } = useTableContext()
+  const { onApiTableList, tableProps } = useTableContext()
 </script>

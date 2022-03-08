@@ -7,7 +7,7 @@
       :onClick="
         () =>
           onEvent({
-            name: 'action',
+            name: 'tableHeaderActions',
             params: { type: item.type },
           })
       "
@@ -33,7 +33,7 @@
   const getDeleteDisabled = computed(() => checkedRowKeys.value.length === 0)
 
   const isShow = (t: WTable.HeaderActionType) =>
-    (tableProps.value.actionList ?? ['create', 'update', 'delete']).includes(t)
+    tableProps.value.headerActions!.includes(t)
 
   const options: ComputedRef<
     {

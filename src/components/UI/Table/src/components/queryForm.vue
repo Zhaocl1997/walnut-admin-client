@@ -1,9 +1,9 @@
 <template>
   <w-form
     @hook="register"
-    @query="onQuery"
-    @reset="onReset"
-    :model="initParams.query"
+    @query="onApiTableQuery"
+    @reset="onApiTableResetListParams"
+    :model="ApiTableListParams.query"
     :disabled="tableProps.loading"
   ></w-form>
 </template>
@@ -11,7 +11,12 @@
 <script lang="ts" setup>
   import { useTableContext } from '../hooks/useTableContext'
 
-  const { tableProps, initParams, onQuery, onReset } = useTableContext()
+  const {
+    tableProps,
+    ApiTableListParams,
+    onApiTableQuery,
+    onApiTableResetListParams,
+  } = useTableContext()
 
   // @ts-ignore
   // @link https://stackoverflow.com/questions/57798016/how-to-ignore-type-instantiation-is-excessively-deep-and-possibly-infinite-ts
