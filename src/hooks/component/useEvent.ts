@@ -14,6 +14,11 @@ export const useEvents = <T extends useEventParams>(
   const emit = instance.emit!
 
   const onEvent = (val: T) => {
+    if (Array.isArray(pool) && !pool?.includes(val.name)) {
+      AppWarn(`Event "${val.name}" hasn't been registered to 'emits' option !`)
+      return
+    }
+
     emit(val.name, val.params)
 
     const propEventName = `on${capitalize(val.name)}`
