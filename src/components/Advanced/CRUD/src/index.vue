@@ -36,13 +36,13 @@
     defaultCreateAndUpdateFormData
   )
 
-  const onCreateAndOpen = () => {
+  const onTableCreateAndOpenDetail = () => {
     actionType.value = 'create'
 
     onOpen((done) => done())
   }
 
-  const onReadAndOpen = async (id: string) => {
+  const onApiTableReadAndOpenDetail = async (id: string) => {
     actionType.value = 'update'
 
     onOpen(async (done) => {
@@ -60,7 +60,10 @@
 
   // table
   // @ts-ignore
-  const [registerTable, { onInit, onDelete, onDeleteMany }] = useTable({
+  const [
+    registerTable,
+    { onApiTableList, onApiTableDelete, onApiTableDeleteMany },
+  ] = useTable({
     ...getProps.value.tableProps,
 
     apiProps: {
@@ -81,10 +84,10 @@
   // emit
   emit('hook', {
     setProps,
-    onCreateAndOpen,
-    onReadAndOpen,
-    onDelete,
-    onDeleteMany,
+    onTableCreateAndOpenDetail,
+    onApiTableReadAndOpenDetail,
+    onApiTableDelete,
+    onApiTableDeleteMany,
     onGetFormData: () => formData,
     onGetActionType: () => actionType,
   })
@@ -106,7 +109,7 @@
           formData.value!
         )
         resetFormData()
-        await onInit()
+        await onApiTableList()
       },
       onNo: (done) => {
         resetFormData()

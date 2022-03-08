@@ -15,10 +15,10 @@ export declare namespace WCrud {
   namespace Inst {
     interface WCrudInst<T = RowData> {
       setProps: SetProps<T>
-      onCreateAndOpen: () => void
-      onReadAndOpen: (id: StringOrNumber) => Promise<void>
-      onDelete: (is: StringOrNumber) => Promise<void>
-      onDeleteMany: () => Promise<void>
+      onTableCreateAndOpenDetail: () => void
+      onApiTableReadAndOpenDetail: (id: StringOrNumber) => Promise<void>
+      onApiTableDelete: (is: StringOrNumber) => Promise<void>
+      onApiTableDeleteMany: () => Promise<void>
       onGetFormData: () => Ref<T>
       onGetActionType: () => Ref<ActionType>
     }

@@ -22,10 +22,10 @@
   const [
     register,
     {
-      onCreateAndOpen,
-      onReadAndOpen,
-      onDelete,
-      onDeleteMany,
+      onTableCreateAndOpenDetail,
+      onApiTableReadAndOpenDetail,
+      onApiTableDelete,
+      onApiTableDeleteMany,
       onGetActionType,
       onGetFormData,
     },
@@ -39,7 +39,6 @@
       striped: true,
       bordered: true,
       singleLine: false,
-      actionList: ['create', 'delete'],
 
       auths: {
         list: `system:${key}:list`,
@@ -50,14 +49,14 @@
         deleteMany: `system:${key}:deleteMany`,
       },
 
-      onAction: ({ type }) => {
+      onTableHeaderActions: ({ type }) => {
         switch (type) {
           case 'create':
-            onCreateAndOpen()
+            onTableCreateAndOpenDetail()
             break
 
           case 'delete':
-            onDeleteMany()
+            onApiTableDeleteMany()
             break
 
           default:
@@ -158,12 +157,19 @@
           width: 80,
           extendType: 'action',
           fixed: 'right',
-          extendActionType: ['read', 'delete'],
-          onRead: (row) => {
-            onReadAndOpen(row._id!)
-          },
-          onDelete: (row) => {
-            onDelete(row._id!)
+          onExtendActionType: async ({ type, rowData }) => {
+            switch (type) {
+              case 'read':
+                await onApiTableReadAndOpenDetail(rowData._id!)
+                break
+
+              case 'delete':
+                await onApiTableDelete(rowData._id!)
+                break
+
+              default:
+                break
+            }
           },
         },
       ],

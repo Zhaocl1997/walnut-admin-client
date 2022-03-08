@@ -22,7 +22,13 @@
 
   const [
     register,
-    { onCreateAndOpen, onReadAndOpen, onDelete, onDeleteMany, onGetFormData },
+    {
+      onTableCreateAndOpenDetail,
+      onApiTableReadAndOpenDetail,
+      onApiTableDelete,
+      onApiTableDeleteMany,
+      onGetFormData,
+    },
   ] = useCRUD<AppLocale & { oldKey?: string }>({
     baseAPI: localeAPI,
 
@@ -33,7 +39,6 @@
       striped: true,
       bordered: true,
       singleLine: false,
-      actionList: ['create', 'delete'],
 
       auths: {
         list: `system:${key}:list`,
@@ -44,14 +49,14 @@
         deleteMany: `system:${key}:deleteMany`,
       },
 
-      onAction: ({ type }) => {
+      onTableHeaderActions: ({ type }) => {
         switch (type) {
           case 'create':
-            onCreateAndOpen()
+            onTableCreateAndOpenDetail()
             break
 
           case 'delete':
-            onDeleteMany()
+            onApiTableDeleteMany()
             break
 
           default:
@@ -138,16 +143,25 @@
           key: 'action',
           width: 80,
           extendType: 'action',
-          extendActionType: ['read', 'delete'],
-          onRead: (row) => {
-            const formData = onGetFormData()
+          onExtendActionType: async ({ type, rowData }) => {
+            switch (type) {
+              case 'read':
+                {
+                  const formData = onGetFormData()
 
-            formData.value.oldKey = row.key
+                  formData.value.oldKey = rowData.key
 
-            onReadAndOpen(row.key!)
-          },
-          onDelete: (row) => {
-            onDelete(row.key!)
+                  await onApiTableReadAndOpenDetail(rowData.key!)
+                }
+                break
+
+              case 'delete':
+                await onApiTableDelete(rowData.key!)
+                break
+
+              default:
+                break
+            }
           },
         },
       ],

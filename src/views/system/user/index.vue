@@ -14,120 +14,55 @@
   // locale unique key
   const key = 'user'
 
-  const [register, { onCreateAndOpen, onReadAndOpen, onDelete, onDeleteMany }] =
-    useCRUD<AppUser>({
-      baseAPI: userAPI,
+  const [
+    register,
+    {
+      onTableCreateAndOpenDetail,
+      onApiTableReadAndOpenDetail,
+      onApiTableDelete,
+      onApiTableDeleteMany,
+    },
+  ] = useCRUD<AppUser>({
+    baseAPI: userAPI,
 
-      tableProps: {
-        localeUniqueKey: key,
-        rowKey: (row) => row._id!,
-        maxHeight: 600,
-        striped: true,
-        bordered: true,
-        singleLine: false,
-        actionList: ['create', 'delete'],
+    tableProps: {
+      localeUniqueKey: key,
+      rowKey: (row) => row._id!,
+      maxHeight: 600,
+      striped: true,
+      bordered: true,
+      singleLine: false,
 
-        auths: {
-          list: `system:${key}:list`,
-          create: `system:${key}:create`,
-          read: `system:${key}:read`,
-          update: `system:${key}:update`,
-          delete: `system:${key}:delete`,
-          deleteMany: `system:${key}:deleteMany`,
-        },
-
-        onAction: ({ type }) => {
-          switch (type) {
-            case 'create':
-              onCreateAndOpen()
-              break
-
-            case 'delete':
-              onDeleteMany()
-              break
-
-            default:
-              break
-          }
-        },
-
-        queryFormProps: {
-          localeUniqueKey: key,
-          localeWithTable: true,
-          span: 6,
-          showFeedback: false,
-          labelWidth: 80,
-          schemas: [
-            {
-              type: 'Base:Input',
-              formProp: {
-                path: 'username',
-              },
-              componentProp: {
-                clearable: true,
-              },
-            },
-
-            {
-              type: 'Extend:Query',
-            },
-          ],
-        },
-
-        // table columns
-        columns: [
-          {
-            type: 'selection',
-          },
-
-          {
-            key: 'username',
-            width: 100,
-          },
-
-          {
-            ...WTablePresetStatusColumn,
-            sorter: {
-              multiple: 3,
-            },
-            filter: true,
-            filterMultiple: false,
-          },
-
-          {
-            ...WTablePresetCreatedAtColumn,
-            sorter: {
-              multiple: 1,
-            },
-          },
-
-          {
-            ...WTablePresetUpdatedAtColumn,
-          },
-
-          {
-            key: 'action',
-            width: 80,
-            extendType: 'action',
-            extendActionType: ['read', 'delete'],
-            onRead: (row) => {
-              onReadAndOpen(row._id!)
-            },
-            onDelete: (row) => {
-              onDelete(row._id!)
-            },
-          },
-        ],
+      auths: {
+        list: `system:${key}:list`,
+        create: `system:${key}:create`,
+        read: `system:${key}:read`,
+        update: `system:${key}:update`,
+        delete: `system:${key}:delete`,
+        deleteMany: `system:${key}:deleteMany`,
       },
 
-      formProps: {
+      onTableHeaderActions: ({ type }) => {
+        switch (type) {
+          case 'create':
+            onTableCreateAndOpenDetail()
+            break
+
+          case 'delete':
+            onApiTableDeleteMany()
+            break
+
+          default:
+            break
+        }
+      },
+
+      queryFormProps: {
         localeUniqueKey: key,
         localeWithTable: true,
-        preset: 'drawer',
-        baseRules: true,
-        labelWidth: 140,
-        xGap: 0,
-
+        span: 6,
+        showFeedback: false,
+        labelWidth: 80,
         schemas: [
           {
             type: 'Base:Input',
@@ -140,26 +75,104 @@
           },
 
           {
-            type: 'Base:Switch',
-            formProp: {
-              path: 'status',
-            },
-            componentProp: {
-              defaultValue: true,
-            },
-          },
-
-          {
-            type: 'Extend:RoleSelect',
-            formProp: {
-              path: 'role',
-              labelHelpMessage: true,
-            },
-            componentProp: {
-              multiple: true,
-            },
+            type: 'Extend:Query',
           },
         ],
       },
-    })
+
+      // table columns
+      columns: [
+        {
+          type: 'selection',
+        },
+
+        {
+          key: 'username',
+          width: 100,
+        },
+
+        {
+          ...WTablePresetStatusColumn,
+          sorter: {
+            multiple: 3,
+          },
+          filter: true,
+          filterMultiple: false,
+        },
+
+        {
+          ...WTablePresetCreatedAtColumn,
+          sorter: {
+            multiple: 1,
+          },
+        },
+
+        {
+          ...WTablePresetUpdatedAtColumn,
+        },
+
+        {
+          key: 'action',
+          width: 80,
+          extendType: 'action',
+          onExtendActionType: async ({ type, rowData }) => {
+            switch (type) {
+              case 'read':
+                await onApiTableReadAndOpenDetail(rowData._id!)
+                break
+
+              case 'delete':
+                await onApiTableDelete(rowData._id!)
+                break
+
+              default:
+                break
+            }
+          },
+        },
+      ],
+    },
+
+    formProps: {
+      localeUniqueKey: key,
+      localeWithTable: true,
+      preset: 'drawer',
+      baseRules: true,
+      labelWidth: 140,
+      xGap: 0,
+
+      schemas: [
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'username',
+          },
+          componentProp: {
+            clearable: true,
+          },
+        },
+
+        {
+          type: 'Base:Switch',
+          formProp: {
+            path: 'status',
+          },
+          componentProp: {
+            defaultValue: true,
+          },
+        },
+
+        {
+          type: 'Extend:RoleSelect',
+          formProp: {
+            path: 'role',
+            labelHelpMessage: true,
+          },
+          componentProp: {
+            multiple: true,
+          },
+        },
+      ],
+    },
+  })
 </script>

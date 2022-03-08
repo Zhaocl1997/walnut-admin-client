@@ -118,7 +118,7 @@
       update: 'system:menu:update',
     },
 
-    onDelete: async (deleted) => {
+    onApiTableDelete: async (deleted) => {
       await menuAPI.delete(deleted._id!)
       AppSuccess()
       await onInit()

@@ -18,11 +18,14 @@ export const useCRUD = <T = RowData>(
   }
 
   const methods = {
-    onCreateAndOpen: () => wCrudRef.value?.onCreateAndOpen(),
-    onReadAndOpen: async (id: StringOrNumber) =>
-      await wCrudRef.value?.onReadAndOpen(id),
-    onDelete: async (id: StringOrNumber) => await wCrudRef.value?.onDelete(id),
-    onDeleteMany: async () => await wCrudRef.value?.onDeleteMany(),
+    onTableCreateAndOpenDetail: () =>
+      wCrudRef.value?.onTableCreateAndOpenDetail(),
+    onApiTableReadAndOpenDetail: async (id: StringOrNumber) =>
+      await wCrudRef.value?.onApiTableReadAndOpenDetail(id),
+    onApiTableDelete: async (id: StringOrNumber) =>
+      await wCrudRef.value?.onApiTableDelete(id),
+    onApiTableDeleteMany: async () =>
+      await wCrudRef.value?.onApiTableDeleteMany(),
     onGetFormData: () => wCrudRef.value?.onGetFormData()!,
     onGetActionType: () => wCrudRef.value?.onGetActionType()!,
   }
