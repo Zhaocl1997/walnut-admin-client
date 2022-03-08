@@ -62,7 +62,7 @@ export declare namespace WTree {
     /**
      * @description delete event
      */
-    onDelete?: (deletedItem: T) => void
+    onTreeNodeItemDelete?: (deletedItem: T) => void
 
     /**
      * @description preset prefix icon, default will take `node.icon` as the icon field

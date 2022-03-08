@@ -236,7 +236,7 @@
 
   const [register10] = useTree({
     deletable: true,
-    onDelete({ option }) {
+    onTreeNodeItemDelete({ option }) {
       console.log('deleted', option)
     },
     treeProps: {

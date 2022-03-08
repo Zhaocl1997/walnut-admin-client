@@ -330,7 +330,7 @@
                 icon="ant-design:delete-outlined"
                 text-prop={t('app:button:delete')}
                 onClick={() => {
-                  getProps.value.onDelete!(toRaw(option))
+                  getProps.value.onTreeNodeItemDelete!(toRaw(option))
                 }}
                 type="error"
                 height="18"
