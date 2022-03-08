@@ -37,8 +37,4 @@ export const useAppDarkMode = () => {
         break
     }
   })
-
-  return {
-    app,
-  }
 }
