@@ -72,9 +72,10 @@
 
   // TODO 99
   import WIcon from '/@/components/UI/Icon'
+  import WButton from '/@/components/UI/Button'
   import WTransition from '/@/components/Extra/Transition'
 
-  import { useProps } from '/@/hooks/core/useProps'
+  import { usePropsAdvanced } from '/@/hooks/core/usePropsAdvanced'
   import { useDropdown } from '/@/components/UI/Dropdown'
 
   // avoid error
@@ -231,7 +232,7 @@
 
   const emit = defineEmits<WTreeEmits>()
 
-  const { setProps, getProps } = useProps<WTree.Props>(
+  const { setProps, getProps } = usePropsAdvanced<WTree.Props>(
     attrs as unknown as WTree.Props
   )
 
@@ -323,7 +324,7 @@
 
           {getProps.value.deletable &&
             hasPermission(getProps.value.auths?.delete) && (
-              <w-button
+              <WButton
                 confirm
                 icon-button
                 icon="ant-design:delete-outlined"
@@ -333,7 +334,7 @@
                 }}
                 type="error"
                 height="18"
-              ></w-button>
+              ></WButton>
             )}
         </div>
       </WTransition>

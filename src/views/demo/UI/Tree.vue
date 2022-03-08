@@ -116,7 +116,7 @@
 
   const state = ref({
     tree1: undefined,
-    tree2: [1],
+    tree2: 1,
     tree3: undefined,
     tree4: [1, 2, 3],
     tree5: undefined,

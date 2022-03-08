@@ -66,8 +66,10 @@ export const useFormAdvanced = (
   const onGetTitle = (title: string) => {
     const uniqueKey = props.value.localeUniqueKey
 
-    return uniqueKey && props.value?.advancedProps?.actionType
-      ? t(`app:button:${props.value.advancedProps?.actionType}`) +
+    const actionType = unref(props.value?.advancedProps?.actionType)
+
+    return uniqueKey && actionType
+      ? t(`app:button:${actionType}`) +
           ' ' +
           t(`table:${uniqueKey}:advancedTitle`)
       : title
