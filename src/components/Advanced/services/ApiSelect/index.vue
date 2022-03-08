@@ -80,11 +80,11 @@
       }
 
       params.value.page!.page! += 1
-      await onInit()
+      await onApiSelectList()
     }
   }
 
-  const onInit = async (filter: boolean = false) => {
+  const onApiSelectList = async (filter: boolean = false) => {
     loading.value = true
 
     try {
@@ -122,7 +122,7 @@
       valueOptions.value.length = 0
     }
     params.value.query[props.labelField ?? 'label'] = query
-    await onInit(true)
+    await onApiSelectList(true)
   }
 
   const onDebounceSearch = useDebounceFn(onSearch, 500)
@@ -133,7 +133,7 @@
       valueOptions.value.length = 0
     }
     resetState()
-    await onInit()
+    await onApiSelectList()
   }
 
   const onFeedback = async () => {
@@ -171,7 +171,7 @@
 
   onMounted(async () => {
     if (isFunction(props.listFn)) {
-      await onInit()
+      await onApiSelectList()
     }
 
     if (props.value) {

@@ -88,7 +88,6 @@
 
         {
           key: 'username',
-          width: 100,
         },
 
         {
