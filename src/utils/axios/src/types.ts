@@ -137,17 +137,17 @@ export type BaseListParams<T = RowData> = {
   /**
    * @description query object
    */
-  query?: T
+  query?: T | null | undefined
 
   /**
    * @description sort object
    */
-  sort?: BaseSortParams<T>
+  sort?: BaseSortParams<T> | null | undefined
 
   /**
    * @description pagination object
    */
-  page?: BasePageParams
+  page?: BasePageParams | null | undefined
 }
 
 /**
