@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <n-popselect :options="langLists" v-model:value="app.locale">
-      <w-icon icon="carbon:language" width="24"></w-icon>
-    </n-popselect>
-  </div>
+  <n-popselect :options="langLists" v-model:value="app.locale">
+    <w-icon icon="carbon:language" width="24"></w-icon>
+  </n-popselect>
 </template>
 
 <script lang="ts">
@@ -15,14 +13,7 @@
 
     inheritAttrs: false,
 
-    props: {
-      showText: {
-        type: Boolean as PropType<boolean>,
-        default: false,
-      },
-    },
-
-    setup(props) {
+    setup() {
       const { app } = useAppState()
 
       const langLists = ref<SelectBaseOption[]>([])

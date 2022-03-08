@@ -4,7 +4,7 @@
 
     inheritAttrs: false,
 
-    setup(props) {
+    setup() {
       const { isFullscreen, toggle } = useFullscreen()
 
       return () => (
