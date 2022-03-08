@@ -24,7 +24,7 @@
         setProps({ disabled: false })
       }
 
-      const onReset = () => {
+      const onFormReset = () => {
         setProps({ disabled: true })
         formEvent({
           name: 'reset',
@@ -71,7 +71,7 @@
             <n-button
               size="small"
               type="info"
-              onClick={onReset}
+              onClick={onFormReset}
               disabled={formProps.value.disabled}
             >
               {t('app:button:reset')}

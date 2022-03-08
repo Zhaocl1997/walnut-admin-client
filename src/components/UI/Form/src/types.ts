@@ -46,6 +46,10 @@ export enum BUILTIN_FORM_TYPE {
 export declare namespace WForm {
   type preset = 'modal' | 'drawer'
 
+  type FinishLoading = { done: Fn }
+
+  type onFinishFormLoadingCallback = Fn<FinishLoading, void | Promise<void>>
+
   namespace Inst {
     type NFormInst = FormInst
 
@@ -88,8 +92,8 @@ export declare namespace WForm {
     }
 
     type Entry =
-      | useEventParams<'query', any>
-      | useEventParams<'reset', any>
+      | useEventParams<'query', FinishLoading>
+      | useEventParams<'reset', FinishLoading>
       | useEventParams<'hook', Inst.WFormInst>
   }
 
