@@ -9,11 +9,10 @@
     },
 
     setup(props, { slots }) {
-      const { menu } = useAppState()
-      const permissions = menu.value.permissions
+      const { hasPermission } = usePermissions()
 
       const render = () => {
-        if (permissions.includes(props.value!)) {
+        if (hasPermission(props.value!)) {
           return renderSlot(slots, 'default')
         }
         return null
