@@ -5,9 +5,10 @@ import type {
 } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
 
-import { easyDeepClone, isFunction, isNumber, isUndefined } from 'easy-fns-ts'
+import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
 import { generateBaseListParams } from '../utils'
 import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'
+import { cloneDeep } from 'lodash-es'
 
 export const useTableAPI = (
   inst: Ref<WTable.Inst.NDataTableInst | undefined>,
@@ -47,7 +48,7 @@ export const useTableAPI = (
     // is got `onBeforeRequest`, then excute it and set query value
     if (isFunction(props?.value?.apiProps?.onBeforeRequest!)) {
       params.query = props?.value?.apiProps?.onBeforeRequest!(
-        easyDeepClone(params.query)
+        cloneDeep(params.query)
       )
     }
 
@@ -112,9 +113,7 @@ export const useTableAPI = (
   }
 
   // reset event
-  const onApiTableResetListParams: WTable.FinishLoadingCallback = async ({
-    done,
-  }) => {
+  const onApiTableReset: WTable.FinishLoadingCallback = async ({ done }) => {
     resetParams()
     inst.value?.clearSorter()
     await onApiTableList()
@@ -124,21 +123,33 @@ export const useTableAPI = (
   // TODO optimise
   onMounted(async () => {
     if (!isUndefined(props.value?.apiProps)) {
+      // Step 1
+      // handle initial query form data
       if (isFunction(props?.value?.apiProps?.listApi)) {
-        if (props.value.queryFormProps) {
+        // set remote true to fit naive-ui
+        setProps({ remote: true })
+
+        if (
+          !isUndefined(props.value.queryFormProps) &&
+          !isUndefined(props.value.queryFormProps?.schemas!)
+        ) {
+          // need to initial query form data based on schemas
           const defaultQueryFormData = extractDefaultFormDataFromSchemas(
             props.value.queryFormProps?.schemas!
           )
 
-          ApiTableListParams.value.query = easyDeepClone(defaultQueryFormData)
+          // set default value to query
+          ApiTableListParams.value.query = cloneDeep(defaultQueryFormData)
+
+          // commit change, make this version a default version
           commitParams()
         }
-
-        setProps({ remote: true })
 
         await onApiTableList()
       }
 
+      // Step 2
+      // handle selection column to manage checkedRowKeys
       if (
         props.value.columns?.map((i) => i.type).includes('selection') &&
         isFunction(props?.value?.apiProps?.deleteManyApi!)
@@ -150,6 +161,8 @@ export const useTableAPI = (
         })
       }
 
+      // Step 3
+      // handle sort params and event
       if (
         props.value.columns
           ?.map(
@@ -170,6 +183,8 @@ export const useTableAPI = (
         })
       }
 
+      // Step 4
+      // handle preset dict column filter event
       if (
         props.value.columns?.some((i) => i.extendType === 'dict') &&
         (
@@ -196,7 +211,7 @@ export const useTableAPI = (
     onApiTableList,
     ApiTableListParams,
     onApiTableQuery,
-    onApiTableResetListParams,
+    onApiTableReset,
     onApiTableDelete,
     onApiTableDeleteMany,
     checkedRowKeys,

@@ -79,6 +79,7 @@ export declare namespace WTable {
   namespace ExtendType {
     interface BaseExtend<E> {
       extendType?: E
+      show?: boolean
     }
 
     /**
@@ -197,7 +198,7 @@ export declare namespace WTable {
     onApiTableList: (extraParams?: Recordable<any> | undefined) => Promise<void>
     ApiTableListParams: Ref<BaseListParams>
     onApiTableQuery: WForm.onFinishFormLoadingCallback
-    onApiTableResetListParams: WForm.onFinishFormLoadingCallback
+    onApiTableReset: WForm.onFinishFormLoadingCallback
     checkedRowKeys: Ref<StringOrNumber[]>
     tableColumns: Ref<Column[]>
   }

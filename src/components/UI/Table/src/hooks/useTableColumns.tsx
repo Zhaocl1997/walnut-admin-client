@@ -40,186 +40,191 @@ export const useTableColumns = (
     )
 
     // @ts-ignore
-    columns.value = props.value.columns?.map((item) => {
-      // default value override
-      item.align = item.align ?? 'center'
+    columns.value = props.value.columns
+      ?.map((i) => ({ ...i, show: i.show ?? true }))
+      .filter((i) => i.show)
+      .map((item) => {
+        // default value override
+        item.align = item.align ?? 'center'
 
-      const tItem = props.value.localeUniqueKey ? translateItem(item) : item
+        const tItem = props.value.localeUniqueKey ? translateItem(item) : item
 
-      // formatter
-      if (tItem.extendType === 'formatter') {
-        return {
-          ...tItem,
+        // formatter
+        if (tItem.extendType === 'formatter') {
+          return {
+            ...tItem,
 
-          render(p) {
-            return tItem.formatter!(p)
-          },
+            render(p) {
+              return tItem.formatter!(p)
+            },
+          }
         }
-      }
 
-      // index based on ApiTableListParams
-      if (tItem.extendType === 'index') {
-        return {
-          ...tItem,
+        // index based on ApiTableListParams
+        if (tItem.extendType === 'index') {
+          return {
+            ...tItem,
 
-          render(_, index) {
-            return (
-              (ApiTableListParams.value.page?.page! - 1) *
-                ApiTableListParams.value.page?.pageSize! +
-              index +
-              1
-            )
-          },
+            render(_, index) {
+              return (
+                (ApiTableListParams.value.page?.page! - 1) *
+                  ApiTableListParams.value.page?.pageSize! +
+                index +
+                1
+              )
+            },
+          }
         }
-      }
 
-      // link
-      if (tItem.extendType === 'link') {
-        return {
-          ...tItem,
+        // link
+        if (tItem.extendType === 'link') {
+          return {
+            ...tItem,
 
-          render(p) {
-            return (
-              <n-a onClick={() => tItem.onClick(p)}>
-                {p[(tItem as TableBaseColumn).key]}
-              </n-a>
-            )
-          },
+            render(p) {
+              return (
+                <n-a onClick={() => tItem.onClick(p)}>
+                  {p[(tItem as TableBaseColumn).key]}
+                </n-a>
+              )
+            },
+          }
         }
-      }
 
-      // dict
-      if (tItem.extendType === 'dict') {
-        return {
-          ...tItem,
+        // dict
+        if (tItem.extendType === 'dict') {
+          return {
+            ...tItem,
 
-          filterOptions: computed(() =>
-            (tItem as TableBaseColumn).filter
-              ? AppDictMap.get(tItem.dictType)?.map((i) => ({
-                  value: i.value,
-                  label: t(i.label!),
-                }))
-              : []
-          ),
+            filterOptions: computed(() =>
+              (tItem as TableBaseColumn).filter
+                ? AppDictMap.get(tItem.dictType)?.map((i) => ({
+                    value: i.value,
+                    label: t(i.label!),
+                  }))
+                : []
+            ),
 
-          filterOptionValue:
-            ApiTableListParams.value.query[(tItem as TableBaseColumn).key] ??
-            null,
+            filterOptionValue:
+              ApiTableListParams.value.query[(tItem as TableBaseColumn).key] ??
+              null,
 
-          render(p) {
-            const dictData = AppDictMap.get(tItem.dictType)
+            render(p) {
+              const dictData = AppDictMap.get(tItem.dictType)
 
-            const target = dictData?.find(
-              (i) =>
-                i.value ===
-                (p[(tItem as TableBaseColumn).key] as boolean).toString()
-            )
+              const target = dictData?.find(
+                (i) =>
+                  i.value ===
+                  (p[(tItem as TableBaseColumn).key] as boolean).toString()
+              )
 
-            if (tItem.tagProps) {
-              return <n-tag {...tItem.tagProps(p)}>{t(target?.label!)}</n-tag>
-            }
+              if (tItem.tagProps) {
+                return <n-tag {...tItem.tagProps(p)}>{t(target?.label!)}</n-tag>
+              }
 
-            return <span>{t(target?.label!)}</span>
-          },
+              return <span>{t(target?.label!)}</span>
+            },
+          }
         }
-      }
 
-      // action
-      if (tItem.extendType === 'action') {
-        const isShow = (t: WTable.ColumnActionType) =>
-          (tItem.extendActionType ?? ['delete', 'read']).includes(t)
+        // action
+        if (tItem.extendType === 'action') {
+          const isShow = (t: WTable.ColumnActionType) =>
+            (tItem.extendActionType ?? ['delete', 'read']).includes(t)
 
-        return {
-          ...tItem,
+          return {
+            ...tItem,
 
-          render(rowData, rowIndex) {
-            return (
-              <div class="flex items-center justify-center children:mr-2 whitespace-nowrap">
-                {isShow('create') && (
-                  <w-button
-                    auth={props.value.auths?.create}
-                    icon-button
-                    icon="ant-design:plus-outlined"
-                    text-prop={t('app:button:create')}
-                    onClick={() =>
-                      tItem.onExtendActionType!({
-                        type: 'create',
-                        rowData,
-                        rowIndex,
-                      })
-                    }
-                    type="success"
-                  ></w-button>
-                )}
+            render(rowData, rowIndex) {
+              return (
+                <div class="flex items-center justify-center children:mr-2 whitespace-nowrap">
+                  {isShow('create') && (
+                    <w-button
+                      auth={props.value.auths?.create}
+                      icon-button
+                      icon="ant-design:plus-outlined"
+                      text-prop={t('app:button:create')}
+                      onClick={() =>
+                        tItem.onExtendActionType!({
+                          type: 'create',
+                          rowData,
+                          rowIndex,
+                        })
+                      }
+                      type="success"
+                    ></w-button>
+                  )}
 
-                {isShow('read') && (
-                  <w-button
-                    auth={props.value.auths?.read}
-                    icon-button
-                    icon="ant-design:edit-outlined"
-                    text-prop={t('app:button:read')}
-                    onClick={() =>
-                      tItem.onExtendActionType!({
-                        type: 'read',
-                        rowData,
-                        rowIndex,
-                      })
-                    }
-                    type="info"
-                  ></w-button>
-                )}
+                  {isShow('read') && (
+                    <w-button
+                      auth={props.value.auths?.read}
+                      icon-button
+                      icon="ant-design:edit-outlined"
+                      text-prop={t('app:button:read')}
+                      onClick={() =>
+                        tItem.onExtendActionType!({
+                          type: 'read',
+                          rowData,
+                          rowIndex,
+                        })
+                      }
+                      type="info"
+                    ></w-button>
+                  )}
 
-                {isShow('delete') && (
-                  <w-button
-                    auth={props.value.auths?.delete}
-                    confirm
-                    icon-button
-                    icon="ant-design:delete-outlined"
-                    text-prop={t('app:button:delete')}
-                    onClick={() =>
-                      tItem.onExtendActionType!({
-                        type: 'delete',
-                        rowData,
-                        rowIndex,
-                      })
-                    }
-                    type="error"
-                  ></w-button>
-                )}
-              </div>
-            )
-          },
+                  {isShow('delete') && (
+                    <w-button
+                      auth={props.value.auths?.delete}
+                      confirm
+                      icon-button
+                      icon="ant-design:delete-outlined"
+                      text-prop={t('app:button:delete')}
+                      onClick={() =>
+                        tItem.onExtendActionType!({
+                          type: 'delete',
+                          rowData,
+                          rowIndex,
+                        })
+                      }
+                      type="error"
+                    ></w-button>
+                  )}
+                </div>
+              )
+            },
+          }
         }
-      }
 
-      if (tItem.extendType === 'icon') {
-        return {
-          ...tItem,
+        // icon
+        if (tItem.extendType === 'icon') {
+          return {
+            ...tItem,
 
-          width: 80,
+            width: 80,
 
-          render(p) {
-            return (
-              <w-icon
-                width="24"
-                class="-mb-2"
-                icon={
-                  typeof tItem.extendIconName === 'string'
-                    ? tItem.extendIconName
-                    : tItem.extendIconName(p)
-                }
-              ></w-icon>
-            )
-          },
+            render(p) {
+              return (
+                <w-icon
+                  width="24"
+                  class="-mb-2"
+                  icon={
+                    typeof tItem.extendIconName === 'string'
+                      ? tItem.extendIconName
+                      : tItem.extendIconName(p)
+                  }
+                ></w-icon>
+              )
+            },
+          }
         }
-      }
 
-      return tItem
-    })
+        return tItem
+      })
 
     // auto handle scrollX
     const widths = props.value.columns
       ?.map((i) => {
+        // expand and selection default width is 80
         if (i.type !== 'expand' && i.type !== 'selection') {
           return i.width
         } else {
@@ -232,7 +237,10 @@ export const useTableColumns = (
       widths?.length !== 0 &&
       widths?.length === props.value.columns?.length
     ) {
-      const w = widths?.reduce((p, c) => (p as number)! + (c as number)!, 0)
+      const w = widths?.reduce((p, c) => (p as number) + (c as number), 0)
+
+      console.log(w)
+
       // @ts-ignore
       props.value.scrollX = w
     }

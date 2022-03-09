@@ -37,7 +37,7 @@
         onApiTableList,
         ApiTableListParams,
         onApiTableQuery,
-        onApiTableResetListParams,
+        onApiTableReset,
         onApiTableDelete,
         onApiTableDeleteMany,
         checkedRowKeys,
@@ -89,7 +89,7 @@
         onApiTableList,
         ApiTableListParams,
         onApiTableQuery,
-        onApiTableResetListParams,
+        onApiTableReset,
         checkedRowKeys,
         tableColumns: columns,
       })

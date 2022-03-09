@@ -105,6 +105,7 @@
       // table columns
       columns: [
         {
+          key: 'selection',
           type: 'selection',
           fixed: 'left',
         },
