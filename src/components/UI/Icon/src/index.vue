@@ -15,3 +15,9 @@
     props,
   })
 </script>
+
+<style scoped>
+  :focus {
+    outline: none;
+  }
+</style>
