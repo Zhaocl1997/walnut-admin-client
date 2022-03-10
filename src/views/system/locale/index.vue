@@ -114,13 +114,13 @@
           key: 'index',
           extendType: 'index',
           fixed: 'left',
-          width: 80,
         },
 
         {
           key: 'key',
-          width: 400,
+          width: 300,
           sorter: true,
+          fixed: 'left',
         },
 
         {
@@ -144,6 +144,7 @@
           key: 'action',
           width: 80,
           extendType: 'action',
+          fixed: 'right',
           onExtendActionType: async ({ type, rowData }) => {
             switch (type) {
               case 'read':

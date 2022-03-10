@@ -6,7 +6,8 @@ import { defaultAppLocaleMessageKeys } from '../../../shared'
 // Extend Naive UI columns
 export const useTableColumns = (
   props: ComputedRef<WTable.Props>,
-  ApiTableListParams: Ref<BaseListParams>
+  ApiTableListParams: Ref<BaseListParams>,
+  setProps: WTable.SetProps
 ) => {
   const columns = ref<WTable.Column[]>([])
   const { t } = useAppI18n()
@@ -64,6 +65,8 @@ export const useTableColumns = (
         if (tItem.extendType === 'index') {
           return {
             ...tItem,
+
+            width: 80,
 
             render(_, index) {
               return (
@@ -220,12 +223,24 @@ export const useTableColumns = (
 
         return tItem
       })
+  })
 
-    // auto handle scrollX
+  const handleScrollX = () => {
+    // first is naive column type
+    // second is extent column type
+    const whiteList = [
+      ['expand', 'selection'],
+      ['index', 'icon'],
+    ]
+
+    // get columns width in array
     const widths = props.value.columns
       ?.map((i) => {
-        // expand and selection default width is 80
-        if (i.type !== 'expand' && i.type !== 'selection') {
+        // expand/selection/index/icon default width is 80
+        if (
+          !whiteList[0].includes(i.type!) &&
+          !whiteList[1].includes(i.extendType!)
+        ) {
           return i.width
         } else {
           return 80
@@ -239,11 +254,17 @@ export const useTableColumns = (
     ) {
       const w = widths?.reduce((p, c) => (p as number) + (c as number), 0)
 
-      console.log(w)
-
-      // @ts-ignore
-      props.value.scrollX = w
+      setProps({ scrollX: w })
+    } else {
+      AppWarn(
+        `Table with 'localeUniqueKey' ${props.value.localeUniqueKey} has a column without width ! This may cause 'scrollX' calculate error !`
+      )
     }
+  }
+
+  onMounted(() => {
+    // auto handle scrollX
+    handleScrollX()
   })
 
   return { columns }

@@ -43,7 +43,11 @@
         checkedRowKeys,
       } = useTableAPI(tableRef, getProps, setProps)
 
-      const { columns } = useTableColumns(getProps, ApiTableListParams)
+      const { columns } = useTableColumns(
+        getProps,
+        ApiTableListParams,
+        setProps
+      )
 
       const getNDataTableProps = computed(() =>
         omit(getProps.value, Object.keys(extendProps))

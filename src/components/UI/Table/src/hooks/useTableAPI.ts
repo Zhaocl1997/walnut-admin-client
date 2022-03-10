@@ -120,90 +120,105 @@ export const useTableAPI = (
     done()
   }
 
-  // TODO optimise
+  const handleListApi = async () => {
+    if (isFunction(props?.value?.apiProps?.listApi)) {
+      // set remote true to fit naive-ui
+      setProps({ remote: true })
+
+      if (
+        !isUndefined(props.value.queryFormProps) &&
+        !isUndefined(props.value.queryFormProps?.schemas!)
+      ) {
+        // need to initial query form data based on schemas
+        const defaultQueryFormData = extractDefaultFormDataFromSchemas(
+          props.value.queryFormProps?.schemas!
+        )
+
+        // set default value to query
+        ApiTableListParams.value.query = cloneDeep(defaultQueryFormData)
+
+        // commit change, make this version a default version
+        commitParams()
+      }
+
+      await onApiTableList()
+    }
+  }
+
+  const handleSelectionColumn = () => {
+    if (
+      props.value.columns?.map((i) => i.type).includes('selection') &&
+      isFunction(props?.value?.apiProps?.deleteManyApi!)
+    ) {
+      setProps({
+        onUpdateCheckedRowKeys: (rowKeys: StringOrNumber[]) => {
+          checkedRowKeys.value = rowKeys
+        },
+      })
+    }
+  }
+
+  const handleSortParams = () => {
+    if (
+      props.value.columns
+        ?.map(
+          (i) =>
+            (i as unknown as SortState).sorter === true ||
+            isNumber(
+              ((i as unknown as SortState).sorter as SorterMultiple)?.multiple
+            )
+        )
+        .filter(Boolean).length !== 0
+    ) {
+      setProps({
+        onUpdateSorter: async (p) => {
+          if (!p) return
+          ApiTableListParams.value.sort = p
+          await onApiTableList()
+        },
+      })
+    }
+  }
+
+  const handleDictFilter = () => {
+    if (
+      props.value.columns?.some((i) => i.extendType === 'dict') &&
+      (
+        props.value.columns?.find(
+          (i) => i.extendType === 'dict'
+        ) as TableBaseColumn
+      ).filter === true
+    ) {
+      setProps({
+        onUpdateFilters: async (filters) => {
+          ApiTableListParams.value.query = Object.assign(
+            ApiTableListParams.value.query,
+            filters
+          )
+
+          await onApiTableList()
+        },
+      })
+    }
+  }
+
   onMounted(async () => {
     if (!isUndefined(props.value?.apiProps)) {
       // Step 1
       // handle initial query form data
-      if (isFunction(props?.value?.apiProps?.listApi)) {
-        // set remote true to fit naive-ui
-        setProps({ remote: true })
-
-        if (
-          !isUndefined(props.value.queryFormProps) &&
-          !isUndefined(props.value.queryFormProps?.schemas!)
-        ) {
-          // need to initial query form data based on schemas
-          const defaultQueryFormData = extractDefaultFormDataFromSchemas(
-            props.value.queryFormProps?.schemas!
-          )
-
-          // set default value to query
-          ApiTableListParams.value.query = cloneDeep(defaultQueryFormData)
-
-          // commit change, make this version a default version
-          commitParams()
-        }
-
-        await onApiTableList()
-      }
+      await handleListApi()
 
       // Step 2
-      // handle selection column to manage checkedRowKeys
-      if (
-        props.value.columns?.map((i) => i.type).includes('selection') &&
-        isFunction(props?.value?.apiProps?.deleteManyApi!)
-      ) {
-        setProps({
-          onUpdateCheckedRowKeys: (rowKeys: StringOrNumber[]) => {
-            checkedRowKeys.value = rowKeys
-          },
-        })
-      }
+      // handle sort params and event
+      handleSortParams()
 
       // Step 3
-      // handle sort params and event
-      if (
-        props.value.columns
-          ?.map(
-            (i) =>
-              (i as unknown as SortState).sorter === true ||
-              isNumber(
-                ((i as unknown as SortState).sorter as SorterMultiple)?.multiple
-              )
-          )
-          .filter(Boolean).length !== 0
-      ) {
-        setProps({
-          onUpdateSorter: async (p) => {
-            if (!p) return
-            ApiTableListParams.value.sort = p
-            await onApiTableList()
-          },
-        })
-      }
+      // handle selection column to manage checkedRowKeys
+      handleSelectionColumn()
 
       // Step 4
       // handle preset dict column filter event
-      if (
-        props.value.columns?.some((i) => i.extendType === 'dict') &&
-        (
-          props.value.columns?.find(
-            (i) => i.extendType === 'dict'
-          ) as TableBaseColumn
-        ).filter === true
-      ) {
-        setProps({
-          onUpdateFilters: async (filters) => {
-            ApiTableListParams.value.query = Object.assign(
-              ApiTableListParams.value.query,
-              filters
-            )
-
-            await onApiTableList()
-          },
-        })
-      }
+      handleDictFilter()
     }
   })
 

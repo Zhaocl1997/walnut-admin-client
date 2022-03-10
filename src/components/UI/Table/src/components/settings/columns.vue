@@ -3,10 +3,10 @@
     {{ t('table:base:settings') }}
     <template #trigger>
       <n-popover
-        v-model:show="show"
+        v-model:show="popoverShow"
         placement="bottom"
         trigger="manual"
-        @clickoutside="show = false"
+        @clickoutside="popoverShow = false"
       >
         <template #trigger>
           <n-button text>
@@ -33,15 +33,24 @@
             <div
               v-for="(item, index) in tableColumns"
               :key="item.key"
-              class="hstack justify-between my-2 mx-1"
+              :class="[
+                'hstack justify-between my-2 mx-1',
+                { 'table-column-draggable': !isInBlackList(item.key) },
+              ]"
             >
               <div class="hstack items-center mr-8">
-                <n-tooltip trigger="hover" placement="left">
+                <n-tooltip
+                  :trigger="isInBlackList(item.key) ? 'click' : 'hover'"
+                  placement="left"
+                >
                   <template #trigger>
                     <w-icon
                       icon="ant-design:drag-outlined"
                       height="20"
-                      class="cursor-move mr-2"
+                      :class="[
+                        'cursor-move mr-2',
+                        { 'cursor-not-allowed': isInBlackList(item.key) },
+                      ]"
                     ></w-icon>
                   </template>
 
@@ -49,6 +58,7 @@
                 </n-tooltip>
 
                 <n-checkbox
+                  :disabled="isInBlackList(item.key)"
                   :checked="!item.className?.includes('hidden')"
                   @update-checked="onUpdateItemChecked(index)"
                 >
@@ -117,6 +127,7 @@
 
 <script lang="ts" setup>
   import type Sortable from 'sortablejs'
+  import type { TableBaseColumn } from 'naive-ui/lib/data-table/src/interface'
   import type { WTable } from '../../types'
 
   import { useSortable } from '/@/hooks/component/useSortable'
@@ -126,7 +137,11 @@
   const { t } = useAppI18n()
   const { tableColumns } = useTableContext()
 
-  const show = ref(false)
+  const popoverShow = ref(false)
+
+  const blackList = ['selection', 'index', 'action']
+
+  const isInBlackList = (key: string) => blackList.includes(key)
 
   // each one not include `hidden` => true
   const getChecked = computed(() =>
@@ -144,7 +159,7 @@
 
   // open column setting popover
   const onOpenPopover = () => {
-    show.value = true
+    popoverShow.value = true
 
     nextTick(() => {
       if (inst) {
@@ -153,6 +168,7 @@
 
       const el = document.getElementById('tableSortable')!
       inst = useSortable(el, {
+        draggable: '.table-column-draggable',
         onEnd: (evt) => {
           const { oldIndex, newIndex } = evt
 
@@ -200,15 +216,16 @@
   }
 
   const getTitle = (item: WTable.Column) => {
-    if (typeof item.title === 'string') {
-      return item.title
+    if (typeof (item as TableBaseColumn).title === 'string') {
+      return (item as TableBaseColumn).title
     }
 
-    if (typeof item.title === 'function') {
+    if (typeof (item as TableBaseColumn).title === 'function') {
+      // @ts-ignore
       return item.title()
     }
 
-    return undefined
+    return t('app:base:selection')
   }
 </script>
 

@@ -99,6 +99,12 @@
 
       columns: [
         {
+          key: 'index',
+          extendType: 'index',
+          fixed: 'left',
+        },
+
+        {
           key: 'name',
           width: 120,
         },
@@ -120,6 +126,9 @@
         {
           key: 'description',
           width: 200,
+          ellipsis: {
+            tooltip: true,
+          },
         },
 
         {
@@ -147,6 +156,7 @@
           key: 'action',
           width: 80,
           extendType: 'action',
+          fixed: 'right',
           onExtendActionType: async ({ type, rowData }) => {
             switch (type) {
               case 'read':
