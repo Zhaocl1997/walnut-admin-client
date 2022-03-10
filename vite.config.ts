@@ -82,6 +82,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
       sourcemap: mode === 'staging',
 
+      minify: 'terser',
       // https://terser.org/docs/api-reference#minify-options
       terserOptions: {
         compress: {
