@@ -8,15 +8,17 @@
       const { isFullscreen, toggle } = useFullscreen()
 
       return () => (
-        <w-icon
-          icon={
-            isFullscreen.value
-              ? 'ant-design:fullscreen-exit-outlined'
-              : 'ant-design:fullscreen-outlined'
-          }
-          width="24"
-          onClick={toggle}
-        ></w-icon>
+        <div>
+          <w-icon
+            icon={
+              isFullscreen.value
+                ? 'ant-design:fullscreen-exit-outlined'
+                : 'ant-design:fullscreen-outlined'
+            }
+            width="24"
+            onClick={toggle}
+          ></w-icon>
+        </div>
       )
     },
   })
