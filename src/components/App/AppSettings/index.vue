@@ -407,6 +407,21 @@
           showButton: false,
         },
       },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'showWatermark',
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'watermarkContent',
+        },
+        componentProp: {
+          disabled: computed(() => !appRelatives.value.showWatermark),
+        },
+      },
     ],
   })
 

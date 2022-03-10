@@ -34,7 +34,9 @@
     "layout": "left-menu",
     "pageLeaveLock": false,
     "idleMS": 60000,
-    "contentPadding": 16
+    "contentPadding": 16,
+    "showWatermark": false,
+    "watermarkContent": "walnut-admin"
   },
   "menu": {
     "showCollapse": true,

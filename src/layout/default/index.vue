@@ -41,6 +41,7 @@
       </n-layout-content>
 
       <TheFooter v-if="setting.app.showFooter && setting.app.fixFooter" />
+      <WAppWatermark />
     </div>
   </n-layout>
 </template>
@@ -56,6 +57,7 @@
     getShowNormalAside,
     toggleLeftMenuLayout,
   } from '/@/settings'
+  import WAppWatermark from '/@/components/App/AppWatermark'
 
   // TODO 99
   import { NLayoutHeader } from 'naive-ui'

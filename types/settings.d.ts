@@ -111,6 +111,16 @@ interface AppSettings {
      * Content padding, default 1rem
      */
     contentPadding: number
+
+    /**
+     * Full screen watermark show
+     */
+    showWatermark: boolean
+
+    /**
+     * Full screen watermark content
+     */
+    watermarkContent: string
   }
 
   menu: {
