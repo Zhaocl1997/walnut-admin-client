@@ -12,6 +12,8 @@ declare type ComponentTrigger = 'hover' | 'click' | 'contentmenu'
 
 declare type ActionType = 'create' | 'update' | ''
 
+declare type TargetContext = '_self' | '_blank'
+
 declare type NaiveCompType =
   | 'default'
   | 'primary'
