@@ -1,7 +1,7 @@
 <template>
   <n-popover
     title="This will only appear in dev mode."
-    :show="devToolShow"
+    :show="devToolShow && !currentMouseTab?.meta.url"
     :show-arrow="false"
     :x="devToolX"
     :y="devToolY"

@@ -118,7 +118,7 @@
       update: 'system:menu:update',
     },
 
-    onApiTableDelete: async (deleted) => {
+    onTreeNodeItemDelete: async (deleted) => {
       await menuAPI.delete(deleted._id!)
       AppSuccess()
       await onInit()
