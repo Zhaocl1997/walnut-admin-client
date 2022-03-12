@@ -47,7 +47,7 @@
 
 <script lang="tsx" setup>
   import WIcon from '/@/components/UI/Icon'
-  import AppColors from './component/colors.vue'
+  import AppColors from './component/colors'
   import { getTheme } from '/@/App/src/naive'
 
   const { app, settings } = useAppState()

@@ -28,20 +28,20 @@ import type { WTree } from '../../Tree'
 
 import type { WFormPropType } from './props'
 
-export enum BUILTIN_FORM_TYPE {
-  Button,
-  ButtonGroup,
-  Checkbox,
-  DatePicker,
-  DynamicTags,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Switch,
-  TimePicker,
-  Tree,
-}
+export const BUILTIN_FORM_TYPE = [
+  'Button',
+  'ButtonGroup',
+  'Checkbox',
+  'DatePicker',
+  'DynamicTags',
+  'Input',
+  'InputNumber',
+  'Radio',
+  'Select',
+  'Switch',
+  'TimePicker',
+  'Tree',
+] as const
 
 export declare namespace WForm {
   type preset = 'modal' | 'drawer'

@@ -1,11 +1,6 @@
 import { BUILTIN_FORM_TYPE } from '../../types'
-import { createAsyncComponent } from '/@/utils/factory/asyncComponent'
 
 import { NSlider, NDynamicInput, NTreeSelect } from 'naive-ui'
-
-import WIconPicker from '/@/components/Extra/IconPicker'
-import WTransitionSelect from '/@/components/Extra/TransitionSelect'
-import WRoleSelect from '/@/components/Advanced/services/RoleSelect'
 
 /**
  * @description Generate all usable components through `BUILTIN_FORM_TYPE`.
@@ -15,12 +10,13 @@ import WRoleSelect from '/@/components/Advanced/services/RoleSelect'
  */
 const getAllComponents = (type: typeof BUILTIN_FORM_TYPE) => {
   const ret: any = {}
-  Object.entries(type).map(([key, value]) => {
-    // Below for prod, no alias and must point to index.vue but not index.ts
-    ret[value] = createAsyncComponent(
-      () => import(`../../../../${value}/src/index.vue`)
-    )
+
+  type.map((key) => {
+    // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+    // Below for prod, no alias and must point to file with extension
+    ret[key] = createAsyncComponent(() => import(`../../../../${key}/index.ts`))
   })
+
   return ret
 }
 
@@ -32,12 +28,30 @@ const allComponents = getAllComponents(BUILTIN_FORM_TYPE)
 componentMap.set('Slider', NSlider)
 componentMap.set('DynamicInput', NDynamicInput)
 componentMap.set('TreeSelect', NTreeSelect)
-componentMap.set('IconPicker', WIconPicker)
-componentMap.set('TransitionSelect', WTransitionSelect)
-componentMap.set('RoleSelect', WRoleSelect)
+componentMap.set(
+  'IconPicker',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../../../../../Extra/IconPicker/index.ts')
+  )
+)
+componentMap.set(
+  'TransitionSelect',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../../../../../Extra/TransitionSelect/index.tsx')
+  )
+)
+componentMap.set(
+  'RoleSelect',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../../../../../Advanced/services/RoleSelect/index.ts')
+  )
+)
 
-Object.values(BUILTIN_FORM_TYPE).map((value) => {
-  componentMap.set(value, allComponents[value])
+BUILTIN_FORM_TYPE.map((key) => {
+  componentMap.set(key, allComponents[key])
 })
 
 export { componentMap }

@@ -1,11 +1,13 @@
+import { NSpin, NText } from 'naive-ui'
+
 // loading component
 const loadingComponent = () => {
-  return h('div', {}, 'Loading...')
+  return h(NSpin, { size: 'small' })
 }
 
 // error component
 const ErrorComponent = () => {
-  return h('div', {}, 'Error...')
+  return h(NText, { type: 'error' }, 'Error.')
 }
 
 // Used 1: w-form async component
@@ -25,7 +27,7 @@ export const createAsyncComponent = (loader: any) => {
 
     // The error component will be displayed if a timeout is
     // provided and exceeded. Default: Infinity.
-    timeout: 3000,
+    timeout: 10000,
 
     // Defining if component is suspensible. Default: true.
     suspensible: false,

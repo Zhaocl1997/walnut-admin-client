@@ -25,7 +25,8 @@
                 !props.disabled && emit('update:modelValue', color)
               }
               class={[
-                'h-5 w-5 rounded border-1 border-primary cursor-pointer',
+                'h-5 w-5 rounded border-1 border-primary',
+                { 'cursor-pointer': !props.disabled },
                 { 'cursor-not-allowed opacity-50': props.disabled },
               ]}
               style={{ background: color }}
