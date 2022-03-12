@@ -62,6 +62,8 @@
 
   const { t } = useAppI18n()
 
+  const { lastBuildTime } = __APP_INFO__
+
   const infoItems = computed<WDescriptionsItem[]>(() => [
     {
       label: t('desc:about:info:version'),
@@ -96,6 +98,14 @@
       typeProps: {
         type: 'primary',
         link: 'https://github.com/Zhaocl1997',
+      },
+    },
+    {
+      label: t('desc:about:info:buildTime'),
+      value: lastBuildTime,
+      type: 'tag',
+      typeProps: {
+        type: 'info',
       },
     },
   ])

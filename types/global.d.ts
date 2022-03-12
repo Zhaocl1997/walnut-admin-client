@@ -46,3 +46,7 @@ declare type DeepMaybeRefSelf<T> = T extends Ref<infer V>
       [K in keyof T]: DeepMaybeRefSelf<T[K]>
     }
   : MaybeRefSelf<T>
+
+const __APP_INFO__: {
+  lastBuildTime: string
+}

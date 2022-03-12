@@ -3,12 +3,18 @@ import type { UserConfig, ConfigEnv } from 'vite'
 import { resolve } from 'path'
 import { loadEnv } from 'vite'
 
+import { getNow } from 'easy-fns-ts/dist/lib'
+
 import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
 import { outDir, publicDir } from './build/constant'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
+}
+
+const __APP_INFO__ = {
+  lastBuildTime: getNow(),
 }
 
 // https://vitejs.dev/config/
@@ -34,6 +40,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       __VUE_I18N_FULL_INSTALL__: false,
       __VUE_I18N_LEGACY_API__: false,
       __INTLIFY_PROD_DEVTOOLS__: false,
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
 
     plugins: createVitePlugins(mode, env),
