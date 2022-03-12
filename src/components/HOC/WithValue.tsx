@@ -38,7 +38,7 @@ export const WithValue = (
                 .map((ov) => fn(ov)))
       }
 
-      onMounted(() => {
+      watchEffect(() => {
         if (!props.value) return
 
         if (props.multiple === true) {
