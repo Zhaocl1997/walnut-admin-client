@@ -1,4 +1,4 @@
-import { paths } from '../../../../../../build/_generated/paths'
+import { paths } from '/build/_generated/paths'
 
 export const useTabsDevTools = () => {
   const currentMouseTab = ref<AppTab>()
@@ -10,7 +10,7 @@ export const useTabsDevTools = () => {
 
   const onOpenFile = () => {
     const filePath = currentMouseTab.value?.meta.component
-    window.open(`vscode://file/${paths.view}/${filePath}.vue`)
+    openExternalLink(`vscode://file/${paths.view}/${filePath}.vue`)
     devToolShow.value = false
   }
 

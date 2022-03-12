@@ -62,6 +62,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/utils/axios': ['AppAxios'],
         '/@/utils/persistent': ['useAppStorage'],
         '/@/utils/factory/asyncComponent': ['createAsyncComponent'],
+        '/@/utils/window/open': ['openExternalLink'],
 
         '/@/utils/log/terminal': [
           'AppTerminalLog',

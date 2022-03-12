@@ -19,7 +19,7 @@
           return (
             <n-text
               {...item.typeProps}
-              onClick={() => window.open(item.typeProps!.link, '_blank')}
+              onClick={() => openExternalLink(item.typeProps!.link)}
               class="cursor-pointer"
             >
               {item.value}

@@ -128,7 +128,7 @@
     }
 
     if (key === 'NewWindow') {
-      window.open(currentMouseTab.value?.path + '?full=1')
+      openExternalLink(currentMouseTab.value?.path + '?full=1')
     }
 
     onCloseCtxMenu()

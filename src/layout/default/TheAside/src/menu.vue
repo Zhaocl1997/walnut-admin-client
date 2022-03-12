@@ -51,7 +51,7 @@
         }
 
         if ((item.meta as AppMenu).ternal === MenuTernalConst.EXTERNAL) {
-          window.open((item.meta as AppMenu).url, '_blank')
+          openExternalLink((item.meta as AppMenu).url!)
           return
         }
 
