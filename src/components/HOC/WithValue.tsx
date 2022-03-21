@@ -39,7 +39,10 @@ export const WithValue = (
       }
 
       watchEffect(() => {
-        if (!props.value) return
+        if (!props.value) {
+          v.value = null
+          return
+        }
 
         if (props.multiple === true) {
           if (props.valueType === 'string') {
