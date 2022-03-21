@@ -17,7 +17,10 @@ const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
     app: useAppStorage(PersistentKeysConst.APP, {
       isDark: preferredColor.value === DarkModeConst.DARK ? true : false,
       darkMode: preferredColor.value as ValueOfDarkModeConst,
-      locale: preferredLanguages.value[0] as ValueOfLocaleConst,
+      locale: preferredLanguages.value[0].replace(
+        '-',
+        '_'
+      ) as ValueOfLocaleConst,
       isLock: false,
       lockMode: AppLockModeConst.AUTO,
     }),

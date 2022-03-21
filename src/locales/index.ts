@@ -18,6 +18,10 @@ const createI18nOptions = async (): Promise<I18nOptions> => {
     // you must set `false`, to use Compostion API
     legacy: false,
 
+    // vue-i18n@9.2-beta.32, need to set this true
+    // https://vue-i18n.intlify.dev/guide/migration/vue3.html#how-to-migration
+    allowComposition: true,
+
     locale,
 
     messages: {
