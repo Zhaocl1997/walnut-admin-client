@@ -60,6 +60,9 @@ declare global {
   type BaseResponseStructure<T = any> =
     import('/@/utils/axios').BaseResponseStructure<T>
   type AppSettings = import('./settings').AppSettings
+
+  // echarts option
+  type EChartsOption = import('echarts').EChartsOption
 }
 
 export {}

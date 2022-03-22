@@ -57,7 +57,7 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'Tinymce',
+    name: 'TinymceDemo',
   })
 </script>
 

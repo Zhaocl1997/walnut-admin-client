@@ -31,8 +31,8 @@ specifiers:
   conventional-changelog-cli: ^2.2.2
   crypto-js: ^4.1.1
   cz-customizable: ^6.3.0
-  default-passive-events: ^2.0.0
   easy-fns-ts: 1.2.2
+  echarts: ^5.3.1
   eslint: ^8.11.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-vue: ^8.5.0
@@ -80,8 +80,8 @@ dependencies:
   animate.css: 4.1.1
   axios: 0.26.1
   crypto-js: 4.1.1
-  default-passive-events: 2.0.0
   easy-fns-ts: 1.2.2
+  echarts: 5.3.1
   html-to-image: 1.9.0
   lodash-es: 4.17.21
   sortablejs: 1.15.0
@@ -2779,10 +2779,6 @@ packages:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
     dev: true
 
-  /default-passive-events/2.0.0:
-    resolution: {integrity: sha512-eMtt76GpDVngZQ3ocgvRcNCklUMwID1PaNbCNxfpDXuiOXttSh0HzBbda1HU9SIUsDc02vb7g9+3I5tlqe/qMQ==}
-    dev: false
-
   /defer-to-connect/1.1.3:
     resolution: {integrity: sha512-0ISdNousHvZT2EiFlZeZAHBUvSxmKswVCEf8hW7KWgG4a8MVEu/3Vb6uWYozkjylyCxe0JBIiRB1jV45S70WVQ==}
     dev: true
@@ -2927,6 +2923,13 @@ packages:
 
   /easy-fns-ts/1.2.2:
     resolution: {integrity: sha512-Mb9gbkn7Qx8Zxs2yvnaKvpefBAi48I4PrlmCbQ3427AoP002T371m+XHmLsiZytwUiBwddTkUFb1xxl8s444/w==}
+    dev: false
+
+  /echarts/5.3.1:
+    resolution: {integrity: sha512-nWdlbgX3OVY0hpqncSvp0gDt1FRSKWn7lsWEH+PHmfCuvE0QmSw17pczQvm8AvawnLEkmf1Cts7YwQJZNC0AEQ==}
+    dependencies:
+      tslib: 2.3.0
+      zrender: 5.3.1
     dev: false
 
   /editor/1.0.0:
@@ -6776,6 +6779,10 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
+  /tslib/2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+    dev: false
+
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: true
@@ -7519,3 +7526,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zrender/5.3.1:
+    resolution: {integrity: sha512-7olqIjy0gWfznKr6vgfnGBk7y4UtdMvdwFmK92vVQsQeDPyzkHW1OlrLEKg6GHz1W5ePf0FeN1q2vkl/HFqhXw==}
+    dependencies:
+      tslib: 2.3.0
+    dev: false
