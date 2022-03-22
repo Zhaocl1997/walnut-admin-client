@@ -49,6 +49,13 @@ componentMap.set(
     () => import('../../../../../Advanced/services/RoleSelect/index.ts')
   )
 )
+componentMap.set(
+  'Tinymce',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../../../../../Vendor/tinymce/index.ts')
+  )
+)
 
 BUILTIN_FORM_TYPE.map((key) => {
   componentMap.set(key, allComponents[key])

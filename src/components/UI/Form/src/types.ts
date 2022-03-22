@@ -27,6 +27,7 @@ import type { WDynamicTagsProps } from '../../DynamicTags'
 import type { WTree } from '../../Tree'
 
 import type { WFormPropType } from './props'
+import type { TinymceEditorProps } from '/@/components/Vendor/tinymce'
 
 export const BUILTIN_FORM_TYPE = [
   'Button',
@@ -131,6 +132,8 @@ export declare namespace WForm {
         valueSeparator?: string
         valueType?: 'string' | 'number'
       }
+
+      'Vendor:Tinymce': TinymceEditorProps
 
       'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
@@ -240,6 +243,8 @@ export declare namespace WForm {
     >
     type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
 
+    type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
+
     type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
     type SlotSchema<D> = DynamicSchemaItemProps<'Base:Slot', D>
     type DynamicInputSchema<D> = DynamicSchemaItemProps<'Base:DynamicInput', D>
@@ -265,6 +270,7 @@ export declare namespace WForm {
       | IconPickerSchema<D>
       | TransitionSelectSchema<D>
       | RoleSelectSchema<D>
+      | TinymceSchema<D>
       | RenderSchema<D>
       | SlotSchema<D>
       | DynamicInputSchema<D>
