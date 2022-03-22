@@ -4,8 +4,8 @@
       <n-list-item>
         <w-title prefix="bar">Basic usage</w-title>
 
-        <pre>Value: {{ value }}</pre>
-        <TinymceEditor v-model:value="value"></TinymceEditor>
+        <pre class="whitespace-pre-wrap">Value: {{ value }}</pre>
+        <TinymceEditor v-model:value="value" disabled></TinymceEditor>
       </n-list-item>
 
       <n-list-item>
