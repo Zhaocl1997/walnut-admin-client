@@ -31,6 +31,7 @@ specifiers:
   conventional-changelog-cli: ^2.2.2
   crypto-js: ^4.1.1
   cz-customizable: ^6.3.0
+  default-passive-events: ^2.0.0
   easy-fns-ts: 1.2.2
   eslint: ^8.11.0
   eslint-config-prettier: ^8.5.0
@@ -79,6 +80,7 @@ dependencies:
   animate.css: 4.1.1
   axios: 0.26.1
   crypto-js: 4.1.1
+  default-passive-events: 2.0.0
   easy-fns-ts: 1.2.2
   html-to-image: 1.9.0
   lodash-es: 4.17.21
@@ -2776,6 +2778,10 @@ packages:
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
     dev: true
+
+  /default-passive-events/2.0.0:
+    resolution: {integrity: sha512-eMtt76GpDVngZQ3ocgvRcNCklUMwID1PaNbCNxfpDXuiOXttSh0HzBbda1HU9SIUsDc02vb7g9+3I5tlqe/qMQ==}
+    dev: false
 
   /defer-to-connect/1.1.3:
     resolution: {integrity: sha512-0ISdNousHvZT2EiFlZeZAHBUvSxmKswVCEf8hW7KWgG4a8MVEu/3Vb6uWYozkjylyCxe0JBIiRB1jV45S70WVQ==}
