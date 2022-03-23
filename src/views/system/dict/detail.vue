@@ -1,8 +1,10 @@
 <template>
-  <n-card>
-    <n-page-header :title="$route.query.name" @back="onBack"></n-page-header>
-  </n-card>
-  <WCRUD @hook="register"></WCRUD>
+  <div>
+    <n-card>
+      <n-page-header :title="$route.query.name" @back="onBack"></n-page-header>
+    </n-card>
+    <WCRUD @hook="register"></WCRUD>
+  </div>
 </template>
 
 <script lang="ts">
