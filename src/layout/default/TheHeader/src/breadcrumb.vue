@@ -1,46 +1,56 @@
 <script lang="tsx">
-  import type { RouteLocationMatched } from 'vue-router'
+  import { findPath } from 'easy-fns-ts'
+  import { DropdownOption } from 'naive-ui'
 
   export default defineComponent({
     setup() {
-      const { settings } = useAppState()
+      const { settings, menu } = useAppState()
       const breadcrumb = settings.value.ForDevelopers.breadcrumb
-      const route = useAppRoute()
       const { t } = useAppI18n()
+      const { currentRoute } = useAppRouter()
 
-      const getChildren = computed(() =>
-        route.matched.filter((item) => item.meta && item.meta.title)
-      )
+      const getChildren = computed(() => {
+        // TODO 999
+        const matched = findPath(
+          menu.value.menus,
+          (n) => n.name === currentRoute.value.name
+        ) as AppMenu[]
 
-      const renderBase = (item: RouteLocationMatched) => (
+        if (matched) {
+          return matched.filter((item) => item.title)
+        }
+      })
+
+      const renderBase = (item: AppMenu) => (
         <div class="inline">
           {breadcrumb.showIcon && (
-            <w-icon
-              icon={item.meta.icon}
-              height="20"
-              class="mr-1 -mb-1"
-            ></w-icon>
+            <w-icon icon={item.icon} height="20" class="mr-1 -mb-1"></w-icon>
           )}
-          <span class="">{t(item.meta.title!)}</span>
+          <span class="">{t(item.title!)}</span>
         </div>
       )
 
-      const genOptions = (arr?: RouteRecordRaw[]): unknown => {
+      const genOptions = (
+        arr?: TreeNodeItem<AppMenu>[]
+      ): DropdownOption[] | undefined => {
         if (!arr || arr?.length === 0) {
           return undefined
         } else {
-          return arr?.map((i) => ({
-            key: i.name,
-            label: t(i.meta?.title!),
-            icon: breadcrumb.showIcon
-              ? () => <w-icon icon={i.meta?.icon} height="20"></w-icon>
-              : null,
-            children: genOptions(i.children),
-          }))
+          return arr?.map(
+            (i) =>
+              ({
+                key: i.name,
+                label: t(i?.title!),
+                icon: breadcrumb.showIcon
+                  ? () => <w-icon icon={i?.icon} height="20"></w-icon>
+                  : null,
+                children: genOptions(i.children),
+              } as DropdownOption)
+          )
         }
       }
 
-      const renderDropdown = (item: RouteLocationMatched) => (
+      const renderDropdown = (item: TreeNodeItem<AppMenu>) => (
         <n-dropdown
           onSelect={(key: string) => {
             useRouterPush({ name: key })
@@ -54,7 +64,7 @@
 
       return () => (
         <n-breadcrumb separator={breadcrumb.separator}>
-          {getChildren.value.map((item) => (
+          {getChildren.value!.map((item) => (
             <n-breadcrumb-item>
               {breadcrumb.showDropdown
                 ? renderDropdown(item)

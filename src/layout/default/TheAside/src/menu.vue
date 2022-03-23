@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type { MenuOption } from 'naive-ui'
 
-  import { formatTree } from 'easy-fns-ts'
+  import { findPath, formatTree } from 'easy-fns-ts'
 
   export default defineComponent({
     setup() {
@@ -10,7 +10,7 @@
       const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
 
-      const expandedKeys = ref()
+      const expandedKeys = ref<string[]>()
 
       const getMenu = computed(() =>
         formatTree<AppMenu, MenuOption>(menu.value.menus, {
@@ -28,16 +28,17 @@
         })
       )
 
-      const getExpandedKeys = computed(
-        () => currentRoute.value.matched?.map((i) => i.name).splice(1) ?? []
-      )
+      watchEffect(() => {
+        // TODO 999
+        const paths = findPath(
+          toRaw(menu.value.menus),
+          (n) => n.name === currentRoute.value.name
+        ) as AppMenu[]
 
-      watch(
-        () => currentRoute.value.fullPath,
-        () => {
-          expandedKeys.value = undefined
+        if (paths) {
+          expandedKeys.value = paths.map((i) => i.name!)
         }
-      )
+      })
 
       const onUpdateValue = (key: string, item: MenuOption) => {
         // If isMobile and showAside true, set showAside to false to close drawer
@@ -85,7 +86,7 @@
                 : currentRoute.value.name
             }
             on-update:value={onUpdateValue}
-            expanded-keys={expandedKeys.value ?? getExpandedKeys.value}
+            expanded-keys={expandedKeys.value}
             on-update:expanded-keys={onUpdateExpandedKeys}
           ></n-menu>
         </w-scrollbar>

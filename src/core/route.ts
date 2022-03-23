@@ -1,9 +1,11 @@
 import { formatTree, findPath, arrToTree, orderTree } from 'easy-fns-ts'
+import { cloneDeep } from 'lodash-es'
 
 import ParentComponent from '/@/layout/default/TheContent'
 import IFrameComponent from '/@/layout/iframe/index.vue'
 
 import { App404Route } from '/@/router/routes'
+import { AppRootName } from '../router/constant'
 
 /**
  * @description Util Function 1 - Build route object through menu object
@@ -65,27 +67,17 @@ const resolveViewModules = (component: string) => {
 /**
  * @description Generate keep-alive component name lists based on `menu`
  * Need to mention, when nested routes wants to be kept-alive, it's parent name also need to be in the `include` array as well
- * So below we use `findPath` to map the name list
+ * Since we flat routes, so need to add root route name finally
  * @link https://github.com/vuejs/vue-router-next/issues/626
  */
-export const buildKeepAliveRouteNameList = (
-  menus: AppMenu[],
-  payload: AppMenu[]
-): string[] => {
-  const res: string[] = []
-
-  menus.map((i) => {
-    if (i.cache) {
-      const path = findPath<AppMenu>(payload, (n) => n._id === i._id)
-
-      if (path) {
-        res.push(...(path as AppMenu[]).map((i) => i.name!))
-      }
-    }
-  })
-
-  return [...new Set(res)]
-}
+export const buildKeepAliveRouteNameList = (menus: AppMenu[]): string[] =>
+  menus
+    .map((i) => {
+      if (i.type === MenuTypeConst.MENU && i.cache) return i.name!
+      return ''
+    })
+    .filter(Boolean)
+    .concat(AppRootName)
 
 /**
  * @description Build Routes Core Function
@@ -134,7 +126,56 @@ export const buildRoutes = (payload: AppMenu[]) => {
   })
 
   // finally push the 404
-  routes.push(App404Route)
+  // routes.push(App404Route)
+  // return routes
 
-  return routes
+  // TODO 999
+  const _tempRoutes = _tempFlatNestedRoutes(routes)
+  _tempRoutes.push(App404Route)
+  return _tempRoutes
+}
+
+// TODO 999
+/**
+ * @description temporarily flat tree route into one level route
+ * @link https://github.com/vuejs/vue-router-next/issues/626
+ */
+const _tempFlatNestedRoutes = (routes: RouteRecordRaw[]) => {
+  const ret: RouteRecordRaw[] = []
+
+  const tree = cloneDeep(routes)
+
+  formatTree(tree, {
+    format: (node) => {
+      // findPath, it's an array
+      const paths = findPath(
+        tree,
+        (n) => n.name === node.name
+      ) as RouteRecordRaw[]
+
+      // only handle menu
+      if (node.meta?.type === MenuTypeConst.MENU) {
+        if (paths.length > 1) {
+          const newNode = paths.reduce(
+            (prev, next) =>
+              ({
+                name: next.name,
+                path: prev.path.startsWith('/')
+                  ? `${prev.path}/${next.path}`
+                  : `/${prev.path}/${next.path}`,
+                meta: next.meta,
+                component: next.component,
+              } as RouteRecordRaw)
+          )
+
+          ret.push(newNode)
+        } else if (!node.children) {
+          // add `/` prefix when no children
+          ret.push({ ...node, path: `/${node.path}` })
+        }
+      }
+    },
+  })
+
+  return ret
 }
