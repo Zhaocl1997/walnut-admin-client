@@ -26,7 +26,7 @@ export interface AppMemory {
   }
 
   menu: {
-    menus: AppMenu[]
+    menus: AppSystemMenu[]
     keepAliveRouteNames: string[]
     indexMenuName: string
     permissions: string[]

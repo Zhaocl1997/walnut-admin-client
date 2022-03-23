@@ -10,7 +10,7 @@ import { AppRootName } from '../router/constant'
 /**
  * @description Util Function 1 - Build route object through menu object
  */
-export const buildCommonRoute = (node: AppMenu): AppTab => ({
+export const buildCommonRoute = (node: AppSystemMenu): AppTab => ({
   path: node.path!,
   name: node.name!,
   meta: {
@@ -70,7 +70,7 @@ const resolveViewModules = (component: string) => {
  * Since we flat routes, so need to add root route name finally
  * @link https://github.com/vuejs/vue-router-next/issues/626
  */
-export const buildKeepAliveRouteNameList = (menus: AppMenu[]): string[] =>
+export const buildKeepAliveRouteNameList = (menus: AppSystemMenu[]): string[] =>
   menus
     .map((i) => {
       if (i.type === MenuTypeConst.MENU && i.cache) return i.name!
@@ -82,7 +82,7 @@ export const buildKeepAliveRouteNameList = (menus: AppMenu[]): string[] =>
 /**
  * @description Build Routes Core Function
  */
-export const buildRoutes = (payload: AppMenu[]) => {
+export const buildRoutes = (payload: AppSystemMenu[]) => {
   // filter `catalog` and `menu`
   const filtered = payload.filter((i) => i.type !== MenuTypeConst.ELEMENT)
 
@@ -92,7 +92,7 @@ export const buildRoutes = (payload: AppMenu[]) => {
   // just pick the root children
   const menus = orderTree(menuTree)[0].children
 
-  const routes = formatTree<AppMenu, RouteRecordRaw>(menus!, {
+  const routes = formatTree<AppSystemMenu, RouteRecordRaw>(menus!, {
     format: (node) => {
       // handle catelog
       if (node.type === MenuTypeConst.CATALOG) {

@@ -21,7 +21,7 @@
       onApiTableReadAndOpenDetail,
       onApiTableDelete,
     },
-  ] = useCRUD<AppDictType>({
+  ] = useCRUD<AppSystemDictType>({
     baseAPI: dictTypeAPI,
 
     tableProps: {

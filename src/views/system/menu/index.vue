@@ -106,7 +106,7 @@
 
   const { menuTreeData, rootId, onInit } = useMenuTree()
 
-  const [registerTree] = useTree<AppMenu>({
+  const [registerTree] = useTree<AppSystemMenu>({
     presetPrefixIcon: true,
     presetContextMenu: true,
     deletable: true,
@@ -146,7 +146,7 @@
 
         const newNode = Object.assign(dragNode, { pid: node._id })
 
-        await menuAPI.update(newNode as AppMenu)
+        await menuAPI.update(newNode as AppSystemMenu)
 
         await onInit()
       },
@@ -171,80 +171,82 @@
   })
 
   // state
-  const { stateRef: formData, resetState: resetFormData } = useState<AppMenu>({
-    type: 'catalog',
-    status: true,
+  const { stateRef: formData, resetState: resetFormData } =
+    useState<AppSystemMenu>({
+      type: 'catalog',
+      status: true,
 
-    path: null,
-    name: null,
-    component: null,
+      path: null,
+      name: null,
+      component: null,
 
-    title: null,
-    icon: null,
-    order: 0,
-    ternal: 'none',
-    url: null,
-    cache: false,
-    show: true,
-    affix: false,
-    permission: null,
-    menuActiveName: null,
-    menuActiveSameTab: false,
-  })
+      title: null,
+      icon: null,
+      order: 0,
+      ternal: 'none',
+      url: null,
+      cache: false,
+      show: true,
+      affix: false,
+      permission: null,
+      menuActiveName: null,
+      menuActiveSameTab: false,
+    })
 
   // schemas
   const schemas = useMenuFormSchema(actionType, formData, menuTreeData)
 
   // form
-  const [registerForm, { validate, restoreValidation }] = useForm<AppMenu>({
-    localeUniqueKey: 'menu',
+  const [registerForm, { validate, restoreValidation }] =
+    useForm<AppSystemMenu>({
+      localeUniqueKey: 'menu',
 
-    labelWidth: 140,
+      labelWidth: 140,
 
-    span: 12,
+      span: 12,
 
-    baseRules: true,
+      baseRules: true,
 
-    schemas: [
-      ...schemas,
+      schemas: [
+        ...schemas,
 
-      {
-        type: 'Base:ButtonGroup',
-        gridProp: {
-          span: 24,
-        },
-        componentProp: {
-          groups: [
-            {
-              textProp: () => t('app:button:save'),
-              type: 'primary',
-              auth: 'system:menu:update',
-              onClick: async () => {
-                const isValid = await validate()
+        {
+          type: 'Base:ButtonGroup',
+          gridProp: {
+            span: 24,
+          },
+          componentProp: {
+            groups: [
+              {
+                textProp: () => t('app:button:save'),
+                type: 'primary',
+                auth: 'system:menu:update',
+                onClick: async () => {
+                  const isValid = await validate()
 
-                if (!isValid) return
+                  if (!isValid) return
 
-                await menuAPI[actionType.value](formData.value)
-                AppSuccess()
-                resetFormData()
-                await onInit()
-                treeMenuValue.value = ''
-                actionType.value = ''
+                  await menuAPI[actionType.value](formData.value)
+                  AppSuccess()
+                  resetFormData()
+                  await onInit()
+                  treeMenuValue.value = ''
+                  actionType.value = ''
+                },
               },
-            },
-            {
-              textProp: () => t('app:button:reset'),
-              onClick: async () => {
-                await restoreValidation()
-                resetFormData()
-                actionType.value = ''
+              {
+                textProp: () => t('app:button:reset'),
+                onClick: async () => {
+                  await restoreValidation()
+                  resetFormData()
+                  actionType.value = ''
+                },
               },
-            },
-          ],
+            ],
+          },
         },
-      },
-    ],
-  })
+      ],
+    })
 
   // effect
   watchEffect(async () => {

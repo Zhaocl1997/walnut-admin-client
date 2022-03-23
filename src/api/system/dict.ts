@@ -1,17 +1,17 @@
 import { BaseAPI } from '../base'
 
-export const dictTypeAPI = new BaseAPI<AppDictType>({
+export const dictTypeAPI = new BaseAPI<AppSystemDictType>({
   model: 'system',
   section: 'dict/type',
 })
 
-export const dictDataAPI = new BaseAPI<AppDictType>({
+export const dictDataAPI = new BaseAPI<AppSystemDictType>({
   model: 'system',
   section: 'dict/data',
 })
 
 export type AppDictTypeCommon = Pick<
-  AppDictData,
+  AppSystemDictData,
   'value' | 'label' | 'description' | 'order'
 >[]
 

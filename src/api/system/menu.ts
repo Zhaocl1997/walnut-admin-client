@@ -1,6 +1,6 @@
 import { BaseAPI } from '../base'
 
-export const menuAPI = new BaseAPI<AppMenu>({
+export const menuAPI = new BaseAPI<AppSystemMenu>({
   model: 'system',
   section: 'menu',
 })

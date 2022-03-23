@@ -3,14 +3,16 @@ import { menuAPI } from '/@/api/system/menu'
 
 export const useMenuTree = () => {
   const rootId = ref<string>()
-  const menuTreeData = ref<TreeNodeItem<AppMenu>[]>([])
+  const menuTreeData = ref<TreeNodeItem<AppSystemMenu>[]>([])
 
   const onInit = async () => {
     const res = await menuAPI.list()
 
     // build, order and format
-    const data = formatTree<AppMenu>(
-      orderTree<AppMenu>(arrToTree<AppMenu>(res.data, { id: '_id' })),
+    const data = formatTree<AppSystemMenu>(
+      orderTree<AppSystemMenu>(
+        arrToTree<AppSystemMenu>(res.data, { id: '_id' })
+      ),
       {
         format: (node) =>
           node.children!.length === 0

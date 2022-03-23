@@ -13,7 +13,7 @@
       const expandedKeys = ref<string[]>()
 
       const getMenu = computed(() =>
-        formatTree<AppMenu, MenuOption>(menu.value.menus, {
+        formatTree<AppSystemMenu, MenuOption>(menu.value.menus, {
           format: (node) => ({
             key: node.name,
             label: t(node.title!),
@@ -33,7 +33,7 @@
         const paths = findPath(
           toRaw(menu.value.menus),
           (n) => n.name === currentRoute.value.name
-        ) as AppMenu[]
+        ) as AppSystemMenu[]
 
         if (paths) {
           expandedKeys.value = paths.map((i) => i.name!)
@@ -46,13 +46,13 @@
           appMemo.value.showAside = false
         }
 
-        if ((item.meta as AppMenu).type === MenuTypeConst.CATALOG) {
+        if ((item.meta as AppSystemMenu).type === MenuTypeConst.CATALOG) {
           useAppMessage().info('Catalog Menu has no page!')
           return
         }
 
-        if ((item.meta as AppMenu).ternal === MenuTernalConst.EXTERNAL) {
-          openExternalLink((item.meta as AppMenu).url!)
+        if ((item.meta as AppSystemMenu).ternal === MenuTernalConst.EXTERNAL) {
+          openExternalLink((item.meta as AppSystemMenu).url!)
           return
         }
 

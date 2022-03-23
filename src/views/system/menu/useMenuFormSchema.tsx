@@ -6,9 +6,9 @@ import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 
 export const useMenuFormSchema = (
   actionType: Ref<ActionType>,
-  formData: Ref<RecordNullable<AppMenu>>,
-  menuTreeData: Ref<TreeNodeItem<AppMenu>[]>
-): DeepMaybeRefSelf<WForm.Schema.Item<AppMenu>[]> => {
+  formData: Ref<RecordNullable<AppSystemMenu>>,
+  menuTreeData: Ref<TreeNodeItem<AppSystemMenu>[]>
+): DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]> => {
   const { getLocaleMessage, locale } = useAppI18n()
 
   const { viewOptions, nameOptions } = getViewsOptions()
@@ -30,7 +30,10 @@ export const useMenuFormSchema = (
   const getCurrentNode = computed(
     () =>
       menuTreeData.value &&
-      findPath<AppMenu>(menuTreeData.value, (n) => n._id === formData.value.pid)
+      findPath<AppSystemMenu>(
+        menuTreeData.value,
+        (n) => n._id === formData.value.pid
+      )
   )
 
   // for path prefix, better experience
@@ -38,7 +41,9 @@ export const useMenuFormSchema = (
     !getCurrentNode.value
       ? '/'
       : '/' +
-        (getCurrentNode.value as AppMenu[]).map((item) => item.path).join('/') +
+        (getCurrentNode.value as AppSystemMenu[])
+          .map((item) => item.path)
+          .join('/') +
         '/'
   )
 

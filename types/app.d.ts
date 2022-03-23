@@ -23,8 +23,8 @@ declare global {
     params?: Recordable
   }
 
-  // menu
-  interface AppMenu extends BaseAppModel {
+  // system menu
+  interface AppSystemMenu extends BaseAppModel {
     pid?: string
     type?: ValueOfMenuTypeConst
     path?: string
@@ -45,8 +45,8 @@ declare global {
     menuActiveSameTab?: boolean
   }
 
-  // role
-  interface AppRole extends BaseAppModel {
+  // system role
+  interface AppSystemRole extends BaseAppModel {
     roleName?: string
     description?: string
     order?: number
@@ -54,8 +54,8 @@ declare global {
     status?: boolean
   }
 
-  // user
-  interface AppUser extends BaseAppModel {
+  // system user
+  interface AppSystemUser extends BaseAppModel {
     username?: string
     nickname?: string
     age?: number
@@ -65,32 +65,32 @@ declare global {
     role?: string[]
   }
 
-  // lang
-  interface AppLang extends BaseAppModel {
+  // system lang
+  interface AppSystemLang extends BaseAppModel {
     lang?: string
     description?: string
     order?: number
     status?: boolean
   }
 
-  // locale
-  interface AppLocale extends BaseAppModel {
+  // system locale
+  interface AppSystemLocale extends BaseAppModel {
     langId?: string
     key?: string
     value?: string
     process?: number
   }
 
-  // dict type
-  interface AppDictType extends BaseAppModel {
+  // system dict type
+  interface AppSystemDictType extends BaseAppModel {
     name?: string
     type?: string
     status?: boolean
     description?: string
   }
 
-  // dict data
-  interface AppDictData extends BaseAppModel {
+  // system dict data
+  interface AppSystemDictData extends BaseAppModel {
     typeId?: string
     label?: string
     value?: string

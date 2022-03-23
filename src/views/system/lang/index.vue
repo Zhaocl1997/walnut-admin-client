@@ -21,7 +21,7 @@
       onApiTableReadAndOpenDetail,
       onApiTableDelete,
     },
-  ] = useCRUD<AppLang>({
+  ] = useCRUD<AppSystemLang>({
     baseAPI: langAPI,
 
     tableProps: {

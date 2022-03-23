@@ -29,7 +29,7 @@
       onApiTableDeleteMany,
       onGetFormData,
     },
-  ] = useCRUD<AppLocale & { oldKey?: string }>({
+  ] = useCRUD<AppSystemLocale & { oldKey?: string }>({
     baseAPI: localeAPI,
 
     tableProps: {

@@ -22,7 +22,7 @@
       onApiTableDelete,
       onApiTableDeleteMany,
     },
-  ] = useCRUD<AppUser>({
+  ] = useCRUD<AppSystemUser>({
     baseAPI: userAPI,
 
     tableProps: {

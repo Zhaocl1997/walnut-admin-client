@@ -18,7 +18,7 @@
             (currentRoute.value.meta.menuActiveName
               ? currentRoute.value.meta.menuActiveName
               : currentRoute.value.name)
-        ) as AppMenu[]
+        ) as AppSystemMenu[]
 
         // handle menuActiveName
         if (currentRoute.value.meta.menuActiveName) {
@@ -34,7 +34,7 @@
         }
       })
 
-      const renderBase = (item: AppMenu) => (
+      const renderBase = (item: AppSystemMenu) => (
         <div class="inline">
           {breadcrumb.showIcon && (
             <w-icon icon={item.icon} height="20" class="mr-1 -mb-1"></w-icon>
@@ -44,7 +44,7 @@
       )
 
       const genOptions = (
-        arr?: TreeNodeItem<AppMenu>[]
+        arr?: TreeNodeItem<AppSystemMenu>[]
       ): DropdownOption[] | undefined => {
         if (!arr || arr?.length === 0) {
           return undefined
@@ -63,7 +63,7 @@
         }
       }
 
-      const renderDropdown = (item: TreeNodeItem<AppMenu>) => (
+      const renderDropdown = (item: TreeNodeItem<AppSystemMenu>) => (
         <n-dropdown
           onSelect={(key: string) => {
             useRouterPush({ name: key })

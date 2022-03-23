@@ -24,7 +24,7 @@ export const signin = (data: SigninPayloadType) => {
  * @description Signin user permissions api
  */
 export const getPermissions = () => {
-  return AppAxios.get<AppMenu[]>({
+  return AppAxios.get<AppSystemMenu[]>({
     url: AuthEnum.PERMISSION,
   })
 }

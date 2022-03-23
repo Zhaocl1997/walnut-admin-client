@@ -29,7 +29,7 @@
       onGetActionType,
       onGetFormData,
     },
-  ] = useCRUD<AppRole>({
+  ] = useCRUD<AppSystemRole>({
     baseAPI: roleAPI,
 
     tableProps: {

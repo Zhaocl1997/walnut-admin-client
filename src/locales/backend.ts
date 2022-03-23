@@ -4,7 +4,7 @@
  */
 export const AppI18nGetLangLists = async () => {
   const lists = await AppAxios.get<
-    Pick<AppLang, 'lang' | 'description' | 'order'>[]
+    Pick<AppSystemLang, 'lang' | 'description' | 'order'>[]
   >({
     url: '/system/lang/list/public',
   })

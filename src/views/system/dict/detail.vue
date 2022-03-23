@@ -33,7 +33,7 @@
       onApiTableReadAndOpenDetail,
       onApiTableDelete,
     },
-  ] = useCRUD<AppDictData>({
+  ] = useCRUD<AppSystemDictData>({
     baseAPI: dictDataAPI,
 
     tableProps: {

@@ -7,7 +7,7 @@ import { buildCommonRoute } from './route'
 /**
  * @description Build Menus Core Function
  */
-export const buildMenus = (payload: AppMenu[]) => {
+export const buildMenus = (payload: AppSystemMenu[]) => {
   // filter `catalog` and `menu`
   // filter `catalog` and `menu` which are visible
   const filtered = easyDeepClone(payload)
