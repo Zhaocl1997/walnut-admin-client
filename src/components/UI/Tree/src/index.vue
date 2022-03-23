@@ -64,6 +64,7 @@
 
 <script lang="tsx" setup>
   import type { DropdownOption, TreeOption } from 'naive-ui'
+  import type { TreeRenderProps } from 'naive-ui/lib/tree/src/interface'
   import type { HTMLAttributes } from 'vue'
   import type { WTree } from './types'
 
@@ -81,6 +82,13 @@
   // avoid error
   interface WTreeProps extends WTree.Props {}
   interface WTreeEmits extends WTree.Emit.Entry {}
+
+  const attrs = useAttrs()
+
+  // props is actually empty, since we use ts to declare props
+  const props = defineProps<WTreeProps>()
+
+  const emit = defineEmits<WTreeEmits>()
 
   const { t } = useAppI18n()
 
@@ -166,7 +174,8 @@
           icon: () => (
             <WIcon height="20" icon="carbon:checkbox-indeterminate"></WIcon>
           ),
-          disabled: getProps.value.treeProps.cascade,
+          disabled:
+            getProps.value.treeProps.cascade || !getProps.value.multiple,
         },
         {
           key: 'independent',
@@ -174,7 +183,8 @@
           icon: () => (
             <WIcon height="20" icon="carbon:checkbox-checked"></WIcon>
           ),
-          disabled: !getProps.value.treeProps.cascade,
+          disabled:
+            !getProps.value.treeProps.cascade || !getProps.value.multiple,
         },
       ],
     },
@@ -225,23 +235,20 @@
     },
   })
 
-  const attrs = useAttrs()
-
-  // props is actually empty, since we use ts to declare props
-  const props = defineProps<WTreeProps>()
-
-  const emit = defineEmits<WTreeEmits>()
-
   const { setProps, getProps } = usePropsAdvanced<WTree.Props>(
     attrs as unknown as WTree.Props
   )
 
   const onSelectedKeys = (keys: StringOrNumber[]) => {
-    emit('update:value', keys[0])
+    if (!getProps.value.multiple) {
+      emit('update:value', keys[0])
+    }
   }
 
   const onCheckedKeys = (keys: StringOrNumber[]) => {
-    emit('update:value', keys)
+    if (getProps.value.multiple) {
+      emit('update:value', keys)
+    }
   }
 
   const onToolbarSelect = (key: string) => {
@@ -278,11 +285,12 @@
     }
 
     if (key === 'cascade') {
+      // TODO after change, need to emit value as well
       setProps({ treeProps: { cascade: true } })
-      console.log(getProps.value)
     }
 
     if (key === 'independent') {
+      // TODO after change, need to emit value as well
       setProps({ treeProps: { cascade: false } })
     }
   }
@@ -291,52 +299,52 @@
     return {
       onContextmenu: getProps.value.presetContextMenu
         ? (e: MouseEvent) => {
+            emit('update:value', option[getKeyField.value] as string)
+
             state.value.currentTarget = option
             openDropdown(e)
             e.preventDefault()
           }
         : undefined,
-      onmouseenter() {
-        option.hover = true
-      },
-      onmouseleave() {
-        option.hover = false
-      },
     } as HTMLAttributes
   }
 
-  const onRenderPrefix = ({ option }: { option: TreeOption }) => {
-    return <WIcon icon={option.icon} height="18" class="mb-0.5"></WIcon>
+  const onRenderPrefix = ({ option }: TreeRenderProps) => {
+    return (
+      <WIcon icon={option.icon as string} height="18" class="mb-0.5"></WIcon>
+    )
   }
 
-  const onRenderSuffix = ({ option }: { option: TreeOption }) => {
+  const onRenderSuffix = ({ option }: TreeRenderProps) => {
     return (
       <WTransition name="fade-right">
-        <div v-show={option.hover} class="flex items-center">
-          {getProps.value.treeProps.draggable &&
-            hasPermission(getProps.value.auths?.update) && (
-              <WIcon
-                height="18"
-                class="cursor-move"
-                icon="ant-design:drag-outlined"
-              ></WIcon>
-            )}
+        {attrs.value === option[getKeyField.value] && (
+          <div class="flex items-center">
+            {getProps.value.treeProps.draggable &&
+              hasPermission(getProps.value.auths?.update) && (
+                <WIcon
+                  height="18"
+                  class="cursor-move"
+                  icon="ant-design:drag-outlined"
+                ></WIcon>
+              )}
 
-          {getProps.value.deletable &&
-            hasPermission(getProps.value.auths?.delete) && (
-              <WButton
-                confirm
-                icon-button
-                icon="ant-design:delete-outlined"
-                text-prop={t('app:button:delete')}
-                onClick={() => {
-                  getProps.value.onTreeNodeItemDelete!(toRaw(option))
-                }}
-                type="error"
-                height="18"
-              ></WButton>
-            )}
-        </div>
+            {getProps.value.deletable &&
+              hasPermission(getProps.value.auths?.delete) && (
+                <WButton
+                  confirm
+                  icon-button
+                  icon="ant-design:delete-outlined"
+                  text-prop={t('app:button:delete')}
+                  onClick={() => {
+                    getProps.value.onTreeNodeItemDelete!(toRaw(option))
+                  }}
+                  type="error"
+                  height="18"
+                ></WButton>
+              )}
+          </div>
+        )}
       </WTransition>
     )
   }

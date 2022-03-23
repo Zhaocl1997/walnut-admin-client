@@ -7,7 +7,7 @@ import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 export const useMenuFormSchema = (
   actionType: Ref<ActionType>,
   formData: Ref<RecordNullable<AppSystemMenu>>,
-  menuTreeData: Ref<TreeNodeItem<AppSystemMenu>[]>
+  treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>
 ): DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]> => {
   const { getLocaleMessage, locale } = useAppI18n()
 
@@ -29,9 +29,9 @@ export const useMenuFormSchema = (
   // get node item from tree data
   const getCurrentNode = computed(
     () =>
-      menuTreeData.value &&
+      treeData.value &&
       findPath<AppSystemMenu>(
-        menuTreeData.value,
+        treeData.value,
         (n) => n._id === formData.value.pid
       )
   )
@@ -40,11 +40,14 @@ export const useMenuFormSchema = (
   const getRoutePathPrefix = computed(() =>
     !getCurrentNode.value
       ? '/'
-      : '/' +
-        (getCurrentNode.value as AppSystemMenu[])
+      : (getCurrentNode.value as AppSystemMenu[])
           .map((item) => item.path)
-          .join('/') +
-        '/'
+          .join('/') + '/'
+  )
+
+  // get tree select expanded keys
+  const getTreeSelectExpandKeys = computed(() =>
+    (getCurrentNode.value as AppSystemMenu[])?.map((i) => i._id!)
   )
 
   return [
@@ -89,6 +92,21 @@ export const useMenuFormSchema = (
             )
           }
         },
+      },
+    },
+
+    {
+      type: 'Base:TreeSelect',
+      formProp: {
+        path: 'pid',
+      },
+      componentProp: {
+        // @ts-ignore
+        options: treeData,
+        keyField: '_id',
+        labelField: 'title',
+        // @ts-ignore
+        expandedKeys: getTreeSelectExpandKeys,
       },
     },
 

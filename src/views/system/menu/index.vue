@@ -97,14 +97,13 @@
 
   const { t } = useAppI18n()
   const { AppSuccess } = useAppMsgSuccess()
-  const { hasPermission } = usePermissions()
 
   // ref
   const actionType = ref<ActionType>('')
   const treeMenuValue = ref<string>('')
   const panelTitle = ref<string>('')
 
-  const { menuTreeData, rootId, onInit } = useMenuTree()
+  const { getLeftMenu, getTreeSelect, rootId, onInit } = useMenuTree()
 
   const [registerTree] = useTree<AppSystemMenu>({
     presetPrefixIcon: true,
@@ -135,28 +134,16 @@
     },
 
     treeProps: {
-      data: menuTreeData,
+      // @ts-ignore
+      data: getLeftMenu,
       keyField: '_id',
       blockLine: true,
       blockNode: true,
-      draggable: true,
-
-      onDrop: async ({ node, dragNode }) => {
-        if (!hasPermission('system:menu:update')) return
-
-        const newNode = Object.assign(dragNode, { pid: node._id })
-
-        await menuAPI.update(newNode as AppSystemMenu)
-
-        await onInit()
-      },
 
       filter: (pattern, node) => {
         if (
           node.title &&
-          t(node.title as string)
-            .toLowerCase()
-            .includes(pattern)
+          (node.title as string).toLowerCase().includes(pattern)
         ) {
           return true
         }
@@ -166,7 +153,7 @@
       renderLabel: ({ option }) =>
         option.type === MenuTypeConst.ELEMENT
           ? (option.permission as string)
-          : t(option.title as string),
+          : (option.title as string),
     },
   })
 
@@ -194,7 +181,7 @@
     })
 
   // schemas
-  const schemas = useMenuFormSchema(actionType, formData, menuTreeData)
+  const schemas = useMenuFormSchema(actionType, formData, getTreeSelect)
 
   // form
   const [registerForm, { validate, restoreValidation }] =
