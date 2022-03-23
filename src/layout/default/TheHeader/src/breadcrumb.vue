@@ -12,9 +12,22 @@
       const getChildren = computed(() => {
         // TODO 999
         const matched = findPath(
-          menu.value.menus,
-          (n) => n.name === currentRoute.value.name
+          toRaw(menu.value.menus),
+          (n) =>
+            n.name ===
+            (currentRoute.value.meta.menuActiveName
+              ? currentRoute.value.meta.menuActiveName
+              : currentRoute.value.name)
         ) as AppMenu[]
+
+        // handle menuActiveName
+        if (currentRoute.value.meta.menuActiveName) {
+          matched.push({
+            name: currentRoute.value.name as string,
+            path: currentRoute.value.path,
+            ...currentRoute.value.meta,
+          })
+        }
 
         if (matched) {
           return matched.filter((item) => item.title)
