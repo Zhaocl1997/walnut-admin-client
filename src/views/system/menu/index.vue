@@ -8,21 +8,14 @@
       >
         <template #header>
           <WAppAuthorize value="system:menu:create">
-            <n-dropdown
-              trigger="hover"
-              :onSelect="onDropDownSelect"
-              :options="getDropdownOptions"
-            >
-              <template #>
-                <n-button>
-                  {{ t('app:button:create') }}
+            <n-button @click="onCreate">
+              {{ t('app:button:create') }}
 
-                  <template #icon>
-                    <w-icon icon="ant-design:plus-outlined"></w-icon>
-                  </template>
-                </n-button>
-              </template> </n-dropdown
-          ></WAppAuthorize>
+              <template #icon>
+                <w-icon icon="ant-design:plus-outlined"></w-icon>
+              </template>
+            </n-button>
+          </WAppAuthorize>
         </template>
 
         <template #>
@@ -68,7 +61,7 @@
           <n-alert :title="t('page:menu:alert')" type="info" />
 
           <w-form
-            v-if="treeMenuValue || actionType === 'create'"
+            v-show="treeMenuValue || actionType === 'create'"
             @hook="registerForm"
             :model="formData"
           ></w-form>
@@ -85,8 +78,6 @@
 </script>
 
 <script lang="tsx" setup>
-  import type { DropdownOption } from 'naive-ui'
-
   import { omit } from 'lodash-es'
 
   import { menuAPI } from '/@/api/system/menu'
@@ -103,7 +94,7 @@
   const treeMenuValue = ref<string>('')
   const panelTitle = ref<string>('')
 
-  const { getLeftMenu, getTreeSelect, rootId, onInit } = useMenuTree()
+  const { getLeftMenu, getTreeSelect, onInit } = useMenuTree()
 
   const [registerTree] = useTree<AppSystemMenu>({
     presetPrefixIcon: true,
@@ -246,37 +237,9 @@
     await restoreValidation()
   })
 
-  const getDropdownOptions = computed<DropdownOption[]>(() => [
-    {
-      key: 'root',
-      label: t('page:menu:dd1'),
-      disabled: !!treeMenuValue.value,
-    },
-    {
-      key: 'child',
-      label: t('page:menu:dd2'),
-      disabled: !treeMenuValue.value,
-    },
-  ])
-
-  const onDropDownSelect = (key: string) => {
-    const pid = formData.value._id
+  const onCreate = () => {
     actionType.value = 'create'
     resetFormData()
-
-    switch (key) {
-      case 'root':
-        panelTitle.value = t('page:menu:dd1')
-        formData.value.pid = rootId.value
-        break
-
-      case 'child':
-        panelTitle.value = t('page:menu:dd2')
-        formData.value.pid = pid
-        break
-
-      default:
-        break
-    }
+    panelTitle.value = t('app:button:create')
   }
 </script>
