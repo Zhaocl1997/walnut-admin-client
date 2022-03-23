@@ -8,9 +8,8 @@
       <keep-alive v-if="appSettings.keepAlive" :include="getKeepAliveInclude">
         <component :is="Component" :key="route.fullPath" />
       </keep-alive>
-      <div v-else :id="route.name" class="h-full">
-        <component :is="Component" :key="route.fullPath" />
-      </div>
+
+      <component v-else :is="Component" :key="route.fullPath" />
     </w-transition>
   </router-view>
 </template>
@@ -21,8 +20,6 @@
 
   const getKeepAliveInclude = computed(() => {
     if (!appSettings.keepAlive) return []
-    console.log(menu.value.keepAliveRouteNames)
-
     return menu.value.keepAliveRouteNames
   })
 </script>
