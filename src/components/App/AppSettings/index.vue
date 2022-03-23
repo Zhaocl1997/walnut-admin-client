@@ -360,9 +360,6 @@
         formProp: {
           path: 'keepAlive',
         },
-        componentProp: {
-          disabled: true,
-        },
       },
       {
         type: 'Base:Select',

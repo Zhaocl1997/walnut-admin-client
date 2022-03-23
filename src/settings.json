@@ -30,7 +30,7 @@
     "fixFooter": true,
     "showAnimation": true,
     "animationName": "fade",
-    "keepAlive": false,
+    "keepAlive": true,
     "layout": "left-menu",
     "pageLeaveLock": false,
     "idleMS": 60000,
