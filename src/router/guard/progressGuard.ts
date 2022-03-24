@@ -1,7 +1,7 @@
 export const createProgressGuard = (router: Router) => {
-  router.beforeEach((from) => {
-    if (from.fullPath) {
-      AppLog(`Entering Route : ${from.fullPath}`)
+  router.beforeEach((to) => {
+    if (to.fullPath) {
+      AppLog(`Entering Route : ${to.fullPath}`)
     }
     window.$loadingBar.start()
     return true

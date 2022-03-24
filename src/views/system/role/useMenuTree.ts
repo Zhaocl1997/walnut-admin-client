@@ -5,7 +5,6 @@ import { menuAPI } from '/@/api/system/menu'
 export const useMenuTree = () => {
   const { t } = useAppI18n()
 
-  const rootId = ref<string>()
   const menuDataRef = ref<TreeNodeItem<AppSystemMenu>[]>([])
   const treeSelectDataRef = ref<TreeNodeItem<AppSystemMenu>[]>([])
 
@@ -70,7 +69,6 @@ export const useMenuTree = () => {
       }
     )
 
-    rootId.value = menuData[0]._id
     menuDataRef.value = menuData
     treeSelectDataRef.value = treeSelectData
   }
@@ -79,5 +77,5 @@ export const useMenuTree = () => {
     onInit()
   })
 
-  return { rootId, getLeftMenu, getTreeSelect, onInit }
+  return { getLeftMenu, getTreeSelect, onInit }
 }

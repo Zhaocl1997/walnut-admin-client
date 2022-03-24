@@ -39,7 +39,7 @@
     "gen:icon:svg": "esno build/icon/generate/svg.ts"
   },
   "dependencies": {
-    "@tinymce/tinymce-vue": "^4",
+    "@tinymce/tinymce-vue": "4.0.7",
     "@vueuse/core": "^8.1.2",
     "animate.css": "^4.1.1",
     "axios": "^0.26.1",

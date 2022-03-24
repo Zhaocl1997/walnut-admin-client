@@ -9,7 +9,7 @@ specifiers:
   '@iconify/types': ^1.0.13
   '@iconify/utils': ^1.0.26
   '@iconify/vue': ^3.2.0
-  '@tinymce/tinymce-vue': ^4
+  '@tinymce/tinymce-vue': 4.0.7
   '@types/crypto-js': ^4.1.1
   '@types/lodash-es': ^4.17.6
   '@types/node': ^17.0.21
