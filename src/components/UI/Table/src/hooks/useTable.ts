@@ -22,6 +22,7 @@ export const useTable = <T>(
     onApiTableDelete: (id: StringOrNumber) =>
       wTableRef.value?.onApiTableDelete(id),
     onApiTableDeleteMany: () => wTableRef.value?.onApiTableDeleteMany(),
+    onGetApiTableListParams: () => wTableRef.value?.onGetApiTableListParams(),
   } as WTable.Inst.WTableInst
 
   return [register, methods]

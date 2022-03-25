@@ -83,6 +83,7 @@
           onApiTableList,
           onApiTableDelete,
           onApiTableDeleteMany,
+          onGetApiTableListParams: () => ApiTableListParams,
         },
       })
 

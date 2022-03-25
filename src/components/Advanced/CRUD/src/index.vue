@@ -59,10 +59,15 @@
   const api = getProps.value.baseAPI!
 
   // table
-  // @ts-ignore
   const [
     registerTable,
-    { onApiTableList, onApiTableDelete, onApiTableDeleteMany },
+    {
+      onApiTableList,
+      onApiTableDelete,
+      onApiTableDeleteMany,
+      onGetApiTableListParams,
+    },
+    // @ts-ignore
   ] = useTable({
     ...getProps.value.tableProps,
 
@@ -90,6 +95,7 @@
     onApiTableDeleteMany,
     onGetFormData: () => formData,
     onGetActionType: () => actionType,
+    onGetApiTableListParams: () => onGetApiTableListParams(),
   })
 
   // form

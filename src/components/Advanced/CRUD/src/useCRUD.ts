@@ -28,6 +28,7 @@ export const useCRUD = <T = RowData>(
       await wCrudRef.value?.onApiTableDeleteMany(),
     onGetFormData: () => wCrudRef.value?.onGetFormData()!,
     onGetActionType: () => wCrudRef.value?.onGetActionType()!,
+    onGetApiTableListParams: () => wCrudRef.value?.onGetApiTableListParams()!,
   }
 
   return [register, methods]

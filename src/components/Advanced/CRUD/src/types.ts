@@ -21,6 +21,7 @@ export declare namespace WCrud {
       onApiTableDeleteMany: () => Promise<void>
       onGetFormData: () => Ref<T>
       onGetActionType: () => Ref<ActionType>
+      onGetApiTableListParams: () => Ref<BaseListParams<T>>
     }
   }
 

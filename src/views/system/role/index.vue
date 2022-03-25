@@ -16,8 +16,7 @@
   // locale unique key
   const key = 'role'
 
-  const { t } = useAppI18n()
-  const { menuTreeData } = useMenuTree()
+  const { getLeftMenu } = useMenuTree()
 
   const [
     register,
@@ -26,7 +25,9 @@
       onApiTableReadAndOpenDetail,
       onApiTableDelete,
       onApiTableDeleteMany,
+      // TODO ts-error
       onGetActionType,
+      // TODO ts-error
       onGetFormData,
     },
   ] = useCRUD<AppSystemRole>({
@@ -236,7 +237,7 @@
             maxHeight: '400px',
 
             treeProps: {
-              data: menuTreeData,
+              data: getLeftMenu,
               blockLine: true,
               blockNode: true,
               keyField: '_id',
@@ -248,7 +249,7 @@
               renderLabel: ({ option }) =>
                 option.type === MenuTypeConst.ELEMENT
                   ? (option.permission as string)
-                  : t(option.title as string),
+                  : (option.title as string),
             },
           },
         },

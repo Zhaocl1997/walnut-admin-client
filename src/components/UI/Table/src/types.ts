@@ -58,6 +58,11 @@ export declare namespace WTable {
        * @description API table default delete many function
        */
       onApiTableDeleteMany: () => Promise<void>
+
+      /**
+       * @description get list params
+       */
+      onGetApiTableListParams: () => Ref<BaseListParams>
     }
 
     interface WTableInst extends NDataTableInst, ExtendInst {}
