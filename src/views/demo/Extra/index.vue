@@ -23,7 +23,7 @@
       </n-anchor>
     </div>
 
-    <div class="pr-42 vstack space-y-4">
+    <div class="inline-grid grid-cols-2 gap-2 pr-42">
       <DemoArrow id="Arrow" />
       <DemoFlipper id="Flipper" />
       <DemoIconPicker id="IconPicker" />

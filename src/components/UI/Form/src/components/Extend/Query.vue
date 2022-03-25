@@ -84,7 +84,10 @@
               onClick={onFormReset}
               disabled={formProps.value.disabled}
             >
-              {t('app:button:reset')}
+              {{
+                default: () => t('app:button:reset'),
+                icon: () => <w-icon icon="carbon:reset"></w-icon>,
+              }}
             </n-button>
 
             {props.foldable && (

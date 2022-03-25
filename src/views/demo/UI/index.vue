@@ -19,12 +19,12 @@
       </n-anchor>
     </div>
 
-    <div class="pr-42 vstack space-y-4">
+    <div class="inline-grid grid-cols-2 gap-2 pr-42">
       <DemoIcon id="Icon" />
       <DemoButton id="Button" />
       <DemoInput id="Input" />
       <DemoSelect id="Select" />
-      <DemoTree id="Tree" />
+      <DemoTree id="Tree" class="col-span-2" />
     </div>
   </div>
 </template>

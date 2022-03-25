@@ -5,6 +5,8 @@
       height="20"
       class="cursor-pointer my-auto mr-1"
       :icon="item.icon"
+      :help-message="item.helpMessage"
+      placement="bottom"
     ></w-a-icon>
   </div>
 </template>

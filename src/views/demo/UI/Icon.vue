@@ -190,6 +190,20 @@
           type="error"
           @click="onClick"
         />
+        <w-a-icon
+          icon="ant-design:home-outlined"
+          width="24"
+          type="error"
+          @click="onClick"
+          disabled
+        />
+        <w-a-icon
+          icon="ant-design:home-outlined"
+          width="24"
+          type="error"
+          @click="onClick"
+          help-message="this is a help message"
+        />
       </n-list-item>
     </n-list>
   </w-demo-card>

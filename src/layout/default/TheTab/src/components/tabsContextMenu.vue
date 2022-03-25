@@ -137,14 +137,14 @@
   const options = computed<DropdownOption[]>(() => [
     {
       key: 'Refresh',
-      label: t('app:base:refresh'),
+      label: t('app:tab:utils:refresh'),
       icon: () => <WIcon height="24" icon="ant-design:sync-outlined"></WIcon>,
       disabled: getOtherDisabled.value,
     },
 
     {
       key: 'Screen Full',
-      label: t('sys:tab:ctx:screenfull'),
+      label: t('app:tab:ctx:screenfull'),
       icon: () => (
         <WIcon height="24" icon="ant-design:fullscreen-outlined"></WIcon>
       ),
@@ -158,14 +158,14 @@
 
     {
       key: DeleteTabConst.TAB_SINGLE,
-      label: t('sys:tab:ctx:close'),
+      label: t('app:tab:ctx:close'),
       icon: () => <WIcon height="24" icon="ant-design:close-outlined"></WIcon>,
       disabled: getCloseDisabled.value,
     },
 
     {
       key: DeleteTabConst.TAB_LEFT,
-      label: t('sys:tab:ctx:closeLeft'),
+      label: t('app:tab:ctx:closeLeft'),
       icon: () => (
         <WIcon height="24" icon="ant-design:vertical-right-outlined"></WIcon>
       ),
@@ -174,7 +174,7 @@
 
     {
       key: DeleteTabConst.TAB_RIGHT,
-      label: t('sys:tab:ctx:closeRight'),
+      label: t('app:tab:ctx:closeRight'),
       icon: () => (
         <WIcon height="24" icon="ant-design:vertical-left-outlined"></WIcon>
       ),
@@ -183,7 +183,7 @@
 
     {
       key: DeleteTabConst.TAB_OTHER,
-      label: t('sys:tab:ctx:closeOther'),
+      label: t('app:tab:ctx:closeOther'),
       icon: () => (
         <WIcon height="24" icon="ant-design:column-width-outlined"></WIcon>
       ),
@@ -192,7 +192,7 @@
 
     {
       key: DeleteTabConst.TAB_ALL,
-      label: t('sys:tab:ctx:closeAll'),
+      label: t('app:tab:ctx:closeAll'),
       icon: () => <WIcon height="24" icon="ant-design:border-outlined"></WIcon>,
       disabled: getCloseOtherDisabled.value,
     },
@@ -205,8 +205,8 @@
     {
       key: 'Fix',
       label: currentMouseTab.value?.meta.affix
-        ? t('sys:tab:ctx:unfix')
-        : t('sys:tab:ctx:fixed'),
+        ? t('app:tab:ctx:unfix')
+        : t('app:tab:ctx:fixed'),
       icon: () => (
         <WIcon
           height="24"
@@ -221,14 +221,14 @@
 
     {
       key: 'Snapshot',
-      label: t('sys:tab:ctx:snapshot'),
+      label: t('app:tab:ctx:snapshot'),
       icon: () => <WIcon height="24" icon="mdi:fit-to-screen"></WIcon>,
       disabled: getOtherDisabled.value,
     },
 
     {
       key: 'NewWindow',
-      label: t('sys:tab:ctx:newWindow'),
+      label: t('app:tab:ctx:newWindow'),
       icon: () => <WIcon height="24" icon="mdi:dock-window"></WIcon>,
     },
   ])
