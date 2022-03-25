@@ -37,7 +37,7 @@ export declare namespace WTree {
     /**
      * @description NTree original props
      */
-    treeProps: TreeProps
+    treeProps?: TreeProps
 
     /**
      * @description v-model:value
