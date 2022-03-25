@@ -28,6 +28,7 @@ import type { WTree } from '../../Tree'
 
 import type { WFormPropType } from './props'
 import type { TinymceEditorProps } from '/@/components/Vendor/tinymce'
+import { WDescriptionsItem } from '../../Descriptions'
 
 export const BUILTIN_FORM_TYPE = [
   'Button',
@@ -228,6 +229,8 @@ export declare namespace WForm {
          */
         vShow?: boolean | Events.Callback<D, boolean>
       }
+
+      descriptionProp?: Partial<WDescriptionsItem>
     }
 
     type DividerSchema<D> = DynamicSchemaItemProps<

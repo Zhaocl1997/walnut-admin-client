@@ -5,7 +5,7 @@
 
   import { componentMap } from './utils'
   import { useFormContext } from '../../hooks/useFormContext'
-  import { getEPBooleanValue, getTranslated } from '../../utils'
+  import { getEPBooleanValue, getFormTranslated } from '../../utils'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -62,9 +62,9 @@
             default: () => renderBase(),
             label: () => (
               <>
-                {getTranslated(formProps, item!)}{' '}
+                {getFormTranslated(formProps, item!)}{' '}
                 {item?.formProp?.labelHelpMessage && (
-                  <w-message msg={getTranslated(formProps, item!, true)} />
+                  <w-message msg={getFormTranslated(formProps, item!, true)} />
                 )}
               </>
             ),

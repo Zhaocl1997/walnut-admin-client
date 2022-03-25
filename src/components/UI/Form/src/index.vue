@@ -1,7 +1,8 @@
 <script lang="tsx">
   import type { WForm } from './types'
+  import type { WDescriptionsItem } from '../../Descriptions'
   import { renderSlot } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
+  import { easyOmit, isUndefined } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { useProps } from '/@/hooks/core/useProps'
@@ -17,6 +18,7 @@
   import WFormItem from './components/FormItem/index.vue'
   import WFormItemExtendQuery from './components/Extend/Query.vue'
   import WFormItemExtendDivider from './components/Extend/Divider.vue'
+  import { getFormTranslated } from './utils'
 
   export default defineComponent({
     name: 'WForm',
@@ -97,25 +99,47 @@
         easyOmit(getProps.value, Object.keys(extendProps))
       )
 
-      const renderNForm = () => (
-        <n-form
-          ref={formRef}
-          {...getNFormProps.value}
-          class={attrs.class}
-          rules={baseRules.value}
-        >
-          <n-grid
-            cols={unref(getProps).cols}
-            xGap={unref(getProps).xGap}
-            yGap={unref(getProps).yGap}
+      const getDefaultDescItemsBySchemas = computed(() => {
+        return formSchemas.value.map((i) => ({
+          type: i.descriptionProp?.type,
+          dictType: i.descriptionProp?.dictType!,
+          label: getFormTranslated(getProps, i),
+          value: getProps.value.model![i.formProp?.path!],
+          span:
+            i.descriptionProp?.span ?? getProps.value.descriptionProps?.column,
+          formatter: i.descriptionProp?.formatter,
+        })) as WDescriptionsItem[]
+      })
+
+      const renderBaseContent = () =>
+        unref(getProps).useDescription ? (
+          <w-descriptions
+            {...unref(getProps).descriptionProps}
+            items={
+              isUndefined(unref(getProps).descriptionProps?.items)
+                ? getDefaultDescItemsBySchemas.value
+                : unref(getProps).descriptionProps?.items
+            }
+          ></w-descriptions>
+        ) : (
+          <n-form
+            ref={formRef}
+            {...getNFormProps.value}
+            class={attrs.class}
+            rules={baseRules.value}
           >
-            {renderItem()}
-          </n-grid>
-        </n-form>
-      )
+            <n-grid
+              cols={unref(getProps).cols}
+              xGap={unref(getProps).xGap}
+              yGap={unref(getProps).yGap}
+            >
+              {renderItem()}
+            </n-grid>
+          </n-form>
+        )
 
       const { renderAdvanced, ...advancedMethods } = useFormAdvanced(
-        renderNForm,
+        renderBaseContent,
         getProps,
         formRef
       )
@@ -149,7 +173,8 @@
         },
       })
 
-      return () => (unref(getProps).preset ? renderAdvanced() : renderNForm())
+      return () =>
+        unref(getProps).preset ? renderAdvanced() : renderBaseContent()
     },
   })
 </script>

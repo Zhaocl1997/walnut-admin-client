@@ -4,6 +4,7 @@ import type {
   LabelPlacement,
   FormRules,
 } from 'naive-ui/lib/form/src/interface'
+import type { WDescriptionProps } from '../../Descriptions'
 import { WTable } from '../../Table'
 
 import type { WForm } from './types'
@@ -53,6 +54,7 @@ export const extendProps = {
     >,
     default: undefined,
   },
+
   /**
    * @description form item class, including the label and content
    */
@@ -76,6 +78,16 @@ export const extendProps = {
    * @description Used for form related to a localed table
    */
   localeWithTable: Boolean as PropType<boolean>,
+
+  /**
+   * @description display in descrition mode
+   */
+  useDescription: Boolean as PropType<boolean>,
+
+  /**
+   * @description description props
+   */
+  descriptionProps: Object as PropType<WDescriptionProps>,
 }
 
 export const props = {

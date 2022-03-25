@@ -58,13 +58,20 @@ export const useFormAdvanced = (
   }
 
   const onNo = () => {
-    formRef.value!.restoreValidation()
-
+    if (!props.value.useDescription) {
+      formRef.value!.restoreValidation()
+    }
     props.value.advancedProps?.onNo(onClose)
   }
 
   const onGetTitle = (title: string) => {
     const uniqueKey = props.value.localeUniqueKey
+
+    if (props.value.useDescription && uniqueKey) {
+      return (
+        t(`table:${uniqueKey}:advancedTitle`) + ' ' + t('app:button:detail')
+      )
+    }
 
     const actionType = unref(props.value?.advancedProps?.actionType)
 

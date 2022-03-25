@@ -24,13 +24,11 @@ export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
 /**
  * @description generate form item label base on different config
  */
-export const getTranslated = (
+export const getFormTranslated = (
   props: ComputedRef<WForm.Props>,
   item: WForm.Schema.Item,
   helpMsg = false
 ) => {
-  const { t } = useAppI18n()
-
   const key = props.value.localeUniqueKey
 
   const isLocale = key && getBoolean(item?.formProp?.locale)
@@ -45,10 +43,10 @@ export const getTranslated = (
 
   return isLocale && path
     ? defaultAppLocaleMessageKeys.includes(path!)
-      ? t(`app:base:${path}`)
+      ? AppI18n?.global.t(`app:base:${path}`)
       : isLocaleWithTable
-      ? t(isHelpMsg(`table:${key}:${path}`) as string)
-      : t(isHelpMsg(`form:${key}:${path}`))
+      ? AppI18n?.global.t(isHelpMsg(`table:${key}:${path}`) as string)
+      : AppI18n?.global.t(isHelpMsg(`form:${key}:${path}`))
     : item?.formProp?.label
 }
 
@@ -85,7 +83,7 @@ export const generateBaseRules = (
                   i?.type === 'Base:Input'
                     ? t('comp:base:input')
                     : t('comp:base:choose'),
-                label: getTranslated(props, i),
+                label: getFormTranslated(props, i),
               }),
             }
           : {
@@ -95,7 +93,7 @@ export const generateBaseRules = (
                   i?.type === 'Base:Input'
                     ? t('comp:base:input')
                     : t('comp:base:choose'),
-                label: getTranslated(props, i),
+                label: getFormTranslated(props, i),
               }),
             },
       ]
