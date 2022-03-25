@@ -97,6 +97,25 @@ declare global {
     order?: number
     status?: boolean
     description?: string
+    tagType?: 'primary' | 'info' | 'success' | 'warning' | 'error'
+  }
+
+  // system operate log
+  interface AppSystemLogOperate extends BaseAppModel {
+    title?: string
+    action?: string
+    method?: string
+    url?: string
+    heepVersion?: string
+    agent?: string
+    statusCode?: number
+    requestData?: string
+    responseData?: string
+    userId?: string
+    userName?: string
+    ip?: string
+    invokingMethod?: string
+    operatedAt?: Date
   }
 }
 

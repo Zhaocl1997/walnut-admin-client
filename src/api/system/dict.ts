@@ -12,7 +12,7 @@ export const dictDataAPI = new BaseAPI<AppSystemDictType>({
 
 export type AppDictTypeCommon = Pick<
   AppSystemDictData,
-  'value' | 'label' | 'description' | 'order'
+  'value' | 'label' | 'description' | 'order' | 'tagType'
 >[]
 
 // default all dict will cacahed for 10 minutes

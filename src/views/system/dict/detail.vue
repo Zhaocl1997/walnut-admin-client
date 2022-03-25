@@ -139,6 +139,14 @@
         },
 
         {
+          key: 'tagType',
+          width: 140,
+          extendType: 'dict',
+          dictType: 'sys_type',
+          filter: true,
+        },
+
+        {
           key: 'description',
           width: 200,
           ellipsis: {
@@ -231,6 +239,38 @@
           },
           componentProp: {
             clearable: true,
+          },
+        },
+
+        {
+          type: 'Base:Select',
+          formProp: {
+            path: 'tagType',
+          },
+          componentProp: {
+            clearable: true,
+            options: [
+              {
+                value: 'primary',
+                label: 'primary',
+              },
+              {
+                value: 'info',
+                label: 'info',
+              },
+              {
+                value: 'success',
+                label: 'success',
+              },
+              {
+                value: 'warning',
+                label: 'warning',
+              },
+              {
+                value: 'error',
+                label: 'error',
+              },
+            ],
           },
         },
 
