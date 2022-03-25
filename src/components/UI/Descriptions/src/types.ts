@@ -19,13 +19,23 @@ type WDescTypeLink = {
   }
 }
 
-type WDescValue = {
+type WDescTypeJson = {
+  type: 'json'
+}
+
+type WDescTypeDict = {
+  type: 'dict'
+  dictType: string
+}
+
+type WDescItemExtend = {
   value: StringOrNumber
+  formatter: (val: string) => string
 }
 
 export type WDescriptionsItem = DescriptionItemProps &
-  Partial<WDescTypeTag | WDescTypeLink> &
-  WDescValue
+  Partial<WDescTypeTag | WDescTypeLink | WDescTypeJson | WDescTypeDict> &
+  WDescItemExtend
 
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 
