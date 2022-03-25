@@ -23,8 +23,8 @@
   const [
     register,
     {
-      onTableCreateAndOpenDetail,
-      onApiTableReadAndOpenDetail,
+      onTableOpenCreateForm,
+      onApiTableReadAndOpenUpdateForm,
       onApiTableDelete,
       onApiTableDeleteMany,
       onGetFormData,
@@ -52,7 +52,7 @@
       onTableHeaderActions: ({ type }) => {
         switch (type) {
           case 'create':
-            onTableCreateAndOpenDetail()
+            onTableOpenCreateForm()
             break
 
           case 'delete':
@@ -153,7 +153,7 @@
 
                   formData.value.oldKey = rowData.key
 
-                  await onApiTableReadAndOpenDetail(rowData.key!)
+                  await onApiTableReadAndOpenUpdateForm(rowData.key!)
                 }
                 break
 

@@ -21,8 +21,8 @@
   const [
     register,
     {
-      onTableCreateAndOpenDetail,
-      onApiTableReadAndOpenDetail,
+      onTableOpenCreateForm,
+      onApiTableReadAndOpenUpdateForm,
       onApiTableDelete,
       onApiTableDeleteMany,
       // TODO ts-error
@@ -53,7 +53,7 @@
       onTableHeaderActions: ({ type }) => {
         switch (type) {
           case 'create':
-            onTableCreateAndOpenDetail()
+            onTableOpenCreateForm()
             break
 
           case 'delete':
@@ -159,7 +159,7 @@
           onExtendActionType: async ({ type, rowData }) => {
             switch (type) {
               case 'read':
-                await onApiTableReadAndOpenDetail(rowData._id!)
+                await onApiTableReadAndOpenUpdateForm(rowData._id!)
                 break
 
               case 'delete':

@@ -17,8 +17,8 @@
   const [
     register,
     {
-      onTableCreateAndOpenDetail,
-      onApiTableReadAndOpenDetail,
+      onTableOpenCreateForm,
+      onApiTableReadAndOpenUpdateForm,
       onApiTableDelete,
     },
   ] = useCRUD<AppSystemDictType>({
@@ -45,7 +45,7 @@
       onTableHeaderActions: ({ type }) => {
         switch (type) {
           case 'create':
-            onTableCreateAndOpenDetail()
+            onTableOpenCreateForm()
             break
 
           default:
@@ -160,7 +160,7 @@
           onExtendActionType: async ({ type, rowData }) => {
             switch (type) {
               case 'read':
-                await onApiTableReadAndOpenDetail(rowData._id!)
+                await onApiTableReadAndOpenUpdateForm(rowData._id!)
                 break
 
               case 'delete':

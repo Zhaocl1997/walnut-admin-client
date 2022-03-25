@@ -36,13 +36,13 @@
     defaultCreateAndUpdateFormData
   )
 
-  const onTableCreateAndOpenDetail = () => {
+  const onTableOpenCreateForm = () => {
     actionType.value = 'create'
 
     onOpen((done) => done())
   }
 
-  const onApiTableReadAndOpenDetail = async (id: string) => {
+  const onApiTableReadAndOpenUpdateForm = async (id: string) => {
     actionType.value = 'update'
 
     onOpen(async (done) => {
@@ -89,8 +89,8 @@
   // emit
   emit('hook', {
     setProps,
-    onTableCreateAndOpenDetail,
-    onApiTableReadAndOpenDetail,
+    onTableOpenCreateForm,
+    onApiTableReadAndOpenUpdateForm,
     onApiTableDelete,
     onApiTableDeleteMany,
     onGetFormData: () => formData,

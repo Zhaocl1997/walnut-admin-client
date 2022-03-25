@@ -15,8 +15,8 @@ export declare namespace WCrud {
   namespace Inst {
     interface WCrudInst<T = RowData> {
       setProps: SetProps<T>
-      onTableCreateAndOpenDetail: () => void
-      onApiTableReadAndOpenDetail: (id: StringOrNumber) => Promise<void>
+      onTableOpenCreateForm: () => void
+      onApiTableReadAndOpenUpdateForm: (id: StringOrNumber) => Promise<void>
       onApiTableDelete: (is: StringOrNumber) => Promise<void>
       onApiTableDeleteMany: () => Promise<void>
       onGetFormData: () => Ref<T>
