@@ -34,14 +34,11 @@
       bordered: true,
       singleLine: false,
 
-      //   auths: {
-      //     list: `system:${key}:list`,
-      //     create: `system:${key}:create`,
-      //     read: `system:${key}:read`,
-      //     update: `system:${key}:update`,
-      //     delete: `system:${key}:delete`,
-      //     deleteMany: `system:${key}:deleteMany`,
-      //   },
+      auths: {
+        list: `system:${key}:list`,
+        read: `system:${key}:read`,
+        delete: `system:${key}:delete`,
+      },
 
       headerActions: ['delete'],
 
@@ -290,6 +287,13 @@
         {
           type: 'Base:Input',
           formProp: {
+            path: 'location',
+          },
+        },
+
+        {
+          type: 'Base:Input',
+          formProp: {
             path: 'browser',
           },
         },
@@ -298,6 +302,13 @@
           type: 'Base:Input',
           formProp: {
             path: 'invokingMethod',
+          },
+        },
+
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'statusCode',
           },
         },
 
@@ -330,27 +341,6 @@
             formatter: (time) => formatTime(time),
           },
         },
-
-        // {
-        //   type: 'Base:Switch',
-        //   formProp: {
-        //     path: 'status',
-        //   },
-        //   componentProp: {
-        //     defaultValue: true,
-        //   },
-        // },
-
-        // {
-        //   type: 'Extend:RoleSelect',
-        //   formProp: {
-        //     path: 'role',
-        //     labelHelpMessage: true,
-        //   },
-        //   componentProp: {
-        //     multiple: true,
-        //   },
-        // },
       ],
     },
   })

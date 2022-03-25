@@ -50,9 +50,9 @@
 
         return (
           <span class="whitespace-pre-wrap break-all">
-            {typeof item.formatter === 'function'
+            {(typeof item.formatter === 'function'
               ? item.formatter(item.value as string)
-              : item.value}
+              : item.value) ?? t('app:base:none')}
           </span>
         )
       }

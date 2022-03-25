@@ -37,7 +37,10 @@ export const useTableAPI = (
   // api list
   const onApiTableList = async () => {
     // no list auth, return
-    if (!hasPermission(props.value.auths?.list)) return
+    if (!hasPermission(props.value.auths?.list)) {
+      useAppNotiError(t('sys:msg:noAuthority'))
+      return
+    }
 
     // start table loading
     setProps({ loading: true })

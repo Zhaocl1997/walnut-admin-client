@@ -1,5 +1,5 @@
 <template>
-  <n-space>
+  <div class="hstack space-x-2 items-center">
     <w-button
       v-for="item in options"
       :key="item.type"
@@ -19,7 +19,13 @@
       :auth="item.auth"
     >
     </w-button>
-  </n-space>
+
+    <n-text v-if="isShow('delete')" type="warning">
+      {{
+        t('table:header:action:checkedText', { checked: checkedRowKeys.length })
+      }}
+    </n-text>
+  </div>
 </template>
 
 <script lang="ts" setup>

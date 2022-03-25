@@ -64,7 +64,7 @@
 
       return () => (
         <n-form-item>
-          <n-space wrap={false} size="small">
+          <n-space wrap={false} size="small" class="-ml-4">
             <n-button
               size="small"
               type="primary"

@@ -201,6 +201,7 @@ export const useTableColumns = (
 
                   {isShow('detail') && (
                     <w-button
+                      auth={props.value.auths?.read}
                       icon-button
                       icon="ant-design:eye-outlined"
                       text-prop={t('app:button:detail')}
