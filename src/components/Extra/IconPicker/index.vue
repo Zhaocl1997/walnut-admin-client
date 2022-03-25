@@ -20,8 +20,11 @@
         </template>
 
         <template #trigger>
-          <div class="cursor-pointer -mb-3 -ml-1">
-            <w-icon :icon="value" width="24"></w-icon>
+          <div class="cursor-pointer -mb-2 -ml-1">
+            <w-icon
+              :icon="value || 'ant-design:home-outlined'"
+              width="24"
+            ></w-icon>
           </div>
         </template>
 
