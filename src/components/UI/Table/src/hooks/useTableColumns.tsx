@@ -121,11 +121,17 @@ export const useTableColumns = (
                   (p[(tItem as TableBaseColumn).key] as boolean).toString()
               )
 
+              if (!target?.label) return
+
               if (tItem.tagProps) {
-                return <n-tag {...tItem.tagProps(p)}>{t(target?.label!)}</n-tag>
+                return <n-tag {...tItem.tagProps(p)}>{t(target.label!)}</n-tag>
               }
 
-              return <n-tag type={target?.tagType}>{t(target?.label!)}</n-tag>
+              if (target.tagType) {
+                return <n-tag type={target.tagType}>{t(target.label!)}</n-tag>
+              }
+
+              return <span>{t(target.label!)}</span>
             },
           }
         }
