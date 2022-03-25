@@ -345,6 +345,7 @@ export const useMenuFormSchema = (
       componentProp: {
         options: nameOptions,
         filterable: true,
+        clearable: true,
       },
       extraProp: {
         vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,

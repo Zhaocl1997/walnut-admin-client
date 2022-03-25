@@ -7,12 +7,13 @@
     props: {
       countToFold: Number as PropType<number>,
       foldable: Boolean as PropType<boolean>,
+      defaultFold: Boolean as PropType<boolean>,
     },
 
-    setup(props, { attrs, slots, emit, expose }) {
+    setup(props) {
       const { t } = useAppI18n()
 
-      const active = ref(false)
+      const active = ref(toRaw(props.defaultFold))
 
       const getText = computed(() =>
         active.value ? t('app:button:expand') : t('app:button:collapse')
@@ -48,9 +49,18 @@
         active.value = !active.value
 
         for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
-          formSchemas.value[i].foldShow = !formSchemas.value[i].foldShow
+          formSchemas.value[i]._internalShow =
+            !formSchemas.value[i]._internalShow
         }
       }
+
+      onMounted(() => {
+        if (props.defaultFold) {
+          for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
+            formSchemas.value[i]._internalShow = false
+          }
+        }
+      })
 
       return () => (
         <n-form-item>

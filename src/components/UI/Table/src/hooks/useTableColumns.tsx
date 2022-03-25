@@ -125,7 +125,7 @@ export const useTableColumns = (
                 return <n-tag {...tItem.tagProps(p)}>{t(target?.label!)}</n-tag>
               }
 
-              return <span>{t(target?.label!)}</span>
+              return <n-tag type={target?.tagType}>{t(target?.label!)}</n-tag>
             },
           }
         }

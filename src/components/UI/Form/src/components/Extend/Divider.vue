@@ -34,8 +34,9 @@
           i <= props.index! + (props.endIndex! ?? formSchemas.value.length);
           i++
         ) {
-          if (!isUndefined(formSchemas.value[i]?.foldShow)) {
-            formSchemas.value[i]!.foldShow = !formSchemas.value[i]?.foldShow
+          if (!isUndefined(formSchemas.value[i]?._internalShow)) {
+            formSchemas.value[i]!._internalShow =
+              !formSchemas.value[i]?._internalShow
           }
         }
       }

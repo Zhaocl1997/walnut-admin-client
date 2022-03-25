@@ -123,6 +123,7 @@ export declare namespace WForm {
       'Extend:Query': {
         countToFold?: number
         foldable?: boolean
+        defaultFold?: boolean
       }
 
       'Extend:IconPicker': {}
@@ -166,7 +167,10 @@ export declare namespace WForm {
       D,
       EP = any
     > {
-      foldShow?: boolean
+      /**
+       * @description internal flag to control show
+       */
+      _internalShow?: boolean
 
       type: T
 

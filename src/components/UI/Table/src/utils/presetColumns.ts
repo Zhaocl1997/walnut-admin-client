@@ -8,15 +8,17 @@ export const WTablePresetOrderColumn: Pick<TableBaseColumn, 'key' | 'width'> = {
   width: 100,
 }
 
-export const WTablePresetStatusColumn: Pick<TableBaseColumn, 'key' | 'width'> &
+export const WTablePresetStatusColumn: Pick<
+  TableBaseColumn,
+  'key' | 'width' | 'filter' | 'filterMultiple'
+> &
   WTable.ExtendType.Dictionary<any> = {
   key: 'status',
   width: 120,
   extendType: 'dict',
   dictType: 'sys_shared_status',
-  tagProps: (row) => ({
-    type: row.status ? 'primary' : 'error',
-  }),
+  filter: true,
+  filterMultiple: false,
 }
 
 export const WTablePresetCreatedAtColumn: Pick<

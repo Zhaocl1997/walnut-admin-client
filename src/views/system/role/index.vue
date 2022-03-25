@@ -134,8 +134,6 @@
           sorter: {
             multiple: 3,
           },
-          filter: true,
-          filterMultiple: false,
         },
 
         {

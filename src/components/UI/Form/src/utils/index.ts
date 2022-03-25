@@ -108,6 +108,8 @@ export const generateBaseRules = (
 export const extractDefaultFormDataFromSchemas = (
   schemas: WForm.Schema.Item[]
 ) => {
+  if (!schemas) return {}
+
   return Object.fromEntries(
     unref(schemas)
       ?.map<[string, BaseDataType | BaseDataType[] | null]>((i) => [

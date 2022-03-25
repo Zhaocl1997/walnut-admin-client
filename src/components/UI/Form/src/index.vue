@@ -1,6 +1,6 @@
 <script lang="tsx">
   import type { WForm } from './types'
-  import { renderSlot, renderList } from 'vue'
+  import { renderSlot } from 'vue'
   import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '/@/hooks/core/useExpose'
@@ -36,6 +36,7 @@
 
       const { onEvent } = useFormEvents(getProps)
 
+      // @ts-ignore
       const baseRules = useFormBaseRules(getProps, formSchemas)
 
       // @ts-ignore
@@ -48,7 +49,7 @@
       })
 
       const renderItem = () =>
-        renderList(formSchemas.value, (item, index) => {
+        formSchemas.value.map((item, index) => {
           if (item.type === 'Extend:Query') {
             return (
               <n-gi key="query" span={4} suffix={true}>
@@ -60,8 +61,8 @@
           if (item.type === 'Extend:Divider') {
             return (
               <n-gi
-                v-show={item.foldShow}
-                key={item.componentProp?.title}
+                v-show={item._internalShow}
+                key={item.formProp?.path}
                 span={24}
                 class={item.extraProp?.sticky ? 'sticky top-0 z-10' : ''}
                 style={
@@ -77,9 +78,9 @@
 
           return (
             <n-gi
+              v-show={item._internalShow}
               key={item.formProp?.path}
               {...(item?.gridProp ?? { span: unref(getProps).span })}
-              v-show={item.foldShow}
             >
               <w-transition {...item?.transitionProp} appear>
                 <WFormItem item={item}>

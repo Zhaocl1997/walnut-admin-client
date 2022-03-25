@@ -163,7 +163,7 @@
       order: 0,
       ternal: 'none',
       url: null,
-      cache: false,
+      cache: true,
       show: true,
       affix: false,
       permission: null,
