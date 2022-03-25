@@ -1,7 +1,12 @@
 <script lang="tsx">
   import type { GlobalThemeOverrides } from 'naive-ui'
-  import { zhCN, enUS, dateZhCN } from 'naive-ui'
+  import { zhCN, dateZhCN } from 'naive-ui'
   import { getCommonTheme, getTheme } from './naive'
+
+  import hljs from 'highlight.js/lib/core'
+  import json from 'highlight.js/lib/languages/json'
+
+  hljs.registerLanguage('json', json)
 
   export default defineComponent({
     name: 'UIProvider',
@@ -24,6 +29,7 @@
 
       return () => (
         <n-config-provider
+          hljs={hljs}
           theme={getTheme.value}
           theme-overrides={getThemeOverrides.value}
           locale={app.value.locale === LocaleConst.EN_US ? {} : zhCN}

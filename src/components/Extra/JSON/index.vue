@@ -1,11 +1,19 @@
-<script lang="tsx">
-  import { genString } from 'easy-fns-ts'
-  import { highlightSyntax } from './utils'
+<template>
+  <n-code
+    :code="
+      typeof value === 'string'
+        ? JSON.stringify(JSON.parse(value), null, 2)
+        : JSON.stringify(value)
+    "
+    language="json"
+    word-wrap
+    :trim="false"
+  ></n-code>
+</template>
 
+<script lang="ts">
   export default defineComponent({
     name: 'WJSON',
-
-    inheritAttrs: false,
 
     props: {
       value: {
@@ -22,75 +30,8 @@
         type: String as PropType<string>,
         default: '100%',
       },
-
-      resizable: {
-        type: Boolean as PropType<boolean>,
-        default: false,
-      },
     },
 
-    setup(props) {
-      const id = genString(8)
-      const widthRef = ref(0)
-
-      const getStyle = computed((): any => {
-        return {
-          height: props.height,
-          width: props.width,
-          resize: props.resizable ? 'both' : 'none',
-        }
-      })
-
-      watchEffect(
-        () => {
-          const target: HTMLElement = document.getElementById(id)!
-          const perttierJSON = highlightSyntax(props.value)!
-          target.innerHTML = perttierJSON
-
-          widthRef.value = target.offsetWidth
-        },
-        { flush: 'post' }
-      )
-
-      return () => <pre id={id} style={getStyle.value} class="w-json-pre" />
-    },
+    setup() {},
   })
 </script>
-
-<style lang="scss" scoped>
-  .w-json-pre {
-    position: relative;
-  }
-
-  .w-json-pre:deep() {
-    padding: 5px;
-    margin: 5px;
-    outline: 1px solid #ccc;
-    overflow-y: auto;
-    line-height: 16px;
-
-    .string {
-      color: green !important;
-    }
-
-    .number {
-      color: darkorange !important;
-    }
-
-    .boolean {
-      color: blue !important;
-    }
-
-    .null {
-      color: magenta !important;
-    }
-
-    .key {
-      color: red !important;
-    }
-
-    .function {
-      color: darkturquoise !important;
-    }
-  }
-</style>
