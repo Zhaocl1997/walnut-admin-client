@@ -107,7 +107,6 @@ declare global {
     method?: string
     url?: string
     heepVersion?: string
-    agent?: string
     statusCode?: number
     requestData?: string
     responseData?: string
@@ -116,6 +115,8 @@ declare global {
     ip?: string
     invokingMethod?: string
     operatedAt?: Date
+    os?: string
+    browser?: string
   }
 }
 

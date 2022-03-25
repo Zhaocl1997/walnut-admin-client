@@ -220,6 +220,7 @@
         bordered: true,
         column: 2,
         colon: true,
+        labelPlacement: 'left',
       },
 
       schemas: [
@@ -276,6 +277,20 @@
           type: 'Base:Input',
           formProp: {
             path: 'url',
+          },
+        },
+
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'os',
+          },
+        },
+
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'browser',
           },
         },
 

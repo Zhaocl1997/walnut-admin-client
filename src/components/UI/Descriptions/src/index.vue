@@ -38,7 +38,11 @@
           if (!target?.label) return
 
           if (target.tagType) {
-            return <n-tag type={target.tagType}>{t(target.label!)}</n-tag>
+            return (
+              <n-tag size="small" type={target.tagType}>
+                {t(target.label!)}
+              </n-tag>
+            )
           }
 
           return <span>{t(target.label!)}</span>
@@ -58,7 +62,11 @@
           <n-descriptions-item {...omit(i, 'label')}>
             {{
               default: () => renderItemsContent(i),
-              label: () => (props.colon ? `${i.label} :` : i.label),
+              label: () => (
+                <span class="whitespace-nowrap">
+                  {props.colon ? `${i.label} :` : i.label}
+                </span>
+              ),
             }}
           </n-descriptions-item>
         ))
