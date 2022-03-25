@@ -146,7 +146,7 @@ export const useTableColumns = (
 
             render(rowData, rowIndex) {
               return (
-                <div class="flex items-center justify-center children:mr-2 whitespace-nowrap">
+                <div class="flex items-center justify-center space-x-2 whitespace-nowrap">
                   {isShow('create') && (
                     <w-button
                       auth={props.value.auths?.create}
@@ -196,6 +196,22 @@ export const useTableColumns = (
                         })
                       }
                       type="error"
+                    ></w-button>
+                  )}
+
+                  {isShow('detail') && (
+                    <w-button
+                      icon-button
+                      icon="ant-design:eye-outlined"
+                      text-prop={t('app:button:detail')}
+                      onClick={() =>
+                        tItem.onExtendActionType!({
+                          type: 'detail',
+                          rowData,
+                          rowIndex,
+                        })
+                      }
+                      type="success"
                     ></w-button>
                   )}
                 </div>

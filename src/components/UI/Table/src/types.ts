@@ -8,7 +8,7 @@ import type { WButtonProps } from '../../Button'
 import type { WTablePropType } from './props'
 
 export declare namespace WTable {
-  type ColumnActionType = 'create' | 'read' | 'delete'
+  type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'
 
   type HeaderActionType = 'create' | 'update' | 'delete' | 'export' | 'import'
 
