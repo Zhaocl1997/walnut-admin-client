@@ -1,6 +1,6 @@
 <script lang="tsx">
   import type { GlobalThemeOverrides } from 'naive-ui'
-  import { zhCN, dateZhCN } from 'naive-ui'
+  import { zhCN, enUS, dateZhCN } from 'naive-ui'
   import { getCommonTheme, getTheme } from './naive'
 
   export default defineComponent({
@@ -26,8 +26,8 @@
         <n-config-provider
           theme={getTheme.value}
           theme-overrides={getThemeOverrides.value}
-          locale={app.value.locale === 'en-US' ? {} : zhCN}
-          date-locale={app.value.locale === 'en-US' ? {} : dateZhCN}
+          locale={app.value.locale === LocaleConst.EN_US ? {} : zhCN}
+          date-locale={app.value.locale === LocaleConst.EN_US ? {} : dateZhCN}
         >
           <n-loading-bar-provider>
             <n-dialog-provider>
