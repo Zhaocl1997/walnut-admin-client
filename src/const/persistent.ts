@@ -2,6 +2,7 @@ export const PersistentKeysConst = {
   AUTH: 'AUTH',
   APP: 'APP',
   TOKEN: 'TOKEN',
+  REFRESH_TOKEN: 'REFRESH_TOKEN',
   LOCK: 'LOCK',
 } as const
 

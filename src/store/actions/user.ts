@@ -1,11 +1,11 @@
 import type { SigninPayloadType } from '../types/user'
 
-import { getUserInfo, signin } from '/@/api/auth'
+import { getUserInfo, refreshToken, signin, signout } from '/@/api/auth'
 import { AppAuthName } from '/@/router/constant'
 import { clearTabs } from '/@/core/tab'
 import { AppCoreFn1 } from '/@/core'
 
-const { menu, token, user, auth } = useAppState()
+const { menu, token, refresh_token, user, auth } = useAppState()
 
 /**
  * @description Action - User - Signin
@@ -14,7 +14,8 @@ export const userActionSignin = async (payload: SigninPayloadType) => {
   const res = await signin(payload)
 
   // set token
-  token.value = res.token
+  token.value = res.access_token
+  refresh_token.value = res.refresh_token
 
   const { username, password, rememberMe } = payload
 
@@ -35,9 +36,13 @@ export const userActionSignin = async (payload: SigninPayloadType) => {
 /**
  * @description Action - User - Signout
  */
-export const userActionSignOut = async () => {
+export const userActionSignOut = async (callApi = true) => {
+  // call signout to remove refresh_token in db
+  callApi && (await signout())
+
   // clear token
   token.value = ''
+  refresh_token.value = ''
 
   // clear userinfo
   user.value.userInfo = {}
@@ -58,4 +63,15 @@ export const userActionInfo = async () => {
   const res = await getUserInfo()
 
   user.value.userInfo = res
+}
+
+/**
+ * @description Action - User - refresh token
+ */
+export const userActionRefreshToken = async () => {
+  const res = await refreshToken({ refresh_token: refresh_token.value })
+
+  token.value = res.access_token
+
+  return res.access_token
 }

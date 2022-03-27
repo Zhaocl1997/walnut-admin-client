@@ -1,4 +1,4 @@
-import type { AxiosTransform } from './src/types'
+import type { AxiosRequestConfigExtend, AxiosTransform } from './src/types'
 
 import {
   easyFilterEmptyValue,
@@ -6,8 +6,22 @@ import {
 } from 'easy-fns-ts'
 
 import { checkReponseErrorStatus } from './checkStatus'
+import {
+  userActionRefreshToken,
+  userActionSignOut,
+} from '/@/store/actions/user'
+import { BussinessCodeConst } from '/@/const/axios'
 
-const { token } = useAppState()
+const { token, refresh_token } = useAppState()
+
+// flag to judge if calling refreshing token api
+let isRefreshing = false
+// waiting queue
+let requestsQueue: ((token: string) => void)[] = []
+
+const setTokenInRequest = (config: AxiosRequestConfigExtend, token: string) => {
+  config.headers!['Authorization'] = `Bearer ${token}`
+}
 
 // custom transform for req and res interceptors
 export const transform: AxiosTransform = {
@@ -17,8 +31,12 @@ export const transform: AxiosTransform = {
 
     // carry token
     if (mergedCustomOptions.needAuth) {
-      token.value &&
-        (config.headers!['Authorization'] = `Bearer ${token.value}`)
+      token.value && setTokenInRequest(config, token.value)
+    }
+
+    // set refresh token in header as well, didn't use cookie
+    if (true) {
+      refresh_token.value && (config.headers!['Refresh'] = refresh_token.value)
     }
 
     // Demonstrate purpose API
@@ -45,15 +63,64 @@ export const transform: AxiosTransform = {
 
   // Here handle response data
   responseInterceptors: (res) => {
+    // code below is custom code in `axios.response.data`
     const { code, data, msg } = res.data
 
-    if (code === 200) {
+    // normal success
+    if (code === BussinessCodeConst.SUCCESS) {
       return Promise.resolve(data)
-    } else {
+    }
+
+    // when access token is expired, call refresh token api to get new token
+    if (code === BussinessCodeConst.ACCESS_TOKEN_EXPIRED) {
+      const config = res.config
+
+      if (!isRefreshing) {
+        isRefreshing = true
+
+        return userActionRefreshToken()
+          .then((res) => {
+            setTokenInRequest(config, res)
+
+            // token already refreshed, call the waiting request
+            requestsQueue.forEach((cb) => cb(res))
+            // clean queue
+            requestsQueue = []
+
+            return AppAxios.request(config)
+          })
+          .finally(() => {
+            isRefreshing = false
+          })
+      } else {
+        // when refreshing token, return a promise that haven't called resolve
+        return new Promise((resolve) => {
+          // push resolve into queue, using an anonymous function to wrap it. ASAP token refresh is done, excute
+          requestsQueue.push((t) => {
+            setTokenInRequest(config, t)
+            resolve(AppAxios.request(config))
+          })
+        })
+      }
+    }
+
+    // refresh token is expired, so this user need to signout and re-signin
+    if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
+      userActionSignOut(false)
+      return Promise.resolve()
+    }
+
+    const badRequestCodeList: number[] = [
+      BussinessCodeConst.SIGNIN_USER_NOT_FOUND,
+      BussinessCodeConst.SIGNIN_PASS_NOT_VALID,
+      BussinessCodeConst.SIGNIN_USER_BANNED,
+    ]
+
+    if (badRequestCodeList.includes(code)) {
       useAppNotiError(msg)
 
       // since we have the error message, just resolve so handle logic behind
-      return Promise.resolve()
+      return Promise.reject()
     }
   },
 

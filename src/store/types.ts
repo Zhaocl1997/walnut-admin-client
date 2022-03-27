@@ -10,6 +10,7 @@ export interface AppStorage {
   }
 
   token: string
+  refresh_token: string
 
   auth: {
     username?: string

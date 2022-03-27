@@ -2,7 +2,10 @@ import type { SigninPayloadType } from '/@/store/types/user'
 
 enum AuthEnum {
   SIGNIN = '/auth/signin',
+  SIGNOUT = '/auth/signout',
   SIGNUP = '/auth/signup',
+
+  REFRESH_TOKEN = '/auth/refresh',
 
   PERMISSION = '/auth/permissions',
   PROFILE = '/auth/profile',
@@ -13,9 +16,31 @@ enum AuthEnum {
  */
 export const signin = (data: SigninPayloadType) => {
   return AppAxios.post<{
-    token: string
+    access_token: string
+    refresh_token: string
   }>({
     url: AuthEnum.SIGNIN,
+    data,
+  })
+}
+
+/**
+ * @description Sign out
+ */
+export const signout = () => {
+  return AppAxios.post({
+    url: AuthEnum.SIGNOUT,
+  })
+}
+
+/**
+ * @description Refresh access_token use refresh_token
+ */
+export const refreshToken = (data: { refresh_token: string }) => {
+  return AppAxios.post<{
+    access_token: string
+  }>({
+    url: AuthEnum.REFRESH_TOKEN,
     data,
   })
 }

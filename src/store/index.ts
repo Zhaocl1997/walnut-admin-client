@@ -25,6 +25,7 @@ const useAppStateStorage = createGlobalState<RemoveableRefRecord<AppStorage>>(
       lockMode: AppLockModeConst.AUTO,
     }),
     token: useAppStorage(PersistentKeysConst.TOKEN, ''),
+    refresh_token: useAppStorage(PersistentKeysConst.REFRESH_TOKEN, ''),
     auth: useAppStorage(PersistentKeysConst.AUTH, {}),
   })
 )

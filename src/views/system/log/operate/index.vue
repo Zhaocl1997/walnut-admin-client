@@ -183,6 +183,7 @@
           extendType: 'formatter',
           formatter: (row) => formatTime(row.operatedAt!),
           sorter: true,
+          defaultSortOrder: 'descend',
         },
 
         {
