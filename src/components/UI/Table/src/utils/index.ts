@@ -1,26 +1,25 @@
-import type {
-  SorterMultiple,
-  SortState,
-} from 'naive-ui/lib/data-table/src/interface'
+import type { SorterMultiple } from 'naive-ui/lib/data-table/src/interface'
+
+import type { DataTableSortState } from 'naive-ui'
 
 /**
  * @description generate base sort object
  */
 const generateSortParams = <T>(
-  sort: SortState | SortState[]
+  sort: DataTableSortState | DataTableSortState[]
 ): BaseSortParams<T> => {
   if (Array.isArray(sort)) {
     return sort.map((i) => ({
       field: i.columnKey as keyof T,
       order: i.order,
-      priority: (i.sorter as SorterMultiple).multiple,
+      priority: (i.sorter as SorterMultiple)?.multiple,
     }))
   } else {
     return [
       {
         field: sort.columnKey as keyof T,
         order: sort.order,
-        priority: (sort.sorter as SorterMultiple).multiple,
+        priority: (sort.sorter as SorterMultiple)?.multiple,
       },
     ]
   }

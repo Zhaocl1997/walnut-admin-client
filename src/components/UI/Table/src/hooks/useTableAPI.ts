@@ -3,6 +3,7 @@ import type {
   SortState,
   TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
+import type { DataTableSortState } from 'naive-ui'
 import type { WTable } from '../types'
 
 import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
@@ -139,6 +140,29 @@ export const useTableAPI = (
 
         // set default value to query
         ApiTableListParams.value.query = cloneDeep(defaultQueryFormData)
+
+        // commit change, make this version a default version
+        commitParams()
+      }
+
+      if (
+        props.value.columns!.some(
+          (i) => (i as TableBaseColumn).defaultSortOrder
+        )
+      ) {
+        // @ts-ignore
+        // TODO sort two types
+        ApiTableListParams.value.sort = props.value.columns
+          ?.map((i) => {
+            if ((i as TableBaseColumn).defaultSortOrder) {
+              return {
+                columnKey: (i as TableBaseColumn).key,
+                order: (i as TableBaseColumn).defaultSortOrder,
+              } as DataTableSortState
+            }
+            return ''
+          })
+          .filter(Boolean)
 
         // commit change, make this version a default version
         commitParams()
