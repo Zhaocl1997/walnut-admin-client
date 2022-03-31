@@ -37,6 +37,8 @@ export const useTableAPI = (
     },
   })
 
+  const total = ref(0)
+
   const checkedRowKeys = ref<StringOrNumber[]>([])
 
   // api list
@@ -68,6 +70,8 @@ export const useTableAPI = (
 
     try {
       const res = await props.value.apiProps?.listApi!(params)!
+
+      total.value = res.total
 
       setProps({
         data: res.data!,
@@ -112,10 +116,20 @@ export const useTableAPI = (
     )
 
     if (ret) {
+      AppSuccess()
+
+      if (
+        ApiTableListParams.value.page!.page! *
+          ApiTableListParams.value.page!.pageSize! >
+        total.value - checkedRowKeys.value.length
+      ) {
+        ApiTableListParams.value.page!.page = 1
+      }
+
+      await onApiTableList()
+
       // use `length = 0` can clear the arr
       checkedRowKeys.value.length = 0
-      AppSuccess()
-      await onApiTableList()
     }
   }
 
