@@ -105,7 +105,7 @@
 
     advancedProps: {
       actionType,
-      width: 500,
+      width: getProps.value.formProps?.drawerWidth ?? 500,
       onYes: async (apiHandler) => {
         await apiHandler(
           // Form API Solution 1

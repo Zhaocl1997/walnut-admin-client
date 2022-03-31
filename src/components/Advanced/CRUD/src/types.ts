@@ -9,7 +9,9 @@ export declare namespace WCrud {
     baseAPI?: BaseAPIType<T>
     onBeforeRequest?: (data: T) => T
     tableProps?: Omit<WTable.Props<T>, 'apiProps'>
-    formProps?: Omit<WForm.Props<T>, 'advancedProps'>
+    formProps?: Omit<WForm.Props<T>, 'advancedProps'> & {
+      drawerWidth?: string | number
+    }
   }
 
   namespace Inst {
