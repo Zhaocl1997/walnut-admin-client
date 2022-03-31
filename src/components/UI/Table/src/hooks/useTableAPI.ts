@@ -7,7 +7,11 @@ import type { DataTableSortState } from 'naive-ui'
 import type { WTable } from '../types'
 
 import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
-import { generateBaseListParams } from '../utils'
+import {
+  generateBaseListParams,
+  generateDefaultSortParams,
+  generateSortParams,
+} from '../utils'
 import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'
 import { cloneDeep } from 'lodash-es'
 
@@ -48,6 +52,12 @@ export const useTableAPI = (
 
     // used for format sort params, query and page didn't change
     const params = generateBaseListParams(ApiTableListParams.value)
+
+    if (params.sort?.length === 0) {
+      params.sort = generateSortParams(
+        generateDefaultSortParams(props.value.columns!)
+      )
+    }
 
     // is got `onBeforeRequest`, then excute it and set query value
     if (isFunction(props?.value?.apiProps?.onBeforeRequest!)) {
@@ -152,17 +162,9 @@ export const useTableAPI = (
       ) {
         // @ts-ignore
         // TODO sort two types
-        ApiTableListParams.value.sort = props.value.columns
-          ?.map((i) => {
-            if ((i as TableBaseColumn).defaultSortOrder) {
-              return {
-                columnKey: (i as TableBaseColumn).key,
-                order: (i as TableBaseColumn).defaultSortOrder,
-              } as DataTableSortState
-            }
-            return ''
-          })
-          .filter(Boolean)
+        ApiTableListParams.value.sort = generateDefaultSortParams(
+          props.value.columns!
+        )
 
         // commit change, make this version a default version
         commitParams()
