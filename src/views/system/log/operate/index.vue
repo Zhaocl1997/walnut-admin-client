@@ -221,6 +221,8 @@
         labelPlacement: 'left',
       },
 
+      drawerWidth: '40%',
+
       schemas: [
         {
           type: 'Base:Input',
@@ -304,6 +306,14 @@
           formProp: {
             path: 'invokingMethod',
           },
+        },
+
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'correspondingMS',
+          },
+          descriptionProp: { formatter: (ms) => `${ms} ms` },
         },
 
         {

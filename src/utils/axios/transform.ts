@@ -114,6 +114,14 @@ export const transform: AxiosTransform = {
       BussinessCodeConst.SIGNIN_USER_NOT_FOUND,
       BussinessCodeConst.SIGNIN_PASS_NOT_VALID,
       BussinessCodeConst.SIGNIN_USER_BANNED,
+      BussinessCodeConst.DATA_EXISTED,
+      BussinessCodeConst.DATA_NOT_FOUND,
+      BussinessCodeConst.DATA_DELETE_ERROR,
+      BussinessCodeConst.DATA_ERROR,
+      BussinessCodeConst.DATA_BAD_ID,
+      BussinessCodeConst.NOT_FOUND,
+      BussinessCodeConst.DATABASE_ERROR,
+      BussinessCodeConst.CUSTOM_ERROR,
     ]
 
     if (badRequestCodeList.includes(code)) {

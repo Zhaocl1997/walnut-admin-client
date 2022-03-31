@@ -106,7 +106,7 @@
           key: 'roleName',
           width: 200,
           sorter: {
-            multiple: 4,
+            multiple: 5,
           },
         },
 
