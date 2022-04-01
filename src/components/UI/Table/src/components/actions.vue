@@ -20,7 +20,10 @@
     >
     </w-button>
 
-    <n-text v-if="isShow('delete')" type="warning">
+    <n-text
+      v-if="isShow('delete') && hasPermission(tableProps.auths?.deleteMany)"
+      type="warning"
+    >
       {{
         t('table:header:action:checkedText', { checked: checkedRowKeys.length })
       }}
@@ -33,6 +36,8 @@
   import { useTableContext } from '../hooks/useTableContext'
 
   const { t } = useI18n()
+
+  const { hasPermission } = usePermissions()
 
   const { onEvent, tableProps, checkedRowKeys } = useTableContext()
 

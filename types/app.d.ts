@@ -118,6 +118,19 @@ declare global {
     os?: string
     browser?: string
   }
+
+  // system signin log
+  interface AppSystemLogSignin extends BaseAppModel {
+    ip?: string
+    location?: string
+    os?: string
+    browser?: string
+    userId?: string
+    userName?: string
+    msg?: string
+    success?: boolean
+    signinAt?: Date
+  }
 }
 
 export {}

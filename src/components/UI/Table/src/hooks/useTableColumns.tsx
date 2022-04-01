@@ -94,6 +94,19 @@ export const useTableColumns = (
           }
         }
 
+        // tag
+        if (tItem.extendType === 'tag') {
+          return {
+            ...tItem,
+
+            render(p) {
+              return (
+                <n-tag {...tItem.tagProps!(p)}>{tItem.formatter!(p)}</n-tag>
+              )
+            },
+          }
+        }
+
         // dict
         if (tItem.extendType === 'dict') {
           return {

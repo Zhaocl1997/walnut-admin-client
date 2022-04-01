@@ -229,6 +229,7 @@
   // effect
   watchEffect(async () => {
     if (treeMenuValue.value) {
+      resetFormData()
       const res = await menuAPI.read(treeMenuValue.value)
       actionType.value = 'update'
       formData.value = Object.assign(formData.value, res)

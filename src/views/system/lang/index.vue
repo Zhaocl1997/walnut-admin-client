@@ -108,8 +108,6 @@
           sorter: {
             multiple: 2,
           },
-          filter: true,
-          filterMultiple: false,
         },
 
         {

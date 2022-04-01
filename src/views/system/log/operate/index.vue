@@ -37,7 +37,7 @@
       auths: {
         list: `system:${key}:list`,
         read: `system:${key}:read`,
-        delete: `system:${key}:delete`,
+        deleteMany: `system:${key}:deleteMany`,
       },
 
       headerActions: ['delete'],
@@ -180,8 +180,6 @@
         {
           key: 'operatedAt',
           width: 200,
-          extendType: 'formatter',
-          formatter: (row) => formatTime(row.operatedAt!),
           sorter: true,
           defaultSortOrder: 'descend',
         },
@@ -347,9 +345,6 @@
           type: 'Base:Input',
           formProp: {
             path: 'operatedAt',
-          },
-          descriptionProp: {
-            formatter: (time) => formatTime(time),
           },
         },
       ],

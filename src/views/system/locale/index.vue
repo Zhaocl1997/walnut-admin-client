@@ -79,10 +79,12 @@
             },
             componentProp: {
               clearable: true,
-              options: ['app:', 'sys:', 'form:', 'table:'].map((i) => ({
-                value: i,
-                label: i,
-              })),
+              options: ['app:', 'sys:', 'form:', 'table:', 'dict:'].map(
+                (i) => ({
+                  value: i,
+                  label: i,
+                })
+              ),
             },
           },
 

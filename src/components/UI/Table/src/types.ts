@@ -123,6 +123,14 @@ export declare namespace WTable {
     }
 
     /**
+     * @description normal tag render, provide a tagProps to config. Also provide formatter function
+     */
+    interface Tag<T = RowData> extends BaseExtend<'tag'> {
+      tagProps?: RenderFn<T, TagProps>
+      formatter: RenderFn<T, string>
+    }
+
+    /**
      * @description preset acion column, default includes three buttons: read / delete
      */
     interface Action<T = RowData> extends BaseExtend<'action'> {
@@ -162,6 +170,7 @@ export declare namespace WTable {
       | ExtendType.Formatter<T>
       | ExtendType.Link<T>
       | ExtendType.Dictionary<T>
+      | ExtendType.Tag<T>
       | ExtendType.Index<T>
     )
 
