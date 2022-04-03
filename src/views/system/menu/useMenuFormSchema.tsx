@@ -288,7 +288,7 @@ export const useMenuFormSchema = (
       extraProp: {
         vIf: ({ formData }) =>
           formData.type === MenuTypeConst.MENU &&
-          formData.ternal === MenuTernalConst.NONE,
+          formData.ternal !== MenuTernalConst.EXTERNAL,
       },
     },
 

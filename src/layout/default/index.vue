@@ -25,13 +25,14 @@
         <MainHeader v-if="!setting.app.fixHeader" />
 
         <div
-          :id="$route.name"
+          :id="String($route.name)"
           class="w-full h-full"
           :style="{
             padding: $route.meta.url ? 0 : setting.app.contentPadding + 'px',
           }"
         >
           <TheContent />
+          <TheIFrameWrapper />
         </div>
 
         <TheFooter v-if="setting.app.showFooter && !setting.app.fixFooter" />
@@ -51,6 +52,7 @@
   import TheAside from './TheAside'
   import TheHeader from './TheHeader'
   import TheContent from './TheContent'
+  import TheIFrameWrapper from '../iframe/wrapper.vue'
   import TheTab from './TheTab'
   import TheFooter from './TheFooter'
   import {

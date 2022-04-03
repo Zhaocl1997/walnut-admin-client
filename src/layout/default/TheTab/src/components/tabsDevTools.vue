@@ -1,7 +1,7 @@
 <template>
   <n-popover
     title="This will only appear in dev mode."
-    :show="devToolShow && !currentMouseTab?.meta.url"
+    :show="devToolShow"
     :show-arrow="false"
     :x="devToolX"
     :y="devToolY"
@@ -16,10 +16,10 @@
         <w-JSON :value="currentMouseTab" height="auto" />
       </n-list-item>
 
-      <n-list-item>
+      <n-list-item v-show="!currentMouseTab?.meta.url">
         <n-button @click="onOpenFile">
           Open vue file related to this tab in
-          <span class="text-red-500">&ensp;VScode</span>
+          <span class="text-red-500">&ensp;VSCode</span>
         </n-button>
       </n-list-item>
     </n-list>

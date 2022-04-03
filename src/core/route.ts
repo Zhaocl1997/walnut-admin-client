@@ -2,7 +2,8 @@ import { formatTree, findPath, arrToTree, orderTree } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 
 import ParentComponent from '/@/layout/default/TheContent'
-import IFrameComponent from '/@/layout/iframe/index.vue'
+import IFrameFaker from '/@/layout/iframe/faker.vue'
+import IFrameReal from '/@/layout/iframe/index.vue'
 
 import { App404Route } from '/@/router/routes'
 import { AppRootName } from '../router/constant'
@@ -40,12 +41,17 @@ const resolveParentComponent = (name: string) => () =>
 /**
  * @description Util Function 3 - Resolve `menu` type menu which is internal with self name
  */
-const resolveIFrameComponent = (name: string) => () =>
+const resolveIFrameComponent = (name: string, cache?: boolean) => () =>
   new Promise((resolve) => {
-    resolve({
-      ...IFrameComponent,
-      name,
-    })
+    cache
+      ? resolve({
+          ...IFrameFaker,
+          name,
+        })
+      : resolve({
+          ...IFrameReal,
+          name,
+        })
   })
 
 const allViewModules = import.meta.glob('../views/**/*.vue')
@@ -108,7 +114,7 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
         if (node.ternal === MenuTernalConst.INTERNAL) {
           return {
             ...buildCommonRoute(node),
-            component: resolveIFrameComponent(node.name!),
+            component: resolveIFrameComponent(node.name!, node.cache),
           }
         }
 
