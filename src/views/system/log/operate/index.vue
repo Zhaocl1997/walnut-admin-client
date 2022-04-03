@@ -9,7 +9,6 @@
 </script>
 
 <script lang="ts" setup>
-  import { formatTime } from 'easy-fns-ts'
   import { logOperateAPI } from '/@/api/system/log'
 
   // locale unique key
@@ -172,9 +171,13 @@
         },
 
         {
-          key: 'statusCode',
-          width: 100,
+          key: 'success',
+          width: 120,
           sorter: true,
+          extendType: 'dict',
+          dictType: 'sys_shared_success',
+          filter: true,
+          filterMultiple: false,
         },
 
         {

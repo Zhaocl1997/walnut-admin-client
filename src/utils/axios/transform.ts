@@ -80,6 +80,8 @@ export const transform: AxiosTransform = {
 
         return userActionRefreshToken()
           .then((res) => {
+            if (!res) return
+
             setTokenInRequest(config, res)
 
             // token already refreshed, call the waiting request
