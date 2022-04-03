@@ -31,8 +31,8 @@
             padding: $route.meta.url ? 0 : setting.app.contentPadding + 'px',
           }"
         >
-          <TheContent />
           <TheIFrameWrapper />
+          <TheContent />
         </div>
 
         <TheFooter v-if="setting.app.showFooter && !setting.app.fixFooter" />

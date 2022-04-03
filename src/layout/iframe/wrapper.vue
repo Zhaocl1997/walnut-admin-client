@@ -1,26 +1,25 @@
 <template>
-  <w-transition
-    :name="
-      settings.ForDevelopers.app.showAnimation
-        ? settings.ForDevelopers.app.animationName
-        : null
-    "
-    mode="out-in"
-    appear
+  <template
+    v-if="getAllIFramePages.length > 0"
+    v-for="item in getAllIFramePages"
+    :key="item.name"
   >
-    <div
-      id="w-iframe-wrapper"
-      class="w-full h-full"
-      v-if="getAllIFramePages.length > 0"
+    <w-transition
+      :name="
+        settings.ForDevelopers.app.showAnimation
+          ? settings.ForDevelopers.app.animationName
+          : null
+      "
+      mode="out-in"
+      appear
     >
-      <template v-for="item in getAllIFramePages" :key="item.name">
-        <WIFrame
-          v-show="item.name === $route.name"
-          :frame-src="item.url!"
-        ></WIFrame>
-      </template>
-    </div>
-  </w-transition>
+      <WIFrame
+        v-if="item.url && tab.tabs.map((i) => i.name).includes(item.name!)"
+        v-show="item.name === $route.name"
+        :frame-src="item.url!"
+      ></WIFrame>
+    </w-transition>
+  </template>
 </template>
 
 <script lang="ts" setup>
