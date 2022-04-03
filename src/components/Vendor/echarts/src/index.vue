@@ -6,7 +6,7 @@
   import type { EChartsOption, ECharts } from 'echarts'
   import { genString } from 'easy-fns-ts'
 
-  // import echarts from './resources/onDemand'
+  import echarts from './resources/onDemand'
 
   interface WEchartsProps {
     option: EChartsOption
@@ -14,7 +14,7 @@
     width?: string
   }
 
-  const { app } = useAppState()
+  const { app, settings } = useAppState()
 
   const chartId = ref('echarts-' + genString(8))
   const chartInst = ref<Nullable<ECharts>>(null)
@@ -33,10 +33,12 @@
 
       const target = document.getElementById(chartId.value)!
       // if ondemand usage, just uncomment top echarts import, and change below to `echarts.init`
-      const chart = window.echarts.init(
+      const chart = echarts.init(
         target,
         app.value.isDark ? 'dark' : undefined,
-        { locale: app.value.locale.split('_')[0].toUpperCase() }
+        {
+          locale: app.value.locale.split('_')[0].toUpperCase(),
+        }
       )
 
       // @ts-ignore

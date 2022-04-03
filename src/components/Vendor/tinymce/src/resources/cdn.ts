@@ -15,3 +15,10 @@ export const getSkinUrl = (name: string) =>
 
 export const getContenteCSSUrl = (name: string) =>
   `https://cdn.jsdelivr.net/npm/tinymce@6.0.0/skins/content/${name}/content.min.css`
+
+export const useTinymceCdn = () => {
+  useScriptTag(cdnUrl)
+  useScriptTag(modelUrl)
+  useScriptTag(themeUrl)
+  useScriptTag(iconsUrl)
+}
