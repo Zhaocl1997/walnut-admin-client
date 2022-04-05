@@ -36,37 +36,22 @@ export const useMenuTree = () => {
     const res = await menuAPI.list()
 
     // build, order and format
-    const menuData = formatTree<AppSystemMenu>(
-      orderTree<AppSystemMenu>(
-        arrToTree<AppSystemMenu>(cloneDeep(res.data), { id: '_id' })
-      ),
-      {
-        format: (node) =>
-          node.children!.length === 0
-            ? {
-                ...node,
-                children: null,
-              }
-            : node,
-      }
+    const menuData = orderTree<AppSystemMenu>(
+      arrToTree<AppSystemMenu>(
+        cloneDeep(res.data),
+        { id: '_id' },
+        { transformEmptyChildrenToNull: true }
+      )
     )
 
-    const treeSelectData = formatTree<AppSystemMenu>(
-      orderTree<AppSystemMenu>(
-        arrToTree<AppSystemMenu>(
-          cloneDeep(res.data).filter((i) => i.type !== MenuTypeConst.ELEMENT),
-          { id: '_id' }
-        )
-      ),
-      {
-        format: (node) =>
-          node.children!.length === 0
-            ? {
-                ...node,
-                children: null,
-              }
-            : node,
-      }
+    const treeSelectData = orderTree<AppSystemMenu>(
+      arrToTree<AppSystemMenu>(
+        cloneDeep(res.data).filter((i) => i.type !== MenuTypeConst.ELEMENT),
+        { id: '_id' },
+        {
+          transformEmptyChildrenToNull: true,
+        }
+      )
     )
 
     menuDataRef.value = menuData

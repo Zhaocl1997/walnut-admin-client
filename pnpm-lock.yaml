@@ -31,7 +31,7 @@ specifiers:
   conventional-changelog-cli: ^2.2.2
   crypto-js: ^4.1.1
   cz-customizable: ^6.3.0
-  easy-fns-ts: 1.2.2
+  easy-fns-ts: 1.2.3
   echarts: ^5.3.2
   eslint: ^8.12.0
   eslint-config-prettier: ^8.5.0
@@ -81,7 +81,7 @@ dependencies:
   animate.css: 4.1.1
   axios: 0.26.1
   crypto-js: 4.1.1
-  easy-fns-ts: 1.2.2
+  easy-fns-ts: 1.2.3
   echarts: 5.3.2
   highlight.js: 11.5.0
   html-to-image: 1.9.0
@@ -2862,8 +2862,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /easy-fns-ts/1.2.2:
-    resolution: {integrity: sha512-Mb9gbkn7Qx8Zxs2yvnaKvpefBAi48I4PrlmCbQ3427AoP002T371m+XHmLsiZytwUiBwddTkUFb1xxl8s444/w==}
+  /easy-fns-ts/1.2.3:
+    resolution: {integrity: sha512-nhljzuWElAlqsYBnIh6v0/V86tAH5xubEIi0LEpD7ZIDOgvBhoTBCGHAfdzzcgpxzIbaUtpWDbtpKzONOYrVkA==}
     dev: false
 
   /echarts/5.3.2:
