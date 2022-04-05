@@ -12,7 +12,7 @@ import {
 } from '/@/store/actions/user'
 import { BussinessCodeConst } from '/@/const/axios'
 
-const { token, refresh_token } = useAppState()
+const { token, refresh_token, app } = useAppState()
 
 // flag to judge if calling refreshing token api
 let isRefreshing = false
@@ -28,6 +28,9 @@ export const transform: AxiosTransform = {
   // Here handler request logic
   requestInterceptors: (config) => {
     const mergedCustomOptions = config.customConfig!
+
+    // adapt for backend locale messages
+    config.headers!['Accept-Language'] = app.value.locale.replace('_', '-')
 
     // carry token
     if (mergedCustomOptions.needAuth) {
