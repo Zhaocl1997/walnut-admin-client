@@ -131,6 +131,13 @@ declare global {
     success?: boolean
     signinAt?: Date
   }
+
+  // shared area
+  interface AppSharedArea {
+    code?: string
+    name?: string
+    pcode?: string
+  }
 }
 
 export {}

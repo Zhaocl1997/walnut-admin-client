@@ -16,6 +16,7 @@
         <n-anchor-link title="Input" href="#Input" />
         <n-anchor-link title="Select" href="#Select" />
         <n-anchor-link title="Tree" href="#Tree" />
+        <n-anchor-link title="Service" href="#Service" />
       </n-anchor>
     </div>
 
@@ -25,6 +26,7 @@
       <DemoInput id="Input" />
       <DemoSelect id="Select" />
       <DemoTree id="Tree" class="col-span-2" />
+      <DemoService id="Service" />
     </div>
   </div>
 </template>
@@ -35,6 +37,7 @@
   import DemoInput from './Input.vue'
   import DemoSelect from './Select.vue'
   import DemoTree from './Tree.vue'
+  import DemoService from './Service.vue'
 </script>
 
 <script lang="ts">
