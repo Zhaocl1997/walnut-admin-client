@@ -51,7 +51,7 @@
         :node-props="nodeProps"
         :render-prefix="getProps.presetPrefixIcon ? onRenderPrefix : undefined"
         :render-suffix="
-          getProps.treeProps.draggable || getProps.deletable
+          getProps.treeProps?.draggable || getProps.deletable
             ? onRenderSuffix
             : undefined
         "
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="tsx" setup>
-  import type { DropdownOption, TreeOption } from 'naive-ui'
+  import type { DropdownOption, TreeOption, TreeProps } from 'naive-ui'
   import type { TreeRenderProps } from 'naive-ui/lib/tree/src/interface'
   import type { HTMLAttributes } from 'vue'
   import type { WTree } from './types'
@@ -79,14 +79,29 @@
   import { usePropsAdvanced } from '/@/hooks/core/usePropsAdvanced'
   import { useDropdown } from '/@/components/UI/Dropdown'
 
-  // avoid error
-  interface WTreeProps extends WTree.Props {}
+  // TODO 888
   interface WTreeEmits extends WTree.Emit.Entry {}
 
-  const attrs = useAttrs()
+  // TODO 888
+  interface InternalProps {
+    treeProps?: TreeProps
+    value?: string | number | string[] | number[]
+    multiple?: boolean
+    toolbar?: boolean
+    deletable?: boolean
+    toolbarOptions?: DropdownOption[]
+    presetPrefixIcon?: boolean
+    presetContextMenu?: boolean
+    maxHeight?: string
+    auths?: {
+      delete?: string
+      update?: string
+    }
+    onTreeNodeItemDelete?: (deletedItem: any) => void
+    onPaste?: (copyTarget: any, currentTarget: any) => void
+  }
 
-  // props is actually empty, since we use ts to declare props
-  const props = defineProps<WTreeProps>()
+  const props = defineProps<InternalProps>()
 
   const emit = defineEmits<WTreeEmits>()
 
@@ -175,7 +190,7 @@
             <WIcon height="20" icon="carbon:checkbox-indeterminate"></WIcon>
           ),
           disabled:
-            getProps.value.treeProps.cascade || !getProps.value.multiple,
+            getProps.value.treeProps!.cascade || !getProps.value.multiple,
         },
         {
           key: 'independent',
@@ -184,7 +199,7 @@
             <WIcon height="20" icon="carbon:checkbox-checked"></WIcon>
           ),
           disabled:
-            !getProps.value.treeProps.cascade || !getProps.value.multiple,
+            !getProps.value.treeProps!.cascade || !getProps.value.multiple,
         },
       ],
     },
@@ -205,7 +220,7 @@
     },
   ])
 
-  const getKeyField = computed(() => getProps.value.treeProps.keyField!)
+  const getKeyField = computed(() => getProps.value.treeProps!.keyField!)
 
   const getShowCopyMsg = computed(
     () => !getProps.value.multiple && state.value.copyTarget[getKeyField.value]
@@ -235,9 +250,7 @@
     },
   })
 
-  const { setProps, getProps } = usePropsAdvanced<WTree.Props>(
-    attrs as unknown as WTree.Props
-  )
+  const { setProps, getProps } = usePropsAdvanced<WTree.Props>(props)
 
   const onSelectedKeys = (keys: StringOrNumber[]) => {
     if (!getProps.value.multiple) {
@@ -254,7 +267,7 @@
   const onToolbarSelect = (key: string) => {
     if (key === 'expand') {
       state.value.expandedKeys = treeToArr(
-        cloneDeep(getProps.value.treeProps.data!)
+        cloneDeep(getProps.value.treeProps!.data!)
       ).map((i) => i[getKeyField.value]) as string[]
 
       state.value.expandAll = true
@@ -268,7 +281,7 @@
 
     if (key === 'check') {
       state.value.checkedKeys = treeToArr(
-        cloneDeep(getProps.value.treeProps.data!)
+        cloneDeep(getProps.value.treeProps!.data!)
       ).map((i) => i[getKeyField.value]) as string[]
 
       state.value.checkAll = true
@@ -318,9 +331,9 @@
   const onRenderSuffix = ({ option }: TreeRenderProps) => {
     return (
       <WTransition name="fade-right">
-        {attrs.value === option[getKeyField.value] && (
+        {getProps.value.value === option[getKeyField.value] && (
           <div class="flex items-center">
-            {getProps.value.treeProps.draggable &&
+            {getProps.value.treeProps!.draggable &&
               hasPermission(getProps.value.auths?.update) && (
                 <WIcon
                   height="18"
@@ -357,9 +370,9 @@
 
   watchEffect(() => {
     if (getProps.value.multiple) {
-      state.value.checkedKeys = attrs.value as StringOrNumber[]
+      state.value.checkedKeys = getProps.value.value as StringOrNumber[]
     } else {
-      state.value.selectedKeys = [attrs.value] as StringOrNumber[]
+      state.value.selectedKeys = [getProps.value.value] as StringOrNumber[]
     }
   })
 </script>

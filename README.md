@@ -45,6 +45,8 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重
 
 - [ ] 999 查看[issue](https://github.com/vuejs/vue-router-next/issues/626)。嵌套路由的keep-alive有问题，为了暂时让keep-alive好使，就把路由扁平化了。但是左侧menu和头部的breadcrumb需要做相应的变动（路由不再是树状结构，但在左侧菜单和面包屑的位置逻辑还是原来树状的逻辑）
 
+- [ ] 888 查看[issue](https://github.com/vuejs/core/issues/4294)。项目中组件的props的类型定义都在vue的文件的外部，引入并使用到defineProps上会导致编译错误，暂时为了解决问题，都在组件内部又重新定义了一遍props的类型，后续支持了就可以从外部文件引入类型了。
+
 - [ ] 99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)
 - [x] 98 data-table pagination onUpdatePage触发两次 [issue](https://github.com/TuSimple/naive-ui/issues/1666)
 - [ ] 97 icon 使用unocss重构，同时扩展iconify提供的多种使用icon的方式 [issue](https://github.com/antfu/unocss)

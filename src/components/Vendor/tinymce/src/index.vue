@@ -58,7 +58,8 @@
   import { menubar } from './resources/menubar'
   import { templates } from './resources/template'
 
-  interface InsideProps {
+  // TODO 888
+  interface InternalProps {
     value?: string
     disabled?: boolean
     height?: string
@@ -69,7 +70,7 @@
     rerender: (p: RawEditorOptions) => void
   }
 
-  const props = withDefaults(defineProps<InsideProps>(), {
+  const props = withDefaults(defineProps<InternalProps>(), {
     value: '',
     disabled: false,
     width: '100%',
