@@ -14,8 +14,8 @@
       return () => (
         <n-switch>
           {{
-            checked: () => attrs.checkedText,
-            unchecked: () => attrs.uncheckedText,
+            checked: () => props.checkedText,
+            unchecked: () => props.uncheckedText,
           }}
         </n-switch>
       )
