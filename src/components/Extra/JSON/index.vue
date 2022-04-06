@@ -1,5 +1,5 @@
 <template>
-  <div ref="WJSONRef" class="relative">
+  <div ref="WJSONRef" class="relative min-h-16">
     <n-code :code="getJSON" language="json" word-wrap :trim="false"></n-code>
 
     <w-transition appear name="fade-right">
