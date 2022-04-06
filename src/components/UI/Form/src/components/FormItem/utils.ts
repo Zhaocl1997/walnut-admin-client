@@ -56,6 +56,13 @@ componentMap.set(
     () => import('../../../../../Vendor/tinymce/index.ts')
   )
 )
+componentMap.set(
+  'AreaCascader',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../../../../../Advanced/services/AreaCascader/index.ts')
+  )
+)
 
 BUILTIN_FORM_TYPE.map((key) => {
   componentMap.set(key, allComponents[key])

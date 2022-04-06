@@ -121,6 +121,14 @@
               query: { name: p.name },
             })
           },
+          ellipsis: {
+            tooltip: true,
+          },
+        },
+
+        {
+          key: 'dictDataCount',
+          width: 80,
         },
 
         {

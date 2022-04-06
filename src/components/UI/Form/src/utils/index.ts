@@ -1,4 +1,5 @@
 import type { WForm } from '../types'
+import type { FormItemRule } from 'naive-ui'
 import { isUndefined } from 'easy-fns-ts'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 
@@ -51,42 +52,23 @@ export const getFormTranslated = (
 }
 
 /**
- * @description default item type pool which could trigger the validation
- */
-export const defaultTriggerPool = ['Base:Input', 'Base:Select']
-
-/**
- * @description default trigger event
- */
-export const defaultTriggerEvent = ['input', 'change', 'blur']
-
-/**
  * @description generate base rules based on schemas
  */
 export const generateBaseRules = (
   schemas: WForm.Schema.Item[],
   props: ComputedRef<WForm.Props>
 ) => {
-  const rules = {}
-
   const { t } = useAppI18n()
 
-  schemas.map((i) => {
-    if (i?.formProp?.path && i?.formProp?.rule !== false) {
-      rules[i?.formProp?.path] = [
-        defaultTriggerPool.includes(i?.type) || i?.formProp?.baseRuleApplied
-          ? {
-              trigger: defaultTriggerEvent,
-              required: true,
-              message: t('comp:form:rule', {
-                type:
-                  i?.type === 'Base:Input'
-                    ? t('comp:base:input')
-                    : t('comp:base:choose'),
-                label: getFormTranslated(props, i),
-              }),
-            }
-          : {
+  return Object.fromEntries(
+    schemas.map((i) => {
+      if (i?.formProp?.path && i?.formProp?.rule !== false) {
+        return [
+          i?.formProp?.path,
+          [
+            {
+              type: i.formProp.ruleType || 'any',
+              trigger: ['blur', 'change', 'input'],
               required: true,
               message: t('comp:form:rule', {
                 type:
@@ -96,11 +78,12 @@ export const generateBaseRules = (
                 label: getFormTranslated(props, i),
               }),
             },
-      ]
-    }
-  })
-
-  return rules
+          ],
+        ]
+      }
+      return []
+    })
+  )
 }
 
 export const extractDefaultFormDataFromSchemas = (

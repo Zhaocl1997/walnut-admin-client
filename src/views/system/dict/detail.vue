@@ -124,9 +124,12 @@
 
         {
           key: 'label',
-          width: 120,
+          width: 240,
           extendType: 'formatter',
           formatter: (row) => t(row.label!),
+          ellipsis: {
+            tooltip: true,
+          },
         },
 
         {

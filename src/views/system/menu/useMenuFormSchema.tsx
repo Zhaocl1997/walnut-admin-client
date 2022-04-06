@@ -142,7 +142,6 @@ export const useMenuFormSchema = (
       formProp: {
         path: 'name',
         labelHelpMessage: true,
-        baseRuleApplied: true,
       },
       componentProp: {
         render: ({ formData }) => {
@@ -232,7 +231,6 @@ export const useMenuFormSchema = (
       type: 'Extend:IconPicker',
       formProp: {
         path: 'icon',
-        baseRuleApplied: true,
       },
       extraProp: {
         vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,

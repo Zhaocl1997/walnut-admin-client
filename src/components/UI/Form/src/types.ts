@@ -9,8 +9,10 @@ import type {
   TreeSelectProps,
   FormItemRule,
 } from 'naive-ui'
+import type { RuleType } from 'node_modules/.pnpm/async-validator@4.0.7/node_modules/async-validator/dist-types/interface'
 
 import type { WTransitionProps } from '/@/components/Extra/Transition'
+import type { WAreaCascaderProps } from '/@/components/Advanced/services/AreaCascader'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import type { WButtonProps } from '../../Button'
@@ -28,7 +30,11 @@ import type { WTree } from '../../Tree'
 
 import type { WFormPropType } from './props'
 import type { TinymceEditorProps } from '/@/components/Vendor/tinymce'
-import { WDescriptionsItem } from '../../Descriptions'
+import type {
+  WFormItemDividerProps,
+  WFormItemQueryProps,
+} from './components/Extend/props'
+import type { WDescriptionsItem } from '../../Descriptions'
 
 export const BUILTIN_FORM_TYPE = [
   'Button',
@@ -112,36 +118,14 @@ export declare namespace WForm {
     }
 
     interface ComponentPropPool<D = any> {
-      'Extend:Divider': {
-        title?: string
-        helpMessage?: string | boolean
-        foldable?: boolean
-        startIndex?: number
-        endIndex?: number
-      } & Pick<DividerProps, 'titlePlacement' | 'dashed'> &
-        Pick<H3Props, 'prefix' | 'type'>
-
-      'Extend:Query': {
-        countToFold?: number
-        foldable?: boolean
-        defaultFold?: boolean
-      }
-
-      'Extend:IconPicker': {}
-      'Extend:TransitionSelect': {}
-      'Extend:RoleSelect': {
-        multiple?: boolean
-        valueSeparator?: string
-        valueType?: 'string' | 'number'
-      }
-
-      'Vendor:Tinymce': TinymceEditorProps
-
       'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
       }
       'Base:Slot': {}
+
       'Base:DynamicInput': DynamicInputProps
+      'Base:Slider': SliderProps
+      'Base:TreeSelect': TreeSelectProps
 
       'Base:Button': WButtonProps
       'Base:ButtonGroup': WButtonGroupProps
@@ -150,17 +134,25 @@ export declare namespace WForm {
       'Base:Select': WSelectProps
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
-      'Base:Switch': WSwitchProps & {
-        checkedText?: string
-        uncheckedText?: string
-      }
-
+      'Base:Switch': WSwitchProps
       'Base:TimePicker': WTimePickerProps
       'Base:DatePicker': WDatePickerProps
       'Base:DynamicTags': WDynamicTagsProps
-      'Base:Slider': SliderProps
-      'Base:TreeSelect': TreeSelectProps
       'Base:Tree': WTree.Props
+
+      'Extend:Divider': WFormItemDividerProps
+      'Extend:Query': WFormItemQueryProps
+
+      'Extend:IconPicker': {}
+      'Extend:TransitionSelect': {}
+      'Extend:RoleSelect': {
+        multiple?: boolean
+        valueSeparator?: string
+        valueType?: 'string' | 'number'
+      }
+      'Extend:AreaCascader': WAreaCascaderProps
+
+      'Vendor:Tinymce': TinymceEditorProps
     }
 
     interface DynamicSchemaItemProps<
@@ -192,9 +184,10 @@ export declare namespace WForm {
         rule?: FormItemRule | FormItemRule[] | undefined | boolean
 
         /**
-         * @description Used for render/slot typed item, whether apply the default base rules
+         * @description when using `base-rules`, you can provide a `ruleType` to specific the value type, default would ba a `any`
+         * Need to mention that array value must specific a `ruleType: 'array'` to make default rules work
          */
-        baseRuleApplied?: boolean
+        ruleType?: RuleType
 
         /**
          * @description normally is string or string array.
@@ -212,6 +205,12 @@ export declare namespace WForm {
          * @description Used for form related to a localed table
          */
         localeWithTable?: boolean
+
+        /**
+         * @description Used for render/slot typed item, whether apply the default base rules
+         * @deprecated
+         */
+        baseRuleApplied?: boolean
       }
 
       gridProp?: GridItemProps
@@ -249,6 +248,7 @@ export declare namespace WForm {
       D
     >
     type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
+    type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Extend:AreaCascader', D>
 
     type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
 
@@ -277,6 +277,7 @@ export declare namespace WForm {
       | IconPickerSchema<D>
       | TransitionSelectSchema<D>
       | RoleSelectSchema<D>
+      | AreaCacaderSchema<D>
       | TinymceSchema<D>
       | RenderSchema<D>
       | SlotSchema<D>
