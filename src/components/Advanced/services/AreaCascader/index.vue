@@ -23,20 +23,20 @@
     getAreaFeedbackByCodes,
   } from '/@/api/shared/area'
 
-  const props = withDefaults(
-    defineProps<{
-      value?: string | null | string[]
-      depth?: number
-      showPath?: boolean
-      multiple?: boolean
-    }>(),
-    {
-      value: null,
-      depth: 4,
-      showPath: true,
-      multiple: false,
-    }
-  )
+  // TODO 888
+  interface InternalProps {
+    value?: string | null | string[]
+    depth?: number
+    showPath?: boolean
+    multiple?: boolean
+  }
+
+  const props = withDefaults(defineProps<InternalProps>(), {
+    value: null,
+    depth: 4,
+    showPath: true,
+    multiple: false,
+  })
   const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
 
   const options = ref<TreeNodeItem<AppSharedArea>[]>([])

@@ -57,7 +57,7 @@
 </script>
 
 <script setup lang="ts">
-  import WAreaCascader from '/@/components/Advanced/services/AreaSelect'
+  import WAreaCascader from '/@/components/Advanced/services/AreaCascader'
   const values = ref({
     areaValue1: null,
     areaValue2: null,
