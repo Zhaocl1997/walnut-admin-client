@@ -172,6 +172,6 @@
   }
 
   const onClear = () => {
-    emit('update:value', '')
+    emit('update:value', null)
   }
 </script>
