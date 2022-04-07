@@ -4,8 +4,12 @@
     <div
       class="hstack space-x-4 absolute top-8 right-8 z-50 children:cursor-pointer"
     >
-      <WAppLocalePicker />
-      <WAppDarkMode />
+      <n-button text>
+        <WAppLocalePicker />
+      </n-button>
+      <n-button text>
+        <WAppDarkMode />
+      </n-button>
     </div>
 
     <div

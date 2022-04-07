@@ -31,7 +31,10 @@
     },
   ])
 
-  const getUserName = computed(() => upperFirst(user.value.userInfo?.username!))
+  // TODO
+  const getUserName = computed(() =>
+    upperFirst(user.value.userInfo?.username! || '')
+  )
 
   const onSelect = async (val: string) => {
     if (val === '1') {

@@ -2,7 +2,7 @@ import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
 
 export interface AppTabUtilListItem {
   icon: string
-  helpMessage: string | Fn<string>
+  helpMessage: ComputedRef<string>
   event: Fn
 }
 

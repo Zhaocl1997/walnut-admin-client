@@ -40,7 +40,7 @@
       </n-space>
 
       <WAppAuthorize value="system:user:create">
-        <div class="bg-red-800">test authorize</div>
+        <n-text class="bg-gray-200/50">test authorize</n-text>
       </WAppAuthorize>
     </n-space>
 

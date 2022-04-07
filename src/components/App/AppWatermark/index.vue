@@ -1,6 +1,5 @@
 <template>
   <n-watermark
-    v-if="settings.ForDevelopers.app.showWatermark"
     :content="settings.ForDevelopers.app.watermarkContent"
     cross
     fullscreen

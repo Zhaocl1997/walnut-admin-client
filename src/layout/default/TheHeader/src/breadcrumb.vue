@@ -1,10 +1,10 @@
 <script lang="tsx">
   import { findPath } from 'easy-fns-ts'
-  import { DropdownOption } from 'naive-ui'
+  import { DropdownOption, darkTheme } from 'naive-ui'
 
   export default defineComponent({
     setup() {
-      const { settings, menu } = useAppState()
+      const { settings, menu, app } = useAppState()
       const breadcrumb = settings.value.ForDevelopers.breadcrumb
       const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
@@ -76,15 +76,25 @@
       )
 
       return () => (
-        <n-breadcrumb separator={breadcrumb.separator}>
-          {getChildren.value!.map((item) => (
-            <n-breadcrumb-item>
-              {breadcrumb.showDropdown
-                ? renderDropdown(item)
-                : renderBase(item)}
-            </n-breadcrumb-item>
-          ))}
-        </n-breadcrumb>
+        <n-config-provider
+          theme={
+            (!app.value.isDark &&
+              settings.value.ForDevelopers.header.inverted) ||
+            app.value.isDark
+              ? darkTheme
+              : null
+          }
+        >
+          <n-breadcrumb separator={breadcrumb.separator}>
+            {getChildren.value!.map((item) => (
+              <n-breadcrumb-item>
+                {breadcrumb.showDropdown
+                  ? renderDropdown(item)
+                  : renderBase(item)}
+              </n-breadcrumb-item>
+            ))}
+          </n-breadcrumb>
+        </n-config-provider>
       )
     },
   })

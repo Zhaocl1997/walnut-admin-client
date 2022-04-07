@@ -43,7 +43,7 @@
       </n-layout-content>
 
       <TheFooter v-if="setting.app.showFooter && setting.app.fixFooter" />
-      <WAppWatermark />
+      <WAppWatermark v-if="setting.app.showWatermark" />
     </div>
   </n-layout>
 </template>

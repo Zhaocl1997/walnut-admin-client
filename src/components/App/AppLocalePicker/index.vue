@@ -13,8 +13,6 @@
   export default defineComponent({
     name: 'AppLocalePicker',
 
-    inheritAttrs: false,
-
     setup() {
       const { app } = useAppState()
 

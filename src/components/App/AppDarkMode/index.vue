@@ -13,8 +13,6 @@
   export default defineComponent({
     name: 'AppDarkMode',
 
-    inheritAttrs: false,
-
     setup() {
       const { t } = useAppI18n()
       const { app } = useAppState()

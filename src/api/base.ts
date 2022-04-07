@@ -2,8 +2,6 @@ import { isProd } from '/@/utils/constant/vue'
 
 export type BaseAPIType<T> = BaseAPI<T>
 
-const { user } = useAppState()
-
 export class BaseAPI<T> {
   private readonly baseAPI: string
 
@@ -25,7 +23,7 @@ export class BaseAPI<T> {
         data,
       },
       {
-        demonstrate: user.value.userInfo.username !== 'admin' && isProd(),
+        demonstrate: isProd(),
       }
     )
   }
@@ -43,7 +41,7 @@ export class BaseAPI<T> {
         data,
       },
       {
-        demonstrate: user.value.userInfo.username !== 'admin' && isProd(),
+        demonstrate: isProd(),
       }
     )
   }
@@ -54,7 +52,7 @@ export class BaseAPI<T> {
         url: `${this.baseAPI}/${id}`,
       },
       {
-        demonstrate: user.value.userInfo.username !== 'admin' && isProd(),
+        demonstrate: isProd(),
       }
     )
   }
@@ -65,7 +63,7 @@ export class BaseAPI<T> {
         url: `${this.baseAPI}/deleteMany/${id}`,
       },
       {
-        demonstrate: user.value.userInfo.username !== 'admin' && isProd(),
+        demonstrate: isProd(),
       }
     )
   }

@@ -45,7 +45,7 @@
     "collapsedWidth": 64,
     "accordion": false,
     "collapsedIconSize": 24,
-    "iconSize": 26,
+    "iconSize": 24,
     "indent": 16,
     "inverted": true
   },
@@ -57,7 +57,7 @@
     "showDarkMode": true,
     "showLock": true,
     "showSearch": true,
-    "inverted": false
+    "inverted": true
   },
   "tab": {
     "height": 32,

@@ -1,13 +1,17 @@
 <template>
   <div v-for="item in lists" :key="item.icon" class="flex items-center">
-    <w-a-icon
-      @click="item.event"
-      height="20"
-      class="cursor-pointer my-auto mr-1"
-      :icon="item.icon"
-      :help-message="item.helpMessage"
-      placement="bottom"
-    ></w-a-icon>
+    <n-tooltip trigger="hover" placement="bottom">
+      <template #>{{ item.helpMessage }}</template>
+
+      <template #trigger>
+        <w-icon
+          @click="item.event"
+          height="20"
+          class="cursor-pointer my-auto mr-1"
+          :icon="item.icon"
+        ></w-icon
+      ></template>
+    </n-tooltip>
   </div>
 </template>
 
