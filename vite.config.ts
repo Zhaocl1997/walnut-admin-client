@@ -76,6 +76,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       hmr: {
         overlay: false,
       },
+
+      https: true,
     },
 
     build: {

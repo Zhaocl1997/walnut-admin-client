@@ -10,6 +10,7 @@ export const createViteProxy = (mode: string, env: ImportMetaEnv) => {
     changeOrigin: true,
     rewrite: (path: string) =>
       path.replace(new RegExp(`^${prefix}`), env.VITE_API_PREFIX),
+    secure: false,
   } as HttpProxy.ServerOptions
 
   return ret

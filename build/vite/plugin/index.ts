@@ -2,6 +2,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
 import Terminal from 'vite-plugin-terminal'
+import mkcert from 'vite-plugin-mkcert'
 
 import { createComponentPlugin } from './component'
 import { createVisualizerPlugin } from './visualizer'
@@ -22,6 +23,8 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   // I'm pretty sure that this package will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
   if (dev) vitePlugins.push(Terminal() as unknown as VitePlugin)
+
+  if (dev) vitePlugins.push(mkcert({ source: 'coding' }))
 
   // https://github.com/antfu/unplugin-auto-import
   vitePlugins.push(creatAutoImportPlugin())
