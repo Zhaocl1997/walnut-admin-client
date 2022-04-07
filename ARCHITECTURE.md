@@ -28,7 +28,7 @@
 |   |   +---Arrow
 |   |   +---Flipper
 |   |   +---IconPicker
-|   |   +---Json
+|   |   +---JSON
 |   |   +---Message
 |   |   +---Screenfull
 |   |   \---Title

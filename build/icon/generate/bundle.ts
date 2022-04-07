@@ -106,7 +106,7 @@ const sources: BundleScriptConfig = {
 const component = '@iconify/vue'
 
 // Set to true to use require() instead of import
-const commonJS = false
+const CommonJS = false
 
 // File to save bundle to
 const target = bundlePath
@@ -115,7 +115,7 @@ const target = bundlePath
  * Do stuff!
  */
 ;(async function () {
-  let bundle = commonJS
+  let bundle = CommonJS
     ? "const { addCollection } = require('" + component + "');\n\n"
     : "import { addCollection } from '" + component + "';\n\n"
 

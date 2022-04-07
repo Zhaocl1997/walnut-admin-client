@@ -19,7 +19,7 @@
       <n-list-item v-show="!currentMouseTab?.meta.url">
         <n-button @click="onOpenFile">
           Open vue file related to this tab in
-          <span class="text-red-500">&ensp;VSCode</span>
+          <span class="text-red-500">&ensp;VS Code</span>
         </n-button>
       </n-list-item>
     </n-list>

@@ -1,7 +1,7 @@
 /**
  * https://github.com/YousefED/typescript-json-schema
  * this interface is also used to generate json schema
- * if change this file, please in terminal run `npm run gen:schema` to generate `settings.json` VSCode support
+ * if change this file, please in terminal run `npm run gen:schema` to generate `settings.json` VS Code support
  * all types below must be explicit import, no auto-import or global usage
  */
 import { ValueOfTransitionNameConst } from '../src/const/transition'

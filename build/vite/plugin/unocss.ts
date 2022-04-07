@@ -1,9 +1,9 @@
-import Unocss from 'unocss/vite'
+import UnoCSS from 'unocss/vite'
 import { presetUno, presetAttributify, presetIcons } from 'unocss'
 
 // dynamic usage is still problematic
 export const createUnoCSSPlugin = (): VitePlugin[] => {
-  return Unocss({
+  return UnoCSS({
     shortcuts: {
       hstack: 'flex flex-row flex-nowrap',
       vstack: 'flex flex-col flex-nowrap',

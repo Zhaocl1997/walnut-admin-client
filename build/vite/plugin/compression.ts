@@ -4,5 +4,6 @@ export const createCompressionPlugin = (): VitePlugin => {
   return compressPlugin({
     ext: '.br',
     algorithm: 'brotliCompress',
+    // deleteOriginFile: true
   })
 }

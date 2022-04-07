@@ -1,5 +1,5 @@
 <template>
-  <w-demo-card title="Echarts Demo">
+  <w-demo-card title="ECharts Demo">
     <n-list>
       <n-list-item>
         <w-title prefix="bar">Line</w-title>

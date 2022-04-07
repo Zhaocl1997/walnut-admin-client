@@ -22,9 +22,9 @@
 
 ## 序言
 
-Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重点是前台，后台和数据库仅供学习！现仍在开发阶段中。技术栈使用了 `Vue3`, `NaiveUI`, `Vite2`, `Typescript`, `Vueuse`, `pnpm`, `unocss` 等, 用于学习和交流！
+Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重点是前台，后台和数据库仅供学习！现仍在开发阶段中。技术栈使用了 `Vue3`, `NaiveUI`, `Vite2`, `TypeScript`, `VueUse`, `pnpm`, `unocss` 等, 用于学习和交流！
 
-项目跑起来需要[后台][walnut-admin-server]，是 [NestJs][nestjs-url] 的一个最基本的框架。数据库用的 mongo。更多信息可查看文档。
+项目跑起来需要[后台][walnut-admin-server]，是 [NestJS][nestjs-url] 的一个最基本的框架。数据库用的 mongo。更多信息可查看文档。
 
 
 ### 接下来的计划  
