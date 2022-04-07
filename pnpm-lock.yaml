@@ -69,6 +69,7 @@ specifiers:
   vite-plugin-banner: ^0.2.0
   vite-plugin-compression: ^0.5.1
   vite-plugin-html: ^3.2.0
+  vite-plugin-inspect: ^0.4.3
   vite-plugin-mkcert: ^1.6.0
   vite-plugin-terminal: ^1.0.1
   vue: ^3.2.31
@@ -150,6 +151,7 @@ devDependencies:
   vite-plugin-banner: 0.2.0
   vite-plugin-compression: 0.5.1_vite@2.9.1
   vite-plugin-html: 3.2.0_vite@2.9.1
+  vite-plugin-inspect: 0.4.3_vite@2.9.1
   vite-plugin-mkcert: 1.6.0
   vite-plugin-terminal: 1.0.1_rollup@2.70.1+vite@2.9.1
   vue-tsc: 0.33.9_typescript@4.6.3
@@ -7135,6 +7137,10 @@ packages:
     resolution: {integrity: sha512-YTnDRlE1cIofRqOFN8ioAbz9qenDvkgVMSn0cnxvIDjM9sfEOMKB0ybMr+otSlCXMfQ/X35haYRoI7Nua82RrA==}
     dev: true
 
+  /ufo/0.7.11:
+    resolution: {integrity: sha512-IT3q0lPvtkqQ8toHQN/BkOi4VIqoqheqM1FnkNWT9y0G8B3xJhwnoKBu5OHx8zHDOvveQzfKuFowJ0VSARiIDg==}
+    dev: true
+
   /uglify-js/3.15.2:
     resolution: {integrity: sha512-peeoTk3hSwYdoc9nrdiEJk+gx1ALCtTjdYuKSXMTDqq7n1W7dHPqWDdSi+BPL0ni2YMeHD7hKUSdbj3TZauY2A==}
     engines: {node: '>=0.8.0'}
@@ -7414,6 +7420,22 @@ packages:
       vite: 2.9.1_sass@1.49.11
     transitivePeerDependencies:
       - acorn
+    dev: true
+
+  /vite-plugin-inspect/0.4.3_vite@2.9.1:
+    resolution: {integrity: sha512-lj3oWnReRUwMHB7k8ZD8o6E27/OSn+8ua+tOftxuS39aM6Z9MG7m5r1CMlxMwEwdTM/wnQr0aH22Y2IX3e+++w==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      vite: ^2.0.0
+    dependencies:
+      '@rollup/pluginutils': 4.2.0
+      debug: 4.3.4
+      kolorist: 1.5.1
+      sirv: 2.0.2
+      ufo: 0.7.11
+      vite: 2.9.1_sass@1.49.11
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /vite-plugin-mkcert/1.6.0:

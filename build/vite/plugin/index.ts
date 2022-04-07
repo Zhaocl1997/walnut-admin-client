@@ -3,6 +3,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
 import Terminal from 'vite-plugin-terminal'
 import mkcert from 'vite-plugin-mkcert'
+import Inspect from 'vite-plugin-inspect'
 
 import { createComponentPlugin } from './component'
 import { createVisualizerPlugin } from './visualizer'
@@ -22,9 +23,13 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   // https://github.com/patak-dev/vite-plugin-terminal
   // I'm pretty sure that this package will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
-  if (dev) vitePlugins.push(Terminal() as unknown as VitePlugin)
+  if (dev) vitePlugins.push(Terminal({ output: ['console', 'terminal'] }))
 
+  // https://github.com/liuweiGL/vite-plugin-mkcert
   if (dev) vitePlugins.push(mkcert({ source: 'coding' }))
+
+  // https://github.com/antfu/vite-plugin-inspect
+  if (dev) vitePlugins.push(Inspect())
 
   // https://github.com/antfu/unplugin-auto-import
   vitePlugins.push(creatAutoImportPlugin())
