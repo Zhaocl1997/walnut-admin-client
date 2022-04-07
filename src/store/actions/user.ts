@@ -4,6 +4,7 @@ import { getUserInfo, refreshToken, signin, signout } from '/@/api/auth'
 import { AppAuthName } from '/@/router/constant'
 import { clearTabs } from '/@/core/tab'
 import { AppCoreFn1 } from '/@/core'
+import { menuActionReset } from './menu'
 
 const { menu, token, refresh_token, user, auth } = useAppState()
 
@@ -46,6 +47,9 @@ export const userActionSignOut = async (callApi = true) => {
 
   // clear userinfo
   user.value.userInfo = {}
+
+  // clear menu
+  menuActionReset()
 
   // push
   await useRouterPush({ name: AppAuthName })
