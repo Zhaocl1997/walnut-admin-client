@@ -15,6 +15,12 @@ declare global {
     $notification: NotificationApiInjection
     $dialog: DialogApiInjection
 
+    // echarts
     echarts: ECharts
+
+    // baidu map
+    BMap: any
+    HOST_TYPE: string
+    BMAP_STATUS_SUCCESS: number
   }
 }

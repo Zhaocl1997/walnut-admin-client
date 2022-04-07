@@ -17,6 +17,7 @@
         <n-anchor-link title="Select" href="#Select" />
         <n-anchor-link title="Tree" href="#Tree" />
         <n-anchor-link title="Service" href="#Service" />
+        <n-anchor-link title="Location" href="#Location" />
       </n-anchor>
     </div>
 
@@ -27,6 +28,7 @@
       <DemoSelect id="Select" />
       <DemoTree id="Tree" class="col-span-2" />
       <DemoService id="Service" />
+      <DemoLocation id="Location" />
     </div>
   </div>
 </template>
@@ -38,6 +40,11 @@
   import DemoSelect from './Select.vue'
   import DemoTree from './Tree.vue'
   import DemoService from './Service.vue'
+  import DemoLocation from './LocationPicker.vue'
+
+  const res = useGeolocation()
+
+  console.log(res)
 </script>
 
 <script lang="ts">
