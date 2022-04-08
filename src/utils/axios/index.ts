@@ -15,7 +15,7 @@ const axiosConfig: AxiosRequestConfigExtend = {
     : import.meta.env.VITE_API_TARGET + import.meta.env.VITE_API_PREFIX,
 
   // time out, default is 10s
-  timeout: Number(import.meta.env.VITE_AXIOS_TIMEOUT),
+  timeout: Number(import.meta.env.VITE_AXIOS_TIMEOUT_SECOND) * 1000,
 
   transform,
 
@@ -40,12 +40,12 @@ const axiosConfig: AxiosRequestConfigExtend = {
     transformStringBoolean: true,
 
     // custom each api cached time
-    cachedMiliseconds: Number(import.meta.env.VITE_AXIOS_CACHE_MAXAGE),
+    cachedSeconds: Number(import.meta.env.VITE_AXIOS_CACHE_SECOND) * 1000,
   },
 
   // adapter for cache, default is 5s
   adapter: cacheAdapterEnhancer(axios.defaults.adapter!, {
-    maxAge: Number(import.meta.env.VITE_AXIOS_CACHE_MAXAGE),
+    cachedSeconds: Number(import.meta.env.VITE_AXIOS_CACHE_SECOND) * 1000,
   }),
 }
 

@@ -33,6 +33,10 @@ export type EncryptionPadding =
   | 'NoPadding'
 
 export interface EncryptionOptions {
+  /**
+   * @description has to be a string with length of multiple of 4
+   * @link https://juejin.cn/post/6844904198677463053
+   */
   key: string
   iv: string
   method: EncryptionMethod
@@ -49,6 +53,10 @@ export class Encryption {
 
   constructor(opt: EncryptionOptions) {
     const { key, iv, method = 'AES', mode = 'CBC', padding = 'Pkcs7' } = opt
+
+    if (key.length % 4 !== 0) {
+      throw new Error('key length must be multiple of 4')
+    }
 
     this.key = CryptoJS.enc.Hex.parse(key)
     this.iv = CryptoJS.enc.Hex.parse(iv)

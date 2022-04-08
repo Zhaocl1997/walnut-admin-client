@@ -23,7 +23,7 @@ export const getDictByType = (type: string) => {
     },
     {
       cache: true,
-      cachedMiliseconds: 600 * 1000,
+      cachedSeconds: 600,
     }
   )
 }

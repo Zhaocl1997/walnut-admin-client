@@ -20,12 +20,12 @@ export const cacheAdapterEnhancer = (
   adapter: AxiosAdapter,
   options?: AxiosAdapterOptions
 ) => {
-  const { maxAge } = options!
+  const { cachedSeconds: defaultCachedSeconds } = options!
 
   return (config: AxiosRequestConfigExtend) => {
     const { method, customConfig } = config
 
-    const { cache, cachedMiliseconds } = customConfig!
+    const { cache, cachedSeconds } = customConfig!
 
     // designed by only get request will be cached
     if (method === 'get' && cache) {
@@ -43,7 +43,11 @@ export const cacheAdapterEnhancer = (
           }
         })()
 
-        httpMempry.set(requestKey, responsePromise, cachedMiliseconds ?? maxAge)
+        httpMempry.set(
+          requestKey,
+          responsePromise,
+          cachedSeconds ?? defaultCachedSeconds
+        )
         return responsePromise
       }
 

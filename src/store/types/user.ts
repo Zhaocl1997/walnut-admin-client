@@ -1,7 +1,7 @@
 export interface SigninPayloadType {
   username: string
   password: string
-  rememberMe: boolean
+  rememberMe?: boolean
 }
 
 export interface UserInfoType {

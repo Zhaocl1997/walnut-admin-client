@@ -5,6 +5,7 @@ import { AppAuthName } from '/@/router/constant'
 import { clearTabs } from '/@/core/tab'
 import { AppCoreFn1 } from '/@/core'
 import { menuActionReset } from './menu'
+import { AppAxiosEncryption } from '/@/utils/crypto'
 
 const { menu, token, refresh_token, user, auth } = useAppState()
 
@@ -12,7 +13,12 @@ const { menu, token, refresh_token, user, auth } = useAppState()
  * @description Action - User - Signin
  */
 export const userActionSignin = async (payload: SigninPayloadType) => {
-  const res = await signin(payload)
+  const params = {
+    username: payload.username,
+    password: AppAxiosEncryption.encrypt(payload.password)!,
+  }
+
+  const res = await signin(params)
 
   // set token
   token.value = res.access_token

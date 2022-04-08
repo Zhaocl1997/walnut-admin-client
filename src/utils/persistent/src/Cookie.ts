@@ -1,5 +1,5 @@
 import { isString } from 'easy-fns-ts'
-import { AppEncryption } from '/@/utils/crypto'
+import { AppPersistEncryption } from '/@/utils/crypto'
 
 export interface CookieOptions {
   prefixKey: string
@@ -22,11 +22,13 @@ export class Cookie {
   set(
     key: string,
     value: any,
-    expire = import.meta.env.VITE_APP_CACHE_MAXAGE,
+    expire = import.meta.env.VITE_APP_PERSIST_SECOND * 1000,
     path = '/'
   ) {
     value = isString(value) ? value : JSON.stringify(value)
-    const finalValue = this.encrypt ? AppEncryption.encrypt(value) : value
+    const finalValue = this.encrypt
+      ? AppPersistEncryption.encrypt(value)
+      : value
     const exp = new Date()
     exp.setTime(exp.getTime() + expire)
     document.cookie = `${this.getKey(key)}=${escape(
@@ -44,7 +46,7 @@ export class Cookie {
         const val = arr2[1]
 
         if (this.encrypt && val) {
-          result = AppEncryption.decrypt(unescape(val))
+          result = AppPersistEncryption.decrypt(unescape(val))
           try {
             return JSON.parse(result)
           } catch (e) {

@@ -3,9 +3,11 @@
     <n-space size="small">
       <n-button @click="onAddNormal">Add Normal Request</n-button>
 
-      <n-button @click="onAddCached" type="info"
-        >Add Cached Request (5s)</n-button
-      >
+      <n-button @click="onAddCached" type="info">
+        Add Cached Request (5s)
+      </n-button>
+
+      <n-button @click="onReset">Reset</n-button>
     </n-space>
 
     <div class="m-4">
@@ -27,7 +29,7 @@
       const text = ref()
       const init = async () => {
         const res = await HelloAPI(props.cache)
-        text.value = res.text
+        text.value = res
       }
 
       init()
@@ -48,6 +50,10 @@
   const onAddNormal = () => {
     cache.value = false
     count.value += 1
+  }
+
+  const onReset = () => {
+    count.value = 10
   }
 </script>
 

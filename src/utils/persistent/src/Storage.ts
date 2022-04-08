@@ -1,6 +1,6 @@
 import { storagePrefix } from '../../constant/prefix'
 import { isProd } from '../../constant/vue'
-import { AppEncryption } from '/@/utils/crypto'
+import { AppPersistEncryption } from '/@/utils/crypto'
 
 // app storage
 // default cache 7 days
@@ -8,7 +8,7 @@ import { AppEncryption } from '/@/utils/crypto'
 export const useAppStorage = <T>(
   key: string,
   initialValue: MaybeRef<T>,
-  expire: number = import.meta.env.VITE_APP_CACHE_MAXAGE,
+  expire: number = import.meta.env.VITE_APP_PERSIST_SECOND * 1000,
   storage = localStorage
 ) => {
   const wholeKey = `${storagePrefix}__${key.toLocaleUpperCase()}__`
@@ -20,7 +20,7 @@ export const useAppStorage = <T>(
         if (!val) return null
 
         const decryptValue = JSON.parse(
-          encrypt ? AppEncryption.decrypt(val) : val
+          encrypt ? AppPersistEncryption.decrypt(val) : val
         )
 
         if (!decryptValue) {
@@ -45,7 +45,7 @@ export const useAppStorage = <T>(
         const target = storage.getItem(wholeKey)
 
         if (target) {
-          const d = encrypt ? AppEncryption.decrypt(target) : target
+          const d = encrypt ? AppPersistEncryption.decrypt(target) : target
           ex = d.e
         }
 
@@ -54,7 +54,7 @@ export const useAppStorage = <T>(
           e: ex ?? new Date().getTime() + expire,
         })
 
-        return encrypt ? AppEncryption.encrypt(str)! : str
+        return encrypt ? AppPersistEncryption.encrypt(str)! : str
       },
     },
   })

@@ -60,9 +60,8 @@ export interface AxiosCustomConfig {
 
   /**
    * @description cached time, default is 5 seconds
-   * @default 5000
    */
-  cachedMiliseconds?: number
+  cachedSeconds?: number
 
   /**
    * @description filter null value in data
@@ -92,7 +91,7 @@ export interface AxiosAdapterOptions {
   /**
    * @description cache max age.
    */
-  maxAge?: number
+  cachedSeconds?: number
 }
 
 /**

@@ -1,11 +1,17 @@
-import { Encryption, EncryptionOptions } from './Crypto'
+import { Encryption } from './Crypto'
 
-const cryptOptions: EncryptionOptions = {
-  key: import.meta.env.VITE_CRYRTO_KEY,
-  iv: import.meta.env.VITE_CRYRTO_IV,
+export const AppPersistEncryption = new Encryption({
+  key: import.meta.env.VITE_PERSIST_CRYPTO_KEY,
+  iv: import.meta.env.VITE_PERSIST_CRYPTO_IV,
   method: 'AES',
   mode: 'CBC',
   padding: 'Pkcs7',
-}
+})
 
-export const AppEncryption = new Encryption(cryptOptions)
+export const AppAxiosEncryption = new Encryption({
+  key: import.meta.env.VITE_AXIOS_CRYPTO_KEY,
+  iv: import.meta.env.VITE_AXIOS_CRYPTO_IV,
+  method: 'AES',
+  mode: 'CBC',
+  padding: 'Pkcs7',
+})
