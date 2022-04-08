@@ -22,5 +22,6 @@ declare global {
     BMap: any
     HOST_TYPE: string
     BMAP_STATUS_SUCCESS: number
+    BMAP_ANCHOR_BOTTOM_RIGHT: number
   }
 }

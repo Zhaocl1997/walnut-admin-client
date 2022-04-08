@@ -1,11 +1,18 @@
 import type { SigninPayloadType } from '../types/user'
 
-import { getUserInfo, refreshToken, signin, signout } from '/@/api/auth'
+import {
+  getSecretKeys,
+  getUserInfo,
+  refreshToken,
+  signin,
+  signout,
+} from '/@/api/auth'
 import { AppAuthName } from '/@/router/constant'
 import { clearTabs } from '/@/core/tab'
 import { AppCoreFn1 } from '/@/core'
 import { menuActionReset } from './menu'
 import { AppAxiosEncryption } from '/@/utils/crypto'
+import { useAppSecretKeys } from '../keys'
 
 const { menu, token, refresh_token, user, auth } = useAppState()
 
@@ -84,4 +91,17 @@ export const userActionRefreshToken = async () => {
   token.value = res.access_token
 
   return res.access_token
+}
+
+/**
+ * @description Action - User - get secret keys like baidu ak or ali keys
+ */
+export const userActionGetSecretKeys = async () => {
+  const res = await getSecretKeys()
+
+  const keys = JSON.parse(AppAxiosEncryption.decrypt(res))
+
+  const secretKeys = useAppSecretKeys()
+
+  secretKeys.value = keys
 }

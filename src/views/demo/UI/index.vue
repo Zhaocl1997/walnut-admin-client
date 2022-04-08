@@ -22,12 +22,12 @@
     </div>
 
     <div class="inline-grid grid-cols-2 gap-2 pr-42">
-      <DemoIcon id="Icon" />
+      <!-- <DemoIcon id="Icon" />
       <DemoButton id="Button" />
       <DemoInput id="Input" />
       <DemoSelect id="Select" />
       <DemoTree id="Tree" class="col-span-2" />
-      <DemoService id="Service" />
+      <DemoService id="Service" /> -->
       <DemoLocation id="Location" />
     </div>
   </div>
@@ -41,10 +41,6 @@
   import DemoTree from './Tree.vue'
   import DemoService from './Service.vue'
   import DemoLocation from './LocationPicker.vue'
-
-  const res = useGeolocation()
-
-  console.log(res)
 </script>
 
 <script lang="ts">

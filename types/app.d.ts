@@ -1,6 +1,10 @@
 import { RouteMeta } from 'vue-router'
 
 declare global {
+  interface AppSecretKeysInterface {
+    B?: string
+  }
+
   interface BaseAppModel {
     _id?: string
 

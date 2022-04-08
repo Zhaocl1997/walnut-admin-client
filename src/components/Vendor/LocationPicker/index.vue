@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts" setup>
+  // TODO 888
   interface InternalProps {
     value?: number[]
     height?: string
@@ -38,6 +39,8 @@
   })
 
   const emits = defineEmits(['update:value'])
+
+  const secretKeys = useAppSecretKeys()
 
   const baiduRef = ref<Nullable<HTMLDivElement>>(null)
   const baiduMap = ref<any>()
@@ -55,8 +58,7 @@
       return
     }
 
-    const url =
-      'https://api.map.baidu.com/getscript?v=2.0&ak=TlW2GCW1IdwWTZU4wdFVSF82LgirjVrx&services=&t=20220314154112'
+    const url = `https://api.map.baidu.com/getscript?v=2.0&ak=${secretKeys.value.B}&services=&t=20220314154112`
     window.HOST_TYPE = '2'
     useScriptTag(url, onInitMap)
   }
@@ -91,18 +93,18 @@
   const onInitMap = async () => {
     console.log('Init Baidu Map')
 
-    const wrap = unref(baiduRef)
-
-    if (!wrap) return
-
     await nextTick()
+
+    const wrap = unref(baiduRef)
 
     const BMap = window.BMap
     const map = new BMap.Map(wrap)
     baiduMap.value = map
     const point = new BMap.Point(116.331398, 39.897445)
     map.centerAndZoom(point, 15)
-    map.addControl(new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT }))
+    map.addControl(
+      new BMap.ScaleControl({ anchor: window.BMAP_ANCHOR_BOTTOM_RIGHT })
+    )
     map.addControl(new BMap.MapTypeControl())
     map.enableScrollWheelZoom(true)
     map.enableAutoResize(true)
@@ -111,15 +113,7 @@
     baiduMapAutoComplete.value = new BMap.Autocomplete({
       input: acId.value,
       location: map,
-      onSearchComplete(data: any) {
-        // baiduMapAutoComplete.value.hide()
-        // console.log(toRaw(data))
-        // baiduMapAutoComplete.value.show()
-        // if (!isHide) {
-        //   baiduMapAutoComplete.hide()
-        //   isHide = true
-        // }
-      },
+      onSearchComplete(data: any) {},
     })
 
     baiduMapAutoComplete.value.addEventListener('onconfirm', (e: any) => {
@@ -131,6 +125,7 @@
 
       myGeo.getPoint(filter.value, (point: any) => {
         emits('update:value', [point.lng, point.lat])
+        baiduMapAutoComplete.value.hide()
 
         map.centerAndZoom(point, 18)
         map.addOverlay(new BMap.Marker(point))
@@ -172,6 +167,7 @@
 
 <script lang="ts">
   import { genString } from 'easy-fns-ts'
+  import { useAppSecretKeys } from '/@/store/keys'
 
   export default defineComponent({
     name: 'LocationPicker',

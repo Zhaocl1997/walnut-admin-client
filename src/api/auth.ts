@@ -9,6 +9,7 @@ enum AuthEnum {
 
   PERMISSION = '/auth/permissions',
   PROFILE = '/auth/profile',
+  KEYS = '/auth/keys',
 }
 
 /**
@@ -64,5 +65,14 @@ export const getUserInfo = () => {
     username: string
   }>({
     url: AuthEnum.PROFILE,
+  })
+}
+
+/**
+ * @description get some sensitive keys from backend
+ */
+export const getSecretKeys = () => {
+  return AppAxios.get<string>({
+    url: AuthEnum.KEYS,
   })
 }
