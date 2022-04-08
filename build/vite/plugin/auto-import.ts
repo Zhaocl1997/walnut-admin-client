@@ -64,18 +64,6 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/utils/factory/asyncComponent': ['createAsyncComponent'],
         '/@/utils/window/open': ['openExternalLink'],
 
-        '/@/utils/log/terminal': [
-          'AppTerminalLog',
-          'AppTerminalInfo',
-          'AppTerminalWarn',
-          'AppTerminalError',
-        ],
-        '/@/utils/log/browser': [
-          'AppBrowserLog',
-          'AppBrowserInfo',
-          'AppBrowserWarn',
-          'AppBrowserError',
-        ],
         '/@/utils/log/combine': ['AppLog', 'AppInfo', 'AppWarn', 'AppError'],
 
         '/@/components/UI/Form': ['useForm'],

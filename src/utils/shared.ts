@@ -7,7 +7,7 @@ export const getDefaultSlotText = (slots: Slots): string => {
 
 export const isInSetup = () => {
   if (!getCurrentInstance()) {
-    AppBrowserError('Hook can only be used in `setup` function!')
+    AppError('Hook can only be used in `setup` function!')
   }
 }
 

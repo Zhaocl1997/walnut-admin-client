@@ -8,12 +8,11 @@ import '/@/store'
 
 const setupErrorhandler = (app: App) => {
   app.config.errorHandler = (error) => {
-    // AppBrowserError(error)
-    console.error(error)
+    AppError(error)
   }
 
   app.config.warnHandler = (warn) => {
-    AppBrowserWarn(warn)
+    AppWarn(warn)
   }
 }
 
@@ -31,5 +30,5 @@ export const setupApp = async (app: App) => {
     app.config.performance = true
   }
 
-  AppTerminalLog('App Initialized!')
+  AppInfo('App Initializing...')
 }
