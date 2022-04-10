@@ -102,9 +102,17 @@ export const useMenuFormSchema = (
     },
 
     {
-      type: 'Base:Switch',
+      type: 'Extend:Dict',
       formProp: {
         path: 'status',
+      },
+      componentProp: {
+        dictType: 'sys_shared_status',
+        dictRenderType: 'radio',
+        defaultValue: true,
+        renderComponentProps: {
+          button: true,
+        },
       },
       extraProp: {
         vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
