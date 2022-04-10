@@ -14,7 +14,7 @@
 
     emits: [],
 
-    setup(props: WSelectProps, { attrs, slots, emit, expose }) {
+    setup(props: WSelectProps, { attrs, slots, emit, expose }: any) {
       const renderOption = ({
         node,
         option,
@@ -23,14 +23,17 @@
         option: SelectOption
       }) => {
         return h(NTooltip, null, {
-          default: () => option.label,
+          default: () =>
+            attrs['render-label']
+              ? attrs['render-label'](option)
+              : option.label,
           trigger: () => node,
         })
       }
 
       return () => (
         <n-select
-          render-option={props.tooltip ? renderOption : null}
+          render-option={props.tooltip ? renderOption : attrs['render-option']}
         ></n-select>
       )
     },

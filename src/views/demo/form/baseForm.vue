@@ -54,6 +54,7 @@
         formDictSelect: null,
         formDictCheckbox: null,
         formDictRadio: null,
+        formLocale: null,
       })
 
       const schemas = computed(
@@ -348,6 +349,16 @@
               componentProp: {
                 dictType: 'gbt_sex',
                 dictRenderType: 'radio',
+              },
+            },
+            {
+              type: 'Extend:Locale',
+              formProp: {
+                label: 'Locale Select',
+                path: 'formLocale',
+              },
+              componentProp: {
+                prefix: 'dict:',
               },
             },
           ]

@@ -15,7 +15,6 @@
 
 <script lang="ts" setup>
   import { dictDataAPI } from '/@/api/system/dict'
-  import { getLocaleMessageStartsWith } from '/@/locales/utils'
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
@@ -26,8 +25,6 @@
   const onBack = () => {
     useRouterPush({ name: 'Dict', replace: true })
   }
-
-  const dictDataLabelOptions = getLocaleMessageStartsWith('dict:')
 
   const [
     register,
@@ -229,14 +226,12 @@
         },
 
         {
-          type: 'Base:Select',
+          type: 'Extend:Locale',
           formProp: {
             path: 'label',
           },
           componentProp: {
-            clearable: true,
-            filterable: true,
-            options: dictDataLabelOptions,
+            prefix: 'dict:',
           },
         },
 

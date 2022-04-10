@@ -185,7 +185,7 @@
   import { WithValueProps } from '/@/components/HOC/WithValue'
 
   export default defineComponent({
-    name: 'ApiSelect',
+    name: 'WApiSelect',
     inheritAttrs: false,
   })
 </script>

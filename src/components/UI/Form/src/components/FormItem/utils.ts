@@ -70,6 +70,13 @@ componentMap.set(
     () => import('../Extend/Dict.vue')
   )
 )
+componentMap.set(
+  'Locale',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../../../../../Advanced/services/LocaleSelect/index.ts')
+  )
+)
 
 BUILTIN_FORM_TYPE.map((key) => {
   componentMap.set(key, allComponents[key])

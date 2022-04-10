@@ -1,5 +1,5 @@
 <template>
-  <w-demo-card title="Some service UI component">
+  <w-demo-card title="Area Cascader with endpoint support">
     <w-JSON :value="values"></w-JSON>
 
     <n-divider />
@@ -50,7 +50,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ServiceDemo',
+    name: 'AreaCascaderDemo',
 
     defaultView: false,
   }
@@ -58,6 +58,7 @@
 
 <script setup lang="ts">
   import WAreaCascader from '/@/components/Advanced/services/AreaCascader'
+
   const values = ref({
     areaValue1: null,
     areaValue2: null,

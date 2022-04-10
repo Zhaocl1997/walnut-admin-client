@@ -30,6 +30,6 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'RoleSelect',
+    name: 'WRoleSelect',
   })
 </script>

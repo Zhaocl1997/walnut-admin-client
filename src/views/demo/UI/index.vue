@@ -18,10 +18,11 @@
         <n-anchor-link title="Checkbox" href="#Checkbox" />
         <n-anchor-link title="Dict" href="#Dict" />
         <n-anchor-link title="Tree" href="#Tree" />
-        <n-anchor-link title="Service" href="#Service" />
+        <n-anchor-link title="AreaCascader" href="#AreaCascader" />
         <n-anchor-link title="Location" href="#Location" />
         <n-anchor-link title="Radio" href="#Radio" />
         <n-anchor-link title="DynamicTags" href="#DynamicTags" />
+        <n-anchor-link title="LocaleSelect" href="#LocaleSelect" />
       </n-anchor>
     </div>
 
@@ -37,10 +38,11 @@
 
       <div class="children:my-2">
         <DemoTree id="Tree" />
-        <DemoService id="Service" />
+        <DemoAreaCascader id="AreaCascader" />
         <DemoLocation id="Location" />
         <DemoRadio id="Radio" />
         <DemoDynamicTags id="DynamicTags" />
+        <DemoLocaleSelect id="LocaleSelect" />
       </div>
     </div>
   </div>
@@ -55,7 +57,8 @@
   import DemoCheckbox from './Checkbox.vue'
   import DemoDynamicTags from './DynamicTags.vue'
   import DemoTree from './Tree.vue'
-  import DemoService from './Service.vue'
+  import DemoAreaCascader from './AreaCascader.vue'
+  import DemoLocaleSelect from './LocaleSelect.vue'
   import DemoLocation from './LocationPicker.vue'
   import DemoDict from './Dict.vue'
 </script>

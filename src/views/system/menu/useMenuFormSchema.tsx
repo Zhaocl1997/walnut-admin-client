@@ -1,9 +1,6 @@
 import type { WForm } from '/@/components/UI/Form'
-
 import { findPath } from 'easy-fns-ts'
-
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
-import { getLocaleMessageStartsWith } from '/@/locales/utils'
 
 export const useMenuFormSchema = (
   actionType: Ref<ActionType>,
@@ -12,10 +9,6 @@ export const useMenuFormSchema = (
 ): DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]> => {
   // get view options and name options
   const { viewOptions, nameOptions } = getViewsOptions()
-
-  // get title list from locale message
-  // key start with `sys:menu` are all menu title
-  const getTitleList = getLocaleMessageStartsWith('sys:menu:')
 
   // get node item from tree data
   const getCurrentNode = computed(
@@ -220,15 +213,14 @@ export const useMenuFormSchema = (
     },
 
     {
-      type: 'Base:Select',
+      type: 'Extend:Locale',
       formProp: {
         path: 'title',
         labelHelpMessage: true,
       },
       componentProp: {
-        clearable: true,
-        filterable: true,
-        options: getTitleList.value,
+        // key start with `sys:menu:` are all menu title
+        prefix: 'sys:menu:',
       },
       extraProp: {
         vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,

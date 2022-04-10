@@ -3,8 +3,6 @@ import type {
   FormItemProps,
   FormInst,
   SliderProps,
-  DividerProps,
-  H3Props,
   DynamicInputProps,
   TreeSelectProps,
   FormItemRule,
@@ -13,6 +11,7 @@ import type { RuleType } from 'node_modules/.pnpm/async-validator@4.0.7/node_mod
 
 import type { WTransitionProps } from '/@/components/Extra/Transition'
 import type { WAreaCascaderProps } from '/@/components/Advanced/services/AreaCascader'
+import type { WLocaleSelectProps } from '/@/components/Advanced/services/LocaleSelect'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import type { WButtonProps } from '../../Button'
@@ -153,6 +152,7 @@ export declare namespace WForm {
       }
       'Extend:AreaCascader': WAreaCascaderProps
       'Extend:Dict': WFormItemDictProps
+      'Extend:Locale': WLocaleSelectProps
 
       'Vendor:Tinymce': TinymceEditorProps
     }
@@ -252,6 +252,7 @@ export declare namespace WForm {
     >
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
     type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
+    type LocaleSchema<D> = DynamicSchemaItemProps<'Extend:Locale', D>
     type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
     type TransitionSelectSchema<D> = DynamicSchemaItemProps<
       'Extend:TransitionSelect',
@@ -285,6 +286,7 @@ export declare namespace WForm {
       | DividerSchema<D>
       | QuerySchema<D>
       | DictSchema<D>
+      | LocaleSchema<D>
       | IconPickerSchema<D>
       | TransitionSelectSchema<D>
       | RoleSelectSchema<D>
