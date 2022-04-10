@@ -125,6 +125,7 @@
               value: 'bar',
             },
           ],
+          multiple: true,
         },
         extraProp: {
           vShow: ({ formData }) => !!formData.title,

@@ -5,4 +5,7 @@ import { props } from './props'
 
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 
-export interface WSelectProps extends SelectProps, ExtendProps, WithValueProp {}
+export interface WSelectProps
+  extends SelectProps,
+    ExtendProps,
+    Omit<WithValueProp, 'value' | 'multiple'> {}

@@ -5,4 +5,4 @@ export const props = {
     type: Array as PropType<CheckboxProps[]>,
     default: () => [],
   },
-}
+} as const

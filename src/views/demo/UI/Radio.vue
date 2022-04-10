@@ -1,70 +1,61 @@
 <template>
   <w-demo-card title="Radio">
-    <!-- <w-title show-left>Base 【{{ radio1 }}】</w-title>
-    <w-radio v-model="radio1" :options="options"></w-radio>
+    <W-JSON :value="state" height="300px"></W-JSON>
 
-    <br />
-    <br />
+    <n-list>
+      <n-list-item>
+        <w-title
+          prefix="bar"
+          help-message="string/number will all feedback correctly"
+        >
+          Basic usage
+        </w-title>
 
-    <w-title show-left>Button Styled 【{{ radio2 }}】</w-title>
-    <w-radio v-model="radio2" :options="options" button></w-radio>
+        <n-space vertical>
+          <w-radio
+            v-model:value="state.radio1"
+            :options="options"
+            value-type="number"
+          ></w-radio>
 
-    <br />
-    <br />
+          <w-radio
+            v-model:value="state.radio2"
+            :options="options"
+            value-type="number"
+          ></w-radio>
 
-    <w-title show-left>Border Styled 【{{ radio3 }}】</w-title>
-    <w-radio v-model="radio3" :options="options" border></w-radio>
+          <w-radio
+            v-model:value="state.radio3"
+            :options="options"
+            value-type="number"
+          ></w-radio>
 
-    <br />
-    <br />
-
-    <w-title show-left>Feedback 【{{ radio4 }}】</w-title>
-    <w-radio v-model="radio4" :options="options"></w-radio> -->
+          <w-radio
+            v-model:value="state.radio4"
+            :options="options"
+            value-type="number"
+          ></w-radio>
+        </n-space>
+      </n-list-item>
+    </n-list>
   </w-demo-card>
 </template>
+
+<script lang="ts" setup>
+  import { options } from '../data'
+
+  const state = reactive({
+    radio1: '',
+    radio2: '1',
+    radio3: '4',
+    radio4: 4,
+  })
+</script>
 
 <script lang="ts">
   export default defineComponent({
     name: 'RadioDemo',
 
     defaultView: false,
-
-    setup() {
-      const state = reactive({
-        radio1: '',
-        radio2: '',
-        radio3: '',
-        radio4: '5',
-      })
-
-      const options = [
-        {
-          value: '1',
-          label: 'Beijing',
-        },
-        {
-          value: '2',
-          label: 'New York City',
-          disabled: true,
-        },
-        {
-          value: '3',
-          label: 'Paris',
-        },
-        {
-          value: '4',
-          label: 'Tokyo',
-        },
-        {
-          value: '5',
-          label: 'London',
-        },
-      ]
-
-      return {
-        ...toRefs(state),
-        options,
-      }
-    },
   })
 </script>

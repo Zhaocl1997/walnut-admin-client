@@ -161,6 +161,8 @@
               },
               componentProp: {
                 options: options,
+                valueType: 'number',
+                multiple: true,
               },
             },
             {

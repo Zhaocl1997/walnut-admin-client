@@ -54,7 +54,7 @@
       <n-list-item>
         <w-title
           prefix="bar"
-          help-message="provide a `value-separator` prop to usage select with a string value"
+          help-message="provide a `value-separator` prop to use select with a string value"
         >
           Multiple but value is string
         </w-title>

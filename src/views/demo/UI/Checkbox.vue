@@ -1,66 +1,97 @@
 <template>
   <w-demo-card title="Checkbox">
-    <!-- <w-title show-left>Base 【{{ checkbox1 }}】【{{ checkbox3 }}】 </w-title>
-    <w-checkbox v-model="checkbox1"> Some text (slot) </w-checkbox>
-    <w-checkbox v-model="checkbox3" text="Some text (prop)"> </w-checkbox>
+    <W-JSON :value="state" height="300px"></W-JSON>
 
-    <br />
-    <br />
+    <n-list>
+      <n-list-item>
+        <w-title
+          prefix="bar"
+          help-message="string/number will all feedback correctly"
+        >
+          Basic usage
+        </w-title>
 
-    <w-title show-left>Multiple 【{{ checkbox2 }}】 </w-title>
-    <w-checkbox v-model="checkbox2" :options="options" multiple />
+        <n-space vertical>
+          <w-checkbox
+            v-model:value="state.checkbox1"
+            :options="options"
+            value-type="number"
+            multiple
+          ></w-checkbox>
 
-    <br />
-    <br /> -->
+          <w-checkbox
+            v-model:value="state.checkbox2"
+            :options="options"
+            value-type="number"
+            multiple
+          ></w-checkbox>
+
+          <w-checkbox
+            v-model:value="state.checkbox3"
+            :options="options"
+            value-type="number"
+            multiple
+          ></w-checkbox>
+        </n-space>
+      </n-list-item>
+
+      <n-list-item>
+        <w-title
+          prefix="bar"
+          help-message="provide a `value-separator` prop to use checkbox with a string value"
+        >
+          String v-model:value
+        </w-title>
+
+        <n-space vertical>
+          <w-checkbox
+            v-model:value="state.checkbox4"
+            :options="options"
+            value-type="number"
+            value-separator=","
+            multiple
+          ></w-checkbox>
+
+          <w-checkbox
+            v-model:value="state.checkbox5"
+            :options="options"
+            value-type="number"
+            value-separator=","
+            multiple
+          ></w-checkbox>
+
+          <w-checkbox
+            v-model:value="state.checkbox6"
+            :options="options"
+            value-type="number"
+            value-separator=","
+            multiple
+          ></w-checkbox>
+        </n-space>
+      </n-list-item>
+    </n-list>
   </w-demo-card>
 </template>
+
+<script lang="ts" setup>
+  import { options } from '../data'
+
+  const state = reactive({
+    checkbox1: [],
+    checkbox2: [1, 4],
+    checkbox3: ['1', '4'],
+    checkbox4: '',
+    checkbox5: '1,4',
+    checkbox6: '1,3,4,5',
+    checkbox7: '',
+    checkbox8: '',
+  })
+</script>
 
 <script lang="ts">
   export default defineComponent({
     name: 'CheckboxDemo',
 
     defaultView: false,
-
-    setup() {
-      const state = reactive({
-        checkbox1: false,
-        checkbox2: ['1', '4'],
-        checkbox3: false,
-        checkbox4: '',
-        checkbox5: '',
-        checkbox6: '',
-        checkbox7: '',
-        checkbox8: '',
-      })
-
-      const options = [
-        {
-          value: '1',
-          label: 'Beijing',
-        },
-        {
-          value: '2',
-          label: 'New York City',
-          disabled: true,
-        },
-        {
-          value: '3',
-          label: 'Paris',
-        },
-        {
-          value: '4',
-          label: 'Tokyo',
-        },
-        {
-          value: '5',
-          label: 'London',
-        },
-      ]
-
-      return {
-        ...toRefs(state),
-        options,
-      }
-    },
   })
 </script>

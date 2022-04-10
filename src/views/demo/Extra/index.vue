@@ -6,7 +6,7 @@
         show-background
         affix
         listen-to="#demo-extra"
-        :trigger-top="24"
+        :trigger-top="120"
         :top="120"
         style="z-index: 50"
         type="block"
@@ -23,16 +23,21 @@
       </n-anchor>
     </div>
 
-    <div class="inline-grid grid-cols-2 gap-2 pr-42">
-      <DemoArrow id="Arrow" />
-      <DemoFlipper id="Flipper" />
-      <DemoIconPicker id="IconPicker" />
-      <DemoJSON id="JSON" />
-      <DemoMessage id="Message" />
-      <DemoScrollbar id="Scrollbar" />
-      <DemoTitle id="Title" />
-      <DemoTransition id="Transition" />
-      <DemoAxios id="Axios" />
+    <div class="grid grid-cols-2 gap-2 pr-42">
+      <div class="children:my-2">
+        <DemoArrow id="Arrow" />
+        <DemoFlipper id="Flipper" />
+        <DemoIconPicker id="IconPicker" />
+        <DemoJSON id="JSON" />
+      </div>
+
+      <div class="children:my-2">
+        <DemoMessage id="Message" />
+        <DemoScrollbar id="Scrollbar" />
+        <DemoTitle id="Title" />
+        <DemoTransition id="Transition" />
+        <DemoAxios id="Axios" />
+      </div>
     </div>
   </div>
 </template>
