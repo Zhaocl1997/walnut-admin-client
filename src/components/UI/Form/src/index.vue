@@ -32,9 +32,18 @@
     setup(props: WForm.Props, { attrs, slots, emit, expose }) {
       const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
 
+      const { t } = useAppI18n()
+
       const { setProps, getProps } = useProps<WForm.Props>(props)
 
       const { formSchemas } = useFormSchemas(getProps)
+
+      ;(async () => {
+        // cached for dict form item
+        await Promise.all(
+          formSchemas.value?.map((i) => useDict(i.componentProp?.dictType))
+        )
+      })()
 
       const { onEvent } = useFormEvents(getProps)
 
@@ -103,7 +112,7 @@
         return formSchemas.value.map((i) => ({
           type: i.descriptionProp?.type,
           dictType: i.descriptionProp?.dictType!,
-          label: getFormTranslated(getProps, i),
+          label: getFormTranslated(t, getProps, i),
           value: getProps.value.model![i.formProp?.path!],
           span:
             i.descriptionProp?.span ?? getProps.value.descriptionProps?.column,

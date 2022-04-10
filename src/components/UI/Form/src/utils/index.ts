@@ -22,23 +22,22 @@ export const getEPBooleanValue = (
  * @description generate form item label base on different config
  */
 export const getFormTranslated = (
+  t: Fn,
   props: ComputedRef<WForm.Props>,
   item: WForm.Schema.Item,
   helpMsg = false
 ) => {
-  const { t } = useAppI18n()
-
   const key = props.value.localeUniqueKey
 
-  const isLocale = key && getBoolean(item?.formProp?.locale)
+  const isLocale = key && getBoolean(item.formProp?.locale)
 
   const isLocaleWithTable =
-    getBoolean(item?.formProp?.localeWithTable) &&
+    getBoolean(item.formProp?.localeWithTable) &&
     getBoolean(props.value.localeWithTable)
 
   const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
 
-  const path = item?.formProp?.path
+  const path = item.formProp?.path
 
   return isLocale && path
     ? defaultAppLocaleMessageKeys.includes(path!)
@@ -46,7 +45,9 @@ export const getFormTranslated = (
       : isLocaleWithTable
       ? t(isHelpMsg(`table:${key}:${path}`) as string)
       : t(isHelpMsg(`form:${key}:${path}`))
-    : item?.formProp?.label
+    : helpMsg
+    ? item.formProp?.labelHelpMessage
+    : item.formProp?.label
 }
 
 /**
@@ -73,7 +74,7 @@ export const generateBaseRules = (
                   i?.type === 'Base:Input'
                     ? t('comp:base:input')
                     : t('comp:base:choose'),
-                label: getFormTranslated(props, i),
+                label: getFormTranslated(t, props, i),
               }),
             },
           ],

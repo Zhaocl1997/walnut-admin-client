@@ -21,6 +21,8 @@
     setup(props, { attrs, slots, emit, expose }) {
       const { item } = props
 
+      const { t } = useAppI18n()
+
       const { formProps } = useFormContext()
 
       const renderBase =
@@ -55,19 +57,38 @@
           vShow={getEPBooleanValue(item, formProps.value, 'vShow')}
           {...(typeof item?.formProp?.rule === 'boolean'
             ? easyOmit(item?.formProp, 'rule')
+            : typeof item?.formProp?.label === 'boolean'
+            ? easyOmit(item?.formProp, 'label')
             : item?.formProp)}
           class={formProps.value.formItemClass}
         >
           {{
             default: () => renderBase(),
-            label: () => (
-              <>
-                {getFormTranslated(formProps, item!)}{' '}
-                {item?.formProp?.labelHelpMessage && (
-                  <w-message msg={getFormTranslated(formProps, item!, true)} />
-                )}
-              </>
-            ),
+            label:
+              item?.type === 'Extend:Dict' && item?.formProp?.label === true
+                ? () => {
+                    const res = AppDictMap.get(item?.componentProp?.dictType!)
+                    return (
+                      <>
+                        {t(res?.name!)}{' '}
+                        {item?.formProp?.labelHelpMessage && (
+                          <w-message
+                            msg={getFormTranslated(t, formProps, item!, true)}
+                          />
+                        )}
+                      </>
+                    )
+                  }
+                : () => (
+                    <>
+                      {getFormTranslated(t, formProps, item!)}{' '}
+                      {item?.formProp?.labelHelpMessage && (
+                        <w-message
+                          msg={getFormTranslated(t, formProps, item!, true)}
+                        />
+                      )}
+                    </>
+                  ),
           }}
         </n-form-item>
       )

@@ -59,264 +59,264 @@
       const schemas = computed(
         (): WForm.Schema.Item<typeof formData.value>[] => {
           return [
-            {
-              type: 'Base:Button',
-              formProp: {
-                label: 'Button',
-              },
-              componentProp: {
-                textProp: 'Single Button',
-                onClick: () => {
-                  console.log('single button')
-                },
-              },
-            },
-            {
-              type: 'Base:ButtonGroup',
-              formProp: {
-                label: 'Button Group',
-              },
-              componentProp: {
-                groups: [
-                  {
-                    textProp: 'Validate',
-                    onClick: async () => {
-                      const valid = await formRef.value?.validate()
-                      if (valid) {
-                        useAppMessage().success('Success')
-                      } else {
-                        useAppMessage().error('Error')
-                      }
-                    },
-                  },
-                  {
-                    textProp: 'Clear Validation',
-                    onClick: () => {
-                      formRef.value?.restoreValidation()
-                    },
-                  },
-                  {
-                    textProp: 'Reset Form Data',
-                    onClick: () => {
-                      resetFormData()
-                    },
-                  },
-                ],
-              },
-              gridProp: {
-                span: 24,
-              },
-            },
+            // {
+            //   type: 'Base:Button',
+            //   formProp: {
+            //     label: 'Button',
+            //   },
+            //   componentProp: {
+            //     textProp: 'Single Button',
+            //     onClick: () => {
+            //       console.log('single button')
+            //     },
+            //   },
+            // },
+            // {
+            //   type: 'Base:ButtonGroup',
+            //   formProp: {
+            //     label: 'Button Group',
+            //   },
+            //   componentProp: {
+            //     groups: [
+            //       {
+            //         textProp: 'Validate',
+            //         onClick: async () => {
+            //           const valid = await formRef.value?.validate()
+            //           if (valid) {
+            //             useAppMessage().success('Success')
+            //           } else {
+            //             useAppMessage().error('Error')
+            //           }
+            //         },
+            //       },
+            //       {
+            //         textProp: 'Clear Validation',
+            //         onClick: () => {
+            //           formRef.value?.restoreValidation()
+            //         },
+            //       },
+            //       {
+            //         textProp: 'Reset Form Data',
+            //         onClick: () => {
+            //           resetFormData()
+            //         },
+            //       },
+            //     ],
+            //   },
+            //   gridProp: {
+            //     span: 24,
+            //   },
+            // },
 
-            {
-              type: 'Base:Input',
-              formProp: {
-                label: 'Input',
-                path: 'formInput',
-                labelHelpMessage: [
-                  '1. Set `whitespace` in `formProp` true, it will treat whitespace as invalid input.',
-                  '2. Set `trim` in `componentProp.valueModifiers` true, it will force to disable input whitespace.',
-                ],
-              },
-              componentProp: {
-                type: 'textarea',
-                showCount: true,
-                maxlength: 100,
-              },
-            },
-            {
-              type: 'Base:InputNumber',
-              formProp: {
-                label: 'InputNumber',
-                path: 'formInputNumber',
-              },
-              componentProp: {
-                min: 3,
-                max: 10,
-              },
-            },
-            {
-              type: 'Base:Select',
-              formProp: {
-                label: 'Select',
-                path: 'formSelect',
-              },
-              componentProp: {
-                options: options,
-                valueType: 'number',
-              },
-            },
-            {
-              type: 'Base:Radio',
-              formProp: {
-                label: 'Radio',
-                path: 'formRadio',
-              },
-              componentProp: {
-                options: options,
-              },
-            },
-            {
-              type: 'Base:Checkbox',
-              formProp: {
-                label: 'Checkbox',
-                path: 'formCheckbox',
-              },
-              componentProp: {
-                options: options,
-                valueType: 'number',
-                multiple: true,
-              },
-            },
-            {
-              type: 'Base:Switch',
-              formProp: {
-                label: 'Switch',
-                path: 'formSwitch',
-                first: true,
-              },
-              componentProp: {},
-            },
-            {
-              type: 'Base:TimePicker',
-              formProp: {
-                label: 'TimePicker',
-                path: 'formTimePicker',
-              },
-              componentProp: {
-                format: 'HH:mm:ss',
-              },
-            },
-            {
-              type: 'Base:DatePicker',
-              formProp: {
-                label: 'DatePicker',
-                path: 'formDatePicker',
-              },
-              componentProp: {
-                type: 'datetime',
-              },
-            },
-            {
-              type: 'Base:DynamicTags',
-              formProp: {
-                label: 'DynamicTags',
-                path: 'formDynamicTags',
-                ruleType: 'array',
-              },
-              componentProp: {
-                round: true,
-              },
-            },
-            {
-              type: 'Base:DynamicInput',
-              formProp: {
-                label: 'Dynamic Input',
-                path: 'formDynamicInput',
-                ruleType: 'array',
-              },
-              componentProp: {
-                preset: 'pair',
-                showSortButton: true,
-                min: 1,
-              },
-            },
-            {
-              type: 'Base:Slider',
-              formProp: {
-                label: 'Slider',
-                path: 'formSlider',
-              },
-              componentProp: {
-                max: 24,
-                min: 10,
-              },
-            },
-            {
-              type: 'Base:Tree',
-              formProp: {
-                label: 'Tree',
-                path: 'formTree',
-              },
-              componentProp: {
-                // TODO emit value do not trigger reset validation status
-                treeProps: {
-                  data: getTreeData(),
-                  labelField: '_label',
-                  keyField: '_id',
-                  blockLine: true,
-                  blockNode: true,
-                },
-              },
-            },
-            {
-              type: 'Base:TreeSelect',
-              formProp: {
-                label: 'TreeSelect',
-                path: 'formTreeSelect',
-              },
-              componentProp: {
-                options: getTreeData(),
-                labelField: '_label',
-                keyField: '_id',
-                clearable: true,
-              },
-            },
-            {
-              type: 'Base:Slot',
-              formProp: {
-                label: 'Slot',
-                path: 'formSlot',
-              },
-            },
-            {
-              type: 'Base:Render',
-              formProp: {
-                label: 'Render',
-                path: 'formRender',
-              },
-              componentProp: {
-                render: ({ formData }) => (
-                  <n-input vModel={[formData.formRender, 'value']}></n-input>
-                ),
-              },
-            },
-            {
-              type: 'Extend:IconPicker',
-              formProp: {
-                label: 'Icon Picker',
-                path: 'formIconPicker',
-              },
-            },
-            {
-              type: 'Extend:TransitionSelect',
-              formProp: {
-                label: 'Transition Select',
-                path: 'formTransitionPicker',
-              },
-            },
-            {
-              type: 'Extend:RoleSelect',
-              formProp: {
-                label: 'Role Select',
-                path: 'formRoleSelect',
-              },
-            },
-            {
-              type: 'Extend:AreaCascader',
-              formProp: {
-                label: 'Area Cascader',
-                path: 'formAreaCascader',
-              },
-            },
-            {
-              type: 'Vendor:Tinymce',
-              formProp: {
-                // TODO emit value do not trigger reset validation status
-                label: 'Tinymce',
-                path: 'formTinymce',
-              },
-            },
+            // {
+            //   type: 'Base:Input',
+            //   formProp: {
+            //     label: 'Input',
+            //     path: 'formInput',
+            //     labelHelpMessage: [
+            //       '1. Set `whitespace` in `formProp` true, it will treat whitespace as invalid input.',
+            //       '2. Set `trim` in `componentProp.valueModifiers` true, it will force to disable input whitespace.',
+            //     ],
+            //   },
+            //   componentProp: {
+            //     type: 'textarea',
+            //     showCount: true,
+            //     maxlength: 100,
+            //   },
+            // },
+            // {
+            //   type: 'Base:InputNumber',
+            //   formProp: {
+            //     label: 'InputNumber',
+            //     path: 'formInputNumber',
+            //   },
+            //   componentProp: {
+            //     min: 3,
+            //     max: 10,
+            //   },
+            // },
+            // {
+            //   type: 'Base:Select',
+            //   formProp: {
+            //     label: 'Select',
+            //     path: 'formSelect',
+            //   },
+            //   componentProp: {
+            //     options: options,
+            //     valueType: 'number',
+            //   },
+            // },
+            // {
+            //   type: 'Base:Radio',
+            //   formProp: {
+            //     label: 'Radio',
+            //     path: 'formRadio',
+            //   },
+            //   componentProp: {
+            //     options: options,
+            //   },
+            // },
+            // {
+            //   type: 'Base:Checkbox',
+            //   formProp: {
+            //     label: 'Checkbox',
+            //     path: 'formCheckbox',
+            //   },
+            //   componentProp: {
+            //     options: options,
+            //     valueType: 'number',
+            //     multiple: true,
+            //   },
+            // },
+            // {
+            //   type: 'Base:Switch',
+            //   formProp: {
+            //     label: 'Switch',
+            //     path: 'formSwitch',
+            //     first: true,
+            //   },
+            //   componentProp: {},
+            // },
+            // {
+            //   type: 'Base:TimePicker',
+            //   formProp: {
+            //     label: 'TimePicker',
+            //     path: 'formTimePicker',
+            //   },
+            //   componentProp: {
+            //     format: 'HH:mm:ss',
+            //   },
+            // },
+            // {
+            //   type: 'Base:DatePicker',
+            //   formProp: {
+            //     label: 'DatePicker',
+            //     path: 'formDatePicker',
+            //   },
+            //   componentProp: {
+            //     type: 'datetime',
+            //   },
+            // },
+            // {
+            //   type: 'Base:DynamicTags',
+            //   formProp: {
+            //     label: 'DynamicTags',
+            //     path: 'formDynamicTags',
+            //     ruleType: 'array',
+            //   },
+            //   componentProp: {
+            //     round: true,
+            //   },
+            // },
+            // {
+            //   type: 'Base:DynamicInput',
+            //   formProp: {
+            //     label: 'Dynamic Input',
+            //     path: 'formDynamicInput',
+            //     ruleType: 'array',
+            //   },
+            //   componentProp: {
+            //     preset: 'pair',
+            //     showSortButton: true,
+            //     min: 1,
+            //   },
+            // },
+            // {
+            //   type: 'Base:Slider',
+            //   formProp: {
+            //     label: 'Slider',
+            //     path: 'formSlider',
+            //   },
+            //   componentProp: {
+            //     max: 24,
+            //     min: 10,
+            //   },
+            // },
+            // {
+            //   type: 'Base:Tree',
+            //   formProp: {
+            //     label: 'Tree',
+            //     path: 'formTree',
+            //   },
+            //   componentProp: {
+            //     // TODO emit value do not trigger reset validation status
+            //     treeProps: {
+            //       data: getTreeData(),
+            //       labelField: '_label',
+            //       keyField: '_id',
+            //       blockLine: true,
+            //       blockNode: true,
+            //     },
+            //   },
+            // },
+            // {
+            //   type: 'Base:TreeSelect',
+            //   formProp: {
+            //     label: 'TreeSelect',
+            //     path: 'formTreeSelect',
+            //   },
+            //   componentProp: {
+            //     options: getTreeData(),
+            //     labelField: '_label',
+            //     keyField: '_id',
+            //     clearable: true,
+            //   },
+            // },
+            // {
+            //   type: 'Base:Slot',
+            //   formProp: {
+            //     label: 'Slot',
+            //     path: 'formSlot',
+            //   },
+            // },
+            // {
+            //   type: 'Base:Render',
+            //   formProp: {
+            //     label: 'Render',
+            //     path: 'formRender',
+            //   },
+            //   componentProp: {
+            //     render: ({ formData }) => (
+            //       <n-input vModel={[formData.formRender, 'value']}></n-input>
+            //     ),
+            //   },
+            // },
+            // {
+            //   type: 'Extend:IconPicker',
+            //   formProp: {
+            //     label: 'Icon Picker',
+            //     path: 'formIconPicker',
+            //   },
+            // },
+            // {
+            //   type: 'Extend:TransitionSelect',
+            //   formProp: {
+            //     label: 'Transition Select',
+            //     path: 'formTransitionPicker',
+            //   },
+            // },
+            // {
+            //   type: 'Extend:RoleSelect',
+            //   formProp: {
+            //     label: 'Role Select',
+            //     path: 'formRoleSelect',
+            //   },
+            // },
+            // {
+            //   type: 'Extend:AreaCascader',
+            //   formProp: {
+            //     label: 'Area Cascader',
+            //     path: 'formAreaCascader',
+            //   },
+            // },
+            // {
+            //   type: 'Vendor:Tinymce',
+            //   formProp: {
+            //     // TODO emit value do not trigger reset validation status
+            //     label: 'Tinymce',
+            //     path: 'formTinymce',
+            //   },
+            // },
             {
               type: 'Extend:Dict',
               formProp: {
@@ -341,8 +341,9 @@
             {
               type: 'Extend:Dict',
               formProp: {
-                label: 'Dict Radio',
+                label: true,
                 path: 'formDictRadio',
+                labelHelpMessage: 'Use dict name as form item label',
               },
               componentProp: {
                 dictType: 'gbt_sex',
