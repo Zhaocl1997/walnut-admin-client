@@ -31,9 +31,9 @@
         if (item.type === 'json') return <w-JSON value={item.value}></w-JSON>
 
         if (item.type === 'dict') {
-          const dictData = AppDictMap.get(item.dictType!)
+          const res = AppDictMap.get(item.dictType!)
 
-          const target = dictData?.find((i) => i.value === item.value)
+          const target = res?.dictData?.find((i) => i.value === item.value)
 
           if (!target?.label) return
 

@@ -15,9 +15,16 @@ export type AppDictTypeCommon = Pick<
   'value' | 'label' | 'description' | 'order' | 'tagType'
 >[]
 
+export type AppDictTypeResponse = {
+  name: string
+  type: string
+  description: string
+  dictData: AppDictTypeCommon
+}
+
 // default all dict will cacahed for 10 minutes
 export const getDictByType = (type: string) => {
-  return AppAxios.get<AppDictTypeCommon>(
+  return AppAxios.get<AppDictTypeResponse>(
     {
       url: '/system/dict/data/s/' + type,
     },

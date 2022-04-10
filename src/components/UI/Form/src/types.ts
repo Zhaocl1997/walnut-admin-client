@@ -177,13 +177,20 @@ export declare namespace WForm {
           defaultValue?: BaseDataType | BaseDataType[] | undefined | null
         }
 
-      formProp?: Omit<FormItemProps, 'rule'> & {
+      formProp?: Omit<FormItemProps, 'rule' | 'label'> & {
         /**
          * @override
          * @description add boolean type to rule
          * Set `rule` false when set `baseRules` true but this form item uses no rule
          */
         rule?: FormItemRule | FormItemRule[] | undefined | boolean
+
+        /**
+         * @override
+         * @description add boolean type to label
+         * Used for dict form item label, set true to use dict type name as form label
+         */
+        label?: string | boolean
 
         /**
          * @description when using `base-rules`, you can provide a `ruleType` to specific the value type, default would ba a `any`

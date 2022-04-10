@@ -69,7 +69,7 @@
 
   const onInit = async () => {
     const res = await useDict(props.dictType)
-    options.value = res!
+    options.value = res!.dictData
 
     dictValue.value = props.value
   }

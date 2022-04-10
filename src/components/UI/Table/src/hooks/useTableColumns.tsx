@@ -105,7 +105,7 @@ export const useTableColumns = (
 
             filterOptions: computed(() =>
               tItem.filter
-                ? AppDictMap.get(tItem.dictType)?.map((i) => ({
+                ? AppDictMap.get(tItem.dictType)?.dictData.map((i) => ({
                     value: i.value,
                     label: t(i.label!),
                   }))
@@ -116,9 +116,9 @@ export const useTableColumns = (
               ApiTableListParams.value.query[tItem.key] ?? null,
 
             render(p) {
-              const dictData = AppDictMap.get(tItem.dictType)
+              const res = AppDictMap.get(tItem.dictType)
 
-              const target = dictData?.find(
+              const target = res?.dictData.find(
                 (i) => i.value === (p[tItem.key] as boolean).toString()
               )
 
