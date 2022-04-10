@@ -1,5 +1,5 @@
 <template>
-  <w-demo-card title="Radio">
+  <w-demo-card title="Dictionary">
     <W-JSON :value="state" height="300px"></W-JSON>
 
     <n-list>
@@ -51,15 +51,33 @@
       <n-list-item>
         <w-title prefix="bar"> Also support original component props </w-title>
 
+        <w-dict
+          v-model:value="state.dict7"
+          dict-type="gbt_sex"
+          :render-component-props="{
+            multiple: true,
+            valueSeparator: ',',
+            clearable: true,
+          }"
+        ></w-dict>
+      </n-list-item>
+
+      <n-list-item>
+        <w-title prefix="bar"> Handle boolean value </w-title>
+
         <n-space vertical>
           <w-dict
-            v-model:value="state.dict7"
-            dict-type="gbt_sex"
-            :render-component-props="{
-              multiple: true,
-              valueSeparator: ',',
-              clearable: true,
-            }"
+            v-model:value="state.dict8"
+            dict-type="sys_shared_status"
+            dict-render-type="radio"
+            :render-component-props="{ button: true, valueType: 'boolean' }"
+          ></w-dict>
+
+          <w-dict
+            v-model:value="state.dict9"
+            dict-type="sys_shared_status"
+            dict-render-type="radio"
+            :render-component-props="{ button: true, valueType: 'boolean' }"
           ></w-dict>
         </n-space>
       </n-list-item>
@@ -78,6 +96,8 @@
     dict5: [1, 2],
     dict6: 9,
     dict7: null,
+    dict8: true,
+    dict9: false,
   })
 </script>
 

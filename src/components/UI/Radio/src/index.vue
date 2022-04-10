@@ -13,13 +13,21 @@
     setup(props: WRadioProps, { attrs, slots, emit, expose }) {
       return () => (
         <n-radio-group name="radiogroup">
-          <n-space>
-            {props.options!.map((item) => (
-              <n-radio key={item.value} {...item}>
+          {!props.button ? (
+            <n-space>
+              {props.options!.map((item) => (
+                <n-radio key={item.value} {...item}>
+                  {item.label}
+                </n-radio>
+              ))}
+            </n-space>
+          ) : (
+            props.options!.map((item) => (
+              <n-radio-button key={item.value} {...item}>
                 {item.label}
-              </n-radio>
-            ))}
-          </n-space>
+              </n-radio-button>
+            ))
+          )}
         </n-radio-group>
       )
     },

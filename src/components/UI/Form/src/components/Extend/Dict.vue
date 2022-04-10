@@ -71,9 +71,7 @@
     const res = await useDict(props.dictType)
     options.value = res!
 
-    if (props.value) {
-      dictValue.value = props.value
-    }
+    dictValue.value = props.value
   }
 
   onMounted(onInit)

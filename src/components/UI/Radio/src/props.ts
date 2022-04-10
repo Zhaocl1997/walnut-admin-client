@@ -5,4 +5,5 @@ export const props = {
     type: Array as PropType<(RadioProps & { label?: string })[]>,
     default: () => [],
   },
+  button: Boolean as PropType<boolean>,
 } as const

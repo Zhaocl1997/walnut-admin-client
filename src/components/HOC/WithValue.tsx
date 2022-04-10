@@ -1,12 +1,12 @@
 export const WithValueProps = {
-  value: [String, Number, Array] as PropType<
-    string | number | string[] | number[] | (string & number)[]
+  value: [String, Number, Boolean, Array] as PropType<
+    string | number | boolean | string[] | number[] | (string & number)[]
   >,
 
   multiple: Boolean as PropType<boolean>,
 
   valueType: {
-    type: String as PropType<'string' | 'number'>,
+    type: String as PropType<'string' | 'number' | 'boolean'>,
     default: 'string',
   },
 
@@ -38,8 +38,15 @@ export const WithValue = (
                 .map((ov) => fn(ov)))
       }
 
+      const transformBoolean = (v: any) => {
+        if (v === true) return 'true'
+        if (v === false) return 'false'
+        if (v === 'true') return true
+        if (v === 'false') return false
+      }
+
       watchEffect(() => {
-        if (!props.value) {
+        if ([null, undefined, '', NaN].includes(props.value as any)) {
           v.value = null
           return
         }
@@ -47,14 +54,18 @@ export const WithValue = (
         if (props.multiple === true) {
           if (props.valueType === 'string') {
             formateDefaultValue((ov) => ov.toString())
-          } else {
+          } else if (props.valueType === 'number') {
             formateDefaultValue((ov) => +ov)
+          } else {
+            formateDefaultValue((ov) => transformBoolean(ov))
           }
         } else {
           if (props.valueType === 'string') {
             v.value = props.value + ''
-          } else {
+          } else if (props.valueType === 'number') {
             v.value = +props.value!
+          } else {
+            v.value = transformBoolean(props.value)
           }
         }
       })
@@ -63,7 +74,11 @@ export const WithValue = (
         v.value = val
         emit(
           'update:value',
-          !props.valueSeparator ? val : val.join(props.valueSeparator)
+          props.valueType === 'boolean'
+            ? transformBoolean(val)
+            : !props.valueSeparator
+            ? val
+            : val.join(props.valueSeparator)
         )
       }
 

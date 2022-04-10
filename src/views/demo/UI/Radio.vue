@@ -37,6 +37,17 @@
           ></w-radio>
         </n-space>
       </n-list-item>
+
+      <n-list-item>
+        <w-title prefix="bar"> Button Radio </w-title>
+
+        <w-radio
+          v-model:value="state.radio5"
+          :options="options"
+          value-type="number"
+          button
+        ></w-radio>
+      </n-list-item>
     </n-list>
   </w-demo-card>
 </template>
@@ -49,6 +60,7 @@
     radio2: '1',
     radio3: '4',
     radio4: 4,
+    radio5: null,
   })
 </script>
 
