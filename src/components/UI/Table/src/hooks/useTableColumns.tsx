@@ -1,7 +1,6 @@
 import type { WTable } from '../types'
-import type { TableBaseColumn } from 'naive-ui/lib/data-table/src/interface'
 
-import { defaultAppLocaleMessageKeys } from '../../../shared'
+import { getTableTranslated } from '../utils'
 
 // Extend Naive UI columns
 export const useTableColumns = (
@@ -12,24 +11,20 @@ export const useTableColumns = (
   const columns = ref<WTable.Column[]>([])
   const { t } = useAppI18n()
 
-  const translateItem = (item: WTable.Column) => {
-    if (props.value.localeUniqueKey) {
-      if (item.type !== 'expand' && item.type !== 'selection') {
-        if (defaultAppLocaleMessageKeys.includes(item.key as string)) {
-          return {
-            ...item,
-            title: () => t(`app:base:${item.key}`),
-          }
-        }
+  const transformColumn = (item: WTable.Column) => {
+    if (item.type === 'expand' || item.type === 'selection') return item
 
-        return {
-          ...item,
-          title: () => t(`table:${props.value.localeUniqueKey}:${item.key}`),
-        }
-      }
+    return {
+      ...item,
+      title: () => (
+        <>
+          {getTableTranslated(props, item)}
+          {item.titleHelpMessage && (
+            <w-message msg={getTableTranslated(props, item, true)}></w-message>
+          )}
+        </>
+      ),
     }
-
-    return item
   }
 
   watchEffect(async () => {
@@ -48,7 +43,7 @@ export const useTableColumns = (
         // default value override
         item.align = item.align ?? 'center'
 
-        const tItem = props.value.localeUniqueKey ? translateItem(item) : item
+        const tItem = props.value.localeUniqueKey ? transformColumn(item) : item
 
         // formatter
         if (tItem.extendType === 'formatter') {
@@ -85,11 +80,7 @@ export const useTableColumns = (
             ...tItem,
 
             render(p) {
-              return (
-                <n-a onClick={() => tItem.onClick(p)}>
-                  {p[(tItem as TableBaseColumn).key]}
-                </n-a>
-              )
+              return <n-a onClick={() => tItem.onClick(p)}>{p[tItem.key]}</n-a>
             },
           }
         }
@@ -113,7 +104,7 @@ export const useTableColumns = (
             ...tItem,
 
             filterOptions: computed(() =>
-              (tItem as TableBaseColumn).filter
+              tItem.filter
                 ? AppDictMap.get(tItem.dictType)?.map((i) => ({
                     value: i.value,
                     label: t(i.label!),
@@ -122,16 +113,13 @@ export const useTableColumns = (
             ),
 
             filterOptionValue:
-              ApiTableListParams.value.query[(tItem as TableBaseColumn).key] ??
-              null,
+              ApiTableListParams.value.query[tItem.key] ?? null,
 
             render(p) {
               const dictData = AppDictMap.get(tItem.dictType)
 
               const target = dictData?.find(
-                (i) =>
-                  i.value ===
-                  (p[(tItem as TableBaseColumn).key] as boolean).toString()
+                (i) => i.value === (p[tItem.key] as boolean).toString()
               )
 
               if (!target?.label) return

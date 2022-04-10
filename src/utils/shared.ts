@@ -1,5 +1,6 @@
 import type { Slots } from 'vue'
 import { renderSlot } from 'vue'
+import { isUndefined } from 'easy-fns-ts'
 
 export const getDefaultSlotText = (slots: Slots): string => {
   return ((slots.default && slots.default()[0].children) as string) || ''
@@ -18,3 +19,6 @@ export const renderSlots = <T extends Recordable>(slots: Slots) => {
   })
   return ret
 }
+
+// handle undefined to defaultValue
+export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)

@@ -107,6 +107,7 @@
         {
           key: 'name',
           width: 120,
+          titleHelpMessage: true,
         },
 
         {

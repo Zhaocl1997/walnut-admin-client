@@ -1,5 +1,6 @@
 import type { WForm } from '../types'
-import { getBoolean, getEPBooleanValue } from '../utils'
+import { getEPBooleanValue } from '../utils'
+import { getBoolean } from '/@/utils/shared'
 
 export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
   const formSchemas = ref<WForm.Schema.Item<any>[]>([])

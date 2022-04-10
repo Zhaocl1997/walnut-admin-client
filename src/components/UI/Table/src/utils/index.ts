@@ -5,6 +5,8 @@ import type {
 
 import type { DataTableSortState } from 'naive-ui'
 import { WTable } from '../types'
+import { getBoolean } from '/@/utils/shared'
+import { defaultAppLocaleMessageKeys } from '../../../shared'
 
 export const generateDefaultSortParams = (columns: WTable.Column[]) => {
   return columns
@@ -62,4 +64,29 @@ export const generateBaseListParams = (params: BaseListParams) => {
   })
 
   return ret
+}
+
+/**
+ * @description generate table item title base on different config
+ */
+export const getTableTranslated = (
+  props: ComputedRef<WTable.Props>,
+  item: WTable.Column,
+  helpMsg = false
+) => {
+  const { t } = useAppI18n()
+
+  const key = props.value.localeUniqueKey
+
+  const isLocale = key && getBoolean(item.locale)
+
+  const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
+
+  const path = item.key
+
+  return isLocale && path
+    ? defaultAppLocaleMessageKeys.includes(path!)
+      ? t(`app:base:${path}`)
+      : t(isHelpMsg(`table:${key}:${path}`) as string)
+    : item.title
 }

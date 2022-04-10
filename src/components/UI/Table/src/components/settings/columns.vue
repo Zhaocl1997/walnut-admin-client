@@ -139,9 +139,9 @@
 
   const popoverShow = ref(false)
 
-  const blackList = ['selection', 'index', 'action']
+  const blackList: StringOrNumber[] = ['selection', 'index', 'action']
 
-  const isInBlackList = (key: string) => blackList.includes(key)
+  const isInBlackList = (key: StringOrNumber) => blackList.includes(key)
 
   // each one not include `hidden` => true
   const getChecked = computed(() =>

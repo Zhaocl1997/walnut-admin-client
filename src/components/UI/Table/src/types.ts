@@ -1,11 +1,15 @@
 import type { DataTableColumn, DataTableInst, TagProps } from 'naive-ui'
-import type { CreateRowKey } from 'naive-ui/lib/data-table/src/interface'
+import type {
+  CreateRowKey,
+  TableBaseColumn,
+} from 'naive-ui/lib/data-table/src/interface'
 
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import type { WForm } from '../../Form'
 import type { WButtonProps } from '../../Button'
 import type { WTablePropType } from './props'
+import { type } from 'os'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'
@@ -82,34 +86,52 @@ export declare namespace WTable {
    * @description extend table column types
    */
   namespace ExtendType {
-    interface BaseExtend<E> {
+    /**
+     * @description base extend table column type
+     */
+    type BaseExtend<T, E> = TableBaseColumn<T> & {
+      /**
+       * @description extend type string
+       */
       extendType?: E
+
+      /**
+       * @description column help message
+       */
+      titleHelpMessage?: string | boolean
+
+      /**
+       * @description Used for localed table column which do not need to locale with the whole table
+       * TRUE when localeUniqueKey has value, specify FALSE when no need to locale the title or titleHelpMessage.
+       */
+      locale?: boolean
+
       show?: boolean
     }
 
     /**
      * @description preset index column, default is used for api table with pageNum and pageSize
      */
-    type Index<T = RowData> = BaseExtend<'index'>
+    type Index<T = RowData> = BaseExtend<T, 'index'>
 
     /**
      * @description preset formatter column, used for just some text transform
      */
-    interface Formatter<T = RowData> extends BaseExtend<'formatter'> {
+    type Formatter<T = RowData> = BaseExtend<T, 'formatter'> & {
       formatter: RenderFn<T, string>
     }
 
     /**
      * @description preset icon column, use `w-icon`by default
      */
-    interface Icon<T = RowData> extends BaseExtend<'icon'> {
+    type Icon<T = RowData> = BaseExtend<T, 'icon'> & {
       extendIconName: string | RenderFn<T, string>
     }
 
     /**
      * @description preset link column, used for a link redirect
      */
-    interface Link<T = RowData> extends BaseExtend<'link'> {
+    type Link<T = RowData> = BaseExtend<T, 'link'> & {
       onClick: RenderFn<T>
     }
 
@@ -117,7 +139,7 @@ export declare namespace WTable {
      * @description preset dictionay column, must provide `dictType`
      * Also support a tag display, pass `tagProps` to show `n-tag` properly
      */
-    interface Dictionary<T = RowData> extends BaseExtend<'dict'> {
+    type Dictionary<T = RowData> = BaseExtend<T, 'dict'> & {
       dictType: string
       tagProps?: RenderFn<T, TagProps>
     }
@@ -125,7 +147,7 @@ export declare namespace WTable {
     /**
      * @description normal tag render, provide a tagProps to config. Also provide formatter function
      */
-    interface Tag<T = RowData> extends BaseExtend<'tag'> {
+    type Tag<T = RowData> = BaseExtend<T, 'tag'> & {
       tagProps?: RenderFn<T, TagProps>
       formatter: RenderFn<T, string>
     }
@@ -133,7 +155,7 @@ export declare namespace WTable {
     /**
      * @description preset acion column, default includes three buttons: read / delete
      */
-    interface Action<T = RowData> extends BaseExtend<'action'> {
+    type Action<T = RowData> = BaseExtend<T, 'action'> & {
       /**
        * @description action column button config
        * @default ['create', 'delete', 'read']
@@ -163,16 +185,15 @@ export declare namespace WTable {
   /**
    * @description extend column entry
    */
-  type Column<T = RowData> = DataTableColumn<T> &
-    (
-      | ExtendType.Action<T>
-      | ExtendType.Icon<T>
-      | ExtendType.Formatter<T>
-      | ExtendType.Link<T>
-      | ExtendType.Dictionary<T>
-      | ExtendType.Tag<T>
-      | ExtendType.Index<T>
-    )
+  // TODO optimise typing
+  type Column<T = RowData> =
+    | ExtendType.Action<T>
+    | ExtendType.Icon<T>
+    | ExtendType.Formatter<T>
+    | ExtendType.Link<T>
+    | ExtendType.Dictionary<T>
+    | ExtendType.Tag<T>
+    | ExtendType.Index<T>
 
   /**
    * @description Props

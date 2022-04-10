@@ -1,7 +1,6 @@
 import type { WForm } from '../types'
-import type { FormItemRule } from 'naive-ui'
-import { isUndefined } from 'easy-fns-ts'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
+import { getBoolean } from '/@/utils/shared'
 
 // get target field boolean value
 export const getEPBooleanValue = (
@@ -19,9 +18,6 @@ export const getEPBooleanValue = (
   return getBoolean(maybeBool, defaultValue)
 }
 
-// handle undefined to defaultValue
-export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
-
 /**
  * @description generate form item label base on different config
  */
@@ -30,6 +26,8 @@ export const getFormTranslated = (
   item: WForm.Schema.Item,
   helpMsg = false
 ) => {
+  const { t } = useAppI18n()
+
   const key = props.value.localeUniqueKey
 
   const isLocale = key && getBoolean(item?.formProp?.locale)
@@ -44,10 +42,10 @@ export const getFormTranslated = (
 
   return isLocale && path
     ? defaultAppLocaleMessageKeys.includes(path!)
-      ? AppI18n?.global.t(`app:base:${path}`)
+      ? t(`app:base:${path}`)
       : isLocaleWithTable
-      ? AppI18n?.global.t(isHelpMsg(`table:${key}:${path}`) as string)
-      : AppI18n?.global.t(isHelpMsg(`form:${key}:${path}`))
+      ? t(isHelpMsg(`table:${key}:${path}`) as string)
+      : t(isHelpMsg(`form:${key}:${path}`))
     : item?.formProp?.label
 }
 
