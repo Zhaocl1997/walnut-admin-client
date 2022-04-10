@@ -24,6 +24,8 @@ export const useTableColumns = (
           )}
         </>
       ),
+      // this is used for column settings to display text correctly
+      titleText: () => getTableTranslated(props, item),
     }
   }
 

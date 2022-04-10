@@ -220,9 +220,10 @@
       return (item as TableBaseColumn).title
     }
 
-    if (typeof (item as TableBaseColumn).title === 'function') {
-      // @ts-ignore
-      return item.title()
+    // @ts-expect-error
+    if (typeof item.titleText === 'function') {
+      // @ts-expect-error
+      return item.titleText()
     }
 
     return t('app:base:selection')
