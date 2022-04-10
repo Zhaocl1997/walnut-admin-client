@@ -63,6 +63,13 @@ componentMap.set(
     () => import('../../../../../Advanced/services/AreaCascader/index.ts')
   )
 )
+componentMap.set(
+  'Dict',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../Extend/Dict.vue')
+  )
+)
 
 BUILTIN_FORM_TYPE.map((key) => {
   componentMap.set(key, allComponents[key])

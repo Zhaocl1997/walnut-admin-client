@@ -26,13 +26,13 @@
     <div class="grid grid-cols-2 gap-2 pr-42">
       <div class="children:my-2">
         <DemoArrow id="Arrow" />
-        <DemoFlipper id="Flipper" />
         <DemoIconPicker id="IconPicker" />
         <DemoJSON id="JSON" />
       </div>
 
       <div class="children:my-2">
         <DemoMessage id="Message" />
+        <DemoFlipper id="Flipper" />
         <DemoScrollbar id="Scrollbar" />
         <DemoTitle id="Title" />
         <DemoTransition id="Transition" />

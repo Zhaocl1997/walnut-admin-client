@@ -31,9 +31,10 @@ import type { WTree } from '../../Tree'
 import type { WFormPropType } from './props'
 import type { TinymceEditorProps } from '/@/components/Vendor/tinymce'
 import type {
+  WFormItemDictProps,
   WFormItemDividerProps,
   WFormItemQueryProps,
-} from './components/Extend/props'
+} from './components/Extend/types'
 import type { WDescriptionsItem } from '../../Descriptions'
 
 export const BUILTIN_FORM_TYPE = [
@@ -151,6 +152,7 @@ export declare namespace WForm {
         valueType?: 'string' | 'number'
       }
       'Extend:AreaCascader': WAreaCascaderProps
+      'Extend:Dict': WFormItemDictProps
 
       'Vendor:Tinymce': TinymceEditorProps
     }
@@ -242,6 +244,7 @@ export declare namespace WForm {
       }
     >
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
+    type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
     type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
     type TransitionSelectSchema<D> = DynamicSchemaItemProps<
       'Extend:TransitionSelect',
@@ -274,6 +277,7 @@ export declare namespace WForm {
     type Item<D = any> =
       | DividerSchema<D>
       | QuerySchema<D>
+      | DictSchema<D>
       | IconPickerSchema<D>
       | TransitionSelectSchema<D>
       | RoleSelectSchema<D>

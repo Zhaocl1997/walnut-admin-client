@@ -16,6 +16,7 @@
         <n-anchor-link title="Input" href="#Input" />
         <n-anchor-link title="Select" href="#Select" />
         <n-anchor-link title="Checkbox" href="#Checkbox" />
+        <n-anchor-link title="Dict" href="#Dict" />
         <n-anchor-link title="Tree" href="#Tree" />
         <n-anchor-link title="Service" href="#Service" />
         <n-anchor-link title="Location" href="#Location" />
@@ -31,6 +32,7 @@
         <DemoInput id="Input" />
         <DemoSelect id="Select" />
         <DemoCheckbox id="Checkbox" />
+        <DemoDict id="Dict" />
       </div>
 
       <div class="children:my-2">
@@ -55,6 +57,7 @@
   import DemoTree from './Tree.vue'
   import DemoService from './Service.vue'
   import DemoLocation from './LocationPicker.vue'
+  import DemoDict from './Dict.vue'
 </script>
 
 <script lang="ts">

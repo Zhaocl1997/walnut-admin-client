@@ -83,8 +83,6 @@
     checkbox4: '',
     checkbox5: '1,4',
     checkbox6: '1,3,4,5',
-    checkbox7: '',
-    checkbox8: '',
   })
 </script>
 

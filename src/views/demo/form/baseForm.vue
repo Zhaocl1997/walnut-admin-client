@@ -51,6 +51,9 @@
         formRoleSelect: null,
         formAreaCascader: null,
         formTinymce: null,
+        formDictSelect: null,
+        formDictCheckbox: null,
+        formDictRadio: null,
       })
 
       const schemas = computed(
@@ -312,6 +315,38 @@
                 // TODO emit value do not trigger reset validation status
                 label: 'Tinymce',
                 path: 'formTinymce',
+              },
+            },
+            {
+              type: 'Extend:Dict',
+              formProp: {
+                label: 'Dict Select',
+                path: 'formDictSelect',
+              },
+              componentProp: {
+                dictType: 'gbt_sex',
+              },
+            },
+            {
+              type: 'Extend:Dict',
+              formProp: {
+                label: 'Dict Checkbox',
+                path: 'formDictCheckbox',
+              },
+              componentProp: {
+                dictType: 'gbt_sex',
+                dictRenderType: 'checkbox',
+              },
+            },
+            {
+              type: 'Extend:Dict',
+              formProp: {
+                label: 'Dict Radio',
+                path: 'formDictRadio',
+              },
+              componentProp: {
+                dictType: 'gbt_sex',
+                dictRenderType: 'radio',
               },
             },
           ]
