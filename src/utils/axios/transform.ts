@@ -1,6 +1,9 @@
 import type { AxiosRequestConfigExtend, AxiosTransform } from './src/types'
 
-import { easyFilterEmptyValue } from 'easy-fns-ts'
+import {
+  easyFilterEmptyValue,
+  easyTransformObjectStringBoolean,
+} from 'easy-fns-ts'
 
 import { checkReponseErrorStatus } from './checkStatus'
 import {
@@ -47,6 +50,11 @@ export const transform: AxiosTransform = {
     // filter null value in config.data
     if (mergedCustomOptions.filterNull && config.data) {
       config.data = easyFilterEmptyValue(config.data)
+    }
+
+    // transform "true"/"false" to true/false
+    if (mergedCustomOptions.transformStringBoolean && config.data) {
+      config.data = easyTransformObjectStringBoolean(config.data)
     }
 
     return config

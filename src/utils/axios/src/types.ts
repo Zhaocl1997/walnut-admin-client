@@ -68,6 +68,12 @@ export interface AxiosCustomConfig {
    * @default true
    */
   filterNull?: boolean
+
+  /**
+   * @description transform "true"/"false" to true/false
+   * @default true
+   */
+  transformStringBoolean?: boolean
 }
 
 /**
