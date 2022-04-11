@@ -1,6 +1,9 @@
 <template>
   <div
-    class="whitespace-nowrap cursor-pointer"
+    :class="[
+      'whitespace-nowrap cursor-pointer px-6 transition-all',
+      { 'pl-4 px-0': appMemo.collapse },
+    ]"
     @click="onGoIndex"
     :style="{
       height: settings.ForDevelopers.header.height + 'px',
@@ -15,13 +18,13 @@
       <img
         src="/assets/logo.png"
         :alt="`${getAppTitle} Logo`"
-        class="h-9 w-9 m-1"
+        class="h-9 w-9"
       />
 
-      <w-transition name="slide-left">
+      <w-transition name="zoom-down">
         <div
           v-show="!appMemo.collapse"
-          class="text-xl not-italic font-bold text-center mr-6"
+          class="text-xl not-italic font-bold text-center"
         >
           {{ getAppTitle }}
         </div>

@@ -15,7 +15,7 @@
       <w-transition appear name="slide-left">
         <AsideLogo
           v-if="appSettings.showLogo"
-          :class="['pl-4', { fixed: appSettings.fixLogo }]"
+          :class="[{ fixed: appSettings.fixLogo }]"
         />
       </w-transition>
 
