@@ -12,6 +12,12 @@
 
       const expandedKeys = ref<string[]>()
 
+      const getTransformName = computed(() =>
+        currentRoute.value.meta.menuActiveName
+          ? currentRoute.value.meta.menuActiveName
+          : currentRoute.value.name
+      )
+
       const getMenu = computed(() =>
         formatTree<AppSystemMenu, MenuOption>(menu.value.menus, {
           format: (node) => ({
@@ -32,7 +38,7 @@
         // TODO 999
         const paths = findPath(
           toRaw(menu.value.menus),
-          (n) => n.name === currentRoute.value.name
+          (n) => n.name === getTransformName.value
         ) as AppSystemMenu[]
 
         if (paths) {
@@ -80,11 +86,7 @@
             indent={menuSettings.indent}
             options={getMenu.value}
             collapsed={appMemo.value.collapse}
-            value={
-              currentRoute.value.meta.menuActiveName
-                ? currentRoute.value.meta.menuActiveName
-                : currentRoute.value.name
-            }
+            value={getTransformName.value}
             on-update:value={onUpdateValue}
             expanded-keys={expandedKeys.value}
             on-update:expanded-keys={onUpdateExpandedKeys}
