@@ -39,8 +39,7 @@ export const useTableColumns = (
 
     // @ts-ignore
     columns.value = props.value.columns
-      ?.map((i) => ({ ...i, show: i.show ?? true }))
-      .filter((i) => i.show)
+      ?.map((i) => ({ ...i, _internalShow: i._internalShow ?? true }))
       .map((item) => {
         // default value override
         item.align = item.align ?? 'center'

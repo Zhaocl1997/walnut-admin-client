@@ -106,7 +106,7 @@ export declare namespace WTable {
        */
       locale?: boolean
 
-      show?: boolean
+      _internalShow?: boolean
     }
 
     /**

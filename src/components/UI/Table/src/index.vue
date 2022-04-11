@@ -70,7 +70,7 @@
             <n-data-table
               ref={tableRef}
               {...getNDataTableProps.value}
-              columns={columns.value}
+              columns={columns.value.filter((i) => i._internalShow)}
             ></n-data-table>
           </n-card>
         </>

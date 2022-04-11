@@ -20,7 +20,7 @@
 
         <template #header>
           <n-checkbox
-            :checked="!getIndeterminate"
+            :checked="getChecked"
             :indeterminate="getIndeterminate"
             @update-checked="onUpdateCheckAllChecked"
           >
@@ -40,18 +40,20 @@
             >
               <div class="hstack items-center mr-8">
                 <n-tooltip
-                  :trigger="isInBlackList(item.key) ? 'click' : 'hover'"
+                  :trigger="isInBlackList(item.key) ? 'manual' : 'hover'"
                   placement="left"
                 >
                   <template #trigger>
-                    <w-icon
-                      icon="ant-design:drag-outlined"
-                      height="20"
-                      :class="[
-                        'cursor-move mr-2',
-                        { 'cursor-not-allowed': isInBlackList(item.key) },
-                      ]"
-                    ></w-icon>
+                    <n-button text :disabled="isInBlackList(item.key)">
+                      <w-icon
+                        icon="ant-design:drag-outlined"
+                        height="20"
+                        :class="[
+                          'cursor-move mr-2',
+                          { 'cursor-not-allowed': isInBlackList(item.key) },
+                        ]"
+                      ></w-icon>
+                    </n-button>
                   </template>
 
                   {{ t('table:base:settings:column:drag') }}
@@ -59,8 +61,8 @@
 
                 <n-checkbox
                   :disabled="isInBlackList(item.key)"
-                  :checked="!item.className?.includes('hidden')"
-                  @update-checked="onUpdateItemChecked(index)"
+                  :checked="item._internalShow"
+                  @update-checked="onUpdateItemChecked(item)"
                 >
                   {{ getTitle(item) }}
                 </n-checkbox>
@@ -69,18 +71,22 @@
               <div class="hstack items-center justify-center">
                 <n-tooltip trigger="hover">
                   <template #trigger>
-                    <w-icon
-                      icon="mdi:arrow-collapse-left"
-                      height="20"
-                      class="cursor-pointer"
-                      :style="{
-                        color:
-                          item.fixed === 'left'
-                            ? `${getCommonTheme.infoColor} !important`
-                            : 'currentColor',
-                      }"
-                      @click="onSetFix(item.fixed, 'left', index)"
-                    ></w-icon>
+                    <n-button text :disabled="isInBlackList(item.key)">
+                      <w-icon
+                        icon="mdi:arrow-collapse-left"
+                        height="20"
+                        class="cursor-pointer"
+                        :style="{
+                          color:
+                            item.fixed === 'left'
+                              ? `${getCommonTheme.infoColor} !important`
+                              : 'currentColor',
+                        }"
+                        @click="
+                          !isInBlackList(item.key) && onSetFix(item, 'left')
+                        "
+                      ></w-icon>
+                    </n-button>
                   </template>
 
                   {{
@@ -90,24 +96,26 @@
                   }}
                 </n-tooltip>
 
-                <div
-                  class="w-[1px] h-4/5 bg-black-300 dark:bg-gray-300 mx-1"
-                ></div>
+                <n-divider vertical></n-divider>
 
                 <n-tooltip trigger="hover">
                   <template #trigger>
-                    <w-icon
-                      icon="mdi:arrow-collapse-right"
-                      height="20"
-                      class="cursor-pointer"
-                      :style="{
-                        color:
-                          item.fixed === 'right'
-                            ? `${getCommonTheme.infoColor} !important`
-                            : 'currentColor',
-                      }"
-                      @click="onSetFix(item.fixed, 'right', index)"
-                    ></w-icon>
+                    <n-button text :disabled="isInBlackList(item.key)">
+                      <w-icon
+                        icon="mdi:arrow-collapse-right"
+                        height="20"
+                        class="cursor-pointer"
+                        :style="{
+                          color:
+                            item.fixed === 'right'
+                              ? `${getCommonTheme.infoColor} !important`
+                              : 'currentColor',
+                        }"
+                        @click="
+                          !isInBlackList(item.key) && onSetFix(item, 'right')
+                        "
+                      ></w-icon>
+                    </n-button>
                   </template>
 
                   {{
@@ -143,16 +151,14 @@
 
   const isInBlackList = (key: StringOrNumber) => blackList.includes(key)
 
-  // each one not include `hidden` => true
   const getChecked = computed(() =>
-    tableColumns.value.every(
-      (i) => !(i.className || i.className?.includes('hidden'))
-    )
+    tableColumns.value.every((i) => i._internalShow)
   )
 
-  // as long as one has `hidden` => true
-  const getIndeterminate = computed(() =>
-    tableColumns.value.some((i) => i.className?.includes('hidden'))
+  const getIndeterminate = computed(
+    () =>
+      tableColumns.value.some((i) => !i._internalShow) &&
+      tableColumns.value.some((i) => i._internalShow)
   )
 
   let inst: Sortable
@@ -180,38 +186,24 @@
     })
   }
 
-  // through className to controll visibility
-  const onUpdateItemChecked = (index: number) => {
-    const current = tableColumns.value![index!]
-
-    if (current.className?.includes('hidden')) {
-      current.className = current.className!.replace('hidden', '')
-    } else {
-      if (!current.className) {
-        current.className = 'hidden'
-      } else {
-        current.className += 'hidden'
-      }
-    }
+  // check one column
+  const onUpdateItemChecked = (item: WTable.Column) => {
+    item._internalShow = !item._internalShow
   }
 
   // check all
   const onUpdateCheckAllChecked = () => {
-    tableColumns.value.map((_, index) => onUpdateItemChecked(index))
+    tableColumns.value
+      .filter((i) => !isInBlackList(i.key))
+      .map((item) => onUpdateItemChecked(item))
   }
 
   // set column fix state
-  const onSetFix = (
-    itemPosition: 'left' | 'right' | undefined,
-    position: 'left' | 'right',
-    index: number
-  ) => {
-    const current = tableColumns.value![index!]
-
-    if (!itemPosition) {
-      current.fixed = position
+  const onSetFix = (item: WTable.Column, position: 'left' | 'right') => {
+    if (!item.fixed) {
+      item.fixed = position
     } else {
-      current.fixed = undefined
+      item.fixed = undefined
     }
   }
 
