@@ -62,7 +62,7 @@ export declare namespace WForm {
     type NFormInst = FormInst
 
     interface WFormInst {
-      validate: () => Promise<boolean> | undefined
+      validate: (fields?: string[]) => Promise<boolean> | undefined
       restoreValidation: Fn
       setProps: Fn
       onOpen: (beforeHook?: Fn) => Promise<void>

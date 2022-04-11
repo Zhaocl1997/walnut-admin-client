@@ -1,3 +1,4 @@
+import type { FormItemRule } from 'naive-ui'
 import type { WForm } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 import { getBoolean } from '/@/utils/shared'
@@ -59,29 +60,48 @@ export const generateBaseRules = (
 ) => {
   const { t } = useAppI18n()
 
+  const getBaseRuleObj = (
+    i: WForm.Schema.Item,
+    extra?: FormItemRule[]
+  ): FormItemRule[] => {
+    const base: FormItemRule[] = [
+      {
+        key: i?.formProp?.path,
+        type: i.formProp?.ruleType || 'any',
+        trigger: ['change', 'input'],
+        required: true,
+        message: t('comp:form:rule', {
+          type:
+            i?.type === 'Base:Input'
+              ? t('comp:base:input')
+              : t('comp:base:choose'),
+          label: getFormTranslated(t, props, i),
+        }),
+      },
+    ]
+
+    return extra ? base.concat(extra) : base
+  }
+
   return Object.fromEntries(
-    schemas.map((i) => {
-      if (i?.formProp?.path && i?.formProp?.rule !== false) {
-        return [
-          i?.formProp?.path,
-          [
-            {
-              type: i.formProp.ruleType || 'any',
-              trigger: ['blur', 'change', 'input'],
-              required: true,
-              message: t('comp:form:rule', {
-                type:
-                  i?.type === 'Base:Input'
-                    ? t('comp:base:input')
-                    : t('comp:base:choose'),
-                label: getFormTranslated(t, props, i),
-              }),
-            },
-          ],
-        ]
-      }
-      return []
-    })
+    schemas
+      .map((i) => {
+        if (i.formProp?.path && i.formProp?.rule !== false) {
+          return [
+            i.formProp.path,
+            i.formProp.rule
+              ? getBaseRuleObj(
+                  i,
+                  (Array.isArray(i.formProp.rule)
+                    ? i.formProp.rule
+                    : [i.formProp.rule]) as FormItemRule[]
+                )
+              : getBaseRuleObj(i),
+          ]
+        }
+        return []
+      })
+      .filter((i) => i.length !== 0)
   )
 }
 
