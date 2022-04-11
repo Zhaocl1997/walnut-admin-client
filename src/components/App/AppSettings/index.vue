@@ -50,7 +50,7 @@
   import AppColors from './component/colors'
   import { getTheme } from '/@/App/src/naive'
 
-  const { app, settings } = useAppState()
+  const { app, appMemo, settings } = useAppState()
   const { t } = useAppI18n()
 
   const el = ref(null)
@@ -474,12 +474,16 @@
         },
         componentProp: {
           step: 10,
+          disabled: computed(() => appMemo.value.collapse),
         },
       },
       {
         type: 'Base:InputNumber',
         formProp: {
           path: 'collapsedWidth',
+        },
+        componentProp: {
+          disabled: computed(() => !appMemo.value.collapse),
         },
       },
       {
@@ -493,11 +497,17 @@
         formProp: {
           path: 'iconSize',
         },
+        componentProp: {
+          disabled: computed(() => appMemo.value.collapse),
+        },
       },
       {
         type: 'Base:InputNumber',
         formProp: {
           path: 'collapsedIconSize',
+        },
+        componentProp: {
+          disabled: computed(() => !appMemo.value.collapse),
         },
       },
       {
@@ -505,11 +515,17 @@
         formProp: {
           path: 'indent',
         },
+        componentProp: {
+          disabled: computed(() => appMemo.value.collapse),
+        },
       },
       {
         type: 'Base:Switch',
         formProp: {
           path: 'inverted',
+        },
+        componentProp: {
+          disabled: computed(() => app.value.isDark),
         },
       },
     ],
@@ -583,6 +599,9 @@
         type: 'Base:Switch',
         formProp: {
           path: 'inverted',
+        },
+        componentProp: {
+          disabled: computed(() => app.value.isDark),
         },
       },
     ],

@@ -70,7 +70,7 @@
       }
 
       return () => (
-        <w-scrollbar height="100%">
+        <div class="w-full h-full">
           <n-menu
             mode={
               settings.value.ForDevelopers.app.layout ===
@@ -91,7 +91,7 @@
             expanded-keys={expandedKeys.value}
             on-update:expanded-keys={onUpdateExpandedKeys}
           ></n-menu>
-        </w-scrollbar>
+        </div>
       )
     },
   })

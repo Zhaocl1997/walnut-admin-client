@@ -15,18 +15,18 @@
     </n-drawer>
 
     <div class="vstack flex-1 h-screen w-full overflow-x-hidden">
-      <MainHeader v-if="setting.app.fixHeader" />
+      <TheMainHeader v-if="setting.app.fixHeader" />
 
       <n-layout-content
         bordered
         :native-scrollbar="false"
         :content-style="{ height: '100%' }"
       >
-        <MainHeader v-if="!setting.app.fixHeader" />
+        <TheMainHeader v-if="!setting.app.fixHeader" />
 
         <div
           :id="String($route.name)"
-          class="w-full h-full"
+          class="w-full"
           :style="{
             padding: $route.meta.url ? 0 : setting.app.contentPadding + 'px',
           }"
@@ -35,35 +35,30 @@
           <TheContent />
         </div>
 
-        <TheFooter v-if="setting.app.showFooter && !setting.app.fixFooter" />
+        <TheFooter v-if="!setting.app.fixFooter" />
 
         <WAppSettings />
 
         <n-back-top />
       </n-layout-content>
 
-      <TheFooter v-if="setting.app.showFooter && setting.app.fixFooter" />
-      <WAppWatermark v-if="setting.app.showWatermark" />
+      <TheFooter v-if="setting.app.fixFooter" />
+
+      <TheAppWatermark v-if="setting.app.showWatermark" />
     </div>
   </n-layout>
 </template>
 
 <script lang="tsx" setup>
   import TheAside from './TheAside'
-  import TheHeader from './TheHeader'
   import TheContent from './TheContent'
-  import TheIFrameWrapper from '../iframe/wrapper.vue'
-  import TheTab from './TheTab'
   import TheFooter from './TheFooter'
-  import {
-    getContentWidth,
-    getShowNormalAside,
-    toggleLeftMenuLayout,
-  } from '/@/settings'
-  import WAppWatermark from '/@/components/App/AppWatermark'
 
-  // TODO 99
-  import { NLayoutHeader } from 'naive-ui'
+  import TheIFrameWrapper from '../iframe/wrapper.vue'
+  import TheMainHeader from './MainHeader.vue'
+  import TheAppWatermark from '/@/components/App/AppWatermark'
+
+  import { getShowNormalAside, toggleLeftMenuLayout } from '/@/settings'
 
   const { appMemo, settings } = useAppState()
   const { currentRoute } = useAppRouter()
@@ -88,31 +83,5 @@
     if (currentRoute.value.query.full) {
       toggleLeftMenuLayout()
     }
-  })
-
-  const MainHeader = defineComponent({
-    setup() {
-      return () => (
-        <div style={{ width: getContentWidth.value }}>
-          {setting.app.showHeader && (
-            <NLayoutHeader bordered inverted={setting.header.inverted}>
-              <TheHeader
-                class="flex-none px-2"
-                style={{ height: setting.header.height + 'px' }}
-              />
-            </NLayoutHeader>
-          )}
-
-          {setting.app.showTabs && (
-            <NLayoutHeader bordered inverted={setting.header.inverted}>
-              <TheTab
-                class="flex-none px-2"
-                style={{ height: setting.tab.height + 'px' }}
-              />
-            </NLayoutHeader>
-          )}
-        </div>
-      )
-    },
   })
 </script>

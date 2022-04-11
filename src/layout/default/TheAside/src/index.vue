@@ -12,23 +12,31 @@
     class="h-screen"
   >
     <div class="select-none overflow-hidden">
-      <AsideLogo
-        v-if="appSettings.showLogo"
-        :class="['pl-4', { fixed: appSettings.fixLogo }]"
-      />
+      <w-transition appear name="slide-left">
+        <AsideLogo
+          v-if="appSettings.showLogo"
+          :class="['pl-4', { fixed: appSettings.fixLogo }]"
+        />
+      </w-transition>
 
-      <AsideMenu
-        v-if="appSettings.showMenu"
-        :class="[
-          { 'pb-6': getShowMenuCollapseButton, absolute: appSettings.fixLogo },
-        ]"
-        :style="{
-          paddingTop:
-            (appSettings.showLogo && appSettings.fixLogo
-              ? settings.ForDevelopers.header.height
-              : 0) + 'px',
-        }"
-      />
+      <w-transition appear name="slide-left">
+        <AsideMenu
+          v-if="appSettings.showMenu"
+          :class="[
+            'transition-all',
+            {
+              'pb-6': getShowMenuCollapseButton,
+              absolute: appSettings.fixLogo,
+            },
+          ]"
+          :style="{
+            paddingTop:
+              (appSettings.showLogo && appSettings.fixLogo
+                ? settings.ForDevelopers.header.height
+                : 0) + 'px',
+          }"
+        />
+      </w-transition>
 
       <MenuCollpaseButton v-if="getShowMenuCollapseButton" />
     </div>
