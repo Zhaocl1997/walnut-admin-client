@@ -79,6 +79,8 @@
             },
             componentProp: {
               clearable: true,
+              tag: true,
+              filterable: true,
               options: ['app:', 'sys:', 'form:', 'table:', 'dict:'].map(
                 (i) => ({
                   value: i,

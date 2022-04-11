@@ -37,50 +37,66 @@
 
       <n-card
         style="z-index: 100"
-        class="mx-1/8 sm:mx-1/4 md:mx-1/4 lg:mx-0 xl:mx-0 2xl:mx-0"
+        class="mx-1/8 sm:mx-1/4 md:mx-1/4 lg:mx-1/6 xl:mx-1/6 2xl:mx-1/6 rounded-3xl"
       >
-        <div class="w-full py-6 z-20">
-          <h1 class="my-2 w-auto inline-flex items-center">
+        <div class="vstack items-center justify-center">
+          <h1 class="hstack items-center justify-center mb-4">
             <img
               src="/assets/logo.png"
               :alt="title"
-              class="w-16 sm:w-12 md:w-16 lg:w-16 xl:w-20 2xl:w-20"
+              class="w-16 sm:w-12 md:w-16 lg:w-16 xl:w-16 2xl:w-16"
             />
             <span
-              class="text-2xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-4xl ml-4 whitespace-nowrap"
+              class="text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-3xl ml-4 whitespace-nowrap"
             >
               {{ title }}
             </span>
           </h1>
 
-          <SignIn class="m-auto text-justify w-full sm:w-7/12" />
+          <div class="">
+            <n-tabs
+              :bar-width="28"
+              animated
+              default-value="account"
+              pane-class="h-64"
+              type="line"
+            >
+              <n-tab-pane
+                name="account"
+                :tab="t('form:app:signin:tab:account')"
+              >
+                <SignInWithAccount class="m-auto text-justify mt-2" />
+              </n-tab-pane>
+
+              <n-tab-pane name="SMS" :tab="t('form:app:signin:tab:sms')">
+                <SignInWitSMS class="m-auto text-justify mt-2" />
+              </n-tab-pane>
+
+              <n-tab-pane name="QR" :tab="t('form:app:signin:tab:qr')">
+                <SignInWithQR class="m-auto text-justify mt-2" />
+              </n-tab-pane>
+            </n-tabs>
+          </div>
         </div>
       </n-card>
     </div>
   </section>
 </template>
 
-<script lang="ts">
-  import SignIn from './signin.vue'
+<script lang="ts" setup>
+  import SignInWithAccount from './signin/account.vue'
+  import SignInWitSMS from './signin/SMS.vue'
+  import SignInWithQR from './signin/QR.vue'
   import SignUp from './signup.vue'
 
+  const { t } = useAppI18n()
+  const title = computed(() => import.meta.env.VITE_APP_TITLE)
+</script>
+
+<script lang="ts">
   export default defineComponent({
     name: 'Auth',
 
     defaultView: false,
-
-    components: { SignIn, SignUp },
-
-    setup() {
-      const { t } = useAppI18n()
-      const title = computed(() => import.meta.env.VITE_APP_TITLE)
-
-      return {
-        t,
-        title,
-      }
-    },
   })
 </script>
-
-<style lang="scss" scoped></style>

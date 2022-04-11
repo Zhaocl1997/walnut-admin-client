@@ -1,5 +1,10 @@
 <template>
-  <n-dropdown trigger="hover" @select="onSelect" :options="dropdownOptions">
+  <n-dropdown
+    trigger="hover"
+    size="medium"
+    @select="onSelect"
+    :options="dropdownOptions"
+  >
     <div class="hstack">
       <n-avatar
         src="/assets/logo.png"
@@ -15,7 +20,8 @@
   </n-dropdown>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
+  import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface'
   import { upperFirst } from 'easy-fns-ts'
   import { userActionSignOut } from '/@/store/actions/user'
 
@@ -24,10 +30,25 @@
 
   const { goNext } = useContinue(() => t('app:user:signout:warning'))
 
-  const dropdownOptions = computed(() => [
+  const dropdownOptions = computed<DropdownMixedOption[]>(() => [
     {
       key: '1',
+      label: t('desc:about:info:doc'),
+      icon: () => <w-icon icon="mdi:file-document"></w-icon>,
+    },
+
+    {
+      type: 'divider',
+    },
+    {
+      key: '2',
+      label: t('app:user:center'),
+      icon: () => <w-icon icon="ant-design:profile-outlined"></w-icon>,
+    },
+    {
+      key: '99',
       label: t('app:user:signout'),
+      icon: () => <w-icon icon="ant-design:logout-outlined"></w-icon>,
     },
   ])
 
@@ -38,6 +59,10 @@
 
   const onSelect = async (val: string) => {
     if (val === '1') {
+      openExternalLink('https://walnut-admin-doc.netlify.app/')
+    }
+
+    if (val === '99') {
       const res = await goNext()
 
       if (res) {
