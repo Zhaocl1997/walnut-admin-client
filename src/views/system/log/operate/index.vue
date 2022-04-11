@@ -270,7 +270,19 @@
         {
           type: 'Base:Input',
           formProp: {
-            path: 'ip',
+            path: 'success',
+          },
+          descriptionProp: {
+            span: 1,
+            type: 'dict',
+            dictType: 'sys_shared_success',
+          },
+        },
+
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'statusCode',
           },
         },
 
@@ -285,6 +297,13 @@
           type: 'Base:Input',
           formProp: {
             path: 'os',
+          },
+        },
+
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'ip',
           },
         },
 
@@ -315,13 +334,6 @@
             path: 'correspondingMS',
           },
           descriptionProp: { formatter: (ms) => `${ms} ms` },
-        },
-
-        {
-          type: 'Base:Input',
-          formProp: {
-            path: 'statusCode',
-          },
         },
 
         {

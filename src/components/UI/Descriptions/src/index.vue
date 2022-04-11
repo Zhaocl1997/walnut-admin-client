@@ -33,7 +33,14 @@
         if (item.type === 'dict') {
           const res = AppDictMap.get(item.dictType!)
 
-          const target = res?.dictData?.find((i) => i.value === item.value)
+          const target = res?.dictData?.find(
+            (i) =>
+              (i.value === 'true'
+                ? true
+                : i.value === 'false'
+                ? false
+                : i.value) === item.value
+          )
 
           if (!target?.label) return
 
