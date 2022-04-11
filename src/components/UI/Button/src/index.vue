@@ -8,7 +8,7 @@
 
     props,
 
-    emits: ['click'],
+    emits: ['click', 'retry-error'],
 
     setup(props: WButtonProps, { attrs, slots, emit, expose }) {
       const { t } = useAppI18n()
@@ -39,37 +39,47 @@
         props.icon && (def.icon = () => <w-icon icon={props.icon}></w-icon>)
 
         getTextProp.value &&
-          (def.default = () => [<div>{getTextProp.value}</div>])
+          (def.default = () => [<span>{getTextProp.value}</span>])
 
         buttonText.value &&
-          (def.default = () => [<div>{buttonText.value}</div>])
+          (def.default = () => [
+            <span class={props.textClass}>{buttonText.value}</span>,
+          ])
 
         return def
       })
 
       const onClick = (event: MouseEvent) => {
+        if (!props.retry) {
+          emit('click', event)
+          return
+        }
+
+        if (!props.canRetry) {
+          emit('retry-error')
+          return
+        }
+
         const retryDelay = ref(props.retry)
 
-        if (props.retry) {
-          disabled.value = true
+        disabled.value = true
 
-          const intervalId = setInterval(() => {
-            buttonText.value = t('comp:button:retry', {
-              retryDelay: retryDelay.value,
-            })
+        const intervalId = setInterval(() => {
+          buttonText.value = t('comp:button:retry', {
+            retryDelay: retryDelay.value,
+          })
 
-            --retryDelay.value!
+          --retryDelay.value!
 
-            if (retryDelay.value! < 0) {
-              retryDelay.value = props.retry
-              buttonText.value = (getTextProp.value ??
-                slots.default?.()) as string
-              disabled.value = false
+          if (retryDelay.value! < 0) {
+            retryDelay.value = props.retry!
+            buttonText.value = (getTextProp.value ??
+              slots.default?.()) as string
+            disabled.value = false
 
-              clearInterval(intervalId)
-            }
-          }, 1000)
-        }
+            clearInterval(intervalId)
+          }
+        }, 1000)
 
         emit('click', event)
       }
