@@ -25,7 +25,7 @@ export const WithValue = (
 
     emits: ['update:value'],
 
-    setup(props, { attrs, emit }) {
+    setup(props, { attrs, emit, slots }) {
       const v = ref()
 
       const formateDefaultValue = (fn: Fn) => {
@@ -87,7 +87,9 @@ export const WithValue = (
           {...props}
           value={v.value}
           onUpdateValue={onUpdateValue}
-        />
+        >
+          {slots}
+        </WrappedComponent>
       )
     },
   })
