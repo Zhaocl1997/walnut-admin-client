@@ -35,7 +35,7 @@
         <n-select
           render-option={props.tooltip ? renderOption : attrs['render-option']}
         >
-          {{ action: () => slots.action() }}
+          {{ action: () => slots.action && slots.action() }}
         </n-select>
       )
     },
