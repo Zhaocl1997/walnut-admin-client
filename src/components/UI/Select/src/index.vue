@@ -34,7 +34,9 @@
       return () => (
         <n-select
           render-option={props.tooltip ? renderOption : attrs['render-option']}
-        ></n-select>
+        >
+          {{ action: () => slots.action() }}
+        </n-select>
       )
     },
   })

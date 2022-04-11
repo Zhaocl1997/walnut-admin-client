@@ -8,20 +8,35 @@
       @update:value="onUpdateValue"
       :render-label="onRenderLabel"
       tooltip
-    ></w-select>
+    >
+      <template #action>
+        <n-space>
+          <w-button
+            size="small"
+            icon="ant-design:plus-outlined"
+            @click="onNewLocale"
+          >
+            New
+          </w-button>
 
-    <w-a-icon
-      icon="ant-design:plus-outlined"
-      class="cursor-pointer"
-      height="20"
-      help-message="New Locale"
-      @click="onNewLocale"
-    ></w-a-icon>
+          <w-button
+            size="small"
+            icon="ant-design:sync-outlined"
+            @click="onRefresh"
+            :loading="loading"
+            :disabled="loading"
+          >
+            Refresh
+          </w-button>
+        </n-space>
+      </template>
+    </w-select>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { SelectOption } from 'naive-ui'
+  import { AppI18nGetI18nMsg } from '/@/locales/backend'
 
   // TODO 888
   interface InternalProps {
@@ -34,6 +49,7 @@
   const emits = defineEmits(['update:value'])
 
   const { getLocaleMessage, locale } = useAppI18n()
+  const loading = ref(false)
 
   const options = computed(() =>
     Object.entries<string>(getLocaleMessage(locale.value))
@@ -55,6 +71,20 @@
 
   const onNewLocale = () => {
     useRouterPush({ name: 'Locale' })
+  }
+
+  const onRefresh = async () => {
+    loading.value = true
+
+    const { app } = useAppState()
+
+    const locale = app.value.locale
+
+    const res = await AppI18nGetI18nMsg(locale, false)
+
+    AppI18n.global.setLocaleMessage(locale, res.data)
+
+    loading.value = false
   }
 </script>
 

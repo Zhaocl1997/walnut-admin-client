@@ -11,6 +11,8 @@
 <script lang="ts" setup>
   import { dictTypeAPI } from '/@/api/system/dict'
 
+  const { t } = useAppI18n()
+
   // locale unique key
   const key = 'dictType'
 
@@ -108,6 +110,8 @@
           key: 'name',
           width: 120,
           titleHelpMessage: true,
+          extendType: 'formatter',
+          formatter: (row) => t(row.name!),
         },
 
         {
@@ -194,12 +198,12 @@
       // create/update form schemas
       schemas: [
         {
-          type: 'Base:Input',
+          type: 'Extend:Locale',
           formProp: {
             path: 'name',
           },
           componentProp: {
-            clearable: true,
+            prefix: 'dict:name:',
           },
         },
 
