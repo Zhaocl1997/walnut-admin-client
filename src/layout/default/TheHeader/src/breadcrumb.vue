@@ -86,7 +86,7 @@
           }
         >
           <n-breadcrumb separator={breadcrumb.separator}>
-            {getChildren.value!.map((item) => (
+            {getChildren.value?.map((item) => (
               <n-breadcrumb-item>
                 {breadcrumb.showDropdown
                   ? renderDropdown(item)
