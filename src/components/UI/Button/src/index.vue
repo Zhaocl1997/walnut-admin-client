@@ -42,9 +42,7 @@
           (def.default = () => [<span>{getTextProp.value}</span>])
 
         buttonText.value &&
-          (def.default = () => [
-            <span class={props.textClass}>{buttonText.value}</span>,
-          ])
+          (def.default = () => [<span>{buttonText.value}</span>])
 
         return def
       })

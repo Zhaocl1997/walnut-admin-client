@@ -46,7 +46,4 @@ export const props = {
     type: Boolean as PropType<boolean>,
     default: false,
   },
-
-  /* text span custom class */
-  textClass: String as PropType<string>,
 }
