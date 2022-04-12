@@ -4,13 +4,13 @@
       <img
         :src="qrcode"
         alt="QR Code"
-        :class="[{ 'blur-sm brightness-50 contrast-50': !isActive }]"
+        :class="[{ 'blur-sm brightness-80 contrast-50': !isActive }]"
       />
 
       <w-transition appear>
         <div v-if="!isActive" class="abs-center">
-          <div class="mb-2 whitespace-nowrap">
-            {{ t('form:app:signin:qrcode:expired	') }}
+          <div class="mb-2 whitespace-nowrap font-bold">
+            {{ t('form:app:signin:qrcode:expired') }}
           </div>
 
           <n-button size="tiny" type="info" round @click="onRefreshQRCode">

@@ -37,7 +37,8 @@
 
       <n-card
         style="z-index: 100"
-        class="mx-1/8 sm:mx-1/4 md:mx-1/4 lg:mx-1/6 xl:mx-1/6 2xl:mx-1/6 rounded-3xl"
+        hoverable
+        class="mx-1/8 sm:mx-1/4 md:mx-1/4 lg:mx-1/6 xl:mx-1/6 2xl:mx-1/6 rounded-3xl light:shadow-2xl"
       >
         <div class="vstack items-center justify-center">
           <h1 class="hstack items-center justify-center mb-4">
@@ -53,30 +54,7 @@
             </span>
           </h1>
 
-          <div class="">
-            <n-tabs
-              :bar-width="28"
-              animated
-              default-value="account"
-              pane-class="h-64"
-              type="line"
-            >
-              <n-tab-pane
-                name="account"
-                :tab="t('form:app:signin:tab:account')"
-              >
-                <SignInWithAccount class="m-auto text-justify mt-2" />
-              </n-tab-pane>
-
-              <n-tab-pane name="SMS" :tab="t('form:app:signin:tab:sms')">
-                <SignInWitSMS class="m-auto text-justify mt-2" />
-              </n-tab-pane>
-
-              <n-tab-pane name="QR" :tab="t('form:app:signin:tab:qr')">
-                <SignInWithQR class="m-auto text-justify mt-2" />
-              </n-tab-pane>
-            </n-tabs>
-          </div>
+          <SignIn />
         </div>
       </n-card>
     </div>
@@ -84,9 +62,7 @@
 </template>
 
 <script lang="ts" setup>
-  import SignInWithAccount from './signin/account.vue'
-  import SignInWitSMS from './signin/SMS.vue'
-  import SignInWithQR from './signin/QR.vue'
+  import SignIn from './signin/index.vue'
   import SignUp from './signup.vue'
 
   const { t } = useAppI18n()

@@ -30,6 +30,10 @@
     }
   }
 
+  const onForgetPassword = () => {
+    console.log('forget password')
+  }
+
   const [register, { validate }] = useForm<typeof accountFormData>({
     localeUniqueKey: 'app:signin',
     baseRules: true,
@@ -72,14 +76,22 @@
       },
       {
         type: 'Base:Render',
-        formProp: {
-          showFeedback: false,
-        },
         componentProp: {
           render: ({ formData }) => (
-            <n-checkbox vModel={[formData.rememberMe, 'checked']}>
-              {t('form:app:signin:remember')}
-            </n-checkbox>
+            <div class="hstack justify-between w-full">
+              <n-checkbox vModel={[formData.rememberMe, 'checked']}>
+                {t('form:app:signin:remember')}
+              </n-checkbox>
+
+              <n-button
+                text
+                size="small"
+                type="tertiary"
+                onClick={onForgetPassword}
+              >
+                {t('form:app:signin:forget')}
+              </n-button>
+            </div>
           ),
         },
       },
@@ -89,7 +101,9 @@
           showFeedback: false,
         },
         componentProp: {
-          textProp: computed(() => t('app:base:signin')),
+          textProp: () => (
+            <span class="text-light-800">{t('app:base:signin')}</span>
+          ),
           loading: loading,
           disabled: loading,
           style: {
@@ -97,7 +111,8 @@
             fontSize: '18px',
             fontWeight: '900',
           },
-          class: 'm-auto uppercase rounded-full',
+          class:
+            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500',
           onClick: onSubmit,
         },
       },
