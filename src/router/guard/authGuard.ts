@@ -1,19 +1,17 @@
 import { easyIsEmpty } from 'easy-fns-ts'
 
-import { AppAuthPath, App500Path, AppRootPath } from '../constant'
+import { AppAuthPath, RouteWhiteLists } from '../constant'
 import { AppCoreFn1 } from '/@/core'
 import { userActionGetSecretKeys, userActionInfo } from '/@/store/actions/user'
 import { useAppSecretKeys } from '/@/store/keys'
-
-const whiteLists: string[] = [AppAuthPath]
 
 const { token, menu, user } = useAppState()
 const appSecretKeys = useAppSecretKeys()
 
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
-    // Paths in `whiteLists` will enter directly
-    if (whiteLists.includes(to.path)) {
+    // Paths in `RouteWhiteLists` will enter directly
+    if (RouteWhiteLists.includes(to.path)) {
       // Login and push to auth page, will go index menu
       if (to.path === AppAuthPath && token.value) {
         next({ name: menu.value.indexMenuName })

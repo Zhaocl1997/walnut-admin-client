@@ -9,6 +9,24 @@ export const AppAuthRoute: RouteRecordRaw = {
   },
 }
 
+export const AppAuthPrivacyPolicyRoute: RouteRecordRaw = {
+  name: constant.AppAuthPrivacyPolicyName,
+  path: constant.AppAuthPrivacyPolicyPath,
+  component: () => import('../views/auth/privacy-policy.vue'),
+  meta: {
+    title: 'form:app:signin:pp',
+  },
+}
+
+export const AppAuthServiceAgreementRoute: RouteRecordRaw = {
+  name: constant.AppAuthServiceAgreementName,
+  path: constant.AppAuthServiceAgreementPath,
+  component: () => import('../views/auth/service-agreement.vue'),
+  meta: {
+    title: 'form:app:signin:sa',
+  },
+}
+
 export const AppRootRoute: RouteRecordRaw = {
   name: constant.AppRootName,
   path: constant.AppRootPath,
@@ -36,6 +54,8 @@ export const App500Route: RouteRecordRaw = {
 
 export const routes: RouteRecordRaw[] = [
   AppAuthRoute,
+  AppAuthPrivacyPolicyRoute,
+  AppAuthServiceAgreementRoute,
   AppRootRoute,
   AppRedirectRoute,
   App500Route,
