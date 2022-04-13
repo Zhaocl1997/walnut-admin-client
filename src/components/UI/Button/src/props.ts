@@ -17,12 +17,6 @@ export const props = {
     default: 0,
   },
 
-  /* can start count down or not */
-  canRetry: {
-    type: Boolean as PropType<boolean>,
-    default: true,
-  },
-
   /* debounce delay for miliseconds */
   debounce: {
     type: Number as PropType<number>,
@@ -46,4 +40,10 @@ export const props = {
     type: Boolean as PropType<boolean>,
     default: false,
   },
-}
+
+  /* manually controll retry */
+  manualRetry: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
+} as const

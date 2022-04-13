@@ -5,3 +5,7 @@ import { props } from './props'
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 
 export interface WButtonProps extends ButtonProps, ExtendProps {}
+
+export interface WButtonInst {
+  onStartRetry: Fn
+}

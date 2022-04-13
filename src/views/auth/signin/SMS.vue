@@ -1,36 +1,31 @@
 <template>
   <div>
-    <w-form @hook="register" :model="SMSFormData"></w-form>
-    <n-modal v-model:show="showVerify">
-      <Verify :show="showVerify" :imgs="imgs" @success="onVerifySuccess" />
-    </n-modal>
+    <w-form @hook="register" :model="SMSFormData"> </w-form>
+
+    <WVerify ref="verifyRef" @success="onVerifySuccess" />
   </div>
 </template>
 
 <script lang="tsx" setup>
+  import type { WButtonInst } from '/@/components/UI/Button'
   import {
     AppAuthPrivacyPolicyPath,
     AppAuthServiceAgreementPath,
   } from '/@/router/constant'
   import { isPhoneNumber } from '/@/utils/regex'
-  import Verify from '/@/components/Extra/Verify'
+  import WVerify, { WVerifyInst } from '/@/components/Extra/Verify'
 
   const { t } = useAppI18n()
 
-  const showVerify = ref(false)
+  const verifyRef = ref<Nullable<WVerifyInst>>(null)
+  const verifyButton = ref<Nullable<WButtonInst>>(null)
   const loading = ref(false)
-  const imgs = [
-    'https://isluo.com/kernel/index/img/welcome/girl1.png',
-    'https://isluo.com/kernel/index/img/welcome/theback.jpg',
-  ]
 
   const SMSFormData = reactive({
     phone: '',
     captcha: '',
     agree: '',
   })
-
-  const getCanStartCountdown = computed(() => isPhoneNumber(SMSFormData.phone))
 
   const onSubmit = async () => {
     const valid = await validate()
@@ -48,17 +43,18 @@
     }
   }
 
-  const onRetryError = async () => {
-    await validate(['phone'])
-  }
+  const onSendCaptcha = async () => {
+    const valid = await validate(['phone'])
 
-  const onSendCaptcha = () => {
-    console.log('send captcha')
-    showVerify.value = true
+    if (!valid) return
+
+    verifyRef.value!.onOpenModal()
   }
 
   const onVerifySuccess = () => {
-    console.log(123)
+    nextTick(() => {
+      verifyButton.value!.onStartRetry()
+    })
   }
 
   const [register, { validate }] = useForm<typeof SMSFormData>({
@@ -111,12 +107,12 @@
                 <n-input vModel={[formData.captcha, 'value']}></n-input>
 
                 <w-button
+                  ref={verifyButton}
                   retry={60}
+                  manual-retry
                   text
                   size="small"
                   type="info"
-                  can-retry={getCanStartCountdown.value}
-                  onRetryError={onRetryError}
                   class="absolute top-1/2 right-4 -translate-y-1/2"
                   onClick={onSendCaptcha}
                 >

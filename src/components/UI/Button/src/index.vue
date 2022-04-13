@@ -8,7 +8,7 @@
 
     props,
 
-    emits: ['click', 'retry-error'],
+    emits: ['click'],
 
     setup(props: WButtonProps, { attrs, slots, emit, expose }) {
       const { t } = useAppI18n()
@@ -47,17 +47,7 @@
         return def
       })
 
-      const onClick = (event: MouseEvent) => {
-        if (!props.retry) {
-          emit('click', event)
-          return
-        }
-
-        if (!props.canRetry) {
-          emit('retry-error')
-          return
-        }
-
+      const onRetry = () => {
         const retryDelay = ref(props.retry)
 
         disabled.value = true
@@ -78,9 +68,19 @@
             clearInterval(intervalId)
           }
         }, 1000)
-
-        emit('click', event)
       }
+
+      const onClick = (event: MouseEvent) => {
+        emit('click', event)
+
+        if (props.retry && !props.manualRetry) {
+          onRetry()
+        }
+      }
+
+      expose({
+        onStartRetry: () => onRetry(),
+      })
 
       const renderButton = () =>
         props.iconButton ? (
