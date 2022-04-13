@@ -1,53 +1,24 @@
 <template>
   <div class="vstack items-center justify-center gap-y-2">
-    <div class="relative">
-      <img
-        :src="qrcode"
-        alt="QR Code"
-        :class="[{ 'blur-sm brightness-80 contrast-50': !isActive }]"
-      />
-
-      <w-transition appear>
-        <div v-if="!isActive" class="abs-center">
-          <div class="mb-2 whitespace-nowrap font-bold">
-            {{ t('form:app:signin:qrcode:expired') }}
-          </div>
-
-          <n-button size="tiny" type="info" round @click="onRefreshQRCode">
-            {{ t('form:app:signin:qrcode:refresh') }}
-          </n-button>
-        </div>
-      </w-transition>
-    </div>
+    <WQRCode :url="url" :expire-seconds="5" @refresh="onRefreshQRCode" />
 
     <span>{{ t('form:app:signin:scan') }}</span>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { useQRCode } from '@vueuse/integrations/useQRCode'
+  import WQRCode from '/@/components/Extra/QRCode'
 
   const { t } = useAppI18n()
 
-  const num = ref(0)
+  const getUrl = () => `https://www.baidu.com/?t=${Date.now()}`
 
-  const url = ref(`https://walnut-admin-doc.netlify.app/?t=${Date.now()}`)
+  const url = ref(getUrl())
 
-  const qrcode = useQRCode(url)
+  const onRefreshQRCode = (cb: Fn) => {
+    url.value = getUrl()
 
-  const { pause, isActive, resume } = useIntervalFn(() => {
-    num.value++
-
-    if (num.value > 3) {
-      num.value = 0
-      pause()
-    }
-  }, 1000)
-
-  const onRefreshQRCode = () => {
-    url.value = `https://walnut-admin-doc.netlify.app/?t=${Date.now()}`
-
-    resume()
+    cb()
   }
 </script>
 

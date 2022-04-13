@@ -15,6 +15,8 @@
         <n-anchor-link title="Flipper" href="#Flipper" />
         <n-anchor-link title="IconPicker" href="#IconPicker" />
         <n-anchor-link title="JSON" href="#JSON" />
+        <n-anchor-link title="Verify" href="#Verify" />
+        <n-anchor-link title="QRCode" href="#QRCode" />
         <n-anchor-link title="Message" href="#Message" />
         <n-anchor-link title="Scrollbar" href="#Scrollbar" />
         <n-anchor-link title="Title" href="#Title" />
@@ -28,6 +30,8 @@
         <DemoArrow id="Arrow" />
         <DemoIconPicker id="IconPicker" />
         <DemoJSON id="JSON" />
+        <DemoVerify id="Verify" />
+        <DemoQRCode id="QRCode" />
       </div>
 
       <div class="children:my-2">
@@ -52,6 +56,8 @@
   import DemoTitle from './Title.vue'
   import DemoTransition from './Transition.vue'
   import DemoAxios from './Axios.vue'
+  import DemoVerify from './Verify.vue'
+  import DemoQRCode from './QRCode.vue'
 </script>
 
 <script lang="ts">
