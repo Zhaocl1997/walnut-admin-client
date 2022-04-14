@@ -23,6 +23,10 @@
 <script lang="tsx" setup>
   import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface'
   import { upperFirst } from 'easy-fns-ts'
+
+  // TODO 99
+  import WIcon from '/@/components/UI/Icon'
+
   import { userActionSignOut } from '/@/store/actions/user'
 
   const { t } = useAppI18n()
@@ -34,7 +38,7 @@
     {
       key: '1',
       label: t('desc:about:info:doc'),
-      icon: () => <w-icon icon="mdi:file-document"></w-icon>,
+      icon: () => <WIcon icon="mdi:file-document"></WIcon>,
     },
 
     {
@@ -43,12 +47,12 @@
     {
       key: '2',
       label: t('app:user:center'),
-      icon: () => <w-icon icon="ant-design:profile-outlined"></w-icon>,
+      icon: () => <WIcon icon="ant-design:profile-outlined"></WIcon>,
     },
     {
       key: '99',
       label: t('app:user:signout'),
-      icon: () => <w-icon icon="ant-design:logout-outlined"></w-icon>,
+      icon: () => <WIcon icon="ant-design:logout-outlined"></WIcon>,
     },
   ])
 

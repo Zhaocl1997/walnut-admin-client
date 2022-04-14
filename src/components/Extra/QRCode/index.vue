@@ -8,7 +8,7 @@
 
     <w-transition appear>
       <div v-if="!isActive" class="abs-center">
-        <div class="mb-2 whitespace-nowrap font-bold">
+        <div class="mb-2 whitespace-nowrap font-bold text-gray-200">
           {{ t('form:app:signin:qrcode:expired') }}
         </div>
 

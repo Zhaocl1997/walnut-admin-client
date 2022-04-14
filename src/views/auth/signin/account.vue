@@ -3,6 +3,8 @@
 </template>
 
 <script lang="tsx" setup>
+  // TODO 99
+  import { NCheckbox, NButton } from 'naive-ui'
   import { userActionSignin } from '/@/store/actions/user'
 
   const { t } = useAppI18n()
@@ -79,18 +81,18 @@
         componentProp: {
           render: ({ formData }) => (
             <div class="hstack justify-between w-full">
-              <n-checkbox vModel={[formData.rememberMe, 'checked']}>
+              <NCheckbox vModel={[formData.rememberMe, 'checked']}>
                 {t('form:app:signin:remember')}
-              </n-checkbox>
+              </NCheckbox>
 
-              <n-button
+              <NButton
                 text
                 size="small"
                 type="tertiary"
                 onClick={onForgetPassword}
               >
                 {t('form:app:signin:forget')}
-              </n-button>
+              </NButton>
             </div>
           ),
         },

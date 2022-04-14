@@ -1,5 +1,5 @@
 <template>
-  <div class="vstack items-center justify-center gap-y-2">
+  <div class="vstack items-center justify-center gap-y-2 mt-8">
     <WQRCode :url="url" :expire-seconds="5" @refresh="onRefreshQRCode" />
 
     <span>{{ t('form:app:signin:scan') }}</span>

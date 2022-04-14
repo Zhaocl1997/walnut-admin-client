@@ -8,6 +8,11 @@
 
 <script lang="tsx" setup>
   import type { WButtonInst } from '/@/components/UI/Button'
+
+  // TODO 99
+  import { NRadio, NText, NInput } from 'naive-ui'
+  import WButton from '/@/components/UI/Button'
+
   import {
     AppAuthPrivacyPolicyPath,
     AppAuthServiceAgreementPath,
@@ -104,9 +109,9 @@
           render({ formData }) {
             return (
               <div class="relative w-full">
-                <n-input vModel={[formData.captcha, 'value']}></n-input>
+                <NInput vModel={[formData.captcha, 'value']}></NInput>
 
-                <w-button
+                <WButton
                   ref={verifyButton}
                   retry={60}
                   manual-retry
@@ -117,7 +122,7 @@
                   onClick={onSendCaptcha}
                 >
                   {t('form:app:signin:sendCaptcha')}
-                </w-button>
+                </WButton>
               </div>
             )
           },
@@ -137,15 +142,15 @@
                   (SMSFormData.agree = SMSFormData.agree ? '' : 'agree')
                 }
               >
-                <n-radio
+                <NRadio
                   value="agree"
                   checked={formData.agree === 'agree'}
                   size="small"
-                ></n-radio>
+                ></NRadio>
 
                 <span class="ml-2 text-xs text-gray-500 cursor-pointer">
                   {t('form:app:signin:continue')}
-                  <n-text
+                  <NText
                     type="info"
                     strong
                     onClick={(e: Event) => {
@@ -155,9 +160,9 @@
                   >
                     {' '}
                     {t('form:app:signin:sa')}{' '}
-                  </n-text>
+                  </NText>
                   、
-                  <n-text
+                  <NText
                     type="info"
                     strong
                     onClick={(e: Event) => {
@@ -167,7 +172,7 @@
                   >
                     {' '}
                     {t('form:app:signin:pp')}{' '}
-                  </n-text>
+                  </NText>
                 </span>
               </div>
             )
