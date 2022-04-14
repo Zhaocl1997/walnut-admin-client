@@ -24,6 +24,10 @@
     width: '100%',
   })
 
+  useEventListener('resize', () => {
+    chartInst.value?.resize()
+  })
+
   watchEffect(
     () => {
       if (chartInst.value) {
@@ -49,10 +53,6 @@
           ? Object.assign(props.option, { backgroundColor: 'transparent' })
           : props.option
       )
-
-      useEventListener('resize', () => {
-        chart.resize()
-      })
     },
     { flush: 'post' }
   )
