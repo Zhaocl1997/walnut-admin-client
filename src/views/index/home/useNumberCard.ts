@@ -30,7 +30,7 @@ const onGetCards = (
       },
     },
     number: ns[1],
-    icon: 'emojione:winking-face-with-tongue',
+    icon: 'emojione-v1:winking-face-with-tongue',
     loading: loading.value,
   },
   {
@@ -43,7 +43,7 @@ const onGetCards = (
       },
     },
     number: ns[2],
-    icon: 'emojione:upside-down-face',
+    icon: 'emojione-v1:upside-down-face',
     loading: loading.value,
   },
   {
@@ -56,7 +56,7 @@ const onGetCards = (
       },
     },
     number: ns[3],
-    icon: 'emojione:thinking-face',
+    icon: 'emojione-v1:thinking-face',
     loading: loading.value,
   },
   {
@@ -69,7 +69,7 @@ const onGetCards = (
       },
     },
     number: ns[4],
-    icon: 'emojione:smiling-face-with-heart-eyes',
+    icon: 'emojione-v1:smiling-face-with-heart-eyes',
     loading: loading.value,
   },
   {
@@ -82,7 +82,7 @@ const onGetCards = (
       },
     },
     number: ns[5],
-    icon: 'emojione:smiling-face-with-sunglasses',
+    icon: 'emojione-v1:smiling-face-with-sunglasses',
     loading: loading.value,
   },
 ]
