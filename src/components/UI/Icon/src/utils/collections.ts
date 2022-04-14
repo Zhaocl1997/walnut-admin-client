@@ -4,6 +4,7 @@ import antdIcons from '@iconify/json/json/ant-design.json'
 import mdiIcons from '@iconify/json/json/mdi.json'
 import simpleIcons from '@iconify/json/json/simple-icons.json'
 import carbonIcons from '@iconify/json/json/carbon.json'
+import emojiv1Icons from '@iconify/json/json/emojione-v1.json'
 
 import svgIcons from './svg.json'
 
@@ -16,4 +17,5 @@ export const iconCollections: IconifyJSON[] = [
   simpleIcons,
   carbonIcons,
   svgIcons,
+  emojiv1Icons,
 ]

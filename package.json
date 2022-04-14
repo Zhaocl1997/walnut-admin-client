@@ -60,7 +60,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
-    "@iconify/json": "^2.1.23",
+    "@iconify/json": "2.1.28",
     "@iconify/json-tools": "^1.0.10",
     "@iconify/tools": "^2.0.15",
     "@iconify/types": "^1.1.0",
