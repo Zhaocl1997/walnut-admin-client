@@ -1,0 +1,115 @@
+<template>
+  <n-card
+    hoverable
+    :segmented="{
+      content: true,
+    }"
+  >
+    <template #header>
+      <n-skeleton v-if="loading" text width="20%" />
+
+      <n-h2 v-else prefix="bar" align-text :type="headerExtra?.tagProps.type">
+        <n-text>
+          {{ title }}
+        </n-text>
+      </n-h2>
+    </template>
+
+    <template #header-extra>
+      <n-skeleton v-if="loading" round width="80px" height="28px" />
+
+      <n-tag v-else v-bind="headerExtra?.tagProps">
+        <n-gradient-text :type="headerExtra?.tagProps.type">
+          {{ headerExtra.text }}
+        </n-gradient-text>
+      </n-tag>
+    </template>
+
+    <template #>
+      <div v-if="loading" class="hstack justify-between">
+        <n-skeleton height="40px" width="60%" round />
+        <n-skeleton height="40px" circle />
+      </div>
+
+      <div v-else class="relative text-3xl">
+        <div class="hstack items-center">
+          <n-number-animation
+            ref="numberAnimationInstRef"
+            :from="0"
+            :to="number"
+            show-separator
+          />
+
+          <w-transition appear name="slide-up">
+            <n-tag
+              v-show="showTrend"
+              class="ml-2"
+              round
+              size="small"
+              :type="trend < 0 ? 'success' : 'error'"
+            >
+              <w-icon
+                :icon="
+                  trend < 0 ? 'mdi:arrow-down-right' : 'mdi:arrow-up-right'
+                "
+              ></w-icon>
+              {{ trend }} %
+            </n-tag>
+          </w-transition>
+        </div>
+
+        <w-transition appear name="slide-right">
+          <w-icon
+            height="48"
+            :icon="icon"
+            class="absolute -top-1.5 right-0 hover:scale-110 transition-all cursor-pointer"
+          ></w-icon>
+        </w-transition>
+      </div>
+    </template>
+  </n-card>
+</template>
+
+<script lang="ts" setup>
+  import type { TagProps } from 'naive-ui'
+
+  // TODO 888
+  interface InternalProps {
+    title?: string
+    headerExtra?: {
+      text?: string
+      tagProps?: TagProps
+    }
+    loading?: boolean
+
+    number?: number
+    icon?: string
+  }
+
+  const props = defineProps<InternalProps>()
+
+  const trend = ref(0)
+  const showTrend = ref(true)
+
+  watch(
+    () => props.number,
+    (newV, oldV) => {
+      if (newV && oldV) {
+        showTrend.value = false
+        trend.value = +((newV - oldV) / oldV).toFixed(2)
+        nextTick(() => {
+          showTrend.value = true
+        })
+      }
+    },
+    {
+      immediate: true,
+    }
+  )
+</script>
+
+<script lang="ts">
+  export default defineComponent({
+    name: 'WHomeNumberCard',
+  })
+</script>
