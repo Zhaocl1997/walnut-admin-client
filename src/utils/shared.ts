@@ -1,6 +1,7 @@
 import type { Slots } from 'vue'
 import { renderSlot } from 'vue'
 import { isUndefined } from 'easy-fns-ts'
+import { filter, isEmpty } from 'lodash-es'
 
 export const getDefaultSlotText = (slots: Slots): string => {
   return ((slots.default && slots.default()[0].children) as string) || ''
@@ -22,3 +23,23 @@ export const renderSlots = <T extends Recordable>(slots: Slots) => {
 
 // handle undefined to defaultValue
 export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
+
+// filter tree deeply
+export const filterTree = <T, R = T>(
+  tree: TreeNodeItem<T>[],
+  cb: (node: T) => boolean
+): TreeNodeItem<R>[] =>
+  // @ts-ignore
+  filter(tree, (item) => {
+    if (cb(item)) {
+      if (item.children) {
+        // @ts-ignore
+        item.children = filterTree(item.children, cb)
+      }
+      return true
+    } else if (item.children) {
+      // @ts-ignore
+      item.children = filterTree(item.children, cb)
+      return !isEmpty(item.children)
+    }
+  })

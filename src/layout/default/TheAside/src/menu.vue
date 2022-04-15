@@ -2,6 +2,8 @@
   import type { MenuOption } from 'naive-ui'
 
   import { findPath, formatTree } from 'easy-fns-ts'
+  import { filterTree } from '/@/utils/shared'
+  import { cloneDeep } from 'lodash-es'
 
   export default defineComponent({
     setup() {
@@ -18,20 +20,28 @@
           : currentRoute.value.name
       )
 
+      // below, clone to not affect original menu data, then filter the `show` field deeply
+      // finally format to naive-ui menu option data structure
       const getMenu = computed(() =>
-        formatTree<AppSystemMenu, MenuOption>(menu.value.menus, {
-          format: (node) => ({
-            key: node.name,
-            label: t(node.title!),
-            icon: () => <w-icon icon={node.icon}></w-icon>,
-            meta: {
-              type: node.type,
-              ternal: node.ternal,
-              url: node.url,
-            },
-            // extra: () => (node.badge && <n-badge value="hot"></n-badge>)
-          }),
-        })
+        formatTree<AppSystemMenu, MenuOption>(
+          filterTree<AppSystemMenu, Omit<AppSystemMenu, 'show'>>(
+            cloneDeep(menu.value.menus),
+            (node) => node.show!
+          ),
+          {
+            format: (node) => ({
+              key: node.name,
+              label: t(node.title!),
+              icon: () => <w-icon icon={node.icon}></w-icon>,
+              meta: {
+                type: node.type,
+                ternal: node.ternal,
+                url: node.url,
+              },
+              // extra: () => (node.badge && <n-badge value="hot"></n-badge>)
+            }),
+          }
+        )
       )
 
       watchEffect(() => {

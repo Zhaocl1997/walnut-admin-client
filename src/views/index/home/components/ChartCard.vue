@@ -26,7 +26,7 @@
     </template>
 
     <template #>
-      <n-skeleton v-if="loading" width="100%" height="40vh" :sharp="false" />
+      <n-skeleton v-if="loading" width="100%" height="44vh" :sharp="false" />
 
       <WECharts v-else :option="option" />
     </template>

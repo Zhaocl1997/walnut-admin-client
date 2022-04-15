@@ -66,6 +66,10 @@
       openExternalLink('https://walnut-admin-doc.netlify.app/')
     }
 
+    if (val === '2') {
+      useRouterPush({ name: 'AccountSetting' })
+    }
+
     if (val === '99') {
       const res = await goNext()
 

@@ -10,9 +10,10 @@ import { buildCommonRoute } from './route'
 export const buildMenus = (payload: AppSystemMenu[]) => {
   // filter `catalog` and `menu`
   // filter `catalog` and `menu` which are visible
-  const filtered = easyDeepClone(payload)
-    .filter((i) => i.type !== MenuTypeConst.ELEMENT)
-    .filter((i) => i.show)
+  // in order to fit menu show in breadcrumb but do not show in menus, `show` filter is done in TheAside => `menu.vue`
+  const filtered = easyDeepClone(payload).filter(
+    (i) => i.type !== MenuTypeConst.ELEMENT
+  )
 
   // unshift the affixed-visibled-ordered tab into tab store
   filtered

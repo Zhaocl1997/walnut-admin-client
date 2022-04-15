@@ -298,7 +298,7 @@ export const useMenuFormSchema = (
         rule: false,
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,
+        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
       },
     },
 
