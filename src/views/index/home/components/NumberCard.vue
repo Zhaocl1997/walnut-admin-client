@@ -42,18 +42,26 @@
 
           <w-transition appear name="slide-up">
             <n-tag
-              v-show="showTrend"
+              v-show="isPositive !== undefined && showTrend"
               class="ml-2"
               round
               size="small"
-              :type="trend < 0 ? 'success' : 'error'"
+              :type="isPositive ? 'success' : 'error'"
             >
-              <w-icon
-                :icon="
-                  trend < 0 ? 'mdi:arrow-down-right' : 'mdi:arrow-up-right'
-                "
-              ></w-icon>
-              {{ trend }} %
+              <div class="hstack items-center gap-x-1">
+                <span>
+                  <span class="mr-1">{{ isPositive ? '+' : '-' }}</span>
+                  <span>{{ trend }} %</span>
+                </span>
+
+                <w-icon
+                  :icon="
+                    isPositive
+                      ? 'ant-design:arrow-up-outlined'
+                      : 'ant-design:arrow-down-outlined'
+                  "
+                ></w-icon>
+              </div>
             </n-tag>
           </w-transition>
         </div>
@@ -90,13 +98,16 @@
 
   const trend = ref(0)
   const showTrend = ref(true)
+  const isPositive = ref<boolean | undefined>()
 
   watch(
     () => props.number,
     (newV, oldV) => {
       if (newV && oldV) {
         showTrend.value = false
-        trend.value = +((newV - oldV) / oldV).toFixed(2)
+        const num = +((newV - oldV) / oldV).toFixed(2)
+        trend.value = Math.abs(num)
+        isPositive.value = num > 0
         nextTick(() => {
           showTrend.value = true
         })

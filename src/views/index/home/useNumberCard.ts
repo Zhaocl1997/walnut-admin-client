@@ -43,7 +43,7 @@ const onGetCards = (
       },
     },
     number: ns[2],
-    icon: 'emojione-v1:upside-down-face',
+    icon: 'emojione-v1:flushed-face',
     loading: loading.value,
   },
   {
@@ -56,7 +56,7 @@ const onGetCards = (
       },
     },
     number: ns[3],
-    icon: 'emojione-v1:thinking-face',
+    icon: 'emojione-v1:kissing-face-with-closed-eyes',
     loading: loading.value,
   },
   {
