@@ -6,74 +6,78 @@
     :height="settings.ForDevelopers.tab.height + 'px'"
   >
     <ul id="tabSortable" class="hstack">
-      <li
-        v-for="(item, index) in tab.tabs"
-        :key="item.name"
-        :class="[
-          { 'text-primary hover:text-primaryHover': $route.name === item.name },
+      <w-transition appear name="fade-down" group>
+        <li
+          v-for="(item, index) in tab.tabs"
+          :key="item.name"
+          :class="[
+            {
+              'text-primary hover:text-primaryHover': $route.name === item.name,
+            },
 
-          /* card */
-          tabSettings.styleMode === TabStyleModeConstInside.CARD &&
-            ($route.name === item.name
-              ? 'border border-primary'
-              : 'border border-gray-400 hover:border-primaryHover hover:text-primaryHover'),
+            /* card */
+            tabSettings.styleMode === TabStyleModeConstInside.CARD &&
+              ($route.name === item.name
+                ? 'border border-primary'
+                : 'border border-gray-400 hover:border-primaryHover hover:text-primaryHover'),
 
-          /* flex */
-          tabSettings.styleMode === TabStyleModeConstInside.FLEX &&
-            ($route.name === item.name
-              ? 'tab-flex border-primary'
-              : 'hover:border-primaryHover hover:text-primaryHover hover:tab-flex'),
+            /* flex */
+            tabSettings.styleMode === TabStyleModeConstInside.FLEX &&
+              ($route.name === item.name
+                ? 'tab-flex border-primary'
+                : 'hover:border-primaryHover hover:text-primaryHover hover:tab-flex'),
 
-          /* round */
-          tabSettings.styleMode === TabStyleModeConstInside.ROUND &&
-            ($route.name === item.name
-              ? 'rounded-xl bg-primary text-light-100'
-              : 'rounded-xl hover:bg-primaryHover hover:text-bodyColor'),
+            /* round */
+            tabSettings.styleMode === TabStyleModeConstInside.ROUND &&
+              ($route.name === item.name
+                ? 'rounded-xl bg-primary text-light-100'
+                : 'rounded-xl hover:bg-primaryHover hover:text-bodyColor'),
 
-          'hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
-          {
-            'tab-draggable': !item.meta.affix,
-          },
-        ]"
-        @click="onTabClick(item)"
-        @mouseup="onMouseUp($event, item.name)"
-        @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
-        @mouseenter="onMouseEnter($event, item, index)"
-        @mouseleave="onMouseLeave(item)"
-      >
-        <w-icon
-          v-if="!appMemo.isMobile && !tabSettings.showIcon && item.meta.affix"
-          height="16"
-          icon="ant-design:pushpin-filled"
-        ></w-icon>
+            'hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
+            {
+              'tab-draggable': !item.meta.affix,
+            },
+          ]"
+          @click="onTabClick(item)"
+          @mouseup="onMouseUp($event, item.name)"
+          @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
+          @mouseenter="onMouseEnter($event, item, index)"
+          @mouseleave="onMouseLeave(item)"
+        >
+          <w-icon
+            v-if="!appMemo.isMobile && !tabSettings.showIcon && item.meta.affix"
+            height="16"
+            icon="ant-design:pushpin-filled"
+          ></w-icon>
 
-        <TabDot
-          :ref="setItemRef"
-          v-else-if="
-            !appMemo.isMobile &&
-            !tabSettings.showIcon &&
-            $route.name === item.name
-          "
-        ></TabDot>
+          <TabDot
+            :ref="setItemRef"
+            v-else-if="
+              !appMemo.isMobile &&
+              !tabSettings.showIcon &&
+              $route.name === item.name
+            "
+          ></TabDot>
 
-        <w-icon
-          v-if="tabSettings.showIcon"
-          :icon="item.meta.icon"
-          height="16"
-        ></w-icon>
+          <w-icon
+            v-if="tabSettings.showIcon"
+            :icon="item.meta.icon"
+            height="16"
+          ></w-icon>
 
-        <span class="text-sm whitespace-nowrap">
-          {{ t(item.meta.title!)  }}
-        </span>
+          <span class="text-sm whitespace-nowrap">
+            {{ t(item.meta.title!)  }}
+          </span>
 
-        <w-icon
-          v-if="!item.meta.affix"
-          icon="ant-design:close-outlined"
-          width="12"
-          class="hover:text-error hover:scale-125 rounded-full transform"
-          @click.prevent.stop="onTabRemove(item.name)"
-        ></w-icon>
-      </li>
+          <w-icon
+            v-if="!item.meta.affix"
+            icon="ant-design:close-outlined"
+            width="12"
+            class="hover:text-error hover:scale-125 rounded-full transform"
+            @click.prevent.stop="onTabRemove(item.name)"
+          ></w-icon>
+        </li>
+      </w-transition>
     </ul>
   </w-scrollbar>
 </template>

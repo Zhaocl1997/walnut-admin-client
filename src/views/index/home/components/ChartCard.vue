@@ -56,5 +56,7 @@
 <script lang="ts">
   export default defineComponent({
     name: 'WHomeChartCard',
+
+    defaultView: false,
   })
 </script>

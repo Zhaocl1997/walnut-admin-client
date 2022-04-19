@@ -27,8 +27,8 @@
 
     <template #>
       <div v-if="loading" class="hstack justify-between">
-        <n-skeleton height="40px" width="60%" round />
-        <n-skeleton height="40px" circle />
+        <n-skeleton height="42px" width="60%" round />
+        <n-skeleton height="42px" circle />
       </div>
 
       <div v-else class="relative text-3xl">
@@ -122,5 +122,7 @@
 <script lang="ts">
   export default defineComponent({
     name: 'WHomeNumberCard',
+
+    defaultView: false,
   })
 </script>
