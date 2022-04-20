@@ -17,48 +17,35 @@
   </div>
 </template>
 
+<script lang="ts" setup>
+  // TODO 888
+  interface InternalProps {
+    value?: any
+    height?: string
+    width?: string
+  }
+
+  const props = withDefaults(defineProps<InternalProps>(), {
+    value: {},
+    height: '100px',
+    width: '100%',
+  })
+
+  const { t } = useAppI18n()
+
+  const WJSONRef = ref()
+  const getJSON = computed(() =>
+    typeof props.value === 'string'
+      ? JSON.stringify(JSON.parse(props.value), null, 2)
+      : JSON.stringify(props.value, null, 2)
+  )
+
+  const isHovered = useElementHover(WJSONRef)
+  const { copy, copied } = useClipboard({ source: getJSON.value })
+</script>
+
 <script lang="ts">
   export default defineComponent({
     name: 'WJSON',
-
-    props: {
-      value: {
-        type: [Object, Array, String] as PropType<any>,
-        default: '',
-      },
-
-      height: {
-        type: String as PropType<string>,
-        default: '100px',
-      },
-
-      width: {
-        type: String as PropType<string>,
-        default: '100%',
-      },
-    },
-
-    setup(props) {
-      const { t } = useAppI18n()
-
-      const WJSONRef = ref()
-      const getJSON = computed(() =>
-        typeof props.value === 'string'
-          ? JSON.stringify(JSON.parse(props.value), null, 2)
-          : JSON.stringify(props.value, null, 2)
-      )
-
-      const isHovered = useElementHover(WJSONRef)
-      const { copy, copied } = useClipboard({ source: getJSON.value })
-
-      return {
-        t,
-        WJSONRef,
-        getJSON,
-        copy,
-        copied,
-        isHovered,
-      }
-    },
   })
 </script>

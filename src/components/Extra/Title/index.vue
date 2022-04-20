@@ -3,7 +3,7 @@
     name: 'WTitle',
 
     props: {
-      helpMessage: String as PropType<string>,
+      helpMessage: [String, Array] as PropType<string | string[]>,
     },
 
     setup(props, { attrs, slots, emit, expose }) {

@@ -3,6 +3,8 @@ import { RouteMeta } from 'vue-router'
 declare global {
   interface AppSecretKeysInterface {
     B?: string
+    AOI?: string
+    AOS?: string
   }
 
   interface BaseAppModel {

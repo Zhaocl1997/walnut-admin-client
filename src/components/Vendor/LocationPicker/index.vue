@@ -26,6 +26,9 @@
 </template>
 
 <script lang="ts" setup>
+  import { genString } from 'easy-fns-ts'
+  import { useAppSecretKeys } from '/@/store/keys'
+
   // TODO 888
   interface InternalProps {
     value?: number[]
@@ -166,9 +169,6 @@
 </script>
 
 <script lang="ts">
-  import { genString } from 'easy-fns-ts'
-  import { useAppSecretKeys } from '/@/store/keys'
-
   export default defineComponent({
     name: 'LocationPicker',
   })

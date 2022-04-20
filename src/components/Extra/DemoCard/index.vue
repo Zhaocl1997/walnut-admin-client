@@ -13,7 +13,7 @@
 
     props: {
       title: String as PropType<string>,
-      description: String as PropType<string>,
+      description: [String, Array] as PropType<string | string[]>,
     },
 
     emits: [],
