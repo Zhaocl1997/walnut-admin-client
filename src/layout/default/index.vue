@@ -26,7 +26,7 @@
 
         <div
           :id="String($route.name)"
-          class="w-full"
+          class="w-full h-full"
           :style="{
             padding: $route.meta.url ? 0 : setting.app.contentPadding + 'px',
           }"

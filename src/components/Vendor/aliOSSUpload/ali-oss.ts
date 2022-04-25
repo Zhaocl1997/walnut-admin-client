@@ -104,8 +104,6 @@ export const onAliOSSClient = (
           // 获取分片上传进度、断点和返回值。
           progress: (p, cpt, res) => {
             checkPoint.value = cpt
-            console.log(checkPoint.value, 444)
-
             onProcessCallback({ percent: Math.ceil(p * 100) })
           },
           // 设置并发上传的分片数量。
@@ -118,8 +116,6 @@ export const onAliOSSClient = (
           mime: data.type!,
         }
       )
-
-      console.log(result, 123)
 
       return {
         id: data.id,
@@ -148,7 +144,6 @@ export const onAliOSSClient = (
         checkPoint.value.name,
         checkPoint.value.uploadId
       )
-      console.log(res)
       checkPoint.value = null
     } catch (error) {
       console.log(error)
