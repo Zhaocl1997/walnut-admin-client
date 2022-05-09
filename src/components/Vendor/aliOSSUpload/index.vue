@@ -7,7 +7,7 @@
       :loading="getUploadLoading"
       class="mb-2"
     >
-      上传文件
+      {{ t('comp:alioss:upload') }}
     </n-button>
 
     <n-upload
@@ -35,7 +35,7 @@
         <n-space size="small">
           <n-upload-trigger #="{ handleClick }" abstract>
             <n-button @click="handleClick" :disabled="getChooseDisabled">
-              选择文件
+              {{ t('comp:alioss:choose') }}
             </n-button>
           </n-upload-trigger>
 
@@ -44,7 +44,11 @@
             :disabled="getUploadDisabled"
             :loading="getUploadLoading"
           >
-            {{ getUploadLoading ? '上传中...' : '上传文件' }}
+            {{
+              getUploadLoading
+                ? t('comp:alioss:uploading')
+                : t('comp:alioss:upload')
+            }}
           </n-button>
         </n-space>
 
@@ -65,7 +69,7 @@
 
   import { genString } from 'easy-fns-ts'
   import { downloadByUrl } from '../../../utils/file/download'
-  import { onAliOSSClient } from './ali-oss'
+  import { AliOSSClient } from './client'
 
   // TODO 888
   interface InternerProps {
@@ -92,6 +96,8 @@
     crossoverSize: 1024 * 10,
   })
   const emits = defineEmits(['update:value'])
+
+  const { t } = useAppI18n()
 
   const uploadRef = ref<Nullable<UploadInst>>(null)
   const listRef = ref<UploadFileInfo[]>()
@@ -128,13 +134,6 @@
     { immediate: true, deep: true }
   )
 
-  const {
-    AliOSSUpload,
-    AliOSSMultiUpload,
-    AliOSSAbortMultipartUpload,
-    onGetFullUrl,
-  } = onAliOSSClient(props.region, props.bucket, props.folder)
-
   const onCustomRequest = ({
     file,
     data,
@@ -156,18 +155,20 @@
     //   })
     // }
 
-    formData.append(file.name, file.file)
-    ;(file.file.size <= props.crossoverSize * 1024
-      ? AliOSSUpload(file)
-      : AliOSSMultiUpload(file, onProgress)
+    formData.append(file.name, file.file!)
+    ;(file.file!.size <= props.crossoverSize * 1024
+      ? AliOSSClient.instance.upload(file, props.folder)
+      : AliOSSClient.instance.multiUpload(file, props.folder, onProgress)
     )
-      .then(({ id, value }) => {
+      .then((data) => {
+        const { id, value } = data!
+
         onFinish()
 
-        const index = listRef.value.findIndex((i) => i.id === id)
+        const index = listRef.value!.findIndex((i) => i.id === id)
 
         if (index !== -1) {
-          listRef.value[index].url = onGetFullUrl(value)
+          listRef.value![index].url = AliOSSClient.instance.getFullUrl(value)
         }
       })
       .catch(() => {
@@ -179,12 +180,12 @@
     file: UploadFileInfo
     fileList: UploadFileInfo[]
   }) => {
-    const index = listRef.value.findIndex((i) => i.id === data.file.id)
+    const index = listRef.value!.findIndex((i) => i.id === data.file.id)
 
     if (index !== -1) {
-      listRef.value.splice(index, 1)
+      listRef.value!.splice(index, 1)
 
-      await AliOSSAbortMultipartUpload()
+      await AliOSSClient.instance.abortMultipartUpload()
     }
   }
 
@@ -200,14 +201,14 @@
   }
 
   const onDownload = (file: UploadFileInfo) => {
-    downloadByUrl({ url: file.url, fileName: file.name })
+    downloadByUrl({ url: file.url!, fileName: file.name })
   }
 
   const onBeforeUpload = (data: {
     file: UploadFileInfo
     fileList: UploadFileInfo[]
   }) => {
-    if (data.file.file.size / 1024 > props.size) {
+    if (data.file.file!.size / 1024 > props.size) {
       useAppMessage().error(
         `File size should not be more than ${props.size / 1024}M`
       )
@@ -218,12 +219,14 @@
   }
 
   onMounted(() => {
-    listRef.value = props.value?.map((i) => ({
-      id: genString(8),
-      name: i,
-      status: 'finished',
-      url: onGetFullUrl(`${props.folder}/${i}`),
-    }))
+    setTimeout(() => {
+      listRef.value = props.value?.map((i) => ({
+        id: genString(8),
+        name: i,
+        status: 'finished',
+        url: AliOSSClient.instance.getFullUrl(`${props.folder}/${i}`),
+      }))
+    }, 500)
   })
 </script>
 
