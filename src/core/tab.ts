@@ -1,8 +1,20 @@
-import { App404Name, AppRedirectName } from '/@/router/constant'
+import {
+  App403Name,
+  App404Name,
+  App500Name,
+  AppAuthName,
+  AppRedirectName,
+} from '/@/router/constant'
 
 const { tab, menu } = useAppState()
 
-const nameBlackList: string[] = [App404Name, AppRedirectName]
+const nameBlackList: string[] = [
+  AppAuthName,
+  App404Name,
+  App500Name,
+  App403Name,
+  AppRedirectName,
+]
 
 /**
  * @description Util Function 1 - Close multiple tabs

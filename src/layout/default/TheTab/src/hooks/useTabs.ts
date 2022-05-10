@@ -30,17 +30,19 @@ export const useTabs = () => {
     })
   }
 
-  watchEffect(
+  watch(
+    route,
     () => {
       // Build tab
       buildTabs(createTab(route))
 
       // Scroll
-      // Trick to trigger the scroll
       appMemo.value.device && onScrollToCurrentTab()
     },
-    // need to set sync otherwise when toggle header visible, it will cause recursive error
-    { flush: 'sync' }
+    {
+      immediate: true,
+      deep: true,
+    }
   )
 
   return { scrollRef, getCurrentRouteTabIndex }
