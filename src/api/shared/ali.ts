@@ -1,4 +1,6 @@
-// get oss sts token
+/**
+ * @description get ali oss sts token from backend
+ */
 export const getAliSTSToken = () => {
   return AppAxios.get<{
     accessKeyId: string
@@ -6,7 +8,10 @@ export const getAliSTSToken = () => {
     stsToken: string
     region: string
     bucket: string
-  }>({
-    url: '/shared/ali/sts',
-  })
+  }>(
+    {
+      url: '/shared/ali/sts',
+    },
+    { autoDecryptResponseData: true }
+  )
 }

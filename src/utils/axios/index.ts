@@ -41,6 +41,14 @@ const axiosConfig: AxiosRequestConfigExtend = {
 
     // custom each api cached time
     cachedSeconds: Number(import.meta.env.VITE_AXIOS_CACHE_SECOND) * 1000,
+
+    // default is not to auto decrypt response data
+    // used for to get some keys from backend
+    autoDecryptResponseData: false,
+
+    // default is not to auto encrypt the request data
+    // used for in signin/signup case
+    autoEncryptRequestData: false,
   },
 
   // adapter for cache, default is 5s

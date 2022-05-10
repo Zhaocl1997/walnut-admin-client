@@ -74,6 +74,23 @@ export interface AxiosCustomConfig {
    * @default true
    */
   transformStringBoolean?: boolean
+
+  /**
+   * @description auto decrypt the sensitive-encrypted data fetched from backend
+   * @default false
+   */
+  autoDecryptResponseData?: boolean
+
+  /**
+   * @description auto encrypt the sensitive data in post method
+   * @default false
+   */
+  autoEncryptRequestData?: boolean
+
+  /**
+   * @description pick field to encrypt
+   */
+  encryptFields?: string[]
 }
 
 /**

@@ -4,6 +4,7 @@ import {
   easyFilterEmptyValue,
   easyTransformObjectStringBoolean,
 } from 'easy-fns-ts'
+import { merge } from 'lodash-es'
 
 import { checkReponseErrorStatus } from './checkStatus'
 import {
@@ -11,6 +12,7 @@ import {
   userActionSignOut,
 } from '/@/store/actions/user'
 import { BussinessCodeConst } from '/@/const/axios'
+import { AppResponseEncryption, AppRequestEncryption } from '../crypto'
 
 const { token, refresh_token, app } = useAppState()
 
@@ -37,9 +39,9 @@ export const transform: AxiosTransform = {
       token.value && setTokenInRequest(config, token.value)
     }
 
-    // set refresh token in header as well, didn't use cookie
-    if (true) {
-      refresh_token.value && (config.headers!['Refresh'] = refresh_token.value)
+    // add timestamp
+    if (mergedCustomOptions.timestamp) {
+      config.url += `?_t=${Date.now()}`
     }
 
     // Demonstrate purpose API
@@ -57,6 +59,18 @@ export const transform: AxiosTransform = {
       config.data = easyTransformObjectStringBoolean(config.data)
     }
 
+    // auto encrypt body data(post)
+    if (mergedCustomOptions.autoEncryptRequestData) {
+      const cryptedObj = Object.fromEntries(
+        mergedCustomOptions.encryptFields!.map((key) => [
+          key,
+          AppRequestEncryption.encrypt(config.data[key]),
+        ])
+      )
+
+      config.data = merge(config.data, cryptedObj)
+    }
+
     return config
   },
 
@@ -71,6 +85,11 @@ export const transform: AxiosTransform = {
 
     // normal success
     if (code === BussinessCodeConst.SUCCESS) {
+      // @ts-ignore
+      if (res.config.customConfig.autoDecryptResponseData) {
+        return Promise.resolve(AppResponseEncryption.decrypt(data))
+      }
+
       return Promise.resolve(data)
     }
 
@@ -82,17 +101,19 @@ export const transform: AxiosTransform = {
         isRefreshing = true
 
         return userActionRefreshToken()
-          .then((res) => {
-            if (!res) return
+          .then((refresh_token) => {
+            if (!refresh_token) return
 
-            setTokenInRequest(config, res)
+            setTokenInRequest(config, refresh_token)
 
             // token already refreshed, call the waiting request
-            requestsQueue.forEach((cb) => cb(res))
+            requestsQueue.forEach((cb) => cb(refresh_token))
             // clean queue
             requestsQueue = []
 
-            return AppAxios.request(config)
+            // add customConfig
+            // @ts-ignore
+            return AppAxios.request(config, config.customConfig)
           })
           .finally(() => {
             isRefreshing = false
@@ -135,6 +156,8 @@ export const transform: AxiosTransform = {
       // since we have the error message, just resolve so handle logic behind
       return Promise.reject()
     }
+
+    return Promise.reject()
   },
 
   // Here handle response error

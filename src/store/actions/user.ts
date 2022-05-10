@@ -11,7 +11,6 @@ import { AppAuthName } from '/@/router/constant'
 import { clearTabs } from '/@/core/tab'
 import { AppCoreFn1 } from '/@/core'
 import { menuActionReset } from './menu'
-import { AppAxiosEncryption } from '/@/utils/crypto'
 import { useAppSecretKeys } from '../keys'
 
 const { menu, token, refresh_token, user, auth } = useAppState()
@@ -22,7 +21,7 @@ const { menu, token, refresh_token, user, auth } = useAppState()
 export const userActionSignin = async (payload: SigninPayloadType) => {
   const params = {
     username: payload.username,
-    password: AppAxiosEncryption.encrypt(payload.password)!,
+    password: payload.password!,
   }
 
   const res = await signin(params)
@@ -99,9 +98,7 @@ export const userActionRefreshToken = async () => {
 export const userActionGetSecretKeys = async () => {
   const res = await getSecretKeys()
 
-  const keys = JSON.parse(AppAxiosEncryption.decrypt(res))
-
   const secretKeys = useAppSecretKeys()
 
-  secretKeys.value = keys
+  secretKeys.value = res
 }

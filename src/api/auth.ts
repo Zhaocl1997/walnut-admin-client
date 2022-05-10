@@ -19,10 +19,13 @@ export const signin = (data: SigninPayloadType) => {
   return AppAxios.post<{
     access_token: string
     refresh_token: string
-  }>({
-    url: AuthEnum.SIGNIN,
-    data,
-  })
+  }>(
+    {
+      url: AuthEnum.SIGNIN,
+      data,
+    },
+    { autoEncryptRequestData: true, encryptFields: ['password'] }
+  )
 }
 
 /**
@@ -72,7 +75,10 @@ export const getUserInfo = () => {
  * @description get some sensitive keys from backend
  */
 export const getSecretKeys = () => {
-  return AppAxios.get<string>({
-    url: AuthEnum.KEYS,
-  })
+  return AppAxios.get<AppSecretKeysInterface>(
+    {
+      url: AuthEnum.KEYS,
+    },
+    { autoDecryptResponseData: true }
+  )
 }
