@@ -12,7 +12,8 @@ import { isDev } from '../constant/vue'
 const axiosConfig: AxiosRequestConfigExtend = {
   baseURL: isDev()
     ? import.meta.env.VITE_PROXY_PREFIX
-    : import.meta.env.VITE_API_TARGET + import.meta.env.VITE_API_PREFIX,
+    : import.meta.env.VITE_PROXY_PREFIX ??
+      import.meta.env.VITE_API_TARGET + import.meta.env.VITE_API_PREFIX,
 
   // time out, default is 10s
   timeout: Number(import.meta.env.VITE_AXIOS_TIMEOUT_SECOND) * 1000,

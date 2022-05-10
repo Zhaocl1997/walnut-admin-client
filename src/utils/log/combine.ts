@@ -6,13 +6,13 @@ export const AppLog = (msg: string | unknown) => {
 }
 
 export const AppInfo = (msg: string | unknown) => {
-  console.log(`[${appName}] [${getNow()}]`, msg)
+  console.info(`[${appName}] [${getNow()}]`, msg)
 }
 
 export const AppWarn = (msg: string | unknown) => {
-  console.log(`[${appName}] [${getNow()}]`, msg)
+  console.warn(`[${appName}] [${getNow()}]`, msg)
 }
 
 export const AppError = (msg: string | unknown) => {
-  console.log(`[${appName}] [${getNow()}]`, msg)
+  console.error(`[${appName}] [${getNow()}]`, msg)
 }

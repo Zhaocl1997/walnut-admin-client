@@ -39,9 +39,9 @@ export interface EncryptionOptions {
    */
   key: string
   iv: string
-  method: EncryptionMethod
-  mode: EncryptionMode
-  padding: EncryptionPadding
+  method?: EncryptionMethod
+  mode?: EncryptionMode
+  padding?: EncryptionPadding
 }
 
 export class Encryption {
@@ -51,15 +51,16 @@ export class Encryption {
   private mode
   private padding
 
-  constructor(opt: EncryptionOptions) {
-    const { key, iv, method = 'AES', mode = 'CBC', padding = 'Pkcs7' } = opt
+  constructor(opt?: EncryptionOptions) {
+    const { key, iv, method = 'AES', mode = 'CBC', padding = 'Pkcs7' } = opt!
 
     if (key.length % 4 !== 0) {
       throw new Error('key length must be multiple of 4')
     }
 
-    this.key = CryptoJS.enc.Hex.parse(key)
-    this.iv = CryptoJS.enc.Hex.parse(iv)
+    this.key = CryptoJS.enc.Utf8.parse(key)
+    this.iv = CryptoJS.enc.Utf8.parse(iv)
+
     this.method = CryptoJS[method]
     this.mode = mode
     this.padding = padding
