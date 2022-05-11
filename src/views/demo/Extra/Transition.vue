@@ -22,7 +22,7 @@
   }
 
   const [register] = useForm({
-    span: 6,
+    span: 12,
     schemas: [
       {
         type: 'Extend:TransitionSelect',

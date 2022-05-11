@@ -20,18 +20,20 @@
           : props.msg?.map((i) => <div>{i}</div>)
 
       return () => (
-        <n-tooltip>
-          {{
-            default: () => formatMessage(),
-            trigger: () => (
-              <w-icon
-                icon={props.icon}
-                width="16"
-                class="align-middle inline mb-0.5"
-              ></w-icon>
-            ),
-          }}
-        </n-tooltip>
+        <div>
+          <n-tooltip>
+            {{
+              default: () => formatMessage(),
+              trigger: () => (
+                <w-icon
+                  icon={props.icon}
+                  width="16"
+                  class="align-middle inline mb-0.5"
+                ></w-icon>
+              ),
+            }}
+          </n-tooltip>
+        </div>
       )
     },
   })

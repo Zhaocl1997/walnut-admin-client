@@ -9,14 +9,16 @@
     setup(props, { attrs, slots, emit, expose }) {
       return () => (
         <n-h4 class="m-0 hstack items-center">
-          {() => (
-            <>
-              <span class="mr-1">{slots.default?.()}</span>
-              {props.helpMessage && (
-                <w-message msg={props.helpMessage}></w-message>
-              )}
-            </>
-          )}
+          {{
+            default: () => (
+              <>
+                <span class="mr-1">{slots.default?.()}</span>
+                {props.helpMessage && (
+                  <w-message msg={props.helpMessage}></w-message>
+                )}
+              </>
+            ),
+          }}
         </n-h4>
       )
     },

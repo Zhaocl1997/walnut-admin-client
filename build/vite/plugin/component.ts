@@ -37,6 +37,7 @@ const comp = {
     'Icon',
     'Input',
     'InputNumber',
+    'Modal',
     'Radio',
     'Select',
     'Switch',
