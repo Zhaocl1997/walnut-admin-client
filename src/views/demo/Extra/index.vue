@@ -22,6 +22,8 @@
         <n-anchor-link title="Title" href="#Title" />
         <n-anchor-link title="Transition" href="#Transition" />
         <n-anchor-link title="Axios" href="#Axios" />
+        <n-anchor-link title="Modal" href="#Modal" />
+        <n-anchor-link title="Drawer" href="#Drawer" />
       </n-anchor>
     </div>
 
@@ -41,6 +43,8 @@
         <DemoTitle id="Title" />
         <DemoTransition id="Transition" />
         <DemoAxios id="Axios" />
+        <DemoModal id="Modal" />
+        <DemoDrawer id="Drawer" />
       </div>
     </div>
   </div>
@@ -58,6 +62,8 @@
   import DemoAxios from './Axios.vue'
   import DemoVerify from './Verify.vue'
   import DemoQRCode from './QRCode.vue'
+  import DemoModal from './Modal.vue'
+  import DemoDrawer from './Drawer.vue'
 </script>
 
 <script lang="ts">
