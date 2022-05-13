@@ -48,8 +48,9 @@ export const extendProps = {
   advancedProps: {
     type: Object as PropType<
       (ModalProps | (DrawerProps & DrawerContentProps)) &
-        Pick<WForm.Inst.WFormInst, 'onYes' | 'onNo'> & {
+        Partial<Pick<WForm.Inst.WFormInst, 'onYes' | 'onNo'>> & {
           actionType?: WTable.HeaderActionType
+          defaultButton?: boolean
         }
     >,
     default: undefined,

@@ -95,6 +95,8 @@ export const useFormAdvanced = (
           onYes={onYes}
           onNo={onNo}
           loading={loading.value}
+          defaultButton={props.value.advancedProps?.defaultButton}
+          closable={props.value.advancedProps?.closable}
         >
           {render()}
         </w-modal>
@@ -116,6 +118,8 @@ export const useFormAdvanced = (
           onYes={onYes}
           onNo={onNo}
           loading={loading.value}
+          defaultButton={props.value.advancedProps?.defaultButton}
+          closable={props.value.advancedProps?.closable}
         >
           {render()}
         </w-drawer>

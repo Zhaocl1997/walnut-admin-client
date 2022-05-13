@@ -14,7 +14,7 @@
       </template>
 
       <template #footer>
-        <n-space size="small">
+        <n-space size="small" v-if="defaultButton">
           <n-button
             size="small"
             :onClick="() => $emit('no')"
@@ -45,11 +45,13 @@
     title?: string
     loading?: boolean
     helpMessage?: string
+    defaultButton?: boolean
   }
 
   const props = withDefaults(defineProps<InternalProps>(), {
     closable: false,
     loading: false,
+    defaultButton: true,
   })
 
   const emits = defineEmits(['yes', 'no'])

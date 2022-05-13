@@ -222,7 +222,11 @@
         labelPlacement: 'left',
       },
 
-      drawerWidth: '40%',
+      advancedProps: {
+        defaultButton: false,
+        width: '40%',
+        closable: true,
+      },
 
       schemas: [
         {

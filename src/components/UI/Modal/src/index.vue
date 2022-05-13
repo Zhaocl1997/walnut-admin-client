@@ -35,7 +35,7 @@
     </template>
 
     <template #action>
-      <n-space size="small" class="float-right">
+      <n-space size="small" class="float-right" v-if="defaultButton">
         <n-button size="small" :onClick="() => $emit('no')" :disabled="loading">
           {{ t('app:button:no') }}
         </n-button>
@@ -68,6 +68,7 @@
     height?: string | number
     draggable?: boolean
     fullscreen?: boolean
+    defaultButton?: boolean
   }
 
   const props = withDefaults(defineProps<InternalProps>(), {
@@ -76,6 +77,7 @@
     height: 'auto',
     draggable: true,
     fullscreen: true,
+    defaultButton: true,
   })
 
   const emits = defineEmits(['yes', 'no', 'update:show'])
