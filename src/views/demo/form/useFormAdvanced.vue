@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
   const configData = ref({
-    preset: false,
+    preset: 'modal',
     maskClosable: true,
     title: 'Title',
   })
@@ -26,19 +26,21 @@
   const formData = ref({})
 
   const [register1] = useForm<typeof configData.value>({
-    span: 8,
-    xGap: 20,
-    labelWidth: 120,
+    span: 12,
+    labelWidth: 80,
     schemas: [
       {
-        type: 'Base:Switch',
+        type: 'Base:Radio',
         formProp: {
           path: 'preset',
           label: 'Preset',
         },
         componentProp: {
-          checkedText: 'Drawer',
-          uncheckedText: 'Modal',
+          button: true,
+          options: ['drawer', 'modal'].map((i) => ({
+            label: i,
+            value: i,
+          })),
         },
       },
       {
@@ -62,7 +64,7 @@
   })
 
   const [register2, { onOpen }] = useForm({
-    preset: computed(() => (configData.value.preset ? 'drawer' : 'modal')),
+    preset: computed(() => configData.value.preset),
     advancedProps: {
       maskClosable: computed(() => configData.value.maskClosable),
       title: computed(() => configData.value.title),
@@ -76,10 +78,9 @@
       onNo: (done) => {
         done()
       },
-      width: '400px',
+      width: '500px',
     },
-    span: 18,
-    labelWidth: 100,
+    labelWidth: 80,
     schemas: Array.from({ length: 20 }, (v, k) => {
       return {
         type: 'Base:Input',

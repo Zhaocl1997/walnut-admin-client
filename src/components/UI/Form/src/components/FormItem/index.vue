@@ -84,6 +84,7 @@
                       {getFormTranslated(t, formProps, item!)}{' '}
                       {item?.formProp?.labelHelpMessage && (
                         <w-message
+                          class="inline"
                           msg={getFormTranslated(t, formProps, item!, true)}
                         />
                       )}

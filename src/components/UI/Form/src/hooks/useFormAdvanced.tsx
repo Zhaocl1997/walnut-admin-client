@@ -1,5 +1,5 @@
 import type { WForm } from '../types'
-import type { DrawerProps, ModalProps } from 'naive-ui'
+import type { DrawerProps } from 'naive-ui'
 
 export const useFormAdvanced = (
   render: Fn,
@@ -82,50 +82,22 @@ export const useFormAdvanced = (
       : title
   }
 
-  const renderAction = () => (
-    <n-space size="small">
-      <n-button
-        size="small"
-        type="primary"
-        onClick={onYes}
-        disabled={loading.value}
-        loading={loading.value}
-      >
-        {(props.value.advancedProps as ModalProps).positiveText ??
-          t('app:button:yes')}
-      </n-button>
-
-      <n-button size="small" onClick={onNo} disabled={loading.value}>
-        {(props.value.advancedProps as ModalProps).negativeText ??
-          t('app:button:no')}
-      </n-button>
-    </n-space>
-  )
-
   const renderAdvanced = () => {
     if (props.value.preset === 'modal') {
       return (
-        <n-modal
-          preset="dialog"
+        <w-modal
           v-model={[show.value, 'show']}
           title={onGetTitle(props.value.advancedProps?.title as string)}
-          maskClosable={!loading.value}
-          onUpdateShow={(show: boolean) => {
-            !show && onNo()
-          }}
+          maskClosable={
+            props.value.advancedProps?.maskClosable && !loading.value
+          }
           closable={!loading.value}
+          onYes={onYes}
+          onNo={onNo}
           loading={loading.value}
-          show-icon={false}
         >
-          {{
-            default: () => (
-              <div class="mt-4">
-                <n-spin show={loading.value}>{render()}</n-spin>
-              </div>
-            ),
-            action: () => renderAction(),
-          }}
-        </n-modal>
+          {render()}
+        </w-modal>
       )
     }
 
@@ -135,7 +107,9 @@ export const useFormAdvanced = (
           v-model={[show.value, 'show']}
           title={onGetTitle(props.value.advancedProps?.title as string)}
           width={(props.value.advancedProps as DrawerProps)?.width}
-          maskClosable={!loading.value}
+          maskClosable={
+            props.value.advancedProps?.maskClosable && !loading.value
+          }
           onUpdateShow={(show: boolean) => {
             !show && onNo()
           }}
