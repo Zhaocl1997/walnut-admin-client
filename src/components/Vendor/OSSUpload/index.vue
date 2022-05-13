@@ -232,7 +232,7 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'WVendorAliOSSUpload',
+    name: 'WVendorOSSUpload',
 
     inheritAttrs: false,
   })

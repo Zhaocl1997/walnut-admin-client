@@ -60,6 +60,6 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'ECharts',
+    name: 'WVendorECharts',
   })
 </script>

@@ -8,7 +8,12 @@
       </template>
 
       <template #trigger>
-        <n-button text :type="type" :disabled="disabled">
+        <n-button
+          :text="text"
+          :type="type"
+          :disabled="disabled"
+          v-bind="$attrs"
+        >
           <w-icon v-bind="$attrs" @click.stop></w-icon>
         </n-button>
       </template>
@@ -16,20 +21,29 @@
   </template>
 
   <template v-else>
-    <n-button text :type="type" :disabled="disabled">
+    <n-button :text="text" :type="type" :disabled="disabled">
       <w-icon v-bind="$attrs" @click.stop></w-icon>
     </n-button>
   </template>
 </template>
 
-<script lang="ts">
-  import { props } from './props'
+<script lang="ts" setup>
+  import type { PopoverPlacement } from 'naive-ui'
 
+  // TODO 888
+  interface InternalProps {
+    type?: NaiveCompType
+    disabled?: boolean
+    text?: boolean
+    helpMessage?: string | (() => string)
+    placement?: PopoverPlacement
+  }
+
+  const props = withDefaults(defineProps<InternalProps>(), { text: true })
+</script>
+
+<script lang="ts">
   export default defineComponent({
     name: 'WAIcon',
-
-    props,
-
-    setup(prop) {},
   })
 </script>

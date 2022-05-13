@@ -5,7 +5,7 @@
         <w-demo-card title="Basic Usage">
           <w-JSON :value="state.fileList1"></w-JSON>
 
-          <WAliOSSUpload v-model:value="state.fileList1"></WAliOSSUpload>
+          <WVendorOSSUpload v-model:value="state.fileList1"></WVendorOSSUpload>
         </w-demo-card>
       </n-list-item>
 
@@ -13,7 +13,7 @@
         <w-demo-card title="Feedback">
           <w-JSON :value="state.fileList2"></w-JSON>
 
-          <WAliOSSUpload v-model:value="state.fileList2"></WAliOSSUpload>
+          <WVendorOSSUpload v-model:value="state.fileList2"></WVendorOSSUpload>
         </w-demo-card>
       </n-list-item>
 
@@ -21,10 +21,10 @@
         <w-demo-card title="Disabled">
           <w-JSON :value="state.fileList3"></w-JSON>
 
-          <WAliOSSUpload
+          <WVendorOSSUpload
             v-model:value="state.fileList3"
             disabled
-          ></WAliOSSUpload>
+          ></WVendorOSSUpload>
         </w-demo-card>
       </n-list-item>
 
@@ -39,11 +39,11 @@
         >
           <w-JSON :value="state.fileList4"></w-JSON>
 
-          <WAliOSSUpload
+          <WVendorOSSUpload
             v-model:value="state.fileList4"
             :max="2"
             accept=".doc,.docx"
-          ></WAliOSSUpload>
+          ></WVendorOSSUpload>
         </w-demo-card>
       </n-list-item>
 
@@ -54,11 +54,11 @@
         >
           <w-JSON :value="state.fileList5"></w-JSON>
 
-          <WAliOSSUpload
+          <WVendorOSSUpload
             v-model:value="state.fileList5"
             image
             :size="1024"
-          ></WAliOSSUpload>
+          ></WVendorOSSUpload>
         </w-demo-card>
       </n-list-item>
 
@@ -66,11 +66,11 @@
         <w-demo-card title="Image Upload Feedback">
           <w-JSON :value="state.fileList6"></w-JSON>
 
-          <WAliOSSUpload
+          <WVendorOSSUpload
             v-model:value="state.fileList6"
             image
             :size="1024"
-          ></WAliOSSUpload>
+          ></WVendorOSSUpload>
         </w-demo-card>
       </n-list-item>
 
@@ -78,12 +78,12 @@
         <w-demo-card title="Image Upload Disabled">
           <w-JSON :value="state.fileList7"></w-JSON>
 
-          <WAliOSSUpload
+          <WVendorOSSUpload
             v-model:value="state.fileList7"
             image
             :size="1024"
             disabled
-          ></WAliOSSUpload>
+          ></WVendorOSSUpload>
         </w-demo-card>
       </n-list-item>
 
@@ -98,11 +98,11 @@
         >
           <w-JSON :value="state.fileList8"></w-JSON>
 
-          <WAliOSSUpload
+          <WVendorOSSUpload
             v-model:value="state.fileList8"
             :size="1024 * 100"
             :crossover-size="1024 * 5"
-          ></WAliOSSUpload>
+          ></WVendorOSSUpload>
         </w-demo-card>
       </n-list-item>
     </n-list>
@@ -110,7 +110,7 @@
 </template>
 
 <script lang="ts" setup>
-  import WAliOSSUpload from '/@/components/Vendor/aliOSSUpload'
+  import WVendorOSSUpload from '/@/components/Vendor/OSSUpload'
 
   const state = ref<any>({
     fileList2: ['test-png.png', 'test-docx.docx', 'test-pdf.pdf'],
@@ -122,6 +122,6 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'AliOSSUploadDemo',
+    name: 'OSSUploadDemo',
   })
 </script>

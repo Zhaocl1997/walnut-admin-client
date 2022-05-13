@@ -4,26 +4,26 @@
       <n-list-item>
         <w-title prefix="bar">Line</w-title>
 
-        <WECharts :option="option1"></WECharts>
+        <WVendorECharts :option="option1"></WVendorECharts>
       </n-list-item>
 
       <n-list-item>
         <w-title prefix="bar">Bar</w-title>
 
-        <WECharts :option="option2"></WECharts>
+        <WVendorECharts :option="option2"></WVendorECharts>
       </n-list-item>
 
       <n-list-item>
         <w-title prefix="bar">Pie</w-title>
 
-        <WECharts :option="option3"></WECharts>
+        <WVendorECharts :option="option3"></WVendorECharts>
       </n-list-item>
     </n-list>
   </w-demo-card>
 </template>
 
 <script lang="ts" setup>
-  import WECharts from '/@/components/Vendor/echarts'
+  import WVendorECharts from '/@/components/Vendor/echarts'
 
   import { option1, option2, option3 } from './option'
 </script>

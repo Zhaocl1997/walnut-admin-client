@@ -170,7 +170,7 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'LocationPicker',
+    name: 'WVendorLocationPicker',
   })
 </script>
 

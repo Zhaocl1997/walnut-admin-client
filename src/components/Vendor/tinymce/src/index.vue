@@ -162,6 +162,6 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'TinymceEditor',
+    name: 'WVendorTinymceEditor',
   })
 </script>

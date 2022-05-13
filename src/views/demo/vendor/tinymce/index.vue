@@ -5,7 +5,10 @@
         <w-title prefix="bar">Basic usage</w-title>
 
         <pre class="whitespace-pre-wrap">Value: {{ value }}</pre>
-        <TinymceEditor v-model:value="value" disabled></TinymceEditor>
+        <WVendorTinymceEditor
+          v-model:value="value"
+          disabled
+        ></WVendorTinymceEditor>
       </n-list-item>
 
       <n-list-item>
@@ -20,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-  import TinymceEditor from '/@/components/Vendor/tinymce'
+  import WVendorTinymceEditor from '/@/components/Vendor/tinymce'
 
   const value = ref(
     '<p style="text-align: center;"><span style="color: rgb(224, 62, 45); font-size: 36pt;"><em><strong>This is default content</strong></em></span></p>'
