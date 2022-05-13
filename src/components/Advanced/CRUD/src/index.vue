@@ -104,7 +104,7 @@
     ...getProps.value.formProps,
 
     advancedProps: {
-      ...getProps.value.formProps!.advancedProps,
+      ...getProps.value.formProps?.advancedProps,
       width: getProps.value.formProps?.advancedProps?.width ?? 500,
       actionType,
       onYes: async (apiHandler) => {

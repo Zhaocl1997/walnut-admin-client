@@ -50,44 +50,57 @@
       </cropper-canvas>
     </n-gi>
 
-    <n-gi :span="8" class="vstack justify-evenly">
-      <n-space vertical size="large">
-        <cropper-viewer
-          selection="#cropperSelection"
-          style="width: 100%"
-        ></cropper-viewer>
+    <n-gi :span="8" class="vstack">
+      <w-scrollbar height="400px">
+        <n-space vertical size="large" class="mb-12">
+          <div class="overflow-auto">
+            <cropper-viewer
+              selection="#cropperSelection"
+              style="height: 200px"
+            ></cropper-viewer>
+          </div>
 
-        <n-grid :x-gap="10" :cols="24">
-          <n-gi :span="12">
-            <cropper-viewer selection="#cropperSelection" style="height: 80px">
-            </cropper-viewer>
-          </n-gi>
+          <n-grid :x-gap="10" :cols="24">
+            <n-gi :span="12">
+              <cropper-viewer
+                selection="#cropperSelection"
+                style="height: 80px"
+              >
+              </cropper-viewer>
+            </n-gi>
 
-          <n-gi :span="8">
-            <cropper-viewer selection="#cropperSelection" style="height: 60px">
-            </cropper-viewer>
-          </n-gi>
+            <n-gi :span="8">
+              <cropper-viewer
+                selection="#cropperSelection"
+                style="height: 60px"
+              >
+              </cropper-viewer>
+            </n-gi>
 
-          <n-gi :span="4">
-            <cropper-viewer selection="#cropperSelection" style="height: 40px">
-            </cropper-viewer>
-          </n-gi>
-        </n-grid>
-      </n-space>
+            <n-gi :span="4">
+              <cropper-viewer
+                selection="#cropperSelection"
+                style="height: 40px"
+              >
+              </cropper-viewer>
+            </n-gi>
+          </n-grid>
+        </n-space>
 
-      <n-space>
-        <w-a-icon
-          v-for="item in buttons"
-          :key="item.icon"
-          :text="false"
-          size="small"
-          height="16"
-          placement="bottom"
-          :icon="item.icon"
-          :help-message="item.helpMessage"
-          @click="item.event"
-        ></w-a-icon>
-      </n-space>
+        <n-space>
+          <w-a-icon
+            v-for="item in buttons"
+            :key="item.icon"
+            :text="false"
+            size="small"
+            height="16"
+            placement="bottom"
+            :icon="item.icon"
+            :help-message="item.helpMessage"
+            @click="item.event"
+          ></w-a-icon>
+        </n-space>
+      </w-scrollbar>
     </n-gi>
   </n-grid>
 </template>
