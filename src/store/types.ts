@@ -32,7 +32,7 @@ export interface AppMemory {
   }
 
   user: {
-    userInfo: Partial<AppUserInfoInterface>
+    userInfo: Partial<AppSystemUser>
   }
 
   tab: {

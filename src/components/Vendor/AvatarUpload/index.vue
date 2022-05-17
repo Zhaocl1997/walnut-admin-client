@@ -9,21 +9,22 @@
       :title="t('comp:avatar-upload:title')"
       width="800px"
       :auto-focus="false"
+      :loading="loading"
       @yes="onYes"
-      @no="show = false"
+      @no="onNo"
+      @update:show="onUpdateShow"
     >
-      <WVendorCropper
+      <w-cropper
         v-model:value="cropperValue"
         v-model:src="value"
         alt="Avatar"
         center
-      ></WVendorCropper>
+      ></w-cropper>
     </w-modal>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import WVendorCropper from '../../Vendor/Cropper'
   import { AliOSSClient } from '../../Vendor/OSSUpload/client'
   import { dataURLtoBlob } from '/@/utils/file/base64'
 
@@ -38,37 +39,70 @@
   const { t } = useAppI18n()
 
   const { user } = useAppState()
-  const userName = user.value.userInfo.userName!
-  const { AppSuccess } = useAppMsgSuccess()
+  const userId = user.value.userInfo._id!
 
   const show = ref(false)
+  const loading = ref(false)
   const cropperValue = ref<string>()
 
-  const onYes = async () => {
-    const client = await AliOSSClient.instance.getClient()
+  const onYes = () => {
+    if (cropperValue.value) {
+      const tempUrl = window.URL.createObjectURL(
+        dataURLtoBlob(cropperValue.value!)
+      )
 
-    const headers = {
-      'Cache-Control': 'no-cache',
-      'Content-Disposition': encodeURIComponent(userName),
-      'x-oss-forbid-overwrite': false,
+      emits('update:value', tempUrl)
     }
 
-    const result = await client.put(
-      `avatar/${userName}.png`,
-      dataURLtoBlob(cropperValue.value!),
-      {
-        headers,
-      }
-    )
+    show.value = false
+  }
 
-    if (result.res.status === 200) {
-      emits('update:value', result.url + `?t=${new Date().getTime()}`)
+  const onNo = () => {
+    show.value = false
+    cropperValue.value = undefined
+  }
 
-      AppSuccess()
-
-      show.value = false
+  const onUpdateShow = (s: boolean) => {
+    if (!s) {
+      cropperValue.value = undefined
     }
   }
+
+  const onSubmit = async () => {
+    if (!cropperValue.value) {
+      return
+    }
+
+    loading.value = true
+
+    try {
+      const client = await AliOSSClient.instance.getClient()
+
+      const headers = {
+        'Cache-Control': 'no-cache',
+        'Content-Disposition': encodeURIComponent(userId),
+        'x-oss-forbid-overwrite': false,
+      }
+
+      const result = await client.put(
+        `avatar/${userId}.png`,
+        dataURLtoBlob(cropperValue.value!),
+        {
+          headers,
+        }
+      )
+
+      if (result.res.status === 200) {
+        emits('update:value', result.url + `?t=${new Date().getTime()}`)
+      }
+    } finally {
+      loading.value = false
+    }
+  }
+
+  defineExpose({
+    onSubmit,
+  })
 </script>
 
 <script lang="ts">

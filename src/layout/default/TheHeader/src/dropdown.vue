@@ -5,7 +5,7 @@
     @select="onSelect"
     :options="dropdownOptions"
   >
-    <div class="hstack">
+    <div class="hstack items-center justify-center">
       <Starport v-if="$route.name !== 'AccountSetting'" port="w-avatar">
         <WAvatar :size="32"> </WAvatar>
       </Starport>
@@ -42,6 +42,7 @@
     {
       type: 'divider',
     },
+
     {
       key: '2',
       label: t('app:user:center'),
@@ -56,7 +57,9 @@
 
   // TODO
   const getUserName = computed(() =>
-    upperFirst(user.value.userInfo?.userName! || '')
+    upperFirst(
+      (user.value.userInfo?.nickName! ?? user.value.userInfo?.userName!) || ''
+    )
   )
 
   const onSelect = async (val: string) => {

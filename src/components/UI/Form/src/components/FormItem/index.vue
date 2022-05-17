@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type { WForm } from '../../types'
 
-  import { easyOmit, isFunction } from 'easy-fns-ts'
+  import { clone, omit, isFunction, isBoolean } from 'lodash-es'
 
   import { componentMap } from './utils'
   import { useFormContext } from '../../hooks/useFormContext'
@@ -55,41 +55,52 @@
       const renderNFormItem = () => (
         <n-form-item
           vShow={getEPBooleanValue(item, formProps.value, 'vShow')}
-          {...(typeof item?.formProp?.rule === 'boolean'
-            ? easyOmit(item?.formProp, 'rule')
-            : typeof item?.formProp?.label === 'boolean'
-            ? easyOmit(item?.formProp, 'label')
+          {...(isBoolean(item?.formProp?.rule) &&
+          isBoolean(item?.formProp?.label)
+            ? omit(clone(item?.formProp), 'rule', 'label')
+            : isBoolean(item?.formProp?.rule)
+            ? omit(item?.formProp, 'rule')
+            : isBoolean(item?.formProp?.label)
+            ? omit(clone(item?.formProp), 'label')
             : item?.formProp)}
           class={formProps.value.formItemClass}
         >
           {{
             default: () => renderBase(),
-            label:
-              item?.type === 'Extend:Dict' && item?.formProp?.label === true
-                ? () => {
-                    const res = AppDictMap.get(item?.componentProp?.dictType!)
-                    return (
-                      <>
-                        {t(res?.name!)}{' '}
-                        {item?.formProp?.labelHelpMessage && (
-                          <w-message
-                            msg={getFormTranslated(t, formProps, item!, true)}
-                          />
-                        )}
-                      </>
-                    )
-                  }
-                : () => (
-                    <>
-                      {getFormTranslated(t, formProps, item!)}{' '}
-                      {item?.formProp?.labelHelpMessage && (
-                        <w-message
-                          class="inline"
-                          msg={getFormTranslated(t, formProps, item!, true)}
-                        />
-                      )}
-                    </>
-                  ),
+            label: () => {
+              if (
+                item?.type === 'Extend:Dict' &&
+                item?.formProp?.label === true
+              ) {
+                const res = AppDictMap.get(item?.componentProp?.dictType!)
+
+                if (!res) return
+
+                return (
+                  <>
+                    {t(res?.name!)}{' '}
+                    {item?.formProp?.labelHelpMessage && (
+                      <w-message
+                        class="inline"
+                        msg={getFormTranslated(t, formProps, item!, true)}
+                      />
+                    )}
+                  </>
+                )
+              }
+
+              return (
+                <>
+                  {getFormTranslated(t, formProps, item!)}{' '}
+                  {item?.formProp?.labelHelpMessage && (
+                    <w-message
+                      class="inline"
+                      msg={getFormTranslated(t, formProps, item!, true)}
+                    />
+                  )}
+                </>
+              )
+            },
           }}
         </n-form-item>
       )

@@ -20,7 +20,7 @@ export const useTableColumns = (
         <>
           {getTableTranslated(props, item)}
           {item.titleHelpMessage && (
-            <w-message msg={getTableTranslated(props, item, true)}></w-message>
+            <w-message msg={getTableTranslated(props, item, true)} class="inline"></w-message>
           )}
         </>
       ),

@@ -64,51 +64,54 @@
 
   const { lastBuildTime } = __APP_INFO__
 
-  const infoItems = computed<WDescriptionsItem[]>(() => [
-    {
-      label: t('desc:about:info:version'),
-      value: pkg.version,
-      type: 'tag',
-      typeProps: {
-        type: 'primary',
-      },
-    },
-    {
-      label: t('desc:about:info:doc'),
-      value: t('desc:about:info:doc'),
-      type: 'link',
-      typeProps: {
-        type: 'primary',
-        link: 'https://walnut-admin-doc.netlify.app/',
-      },
-    },
-    {
-      label: t('desc:about:info:preview'),
-      value: t('desc:about:info:preview'),
-      type: 'link',
-      typeProps: {
-        type: 'primary',
-        link: 'http://152.136.25.175',
-      },
-    },
-    {
-      label: t('desc:about:info:code'),
-      value: t('desc:about:info:code'),
-      type: 'link',
-      typeProps: {
-        type: 'primary',
-        link: 'https://github.com/Zhaocl1997',
-      },
-    },
-    {
-      label: t('desc:about:info:buildTime'),
-      value: lastBuildTime,
-      type: 'tag',
-      typeProps: {
-        type: 'info',
-      },
-    },
-  ])
+  const infoItems = computed<WDescriptionsItem[]>(
+    () =>
+      [
+        {
+          label: t('desc:about:info:version'),
+          value: pkg.version,
+          type: 'tag',
+          typeProps: {
+            type: 'primary',
+          },
+        },
+        {
+          label: t('desc:about:info:doc'),
+          value: t('desc:about:info:doc'),
+          type: 'link',
+          typeProps: {
+            type: 'primary',
+            link: 'https://walnut-admin-doc.netlify.app/',
+          },
+        },
+        {
+          label: t('desc:about:info:preview'),
+          value: t('desc:about:info:preview'),
+          type: 'link',
+          typeProps: {
+            type: 'primary',
+            link: 'http://152.136.25.175',
+          },
+        },
+        {
+          label: t('desc:about:info:code'),
+          value: t('desc:about:info:code'),
+          type: 'link',
+          typeProps: {
+            type: 'primary',
+            link: 'https://github.com/Zhaocl1997',
+          },
+        },
+        {
+          label: t('desc:about:info:buildTime'),
+          value: lastBuildTime,
+          type: 'tag',
+          typeProps: {
+            type: 'info',
+          },
+        },
+      ] as WDescriptionsItem[]
+  )
 
   const DepItems = ref<WDescriptionsItem[]>(
     Object.entries(pkg.dependencies).map(([k, v]) => ({

@@ -9,13 +9,14 @@
           style="width: 100%; height: 400px"
         >
           <cropper-image
+            v-if="src"
             ref="imageRef"
             :src="src"
             :alt="alt"
-            rotatable
-            scalable
-            skewable
-            translatable
+            :rotatable="src"
+            :scalable="src"
+            :skewable="src"
+            :translatable="src"
             crossorigin="anonymous"
           ></cropper-image>
 
@@ -27,11 +28,11 @@
             :id="selectionId"
             ref="selectionRef"
             initial-coverage="0.5"
-            movable
-            resizable
-            zoomable
-            keyboard
-            outlined
+            :movable="src"
+            :resizable="src"
+            :zoomable="src"
+            :keyboard="src"
+            :outlined="src"
             @change="onSelectionChange"
           >
             <cropper-grid role="grid" covered bordered></cropper-grid>
@@ -57,6 +58,7 @@
         <w-scrollbar v-if="flag" height="330px">
           <n-space vertical size="large">
             <cropper-viewer
+              class="border-1 border-bodyColor"
               :selection="`#${selectionId}`"
               style="height: 200px"
             ></cropper-viewer>
@@ -64,6 +66,7 @@
             <n-grid :x-gap="10" :cols="24">
               <n-gi :span="12">
                 <cropper-viewer
+                  class="border-1 border-bodyColor"
                   :selection="`#${selectionId}`"
                   style="height: 80px"
                 >
@@ -72,6 +75,7 @@
 
               <n-gi :span="8">
                 <cropper-viewer
+                  class="border-1 border-bodyColor"
                   :selection="`#${selectionId}`"
                   style="height: 60px"
                 >
@@ -80,6 +84,7 @@
 
               <n-gi :span="4">
                 <cropper-viewer
+                  class="border-1 border-light-50"
                   :selection="`#${selectionId}`"
                   style="height: 40px"
                 >
@@ -118,6 +123,7 @@
             height="16"
             placement="bottom"
             :icon="item.icon"
+            :disabled="!src"
             :help-message="item.helpMessage"
             @click="item.event"
           ></w-a-icon>
@@ -137,8 +143,8 @@
 
   // TODO 888
   interface InternalProps {
-    src: string
-    alt: string
+    src?: string
+    alt?: string
     value?: string
     disabled?: boolean
     center?: boolean
@@ -297,7 +303,7 @@
   ]
 
   onMounted(() => {
-    if (props.center) {
+    if (props.src && props.center) {
       setTimeout(() => {
         onReset()
       }, 200)
