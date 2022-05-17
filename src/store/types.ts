@@ -11,7 +11,7 @@ export interface AppStorage {
   refresh_token: string
 
   auth: {
-    username?: string
+    userName?: string
     password?: string
   }
 }

@@ -13,7 +13,7 @@
   const loading = ref(false)
 
   const accountFormData = reactive({
-    username: '',
+    userName: '',
     password: '',
     rememberMe: true,
   })
@@ -46,13 +46,13 @@
       {
         type: 'Base:Input',
         formProp: {
-          path: 'username',
+          path: 'userName',
           ruleType: 'string',
         },
         componentProp: {
           clearable: true,
           inputProps: {
-            autocomplete: 'username',
+            autocomplete: 'userName',
           },
         },
       },
@@ -122,7 +122,7 @@
   })
 
   onMounted(() => {
-    accountFormData.username = auth.value.username!
+    accountFormData.userName = auth.value.userName!
     accountFormData.password = auth.value.password!
   })
 </script>

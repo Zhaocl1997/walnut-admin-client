@@ -37,7 +37,7 @@
       {
         type: 'Base:Input',
         formProp: {
-          path: 'username',
+          path: 'userName',
         },
         componentProp: {
           disabled: true,

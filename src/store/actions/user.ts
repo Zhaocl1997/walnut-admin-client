@@ -20,7 +20,7 @@ const { menu, token, refresh_token, user, auth } = useAppState()
  */
 export const userActionSignin = async (payload: SigninPayloadType) => {
   const params = {
-    username: payload.username,
+    userName: payload.userName,
     password: payload.password!,
   }
 
@@ -30,11 +30,11 @@ export const userActionSignin = async (payload: SigninPayloadType) => {
   token.value = res.access_token
   refresh_token.value = res.refresh_token
 
-  const { username, password, rememberMe } = payload
+  const { userName, password, rememberMe } = payload
 
   if (rememberMe) {
     auth.value = {
-      username,
+      userName,
       password,
     }
   } else {

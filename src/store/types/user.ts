@@ -1,5 +1,5 @@
 export interface SigninPayloadType {
-  username: string
+  userName: string
   password: string
   rememberMe?: boolean
 }

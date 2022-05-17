@@ -67,7 +67,7 @@
           {
             type: 'Base:Input',
             formProp: {
-              path: 'username',
+              path: 'userName',
             },
             componentProp: {
               clearable: true,
@@ -95,7 +95,7 @@
         },
 
         {
-          key: 'username',
+          key: 'userName',
           width: 'auto',
         },
 
@@ -151,7 +151,7 @@
         {
           type: 'Base:Input',
           formProp: {
-            path: 'username',
+            path: 'userName',
           },
           componentProp: {
             clearable: true,

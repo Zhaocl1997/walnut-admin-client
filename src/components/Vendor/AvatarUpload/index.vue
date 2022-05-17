@@ -38,7 +38,7 @@
   const { t } = useAppI18n()
 
   const { user } = useAppState()
-  const userName = user.value.userInfo.username!
+  const userName = user.value.userInfo.userName!
   const { AppSuccess } = useAppMsgSuccess()
 
   const show = ref(false)

@@ -6,7 +6,7 @@ declare global {
   }
 
   interface AppUserInfoInterface {
-    username: string
+    userName: string
     role: string[]
     avatar: string
   }
@@ -66,7 +66,7 @@ declare global {
 
   // system user
   interface AppSystemUser extends BaseAppModel {
-    username?: string
+    userName?: string
     nickName?: string
     age?: number
     gender?: string
