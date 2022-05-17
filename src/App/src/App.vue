@@ -1,11 +1,13 @@
 <template>
-  <UIProvider>
-    <ThemeProvider>
-      <MsgProvider>
-        <RouterView></RouterView>
-      </MsgProvider>
-    </ThemeProvider>
-  </UIProvider>
+  <StarportCarrier>
+    <UIProvider>
+      <ThemeProvider>
+        <MsgProvider>
+          <RouterView></RouterView>
+        </MsgProvider>
+      </ThemeProvider>
+    </UIProvider>
+  </StarportCarrier>
 </template>
 
 <script lang="ts" setup>

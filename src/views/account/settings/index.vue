@@ -1,15 +1,25 @@
 <template>
-  <n-card title="sys:menu:account">
-    <n-tabs type="line" animated>
-      <n-tab-pane name="oasis" tab="Oasis"> Wonderwall </n-tab-pane>
-      <n-tab-pane name="the beatles" tab="the Beatles"> Hey Jude </n-tab-pane>
-      <n-tab-pane name="jay chou" tab="周杰伦"> 七里香 </n-tab-pane>
+  <n-card :title="t('sys:menu:account:setting')">
+    <n-tabs type="card" animated>
+      <n-tab-pane name="info" display-directive="show" tab="Basic Info">
+        <AccountSettingTabInfo />
+      </n-tab-pane>
+
+      <n-tab-pane name="security" display-directive="show" tab="Security">
+        security
+      </n-tab-pane>
+
+      <n-tab-pane name="account" display-directive="show" tab="Account">
+        account
+      </n-tab-pane>
     </n-tabs>
   </n-card>
 </template>
 
 <script lang="ts" setup>
-  const state = ref()
+  import AccountSettingTabInfo from './tabs/info.vue'
+
+  const { t } = useAppI18n()
 </script>
 
 <script lang="ts">

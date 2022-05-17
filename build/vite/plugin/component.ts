@@ -2,7 +2,14 @@ import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 const comp = {
-  Advanced: ['CRUD', 'AIcon'],
+  Advanced: [
+    'CRUD',
+    'AIcon',
+    'ApiSelect',
+    'AreaCascader',
+    'LocaleSelect',
+    'RoleSelect',
+  ],
   App: [
     'AppDarkMode',
     'AppFullScreen',
@@ -44,6 +51,14 @@ const comp = {
     'Table',
     'TimePicker',
     'Tree',
+  ],
+  Vendor: [
+    'AvatarUpload',
+    'Cropper',
+    'Echarts',
+    'LocationPicker',
+    'OSSUpload',
+    'Tinymce',
   ],
 }
 

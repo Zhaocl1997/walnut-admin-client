@@ -6,21 +6,19 @@
       <n-list-item>
         <w-title prefix="bar">Basic usage</w-title>
 
-        <WLocationPicker v-model:value="state.location1"></WLocationPicker>
+        <w-location-picker v-model:value="state.location1"></w-location-picker>
       </n-list-item>
 
       <n-list-item>
         <w-title prefix="bar">Feedback</w-title>
 
-        <WLocationPicker v-model:value="state.location2"></WLocationPicker>
+        <w-location-picker v-model:value="state.location2"></w-location-picker>
       </n-list-item>
     </n-list>
   </w-demo-card>
 </template>
 
 <script lang="ts" setup>
-  import WLocationPicker from '/@/components/Vendor/LocationPicker'
-
   const state = ref({
     location1: [],
     location2: [126.544844, 45.726521],

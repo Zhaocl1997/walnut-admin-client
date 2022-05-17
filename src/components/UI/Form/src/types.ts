@@ -10,8 +10,8 @@ import type {
 import type { RuleType } from 'node_modules/.pnpm/async-validator@4.0.7/node_modules/async-validator/dist-types/interface'
 
 import type { WTransitionProps } from '/@/components/Extra/Transition'
-import type { WAreaCascaderProps } from '/@/components/Advanced/services/AreaCascader'
-import type { WLocaleSelectProps } from '/@/components/Advanced/services/LocaleSelect'
+import type { WAreaCascaderProps } from '/@/components/Advanced/AreaCascader'
+import type { WLocaleSelectProps } from '/@/components/Advanced/LocaleSelect'
 import type { useEventParams } from '/@/hooks/component/useEvent'
 
 import type { WButtonProps } from '../../Button'
@@ -28,7 +28,7 @@ import type { WDynamicTagsProps } from '../../DynamicTags'
 import type { WTree } from '../../Tree'
 
 import type { WFormPropType } from './props'
-import type { TinymceEditorProps } from '/@/components/Vendor/tinymce'
+import type { TinymceEditorProps } from '/@/components/Vendor/Tinymce'
 import type {
   WFormItemDictProps,
   WFormItemDividerProps,

@@ -1,3 +1,5 @@
+import StarportPlugin from 'vue-starport'
+
 import { setupI18n } from '/@/locales'
 import { setupRouter } from '/@/router'
 
@@ -25,6 +27,8 @@ export const setupApp = async (app: App) => {
   setupRouter(app)
 
   setupErrorhandler(app)
+
+  app.use(StarportPlugin({ keepAlive: true }))
 
   if (isDev()) {
     app.config.performance = true

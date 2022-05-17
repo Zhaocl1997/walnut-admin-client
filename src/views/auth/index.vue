@@ -58,6 +58,8 @@
         </div>
       </n-card>
     </div>
+
+    <n-text class="absolute bottom-2 right-1/5 cursor-pointer" @click="onClick">黑ICP备2022002207号</n-text>
   </section>
 </template>
 
@@ -67,6 +69,10 @@
 
   const { t } = useAppI18n()
   const title = computed(() => import.meta.env.VITE_APP_TITLE)
+
+  const onClick = () => {
+    openExternalLink('http://beian.miit.gov.cn/')
+  }
 </script>
 
 <script lang="ts">

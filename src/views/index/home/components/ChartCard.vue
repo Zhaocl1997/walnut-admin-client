@@ -28,15 +28,13 @@
     <template #>
       <n-skeleton v-if="loading" width="100%" height="44vh" :sharp="false" />
 
-      <WECharts v-else :option="option" />
+      <w-echarts v-else :option="option" />
     </template>
   </n-card>
 </template>
 
 <script lang="ts" setup>
   import type { TagProps } from 'naive-ui'
-
-  import WECharts from '/@/components/Vendor/echarts'
 
   // TODO 888
   interface InteralProps {

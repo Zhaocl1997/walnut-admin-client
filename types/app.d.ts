@@ -67,9 +67,12 @@ declare global {
   // system user
   interface AppSystemUser extends BaseAppModel {
     username?: string
-    nickname?: string
+    nickName?: string
     age?: number
-    sex?: string
+    gender?: string
+    phoneNumber?: string
+    emailAddress?: string
+    description?: string
     avatar?: string
     status?: boolean
     role?: string[]

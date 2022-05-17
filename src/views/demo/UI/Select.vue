@@ -77,15 +77,15 @@
         </w-title>
 
         <n-space vertical>
-          <RoleSelect v-model:value="state.select6"></RoleSelect>
+          <w-role-select v-model:value="state.select6"></w-role-select>
 
-          <RoleSelect v-model:value="state.select7" multiple></RoleSelect>
+          <w-role-select v-model:value="state.select7" multiple></w-role-select>
 
-          <RoleSelect
+          <w-role-select
             v-model:value="state.select8"
             multiple
             value-separator="|"
-          ></RoleSelect>
+          ></w-role-select>
         </n-space>
       </n-list-item>
 
@@ -107,8 +107,6 @@
 </template>
 
 <script lang="ts" setup>
-  import RoleSelect from '/@/components/Advanced/services/RoleSelect'
-
   const state = reactive<any>({
     select1: '1',
     select2: 1,

@@ -37,13 +37,15 @@
         w:children="cursor-pointer flex items-center px-0.5 h-full"
       >
         <WAppFullScreen
+          :isFullscreen="isFullscreen"
+          :click-event="toggle"
           v-if="!appMemo.isMobile && headerSettings.showFullScreen"
         />
         <WAppLock v-if="headerSettings.showLock" />
         <WAppSearch v-if="headerSettings.showSearch" />
         <WAppLocalePicker v-if="headerSettings.showLocale" />
         <WAppDarkMode v-if="headerSettings.showDarkMode" />
-        <HeaderAvatar />
+        <HeaderDropdown />
       </div>
     </div>
   </div>
@@ -52,7 +54,7 @@
 <script lang="ts" setup>
   import HeaderBreadCrumb from './breadcrumb.vue'
   import HeaderCollapse from './collapse.vue'
-  import HeaderAvatar from './avatar.vue'
+  import HeaderDropdown from './dropdown.vue'
   import TheMenu from '../../TheAside/src/menu.vue'
   import TheLogo from '../../TheAside/src/logo.vue'
   import { getShowMenuCollpaseIcon } from '/@/settings'
@@ -61,4 +63,6 @@
   const headerSettings = settings.value.ForDevelopers.header
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
+
+  const { isFullscreen, toggle } = useFullscreen()
 </script>

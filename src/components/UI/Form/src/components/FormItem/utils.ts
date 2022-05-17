@@ -46,21 +46,21 @@ componentMap.set(
   'RoleSelect',
   createAsyncComponent(
     // @ts-ignore
-    () => import('../../../../../Advanced/services/RoleSelect/index.ts')
+    () => import('../../../../../Advanced/RoleSelect/index.ts')
   )
 )
 componentMap.set(
   'Tinymce',
   createAsyncComponent(
     // @ts-ignore
-    () => import('../../../../../Vendor/tinymce/index.ts')
+    () => import('../../../../../Vendor/Tinymce/index.ts')
   )
 )
 componentMap.set(
   'AreaCascader',
   createAsyncComponent(
     // @ts-ignore
-    () => import('../../../../../Advanced/services/AreaCascader/index.ts')
+    () => import('../../../../../Advanced/AreaCascader/index.ts')
   )
 )
 componentMap.set(
@@ -74,7 +74,7 @@ componentMap.set(
   'Locale',
   createAsyncComponent(
     // @ts-ignore
-    () => import('../../../../../Advanced/services/LocaleSelect/index.ts')
+    () => import('../../../../../Advanced/LocaleSelect/index.ts')
   )
 )
 

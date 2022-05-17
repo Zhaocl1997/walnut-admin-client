@@ -6,12 +6,9 @@
     :options="dropdownOptions"
   >
     <div class="hstack">
-      <n-avatar
-        src="/assets/logo.png"
-        circle
-        alt="avatar"
-        size="small"
-      ></n-avatar>
+      <Starport v-if="$route.name !== 'AccountSetting'" port="w-avatar">
+        <WAvatar :size="32"> </WAvatar>
+      </Starport>
 
       <div class="text-base font-semibold pl-1 my-auto">
         {{ getUserName }}
@@ -26,6 +23,7 @@
 
   // TODO 99
   import WIcon from '/@/components/UI/Icon'
+  import WAvatar from '/@/views/account/settings/components/avatar.vue'
 
   import { userActionSignOut } from '/@/store/actions/user'
 

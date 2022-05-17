@@ -7,8 +7,8 @@
         <w-title prefix="bar"> Basic usage </w-title>
 
         <n-space vertical>
-          <WLocaleSelect v-model:value="state.locale1"></WLocaleSelect>
-          <WLocaleSelect v-model:value="state.locale2"></WLocaleSelect>
+          <w-locale-select v-model:value="state.locale1"></w-locale-select>
+          <w-locale-select v-model:value="state.locale2"></w-locale-select>
         </n-space>
       </n-list-item>
 
@@ -16,15 +16,15 @@
         <w-title prefix="bar"> With prefix limit </w-title>
 
         <n-space vertical>
-          <WLocaleSelect
+          <w-locale-select
             v-model:value="state.locale3"
             prefix="sys:menu:"
-          ></WLocaleSelect>
+          ></w-locale-select>
 
-          <WLocaleSelect
+          <w-locale-select
             v-model:value="state.locale4"
             prefix="sys:menu:"
-          ></WLocaleSelect>
+          ></w-locale-select>
         </n-space>
       </n-list-item>
     </n-list>
@@ -32,7 +32,6 @@
 </template>
 
 <script lang="ts" setup>
-  import WLocaleSelect from '/@/components/Advanced/services/LocaleSelect'
 
   const state = reactive({
     locale1: '',
