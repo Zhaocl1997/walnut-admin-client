@@ -14,7 +14,16 @@ import { createUnoCSSPlugin } from './unocss'
 import { createBannerPlugin } from './banner'
 
 export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
-  const vitePlugins: (VitePlugin | VitePlugin[])[] = [vue(), vueJsx()]
+  const vitePlugins: (VitePlugin | VitePlugin[])[] = [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('cropper-'),
+        },
+      },
+    }),
+    vueJsx(),
+  ]
 
   const dev = mode === 'development'
   const stage = mode === 'staging'
