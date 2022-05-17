@@ -115,9 +115,9 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
                 .toString()
             }
 
-            if (id.includes('src/')) {
-              return 'src'
-            }
+            // if (id.includes('src/')) {
+            //   return 'src'
+            // }
           },
         },
       },
