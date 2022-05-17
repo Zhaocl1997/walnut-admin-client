@@ -36,7 +36,7 @@ export class AliOSSClient {
     return AliOSSClient.config
   }
 
-  private async getClient() {
+  public async getClient() {
     if (AliOSSClient.client) return AliOSSClient.client
     const config = await this.getConfig()
     AliOSSClient.client = new OSS(config)

@@ -3,9 +3,3 @@ export interface SigninPayloadType {
   password: string
   rememberMe?: boolean
 }
-
-export interface UserInfoType {
-  role: string
-  userId: string
-  username: string
-}

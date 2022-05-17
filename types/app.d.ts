@@ -5,6 +5,12 @@ declare global {
     B?: string
   }
 
+  interface AppUserInfoInterface {
+    username: string
+    role: string[]
+    avatar: string
+  }
+
   interface BaseAppModel {
     _id?: string
 

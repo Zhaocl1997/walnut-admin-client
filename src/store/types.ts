@@ -1,5 +1,3 @@
-import type { UserInfoType } from './types/user'
-
 export interface AppStorage {
   app: {
     isDark: boolean
@@ -34,7 +32,7 @@ export interface AppMemory {
   }
 
   user: {
-    userInfo: Partial<UserInfoType>
+    userInfo: Partial<AppUserInfoInterface>
   }
 
   tab: {

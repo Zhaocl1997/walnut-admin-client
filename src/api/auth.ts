@@ -62,11 +62,7 @@ export const getPermissions = () => {
  * @description Signin user detail info api
  */
 export const getUserInfo = () => {
-  return AppAxios.get<{
-    role: string
-    userId: string
-    username: string
-  }>({
+  return AppAxios.get<AppUserInfoInterface>({
     url: AuthEnum.PROFILE,
   })
 }
