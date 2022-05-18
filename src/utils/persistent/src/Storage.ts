@@ -11,7 +11,9 @@ export const useAppStorage = <T>(
   expire: number = import.meta.env.VITE_APP_PERSIST_SECOND * 1000,
   storage = localStorage
 ) => {
-  const wholeKey = `${storagePrefix}__${key.toLocaleUpperCase()}__`
+  const wholeKey = `${storagePrefix}__${key
+    .replaceAll('-', '_')
+    .toLocaleUpperCase()}__`
   const encrypt = isProd()
 
   return useStorage<T>(wholeKey, initialValue, storage, {

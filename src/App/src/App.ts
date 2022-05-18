@@ -2,6 +2,7 @@ import StarportPlugin from 'vue-starport'
 
 import { setupI18n } from '/@/locales'
 import { setupRouter } from '/@/router'
+import { setupStore } from '/@/store/pinia'
 
 import { isDev } from '/@/utils/constant/vue'
 
@@ -25,6 +26,8 @@ export const setupApp = async (app: App) => {
   await setupI18n(app)
 
   setupRouter(app)
+
+  setupStore(app)
 
   setupErrorhandler(app)
 

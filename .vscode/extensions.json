@@ -18,7 +18,7 @@
     "voorjaar.windicss-intellisense",
 
     /* vue3 tsc */
-    "johnsoncodehk.volar",
+    "Vue.volar",
 
     /* todo tree */
     "Gruntfuggly.todo-tree",

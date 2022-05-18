@@ -46,6 +46,19 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         ],
         '/@/store': ['useAppState'],
 
+        // pinia store modules
+        '/@/store/modules/app/app-adapter': ['useAppAdapterStore'],
+        '/@/store/modules/app/app-dark': ['useAppDarkStore'],
+        '/@/store/modules/app/app-key': ['useAppKeyStore'],
+        '/@/store/modules/app/app-locale': ['useAppLocaleStore'],
+        '/@/store/modules/app/app-lock': ['useAppLockStore'],
+        '/@/store/modules/app/app-menu': ['useAppMenuStore'],
+        '/@/store/modules/app/app-setting': ['useAppSettingStore'],
+        '/@/store/modules/app/app-tab': ['useAppTabStore'],
+        '/@/store/modules/user/user-auth': ['useUserAuthStore'],
+        '/@/store/modules/user/user-profile': ['useUserProfileStore'],
+        '/@/store/modules/user/user-permission': ['useUserPermissionStore'],
+
         '/@/hooks/core/useContext': ['useContext'],
         '/@/hooks/core/usePermissions': ['usePermissions'],
         '/@/hooks/core/useState': ['useState'],
