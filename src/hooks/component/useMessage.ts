@@ -1,64 +1,51 @@
-import { formatTime } from 'easy-fns-ts'
+import type { MessageType } from 'naive-ui'
 
 export const useAppMessage = () => {
   return window.$message
 }
 
-export const useAppNotification = () => {
-  return window.$notification
-}
-
-export const useAppDialog = () => {
-  return window.$dialog
-}
-
-/**
- * @description Normal use 1, success message, with a default value
- */
-export const useAppMsgSuccess = (title?: string) => {
-  const { t } = useAppI18n()
-  const AppSuccess = () => {
-    useAppMessage().success(title ?? t('app:base:operation:success'))
-  }
-  return { AppSuccess }
+interface AppMessageOptions {
+  type?: MessageType
+  duration?: number
+  closable?: boolean
+  placement?: MessagePlacement
 }
 
 /**
- * @description Normal use 2, error notification, with a default duration for 5s
+ * @description message usage
  */
-export const useAppNotiError = (msg: string, duration = 5000) => {
-  useAppNotification().error({
-    title: import.meta.env.VITE_APP_TITLE,
-    content: msg,
-    duration,
-    meta: formatTime(new Date()),
+export const AppMsg = (msg: string, options: AppMessageOptions) => {
+  const appMsg = useAppMsgStore()
+
+  appMsg.setMsgPlacement(options?.placement ?? 'top')
+
+  useAppMessage().create(msg, {
+    duration: options?.duration ?? 3000,
+    closable: options?.closable ?? true,
+    type: options.type,
   })
 }
 
-/**
- * @description operations to confirm to continue, like delete or other important operations
- */
-export const useContinue = (msg: MaybeRefSelf<string> | Fn<any, string>) => {
-  const { t } = useAppI18n()
-  const dialog = useAppDialog()
+export const useAppMsgSuccess2 = (
+  msg?: string,
+  options?: Omit<AppMessageOptions, 'type'>
+) =>
+  AppMsg(msg ?? AppI18n.global?.t('app:base:operation:success'), {
+    ...options,
+    type: 'success',
+  })
 
-  const goNext = () =>
-    new Promise<boolean>((res) => {
-      dialog.warning({
-        title: t('app:base:warning'),
-        content: msg as any,
-        negativeText: t('app:button:no'),
-        positiveText: t('app:button:yes'),
-        onPositiveClick: () => {
-          res(true)
-        },
-        onNegativeClick: () => {
-          res(false)
-        },
-      })
-    })
+export const useAppMsgInfo = (
+  msg: string,
+  options?: Omit<AppMessageOptions, 'type'>
+) => AppMsg(msg, { ...options, type: 'info' })
 
-  return {
-    goNext,
-  }
-}
+export const useAppMsgWarning = (
+  msg: string,
+  options?: Omit<AppMessageOptions, 'type'>
+) => AppMsg(msg, { ...options, type: 'warning' })
+
+export const useAppMsgError = (
+  msg: string,
+  options?: Omit<AppMessageOptions, 'type'>
+) => AppMsg(msg, { ...options, type: 'error' })
