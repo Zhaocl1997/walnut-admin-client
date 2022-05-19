@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts" setup>
-  import UIProvider from './UIProvider.vue'
-  import MsgProvider from './MsgProvider.vue'
-  import ThemeProvider from './AppTheme.vue'
+  import UIProvider from './naive/UIProvider.vue'
+  import MsgProvider from './naive/MsgProvider.vue'
+  import ThemeProvider from './naive/AppTheme.vue'
 
   import { useAppTitle } from '/@/hooks/core/useAppTitle'
   import { useAppResize } from '/@/hooks/core/useAppResize'
