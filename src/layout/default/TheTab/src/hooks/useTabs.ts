@@ -1,13 +1,11 @@
 import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
 
-import { onLeaveRoomForTabs, createTab } from '../utils'
-import { buildTabs } from '/@/core/tab'
-
 /**
  * @description App Tab Core Function
  */
 export const useTabs = () => {
-  const { appMemo, tab } = useAppState()
+  const appTab = useAppTabStore()
+  const appAdapter = useAppAdapterStore()
 
   const route = useAppRoute()
   const { currentRoute } = useAppRouter()
@@ -15,7 +13,7 @@ export const useTabs = () => {
   const scrollRef = ref<Nullable<WScrollbarRef>>(null)
 
   const getCurrentRouteTabIndex = computed(() =>
-    tab.value.tabs.findIndex((item) => item.name === currentRoute.value.name)
+    appTab.tabs.findIndex((item) => item.name === currentRoute.value.name)
   )
 
   const onScrollToCurrentTab = () => {
@@ -23,9 +21,9 @@ export const useTabs = () => {
     nextTick(() => {
       // If is mobile, just scroll to current route tab index
       scrollRef.value?.scrollToIndex(
-        appMemo.value.isMobile
+        appAdapter.isMobile
           ? getCurrentRouteTabIndex.value
-          : onLeaveRoomForTabs(getCurrentRouteTabIndex.value)
+          : appTab.leaveRoomForTabs(getCurrentRouteTabIndex.value)
       )
     })
   }
@@ -34,10 +32,10 @@ export const useTabs = () => {
     route,
     () => {
       // Build tab
-      buildTabs(createTab(route))
+      appTab.createTabs(appTab.createTabByRoute(route))
 
       // Scroll
-      appMemo.value.device && onScrollToCurrentTab()
+      appAdapter.device && onScrollToCurrentTab()
     },
     {
       immediate: true,

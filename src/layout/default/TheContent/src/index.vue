@@ -1,11 +1,18 @@
 <template>
   <router-view v-slot="{ Component, route }">
     <w-transition
-      :name="appSettings.showAnimation ? appSettings.animationName : null"
+      :name="
+        appSetting.settings.app.showAnimation
+          ? appSetting.settings.app.animationName
+          : null
+      "
       mode="out-in"
       appear
     >
-      <keep-alive v-if="appSettings.keepAlive" :include="getKeepAliveInclude">
+      <keep-alive
+        v-if="appSetting.settings.app.keepAlive"
+        :include="getKeepAliveInclude"
+      >
         <component :is="Component" :key="route.fullPath" />
       </keep-alive>
 
@@ -15,11 +22,11 @@
 </template>
 
 <script lang="tsx" setup>
-  const { menu, settings } = useAppState()
-  const appSettings = settings.value.ForDevelopers.app
+  const appMenu = useAppMenuStore()
+  const appSetting = useAppSettingStore()
 
   const getKeepAliveInclude = computed(() => {
-    if (!appSettings.keepAlive) return []
-    return menu.value.keepAliveRouteNames
+    if (!appSetting.settings.app.keepAlive) return []
+    return appMenu.keepAliveRouteNames
   })
 </script>

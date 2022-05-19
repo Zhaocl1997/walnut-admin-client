@@ -1,7 +1,7 @@
 <template>
   <w-icon
     :icon="
-      appMemo.collapse
+      appMenu.collapse
         ? 'ant-design:menu-fold-outlined'
         : 'ant-design:menu-unfold-outlined'
     "
@@ -12,14 +12,15 @@
 </template>
 
 <script lang="ts" setup>
-  const { appMemo } = useAppState()
+  const appMenu = useAppMenuStore()
+  const appAdapter = useAppAdapterStore()
 
   const onClick = () => {
-    if (appMemo.value.isMobile) {
-      appMemo.value.showAside = !appMemo.value.showAside
-      appMemo.value.collapse = false
+    if (appAdapter.isMobile) {
+      appMenu.setShowAside(!appMenu.showAside)
+      appMenu.setCollapse(false)
     } else {
-      appMemo.value.collapse = !appMemo.value.collapse
+      appMenu.setCollapse(!appMenu.collapse)
     }
   }
 </script>

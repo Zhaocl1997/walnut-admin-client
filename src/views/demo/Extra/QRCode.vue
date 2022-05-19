@@ -23,9 +23,9 @@
 
   const url2 = ref(getUrl())
 
-  const onRefresh = (cb: Fn) => {
+  const onRefresh = (callback: Fn) => {
     url2.value = getUrl()
-    cb()
+    callback()
   }
 </script>
 

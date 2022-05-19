@@ -6,15 +6,15 @@
   >
     <w-transition
       :name="
-        settings.ForDevelopers.app.showAnimation
-          ? settings.ForDevelopers.app.animationName
+        appSetting.settings.app.showAnimation
+          ? appSetting.settings.app.animationName
           : null
       "
       mode="out-in"
       appear
     >
       <WIFrame
-        v-if="item.url && tab.tabs.map((i) => i.name).includes(item.name!)"
+        v-if="item.url && appTab.tabs.map((i) => i.name).includes(item.name!)"
         v-show="item.name === $route.name"
         :frame-src="item.url!"
       ></WIFrame>
@@ -27,17 +27,19 @@
   import { cloneDeep } from 'lodash-es'
   import WIFrame from './index.vue'
 
-  const { menu, tab, settings } = useAppState()
+  const appSetting = useAppSettingStore()
+  const appMenu = useAppMenuStore()
+  const appTab = useAppTabStore()
 
   const getAllIFramePages = computed(() =>
-    treeToArr(cloneDeep(menu.value.menus))
+    treeToArr(cloneDeep(appMenu.menus))
       .filter((i) => i.ternal === MenuTernalConst.INTERNAL && i.url && i.cache)
       .map((i) => ({
         name: i.name,
         url: i.url,
         cache: i.cache,
       }))
-      .filter((e) => tab.value.tabs.map((i) => i.name).includes(e.name!))
+      .filter((e) => appTab.tabs.map((i) => i.name).includes(e.name!))
   )
 </script>
 

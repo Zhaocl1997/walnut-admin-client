@@ -7,14 +7,11 @@ import {
 import { merge } from 'lodash-es'
 
 import { checkReponseErrorStatus } from './checkStatus'
-import {
-  userActionRefreshToken,
-  userActionSignOut,
-} from '/@/store/actions/user'
 import { BussinessCodeConst } from '/@/const/axios'
 import { AppResponseEncryption, AppRequestEncryption } from '../crypto'
 
-const { token, refresh_token, app } = useAppState()
+const userAuth = useUserAuthStore()
+const appLocale = useAppLocaleStore()
 
 // flag to judge if calling refreshing token api
 let isRefreshing = false
@@ -32,11 +29,11 @@ export const transform: AxiosTransform = {
     const mergedCustomOptions = config.customConfig!
 
     // adapt for backend locale messages
-    config.headers!['Accept-Language'] = app.value.locale.replace('_', '-')
+    config.headers!['Accept-Language'] = appLocale.locale.replace('_', '-')
 
     // carry token
     if (mergedCustomOptions.needAuth) {
-      token.value && setTokenInRequest(config, token.value)
+      userAuth.access_token && setTokenInRequest(config, userAuth.access_token)
     }
 
     // add timestamp
@@ -100,7 +97,8 @@ export const transform: AxiosTransform = {
       if (!isRefreshing) {
         isRefreshing = true
 
-        return userActionRefreshToken()
+        return userAuth
+          .GetNewATWithRT()
           .then((refresh_token) => {
             if (!refresh_token) return
 
@@ -132,7 +130,7 @@ export const transform: AxiosTransform = {
 
     // refresh token is expired, so this user need to signout and re-signin
     if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
-      userActionSignOut(false)
+      userAuth.SigninOut(false)
       return Promise.resolve()
     }
 

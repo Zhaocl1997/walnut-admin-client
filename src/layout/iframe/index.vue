@@ -30,7 +30,7 @@
 </script>
 
 <style lang="scss" scoped>
-  :deep(.n-spin-content) {
+  :deep(.w-spin-content) {
     height: 100%;
   }
 </style>

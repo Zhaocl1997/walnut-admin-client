@@ -14,7 +14,8 @@
     width?: string
   }
 
-  const { app, settings } = useAppState()
+  const appDark = useAppDarkStore()
+  const appLocale = useAppLocaleStore()
 
   const chartId = ref('echarts-' + genString(8))
   const chartInst = ref<Nullable<ECharts>>(null)
@@ -28,6 +29,7 @@
     chartInst.value?.resize()
   })
 
+  // TODO keep-alive error
   watchEffect(
     () => {
       if (chartInst.value) {
@@ -37,19 +39,15 @@
 
       const target = document.getElementById(chartId.value)!
       // if ondemand usage, just uncomment top echarts import, and change below to `echarts.init`
-      const chart = echarts.init(
-        target,
-        app.value.isDark ? 'dark' : undefined,
-        {
-          locale: app.value.locale.split('_')[0].toUpperCase(),
-        }
-      )
+      const chart = echarts.init(target, appDark.isDark ? 'dark' : undefined, {
+        locale: appLocale.locale.split('_')[0].toUpperCase(),
+      })
 
       // @ts-ignore
       chartInst.value = chart
 
       chart.setOption(
-        app.value.isDark
+        appDark.isDark
           ? Object.assign(props.option, { backgroundColor: 'transparent' })
           : props.option
       )

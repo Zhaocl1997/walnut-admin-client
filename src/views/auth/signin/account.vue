@@ -5,10 +5,9 @@
 <script lang="tsx" setup>
   // TODO 99
   import { NCheckbox, NButton } from 'naive-ui'
-  import { userActionSignin } from '/@/store/actions/user'
 
   const { t } = useAppI18n()
-  const { auth } = useAppState()
+  const appAuth = useUserAuthStore()
 
   const loading = ref(false)
 
@@ -25,7 +24,7 @@
       loading.value = true
 
       try {
-        await userActionSignin(accountFormData)
+        await appAuth.SignInWithPassword(accountFormData)
       } finally {
         loading.value = false
       }
@@ -122,8 +121,8 @@
   })
 
   onMounted(() => {
-    accountFormData.userName = auth.value.userName!
-    accountFormData.password = auth.value.password!
+    accountFormData.userName = appAuth.remember?.userName!
+    accountFormData.password = appAuth.remember?.password!
   })
 </script>
 

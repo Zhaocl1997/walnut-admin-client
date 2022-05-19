@@ -1,9 +1,9 @@
 <template>
   <w-transition appear name="slide-down">
     <n-layout-footer
-      v-if="setting.app.showFooter"
+      v-if="appSetting.settings.app.showFooter"
       bordered
-      :inverted="setting.header.inverted"
+      :inverted="appSetting.settings.header.inverted"
     >
       <div class="py-0.5">
         <div class="hstack space-x-1 items-center justify-center">
@@ -15,7 +15,9 @@
             icon="ant-design:copyright-circle-outlined"
           ></w-icon>
 
-          <span> 2020-PRESENT {{ getAppTitle }} All Rights Reserved.</span>
+          <span class="whitespace-nowrap overflow-y-auto">
+            2020-present {{ getAppTitle }}. All Rights Reserved.
+          </span>
         </div>
       </div>
     </n-layout-footer>
@@ -25,8 +27,7 @@
 <script lang="ts" setup>
   import { NLayoutFooter } from 'naive-ui'
 
-  const { settings } = useAppState()
-  const setting = settings.value.ForDevelopers
+  const appSetting = useAppSettingStore()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 </script>

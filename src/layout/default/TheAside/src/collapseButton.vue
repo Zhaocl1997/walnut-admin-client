@@ -2,17 +2,22 @@
   <w-button
     type="info"
     text
-    class="absolute bottom-0 w-full bg-base-color"
+    size="large"
+    class="absolute bottom-0 w-full bg-base-color py-1"
     :style="{ backgroundColor: 'var(--inverted-color)' }"
     :icon="
-      appMemo.collapse
+      appMenu.collapse
         ? 'ant-design:double-right-outlined'
         : 'ant-design:double-left-outlined'
     "
-    @click="() => (appMemo.collapse = !appMemo.collapse)"
+    @click="onToogleCollapse"
   ></w-button>
 </template>
 
 <script lang="ts" setup>
-  const { appMemo } = useAppState()
+  const appMenu = useAppMenuStore()
+
+  const onToogleCollapse = () => {
+    appMenu.setCollapse(!appMenu.collapse)
+  }
 </script>

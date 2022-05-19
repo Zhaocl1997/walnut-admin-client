@@ -1,6 +1,6 @@
 <template>
   <div id="demo-extra">
-    <div class="float-right w-36">
+    <div v-if="!appAdapter.isMobile" class="float-right w-36">
       <n-anchor
         show-rail
         show-background
@@ -12,12 +12,14 @@
         type="block"
       >
         <n-anchor-link title="Arrow" href="#Arrow" />
-        <n-anchor-link title="Flipper" href="#Flipper" />
         <n-anchor-link title="IconPicker" href="#IconPicker" />
         <n-anchor-link title="JSON" href="#JSON" />
         <n-anchor-link title="Verify" href="#Verify" />
         <n-anchor-link title="QRCode" href="#QRCode" />
+        <n-anchor-link title="NaiveMsg" href="#NaiveMsg" />
+
         <n-anchor-link title="Message" href="#Message" />
+        <n-anchor-link title="Flipper" href="#Flipper" />
         <n-anchor-link title="Scrollbar" href="#Scrollbar" />
         <n-anchor-link title="Title" href="#Title" />
         <n-anchor-link title="Transition" href="#Transition" />
@@ -27,13 +29,19 @@
       </n-anchor>
     </div>
 
-    <div class="grid grid-cols-2 gap-2 pr-42">
+    <div
+      :class="[
+        'grid 2xl:grid-cols-2 grid-cols-1 2xl:gap-2 gap-0',
+        { 'pr-42': !appAdapter.isMobile },
+      ]"
+    >
       <div class="children:my-2">
         <DemoArrow id="Arrow" />
         <DemoIconPicker id="IconPicker" />
         <DemoJSON id="JSON" />
         <DemoVerify id="Verify" />
         <DemoQRCode id="QRCode" />
+        <DemoNaiveMsg id="NaiveMsg" />
       </div>
 
       <div class="children:my-2">
@@ -64,6 +72,9 @@
   import DemoQRCode from './QRCode.vue'
   import DemoModal from './Modal.vue'
   import DemoDrawer from './Drawer.vue'
+  import DemoNaiveMsg from './NaiveMsg.vue'
+
+  const appAdapter = useAppAdapterStore()
 </script>
 
 <script lang="ts">

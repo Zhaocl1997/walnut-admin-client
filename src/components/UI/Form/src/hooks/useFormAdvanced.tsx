@@ -7,7 +7,6 @@ export const useFormAdvanced = (
   formRef: Ref<Nullable<WForm.Inst.NFormInst>>
 ) => {
   const { t } = useAppI18n()
-  const { AppSuccess } = useAppMsgSuccess()
 
   const show = ref(false)
   const loading = ref(false)
@@ -42,7 +41,7 @@ export const useFormAdvanced = (
 
         if (ret) {
           onClose()
-          AppSuccess()
+          useAppMsgSuccess2()
         } else {
           return Promise.reject()
         }
@@ -51,7 +50,7 @@ export const useFormAdvanced = (
       }
     }
 
-    props.value.advancedProps?.onYes(apiHandler, () => {
+    props.value.advancedProps?.onYes!(apiHandler, () => {
       done()
       onClose()
     })
@@ -61,7 +60,7 @@ export const useFormAdvanced = (
     if (!props.value.useDescription) {
       formRef.value!.restoreValidation()
     }
-    props.value.advancedProps?.onNo(onClose)
+    props.value.advancedProps?.onNo!(onClose)
   }
 
   const onGetTitle = (title: string) => {
@@ -89,14 +88,13 @@ export const useFormAdvanced = (
           v-model={[show.value, 'show']}
           title={onGetTitle(props.value.advancedProps?.title as string)}
           maskClosable={
-            props.value.advancedProps?.maskClosable && !loading.value
+            !loading.value && props.value.advancedProps?.maskClosable
           }
-          closable={!loading.value}
+          closable={!loading.value && props.value.advancedProps?.closable}
           onYes={onYes}
           onNo={onNo}
           loading={loading.value}
           defaultButton={props.value.advancedProps?.defaultButton}
-          closable={props.value.advancedProps?.closable}
         >
           {render()}
         </w-modal>
@@ -110,8 +108,9 @@ export const useFormAdvanced = (
           title={onGetTitle(props.value.advancedProps?.title as string)}
           width={(props.value.advancedProps as DrawerProps)?.width}
           maskClosable={
-            props.value.advancedProps?.maskClosable && !loading.value
+            !loading.value && props.value.advancedProps?.maskClosable
           }
+          closable={!loading.value && props.value.advancedProps?.closable}
           onUpdateShow={(show: boolean) => {
             !show && onNo()
           }}
@@ -119,7 +118,6 @@ export const useFormAdvanced = (
           onNo={onNo}
           loading={loading.value}
           defaultButton={props.value.advancedProps?.defaultButton}
-          closable={props.value.advancedProps?.closable}
         >
           {render()}
         </w-drawer>

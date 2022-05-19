@@ -13,6 +13,14 @@ const useUserPermissionStoreInside = defineStore(StoreKeys.USER_PERMISSION, {
     setPermissions(payload: string[]) {
       this.permissions = payload
     },
+
+    createPermissions(payload: AppSystemMenu[]): string[] {
+      return payload.map((i) => i.permission!).filter((i) => i)
+    },
+
+    clearPermissions() {
+      this.setPermissions([])
+    },
   },
 })
 

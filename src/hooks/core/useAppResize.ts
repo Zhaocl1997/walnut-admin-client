@@ -2,8 +2,9 @@ import { useResize } from './useResize'
 import { useBreakpoints } from './useBreakpoints'
 
 export const useAppResize = () => {
-  const { appMemo, settings } = useAppState()
-  const appSetting = settings.value.ForDevelopers.app
+  const appAdapter = useAppAdapterStore()
+  const appMenu = useAppMenuStore()
+
   const breakpoints = useBreakpoints()
 
   const handler = () => {
@@ -13,10 +14,10 @@ export const useAppResize = () => {
       // 2.device => 'mobile'
       // 3.no more collapse
       // 4.mobile only show `left-menu` layout
-      appMemo.value.isMobile = true
-      appMemo.value.device = DevideConst.MOBILE
-      appMemo.value.collapse = false
-      appSetting.layout = AppLayoutModeConst.LEFT_MENU
+      appAdapter.setIsMobile(true)
+      appAdapter.setDevice(DevideConst.MOBILE)
+      appMenu.setCollapse(false)
+      // appSetting.settings.app.layout = AppLayoutModeConst.LEFT_MENU
     }
 
     if (breakpoints.isInBetween('sm', 'lg')) {
@@ -24,9 +25,9 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'tablet'
       // 3.auto collapse
-      appMemo.value.isMobile = false
-      appMemo.value.device = DevideConst.TABLET
-      appMemo.value.collapse = true
+      appAdapter.setIsMobile(false)
+      appAdapter.setDevice(DevideConst.TABLET)
+      appMenu.setCollapse(true)
     }
 
     if (breakpoints.isInBetween('lg', 'xl')) {
@@ -34,9 +35,9 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'laptop'
       // 3.no collapse
-      appMemo.value.isMobile = false
-      appMemo.value.device = DevideConst.LAPTOP
-      appMemo.value.collapse = false
+      appAdapter.setIsMobile(false)
+      appAdapter.setDevice(DevideConst.LAPTOP)
+      appMenu.setCollapse(false)
     }
 
     if (breakpoints.isGreater('xl')) {
@@ -44,9 +45,9 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'desktop'
       // 3.no collapse
-      appMemo.value.isMobile = false
-      appMemo.value.device = DevideConst.DESKTOP
-      appMemo.value.collapse = false
+      appAdapter.setIsMobile(false)
+      appAdapter.setDevice(DevideConst.DESKTOP)
+      appMenu.setCollapse(false)
     }
   }
 

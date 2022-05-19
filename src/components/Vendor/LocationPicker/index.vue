@@ -27,7 +27,6 @@
 
 <script lang="ts" setup>
   import { genString } from 'easy-fns-ts'
-  import { useAppSecretKeys } from '/@/store/keys'
 
   // TODO 888
   interface InternalProps {
@@ -43,7 +42,7 @@
 
   const emits = defineEmits(['update:value'])
 
-  const secretKeys = useAppSecretKeys()
+  const appKey = useAppKeyStore()
 
   const baiduRef = ref<Nullable<HTMLDivElement>>(null)
   const baiduMap = ref<any>()
@@ -61,7 +60,7 @@
       return
     }
 
-    const url = `https://api.map.baidu.com/getscript?v=2.0&ak=${secretKeys.value.B}&services=&t=20220314154112`
+    const url = `https://api.map.baidu.com/getscript?v=2.0&ak=${appKey.baiduAK}&services=&t=20220314154112`
     window.HOST_TYPE = '2'
     useScriptTag(url, onInitMap)
   }

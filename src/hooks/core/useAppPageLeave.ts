@@ -1,12 +1,14 @@
 export const useAppPageLeave = () => {
-  const { app, settings } = useAppState()
+  const appLock = useAppLockStore()
+  const appSetting = useAppSettingStore()
+
   const isLeft = usePageLeave()
 
   debouncedWatch(
     isLeft,
     () => {
-      if (settings.value.ForDevelopers.app.pageLeaveLock) {
-        app.value.isLock = isLeft.value
+      if (appSetting.settings.app.pageLeaveLock) {
+        appLock.setIsLock(isLeft.value)
       }
     },
     { debounce: 200 }

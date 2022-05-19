@@ -76,9 +76,9 @@
   const onRefresh = async () => {
     loading.value = true
 
-    const { app } = useAppState()
+    const appLocale = useAppLocaleStore()
 
-    const locale = app.value.locale
+    const locale = appLocale.locale
 
     const res = await AppI18nGetI18nMsg(locale, 0)
 

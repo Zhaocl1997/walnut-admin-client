@@ -18,9 +18,7 @@
   import { toJpeg } from 'html-to-image'
 
   import { useRedirect } from '/@/hooks/core/useRedirect'
-  import { sortTab } from '/@/core/tab'
-  import { getCustomTheme } from '/@/App/src/naive'
-  import { toggleLeftMenuLayout } from '/@/settings'
+  import { getThemeOverridesCommon } from '/@/App/src/naive/src/theme'
 
   import { getTabsContext } from '../hooks/useTabsContext'
 
@@ -29,8 +27,10 @@
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { tab, settings } = useAppState()
   const { enter } = useFullscreen()
+
+  const appTab = useAppTabStore()
+  const appSetting = useAppSettingStore()
 
   const {
     x,
@@ -42,9 +42,9 @@
     currentMouseTabIndex,
   } = getTabsContext()
 
-  const getTabsLength = computed(() => tab.value.tabs.length)
+  const getTabsLength = computed(() => appTab.tabs.length)
   const getAffixedTabsLength = computed(
-    () => tab.value.tabs.filter((i) => i.meta.affix).length
+    () => appTab.tabs.filter((i) => i.meta.affix).length
   )
 
   // only affixed can not close
@@ -95,27 +95,29 @@
     }
 
     if (key === 'Screen Full') {
-      toggleLeftMenuLayout()
+      appSetting.toggleLeftMenuLayout()
       enter()
     }
 
     if (key === 'Fix') {
-      currentMouseTab.value!.meta.affix = !currentMouseTab.value?.meta.affix
+      appTab.setTab(currentMouseTabIndex.value, {
+        meta: { affix: !currentMouseTab.value?.meta.affix },
+      })
 
-      sortTab()
+      appTab.sortTabs()
     }
 
     if (key === 'Snapshot') {
       const target = document.getElementById(currentMouseTab.value?.name!)
 
-      const padding = settings.value.ForDevelopers.app.contentPadding
+      const padding = appSetting.settings.app.contentPadding
 
       toJpeg(target!, {
         width: target?.scrollWidth! + padding * 2,
         height: target?.scrollHeight! + padding * 2,
         canvasWidth: target?.scrollWidth! + padding * 2,
         canvasHeight: target?.scrollHeight! + padding * 2,
-        backgroundColor: getCustomTheme.value.bodyColor,
+        backgroundColor: getThemeOverridesCommon.value.bodyColor,
         style: {
           margin: padding + 'px',
         },

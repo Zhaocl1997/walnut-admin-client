@@ -1,6 +1,6 @@
 <template>
   <n-watermark
-    :content="settings.ForDevelopers.app.watermarkContent"
+    :content="appSetting.settings.app.watermarkContent"
     cross
     fullscreen
     :font-size="16"
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-  const { settings } = useAppState()
+  const appSetting = useAppSettingStore()
 </script>
 
 <script lang="ts">

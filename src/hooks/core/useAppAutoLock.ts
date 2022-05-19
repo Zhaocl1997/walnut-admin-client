@@ -1,17 +1,20 @@
 export const useAppAutoLock = () => {
-  const { app, settings } = useAppState()
-  const { idle } = useIdle(settings.value.ForDevelopers.app.idleMS)
+  const appLock = useAppLockStore()
+  const appSetting = useAppSettingStore()
+
+  const { idle } = useIdle(appSetting.settings.app.idleMS)
   const visibility = useDocumentVisibility()
 
   // only work in auto mode
   watchEffect(() => {
     if (
       visibility.value === 'visible' &&
-      app.value.lockMode !== AppLockModeConst.MANUAL &&
-      settings.value.ForDevelopers.app.idleMS !== 0
+      appLock.lockMode !== AppLockModeConst.MANUAL &&
+      appSetting.settings.app.idleMS !== 0
     ) {
-      app.value.isLock = idle.value
-      app.value.lockMode = AppLockModeConst.AUTO
+      // app.value.isLock = idle.value
+      appLock.setIsLock(idle.value)
+      appLock.lockMode = AppLockModeConst.AUTO
     }
   })
 }

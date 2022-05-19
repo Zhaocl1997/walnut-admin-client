@@ -3,7 +3,6 @@ import type {
   SortState,
   TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
-import type { DataTableSortState } from 'naive-ui'
 import type { WTable } from '../types'
 
 import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
@@ -21,7 +20,6 @@ export const useTableAPI = (
   setProps: WTable.SetProps
 ) => {
   const { t } = useAppI18n()
-  const { AppSuccess } = useAppMsgSuccess()
   const { hasPermission } = usePermissions()
 
   const {
@@ -104,7 +102,7 @@ export const useTableAPI = (
   const onApiTableDelete = async (id: StringOrNumber) => {
     const ret = await props.value.apiProps?.deleteApi!(id)
     if (ret) {
-      AppSuccess()
+      useAppMsgSuccess2()
       await onApiTableList()
     }
   }
@@ -116,7 +114,7 @@ export const useTableAPI = (
     )
 
     if (ret) {
-      AppSuccess()
+      useAppMsgSuccess2()
 
       if (
         ApiTableListParams.value.page!.page! *

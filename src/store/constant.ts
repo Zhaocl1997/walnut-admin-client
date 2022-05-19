@@ -5,6 +5,7 @@ export const StoreKeys = {
   APP_LOCALE: 'APP_LOCALE',
   APP_LOCK: 'APP_LOCK',
   APP_MENU: 'APP_MENU',
+  APP_MSG: 'APP_MSG',
   APP_SETTING: 'APP_SETTING',
   APP_TAB: 'APP_TAB',
 

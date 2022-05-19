@@ -1,13 +1,13 @@
 <template>
   <n-avatar
     :style="{ height: size + 'px', width: size + 'px' }"
-    :src="value ?? user.userInfo.avatar"
+    :src="value ?? userProfile.getAvatar"
     circle
     alt="avatar"
     object-fit="cover"
   >
-    <span v-if="!value && !user.userInfo.avatar">
-      {{ user.userInfo.nickName ?? user.userInfo.userName }}
+    <span v-if="!value && !userProfile.getAvatar">
+      {{ userProfile.getDisplayName }}
     </span>
   </n-avatar>
 </template>
@@ -17,7 +17,7 @@
     size: 24,
   })
 
-  const { user } = useAppState()
+  const userProfile = useUserProfileStore()
 </script>
 
 <script lang="ts">

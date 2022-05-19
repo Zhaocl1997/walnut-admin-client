@@ -75,11 +75,11 @@
                       <w-icon
                         icon="mdi:arrow-collapse-left"
                         height="20"
-                        class="cursor-pointer"
+                        class="cursor-pointer text-primary"
                         :style="{
                           color:
                             item.fixed === 'left'
-                              ? `${getCommonTheme.infoColor} !important`
+                              ? `${getThemeOverridesCommon.infoColor} !important`
                               : 'currentColor',
                         }"
                         @click="
@@ -108,7 +108,7 @@
                         :style="{
                           color:
                             item.fixed === 'right'
-                              ? `${getCommonTheme.infoColor} !important`
+                              ? `${getThemeOverridesCommon.infoColor} !important`
                               : 'currentColor',
                         }"
                         @click="
@@ -140,7 +140,7 @@
 
   import { useSortable } from '/@/hooks/component/useSortable'
   import { useTableContext } from '../../hooks/useTableContext'
-  import { getCommonTheme } from '/@/App/src/naive'
+  import { getThemeOverridesCommon } from '/@/App/src/naive/src/theme'
 
   const { t } = useAppI18n()
   const { tableColumns } = useTableContext()

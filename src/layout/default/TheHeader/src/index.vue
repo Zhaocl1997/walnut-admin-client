@@ -3,24 +3,26 @@
     <div class="hstack justify-between h-full items-center">
       <div class="hstack items-center justify-between space-x-2">
         <img
-          v-if="appMemo.isMobile"
+          v-if="appAdapter.isMobile"
           src="/assets/logo.png"
           :alt="`${getAppTitle} Logo`"
           class="h-9 w-9 m-1"
-          @click="() => (appMemo.showAside = true)"
+          @click="onShowAside"
         />
 
         <template v-else>
-          <HeaderCollapse v-if="getShowMenuCollpaseIcon" />
+          <HeaderCollapse v-if="appSetting.getShowMenuCollapseIcon" />
 
           <w-transition name="slide-left">
-            <HeaderBreadCrumb v-if="headerSettings.showBreadcrumb" />
+            <HeaderBreadCrumb
+              v-if="appSetting.settings.header.showBreadcrumb"
+            />
           </w-transition>
         </template>
 
         <w-transition name="slide-up">
           <div
-            v-if="settings.ForDevelopers.app.layout === 'top-menu'"
+            v-if="appSetting.settings.app.layout === 'top-menu'"
             class="hstack items-center justify-between"
           >
             <TheLogo class="mr-16" />
@@ -32,19 +34,21 @@
       <div
         :class="[
           'hstack justify-end space-x-2 h-full',
-          { 'space-x-1': appMemo.isMobile },
+          { 'space-x-1': appAdapter.isMobile },
         ]"
         w:children="cursor-pointer flex items-center px-0.5 h-full"
       >
         <WAppFullScreen
           :isFullscreen="isFullscreen"
           :click-event="toggle"
-          v-if="!appMemo.isMobile && headerSettings.showFullScreen"
+          v-if="
+            !appAdapter.isMobile && appSetting.settings.header.showFullScreen
+          "
         />
-        <WAppLock v-if="headerSettings.showLock" />
-        <WAppSearch v-if="headerSettings.showSearch" />
-        <WAppLocalePicker v-if="headerSettings.showLocale" />
-        <WAppDarkMode v-if="headerSettings.showDarkMode" />
+        <WAppLock v-if="appSetting.settings.header.showLock" />
+        <WAppSearch v-if="appSetting.settings.header.showSearch" />
+        <WAppLocalePicker v-if="appSetting.settings.header.showLocale" />
+        <WAppDarkMode v-if="appSetting.settings.header.showDarkMode" />
         <HeaderDropdown />
       </div>
     </div>
@@ -57,12 +61,16 @@
   import HeaderDropdown from './dropdown.vue'
   import TheMenu from '../../TheAside/src/menu.vue'
   import TheLogo from '../../TheAside/src/logo.vue'
-  import { getShowMenuCollpaseIcon } from '/@/settings'
 
-  const { appMemo, settings } = useAppState()
-  const headerSettings = settings.value.ForDevelopers.header
+  const appSetting = useAppSettingStore()
+  const appAdapter = useAppAdapterStore()
+  const appMenu = useAppMenuStore()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
   const { isFullscreen, toggle } = useFullscreen()
+
+  const onShowAside = () => {
+    appMenu.setShowAside(true)
+  }
 </script>

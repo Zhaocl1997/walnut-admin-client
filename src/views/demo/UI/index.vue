@@ -1,6 +1,6 @@
 <template>
   <div id="demo-ui">
-    <div class="float-right w-36">
+    <div v-if="!appAdapter.isMobile" class="float-right w-36">
       <n-anchor
         show-rail
         show-background
@@ -17,6 +17,7 @@
         <n-anchor-link title="Select" href="#Select" />
         <n-anchor-link title="Checkbox" href="#Checkbox" />
         <n-anchor-link title="Dict" href="#Dict" />
+
         <n-anchor-link title="Tree" href="#Tree" />
         <n-anchor-link title="AreaCascader" href="#AreaCascader" />
         <n-anchor-link title="Location" href="#Location" />
@@ -26,7 +27,12 @@
       </n-anchor>
     </div>
 
-    <div class="grid grid-cols-2 gap-2 pr-42">
+    <div
+      :class="[
+        'grid 2xl:grid-cols-2 grid-cols-1 2xl:gap-2 gap-0',
+        { 'pr-42': !appAdapter.isMobile },
+      ]"
+    >
       <div class="children:my-2">
         <DemoIcon id="Icon" />
         <DemoButton id="Button" />
@@ -61,6 +67,8 @@
   import DemoLocaleSelect from './LocaleSelect.vue'
   import DemoLocation from './LocationPicker.vue'
   import DemoDict from './Dict.vue'
+
+  const appAdapter = useAppAdapterStore()
 </script>
 
 <script lang="ts">

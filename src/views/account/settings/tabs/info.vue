@@ -23,14 +23,13 @@
 <script lang="ts" setup>
   import WAvatar from '../components/avatar.vue'
   import { userAPI } from '/@/api/system/user'
-  import { userActionInfo } from '/@/store/actions/user'
 
-  const { user } = useAppState()
+  const userProfile = useUserProfileStore()
+
   const { t } = useAppI18n()
-  const { AppSuccess } = useAppMsgSuccess()
 
   const avatarUploadRef = ref<any>()
-  const formData = ref<AppSystemUser>({ ...user.value.userInfo })
+  const formData = ref<AppSystemUser>({ ...userProfile.profile })
   const loading = ref(false)
 
   const [register] = useForm<typeof formData.value>({
@@ -110,8 +109,8 @@
               // upload avatar and get real avatar url
               await avatarUploadRef.value.onSubmit()
               await userAPI.update(formData.value)
-              AppSuccess()
-              await userActionInfo()
+              useAppMsgSuccess2()
+              await userProfile.getProfile()
             } finally {
               loading.value = false
             }

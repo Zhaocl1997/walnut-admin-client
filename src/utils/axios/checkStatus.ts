@@ -1,5 +1,3 @@
-import { userActionSignOut } from '/@/store/actions/user'
-
 const responseError = (msg: string) => {
   const { t } = AppI18n.global
 
@@ -16,8 +14,13 @@ export const checkReponseErrorStatus = (status?: number, msg?: string) => {
 
     // 401: unauthorized
     case 401:
-      responseError('app:ajax:401')
-      userActionSignOut()
+      {
+        responseError('app:ajax:401')
+
+        const userAuth = useUserAuthStore()
+
+        userAuth.SigninOut()
+      }
       break
 
     case 403:

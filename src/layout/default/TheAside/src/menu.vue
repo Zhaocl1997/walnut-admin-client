@@ -7,8 +7,10 @@
 
   export default defineComponent({
     setup() {
-      const { appMemo, menu, settings } = useAppState()
-      const menuSettings = settings.value.ForDevelopers.menu
+      const appMenu = useAppMenuStore()
+      const appAdapter = useAppAdapterStore()
+      const appSetting = useAppSettingStore()
+
       const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
 
@@ -25,7 +27,7 @@
       const getMenu = computed(() =>
         formatTree<AppSystemMenu, MenuOption>(
           filterTree<AppSystemMenu, Omit<AppSystemMenu, 'show'>>(
-            cloneDeep(menu.value.menus),
+            cloneDeep(appMenu.menus),
             (node) => node.show!
           ),
           {
@@ -47,7 +49,7 @@
       watchEffect(() => {
         // TODO 999
         const paths = findPath(
-          toRaw(menu.value.menus),
+          toRaw(appMenu.menus),
           (n) => n.name === getTransformName.value
         ) as AppSystemMenu[]
 
@@ -58,8 +60,8 @@
 
       const onUpdateValue = (key: string, item: MenuOption) => {
         // If isMobile and showAside true, set showAside to false to close drawer
-        if (appMemo.value.isMobile && appMemo.value.showAside) {
-          appMemo.value.showAside = false
+        if (appAdapter.isMobile && appMenu.showAside) {
+          appMenu.showAside = false
         }
 
         if ((item.meta as AppSystemMenu).type === MenuTypeConst.CATALOG) {
@@ -83,19 +85,18 @@
         <w-scrollbar height="100%">
           <n-menu
             mode={
-              settings.value.ForDevelopers.app.layout ===
-              AppLayoutModeConst.LEFT_MENU
+              appSetting.settings.app.layout === AppLayoutModeConst.LEFT_MENU
                 ? 'vertical'
                 : 'horizontal'
             }
-            inverted={menuSettings.inverted}
-            collapsedWidth={menuSettings.collapsedWidth}
-            accordion={menuSettings.accordion}
-            collapsedIconSize={menuSettings.collapsedIconSize}
-            iconSize={menuSettings.iconSize}
-            indent={menuSettings.indent}
+            inverted={appSetting.settings.menu.inverted}
+            collapsedWidth={appSetting.settings.menu.collapsedWidth}
+            accordion={appSetting.settings.menu.accordion}
+            collapsedIconSize={appSetting.settings.menu.collapsedIconSize}
+            iconSize={appSetting.settings.menu.iconSize}
+            indent={appSetting.settings.menu.indent}
             options={getMenu.value}
-            collapsed={appMemo.value.collapse}
+            collapsed={appMenu.collapse}
             value={getTransformName.value}
             on-update:value={onUpdateValue}
             expanded-keys={expandedKeys.value}

@@ -1,23 +1,29 @@
 <template>
   <div class="hstack justify-between p-1">
-    <div v-if="tabSettings.showUtils" class="hstack flex-none justify-start">
+    <div
+      v-if="appSetting.settings.tab.showUtils"
+      class="hstack flex-none justify-start"
+    >
       <TabsUtils :lists="leftUtils"></TabsUtils>
     </div>
 
     <div
       class="flex flex-grow"
       :style="{
-        width: `calc(100vw - ${settings.ForDevelopers.menu.width}px - 120px)`,
+        width: `calc(100vw - ${appSetting.settings.menu.width}px - 120px)`,
       }"
     >
       <TabsContentMain></TabsContentMain>
     </div>
 
-    <div v-if="tabSettings.showUtils" class="hstack flex-none justify-end">
+    <div
+      v-if="appSetting.settings.tab.showUtils"
+      class="hstack flex-none justify-end"
+    >
       <TabsUtils :lists="rightUtils"></TabsUtils>
     </div>
 
-    <TabsContextMenu v-if="tabSettings.contextMenu" />
+    <TabsContextMenu v-if="appSetting.settings.tab.contextMenu" />
     <TabsDevTools v-if="getShowDevTools" />
   </div>
 </template>
@@ -38,19 +44,20 @@
   import { setTabsContext } from './hooks/useTabsContext'
   import { isDev } from '/@/utils/constant/vue'
 
-  const { appMemo, settings, tab } = useAppState()
-  const tabSettings = settings.value.ForDevelopers.tab
+  const appTab = useAppTabStore()
+  const appSetting = useAppSettingStore()
+  const appAdapter = useAppAdapterStore()
 
   watchEffect(() => {
-    if (tabSettings.persistent) {
-      localStorage.setItem('tab', JSON.stringify(tab.value.tabs))
+    if (appSetting.settings.tab.persistent) {
+      localStorage.setItem('tab', JSON.stringify(appTab.tabs))
     } else {
       localStorage.removeItem('tab')
     }
   })
 
   const getShowDevTools = computed(
-    () => isDev() && !appMemo.value.isMobile && tabSettings.devtool
+    () => isDev() && !appAdapter.isMobile && appSetting.settings.tab.devtool
   )
 
   const { scrollRef, getCurrentRouteTabIndex } = useTabs()

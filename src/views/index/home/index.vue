@@ -46,11 +46,11 @@
 </script>
 
 <style scoped>
-  :deep(.n-card > .n-card-header) {
+  :deep(.w-card > .w-card-header) {
     padding: 12px 16px !important;
   }
 
-  :deep(.n-h) {
+  :deep(.w-h) {
     margin: 0;
   }
 </style>

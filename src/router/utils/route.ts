@@ -6,26 +6,6 @@ import IFrameFaker from '/@/layout/iframe/faker.vue'
 import IFrameReal from '/@/layout/iframe/index.vue'
 
 import { App404Route } from '/@/router/routes'
-import { AppRootName } from '../router/constant'
-
-/**
- * @description Util Function 1 - Build route object through menu object
- */
-export const buildCommonRoute = (node: AppSystemMenu): AppTab => ({
-  path: node.path!,
-  name: node.name!,
-  meta: {
-    title: node.title,
-    icon: node.icon,
-    cache: node.cache,
-    url: node.url,
-    affix: node.affix,
-    type: node.type,
-    component: node.component,
-    menuActiveName: node.menuActiveName,
-    menuActiveSameTab: node.menuActiveSameTab,
-  },
-})
 
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
@@ -54,7 +34,7 @@ const resolveIFrameComponent = (name: string, cache?: boolean) => () =>
         })
   })
 
-const allViewModules = import.meta.glob('../views/**/*.vue')
+const allViewModules = import.meta.glob('../../views/**/*.vue')
 
 /**
  * @description Util Function 4 - Resolve `views` dynamically base on `node.component` which equal to `path`
@@ -64,31 +44,18 @@ const resolveViewModules = (component: string) => {
 
   // find the file location same index
   const index = keys.findIndex(
-    (i) => i.replace('../views/', '').replace('.vue', '') === component
+    (i) => i.replace('../../views/', '').replace('.vue', '') === component
   )
 
   return allViewModules[keys[index]]
 }
 
 /**
- * @description Generate keep-alive component name lists based on `menu`
- * Need to mention, when nested routes wants to be kept-alive, it's parent name also need to be in the `include` array as well
- * Since we flat routes, so need to add root route name finally
- * @link https://github.com/vuejs/vue-router-next/issues/626
- */
-export const buildKeepAliveRouteNameList = (menus: AppSystemMenu[]): string[] =>
-  menus
-    .map((i) => {
-      if (i.type === MenuTypeConst.MENU && i.cache) return i.name!
-      return ''
-    })
-    .filter(Boolean)
-    .concat(AppRootName)
-
-/**
  * @description Build Routes Core Function
  */
 export const buildRoutes = (payload: AppSystemMenu[]) => {
+  const appMenu = useAppMenuStore()
+
   // filter `catalog` and `menu`
   const filtered = payload.filter((i) => i.type !== MenuTypeConst.ELEMENT)
 
@@ -103,7 +70,7 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
       // handle catelog
       if (node.type === MenuTypeConst.CATALOG) {
         return {
-          ...buildCommonRoute(node),
+          ...appMenu.createRouteByMenu(node),
           component: resolveParentComponent(node.name!),
         }
       }
@@ -113,7 +80,7 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
         // handle internal menu
         if (node.ternal === MenuTernalConst.INTERNAL) {
           return {
-            ...buildCommonRoute(node),
+            ...appMenu.createRouteByMenu(node),
             component: resolveIFrameComponent(node.name!, node.cache),
           }
         }
@@ -124,7 +91,7 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
 
         // common view route
         return {
-          ...buildCommonRoute(node),
+          ...appMenu.createRouteByMenu(node),
           component: resolveViewModules(node.component),
         }
       }

@@ -1,6 +1,16 @@
 import type { RemovableRef } from '@vueuse/core'
+import type { NotificationPlacement } from 'naive-ui'
 
 declare global {
+  type MessagePlacement =
+    | 'top'
+    | 'top-left'
+    | 'top-right'
+    | 'bottom'
+    | 'bottom-left'
+    | 'bottom-right'
+
+  type NotificationPlacement = NotificationPlacement
   interface AppState {
     device: ValueOfDevideConst
     isMobile: boolean
@@ -31,6 +41,11 @@ declare global {
     menus: AppSystemMenu[]
     keepAliveRouteNames: string[]
     indexMenuName?: string
+  }
+
+  interface AppMsgState {
+    notiPlacement: NotificationPlacement
+    msgPlacement: MessagePlacement
   }
 
   interface AppSettingState {

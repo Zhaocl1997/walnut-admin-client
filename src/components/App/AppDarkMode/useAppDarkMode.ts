@@ -1,5 +1,5 @@
 export const useAppDarkMode = () => {
-  const { app } = useAppState()
+  const appDark = useAppDarkStore()
 
   const isSystemDark = usePreferredDark()
 
@@ -10,17 +10,17 @@ export const useAppDarkMode = () => {
       root?.classList.add(DarkModeConst.DARK)
       root?.classList.remove(DarkModeConst.LIGHT)
 
-      app.value.isDark = true
+      appDark.setIsDark(true)
     } else {
       root?.classList.add(DarkModeConst.LIGHT)
       root?.classList.remove(DarkModeConst.DARK)
 
-      app.value.isDark = false
+      appDark.setIsDark(false)
     }
   }
 
   watchEffect(() => {
-    switch (app.value.darkMode) {
+    switch (appDark.darkMode) {
       case DarkModeConst.LIGHT:
         setIsDark(false)
         break

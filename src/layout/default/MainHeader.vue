@@ -1,27 +1,27 @@
 <template>
-  <div :style="{ width: getContentWidth }">
+  <div :style="{ width: appSetting.getContentWidth }">
     <w-transition appear name="slide-up">
       <n-layout-header
-        v-if="setting.app.showHeader"
+        v-if="appSetting.settings.app.showHeader"
         bordered
-        :inverted="setting.header.inverted"
+        :inverted="appSetting.settings.header.inverted"
       >
         <TheHeader
           class="flex-none px-2"
-          :style="{ height: setting.header.height + 'px' }"
+          :style="{ height: appSetting.settings.header.height + 'px' }"
         />
       </n-layout-header>
     </w-transition>
 
     <w-transition appear name="slide-up">
       <n-layout-header
-        v-if="setting.app.showTabs"
+        v-if="appSetting.settings.app.showTabs"
         bordered
-        :inverted="setting.header.inverted"
+        :inverted="appSetting.settings.header.inverted"
       >
         <TheTab
           class="flex-none px-2"
-          :style="{ height: setting.tab.height + 'px' }"
+          :style="{ height: appSetting.settings.tab.height + 'px' }"
         />
       </n-layout-header>
     </w-transition>
@@ -31,10 +31,8 @@
 <script lang="ts" setup>
   import TheHeader from './TheHeader'
   import TheTab from './TheTab'
-  import { getContentWidth } from '/@/settings'
 
-  const { settings } = useAppState()
-  const setting = settings.value.ForDevelopers
+  const appSetting = useAppSettingStore()
 </script>
 
 <script lang="ts">

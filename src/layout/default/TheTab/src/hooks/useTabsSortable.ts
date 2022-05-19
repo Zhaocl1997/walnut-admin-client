@@ -1,10 +1,11 @@
 import type Sortable from 'sortablejs'
 import { useSortable } from '/@/hooks/component/useSortable'
-import { changeTabOrder } from '/@/core/tab'
 
 let inst: Sortable
 
 export const useTabsSortable = (isSortable: boolean) => {
+  const appTab = useAppTabStore()
+
   if (!isSortable) {
     inst?.destroy()
     return
@@ -17,7 +18,7 @@ export const useTabsSortable = (isSortable: boolean) => {
     onEnd: (evt) => {
       const { oldIndex, newIndex } = evt
 
-      changeTabOrder(oldIndex!, newIndex!)
+      appTab.changeTabOrder(oldIndex!, newIndex!)
     },
   })
 

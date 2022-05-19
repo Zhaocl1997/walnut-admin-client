@@ -3,15 +3,11 @@
     <w-icon
       icon="ant-design:lock-outlined"
       height="24"
-      @click="onOpenEnterLockModal"
+      @click="onLock"
     ></w-icon>
 
-    <n-modal :show="enterLockModalShow">
-      <n-button @click="onLock">Lock App</n-button>
-    </n-modal>
-
     <n-modal
-      :show="app.isLock"
+      :show="appLock.isLock"
       class="h-screen w-screen relative bg-black bg-opacity-{99}"
     >
       <div class="absolute top-0 left-0 bottom-0 right-0">
@@ -58,7 +54,7 @@
 
           <n-time :time="now" format="mm"></n-time>
 
-          <n-time v-if="!appMemo.isMobile" :time="now" format="ss"></n-time>
+          <n-time v-if="!addAdapter.isMobile" :time="now" format="ss"></n-time>
         </div>
       </div>
     </n-modal>
@@ -71,31 +67,24 @@
   import Battery from './src/Battery.vue'
   import Network from './src/Network.vue'
 
-  const { appMemo, app } = useAppState()
+  const appLock = useAppLockStore()
+  const addAdapter = useAppAdapterStore()
 
   const now = useNow()
   const fps = useFps()
 
-  const enterLockModalShow = ref(false)
-
   const getShowUnlock = computed(
-    () => app.value.lockMode === AppLockModeConst.MANUAL
+    () => appLock.lockMode === AppLockModeConst.MANUAL
   )
 
-  const onOpenEnterLockModal = () => {
-    // enterLockModalShow.value = true
-    app.value.isLock = true
-    app.value.lockMode = AppLockModeConst.MANUAL
-  }
-
   const onLock = () => {
-    // enterLockModalShow.value = false
-    app.value.isLock = true
+    appLock.setIsLock(true)
+    appLock.setLockMode(AppLockModeConst.MANUAL)
   }
 
   const onUnlock = () => {
-    app.value.isLock = false
-    app.value.lockMode = AppLockModeConst.AUTO
+    appLock.setIsLock(false)
+    appLock.setLockMode(AppLockModeConst.AUTO)
   }
 </script>
 

@@ -1,11 +1,10 @@
-import { toggleLeftMenuLayout } from '/@/settings'
-
 export const useAppFullScreen = () => {
   const { isFullscreen } = useFullscreen()
+  const appSetting = useAppSettingStore()
 
   watchEffect(() => {
     if (!isFullscreen.value) {
-      toggleLeftMenuLayout(true)
+      appSetting.toggleLeftMenuLayout(true)
     }
   })
 }

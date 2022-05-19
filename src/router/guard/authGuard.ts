@@ -2,19 +2,19 @@ import { easyIsEmpty } from 'easy-fns-ts'
 
 import { AppAuthPath, RouteWhiteLists } from '../constant'
 import { AppCoreFn1 } from '/@/core'
-import { userActionGetSecretKeys, userActionInfo } from '/@/store/actions/user'
-import { useAppSecretKeys } from '/@/store/keys'
-
-const { token, menu, user } = useAppState()
-const appSecretKeys = useAppSecretKeys()
 
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
+    const userAuth = useUserAuthStore()
+    const userProfile = useUserProfileStore()
+    const appMenu = useAppMenuStore()
+    const appKey = useAppKeyStore()
+
     // Paths in `RouteWhiteLists` will enter directly
     if (RouteWhiteLists.includes(to.path)) {
       // Login and push to auth page, will go index menu
-      if (to.path === AppAuthPath && token.value) {
-        next({ name: menu.value.indexMenuName })
+      if (to.path === AppAuthPath && userAuth.access_token) {
+        next({ name: appMenu.indexMenuName })
         return
       }
       next()
@@ -22,7 +22,7 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // No token, next to auth page and return
-    if (!token.value) {
+    if (!userAuth.access_token) {
       const redirectData = {
         path: AppAuthPath,
         replace: true,
@@ -33,16 +33,16 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // Get user info
-    if (easyIsEmpty(user.value.userInfo)) {
-      await userActionInfo()
+    if (easyIsEmpty(userProfile.profile)) {
+      await userProfile.getProfile()
     }
 
-    if (easyIsEmpty(appSecretKeys.value)) {
-      await userActionGetSecretKeys()
+    if (easyIsEmpty(appKey.baiduAK)) {
+      await appKey.getSecretKeys()
     }
 
     // Got menus, next and return
-    if (menu.value.menus && menu.value.menus.length !== 0) {
+    if (appMenu.menus && appMenu.menus.length !== 0) {
       next()
       return
     }

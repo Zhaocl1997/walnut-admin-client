@@ -38,8 +38,8 @@
 
   const { t } = useAppI18n()
 
-  const { user } = useAppState()
-  const userId = user.value.userInfo._id!
+  const userProfile = useUserProfileStore()
+  const userId = userProfile.profile._id!
 
   const show = ref(false)
   const loading = ref(false)

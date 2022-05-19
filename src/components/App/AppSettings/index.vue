@@ -17,7 +17,7 @@
   >
     <w-form
       @hook="register0"
-      :model="app.isDark ? darkThemeRelatives : lightThemeRelatives"
+      :model="appDark.isDark ? darkThemeRelatives : lightThemeRelatives"
     ></w-form>
     <w-form @hook="register1" :model="appRelatives"></w-form>
     <w-form @hook="register2" :model="menuRelatives"></w-form>
@@ -49,9 +49,12 @@
   // TODO 99
   import WIcon from '/@/components/UI/Icon'
   import AppColors from './component/colors'
-  import { getTheme } from '/@/App/src/naive'
+  import { getMergedTheme } from '/@/App/src/naive/src/theme'
 
-  const { app, appMemo, settings } = useAppState()
+  const appDark = useAppDarkStore()
+  const appMenu = useAppMenuStore()
+  const appSetting = useAppSettingStore()
+
   const { t } = useAppI18n()
 
   const el = ref(null)
@@ -75,20 +78,20 @@
     y.value = myY.value ?? height.value - 50
   })
 
-  const lightThemeRelatives = ref(settings.value.ForDevelopers.themes.light)
-  const darkThemeRelatives = ref(settings.value.ForDevelopers.themes.dark)
-  const appRelatives = ref(settings.value.ForDevelopers.app)
-  const menuRelatives = ref(settings.value.ForDevelopers.menu)
-  const headerRelatives = ref(settings.value.ForDevelopers.header)
-  const breadcrumbRelatives = ref(settings.value.ForDevelopers.breadcrumb)
-  const tabRelatives = ref(settings.value.ForDevelopers.tab)
+  const lightThemeRelatives = ref(appSetting.settings.themes.light)
+  const darkThemeRelatives = ref(appSetting.settings.themes.dark)
+  const appRelatives = ref(appSetting.settings.app)
+  const menuRelatives = ref(appSetting.settings.menu)
+  const headerRelatives = ref(appSetting.settings.header)
+  const breadcrumbRelatives = ref(appSetting.settings.breadcrumb)
+  const tabRelatives = ref(appSetting.settings.tab)
 
-  const modalColor = computed(() => getTheme.value?.Drawer.common?.modalColor)
+  const modalColor = computed(
+    () => getMergedTheme.value?.Drawer.common?.modalColor
+  )
 
   const { copy, copied } = useClipboard({
-    source: computed(() =>
-      JSON.stringify(settings.value.ForDevelopers, null, 4)
-    ),
+    source: computed(() => JSON.stringify(appSetting.settings, null, 4)),
     copiedDuring: 8000,
   })
 
@@ -255,7 +258,7 @@
           render: ({ formData }) => (
             <AppColors
               v-model={[formData.invertedColor]}
-              disabled={app.value.isDark}
+              disabled={appDark.isDark}
             />
           ),
         },
@@ -475,7 +478,7 @@
         },
         componentProp: {
           step: 10,
-          disabled: computed(() => appMemo.value.collapse),
+          disabled: computed(() => appMenu.collapse),
         },
       },
       {
@@ -484,7 +487,7 @@
           path: 'collapsedWidth',
         },
         componentProp: {
-          disabled: computed(() => !appMemo.value.collapse),
+          disabled: computed(() => !appMenu.collapse),
         },
       },
       {
@@ -499,7 +502,7 @@
           path: 'iconSize',
         },
         componentProp: {
-          disabled: computed(() => appMemo.value.collapse),
+          disabled: computed(() => appMenu.collapse),
         },
       },
       {
@@ -508,7 +511,7 @@
           path: 'collapsedIconSize',
         },
         componentProp: {
-          disabled: computed(() => !appMemo.value.collapse),
+          disabled: computed(() => !appMenu.collapse),
         },
       },
       {
@@ -517,7 +520,7 @@
           path: 'indent',
         },
         componentProp: {
-          disabled: computed(() => appMemo.value.collapse),
+          disabled: computed(() => appMenu.collapse),
         },
       },
       {
@@ -526,7 +529,7 @@
           path: 'inverted',
         },
         componentProp: {
-          disabled: computed(() => app.value.isDark),
+          disabled: computed(() => appDark.isDark),
         },
       },
     ],
@@ -602,7 +605,7 @@
           path: 'inverted',
         },
         componentProp: {
-          disabled: computed(() => app.value.isDark),
+          disabled: computed(() => appDark.isDark),
         },
       },
     ],

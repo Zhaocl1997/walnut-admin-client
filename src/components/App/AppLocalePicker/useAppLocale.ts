@@ -4,7 +4,7 @@ import { AppI18nGetI18nMsg } from '/@/locales/backend'
  * @link https://vue-i18n-next.intlify.dev/guide/advanced/lazy.html
  */
 export const useAppLocale = () => {
-  const { app } = useAppState()
+  const appLocale = useAppLocaleStore()
 
   const loadLocaleMessages = async (locale: ValueOfLocaleConst) => {
     // Don't load again if has been loaded
@@ -41,7 +41,7 @@ export const useAppLocale = () => {
   }
 
   watchEffect(async () => {
-    await loadLocaleMessages(app.value.locale)
-    setI18nLanguage(app.value.locale)
+    await loadLocaleMessages(appLocale.locale)
+    setI18nLanguage(appLocale.locale)
   })
 }

@@ -8,9 +8,9 @@ import { AppI18nGetI18nMsg } from './backend'
  * @description Get locale messages from back end
  */
 const createI18nOptions = async (): Promise<I18nOptions> => {
-  const { app } = useAppState()
+  const appLocale = useAppLocaleStore()
 
-  const locale = app.value.locale
+  const locale = appLocale.locale
 
   const backendMsg = await AppI18nGetI18nMsg(locale)
 

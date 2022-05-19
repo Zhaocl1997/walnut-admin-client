@@ -2,15 +2,15 @@
   <div
     :class="[
       'whitespace-nowrap cursor-pointer px-6 transition-all',
-      { 'pl-4 px-0': appMemo.collapse },
+      { 'pl-4 px-0': appMenu.collapse },
     ]"
     @click="onGoIndex"
     :style="{
-      height: settings.ForDevelopers.header.height + 'px',
+      height: appSetting.settings.header.height + 'px',
       width:
-        (appMemo.collapse
-          ? settings.ForDevelopers.menu.collapsedWidth
-          : settings.ForDevelopers.menu.width) + 'px',
+        (appMenu.collapse
+          ? appSetting.settings.menu.collapsedWidth
+          : appSetting.settings.menu.width) + 'px',
       zIndex: 999,
     }"
   >
@@ -23,7 +23,7 @@
 
       <w-transition name="zoom-down">
         <div
-          v-show="!appMemo.collapse"
+          v-show="!appMenu.collapse"
           class="text-xl not-italic font-bold text-center"
         >
           {{ getAppTitle }}
@@ -34,11 +34,12 @@
 </template>
 
 <script lang="ts" setup>
-  const { appMemo, menu, settings } = useAppState()
+  const appMenu = useAppMenuStore()
+  const appSetting = useAppSettingStore()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
   const onGoIndex = () => {
-    useRouterPush({ name: menu.value.indexMenuName })
+    useRouterPush({ name: appMenu.indexMenuName })
   }
 </script>

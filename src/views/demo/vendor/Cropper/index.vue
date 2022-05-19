@@ -17,9 +17,11 @@
       <n-list-item>
         <w-title prefix="bar" class="mb-2">Avatar Upload (OSS)</w-title>
 
-        <w-JSON :value="{ avatar: user.userInfo.avatar }"></w-JSON>
+        <w-JSON :value="{ avatar: userProfile.getAvatar }"></w-JSON>
 
-        <w-avatar-upload v-model:value="user.userInfo.avatar"></w-avatar-upload>
+        <w-avatar-upload
+          v-model:value="userProfile.getAvatar"
+        ></w-avatar-upload>
       </n-list-item>
     </n-list>
   </w-demo-card>
@@ -29,7 +31,7 @@
   const cropperValue = ref()
   const srcValue = ref('/assets/auth_bg.jpg')
 
-  const { user } = useAppState()
+  const userProfile = useUserProfileStore()
 </script>
 
 <script lang="ts">

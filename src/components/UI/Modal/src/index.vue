@@ -93,8 +93,8 @@
       if (props.draggable) {
         nextTick(() => {
           const dragEl =
-            wModal.value?.containerRef.querySelector('.n-card-header')
-          const dragDom = wModal.value?.containerRef.querySelector('.n-modal')
+            wModal.value?.containerRef.querySelector('.w-card-header')
+          const dragDom = wModal.value?.containerRef.querySelector('.w-modal')
 
           useModalDraggable(dragEl, dragDom)
         })
@@ -103,7 +103,7 @@
   )
 
   const onFullScreen = () => {
-    const dragDom = wModal.value?.containerRef.querySelector('.n-modal')
+    const dragDom = wModal.value?.containerRef.querySelector('.w-modal')
 
     isFullscreen.value = !isFullscreen.value
 

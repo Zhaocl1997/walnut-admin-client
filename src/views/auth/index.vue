@@ -44,13 +44,13 @@
           <h1 class="hstack items-center justify-center mb-4">
             <img
               src="/assets/logo.png"
-              :alt="title"
+              :alt="getAppTitle"
               class="w-16 sm:w-12 md:w-16 lg:w-16 xl:w-16 2xl:w-16"
             />
             <span
               class="text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-3xl ml-4 whitespace-nowrap"
             >
-              {{ title }}
+              {{ getAppTitle }}
             </span>
           </h1>
 
@@ -68,7 +68,7 @@
   import SignUp from './signup.vue'
 
   const { t } = useAppI18n()
-  const title = computed(() => import.meta.env.VITE_APP_TITLE)
+  const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
   const onClick = () => {
     openExternalLink('http://beian.miit.gov.cn/')

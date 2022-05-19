@@ -87,7 +87,6 @@
   import { useMenuTree } from '../role/useMenuTree'
 
   const { t } = useAppI18n()
-  const { AppSuccess } = useAppMsgSuccess()
 
   // ref
   const actionType = ref<ActionType>('')
@@ -110,7 +109,7 @@
 
     onTreeNodeItemDelete: async (deleted) => {
       await menuAPI.delete(deleted._id!)
-      AppSuccess()
+      useAppMsgSuccess2()
       await onInit()
     },
 
@@ -205,7 +204,7 @@
                   if (!isValid) return
 
                   await menuAPI[actionType.value](formData.value)
-                  AppSuccess()
+                  useAppMsgSuccess2()
                   resetFormData()
                   await onInit()
                   treeMenuValue.value = ''

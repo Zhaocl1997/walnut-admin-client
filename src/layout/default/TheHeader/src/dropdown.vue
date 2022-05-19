@@ -11,7 +11,7 @@
       </Starport>
 
       <div class="text-base font-semibold pl-1 my-auto">
-        {{ getUserName }}
+        {{ userProfile.getDisplayName }}
       </div>
     </div>
   </n-dropdown>
@@ -19,18 +19,14 @@
 
 <script lang="tsx" setup>
   import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface'
-  import { upperFirst } from 'easy-fns-ts'
 
   // TODO 99
   import WIcon from '/@/components/UI/Icon'
   import WAvatar from '/@/views/account/settings/components/avatar.vue'
 
-  import { userActionSignOut } from '/@/store/actions/user'
-
   const { t } = useAppI18n()
-  const { user } = useAppState()
-
-  const { goNext } = useContinue(() => t('app:user:signout:warning'))
+  const userProfile = useUserProfileStore()
+  const userAuth = useUserAuthStore()
 
   const dropdownOptions = computed<DropdownMixedOption[]>(() => [
     {
@@ -55,13 +51,6 @@
     },
   ])
 
-  // TODO
-  const getUserName = computed(() =>
-    upperFirst(
-      (user.value.userInfo?.nickName! ?? user.value.userInfo?.userName!) || ''
-    )
-  )
-
   const onSelect = async (val: string) => {
     if (val === '1') {
       openExternalLink('https://walnut-admin-doc.netlify.app/')
@@ -72,10 +61,10 @@
     }
 
     if (val === '99') {
-      const res = await goNext()
+      const res = await useAppConfirm(t('app:user:signout:warning'))
 
       if (res) {
-        userActionSignOut()
+        await userAuth.SigninOut()
       }
     }
   }

@@ -44,7 +44,6 @@ export const creatAutoImportPlugin = (): VitePlugin => {
           'useAppRouter',
           'useRouterPush',
         ],
-        '/@/store': ['useAppState'],
 
         // pinia store modules
         '/@/store/modules/app/app-adapter': ['useAppAdapterStore'],
@@ -53,24 +52,41 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/store/modules/app/app-locale': ['useAppLocaleStore'],
         '/@/store/modules/app/app-lock': ['useAppLockStore'],
         '/@/store/modules/app/app-menu': ['useAppMenuStore'],
+        '/@/store/modules/app/app-msg': ['useAppMsgStore'],
         '/@/store/modules/app/app-setting': ['useAppSettingStore'],
         '/@/store/modules/app/app-tab': ['useAppTabStore'],
         '/@/store/modules/user/user-auth': ['useUserAuthStore'],
         '/@/store/modules/user/user-profile': ['useUserProfileStore'],
         '/@/store/modules/user/user-permission': ['useUserPermissionStore'],
 
+        // hooks
         '/@/hooks/core/useContext': ['useContext'],
         '/@/hooks/core/usePermissions': ['usePermissions'],
         '/@/hooks/core/useState': ['useState'],
         '/@/hooks/core/useDict': ['useDict', 'AppDictMap'],
+
+        // message
         '/@/hooks/component/useMessage': [
           'useAppMessage',
+          'AppMsg',
+          'useAppMsgSuccess2',
+          'useAppMsgInfo',
+          'useAppMsgWarning',
+          'useAppMsgError',
+        ],
+
+        // notification
+        '/@/hooks/component/useNoti': [
           'useAppNotification',
-          'useAppDialog',
-          'useContinue',
-          'useAppMsgSuccess',
+          'AppNoti',
+          'useAppNotiSuccess',
+          'useAppNotiInfo',
+          'useAppNotiWarning',
           'useAppNotiError',
         ],
+
+        // confirm
+        '/@/hooks/component/useConfirm': ['useAppConfirm'],
 
         '/@/utils/axios': ['AppAxios'],
         '/@/utils/persistent': ['useAppStorage'],

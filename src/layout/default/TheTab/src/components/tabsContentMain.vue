@@ -3,12 +3,12 @@
     ref="scrollRef"
     @scroll="onCloseCtxMenu"
     vertical
-    :height="settings.ForDevelopers.tab.height + 'px'"
+    :height="appSetting.settings.tab.height + 'px'"
   >
     <ul id="tabSortable" class="hstack">
       <w-transition appear name="fade-down" group>
         <li
-          v-for="(item, index) in tab.tabs"
+          v-for="(item, index) in appTab.tabs"
           :key="item.name"
           :class="[
             {
@@ -16,19 +16,22 @@
             },
 
             /* card */
-            tabSettings.styleMode === TabStyleModeConstInside.CARD &&
+            appSetting.settings.tab.styleMode ===
+              TabStyleModeConstInside.CARD &&
               ($route.name === item.name
                 ? 'border border-primary'
                 : 'border border-gray-400 hover:border-primaryHover hover:text-primaryHover'),
 
             /* flex */
-            tabSettings.styleMode === TabStyleModeConstInside.FLEX &&
+            appSetting.settings.tab.styleMode ===
+              TabStyleModeConstInside.FLEX &&
               ($route.name === item.name
                 ? 'tab-flex border-primary'
                 : 'hover:border-primaryHover hover:text-primaryHover hover:tab-flex'),
 
             /* round */
-            tabSettings.styleMode === TabStyleModeConstInside.ROUND &&
+            appSetting.settings.tab.styleMode ===
+              TabStyleModeConstInside.ROUND &&
               ($route.name === item.name
                 ? 'rounded-xl bg-primary text-light-100'
                 : 'rounded-xl hover:bg-primaryHover hover:text-bodyColor'),
@@ -45,7 +48,11 @@
           @mouseleave="onMouseLeave(item)"
         >
           <w-icon
-            v-if="!appMemo.isMobile && !tabSettings.showIcon && item.meta.affix"
+            v-if="
+              !appAdapter.isMobile &&
+              !appSetting.settings.tab.showIcon &&
+              item.meta.affix
+            "
             height="16"
             icon="ant-design:pushpin-filled"
           ></w-icon>
@@ -53,14 +60,14 @@
           <TabDot
             :ref="setItemRef"
             v-else-if="
-              !appMemo.isMobile &&
-              !tabSettings.showIcon &&
+              !appAdapter.isMobile &&
+              !appSetting.settings.tab.showIcon &&
               $route.name === item.name
             "
           ></TabDot>
 
           <w-icon
-            v-if="tabSettings.showIcon"
+            v-if="appSetting.settings.tab.showIcon"
             :icon="item.meta.icon"
             height="16"
           ></w-icon>
@@ -89,8 +96,10 @@
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { appMemo, tab, settings } = useAppState()
-  const tabSettings = settings.value.ForDevelopers.tab
+
+  const appTab = useAppTabStore()
+  const appSetting = useAppSettingStore()
+  const appAdapter = useAppAdapterStore()
 
   const TabStyleModeConstInside = TabStyleModeConst
 
@@ -127,8 +136,8 @@
 
     // start bounce
     if (
-      !tabSettings.showIcon &&
-      !appMemo.value.isMobile &&
+      !appSetting.settings.tab.showIcon &&
+      !appAdapter.isMobile &&
       !item.meta.affix &&
       item.name === currentRoute.value.name
     ) {
@@ -142,8 +151,8 @@
 
     // stop bounce
     if (
-      !tabSettings.showIcon &&
-      !appMemo.value.isMobile &&
+      !appSetting.settings.tab.showIcon &&
+      !appAdapter.isMobile &&
       !item.meta.affix &&
       currentMouseTab.value?.name === currentRoute.value.name
     ) {
@@ -155,7 +164,7 @@
     // middle button close
     // 1 stands for mouse middle button
     if (e.button === 1) {
-      const isRemoveable = !tab.value.tabs
+      const isRemoveable = !appTab.tabs
         .filter((i) => i.meta.affix)
         .map((i) => i.name)
         .includes(name)
@@ -167,7 +176,7 @@
   watchEffect(() => {
     nextTick(() => {
       // tab sortable
-      useTabsSortable(tabSettings.sortable)
+      useTabsSortable(appSetting.settings.tab.sortable)
     })
   })
 </script>

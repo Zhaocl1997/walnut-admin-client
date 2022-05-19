@@ -78,7 +78,7 @@
 </script>
 
 <style scoped>
-  .n-divider {
+  .w-divider {
     margin-top: 4px !important;
     margin-bottom: 4px !important;
   }
