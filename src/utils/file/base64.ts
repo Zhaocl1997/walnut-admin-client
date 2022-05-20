@@ -1,47 +1,60 @@
 /**
  * @description base64 to blob
- * @param base64Buf base64 string
  */
-export const dataURLtoBlob = (base64Buf: string): Blob => {
-  const arr = base64Buf.split(',')
-  const typeItem = arr[0]
-  const mime = typeItem.match(/:(.*?);/)![1]
-  // https://www.runoob.com/jsref/met-win-atob.html
-  const bstr = window.atob(arr[1])
-  let n = bstr.length
-  const u8arr = new Uint8Array(n)
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n)
-  }
-  return new Blob([u8arr], { type: mime })
+export const base64ToBlob = (base64String: string) => {
+  return new Promise<Blob>((resolve, reject) => {
+    try {
+      const arr = base64String.split(',')
+      const typeItem = arr[0]
+      const mime = typeItem.match(/:(.*?);/)![1]
+      // https://www.runoob.com/jsref/met-win-atob.html
+      const bstr = window.atob(arr[1])
+      let n = bstr.length
+      const u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      resolve(new Blob([u8arr], { type: mime }))
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+/**
+ * @description blob to base64
+ */
+export const blobToBase64 = (blob: Blob) => {
+  return new Promise<string>((resolve, reject) => {
+    const fr = new FileReader()
+    fr.onload = (e) => {
+      resolve(e.target!.result as string)
+    }
+    fr.onerror = reject
+    fr.readAsDataURL(blob)
+  })
 }
 
 /**
  * @description img url to base64
- * @param url image url
- * @param mineType
  */
-export const urlToBase64 = (
-  url: string,
-  mineType?: string
-): Promise<string> => {
-  return new Promise((resolve, reject) => {
+export const imgUrlToBase64 = (url: string, mineType: string = 'image/png') => {
+  return new Promise<string>((resolve, reject) => {
     // https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toDataURL
-    let canvas = document.createElement('CANVAS') as Nullable<HTMLCanvasElement>
+    let canvas = document.createElement('canvas') as Nullable<HTMLCanvasElement>
     const ctx = canvas!.getContext('2d')
 
     const img = new Image()
-    img.crossOrigin = ''
+    img.crossOrigin = 'Anonymous'
     img.onload = function () {
       if (!canvas || !ctx) {
         return reject()
       }
       canvas.height = img.height
       canvas.width = img.width
-      ctx.drawImage(img, 0, 0)
-      const dataURL = canvas.toDataURL(mineType || 'image/png')
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      resolve(canvas.toDataURL(mineType))
       canvas = null
-      resolve(dataURL)
     }
     img.src = url
   })

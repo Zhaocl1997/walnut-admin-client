@@ -17,6 +17,8 @@
         <n-anchor-link title="Verify" href="#Verify" />
         <n-anchor-link title="QRCode" href="#QRCode" />
         <n-anchor-link title="NaiveMsg" href="#NaiveMsg" />
+        <n-anchor-link title="Modal" href="#Modal" />
+        <n-anchor-link title="Drawer" href="#Drawer" />
 
         <n-anchor-link title="Message" href="#Message" />
         <n-anchor-link title="Flipper" href="#Flipper" />
@@ -24,8 +26,7 @@
         <n-anchor-link title="Title" href="#Title" />
         <n-anchor-link title="Transition" href="#Transition" />
         <n-anchor-link title="Axios" href="#Axios" />
-        <n-anchor-link title="Modal" href="#Modal" />
-        <n-anchor-link title="Drawer" href="#Drawer" />
+        <n-anchor-link title="File" href="#File" />
       </n-anchor>
     </div>
 
@@ -42,6 +43,8 @@
         <DemoVerify id="Verify" />
         <DemoQRCode id="QRCode" />
         <DemoNaiveMsg id="NaiveMsg" />
+        <DemoModal id="Modal" />
+        <DemoDrawer id="Drawer" />
       </div>
 
       <div class="children:my-2">
@@ -51,8 +54,7 @@
         <DemoTitle id="Title" />
         <DemoTransition id="Transition" />
         <DemoAxios id="Axios" />
-        <DemoModal id="Modal" />
-        <DemoDrawer id="Drawer" />
+        <DemoFile id="File" />
       </div>
     </div>
   </div>
@@ -73,6 +75,7 @@
   import DemoModal from './Modal.vue'
   import DemoDrawer from './Drawer.vue'
   import DemoNaiveMsg from './NaiveMsg.vue'
+  import DemoFile from './File.vue'
 
   const appAdapter = useAppAdapterStore()
 </script>
