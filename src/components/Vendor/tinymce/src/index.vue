@@ -80,7 +80,8 @@
 
   const editorId = ref('tinymce-' + genString(8))
   const editorValue = ref('')
-  const editorRef = ref<Nullable<TinymceVueInstance>>(null)
+  // third party libs should use shallowRef !!!
+  const editorRef = shallowRef<Nullable<TinymceVueInstance>>(null)
 
   const loading = ref(false)
 

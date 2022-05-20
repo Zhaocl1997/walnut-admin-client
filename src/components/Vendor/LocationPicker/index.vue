@@ -44,9 +44,11 @@
 
   const appKey = useAppKeyStore()
 
-  const baiduRef = ref<Nullable<HTMLDivElement>>(null)
-  const baiduMap = ref<any>()
-  const baiduMapAutoComplete = ref<any>()
+  // third party libs should use shallowRef !!!
+  const baiduRef = shallowRef<Nullable<HTMLDivElement>>(null)
+  const baiduMap = shallowRef<any>()
+  const baiduMapAutoComplete = shallowRef<any>()
+
   const acId = ref('ac' + genString(8))
 
   const filter = ref<string>()
@@ -60,7 +62,7 @@
       return
     }
 
-    const url = `https://api.map.baidu.com/getscript?v=2.0&ak=${appKey.baiduAK}&services=&t=20220314154112`
+    const url = `https://api.map.baidu.com/getscript?v=3.0&ak=${appKey.baiduAK}&services=&t=20220512164557`
     window.HOST_TYPE = '2'
     useScriptTag(url, onInitMap)
   }
