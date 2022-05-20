@@ -26,40 +26,47 @@
     </div>
 
     <div
-      class="lg:w-1/2 w-full flex items-center justify-center text-center lg:px-16 xl:px-32 2xl:px-48 px-0 z-0 bg-bodyColor"
+      class="lg:w-1/2 w-full flex items-center justify-center text-center bg-bodyColor relative"
     >
-      <div
-        class="absolute lg:hidden z-10 inset-0 bg-no-repeat bg-cover items-center"
-        style="background-image: url('/assets/auth_bg.jpg')"
-      >
-        <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
-      </div>
-
-      <n-card
-        style="z-index: 100"
-        hoverable
-        class="mx-1/8 sm:mx-1/4 md:mx-1/4 lg:mx-1/6 xl:mx-1/6 2xl:mx-1/6 rounded-3xl light:shadow-2xl"
-      >
-        <div class="vstack items-center justify-center">
-          <h1 class="hstack items-center justify-center mb-4">
-            <img
-              src="/assets/logo.png"
-              :alt="getAppTitle"
-              class="w-16 sm:w-12 md:w-16 lg:w-16 xl:w-16 2xl:w-16"
-            />
-            <span
-              class="text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-3xl ml-4 whitespace-nowrap"
-            >
-              {{ getAppTitle }}
-            </span>
-          </h1>
-
-          <SignIn />
+      <div>
+        <div
+          class="absolute lg:hidden z-10 inset-0 bg-no-repeat bg-cover items-center"
+          style="background-image: url('/assets/auth_bg.jpg')"
+        >
+          <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
         </div>
-      </n-card>
-    </div>
 
-    <n-text class="absolute bottom-2 right-1/5 cursor-pointer" @click="onClick">黑ICP备2022002207号</n-text>
+        <n-card
+          style="z-index: 100"
+          hoverable
+          class="rounded-3xl relative light:shadow-2xl"
+        >
+          <div class="vstack items-center justify-center">
+            <h1 class="hstack items-center justify-center mb-4">
+              <img
+                src="/assets/logo.png"
+                :alt="getAppTitle"
+                class="w-16 sm:w-12 md:w-16 lg:w-16 xl:w-16 2xl:w-16"
+              />
+              <span
+                class="md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-3xl ml-4 whitespace-nowrap"
+              >
+                {{ getAppTitle }}
+              </span>
+            </h1>
+
+            <SignIn />
+          </div>
+        </n-card>
+
+        <n-text
+          class="absolute bottom-4 right-1/2 translate-x-1/2 cursor-pointer"
+          @click="onClick"
+        >
+          黑ICP备2022002207号
+        </n-text>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -73,6 +80,11 @@
   const onClick = () => {
     openExternalLink('http://beian.miit.gov.cn/')
   }
+
+  useAppNotiInfo('Demonstrate only \nAccount: user \nPassword: 2020', {
+    closable: false,
+    duration: 5000,
+  })
 </script>
 
 <script lang="ts">

@@ -148,7 +148,7 @@
                   size="small"
                 ></NRadio>
 
-                <span class="ml-2 text-xs text-gray-500 cursor-pointer">
+                <span class="ml-2 text-xs text-gray-500 cursor-pointer break-all">
                   {t('form:app:signin:continue')}
                   <NText
                     type="info"

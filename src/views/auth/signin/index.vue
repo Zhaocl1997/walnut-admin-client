@@ -5,20 +5,20 @@
       :bar-width="28"
       animated
       default-value="account"
-      pane-class="h-64"
+      pane-class="h-64 "
       type="line"
       justify-content="space-around"
     >
       <n-tab-pane name="account" :tab="t('form:app:signin:tab:account')">
-        <SignInWithAccount class="m-auto text-justify mt-2" />
+        <SignInWithAccount class="w-72 text-justify mt-2" />
       </n-tab-pane>
 
       <n-tab-pane name="SMS" :tab="t('form:app:signin:tab:sms')">
-        <SignInWitSMS class="m-auto text-justify mt-2" />
+        <SignInWitSMS class="w-72 text-justify mt-2" />
       </n-tab-pane>
 
       <n-tab-pane name="QR" :tab="t('form:app:signin:tab:qr')">
-        <SignInWithQR class="m-auto text-justify mt-2" />
+        <SignInWithQR class="w-72 text-justify mt-2" />
       </n-tab-pane>
     </n-tabs>
   </div>
