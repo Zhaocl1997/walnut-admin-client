@@ -43,7 +43,7 @@
   )
 
   const isHovered = useElementHover(WJSONRef)
-  const { copy, copied } = useClipboard({ source: getJSON.value })
+  const { copy, copied } = useClipboard({ source: getJSON })
 </script>
 
 <script lang="ts">
