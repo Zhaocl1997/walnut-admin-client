@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-  import type { EChartsOption, ECharts } from 'echarts'
+  import type { EChartsOption } from 'echarts'
   import { genString } from 'easy-fns-ts'
 
   import echarts from './resources/onDemand'
@@ -14,11 +14,18 @@
     width?: string
   }
 
+  const chartId = ref('echarts-' + genString(8))
+  // third party libs should use shallowRef !!!
+  const chartInst = shallowRef<Nullable<echarts.ECharts>>(null)
+
   const appDark = useAppDarkStore()
   const appLocale = useAppLocaleStore()
 
-  const chartId = ref('echarts-' + genString(8))
-  const chartInst = ref<Nullable<ECharts>>(null)
+  const getSkinName = computed(() => (appDark.isDark ? 'dark' : undefined))
+
+  const getLangName = computed(() =>
+    appLocale.locale.split('_')[0].toUpperCase()
+  )
 
   const props = withDefaults(defineProps<WEchartsProps>(), {
     height: '400px',
@@ -29,31 +36,40 @@
     chartInst.value?.resize()
   })
 
-  // TODO keep-alive error
-  watchEffect(
-    () => {
-      if (chartInst.value) {
-        chartInst.value.dispose()
-        chartInst.value = null
-      }
+  const onInit = () => {
+    if (chartInst.value) {
+      chartInst.value.dispose()
+      chartInst.value = null
+    }
 
-      const target = document.getElementById(chartId.value)!
-      // if ondemand usage, just uncomment top echarts import, and change below to `echarts.init`
-      const chart = echarts.init(target, appDark.isDark ? 'dark' : undefined, {
-        locale: appLocale.locale.split('_')[0].toUpperCase(),
-      })
+    const target = document.getElementById(chartId.value)!
 
-      // @ts-ignore
-      chartInst.value = chart
+    if (!target) return
 
-      chart.setOption(
-        appDark.isDark
-          ? Object.assign(props.option, { backgroundColor: 'transparent' })
-          : props.option
-      )
-    },
-    { flush: 'post' }
-  )
+    // if ondemand usage, just uncomment top echarts import, and change below to `echarts.init`
+    const chart = echarts.init(target, getSkinName.value, {
+      locale: getLangName.value,
+    })
+
+    chartInst.value = chart
+
+    chartInst.value!.setOption(
+      appDark.isDark
+        ? Object.assign(props.option, { backgroundColor: 'transparent' })
+        : props.option
+    )
+  }
+
+  watch(() => [getSkinName, getLangName, props.option], onInit, {
+    deep: true,
+    flush: 'post',
+  })
+
+  onMounted(() => {
+    onInit()
+  })
+
+  onActivated(onInit)
 </script>
 
 <script lang="ts">
