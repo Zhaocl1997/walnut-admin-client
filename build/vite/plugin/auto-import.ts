@@ -65,11 +65,14 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/hooks/core/useState': ['useState'],
         '/@/hooks/core/useDict': ['useDict', 'AppDictMap'],
 
+        // web hook
+        '/@/hooks/web/useBlob': ['useBlob'],
+
         // message
         '/@/hooks/component/useMessage': [
           'useAppMessage',
           'AppMsg',
-          'useAppMsgSuccess2',
+          'useAppMsgSuccess',
           'useAppMsgInfo',
           'useAppMsgWarning',
           'useAppMsgError',
@@ -92,6 +95,19 @@ export const creatAutoImportPlugin = (): VitePlugin => {
         '/@/utils/persistent': ['useAppStorage'],
         '/@/utils/factory/asyncComponent': ['createAsyncComponent'],
         '/@/utils/window/open': ['openExternalLink'],
+
+        // file
+        '/@/utils/file/base64': [
+          'base64ToBlob',
+          'blobToBase64',
+          'imgUrlToBase64',
+        ],
+        '/@/utils/file/download': [
+          'downloadByOnlineUrl',
+          'downloadByBase64',
+          'downloadByBlob',
+          'downloadByUrl',
+        ],
 
         '/@/utils/log/combine': ['AppLog', 'AppInfo', 'AppWarn', 'AppError'],
 

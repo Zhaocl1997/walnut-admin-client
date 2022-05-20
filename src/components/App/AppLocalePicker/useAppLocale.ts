@@ -10,7 +10,7 @@ export const useAppLocale = () => {
     // Don't load again if has been loaded
     if (
       Object.keys(
-        (AppI18n.global.messages as unknown as Ref<string[]>).value
+        (AppI18n.global?.messages as unknown as Ref<string[]>).value
       ).includes(locale)
     ) {
       return

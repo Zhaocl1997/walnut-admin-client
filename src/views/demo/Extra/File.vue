@@ -61,12 +61,14 @@
 </template>
 
 <script lang="ts" setup>
+  import type { WAbsImageInst } from '/@/components/Extra/AbsImage'
+
   const blobURL = ref<string>()
   const base64 = ref<string>()
   const hasFile = ref(false)
   const fileName = ref<string>()
 
-  const absImageRef = ref()
+  const absImageRef = ref<WAbsImageInst>()
 
   const onRenderBlobURL = async () => {
     const res = await absImageRef.value.onGetBlobURL()

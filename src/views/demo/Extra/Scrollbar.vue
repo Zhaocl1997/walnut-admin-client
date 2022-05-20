@@ -79,13 +79,13 @@
 </template>
 
 <script lang="ts" setup>
-  import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
+  import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
 
   const position = ref(0)
   const positionVertival = ref(0)
 
-  const scrollRef = ref<Nullable<WScrollbarRef>>(null)
-  const scrollVerticalRef = ref<Nullable<WScrollbarRef>>(null)
+  const scrollRef = ref<Nullable<WScrollbarInst>>(null)
+  const scrollVerticalRef = ref<Nullable<WScrollbarInst>>(null)
 </script>
 
 <script lang="ts">

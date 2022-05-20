@@ -1,4 +1,4 @@
-import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
+import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
 
 export interface AppTabUtilListItem {
   icon: string
@@ -7,7 +7,7 @@ export interface AppTabUtilListItem {
 }
 
 export interface AppTabContext {
-  scrollRef: Ref<Nullable<WScrollbarRef>>
+  scrollRef: Ref<Nullable<WScrollbarInst>>
 
   x: Ref<number>
   y: Ref<number>

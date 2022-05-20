@@ -7,8 +7,6 @@
 </template>
 
 <script lang="ts" setup>
-  import WQRCode from '/@/components/Extra/QRCode'
-
   const { t } = useAppI18n()
 
   const getUrl = () => `https://www.baidu.com/?t=${Date.now()}`

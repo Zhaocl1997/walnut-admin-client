@@ -41,7 +41,7 @@ export const useFormAdvanced = (
 
         if (ret) {
           onClose()
-          useAppMsgSuccess2()
+          useAppMsgSuccess()
         } else {
           return Promise.reject()
         }

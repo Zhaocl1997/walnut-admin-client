@@ -26,7 +26,7 @@ export const AppMsg = (msg: string, options: AppMessageOptions) => {
   })
 }
 
-export const useAppMsgSuccess2 = (
+export const useAppMsgSuccess = (
   msg?: string,
   options?: Omit<AppMessageOptions, 'type'>
 ) =>

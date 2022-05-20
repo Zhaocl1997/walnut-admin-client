@@ -56,7 +56,7 @@
   }
 
   const onOpenMsg = (type: number) => {
-    type === 1 && useAppMsgSuccess2()
+    type === 1 && useAppMsgSuccess()
     type === 2 && useAppMsgInfo('Message Info', { closable: false })
     type === 3 && useAppMsgWarning('Message Warning', { duration: 1000 })
     type === 4 && useAppMsgError('Message Error', { placement: 'top-left' })
@@ -66,7 +66,7 @@
     const res = await useAppConfirm('Do you want to continue?')
 
     if (res) {
-      useAppMsgSuccess2()
+      useAppMsgSuccess()
     } else {
       useAppMsgInfo('Canceled')
     }

@@ -102,7 +102,7 @@ export const useTableAPI = (
   const onApiTableDelete = async (id: StringOrNumber) => {
     const ret = await props.value.apiProps?.deleteApi!(id)
     if (ret) {
-      useAppMsgSuccess2()
+      useAppMsgSuccess()
       await onApiTableList()
     }
   }
@@ -114,7 +114,7 @@ export const useTableAPI = (
     )
 
     if (ret) {
-      useAppMsgSuccess2()
+      useAppMsgSuccess()
 
       if (
         ApiTableListParams.value.page!.page! *

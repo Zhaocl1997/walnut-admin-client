@@ -1,5 +1,3 @@
-import { base64ToBlob, imgUrlToBase64 } from './base64'
-
 const { createBlobUrl } = useBlob()
 
 /**

@@ -8,6 +8,7 @@
 
 <script lang="tsx" setup>
   import type { WButtonInst } from '/@/components/UI/Button'
+  import type { WVerifyInst } from '/@/components/Extra/Verify'
 
   // TODO 99
   import { NRadio, NText, NInput } from 'naive-ui'
@@ -18,7 +19,6 @@
     AppAuthServiceAgreementPath,
   } from '/@/router/constant'
   import { isPhoneNumber } from '/@/utils/regex'
-  import WVerify, { WVerifyInst } from '/@/components/Extra/Verify'
 
   const { t } = useAppI18n()
 

@@ -29,10 +29,10 @@
 </template>
 
 <script lang="ts" setup>
-  import WVerify from '/@/components/Extra/Verify'
+  import type { WVerifyInst } from '/@/components/Extra/Verify'
 
-  const verify = ref(null)
-  const verify2 = ref(null)
+  const verify = ref<WVerifyInst>()
+  const verify2 = ref<WVerifyInst>()
 
   const onSuccess = () => {
     useAppMessage().success('Success')

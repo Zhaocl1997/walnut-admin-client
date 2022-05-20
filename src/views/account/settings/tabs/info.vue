@@ -109,7 +109,7 @@
               // upload avatar and get real avatar url
               await avatarUploadRef.value.onSubmit()
               await userAPI.update(formData.value)
-              useAppMsgSuccess2()
+              useAppMsgSuccess()
               await userProfile.getProfile()
             } finally {
               loading.value = false

@@ -1,6 +1,6 @@
 <script lang="tsx">
   import type { ScrollbarInst } from 'naive-ui/lib/_internal'
-  import type { WScrollbarRef } from './index'
+  import type { WScrollbarInst } from './index'
 
   import { useExpose } from '/@/hooks/core/useExpose'
   import { genString } from 'easy-fns-ts'
@@ -43,7 +43,7 @@
         )
       }, 300)
 
-      const methods: WScrollbarRef = {
+      const methods: WScrollbarInst = {
         scrollTo: (opt) => {
           scrollRef.value!.scrollTo({
             ...(opt as Object),

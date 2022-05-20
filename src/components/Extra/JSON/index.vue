@@ -1,20 +1,22 @@
 <template>
-  <div ref="WJSONRef" class="relative min-h-16">
-    <n-code :code="getJSON" language="json" word-wrap :trim="false"></n-code>
+  <w-scrollbar :height="height">
+    <div ref="WJSONRef" class="relative">
+      <n-code :code="getJSON" language="json" word-wrap :trim="false"></n-code>
 
-    <w-transition appear name="fade-right">
-      <n-button
-        class="absolute top-2 right-2"
-        v-show="isHovered"
-        dashed
-        size="tiny"
-        :type="copied ? 'success' : 'info'"
-        @click="() => copy()"
-      >
-        {{ copied ? t('app:base:success') : t('app:button:copy') }}
-      </n-button>
-    </w-transition>
-  </div>
+      <w-transition appear name="fade-right">
+        <n-button
+          class="absolute top-2 right-2"
+          v-show="isHovered"
+          dashed
+          size="tiny"
+          :type="copied ? 'success' : 'info'"
+          @click="() => copy()"
+        >
+          {{ copied ? t('app:base:success') : t('app:button:copy') }}
+        </n-button>
+      </w-transition>
+    </div>
+  </w-scrollbar>
 </template>
 
 <script lang="ts" setup>

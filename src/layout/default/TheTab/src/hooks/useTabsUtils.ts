@@ -1,10 +1,10 @@
 import type { AppTabUtilListItem } from '../types'
-import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
+import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
 
 import { useRedirect } from '/@/hooks/core/useRedirect'
 
 export const useTabsUtils = (
-  scrollRef: Ref<Nullable<WScrollbarRef>>,
+  scrollRef: Ref<Nullable<WScrollbarInst>>,
   currentRouteTabIndex: Ref<number>,
   startBounce: Fn,
   stopBounce: Fn

@@ -55,7 +55,7 @@
     const isAvatarUploadSuccess = await avatarUpload.value?.onOSSUpload()
 
     if (isAvatarUploadSuccess) {
-      useAppMsgSuccess2()
+      useAppMsgSuccess()
     } else {
       useAppMsgInfo('Upload avatar fail')
     }

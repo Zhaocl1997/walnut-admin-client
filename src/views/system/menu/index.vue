@@ -109,7 +109,7 @@
 
     onTreeNodeItemDelete: async (deleted) => {
       await menuAPI.delete(deleted._id!)
-      useAppMsgSuccess2()
+      useAppMsgSuccess()
       await onInit()
     },
 
@@ -204,7 +204,7 @@
                   if (!isValid) return
 
                   await menuAPI[actionType.value](formData.value)
-                  useAppMsgSuccess2()
+                  useAppMsgSuccess()
                   resetFormData()
                   await onInit()
                   treeMenuValue.value = ''

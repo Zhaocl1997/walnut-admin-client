@@ -1,4 +1,4 @@
-import type { WScrollbarRef } from '/@/components/Extra/Scrollbar'
+import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
 
 /**
  * @description App Tab Core Function
@@ -10,7 +10,7 @@ export const useTabs = () => {
   const route = useAppRoute()
   const { currentRoute } = useAppRouter()
 
-  const scrollRef = ref<Nullable<WScrollbarRef>>(null)
+  const scrollRef = ref<Nullable<WScrollbarInst>>(null)
 
   const getCurrentRouteTabIndex = computed(() =>
     appTab.tabs.findIndex((item) => item.name === currentRoute.value.name)

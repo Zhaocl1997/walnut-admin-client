@@ -1,9 +1,11 @@
 <template>
-  <n-modal
+  <w-modal
     v-model:show="show"
-    preset="card"
     :title="t('comp:verify:title')"
     :close-on-esc="false"
+    :default-button="false"
+    :fullscreen="false"
+    :closable="false"
     :style="{ width: 'auto' }"
   >
     <div class="select-none" @mousedown.stop @touchstart.stop>
@@ -98,7 +100,7 @@
         </div>
       </div>
     </div>
-  </n-modal>
+  </w-modal>
 </template>
 
 <script lang="ts">
@@ -464,7 +466,7 @@
   const onOpenModal = () => {
     show.value = true
 
-    nextTick(() => onReset())
+    nextTick(onReset)
   }
 
   defineExpose({ onOpenModal })

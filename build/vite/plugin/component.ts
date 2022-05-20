@@ -20,15 +20,19 @@ const comp = {
     'AppAuthorize',
   ],
   Extra: [
+    'AbsImage',
     'Arrow',
     'DemoCard',
     'Flipper',
     'IconPicker',
     'JSON',
     'Message',
+    'QRCode',
     'Scrollbar',
     'Title',
     'Transition',
+    'TransitionSelect',
+    'Verify'
   ],
   UI: [
     'Button',
