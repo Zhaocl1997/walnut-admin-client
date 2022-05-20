@@ -95,25 +95,17 @@
         </w-scrollbar>
 
         <n-space>
-          <n-upload
-            abstract
-            :default-upload="false"
-            @change="onUploadChange"
-            accept=".jpg, .jpeg, .png"
-          >
-            <n-upload-trigger #="{ handleClick }" abstract>
-              <w-a-icon
-                :text="false"
-                size="small"
-                height="16"
-                placement="bottom"
-                icon="ant-design:picture-outlined"
-                :help-message="t('comp:cropper:choose')"
-                @click="handleClick"
-              >
-              </w-a-icon>
-            </n-upload-trigger>
-          </n-upload>
+          <w-abs-image ref="absImage" @change="onUploadChange">
+            <w-a-icon
+              :text="false"
+              size="small"
+              height="16"
+              placement="bottom"
+              icon="ant-design:picture-outlined"
+              :help-message="t('comp:cropper:choose')"
+            >
+            </w-a-icon>
+          </w-abs-image>
 
           <w-a-icon
             v-for="item in buttons"
@@ -135,10 +127,9 @@
 
 <script lang="ts" setup>
   import type { CropperImage, CropperSelection } from 'cropperjs'
-  import type { UploadFileInfo } from 'naive-ui'
+  import type { WAbsImageInst } from '/@/components/Extra/AbsImage'
 
   import 'cropperjs'
-  import { downloadByUrl } from '/@/utils/file/download'
   import { genString } from 'easy-fns-ts'
 
   // TODO 888
@@ -158,8 +149,11 @@
   const selectionId = ref('s-' + genString(8))
   const flag = ref(true)
 
-  const imageRef = ref<Nullable<CropperImage>>(null)
-  const selectionRef = ref<Nullable<CropperSelection>>(null)
+  const absImage = ref<WAbsImageInst>()
+
+  // third party libs should use shallowRef !!!
+  const imageRef = shallowRef<Nullable<CropperImage>>(null)
+  const selectionRef = shallowRef<Nullable<CropperSelection>>(null)
 
   const initSelectionData = ref<{
     x: number
@@ -167,6 +161,11 @@
     width: number
     height: number
   }>()
+
+  const {
+    createBlobUrl: createBlobUrlCropper,
+    tempBlobURL: tempBlobURLCropper,
+  } = useBlob()
 
   watch(
     () => props.src,
@@ -232,32 +231,32 @@
   }
 
   const onDownload = async () => {
-    const url = await onGetCropperValue()
+    await onGetCropperValue()
 
-    downloadByUrl({ url })
+    await downloadByUrl(tempBlobURLCropper.value!)
   }
 
-  const onUploadChange = (options: {
-    file: UploadFileInfo
-    fileList: Array<UploadFileInfo>
-    event?: Event
-  }) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(options.file.file!)
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      emits('update:src', e.target!.result)
-    }
+  const onUploadChange = async () => {
+    const tempBlobURLSrc = await absImage.value?.onGetBlobURL()
+
+    emits('update:src', tempBlobURLSrc)
   }
 
   const onGetCropperValue = async () => {
     const canvas = await selectionRef.value?.$toCanvas()
 
-    const url = canvas?.toDataURL('image/png')!
+    const base64 = canvas?.toDataURL('image/png')!
 
-    emits('update:value', url)
+    const blob = await base64ToBlob(base64)
 
-    return url
+    await createBlobUrlCropper(blob)
+
+    emits('update:value', tempBlobURLCropper.value)
   }
+
+  defineExpose({
+    onGetCropperBlob: () => absImage.value?.onGetBlob(),
+  })
 
   const buttons = [
     {

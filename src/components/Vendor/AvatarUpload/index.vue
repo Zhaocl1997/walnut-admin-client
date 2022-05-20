@@ -13,10 +13,12 @@
       @yes="onYes"
       @no="onNo"
       @update:show="onUpdateShow"
+      display-directive="show"
     >
       <w-cropper
-        v-model:value="cropperValue"
-        v-model:src="value"
+        ref="cropperRef"
+        v-model:value="cropperUrl"
+        v-model:src="srcUrl"
         alt="Avatar"
         center
       ></w-cropper>
@@ -25,16 +27,10 @@
 </template>
 
 <script lang="ts" setup>
+  import type { WCropperInst } from '/@/components/Vendor/Cropper'
   import { AliOSSClient } from '../../Vendor/OSSUpload/client'
-  import { dataURLtoBlob } from '/@/utils/file/base64'
 
-  // TODO 888
-  interface InternalProps {
-    value: string
-  }
-
-  const props = defineProps<InternalProps>()
-  const emits = defineEmits(['update:value'])
+  const emits = defineEmits(['change'])
 
   const { t } = useAppI18n()
 
@@ -43,15 +39,18 @@
 
   const show = ref(false)
   const loading = ref(false)
-  const cropperValue = ref<string>()
+  const cropperUrl = ref<string>()
+  const srcUrl = ref<string>()
+
+  const cropperRef = ref<WCropperInst>()
+
+  onMounted(() => {
+    srcUrl.value = userProfile.getAvatar
+  })
 
   const onYes = () => {
-    if (cropperValue.value) {
-      const tempUrl = window.URL.createObjectURL(
-        dataURLtoBlob(cropperValue.value!)
-      )
-
-      emits('update:value', tempUrl)
+    if (cropperUrl.value) {
+      emits('change', cropperUrl.value)
     }
 
     show.value = false
@@ -59,17 +58,17 @@
 
   const onNo = () => {
     show.value = false
-    cropperValue.value = undefined
+    cropperUrl.value = undefined
   }
 
   const onUpdateShow = (s: boolean) => {
     if (!s) {
-      cropperValue.value = undefined
+      cropperUrl.value = undefined
     }
   }
 
-  const onSubmit = async () => {
-    if (!cropperValue.value) {
+  const onOSSUpload = async () => {
+    if (!cropperUrl.value) {
       return
     }
 
@@ -84,24 +83,25 @@
         'x-oss-forbid-overwrite': false,
       }
 
-      const result = await client.put(
-        `avatar/${userId}.png`,
-        dataURLtoBlob(cropperValue.value!),
-        {
-          headers,
-        }
-      )
+      const file = await cropperRef.value?.onGetCropperBlob()
+
+      const result = await client.put(`avatar/${userId}.png`, file, {
+        headers,
+      })
 
       if (result.res.status === 200) {
-        emits('update:value', result.url + `?t=${new Date().getTime()}`)
+        emits('change', result.url + `?t=${new Date().getTime()}`)
+        return true
       }
+
+      return false
     } finally {
       loading.value = false
     }
   }
 
   defineExpose({
-    onSubmit,
+    onOSSUpload,
   })
 </script>
 
