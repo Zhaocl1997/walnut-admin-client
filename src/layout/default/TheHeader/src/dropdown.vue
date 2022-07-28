@@ -64,7 +64,7 @@
       const res = await useAppConfirm(t('app:user:signout:warning'))
 
       if (res) {
-        await userAuth.SigninOut()
+        await userAuth.Signout()
       }
     }
   }

@@ -3,7 +3,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppAdapterStoreInside = defineStore(StoreKeys.APP_ADAPTER, {
-  state: (): AppState => ({
+  state: (): AppAdapterState => ({
     device: DevideConst.DESKTOP,
   }),
 
