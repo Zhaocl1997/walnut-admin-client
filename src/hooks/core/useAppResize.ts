@@ -14,7 +14,7 @@ export const useAppResize = () => {
       // 2.device => 'mobile'
       // 3.no more collapse
       // 4.mobile only show `left-menu` layout
-      appAdapter.setIsMobile(true)
+
       appAdapter.setDevice(DevideConst.MOBILE)
       appMenu.setCollapse(false)
       // appSetting.settings.app.layout = AppLayoutModeConst.LEFT_MENU
@@ -25,7 +25,7 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'tablet'
       // 3.auto collapse
-      appAdapter.setIsMobile(false)
+
       appAdapter.setDevice(DevideConst.TABLET)
       appMenu.setCollapse(true)
     }
@@ -35,7 +35,7 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'laptop'
       // 3.no collapse
-      appAdapter.setIsMobile(false)
+
       appAdapter.setDevice(DevideConst.LAPTOP)
       appMenu.setCollapse(false)
     }
@@ -45,7 +45,7 @@ export const useAppResize = () => {
       // 1.isMobile => false
       // 2.device => 'desktop'
       // 3.no collapse
-      appAdapter.setIsMobile(false)
+
       appAdapter.setDevice(DevideConst.DESKTOP)
       appMenu.setCollapse(false)
     }

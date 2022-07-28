@@ -5,18 +5,17 @@ import { store } from '../../pinia'
 const useAppAdapterStoreInside = defineStore(StoreKeys.APP_ADAPTER, {
   state: (): AppState => ({
     device: DevideConst.DESKTOP,
-    isMobile: false,
   }),
 
-  getters: {},
+  getters: {
+    isMobile(state) {
+      return state.device === DevideConst.MOBILE
+    },
+  },
 
   actions: {
     setDevice(payload: ValueOfDevideConst) {
       this.device = payload
-    },
-
-    setIsMobile(payload: boolean) {
-      this.isMobile = payload
     },
   },
 })

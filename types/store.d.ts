@@ -13,7 +13,6 @@ declare global {
   type NotificationPlacement = NotificationPlacement
   interface AppState {
     device: ValueOfDevideConst
-    isMobile: boolean
   }
 
   interface AppDarkState {
