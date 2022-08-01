@@ -81,7 +81,7 @@
     openExternalLink('http://beian.miit.gov.cn/')
   }
 
-  useAppNotiInfo('Demonstrate only \nAccount: user \nPassword: 2020', {
+  useAppNotiInfo('Demonstrate only \nAccount: visitor \nPassword: 2020', {
     closable: false,
     duration: 5000,
   })

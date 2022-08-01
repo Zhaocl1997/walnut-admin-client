@@ -78,7 +78,6 @@
       const client = await AliOSSClient.instance.getClient()
 
       const headers = {
-        'Cache-Control': 'no-cache',
         'Content-Disposition': encodeURIComponent(userId),
         'x-oss-forbid-overwrite': false,
       }

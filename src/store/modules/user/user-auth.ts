@@ -100,8 +100,10 @@ const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
       // clear tab
       appTab.clearTabs()
 
-      // push to signin page
-      await useRouterPush({ name: AppAuthName })
+      useTimeoutFn(() => {
+        // push to signin page
+        useRouterPush({ name: AppAuthName })
+      }, 200)
     },
   },
 })

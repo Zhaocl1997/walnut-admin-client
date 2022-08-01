@@ -7,13 +7,14 @@
     <n-gi>
       <div class="vstack justify-center items-center">
         <Starport v-if="$route.name === 'AccountSetting'" port="w-avatar">
-          <WAvatar v-model:value="formData.avatar" :size="240"> </WAvatar>
+          <WAvatar :value="tempSrcUrl ?? formData.avatar" :size="240">
+          </WAvatar>
         </Starport>
 
         <w-avatar-upload
-          v-model:value="formData.avatar"
           ref="avatarUploadRef"
           class="mt-4"
+          @change="onAvatarChange"
         ></w-avatar-upload>
       </div>
     </n-gi>
@@ -21,16 +22,34 @@
 </template>
 
 <script lang="ts" setup>
+  import type { WAvatarUploadInst } from '/@/components/Vendor/AvatarUpload'
+  import { pick } from 'lodash-es'
   import WAvatar from '../components/avatar.vue'
   import { userAPI } from '/@/api/system/user'
 
+  const { t } = useAppI18n()
   const userProfile = useUserProfileStore()
 
-  const { t } = useAppI18n()
+  const avatarUploadRef = ref<WAvatarUploadInst>()
+  const formData = ref<AppSystemUser>({
+    ...pick(userProfile.profile, [
+      '_id',
+      'userName',
+      'nickName',
+      'phoneNumber',
+      'emailAddress',
+      'description',
+      'gender',
+      'avatar',
+    ]),
+  })
 
-  const avatarUploadRef = ref<any>()
-  const formData = ref<AppSystemUser>({ ...userProfile.profile })
   const loading = ref(false)
+  const tempSrcUrl = ref<string>()
+
+  const onAvatarChange = (temp: string) => {
+    tempSrcUrl.value = temp
+  }
 
   const [register] = useForm<typeof formData.value>({
     localeUniqueKey: 'userInfo',
@@ -107,7 +126,13 @@
 
             try {
               // upload avatar and get real avatar url
-              await avatarUploadRef.value.onSubmit()
+              const isAvatarUploadSuccess =
+                await avatarUploadRef.value?.onOSSUpload()
+              if (!isAvatarUploadSuccess) return
+
+              // set the new avatar url
+              formData.value.avatar = tempSrcUrl.value
+
               await userAPI.update(formData.value)
               useAppMsgSuccess()
               await userProfile.getProfile()

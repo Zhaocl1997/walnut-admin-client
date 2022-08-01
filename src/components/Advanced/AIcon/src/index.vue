@@ -14,7 +14,12 @@
           :disabled="disabled"
           v-bind="$attrs"
         >
-          <w-icon v-bind="$attrs" @click.stop></w-icon>
+          <w-icon
+            :icon="$attrs.icon"
+            :height="$attrs.height"
+            :width="$attrs.width"
+            :disabled="disabled"
+          ></w-icon>
         </n-button>
       </template>
     </n-tooltip>
@@ -22,7 +27,12 @@
 
   <template v-else>
     <n-button :text="text" :type="type" :disabled="disabled">
-      <w-icon v-bind="$attrs" @click.stop></w-icon>
+      <w-icon
+        :icon="$attrs.icon"
+        :height="$attrs.height"
+        :width="$attrs.width"
+        :disabled="disabled"
+      ></w-icon>
     </n-button>
   </template>
 </template>
