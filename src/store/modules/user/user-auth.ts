@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
-import { StoreKeys } from '../../constant'
-import { store } from '../../pinia'
-import { SigninPayloadType } from '../../types/user'
+
 import { refreshToken, signin, signout } from '/@/api/auth'
 import { AppCoreFn1 } from '/@/core'
 import { AppAuthName } from '/@/router/constant'
+
+import { StoreKeys } from '../../constant'
+import { store } from '../../pinia'
 
 const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): UserAuthState => ({
@@ -25,7 +26,7 @@ const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
     setRefreshToken(payload: string) {
       this.refresh_token = payload
     },
-    setRemember(payload: { userName: string; password: string } | undefined) {
+    setRemember(payload: PasswordSigninPayload | undefined) {
       this.remember = payload
     },
 
@@ -48,7 +49,7 @@ const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description basic signin with userName and password
      */
-    async SignInWithPassword(payload: SigninPayloadType) {
+    async SignInWithPassword(payload: PasswordSigninPayload) {
       const appMenu = useAppMenuStore()
 
       const res = await signin(payload)
@@ -76,7 +77,7 @@ const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description signout, need to clean lots of state
      */
-    async SigninOut(callApi = true) {
+    async Signout(callApi = true) {
       const userProfile = useUserProfileStore()
       const userPermission = useUserPermissionStore()
       const appMenu = useAppMenuStore()

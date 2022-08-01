@@ -19,7 +19,7 @@ export const checkReponseErrorStatus = (status?: number, msg?: string) => {
 
         const userAuth = useUserAuthStore()
 
-        userAuth.SigninOut()
+        userAuth.Signout()
       }
       break
 

@@ -5,7 +5,7 @@ import { getUserInfo } from '/@/api/auth'
 import { upperFirst } from 'easy-fns-ts'
 
 const useUserProfileStoreInside = defineStore(StoreKeys.USER_PROFILE, {
-  state: (): UserState => ({
+  state: (): UserProfileState => ({
     profile: {},
   }),
 

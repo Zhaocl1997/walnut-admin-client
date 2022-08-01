@@ -1,5 +1,3 @@
-import type { SigninPayloadType } from '/@/store/types/user'
-
 enum AuthEnum {
   SIGNIN = '/auth/signin',
   SIGNOUT = '/auth/signout',
@@ -15,7 +13,7 @@ enum AuthEnum {
 /**
  * @description Sign in
  */
-export const signin = (data: SigninPayloadType) => {
+export const signin = (data: PasswordSigninPayload) => {
   return AppAxios.post<{
     access_token: string
     refresh_token: string

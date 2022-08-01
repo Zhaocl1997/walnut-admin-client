@@ -130,7 +130,7 @@ export const transform: AxiosTransform = {
 
     // refresh token is expired, so this user need to signout and re-signin
     if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
-      userAuth.SigninOut(false)
+      userAuth.Signout(false)
       return Promise.resolve()
     }
 
