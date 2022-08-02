@@ -36,7 +36,6 @@
 
 <script lang="ts" setup>
   import { SelectOption } from 'naive-ui'
-  import { AppI18nGetI18nMsg } from '/@/locales/backend'
 
   // TODO 888
   interface InternalProps {
@@ -70,13 +69,13 @@
   }
 
   const onNewLocale = () => {
-    useRouterPush({ name: 'Locale' })
+    useAppRouterPush({ name: 'Locale' })
   }
 
   const onRefresh = async () => {
     loading.value = true
 
-    const appLocale = useAppLocaleStore()
+    const appLocale = useAppStoreLocale()
 
     const locale = appLocale.locale
 

@@ -14,7 +14,7 @@ export interface AppTabContext {
   ctxMenuShow: Ref<boolean>
 
   onTabClick: (item: AppTab) => void
-  onTabRemove: (name: string, type?: ValueOfDeleteTabConst) => void
+  onTabRemove: (name: string, type?: ValueOfAppConstTabDeleteType) => void
 
   onOpenCtxMenu: (event: MouseEvent) => void
   onCloseCtxMenu: () => void

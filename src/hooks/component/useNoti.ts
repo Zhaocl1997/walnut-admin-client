@@ -16,7 +16,7 @@ interface AppNotiOptions {
  * @description notification usage
  */
 export const AppNoti = (msg: string, options: AppNotiOptions) => {
-  const appMsg = useAppMsgStore()
+  const appMsg = useAppStoreNaive()
 
   appMsg.setNotiPlacement(options?.placement ?? 'top-right')
 

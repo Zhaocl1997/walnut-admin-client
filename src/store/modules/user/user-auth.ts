@@ -7,7 +7,7 @@ import { AppAuthName } from '/@/router/constant'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
+const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): UserAuthState => ({
     access_token: useAppStorage('access_token', ''),
     refresh_token: useAppStorage('refresh_token', ''),
@@ -50,9 +50,12 @@ const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
      * @description basic signin with userName and password
      */
     async SignInWithPassword(payload: PasswordSigninPayload) {
-      const appMenu = useAppMenuStore()
+      const appMenu = useAppStoreMenu()
 
-      const res = await signin(payload)
+      const res = await signin({
+        username: payload.userName,
+        password: payload.password,
+      })
 
       // set tokens
       this.setAccessToken(res.access_token)
@@ -71,17 +74,17 @@ const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
       await AppCoreFn1()
 
       // push to the index menu
-      await useRouterPush({ name: appMenu.indexMenuName })
+      await useAppRouterPush({ name: appMenu.indexMenuName })
     },
 
     /**
      * @description signout, need to clean lots of state
      */
     async Signout(callApi = true) {
-      const userProfile = useUserProfileStore()
-      const userPermission = useUserPermissionStore()
-      const appMenu = useAppMenuStore()
-      const appTab = useAppTabStore()
+      const userProfile = useAppStoreUserProfile()
+      const userPermission = useAppStoreUserPermission()
+      const appMenu = useAppStoreMenu()
+      const appTab = useAppStoreTab()
 
       // call signout to remove refresh_token in db
       callApi && (await signout())
@@ -103,15 +106,15 @@ const useUserAuthStoreInside = defineStore(StoreKeys.USER_AUTH, {
 
       useTimeoutFn(() => {
         // push to signin page
-        useRouterPush({ name: AppAuthName })
+        useAppRouterPush({ name: AppAuthName })
       }, 200)
     },
   },
 })
 
-const useUserAuthStoreOutside = () => useUserAuthStoreInside(store)
+const useAppStoreUserAuthOutside = () => useAppStoreUserAuthInside(store)
 
-export const useUserAuthStore = () => {
-  if (getCurrentInstance()) return useUserAuthStoreInside()
-  return useUserAuthStoreOutside()
+export const useAppStoreUserAuth = () => {
+  if (getCurrentInstance()) return useAppStoreUserAuthInside()
+  return useAppStoreUserAuthOutside()
 }

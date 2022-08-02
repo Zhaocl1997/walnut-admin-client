@@ -77,7 +77,7 @@
   import DemoNaiveMsg from './NaiveMsg.vue'
   import DemoFile from './File.vue'
 
-  const appAdapter = useAppAdapterStore()
+  const appAdapter = useAppStoreAdapter()
 </script>
 
 <script lang="ts">

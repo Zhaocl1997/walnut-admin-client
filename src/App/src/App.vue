@@ -15,14 +15,11 @@
   import MsgProvider from './naive/MsgProvider.vue'
   import ThemeProvider from './naive/AppTheme.vue'
 
-  import { useAppTitle } from '/@/hooks/core/useAppTitle'
-  import { useAppResize } from '/@/hooks/core/useAppResize'
   import { useAppFullScreen } from '/@/components/App/AppFullScreen/useAppFullScreen'
   import { useAppDarkMode } from '/@/components/App/AppDarkMode/useAppDarkMode'
   import { useAppLocale } from '/@/components/App/AppLocalePicker/useAppLocale'
-  import { useAppPageLeave } from '/@/hooks/core/useAppPageLeave'
+
   import { useAppAutoLock } from '../../hooks/core/useAppAutoLock'
-  import { useAppTextSelection } from '/@/hooks/core/useAppTextSelection'
 
   useAppTitle()
   useAppResize()

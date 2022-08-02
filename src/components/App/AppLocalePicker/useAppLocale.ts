@@ -1,12 +1,10 @@
-import { AppI18nGetI18nMsg } from '/@/locales/backend'
-
 /**
  * @link https://vue-i18n-next.intlify.dev/guide/advanced/lazy.html
  */
 export const useAppLocale = () => {
-  const appLocale = useAppLocaleStore()
+  const appLocale = useAppStoreLocale()
 
-  const loadLocaleMessages = async (locale: ValueOfLocaleConst) => {
+  const loadLocaleMessages = async (locale: ValueOfAppConstLocale) => {
     // Don't load again if has been loaded
     if (
       Object.keys(
@@ -23,7 +21,7 @@ export const useAppLocale = () => {
     return nextTick()
   }
 
-  const setI18nLanguage = (locale: ValueOfLocaleConst) => {
+  const setI18nLanguage = (locale: ValueOfAppConstLocale) => {
     if (AppI18n.mode === 'legacy') {
       AppI18n.global.locale = locale
     } else {

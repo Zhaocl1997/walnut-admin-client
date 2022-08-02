@@ -25,8 +25,8 @@
   import WAvatar from '/@/views/account/settings/components/avatar.vue'
 
   const { t } = useAppI18n()
-  const userProfile = useUserProfileStore()
-  const userAuth = useUserAuthStore()
+  const userProfile = useAppStoreUserProfile()
+  const userAuth = useAppStoreUserAuth()
 
   const dropdownOptions = computed<DropdownMixedOption[]>(() => [
     {
@@ -57,7 +57,7 @@
     }
 
     if (val === '2') {
-      useRouterPush({ name: 'AccountSetting' })
+      useAppRouterPush({ name: 'AccountSetting' })
     }
 
     if (val === '99') {

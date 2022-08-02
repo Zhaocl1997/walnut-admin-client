@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-const useUserPermissionStoreInside = defineStore(StoreKeys.USER_PERMISSION, {
+const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
   state: (): UserPermissionState => ({
     permissions: [],
   }),
@@ -24,9 +24,10 @@ const useUserPermissionStoreInside = defineStore(StoreKeys.USER_PERMISSION, {
   },
 })
 
-const useUserPermissionStoreOutside = () => useUserPermissionStoreInside(store)
+const useAppStoreUserPermissionOutside = () =>
+  useAppStoreUserPermissionInside(store)
 
-export const useUserPermissionStore = () => {
-  if (getCurrentInstance()) return useUserPermissionStoreInside()
-  return useUserPermissionStoreOutside()
+export const useAppStoreUserPermission = () => {
+  if (getCurrentInstance()) return useAppStoreUserPermissionInside()
+  return useAppStoreUserPermissionOutside()
 }

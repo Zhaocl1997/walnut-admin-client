@@ -6,7 +6,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 import { AppRootName } from '/@/router/constant'
 
-const useAppMenuStoreInside = defineStore(StoreKeys.APP_MENU, {
+const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
   state: (): AppMenuState => ({
     collapse: false,
     showAside: false,
@@ -64,12 +64,12 @@ const useAppMenuStoreInside = defineStore(StoreKeys.APP_MENU, {
      * @description create menus main function, filter and build/order tree
      */
     createMenus(payload: AppSystemMenu[]) {
-      const appTab = useAppTabStore()
+      const appTab = useAppStoreTab()
 
       // filter `catalog` and `menu`
       // in order to fit menu show in breadcrumb but do not show in menus, `show` filter is done in `TheAside` => `menu.vue`
       const filtered = cloneDeep(payload).filter(
-        (i) => i.type !== MenuTypeConst.ELEMENT
+        (i) => i.type !== AppConstMenuType.ELEMENT
       )
 
       // init the affixed tabs
@@ -104,7 +104,7 @@ const useAppMenuStoreInside = defineStore(StoreKeys.APP_MENU, {
     createKeepAliveRouteNames(menus: AppSystemMenu[]): string[] {
       return menus
         .map((i) => {
-          if (i.type === MenuTypeConst.MENU && i.cache) return i.name!
+          if (i.type === AppConstMenuType.MENU && i.cache) return i.name!
           return ''
         })
         .filter(Boolean)
@@ -113,9 +113,9 @@ const useAppMenuStoreInside = defineStore(StoreKeys.APP_MENU, {
   },
 })
 
-const useAppMenuStoreOutside = () => useAppMenuStoreInside(store)
+const useAppStoreMenuOutside = () => useAppStoreMenuInside(store)
 
-export const useAppMenuStore = () => {
-  if (getCurrentInstance()) return useAppMenuStoreInside()
-  return useAppMenuStoreOutside()
+export const useAppStoreMenu = () => {
+  if (getCurrentInstance()) return useAppStoreMenuInside()
+  return useAppStoreMenuOutside()
 }

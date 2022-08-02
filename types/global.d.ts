@@ -14,6 +14,8 @@ declare type ActionType = 'create' | 'update' | ''
 
 declare type TargetContext = '_self' | '_blank'
 
+declare type ValueOf<T> = T[keyof T]
+
 declare type NaiveCompType =
   | 'default'
   | 'primary'

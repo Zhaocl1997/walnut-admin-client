@@ -211,7 +211,7 @@
                                 "type": "boolean"
                             },
                             "animationName": {
-                                "$ref": "#/definitions/ValueOfTransitionNameConst",
+                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
                                 "description": "Page change animation name"
                             },
                             "keepAlive": {
@@ -219,7 +219,7 @@
                                 "type": "boolean"
                             },
                             "layout": {
-                                "$ref": "#/definitions/ValueOfAppLayoutModeConst",
+                                "$ref": "#/definitions/ValueOfAppConstLayoutMode",
                                 "description": "App Layout"
                             },
                             "pageLeaveLock": {
@@ -271,7 +271,7 @@
                                 "type": "boolean"
                             },
                             "collapseMode": {
-                                "$ref": "#/definitions/ValueOfMenuCollapseModeConst",
+                                "$ref": "#/definitions/ValueOfAppConstCollapseMode",
                                 "description": "Menu Collapse Mode"
                             },
                             "width": {
@@ -386,7 +386,7 @@
                                 "type": "boolean"
                             },
                             "styleMode": {
-                                "$ref": "#/definitions/ValueOfTabStyleModeConst",
+                                "$ref": "#/definitions/ValueOfAppConstTabStyleMode",
                                 "description": "Tab style mode"
                             },
                             "devtool": {
@@ -441,7 +441,7 @@
                     "themes"
                 ],
                 "definitions": {
-                    "ValueOfTransitionNameConst": {
+                    "ValueOfAppConstTransitionName": {
                         "enum": [
                             "back-down",
                             "back-left",
@@ -484,14 +484,14 @@
                         ],
                         "type": "string"
                     },
-                    "ValueOfAppLayoutModeConst": {
+                    "ValueOfAppConstLayoutMode": {
                         "enum": [
                             "left-menu",
                             "top-menu"
                         ],
                         "type": "string"
                     },
-                    "ValueOfMenuCollapseModeConst": {
+                    "ValueOfAppConstCollapseMode": {
                         "enum": [
                             "arrow-circle",
                             "bar",
@@ -500,7 +500,7 @@
                         ],
                         "type": "string"
                     },
-                    "ValueOfTabStyleModeConst": {
+                    "ValueOfAppConstTabStyleMode": {
                         "enum": [
                             "card",
                             "flex",

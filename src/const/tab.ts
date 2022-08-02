@@ -1,4 +1,4 @@
-export const DeleteTabConst = {
+export const AppConstTabDeleteType = {
   TAB_SINGLE: 'TAB_SINGLE',
   TAB_LEFT: 'TAB_LEFT',
   TAB_RIGHT: 'TAB_RIGHT',
@@ -6,4 +6,4 @@ export const DeleteTabConst = {
   TAB_ALL: 'TAB_ALL',
 } as const
 
-export type ValueOfDeleteTabConst = ValueOf<typeof DeleteTabConst>
+export type ValueOfAppConstTabDeleteType = ValueOf<typeof AppConstTabDeleteType>

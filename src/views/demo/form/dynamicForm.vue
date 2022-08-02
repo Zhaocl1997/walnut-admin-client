@@ -16,8 +16,8 @@
       const configFormData = ref({
         vIf: true,
         vShow: true,
-        transition1: 'fade' as ValueOfTransitionNameConst,
-        transition2: 'fade' as ValueOfTransitionNameConst,
+        transition1: 'fade' as ValueOfAppConstTransitionName,
+        transition2: 'fade' as ValueOfAppConstTransitionName,
         disabled: false,
         labelHelpMessage: true,
         labelWidth: 80,

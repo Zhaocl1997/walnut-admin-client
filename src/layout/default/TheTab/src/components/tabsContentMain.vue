@@ -17,21 +17,21 @@
 
             /* card */
             appSetting.settings.tab.styleMode ===
-              TabStyleModeConstInside.CARD &&
+              AppConstTabStyleModeInside.CARD &&
               ($route.name === item.name
                 ? 'border border-primary'
                 : 'border border-gray-400 hover:border-primaryHover hover:text-primaryHover'),
 
             /* flex */
             appSetting.settings.tab.styleMode ===
-              TabStyleModeConstInside.FLEX &&
+              AppConstTabStyleModeInside.FLEX &&
               ($route.name === item.name
                 ? 'tab-flex border-primary'
                 : 'hover:border-primaryHover hover:text-primaryHover hover:tab-flex'),
 
             /* round */
             appSetting.settings.tab.styleMode ===
-              TabStyleModeConstInside.ROUND &&
+              AppConstTabStyleModeInside.ROUND &&
               ($route.name === item.name
                 ? 'rounded-xl bg-primary text-light-100'
                 : 'rounded-xl hover:bg-primaryHover hover:text-bodyColor'),
@@ -73,7 +73,7 @@
           ></w-icon>
 
           <span class="text-sm whitespace-nowrap">
-            {{ t(item.meta.title!)  }}
+            {{ t(item.meta.title!) }}
           </span>
 
           <w-icon
@@ -97,11 +97,11 @@
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()
 
-  const appTab = useAppTabStore()
-  const appSetting = useAppSettingStore()
-  const appAdapter = useAppAdapterStore()
+  const appTab = useAppStoreTab()
+  const appSetting = useAppStoreSetting()
+  const appAdapter = useAppStoreAdapter()
 
-  const TabStyleModeConstInside = TabStyleModeConst
+  const AppConstTabStyleModeInside = AppConstTabStyleMode
 
   const {
     scrollRef,

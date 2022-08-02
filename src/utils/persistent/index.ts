@@ -1,6 +1,5 @@
 import { isProd } from '../constant/vue'
 import { storagePrefix } from '../constant/prefix'
-import { useAppStorage } from './src/Storage'
 import { Cookie } from './src/Cookie'
 
 const AppCookie = new Cookie({
@@ -24,5 +23,3 @@ export const clearCookie = () => {
 export const removeCookie = (key: string) => {
   AppCookie.remove(key)
 }
-
-export { useAppStorage }

@@ -27,7 +27,7 @@
 <script lang="ts" setup>
   import { NLayoutFooter } from 'naive-ui'
 
-  const appSetting = useAppSettingStore()
+  const appSetting = useAppStoreSetting()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 </script>

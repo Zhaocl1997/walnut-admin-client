@@ -5,7 +5,7 @@ import { store } from '../../pinia'
 
 import AppSettingsFromJson from '/@/settings.json'
 
-const useAppSettingStoreInside = defineStore(StoreKeys.APP_SETTING, {
+const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
   state: (): AppSettingState => ({
     settings: clone(AppSettingsFromJson) as AppSettings,
   }),
@@ -22,22 +22,22 @@ const useAppSettingStoreInside = defineStore(StoreKeys.APP_SETTING, {
     getShowMenuCollapseButton(): boolean {
       return (
         this.getShowMenuCollpase &&
-        this.getMenuCollapseMode === MenuCollapseModeConst.BUTTON
+        this.getMenuCollapseMode === AppConstCollapseMode.BUTTON
       )
     },
 
     getShowMenuCollapseIcon(): boolean {
       return (
         this.getShowMenuCollpase &&
-        this.getMenuCollapseMode === MenuCollapseModeConst.ICON
+        this.getMenuCollapseMode === AppConstCollapseMode.ICON
       )
     },
 
     getShowMenuCollapseBuiltIn(): boolean | string {
       if (
         this.getShowMenuCollpase &&
-        this.getMenuCollapseMode !== MenuCollapseModeConst.ICON &&
-        this.getMenuCollapseMode !== MenuCollapseModeConst.BUTTON
+        this.getMenuCollapseMode !== AppConstCollapseMode.ICON &&
+        this.getMenuCollapseMode !== AppConstCollapseMode.BUTTON
       ) {
         return this.getMenuCollapseMode
       }
@@ -49,14 +49,14 @@ const useAppSettingStoreInside = defineStore(StoreKeys.APP_SETTING, {
     },
 
     getShowNormalAside(): boolean {
-      const appAdapter = useAppAdapterStore()
+      const appAdapter = useAppStoreAdapter()
 
       return !appAdapter.isMobile && this.getShowAside
     },
 
     getContentWidth(state): string {
-      const appAdapter = useAppAdapterStore()
-      const appMenu = useAppMenuStore()
+      const appAdapter = useAppStoreAdapter()
+      const appMenu = useAppStoreMenu()
 
       return appAdapter.isMobile || !this.getShowAside
         ? '100vw'
@@ -77,9 +77,9 @@ const useAppSettingStoreInside = defineStore(StoreKeys.APP_SETTING, {
   },
 })
 
-const useAppSettingStoreOutside = () => useAppSettingStoreInside(store)
+const useAppStoreSettingOutside = () => useAppStoreSettingInside(store)
 
-export const useAppSettingStore = () => {
-  if (getCurrentInstance()) return useAppSettingStoreInside()
-  return useAppSettingStoreOutside()
+export const useAppStoreSetting = () => {
+  if (getCurrentInstance()) return useAppStoreSettingInside()
+  return useAppStoreSettingOutside()
 }

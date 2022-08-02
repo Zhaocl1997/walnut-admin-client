@@ -8,9 +8,8 @@
 
 <script lang="ts" setup>
   import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
-  import { AppI18nGetLangLists } from '/@/locales/backend'
 
-  const appLocale = useAppLocaleStore()
+  const appLocale = useAppStoreLocale()
 
   const langLists = ref<SelectBaseOption[]>([])
 

@@ -141,7 +141,7 @@
       },
 
       renderLabel: ({ option }) =>
-        option.type === MenuTypeConst.ELEMENT
+        option.type === AppConstMenuType.ELEMENT
           ? (option.permission as string)
           : (option.title as string),
     },

@@ -17,7 +17,6 @@
 
   import { toJpeg } from 'html-to-image'
 
-  import { useRedirect } from '/@/hooks/core/useRedirect'
   import { getThemeOverridesCommon } from '/@/App/src/naive/src/theme'
 
   import { getTabsContext } from '../hooks/useTabsContext'
@@ -29,8 +28,8 @@
   const { currentRoute } = useAppRouter()
   const { enter } = useFullscreen()
 
-  const appTab = useAppTabStore()
-  const appSetting = useAppSettingStore()
+  const appTab = useAppStoreTab()
+  const appSetting = useAppStoreSetting()
 
   const {
     x,
@@ -78,20 +77,19 @@
   )
 
   const onSelect = async (
-    key: ValueOfDeleteTabConst &
+    key: ValueOfAppConstTabDeleteType &
       'Refresh' &
       'Screen Full' &
       'Fix' &
       'Snapshot' &
       'NewWindow'
   ) => {
-    if (Object.values(DeleteTabConst).includes(key)) {
+    if (Object.values(AppConstTabDeleteType).includes(key)) {
       onTabRemove(currentMouseTab.value?.name!, key)
     }
 
     if (key === 'Refresh') {
-      const { redirect } = useRedirect()
-      await redirect()
+      await useRedirect()
     }
 
     if (key === 'Screen Full') {
@@ -159,14 +157,14 @@
     },
 
     {
-      key: DeleteTabConst.TAB_SINGLE,
+      key: AppConstTabDeleteType.TAB_SINGLE,
       label: t('app:tab:ctx:close'),
       icon: () => <WIcon height="24" icon="ant-design:close-outlined"></WIcon>,
       disabled: getCloseDisabled.value,
     },
 
     {
-      key: DeleteTabConst.TAB_LEFT,
+      key: AppConstTabDeleteType.TAB_LEFT,
       label: t('app:tab:ctx:closeLeft'),
       icon: () => (
         <WIcon height="24" icon="ant-design:vertical-right-outlined"></WIcon>
@@ -175,7 +173,7 @@
     },
 
     {
-      key: DeleteTabConst.TAB_RIGHT,
+      key: AppConstTabDeleteType.TAB_RIGHT,
       label: t('app:tab:ctx:closeRight'),
       icon: () => (
         <WIcon height="24" icon="ant-design:vertical-left-outlined"></WIcon>
@@ -184,7 +182,7 @@
     },
 
     {
-      key: DeleteTabConst.TAB_OTHER,
+      key: AppConstTabDeleteType.TAB_OTHER,
       label: t('app:tab:ctx:closeOther'),
       icon: () => (
         <WIcon height="24" icon="ant-design:column-width-outlined"></WIcon>
@@ -193,7 +191,7 @@
     },
 
     {
-      key: DeleteTabConst.TAB_ALL,
+      key: AppConstTabDeleteType.TAB_ALL,
       label: t('app:tab:ctx:closeAll'),
       icon: () => <WIcon height="24" icon="ant-design:border-outlined"></WIcon>,
       disabled: getCloseOtherDisabled.value,

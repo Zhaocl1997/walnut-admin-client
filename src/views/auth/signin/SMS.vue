@@ -18,7 +18,6 @@
     AppAuthPrivacyPolicyPath,
     AppAuthServiceAgreementPath,
   } from '/@/router/constant'
-  import { isPhoneNumber } from '/@/utils/regex'
 
   const { t } = useAppI18n()
 

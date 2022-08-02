@@ -4,8 +4,7 @@ import type {
 } from 'naive-ui/lib/data-table/src/interface'
 
 import type { DataTableSortState } from 'naive-ui'
-import { WTable } from '../types'
-import { getBoolean } from '/@/utils/shared'
+import type { WTable } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 
 export const generateDefaultSortParams = (columns: WTable.Column[]) => {

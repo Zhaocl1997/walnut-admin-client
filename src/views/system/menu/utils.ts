@@ -45,30 +45,30 @@ export const getViewsOptions = () => {
 
 export const menuTypeOptions: OptionDataItem[] = [
   {
-    value: MenuTypeConst.CATALOG,
+    value: AppConstMenuType.CATALOG,
     label: 'Catalog',
   },
   {
-    value: MenuTypeConst.MENU,
+    value: AppConstMenuType.MENU,
     label: 'Menu',
   },
   {
-    value: MenuTypeConst.ELEMENT,
+    value: AppConstMenuType.ELEMENT,
     label: 'Element',
   },
 ]
 
 export const menuTernalOptions: OptionDataItem[] = [
   {
-    value: MenuTernalConst.NONE,
+    value: AppConstMenuTernal.NONE,
     label: 'Normal',
   },
   {
-    value: MenuTernalConst.EXTERNAL,
+    value: AppConstMenuTernal.EXTERNAL,
     label: 'External',
   },
   {
-    value: MenuTernalConst.INTERNAL,
+    value: AppConstMenuTernal.INTERNAL,
     label: 'Internal',
   },
 ]

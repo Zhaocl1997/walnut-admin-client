@@ -27,7 +27,7 @@
   import { getLocale, getDateLocale } from './src/locale'
   import { getTheme, getThemeOverrides } from './src/theme'
 
-  const appMsg = useAppMsgStore()
+  const appMsg = useAppStoreNaive()
 </script>
 
 <script lang="ts">

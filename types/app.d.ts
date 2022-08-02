@@ -30,14 +30,14 @@ declare global {
   // system menu
   interface AppSystemMenu extends BaseAppModel {
     pid?: string
-    type?: ValueOfMenuTypeConst
+    type?: ValueOfAppConstMenuType
     path?: string
     name?: string
     component?: any
     title?: string
     icon?: string
     order?: number
-    ternal?: ValueOfMenuTernalConst
+    ternal?: ValueOfAppConstMenuTernal
     url?: string
     show?: boolean
     cache?: boolean

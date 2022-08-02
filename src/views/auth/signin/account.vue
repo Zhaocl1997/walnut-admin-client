@@ -7,7 +7,7 @@
   import { NCheckbox, NButton } from 'naive-ui'
 
   const { t } = useAppI18n()
-  const appAuth = useUserAuthStore()
+  const appAuth = useAppStoreUserAuth()
 
   const loading = ref(false)
 

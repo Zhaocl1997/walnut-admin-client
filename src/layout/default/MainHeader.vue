@@ -32,7 +32,7 @@
   import TheHeader from './TheHeader'
   import TheTab from './TheTab'
 
-  const appSetting = useAppSettingStore()
+  const appSetting = useAppStoreSetting()
 </script>
 
 <script lang="ts">

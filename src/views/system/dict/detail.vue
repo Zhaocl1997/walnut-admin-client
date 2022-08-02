@@ -26,7 +26,7 @@
   const key = 'dictData'
 
   const onBack = () => {
-    useRouterPush({ name: 'Dict', replace: true })
+    useAppRouterPush({ name: 'Dict', replace: true })
   }
 
   const [

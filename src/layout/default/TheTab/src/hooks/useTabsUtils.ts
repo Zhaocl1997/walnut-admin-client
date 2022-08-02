@@ -1,8 +1,6 @@
 import type { AppTabUtilListItem } from '../types'
 import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
 
-import { useRedirect } from '/@/hooks/core/useRedirect'
-
 export const useTabsUtils = (
   scrollRef: Ref<Nullable<WScrollbarInst>>,
   currentRouteTabIndex: Ref<number>,
@@ -39,8 +37,7 @@ export const useTabsUtils = (
       icon: 'ant-design:sync-outlined',
       helpMessage: computed(() => t('app:tab:utils:refresh')),
       event: async () => {
-        const { redirect } = useRedirect()
-        await redirect()
+        await useRedirect()
       },
     },
     {

@@ -1,7 +1,7 @@
-export const SymbolKeyConst = {
+export const AppConstSymbolKey = {
   FORM_KEY: 'w-form',
   TABLE_KEY: 'w-table',
   TABS_KEY: 'w-tabs',
 }
 
-export type ValueOfSymbolKeyConst = ValueOf<typeof SymbolKeyConst>
+export type ValueOfAppConstSymbolKey = ValueOf<typeof AppConstSymbolKey>

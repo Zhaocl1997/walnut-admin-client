@@ -108,7 +108,7 @@ export const useMenuFormSchema = (
         },
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
 
@@ -118,7 +118,7 @@ export const useMenuFormSchema = (
         title: 'form:menu:divider2',
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
 
@@ -132,7 +132,7 @@ export const useMenuFormSchema = (
         prefix: getRoutePathPrefix,
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
 
@@ -147,8 +147,8 @@ export const useMenuFormSchema = (
       componentProp: {
         render: ({ formData }) => {
           if (
-            formData.type === MenuTypeConst.CATALOG ||
-            formData.ternal !== MenuTernalConst.NONE
+            formData.type === AppConstMenuType.CATALOG ||
+            formData.ternal !== AppConstMenuTernal.NONE
           ) {
             return (
               <w-input
@@ -160,8 +160,8 @@ export const useMenuFormSchema = (
           }
 
           if (
-            formData.type === MenuTypeConst.MENU &&
-            formData.ternal === MenuTernalConst.NONE
+            formData.type === AppConstMenuType.MENU &&
+            formData.ternal === AppConstMenuTernal.NONE
           ) {
             return (
               <n-select
@@ -176,7 +176,7 @@ export const useMenuFormSchema = (
         },
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
 
@@ -200,8 +200,8 @@ export const useMenuFormSchema = (
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === MenuTypeConst.MENU &&
-          formData.ternal === MenuTernalConst.NONE,
+          formData.type === AppConstMenuType.MENU &&
+          formData.ternal === AppConstMenuTernal.NONE,
       },
     },
 
@@ -223,7 +223,7 @@ export const useMenuFormSchema = (
         prefix: 'sys:menu:',
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
 
@@ -233,7 +233,7 @@ export const useMenuFormSchema = (
         path: 'icon',
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
 
@@ -257,7 +257,8 @@ export const useMenuFormSchema = (
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === MenuTypeConst.MENU && actionType.value === 'create',
+          formData.type === AppConstMenuType.MENU &&
+          actionType.value === 'create',
       },
     },
 
@@ -271,8 +272,8 @@ export const useMenuFormSchema = (
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === MenuTypeConst.MENU &&
-          formData.ternal !== MenuTernalConst.NONE,
+          formData.type === AppConstMenuType.MENU &&
+          formData.ternal !== AppConstMenuTernal.NONE,
       },
     },
 
@@ -285,8 +286,8 @@ export const useMenuFormSchema = (
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === MenuTypeConst.MENU &&
-          formData.ternal !== MenuTernalConst.EXTERNAL,
+          formData.type === AppConstMenuType.MENU &&
+          formData.ternal !== AppConstMenuTernal.EXTERNAL,
       },
     },
 
@@ -298,7 +299,7 @@ export const useMenuFormSchema = (
         rule: false,
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type !== MenuTypeConst.ELEMENT,
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
 
@@ -310,7 +311,7 @@ export const useMenuFormSchema = (
         rule: false,
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
 
@@ -321,7 +322,7 @@ export const useMenuFormSchema = (
         rule: false,
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type === MenuTypeConst.ELEMENT,
+        vIf: ({ formData }) => formData.type === AppConstMenuType.ELEMENT,
       },
     },
 
@@ -337,7 +338,7 @@ export const useMenuFormSchema = (
         clearable: true,
       },
       extraProp: {
-        vIf: ({ formData }) => formData.type === MenuTypeConst.MENU,
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
 
@@ -349,7 +350,7 @@ export const useMenuFormSchema = (
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === MenuTypeConst.MENU && !!formData.menuActiveName,
+          formData.type === AppConstMenuType.MENU && !!formData.menuActiveName,
       },
     },
   ]

@@ -5,10 +5,10 @@ import { AppCoreFn1 } from '/@/core'
 
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
-    const userAuth = useUserAuthStore()
-    const userProfile = useUserProfileStore()
-    const appMenu = useAppMenuStore()
-    const appKey = useAppKeyStore()
+    const userAuth = useAppStoreUserAuth()
+    const userProfile = useAppStoreUserProfile()
+    const appMenu = useAppStoreMenu()
+    const appKey = useAppStoreSecretKey()
 
     // Paths in `RouteWhiteLists` will enter directly
     if (RouteWhiteLists.includes(to.path)) {

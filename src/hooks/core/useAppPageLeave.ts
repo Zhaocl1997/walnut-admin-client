@@ -1,6 +1,6 @@
 export const useAppPageLeave = () => {
-  const appLock = useAppLockStore()
-  const appSetting = useAppSettingStore()
+  const appLock = useAppStoreLock()
+  const appSetting = useAppStoreSetting()
 
   const isLeft = usePageLeave()
 

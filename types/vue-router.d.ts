@@ -7,7 +7,7 @@ declare module 'vue-router' {
     cache?: boolean
     affix?: boolean
     url?: string
-    type?: ValueOfMenuTypeConst
+    type?: ValueOfAppConstMenuType
     component?: string
     badge?: string
     menuActiveName?: string

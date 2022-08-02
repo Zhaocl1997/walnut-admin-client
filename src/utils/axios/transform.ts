@@ -10,8 +10,8 @@ import { checkReponseErrorStatus } from './checkStatus'
 import { BussinessCodeConst } from '/@/const/axios'
 import { AppResponseEncryption, AppRequestEncryption } from '../crypto'
 
-const userAuth = useUserAuthStore()
-const appLocale = useAppLocaleStore()
+const userAuth = useAppStoreUserAuth()
+const appLocale = useAppStoreLocale()
 
 // flag to judge if calling refreshing token api
 let isRefreshing = false
@@ -163,7 +163,7 @@ export const transform: AxiosTransform = {
     const { t } = AppI18n.global
 
     if (err.message === 'Network Error') {
-      useRouterPush({ name: '500' })
+      useAppRouterPush({ name: '500' })
       return
     }
 

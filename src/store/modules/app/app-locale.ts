@@ -4,26 +4,27 @@ import { store } from '../../pinia'
 
 const preferredLanguages = usePreferredLanguages()
 
-const useAppLocaleStoreInside = defineStore(StoreKeys.APP_LOCALE, {
+const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
   state: (): AppLocaleState => ({
     locale: useAppStorage(
-      'app-locale',
-      preferredLanguages.value[0].replace('-', '_') as ValueOfLocaleConst
+      AppConstPersistKey.LOCALE,
+      preferredLanguages.value[0].replace('-', '_') as ValueOfAppConstLocale,
+      Infinity
     ),
   }),
 
   getters: {},
 
   actions: {
-    setLocale(payload: ValueOfLocaleConst) {
+    setLocale(payload: ValueOfAppConstLocale) {
       this.locale = payload
     },
   },
 })
 
-const useAppLocaleStoreOutside = () => useAppLocaleStoreInside(store)
+const useAppStoreLocaleOutside = () => useAppStoreLocaleInside(store)
 
-export const useAppLocaleStore = () => {
-  if (getCurrentInstance()) return useAppLocaleStoreInside()
-  return useAppLocaleStoreOutside()
+export const useAppStoreLocale = () => {
+  if (getCurrentInstance()) return useAppStoreLocaleInside()
+  return useAppStoreLocaleOutside()
 }

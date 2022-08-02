@@ -4,8 +4,6 @@ import { setupI18n } from '/@/locales'
 import { setupRouter } from '/@/router'
 import { setupStore } from '/@/store/pinia'
 
-import { isDev } from '/@/utils/constant/vue'
-
 import '/@/components/UI/Icon/src/utils/bundle'
 
 const setupErrorhandler = (app: App) => {

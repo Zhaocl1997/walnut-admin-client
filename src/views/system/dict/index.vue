@@ -120,7 +120,7 @@
           extendType: 'link',
           onClick: (p) => {
             // TODO simple encode
-            useRouterPush({
+            useAppRouterPush({
               name: 'DictDetail',
               params: { id: p._id },
               query: { name: p.name },

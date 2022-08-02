@@ -1,5 +1,5 @@
 export const usePermissions = () => {
-  const userPermission = useUserPermissionStore()
+  const userPermission = useAppStoreUserPermission()
 
   const hasPermission = (p?: string) => {
     if (!p) return true

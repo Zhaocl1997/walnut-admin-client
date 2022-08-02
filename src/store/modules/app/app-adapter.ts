@@ -2,27 +2,27 @@ import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-const useAppAdapterStoreInside = defineStore(StoreKeys.APP_ADAPTER, {
+const useAppStoreAdapterInside = defineStore(StoreKeys.APP_ADAPTER, {
   state: (): AppAdapterState => ({
-    device: DevideConst.DESKTOP,
+    device: AppConstDevice.DESKTOP,
   }),
 
   getters: {
     isMobile(state) {
-      return state.device === DevideConst.MOBILE
+      return state.device === AppConstDevice.MOBILE
     },
   },
 
   actions: {
-    setDevice(payload: ValueOfDevideConst) {
+    setDevice(payload: ValueOfAppConstDevice) {
       this.device = payload
     },
   },
 })
 
-const useAppAdapterStoreOutside = () => useAppAdapterStoreInside(store)
+const useAppStoreAdapterOutside = () => useAppStoreAdapterInside(store)
 
-export const useAppAdapterStore = () => {
-  if (getCurrentInstance()) return useAppAdapterStoreInside()
-  return useAppAdapterStoreOutside()
+export const useAppStoreAdapter = () => {
+  if (getCurrentInstance()) return useAppStoreAdapterInside()
+  return useAppStoreAdapterOutside()
 }

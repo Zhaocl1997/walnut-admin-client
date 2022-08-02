@@ -11,7 +11,7 @@
 <script lang="ts" setup>
   const show = ref(true)
   const formData = ref({
-    name: 'fade' as ValueOfTransitionNameConst,
+    name: 'fade' as ValueOfAppConstTransitionName,
   })
 
   const onStart = () => {

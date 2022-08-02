@@ -1,13 +1,12 @@
 import { storagePrefix } from '../../constant/prefix'
 import { isProd } from '../../constant/vue'
-import { AppPersistEncryption } from '/@/utils/crypto'
 
 // app storage
 // default cache 7 days
 // defualt only encrypt in prod
 export const useAppStorage = <T>(
   key: string,
-  initialValue: MaybeRef<T>,
+  initialValue: MaybeComputedRef<T>,
   expire: number = import.meta.env.VITE_APP_PERSIST_SECOND * 1000,
   storage = localStorage
 ) => {
@@ -33,7 +32,8 @@ export const useAppStorage = <T>(
         const { v, e } = decryptValue
 
         // not expire yet
-        if (new Date().getTime() <= e) {
+        // or exipre is Infinity
+        if (new Date().getTime() <= e || !e) {
           return v
         } else {
           storage.removeItem(wholeKey)

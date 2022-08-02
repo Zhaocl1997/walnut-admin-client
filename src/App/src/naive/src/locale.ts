@@ -1,10 +1,10 @@
 import { zhCN, dateZhCN } from 'naive-ui'
 
-const appLocale = useAppLocaleStore()
+const appLocale = useAppStoreLocale()
 
 export const getLocale = computed(() =>
-  appLocale.locale === LocaleConst.EN_US ? {} : zhCN
+  appLocale.locale === AppConstLocale.EN_US ? {} : zhCN
 )
 export const getDateLocale = computed(() =>
-  appLocale.locale === LocaleConst.EN_US ? {} : dateZhCN
+  appLocale.locale === AppConstLocale.EN_US ? {} : dateZhCN
 )

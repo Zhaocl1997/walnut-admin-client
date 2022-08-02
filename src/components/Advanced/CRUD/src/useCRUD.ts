@@ -1,7 +1,5 @@
 import type { WCrud } from './types'
 
-import { isInSetup } from '/@/utils/shared'
-
 export const useCRUD = <T = RowData>(
   props: WCrud.Props<T>
 ): WCrud.useFormReturnType<T> => {

@@ -1,7 +1,6 @@
 import type { FormItemRule } from 'naive-ui'
 import type { WForm } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
-import { getBoolean } from '/@/utils/shared'
 
 // get target field boolean value
 export const getEPBooleanValue = (

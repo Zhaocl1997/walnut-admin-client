@@ -31,14 +31,14 @@ declare global {
    * App adapter state
    */
   interface AppAdapterState {
-    device: ValueOfDevideConst
+    device: ValueOfAppConstDevice
   }
 
   /**
    * App dark state
    */
   interface AppDarkState {
-    darkMode: RemovableRef<ValueOfDarkModeConst>
+    darkMode: RemovableRef<ValueOfAppConstDarkMode>
     isDark: RemovableRef<boolean>
   }
 
@@ -53,14 +53,14 @@ declare global {
    * App locale state
    */
   interface AppLocaleState {
-    locale: RemovableRef<ValueOfLocaleConst>
+    locale: RemovableRef<ValueOfAppConstLocale>
   }
 
   /**
    * App lock state
    */
   interface AppLockState {
-    lockMode: RemovableRef<ValueOfAppLockModeConst>
+    lockMode: RemovableRef<ValueOfAppConstLockMode>
     isLock: RemovableRef<boolean>
   }
 

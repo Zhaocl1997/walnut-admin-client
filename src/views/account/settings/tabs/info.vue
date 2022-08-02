@@ -28,7 +28,7 @@
   import { userAPI } from '/@/api/system/user'
 
   const { t } = useAppI18n()
-  const userProfile = useUserProfileStore()
+  const userProfile = useAppStoreUserProfile()
 
   const avatarUploadRef = ref<WAvatarUploadInst>()
   const formData = ref<AppSystemUser>({

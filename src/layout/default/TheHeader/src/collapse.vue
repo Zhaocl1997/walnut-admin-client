@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts" setup>
-  const appMenu = useAppMenuStore()
-  const appAdapter = useAppAdapterStore()
+  const appMenu = useAppStoreMenu()
+  const appAdapter = useAppStoreAdapter()
 
   const onClick = () => {
     if (appAdapter.isMobile) {

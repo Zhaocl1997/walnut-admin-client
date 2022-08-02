@@ -54,10 +54,10 @@ const resolveViewModules = (component: string) => {
  * @description Build Routes Core Function
  */
 export const buildRoutes = (payload: AppSystemMenu[]) => {
-  const appMenu = useAppMenuStore()
+  const appMenu = useAppStoreMenu()
 
   // filter `catalog` and `menu`
-  const filtered = payload.filter((i) => i.type !== MenuTypeConst.ELEMENT)
+  const filtered = payload.filter((i) => i.type !== AppConstMenuType.ELEMENT)
 
   // build tree
   const menuTree = arrToTree(filtered, { id: '_id' })
@@ -68,7 +68,7 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
   const routes = formatTree<AppSystemMenu, RouteRecordRaw>(menus!, {
     format: (node) => {
       // handle catelog
-      if (node.type === MenuTypeConst.CATALOG) {
+      if (node.type === AppConstMenuType.CATALOG) {
         return {
           ...appMenu.createRouteByMenu(node),
           component: resolveParentComponent(node.name!),
@@ -76,9 +76,9 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
       }
 
       // handle menu
-      if (node.type === MenuTypeConst.MENU) {
+      if (node.type === AppConstMenuType.MENU) {
         // handle internal menu
-        if (node.ternal === MenuTernalConst.INTERNAL) {
+        if (node.ternal === AppConstMenuTernal.INTERNAL) {
           return {
             ...appMenu.createRouteByMenu(node),
             component: resolveIFrameComponent(node.name!, node.cache),
@@ -127,7 +127,7 @@ const _tempFlatNestedRoutes = (routes: RouteRecordRaw[]) => {
       ) as RouteRecordRaw[]
 
       // only handle menu
-      if (node.meta?.type === MenuTypeConst.MENU) {
+      if (node.meta?.type === AppConstMenuType.MENU) {
         if (paths.length > 1) {
           const newNode = paths.reduce(
             (prev, next) =>

@@ -51,9 +51,9 @@
   import AppColors from './component/colors'
   import { getMergedTheme } from '/@/App/src/naive/src/theme'
 
-  const appDark = useAppDarkStore()
-  const appMenu = useAppMenuStore()
-  const appSetting = useAppSettingStore()
+  const appDark = useAppStoreDark()
+  const appMenu = useAppStoreMenu()
+  const appSetting = useAppStoreSetting()
 
   const { t } = useAppI18n()
 
@@ -371,7 +371,7 @@
           path: 'layout',
         },
         componentProp: {
-          options: Object.values(AppLayoutModeConst).map((i) => ({
+          options: Object.values(AppConstLayoutMode).map((i) => ({
             value: i,
             label: i,
           })),
@@ -460,7 +460,7 @@
           path: 'collapseMode',
         },
         componentProp: {
-          options: Object.values(MenuCollapseModeConst).map((i) => ({
+          options: Object.values(AppConstCollapseMode).map((i) => ({
             value: i,
             label: i,
           })),
@@ -725,7 +725,7 @@
           path: 'styleMode',
         },
         componentProp: {
-          options: Object.values(TabStyleModeConst).map((i) => ({
+          options: Object.values(AppConstTabStyleMode).map((i) => ({
             value: i,
             label: i,
           })),

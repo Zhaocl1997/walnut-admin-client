@@ -15,7 +15,7 @@ interface AppMessageOptions {
  * @description message usage
  */
 export const AppMsg = (msg: string, options: AppMessageOptions) => {
-  const appMsg = useAppMsgStore()
+  const appMsg = useAppStoreNaive()
 
   appMsg.setMsgPlacement(options?.placement ?? 'top')
 

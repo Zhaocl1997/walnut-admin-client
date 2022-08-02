@@ -1,5 +1,5 @@
 export const useAppDarkMode = () => {
-  const appDark = useAppDarkStore()
+  const appDark = useAppStoreDark()
 
   const isSystemDark = usePreferredDark()
 
@@ -7,13 +7,13 @@ export const useAppDarkMode = () => {
     const root = document.querySelector('html')
 
     if (dark) {
-      root?.classList.add(DarkModeConst.DARK)
-      root?.classList.remove(DarkModeConst.LIGHT)
+      root?.classList.add(AppConstDarkMode.DARK)
+      root?.classList.remove(AppConstDarkMode.LIGHT)
 
       appDark.setIsDark(true)
     } else {
-      root?.classList.add(DarkModeConst.LIGHT)
-      root?.classList.remove(DarkModeConst.DARK)
+      root?.classList.add(AppConstDarkMode.LIGHT)
+      root?.classList.remove(AppConstDarkMode.DARK)
 
       appDark.setIsDark(false)
     }
@@ -21,15 +21,15 @@ export const useAppDarkMode = () => {
 
   watchEffect(() => {
     switch (appDark.darkMode) {
-      case DarkModeConst.LIGHT:
+      case AppConstDarkMode.LIGHT:
         setIsDark(false)
         break
 
-      case DarkModeConst.DARK:
+      case AppConstDarkMode.DARK:
         setIsDark(true)
         break
 
-      case DarkModeConst.SYSTEM:
+      case AppConstDarkMode.SYSTEM:
         setIsDark(unref(isSystemDark))
         break
 

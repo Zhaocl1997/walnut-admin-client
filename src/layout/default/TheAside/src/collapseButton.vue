@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-  const appMenu = useAppMenuStore()
+  const appMenu = useAppStoreMenu()
 
   const onToogleCollapse = () => {
     appMenu.setCollapse(!appMenu.collapse)

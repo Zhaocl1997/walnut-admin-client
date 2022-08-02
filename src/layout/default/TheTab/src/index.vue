@@ -42,11 +42,10 @@
   import { useTabsDot } from './hooks/useTabsDot'
 
   import { setTabsContext } from './hooks/useTabsContext'
-  import { isDev } from '/@/utils/constant/vue'
 
-  const appTab = useAppTabStore()
-  const appSetting = useAppSettingStore()
-  const appAdapter = useAppAdapterStore()
+  const appTab = useAppStoreTab()
+  const appSetting = useAppStoreSetting()
+  const appAdapter = useAppStoreAdapter()
 
   watchEffect(() => {
     if (appSetting.settings.tab.persistent) {

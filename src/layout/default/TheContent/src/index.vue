@@ -22,8 +22,8 @@
 </template>
 
 <script lang="tsx" setup>
-  const appMenu = useAppMenuStore()
-  const appSetting = useAppSettingStore()
+  const appMenu = useAppStoreMenu()
+  const appSetting = useAppStoreSetting()
 
   const getKeepAliveInclude = computed(() => {
     if (!appSetting.settings.app.keepAlive) return []

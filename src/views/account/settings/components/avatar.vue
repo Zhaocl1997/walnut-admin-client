@@ -17,7 +17,7 @@
     size: 24,
   })
 
-  const userProfile = useUserProfileStore()
+  const userProfile = useAppStoreUserProfile()
 </script>
 
 <script lang="ts">

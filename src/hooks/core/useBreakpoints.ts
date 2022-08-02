@@ -3,6 +3,6 @@ import {
   useBreakpoints as VueUseBreakpoints,
 } from '@vueuse/core'
 
-export const useBreakpoints = () => {
+export const useAppBreakpoints = () => {
   return VueUseBreakpoints(breakpointsTailwind)
 }

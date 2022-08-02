@@ -1,7 +1,5 @@
 import type { WForm } from '../types'
 
-import { isInSetup } from '/@/utils/shared'
-
 export const useForm = <T>(
   props: DeepMaybeRefSelf<WForm.Props<T>> | WForm.Props<T>
 ): WForm.Hook.useFormReturnType => {

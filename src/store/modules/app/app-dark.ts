@@ -4,22 +4,24 @@ import { store } from '../../pinia'
 
 const preferredColor = usePreferredColorScheme()
 
-const useAppDarkStoreInside = defineStore(StoreKeys.APP_DARK, {
+const useAppStoreDarkInside = defineStore(StoreKeys.APP_DARK, {
   state: (): AppDarkState => ({
     darkMode: useAppStorage(
-      'app-darkMode',
-      preferredColor.value as ValueOfDarkModeConst
+      AppConstPersistKey.DARK_MODE,
+      preferredColor.value as ValueOfAppConstDarkMode,
+      Infinity
     ),
     isDark: useAppStorage(
-      'app-isDark',
-      preferredColor.value === DarkModeConst.DARK
+      AppConstPersistKey.IS_DARK,
+      preferredColor.value === AppConstDarkMode.DARK,
+      Infinity
     ),
   }),
 
   getters: {},
 
   actions: {
-    setDarkMode(payload: ValueOfDarkModeConst) {
+    setDarkMode(payload: ValueOfAppConstDarkMode) {
       this.darkMode = payload
     },
 
@@ -29,9 +31,9 @@ const useAppDarkStoreInside = defineStore(StoreKeys.APP_DARK, {
   },
 })
 
-const useAppDarkStoreOutside = () => useAppDarkStoreInside(store)
+const useAppStoreDarkOutside = () => useAppStoreDarkInside(store)
 
-export const useAppDarkStore = () => {
-  if (getCurrentInstance()) return useAppDarkStoreInside()
-  return useAppDarkStoreOutside()
+export const useAppStoreDark = () => {
+  if (getCurrentInstance()) return useAppStoreDarkInside()
+  return useAppStoreDarkOutside()
 }

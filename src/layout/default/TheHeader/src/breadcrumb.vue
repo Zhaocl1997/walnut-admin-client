@@ -4,9 +4,9 @@
 
   export default defineComponent({
     setup() {
-      const appMenu = useAppMenuStore()
-      const appSetting = useAppSettingStore()
-      const appDark = useAppDarkStore()
+      const appMenu = useAppStoreMenu()
+      const appSetting = useAppStoreSetting()
+      const appDark = useAppStoreDark()
 
       const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
@@ -68,7 +68,7 @@
       const renderDropdown = (item: TreeNodeItem<AppSystemMenu>) => (
         <n-dropdown
           onSelect={(key: string) => {
-            useRouterPush({ name: key })
+            useAppRouterPush({ name: key })
           }}
           show-arrow
           options={genOptions(item.children)}

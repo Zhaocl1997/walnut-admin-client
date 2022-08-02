@@ -1,5 +1,4 @@
 import type { WDropdown } from '../types'
-import { isInSetup } from '/@/utils/shared'
 
 export const useDropdown = <T>(
   props: WDropdown.Props

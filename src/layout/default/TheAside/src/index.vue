@@ -48,6 +48,6 @@
   import AsideLogo from './logo.vue'
   import MenuCollpaseButton from './collapseButton.vue'
 
-  const appMenu = useAppMenuStore()
-  const appSetting = useAppSettingStore()
+  const appMenu = useAppStoreMenu()
+  const appSetting = useAppStoreSetting()
 </script>

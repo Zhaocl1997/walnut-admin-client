@@ -18,8 +18,8 @@
   // third party libs should use shallowRef !!!
   const chartInst = shallowRef<Nullable<echarts.ECharts>>(null)
 
-  const appDark = useAppDarkStore()
-  const appLocale = useAppLocaleStore()
+  const appDark = useAppStoreDark()
+  const appLocale = useAppStoreLocale()
 
   const getSkinName = computed(() => (appDark.isDark ? 'dark' : undefined))
 

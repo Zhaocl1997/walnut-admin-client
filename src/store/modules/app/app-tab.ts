@@ -18,7 +18,7 @@ const nameBlackList: string[] = [
   AppRedirectName,
 ]
 
-const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
+const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
   state: (): AppTabState => ({
     tabs: [],
     visitedTabs: new Map(),
@@ -41,7 +41,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
     setVisitedTabs() {
       // set visited tabs
       this.visitedTabs.set(
-        SymbolKeyConst.TABS_KEY,
+        AppConstSymbolKey.TABS_KEY,
         this.tabs.map((item) => item.name)
       )
     },
@@ -70,7 +70,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
 
       // not found
       if (index === -1) {
-        const cached = this.visitedTabs.get(SymbolKeyConst.TABS_KEY)
+        const cached = this.visitedTabs.get(AppConstSymbolKey.TABS_KEY)
 
         // TODO what if detail page multiple ? cannot just use name as a key, maybe should use fullPath
 
@@ -118,7 +118,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
      */
     async deleteTabs(
       name: string,
-      type: ValueOfDeleteTabConst = DeleteTabConst.TAB_SINGLE
+      type: ValueOfAppConstTabDeleteType = AppConstTabDeleteType.TAB_SINGLE
     ) {
       const { currentRoute } = AppRouter
       const currentRouteName = currentRoute.value.name as string
@@ -130,7 +130,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
       const currentTab = this.tabs[index]
 
       switch (type) {
-        case DeleteTabConst.TAB_SINGLE:
+        case AppConstTabDeleteType.TAB_SINGLE:
           {
             // simple splice
             this.tabs.splice(index, 1)
@@ -151,7 +151,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
           }
           break
 
-        case DeleteTabConst.TAB_LEFT:
+        case AppConstTabDeleteType.TAB_LEFT:
           {
             const nameList: string[] = []
 
@@ -170,7 +170,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
           }
           break
 
-        case DeleteTabConst.TAB_RIGHT:
+        case AppConstTabDeleteType.TAB_RIGHT:
           {
             const nameList: string[] = []
 
@@ -189,7 +189,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
           }
           break
 
-        case DeleteTabConst.TAB_OTHER:
+        case AppConstTabDeleteType.TAB_OTHER:
           {
             const nameList: string[] = []
 
@@ -209,10 +209,10 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
           }
           break
 
-        case DeleteTabConst.TAB_ALL:
+        case AppConstTabDeleteType.TAB_ALL:
           {
             const nameList: string[] = []
-            const appMenu = useAppMenuStore()
+            const appMenu = useAppStoreMenu()
 
             this.tabs.map((item) => {
               // find all not affixed tabs
@@ -269,7 +269,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
      * @description click tab and push to target route
      */
     async goTab(name: string, query?: any, params?: any) {
-      await useRouterPush({
+      await useAppRouterPush({
         name,
         query,
         params,
@@ -280,7 +280,7 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
      * @description leave some room for tab index for beauty
      */
     initAffixedTabs(payload: AppSystemMenu[]) {
-      const appMenu = useAppMenuStore()
+      const appMenu = useAppStoreMenu()
 
       // unshift the affixed-visibled-ordered tab into tab store
       payload
@@ -305,9 +305,9 @@ const useAppTabStoreInside = defineStore(StoreKeys.APP_TAB, {
   },
 })
 
-const useAppTabStoreOutside = () => useAppTabStoreInside(store)
+const useAppStoreTabOutside = () => useAppStoreTabInside(store)
 
-export const useAppTabStore = () => {
-  if (getCurrentInstance()) return useAppTabStoreInside()
-  return useAppTabStoreOutside()
+export const useAppStoreTab = () => {
+  if (getCurrentInstance()) return useAppStoreTabInside()
+  return useAppStoreTabOutside()
 }

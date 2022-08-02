@@ -60,20 +60,20 @@
   import TheMainHeader from './MainHeader.vue'
   import TheAppWatermark from '/@/components/App/AppWatermark'
 
-  const appMenu = useAppMenuStore()
-  const appSetting = useAppSettingStore()
+  const appMenu = useAppStoreMenu()
+  const appSetting = useAppStoreSetting()
 
   const { currentRoute } = useAppRouter()
 
   // TODO layout
   // watchEffect(() => {
-  //   if (setting.app.layout === AppLayoutModeConst.LEFT_MENU) {
+  //   if (setting.app.layout === AppConstLayoutMode.LEFT_MENU) {
   //     setting.app.showLogo = true
   //     setting.app.showMenu = true
   //     setting.header.showBreadcrumb = true
   //   }
 
-  //   if (setting.app.layout === AppLayoutModeConst.TOP_MENU) {
+  //   if (setting.app.layout === AppConstLayoutMode.TOP_MENU) {
   //     setting.app.showLogo = false
   //     setting.app.showMenu = false
   //     setting.header.showBreadcrumb = false

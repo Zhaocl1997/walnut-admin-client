@@ -5,7 +5,7 @@ export type TransitionMode = 'in-out' | 'out-in'
 
 const props = {
   name: {
-    type: String as PropType<Nullable<ValueOfTransitionNameConst>>,
+    type: String as PropType<Nullable<ValueOfAppConstTransitionName>>,
     default: 'fade',
   },
   mode: {

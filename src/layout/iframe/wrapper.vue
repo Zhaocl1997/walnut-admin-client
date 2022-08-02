@@ -27,13 +27,15 @@
   import { cloneDeep } from 'lodash-es'
   import WIFrame from './index.vue'
 
-  const appSetting = useAppSettingStore()
-  const appMenu = useAppMenuStore()
-  const appTab = useAppTabStore()
+  const appSetting = useAppStoreSetting()
+  const appMenu = useAppStoreMenu()
+  const appTab = useAppStoreTab()
 
   const getAllIFramePages = computed(() =>
     treeToArr(cloneDeep(appMenu.menus))
-      .filter((i) => i.ternal === MenuTernalConst.INTERNAL && i.url && i.cache)
+      .filter(
+        (i) => i.ternal === AppConstMenuTernal.INTERNAL && i.url && i.cache
+      )
       .map((i) => ({
         name: i.name,
         url: i.url,

@@ -1,5 +1,4 @@
 import { isString } from 'easy-fns-ts'
-import { AppPersistEncryption } from '/@/utils/crypto'
 
 export interface CookieOptions {
   prefixKey: string

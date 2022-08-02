@@ -2,13 +2,11 @@ import type { I18nOptions } from 'vue-i18n'
 
 import { createI18n } from 'vue-i18n'
 
-import { AppI18nGetI18nMsg } from './backend'
-
 /**
  * @description Get locale messages from back end
  */
 const createI18nOptions = async (): Promise<I18nOptions> => {
-  const appLocale = useAppLocaleStore()
+  const appLocale = useAppStoreLocale()
 
   const locale = appLocale.locale
 

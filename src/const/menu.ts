@@ -1,14 +1,14 @@
-export const MenuTypeConst = {
+export const AppConstMenuType = {
   CATALOG: 'catalog',
   MENU: 'menu',
   ELEMENT: 'element',
 } as const
 
-export const MenuTernalConst = {
+export const AppConstMenuTernal = {
   EXTERNAL: 'external',
   INTERNAL: 'internal',
   NONE: 'none',
 } as const
 
-export type ValueOfMenuTypeConst = ValueOf<typeof MenuTypeConst>
-export type ValueOfMenuTernalConst = ValueOf<typeof MenuTernalConst>
+export type ValueOfAppConstMenuType = ValueOf<typeof AppConstMenuType>
+export type ValueOfAppConstMenuTernal = ValueOf<typeof AppConstMenuTernal>

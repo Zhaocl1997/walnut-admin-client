@@ -85,8 +85,8 @@
 
   const loading = ref(false)
 
-  const appDark = useAppDarkStore()
-  const appLocale = useAppLocaleStore()
+  const appDark = useAppStoreDark()
+  const appLocale = useAppStoreLocale()
 
   const getSkinName = computed(() =>
     appDark.isDark ? 'tinymce-5-dark' : 'tinymce-5'

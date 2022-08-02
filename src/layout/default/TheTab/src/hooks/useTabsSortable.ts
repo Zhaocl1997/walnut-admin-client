@@ -4,7 +4,7 @@ import { useSortable } from '/@/hooks/component/useSortable'
 let inst: Sortable
 
 export const useTabsSortable = (isSortable: boolean) => {
-  const appTab = useAppTabStore()
+  const appTab = useAppStoreTab()
 
   if (!isSortable) {
     inst?.destroy()

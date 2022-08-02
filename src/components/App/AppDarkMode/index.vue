@@ -11,19 +11,19 @@
 
 <script lang="ts" setup>
   const { t } = useAppI18n()
-  const appDark = useAppDarkStore()
+  const appDark = useAppStoreDark()
 
   const darkModeOptions = computed(() => [
     {
-      value: DarkModeConst.LIGHT,
+      value: AppConstDarkMode.LIGHT,
       label: t('sys:dark:light'),
     },
     {
-      value: DarkModeConst.DARK,
+      value: AppConstDarkMode.DARK,
       label: t('sys:dark:dark'),
     },
     {
-      value: DarkModeConst.SYSTEM,
+      value: AppConstDarkMode.SYSTEM,
       label: t('sys:dark:sys'),
     },
   ])

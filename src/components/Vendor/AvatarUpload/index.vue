@@ -34,7 +34,7 @@
 
   const { t } = useAppI18n()
 
-  const userProfile = useUserProfileStore()
+  const userProfile = useAppStoreUserProfile()
   const userId = userProfile.profile._id!
 
   const show = ref(false)

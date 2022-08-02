@@ -68,7 +68,7 @@
   import DemoLocation from './LocationPicker.vue'
   import DemoDict from './Dict.vue'
 
-  const appAdapter = useAppAdapterStore()
+  const appAdapter = useAppStoreAdapter()
 </script>
 
 <script lang="ts">

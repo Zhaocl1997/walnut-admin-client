@@ -1,6 +1,6 @@
 export const useAppFullScreen = () => {
   const { isFullscreen } = useFullscreen()
-  const appSetting = useAppSettingStore()
+  const appSetting = useAppStoreSetting()
 
   watchEffect(() => {
     if (!isFullscreen.value) {

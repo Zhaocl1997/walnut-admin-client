@@ -1,5 +1,5 @@
 export const useTabsActions = () => {
-  const appTab = useAppTabStore()
+  const appTab = useAppStoreTab()
 
   const onTabClick = async (item: AppTab) => {
     // push by name
@@ -8,7 +8,7 @@ export const useTabsActions = () => {
 
   const onTabRemove = (
     name: string,
-    type: ValueOfDeleteTabConst = DeleteTabConst.TAB_SINGLE
+    type: ValueOfAppConstTabDeleteType = AppConstTabDeleteType.TAB_SINGLE
   ) => {
     // remove tab
     appTab.deleteTabs(name, type)

@@ -11,8 +11,8 @@ import { buildRoutes } from '/@/router/utils/route'
  * 2. route guard protection
  */
 export const AppCoreFn1 = async () => {
-  const appMenu = useAppMenuStore()
-  const userPermission = useUserPermissionStore()
+  const appMenu = useAppStoreMenu()
+  const userPermission = useAppStoreUserPermission()
 
   const { addRoute, getRoutes } = AppRouter
 

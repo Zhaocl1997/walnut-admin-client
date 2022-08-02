@@ -17,8 +17,6 @@
 </template>
 
 <script lang="ts">
-  import { isCSSLength, isCSSTime } from '/@/utils/regex'
-
   export default defineComponent({
     name: 'WFlipper',
 

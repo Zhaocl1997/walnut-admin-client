@@ -62,9 +62,9 @@
   import TheMenu from '../../TheAside/src/menu.vue'
   import TheLogo from '../../TheAside/src/logo.vue'
 
-  const appSetting = useAppSettingStore()
-  const appAdapter = useAppAdapterStore()
-  const appMenu = useAppMenuStore()
+  const appSetting = useAppStoreSetting()
+  const appAdapter = useAppStoreAdapter()
+  const appMenu = useAppStoreMenu()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 

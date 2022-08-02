@@ -17,7 +17,7 @@ export const checkReponseErrorStatus = (status?: number, msg?: string) => {
       {
         responseError('app:ajax:401')
 
-        const userAuth = useUserAuthStore()
+        const userAuth = useAppStoreUserAuth()
 
         userAuth.Signout()
       }

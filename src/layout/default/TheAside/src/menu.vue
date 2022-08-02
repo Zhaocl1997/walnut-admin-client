@@ -7,9 +7,9 @@
 
   export default defineComponent({
     setup() {
-      const appMenu = useAppMenuStore()
-      const appAdapter = useAppAdapterStore()
-      const appSetting = useAppSettingStore()
+      const appMenu = useAppStoreMenu()
+      const appAdapter = useAppStoreAdapter()
+      const appSetting = useAppStoreSetting()
 
       const { t } = useAppI18n()
       const { currentRoute } = useAppRouter()
@@ -64,17 +64,19 @@
           appMenu.showAside = false
         }
 
-        if ((item.meta as AppSystemMenu).type === MenuTypeConst.CATALOG) {
+        if ((item.meta as AppSystemMenu).type === AppConstMenuType.CATALOG) {
           useAppMessage().info('Catalog Menu has no page!')
           return
         }
 
-        if ((item.meta as AppSystemMenu).ternal === MenuTernalConst.EXTERNAL) {
+        if (
+          (item.meta as AppSystemMenu).ternal === AppConstMenuTernal.EXTERNAL
+        ) {
           openExternalLink((item.meta as AppSystemMenu).url!)
           return
         }
 
-        useRouterPush({ name: key })
+        useAppRouterPush({ name: key })
       }
 
       const onUpdateExpandedKeys = (keys: string[]) => {
@@ -85,7 +87,7 @@
         <w-scrollbar height="100%">
           <n-menu
             mode={
-              appSetting.settings.app.layout === AppLayoutModeConst.LEFT_MENU
+              appSetting.settings.app.layout === AppConstLayoutMode.LEFT_MENU
                 ? 'vertical'
                 : 'horizontal'
             }

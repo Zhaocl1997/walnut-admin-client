@@ -4,8 +4,8 @@ import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
  * @description App Tab Core Function
  */
 export const useTabs = () => {
-  const appTab = useAppTabStore()
-  const appAdapter = useAppAdapterStore()
+  const appTab = useAppStoreTab()
+  const appAdapter = useAppStoreAdapter()
 
   const route = useAppRoute()
   const { currentRoute } = useAppRouter()

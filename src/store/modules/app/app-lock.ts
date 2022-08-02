@@ -2,16 +2,20 @@ import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-const useAppLockStoreInside = defineStore(StoreKeys.APP_LOCK, {
+const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
   state: (): AppLockState => ({
-    lockMode: useAppStorage('app-lockMode', AppLockModeConst.AUTO),
-    isLock: useAppStorage('app-isLock', false),
+    lockMode: useAppStorage(
+      AppConstPersistKey.LOCK_MODE,
+      AppConstLockMode.AUTO,
+      Infinity
+    ),
+    isLock: useAppStorage(AppConstPersistKey.IS_LOCK, false, Infinity),
   }),
 
   getters: {},
 
   actions: {
-    setLockMode(payload: ValueOfAppLockModeConst) {
+    setLockMode(payload: ValueOfAppConstLockMode) {
       this.lockMode = payload
     },
 
@@ -21,9 +25,9 @@ const useAppLockStoreInside = defineStore(StoreKeys.APP_LOCK, {
   },
 })
 
-const useAppLockStoreOutside = () => useAppLockStoreInside(store)
+const useAppStoreLockOutside = () => useAppStoreLockInside(store)
 
-export const useAppLockStore = () => {
-  if (getCurrentInstance()) return useAppLockStoreInside()
-  return useAppLockStoreOutside()
+export const useAppStoreLock = () => {
+  if (getCurrentInstance()) return useAppStoreLockInside()
+  return useAppStoreLockOutside()
 }

@@ -42,7 +42,7 @@
 
   const emits = defineEmits(['update:value'])
 
-  const appKey = useAppKeyStore()
+  const appKey = useAppStoreSecretKey()
 
   // third party libs should use shallowRef !!!
   const baiduRef = shallowRef<Nullable<HTMLDivElement>>(null)

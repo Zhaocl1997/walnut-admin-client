@@ -9,7 +9,7 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const getChilren = (group: string) =>
-      Object.entries(TransitionNameConst)
+      Object.entries(AppConstTransitionName)
         .map(([key, value]) => ({
           value: value,
           label: key,

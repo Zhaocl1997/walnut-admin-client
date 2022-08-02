@@ -4,11 +4,11 @@
  * if change this file, please in terminal run `npm run gen:schema` to generate `settings.json` VS Code support
  * all types below must be explicit import, no auto-import or global usage
  */
-import { ValueOfTransitionNameConst } from '../src/const/transition'
+import { ValueOfAppConstTransitionName } from '../src/const/transition'
 import {
-  ValueOfAppLayoutModeConst,
-  ValueOfMenuCollapseModeConst,
-  ValueOfTabStyleModeConst,
+  ValueOfAppConstLayoutMode,
+  ValueOfAppConstCollapseMode,
+  ValueOfAppConstTabStyleMode,
 } from '../src/const/app'
 
 interface AppSettings {
@@ -85,7 +85,7 @@ interface AppSettings {
     /**
      * Page change animation name
      */
-    animationName: ValueOfTransitionNameConst
+    animationName: ValueOfAppConstTransitionName
 
     /**
      * Keep alive pages
@@ -95,7 +95,7 @@ interface AppSettings {
     /**
      * App Layout
      */
-    layout: ValueOfAppLayoutModeConst
+    layout: ValueOfAppConstLayoutMode
 
     /**
      * Mouse leave page, lock app
@@ -132,7 +132,7 @@ interface AppSettings {
     /**
      * Menu Collapse Mode
      */
-    collapseMode: ValueOfMenuCollapseModeConst
+    collapseMode: ValueOfAppConstCollapseMode
 
     /**
      * When app layout is `left-menu`, menu width
@@ -241,7 +241,7 @@ interface AppSettings {
     /**
      * Tab style mode
      */
-    styleMode: ValueOfTabStyleModeConst
+    styleMode: ValueOfAppConstTabStyleMode
 
     /**
      * Tab devtool, only work in dev env

@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-  const appSetting = useAppSettingStore()
+  const appSetting = useAppStoreSetting()
 </script>
 
 <script lang="ts">

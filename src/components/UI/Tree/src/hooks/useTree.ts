@@ -1,7 +1,5 @@
 import type { WTree } from '../types'
 
-import { isInSetup } from '/@/utils/shared'
-
 export const useTree = <T = RowData>(
   props: WTree.Props<T>
 ): WTree.Hook.useTree<T> => {

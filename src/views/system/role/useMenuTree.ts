@@ -46,7 +46,7 @@ export const useMenuTree = () => {
 
     const treeSelectData = orderTree<AppSystemMenu>(
       arrToTree<AppSystemMenu>(
-        cloneDeep(res.data).filter((i) => i.type !== MenuTypeConst.ELEMENT),
+        cloneDeep(res.data).filter((i) => i.type !== AppConstMenuType.ELEMENT),
         { id: '_id' },
         {
           transformEmptyChildrenToNull: true,

@@ -34,12 +34,12 @@
 </template>
 
 <script lang="ts" setup>
-  const appMenu = useAppMenuStore()
-  const appSetting = useAppSettingStore()
+  const appMenu = useAppStoreMenu()
+  const appSetting = useAppStoreSetting()
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
   const onGoIndex = () => {
-    useRouterPush({ name: appMenu.indexMenuName })
+    useAppRouterPush({ name: appMenu.indexMenuName })
   }
 </script>

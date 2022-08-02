@@ -1,4 +1,4 @@
-export const TransitionNameConst = {
+export const AppConstTransitionName = {
   FADE: 'fade',
   FADE_DOWN: 'fade-down',
   FADE_DOWN_BIG: 'fade-down-big',
@@ -45,5 +45,5 @@ export const TransitionNameConst = {
   FLIP_Y: 'flip-y',
 } as const
 
-export type ValueOfTransitionNameConst =
-  typeof TransitionNameConst[keyof typeof TransitionNameConst]
+export type ValueOfAppConstTransitionName =
+  typeof AppConstTransitionName[keyof typeof AppConstTransitionName]

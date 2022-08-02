@@ -67,24 +67,24 @@
   import Battery from './src/Battery.vue'
   import Network from './src/Network.vue'
 
-  const appLock = useAppLockStore()
-  const addAdapter = useAppAdapterStore()
+  const appLock = useAppStoreLock()
+  const addAdapter = useAppStoreAdapter()
 
   const now = useNow()
   const fps = useFps()
 
   const getShowUnlock = computed(
-    () => appLock.lockMode === AppLockModeConst.MANUAL
+    () => appLock.lockMode === AppConstLockMode.MANUAL
   )
 
   const onLock = () => {
     appLock.setIsLock(true)
-    appLock.setLockMode(AppLockModeConst.MANUAL)
+    appLock.setLockMode(AppConstLockMode.MANUAL)
   }
 
   const onUnlock = () => {
     appLock.setIsLock(false)
-    appLock.setLockMode(AppLockModeConst.AUTO)
+    appLock.setLockMode(AppConstLockMode.AUTO)
   }
 </script>
 
