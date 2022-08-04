@@ -1,13 +1,11 @@
-interface listQueryParams {
-  pageNum: number
-  pageSize: number
-}
-
+/**
+ * @description mock list endpoint
+ */
 export const mockListApi =
   <T>(arr: T[]) =>
-  (query: listQueryParams = { pageNum: 1, pageSize: 10 }) => {
-    const num = query.pageNum || 1
-    const size = query.pageSize || 10
+  (params: BaseListParams) => {
+    const num = params.page?.page || 1
+    const size = params.page?.pageSize || 10
     const total = arr.length
 
     return {

@@ -13,11 +13,11 @@
         v-model:show="show"
         placement="top"
         trigger="click"
-        :style="{ width: '500px', position: 'relative', right: '0px' }"
+        :style="{ width: '480px', position: 'relative', right: '0px' }"
       >
-        <template #header>
+        <!-- <template #header>
           <n-text type="info">{{ t('comp:iconPicker:title') }}</n-text>
-        </template>
+        </template> -->
 
         <template #trigger>
           <div class="cursor-pointer -mb-2 -ml-1">
@@ -30,7 +30,7 @@
 
         <template #default>
           <n-spin :show="loading">
-            <div class="w-64 mt-1 mb-3">
+            <div class="vstack justify-center items-center">
               <n-input
                 ref="searchInputRef"
                 v-model:value="filters"
@@ -38,43 +38,64 @@
                 clearable
                 :placeholder="t('comp:iconPicker:ph')"
                 @input="debouncedInit"
+                class="w-full mt-1 mb-3 border-b-cool-gray-50"
               ></n-input>
+
+              <n-tabs
+                v-model:value="currentTab"
+                type="line"
+                size="small"
+                animated
+              >
+                <n-tab-pane
+                  v-for="i in iconCollectionsNameList"
+                  :name="i"
+                  :tab="i"
+                >
+                </n-tab-pane>
+              </n-tabs>
+
+              <div class="h-58 w-full hstack">
+                <div class="">
+                  <span
+                    v-for="(icon, index) in lists"
+                    :key="icon"
+                    :title="icon"
+                  >
+                    <w-icon
+                      :icon="icon"
+                      width="36"
+                      :class="[
+                        'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
+                        {
+                          'bg-light-blue-300': icon === value,
+                          'hover:bg-warm-gray-300': icon !== value,
+                        },
+                      ]"
+                      @click="onChooseIcon(icon)"
+                    />
+                  </span>
+                </div>
+
+                <n-empty class="pt-12" v-show="lists.length === 0" />
+              </div>
+
+              <n-pagination
+                v-model:page="page"
+                :page-size="pageSize"
+                :item-count="total"
+                size="small"
+                class="text-sm"
+                :page-slot="7"
+                @update:page="onInit(false)"
+              >
+                <template #suffix>
+                  <span class="whitespace-nowrap">
+                    {{ t('comp:pagination:total', { total }) }}
+                  </span>
+                </template>
+              </n-pagination>
             </div>
-
-            <div style="min-height: 230px">
-              <span v-for="(icon, index) in lists" :key="icon" :title="icon">
-                <w-icon
-                  :icon="icon"
-                  width="36"
-                  :class="[
-                    'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
-                    {
-                      'bg-light-blue-300': icon === value,
-                      'hover:bg-warm-gray-300': icon !== value,
-                    },
-                  ]"
-                  @click="onChooseIcon(icon)"
-                />
-              </span>
-
-              <n-empty v-show="lists.length === 0" />
-            </div>
-
-            <n-pagination
-              v-model:page="pageNum"
-              :page-size="pageSize"
-              :item-count="total"
-              size="small"
-              class="text-sm"
-              :page-slot="7"
-              @update:page="init(false)"
-            >
-              <template #suffix>
-                <span class="whitespace-nowrap">
-                  {{ t('comp:pagination:total', { total }) }}
-                </span>
-              </template>
-            </n-pagination>
           </n-spin>
         </template>
       </n-popover>
@@ -91,50 +112,68 @@
 <script lang="ts" setup>
   import type { InputInst } from 'naive-ui'
   import { mockListApi } from '/@/utils/mockListApi'
+  import { iconCollectionsNameList } from '/@/components/UI/Icon/src/utils/collections'
   import iconLists from '/@/components/UI/Icon/src/utils/list'
 
-  const props = defineProps({ value: String as PropType<string> })
+  interface IconPickerProps {
+    value?: string
+  }
+
+  const props = defineProps<IconPickerProps>()
   const emit = defineEmits(['update:value'])
 
   const { t } = useAppI18n()
   const {
     lists,
     total,
-    pageNum,
+    page,
     pageSize,
     show,
     filters,
     rootInputRef,
     searchInputRef,
     loading,
+    currentTab,
   } = toRefs(
     reactive({
       lists: [] as string[],
       total: 0,
-      pageNum: 1,
+      page: 1,
       pageSize: 55,
       show: false,
       filters: '',
       rootInputRef: null as Nullable<InputInst>,
       searchInputRef: null as Nullable<InputInst>,
       loading: false,
+      currentTab: 'ant-design',
     })
   )
 
-  const init = (needFeedback?: boolean) => {
+  watch(currentTab, () => onInit())
+
+  const onInit = (needFeedback = false) => {
     loading.value = true
+
     if (props.value && needFeedback) {
-      const index = iconLists.findIndex((item) => item === props.value) + 1
+      const index =
+        iconLists
+          .filter((i) => i.includes(currentTab.value))
+          .findIndex((item) => item === props.value) + 1
 
       const shouldGoPageNum = Math.floor(index / pageSize.value) + 1
 
-      pageNum.value = shouldGoPageNum
+      page.value = shouldGoPageNum
     }
 
-    const filtered = iconLists.filter((i) => i.includes(filters.value))
+    const filtered = iconLists.filter(
+      (i) => i.includes(filters.value) && i.includes(currentTab.value)
+    )
+
     const filterdRes = mockListApi(filtered)({
-      pageNum: pageNum.value,
-      pageSize: pageSize.value,
+      page: {
+        page: page.value,
+        pageSize: pageSize.value,
+      },
     })
 
     setTimeout(() => {
@@ -145,21 +184,21 @@
   }
 
   const debouncedInit = useDebounceFn(() => {
-    pageNum.value = 1
-    init(false)
+    page.value = 1
+    onInit()
   }, 300)
 
   const onOpenPopover = () => {
     filters.value = ''
     show.value = true
-    init(true)
+    onInit(true)
     nextTick(() => {
       searchInputRef.value?.focus()
     })
   }
 
   const onChooseIcon = (icon: string) => {
-    pageNum.value = 1
+    page.value = 1
     show.value = false
 
     emit('update:value', icon)

@@ -19,3 +19,8 @@ export const iconCollections: IconifyJSON[] = [
   svgIcons,
   emojiv1Icons,
 ]
+
+/**
+ * @description Used for icon category filter.
+ */
+export const iconCollectionsNameList = iconCollections.map((i) => i.prefix)
