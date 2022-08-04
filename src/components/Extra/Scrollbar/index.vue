@@ -144,18 +144,20 @@
       })
 
       return () => (
-        <n-scrollbar
-          id={id.value}
-          ref={scrollRef}
-          onScroll={onScroll}
-          containerStyle={{
-            height: props.height,
-            width: props.width,
-          }}
-          x-scrollable={props.vertical}
-        >
-          {slots}
-        </n-scrollbar>
+        <div class="w-full h-full">
+          <n-scrollbar
+            id={id.value}
+            ref={scrollRef}
+            onScroll={onScroll}
+            containerStyle={{
+              height: props.height,
+              width: props.width,
+            }}
+            x-scrollable={props.vertical}
+          >
+            {slots}
+          </n-scrollbar>
+        </div>
       )
     },
   })

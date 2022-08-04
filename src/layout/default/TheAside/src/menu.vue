@@ -84,29 +84,27 @@
       }
 
       return () => (
-        <div class="w-full">
-          <w-scrollbar height="100%">
-            <n-menu
-              mode={
-                appSetting.settings.app.layout === AppConstLayoutMode.LEFT_MENU
-                  ? 'vertical'
-                  : 'horizontal'
-              }
-              inverted={appSetting.settings.menu.inverted}
-              collapsedWidth={appSetting.settings.menu.collapsedWidth}
-              accordion={appSetting.settings.menu.accordion}
-              collapsedIconSize={appSetting.settings.menu.collapsedIconSize}
-              iconSize={appSetting.settings.menu.iconSize}
-              indent={appSetting.settings.menu.indent}
-              options={getMenu.value}
-              collapsed={appMenu.collapse}
-              value={getTransformName.value}
-              on-update:value={onUpdateValue}
-              expanded-keys={expandedKeys.value}
-              on-update:expanded-keys={onUpdateExpandedKeys}
-            ></n-menu>
-          </w-scrollbar>
-        </div>
+        <w-scrollbar height="100%">
+          <n-menu
+            mode={
+              appSetting.settings.app.layout === AppConstLayoutMode.LEFT_MENU
+                ? 'vertical'
+                : 'horizontal'
+            }
+            inverted={appSetting.settings.menu.inverted}
+            collapsedWidth={appSetting.settings.menu.collapsedWidth}
+            accordion={appSetting.settings.menu.accordion}
+            collapsedIconSize={appSetting.settings.menu.collapsedIconSize}
+            iconSize={appSetting.settings.menu.iconSize}
+            indent={appSetting.settings.menu.indent}
+            options={getMenu.value}
+            collapsed={appMenu.collapse}
+            value={getTransformName.value}
+            on-update:value={onUpdateValue}
+            expanded-keys={expandedKeys.value}
+            on-update:expanded-keys={onUpdateExpandedKeys}
+          ></n-menu>
+        </w-scrollbar>
       )
     },
   })
