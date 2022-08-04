@@ -118,6 +118,9 @@ export const useFormAdvanced = (
           onNo={onNo}
           loading={loading.value}
           defaultButton={props.value.advancedProps?.defaultButton}
+          resizable={props.value.advancedProps?.resizable}
+          defaultWidth={props.value.advancedProps?.defaultWidth}
+          defaultHeight={props.value.advancedProps?.defaultHeight}
         >
           {render()}
         </w-drawer>

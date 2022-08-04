@@ -10,12 +10,14 @@
       :helpMessage="configFormData.helpMessage"
       :closable="configFormData.closable"
       :maskClosable="configFormData.maskClosable"
-      :width="configFormData.width"
+      :width="configFormData.resizable ? undefined : configFormData.width"
       :loading="configFormData.loading"
       :placement="configFormData.placement"
       :to="configFormData.scope ? '#Drawer' : undefined"
       :trap-focus="!configFormData.scope"
       :block-scroll="!configFormData.scope"
+      :resizable="configFormData.resizable"
+      :default-width="configFormData.width"
       @yes="drawerShow = false"
       @no="drawerShow = false"
     >
@@ -39,6 +41,7 @@
     loading: false,
     placement: 'right',
     scope: false,
+    resizable: false,
   })
 
   const [register] = useForm<typeof configFormData.value>({
@@ -90,6 +93,9 @@
           label: 'Width',
           path: 'width',
         },
+        componentProp: {
+          disabled: computed(() => configFormData.value.resizable),
+        },
       },
       {
         type: 'Base:Switch',
@@ -116,6 +122,13 @@
         formProp: {
           label: 'Scoped',
           path: 'scope',
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          label: 'Resizable',
+          path: 'resizable',
         },
       },
       {
