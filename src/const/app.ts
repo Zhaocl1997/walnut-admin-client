@@ -58,3 +58,20 @@ export const AppConstLockMode = {
 
 export type ValueOfAppConstLockMode =
   typeof AppConstLockMode[keyof typeof AppConstLockMode]
+
+export const AppConstAnimationMode = {
+  GLOBAL: 'global',
+  SCOPE: 'scope',
+} as const
+
+export type ValueOfAppConstAnimationMode =
+  typeof AppConstAnimationMode[keyof typeof AppConstAnimationMode]
+
+export const AppConstColorMode = {
+  CAFE: 'cafe',
+  CONTRAST: 'contrast',
+  GRAYSCALE: 'grayscale',
+} as const
+
+export type ValueOfAppConstColorMode =
+  typeof AppConstColorMode[keyof typeof AppConstColorMode]

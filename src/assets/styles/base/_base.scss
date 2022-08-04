@@ -12,3 +12,15 @@ body {
   height: 100%;
   overflow: hidden;
 }
+
+html[color-mode="cafe"] {
+  filter: sepia(0.9) hue-rotate(315deg) brightness(0.9);
+}
+
+html[color-mode="contrast"] {
+  filter: contrast(2);
+}
+
+html[color-mode="grayscale"] {
+  filter: grayscale(100%);
+}

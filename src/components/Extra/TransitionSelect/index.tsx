@@ -28,12 +28,12 @@ export default defineComponent({
     )
 
     return () => (
-      <n-select
+      <w-select
         value={props.value}
         options={options.value}
         filterable
         onUpdateValue={(v: string) => emit('update:value', v)}
-      ></n-select>
+      ></w-select>
     )
   },
 })

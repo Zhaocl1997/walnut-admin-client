@@ -29,6 +29,7 @@
     "fixHeader": true,
     "fixFooter": true,
     "showAnimation": true,
+    "animationMode": "global",
     "animationName": "fade",
     "keepAlive": true,
     "layout": "left-menu",

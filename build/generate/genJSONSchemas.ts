@@ -7,7 +7,7 @@ import {
   VScodeSettingsFilePath,
   AppSettingsJSONFilePath,
   AppSettingsInterfaceFilePath,
-} from 'build/utils/paths'
+} from '../utils/paths'
 
 const settings: TJS.PartialArgs = {
   required: true,

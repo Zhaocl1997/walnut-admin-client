@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "5.0.0",
-    "@vueuse/core": "^9.0.2",
-    "@vueuse/integrations": "^9.0.2",
+    "@vueuse/core": "^9.1.0",
+    "@vueuse/integrations": "^9.1.0",
     "ali-oss": "^6.17.1",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",

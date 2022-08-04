@@ -9,6 +9,8 @@ import {
   ValueOfAppConstLayoutMode,
   ValueOfAppConstCollapseMode,
   ValueOfAppConstTabStyleMode,
+  ValueOfAppConstAnimationMode,
+  ValueOfAppConstColorMode,
 } from '../src/const/app'
 
 interface AppSettings {
@@ -83,6 +85,11 @@ interface AppSettings {
     showAnimation: boolean
 
     /**
+     * Animation mode. `global` or `scope`. `scope` means use router object meta animation
+     */
+    animationMode: ValueOfAppConstAnimationMode
+
+    /**
      * Page change animation name
      */
     animationName: ValueOfAppConstTransitionName
@@ -121,6 +128,11 @@ interface AppSettings {
      * Full screen watermark content
      */
     watermarkContent: string
+
+    /**
+     * Custom color mode
+     */
+    colorMode: ValueOfAppConstColorMode
   }
 
   menu: {

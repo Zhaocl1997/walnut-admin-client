@@ -210,6 +210,10 @@
                                 "description": "Page change animation",
                                 "type": "boolean"
                             },
+                            "animationMode": {
+                                "$ref": "#/definitions/ValueOfAppConstAnimationMode",
+                                "description": "Animation mode. `global` or `scope`. `scope` means use router object meta animation"
+                            },
                             "animationName": {
                                 "$ref": "#/definitions/ValueOfAppConstTransitionName",
                                 "description": "Page change animation name"
@@ -241,10 +245,16 @@
                             "watermarkContent": {
                                 "description": "Full screen watermark content",
                                 "type": "string"
+                            },
+                            "colorMode": {
+                                "$ref": "#/definitions/ValueOfAppConstColorMode",
+                                "description": "Custom color mode"
                             }
                         },
                         "required": [
+                            "animationMode",
                             "animationName",
+                            "colorMode",
                             "contentPadding",
                             "fixFooter",
                             "fixHeader",
@@ -441,6 +451,13 @@
                     "themes"
                 ],
                 "definitions": {
+                    "ValueOfAppConstAnimationMode": {
+                        "enum": [
+                            "global",
+                            "scope"
+                        ],
+                        "type": "string"
+                    },
                     "ValueOfAppConstTransitionName": {
                         "enum": [
                             "back-down",
@@ -488,6 +505,14 @@
                         "enum": [
                             "left-menu",
                             "top-menu"
+                        ],
+                        "type": "string"
+                    },
+                    "ValueOfAppConstColorMode": {
+                        "enum": [
+                            "cafe",
+                            "contrast",
+                            "grayscale"
                         ],
                         "type": "string"
                     },

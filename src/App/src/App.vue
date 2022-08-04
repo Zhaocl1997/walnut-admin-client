@@ -29,4 +29,5 @@
   useAppPageLeave()
   useAppAutoLock()
   useAppTextSelection()
+  useAppColorMode()
 </script>

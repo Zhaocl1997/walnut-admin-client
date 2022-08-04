@@ -50,6 +50,7 @@
   import WIcon from '/@/components/UI/Icon'
   import AppColors from './component/colors'
   import { getMergedTheme } from '/@/App/src/naive/src/theme'
+  import { AppConstColorMode } from '/@/const'
 
   const appDark = useAppStoreDark()
   const appMenu = useAppStoreMenu()
@@ -351,12 +352,30 @@
         },
       },
       {
+        type: 'Base:Select',
+        formProp: {
+          path: 'animationMode',
+        },
+        componentProp: {
+          disabled: computed(() => !appRelatives.value.showAnimation),
+          options: Object.values(AppConstAnimationMode).map((i) => ({
+            label: i,
+            value: i,
+          })),
+        },
+      },
+      {
         type: 'Extend:TransitionSelect',
         formProp: {
           path: 'animationName',
         },
         componentProp: {
-          disabled: computed(() => !appRelatives.value.showAnimation),
+          disabled: computed(
+            () =>
+              appRelatives.value.animationMode ===
+                AppConstAnimationMode.SCOPE || !appRelatives.value.showAnimation
+          ),
+          tooltip: true,
         },
       },
       {
@@ -421,6 +440,25 @@
         },
         componentProp: {
           disabled: computed(() => !appRelatives.value.showWatermark),
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'showWatermark',
+        },
+      },
+      {
+        type: 'Base:Select',
+        formProp: {
+          path: 'colorMode',
+        },
+        componentProp: {
+          clearable: true,
+          options: Object.values(AppConstColorMode).map((i) => ({
+            value: i,
+            label: i,
+          })),
         },
       },
     ],
@@ -521,6 +559,15 @@
         },
         componentProp: {
           disabled: computed(() => appMenu.collapse),
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'inverted',
+        },
+        componentProp: {
+          disabled: computed(() => appDark.isDark),
         },
       },
       {
