@@ -12,6 +12,19 @@
 
         <WQRCode :url="url2" :expire-seconds="3" @refresh="onRefresh" />
       </n-list-item>
+
+      <n-list-item>
+        <n-space vertical size="small">
+          <w-title prefix="bar">Success</w-title>
+
+          <n-button @click="success = !success">make it success</n-button>
+
+          <WQRCode
+            url="https://walnut-admin-doc.netlify.app/"
+            :success="success"
+          />
+        </n-space>
+      </n-list-item>
     </n-list>
   </w-demo-card>
 </template>
@@ -20,6 +33,7 @@
   const getUrl = () => `https://www.baidu.com/?t=${Date.now()}`
 
   const url2 = ref(getUrl())
+  const success = ref(false)
 
   const onRefresh = (callback: Fn) => {
     url2.value = getUrl()

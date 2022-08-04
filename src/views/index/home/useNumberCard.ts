@@ -95,7 +95,7 @@ export const useNumberCard = () => {
     return new Promise((res) => {
       setTimeout(() => {
         res([n(6), n(3), n(4), n(5), n(2), n(7)])
-      }, 2000)
+      }, 500)
     })
   }
 

@@ -263,7 +263,7 @@ export const useChartCard = () => {
           ),
           option2: Array.from({ length: 5 }, () => getRandomInt(300, 1000)),
         })
-      }, 2000)
+      }, 500)
     })
   }
 

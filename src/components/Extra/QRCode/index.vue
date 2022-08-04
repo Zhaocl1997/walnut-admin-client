@@ -3,18 +3,28 @@
     <img
       :src="qrcode"
       alt="QR Code"
-      :class="[{ 'blur-sm brightness-80 contrast-50': !isActive }]"
+      :class="[{ 'blur-sm brightness-80 contrast-50': !isActive || success }]"
     />
 
     <w-transition appear>
-      <div v-if="!isActive" class="abs-center">
-        <div class="mb-2 whitespace-nowrap font-bold text-gray-200">
-          {{ t('form:app:signin:qrcode:expired') }}
-        </div>
+      <div class="abs-center">
+        <template v-if="!isActive">
+          <div class="mb-2 whitespace-nowrap font-bold text-gray-200">
+            {{ t('form:app:signin:qrcode:expired') }}
+          </div>
 
-        <n-button size="tiny" type="info" round @click="onRefresh">
-          {{ t('form:app:signin:qrcode:refresh') }}
-        </n-button>
+          <n-button size="tiny" type="info" round @click="onRefresh">
+            {{ t('form:app:signin:qrcode:refresh') }}
+          </n-button>
+        </template>
+
+        <n-result
+          v-if="success"
+          size="small"
+          status="success"
+          :description="t('app:base:success')"
+        >
+        </n-result>
       </div>
     </w-transition>
   </div>
@@ -33,6 +43,7 @@
   interface InternalProps {
     url: string
     expireSeconds?: number
+    success?: boolean
   }
 
   const props = defineProps<InternalProps>()
