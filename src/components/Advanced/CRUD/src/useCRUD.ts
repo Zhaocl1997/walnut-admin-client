@@ -10,9 +10,13 @@ export const useCRUD = <T = RowData>(
   const register = (instance: WCrud.Inst.WCrudInst<T>) => {
     wCrudRef.value = instance
 
-    watchEffect(() => {
-      props && instance.setProps(props)
-    })
+    watchEffect(
+      () => {
+        props && instance.setProps(props)
+      },
+      // FLUSH need to set sync here, otherwise will cause `Maximum recursive updates exceeded` error
+      { flush: 'sync' }
+    )
   }
 
   const methods = {

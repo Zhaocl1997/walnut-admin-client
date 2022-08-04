@@ -1,6 +1,6 @@
 <template>
   <n-layout has-sider>
-    <w-transition name="slide-left">
+    <w-transition appear name="slide-left">
       <TheAside v-if="appSetting.getShowNormalAside" />
     </w-transition>
 

@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ width: appSetting.getContentWidth }">
+  <div class="w-full">
     <w-transition appear name="slide-up">
       <n-layout-header
         v-if="appSetting.settings.app.showHeader"

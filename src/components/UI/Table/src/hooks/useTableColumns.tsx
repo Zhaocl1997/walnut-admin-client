@@ -20,7 +20,10 @@ export const useTableColumns = (
         <>
           {getTableTranslated(props, item)}
           {item.titleHelpMessage && (
-            <w-message msg={getTableTranslated(props, item, true)} class="inline"></w-message>
+            <w-message
+              msg={getTableTranslated(props, item, true)}
+              class="inline"
+            ></w-message>
           )}
         </>
       ),
@@ -282,7 +285,7 @@ export const useTableColumns = (
       setProps({ scrollX: w })
     } else {
       AppWarn(
-        `Table with 'localeUniqueKey' ${props.value.localeUniqueKey} has a column without width ! This may cause 'scrollX' calculate error !`
+        `Table with 'localeUniqueKey' ${props.value.localeUniqueKey} has a column without width. This may cause 'scrollX' calculate error.`
       )
     }
   }

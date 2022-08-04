@@ -53,17 +53,6 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
       return !appAdapter.isMobile && this.getShowAside
     },
-
-    getContentWidth(state): string {
-      const appAdapter = useAppStoreAdapter()
-      const appMenu = useAppStoreMenu()
-
-      return appAdapter.isMobile || !this.getShowAside
-        ? '100vw'
-        : appMenu.collapse
-        ? `calc(100vw - ${state.settings.menu.collapsedWidth}px)`
-        : `calc(100vw - ${state.settings.menu.width}px)`
-    },
   },
 
   actions: {
