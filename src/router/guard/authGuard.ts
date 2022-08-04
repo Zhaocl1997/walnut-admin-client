@@ -58,6 +58,6 @@ export const createAuthGuard = (router: Router) => {
     //   to.path === redirect ? { ...to, replace: true } : { path: redirect }
     // next(nextData)
 
-    next({ ...to, replace: true })
+    next(to)
   })
 }
