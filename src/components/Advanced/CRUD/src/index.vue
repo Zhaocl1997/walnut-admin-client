@@ -10,8 +10,8 @@
   import type { WCrud } from './types'
 
   import { isFunction } from 'easy-fns-ts'
-  import { useProps } from '/@/hooks/core/useProps'
-  import { extractDefaultFormDataFromSchemas } from '/@/components/UI/Form/src/utils'
+  import { useProps } from '@/hooks/core/useProps'
+  import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
 
   interface InternalProps extends WCrud.Props {}
 

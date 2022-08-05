@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { dictTypeAPI } from '/@/api/system/dict'
+  import { dictTypeAPI } from '@/api/system/dict'
 
   const { t } = useAppI18n()
 

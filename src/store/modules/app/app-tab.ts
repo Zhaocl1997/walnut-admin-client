@@ -8,7 +8,7 @@ import {
   App500Name,
   AppAuthName,
   AppRedirectName,
-} from '/@/router/constant'
+} from '@/router/constant'
 
 const nameBlackList: string[] = [
   AppAuthName,

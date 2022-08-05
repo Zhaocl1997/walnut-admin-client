@@ -182,7 +182,7 @@
 
 <script lang="ts">
   import { isFunction } from '@vueuse/core'
-  import { WithValueProps } from '/@/components/HOC/WithValue'
+  import { WithValueProps } from '@/components/HOC/WithValue'
 
   export default defineComponent({
     name: 'WApiSelect',

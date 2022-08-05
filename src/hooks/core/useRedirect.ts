@@ -1,4 +1,4 @@
-import { AppRedirectPath } from '/@/router/constant'
+import { AppRedirectPath } from '@/router/constant'
 
 /**
  * @description use redirect

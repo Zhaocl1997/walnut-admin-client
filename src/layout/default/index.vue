@@ -58,7 +58,7 @@
 
   import TheIFrameWrapper from '../iframe/wrapper.vue'
   import TheMainHeader from './MainHeader.vue'
-  import TheAppWatermark from '/@/components/App/AppWatermark'
+  import TheAppWatermark from '@/components/App/AppWatermark'
 
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()

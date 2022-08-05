@@ -1,6 +1,6 @@
-import type { WCheckboxProps } from '/@/components/UI/Checkbox'
-import type { WRadioProps } from '/@/components/UI/Radio'
-import type { WSelectProps } from '/@/components/UI/Select'
+import type { WCheckboxProps } from '@/components/UI/Checkbox'
+import type { WRadioProps } from '@/components/UI/Radio'
+import type { WSelectProps } from '@/components/UI/Select'
 
 export interface WFormItemDividerProps {
   titlePlacement?: 'left' | 'right' | 'center'

@@ -2,7 +2,7 @@
   import type { ScrollbarInst } from 'naive-ui/lib/_internal'
   import type { WScrollbarInst } from './index'
 
-  import { useExpose } from '/@/hooks/core/useExpose'
+  import { useExpose } from '@/hooks/core/useExpose'
   import { genString } from 'easy-fns-ts'
 
   export default defineComponent({

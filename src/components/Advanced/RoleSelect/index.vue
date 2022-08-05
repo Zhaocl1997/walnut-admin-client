@@ -13,8 +13,8 @@
 
 <script lang="ts" setup>
   import ApiSelect from '../ApiSelect'
-  import { roleAPI } from '/@/api/system/role'
-  import { WithValueProps } from '/@/components/HOC/WithValue'
+  import { roleAPI } from '@/api/system/role'
+  import { WithValueProps } from '@/components/HOC/WithValue'
 
   defineProps(WithValueProps)
 

@@ -1,6 +1,6 @@
 import type { WHomeChartCardProps } from './components/types'
 import { getRandomInt } from 'easy-fns-ts'
-import echarts from '/@/components/Vendor/Echarts/src/resources/onDemand'
+import echarts from '@/components/Vendor/Echarts/src/resources/onDemand'
 
 const onGetOption1 = (): EChartsOption => ({
   color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],

@@ -127,7 +127,7 @@
 
 <script lang="ts" setup>
   import type { CropperImage, CropperSelection } from 'cropperjs'
-  import type { WAbsImageInst } from '/@/components/Extra/AbsImage'
+  import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 
   import 'cropperjs'
   import { genString } from 'easy-fns-ts'

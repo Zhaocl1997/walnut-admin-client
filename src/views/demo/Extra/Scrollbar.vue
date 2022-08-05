@@ -79,7 +79,7 @@
 </template>
 
 <script lang="ts" setup>
-  import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
+  import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
   const position = ref(0)
   const positionVertival = ref(0)

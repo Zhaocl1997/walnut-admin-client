@@ -4,7 +4,7 @@ import type {
   TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
 
-import type { useEventParams } from '/@/hooks/component/useEvent'
+import type { useEventParams } from '@/hooks/component/useEvent'
 
 import type { WForm } from '../../Form'
 import type { WButtonProps } from '../../Button'

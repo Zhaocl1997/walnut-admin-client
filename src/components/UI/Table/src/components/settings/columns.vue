@@ -138,9 +138,9 @@
   import type { TableBaseColumn } from 'naive-ui/lib/data-table/src/interface'
   import type { WTable } from '../../types'
 
-  import { useSortable } from '/@/hooks/component/useSortable'
+  import { useSortable } from '@/hooks/component/useSortable'
   import { useTableContext } from '../../hooks/useTableContext'
-  import { getThemeOverridesCommon } from '/@/App/src/naive/src/theme'
+  import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
   const { t } = useAppI18n()
   const { tableColumns } = useTableContext()

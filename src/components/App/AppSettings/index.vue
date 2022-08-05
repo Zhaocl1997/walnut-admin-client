@@ -47,10 +47,10 @@
 
 <script lang="tsx" setup>
   // TODO 99
-  import WIcon from '/@/components/UI/Icon'
+  import WIcon from '@/components/UI/Icon'
   import AppColors from './component/colors'
-  import { getMergedTheme } from '/@/App/src/naive/src/theme'
-  import { AppConstColorMode } from '/@/const'
+  import { getMergedTheme } from '@/App/src/naive/src/theme'
+  import { AppConstColorMode } from '@/const'
 
   const appDark = useAppStoreDark()
   const appMenu = useAppStoreMenu()

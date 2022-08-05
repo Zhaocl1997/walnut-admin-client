@@ -112,7 +112,7 @@
 
 <script lang="ts" setup>
   import { getTreeData } from '../data'
-  import { useTree } from '/@/components/UI/Tree'
+  import { useTree } from '@/components/UI/Tree'
 
   const state = ref({
     tree1: undefined,

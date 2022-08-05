@@ -9,7 +9,7 @@
 </script>
 
 <script lang="tsx" setup>
-  import { roleAPI } from '/@/api/system/role'
+  import { roleAPI } from '@/api/system/role'
 
   import { useMenuTree } from './useMenuTree'
 

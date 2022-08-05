@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { langAPI } from '/@/api/system/lang'
+  import { langAPI } from '@/api/system/lang'
 
   // locale unique key
   const key = 'lang'

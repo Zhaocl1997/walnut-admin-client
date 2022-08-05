@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { userAPI } from '/@/api/system/user'
+  import { userAPI } from '@/api/system/user'
 
   // locale unique key
   const key = 'user'

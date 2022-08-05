@@ -21,7 +21,7 @@
     getAreaChildrenByPcode,
     getAreaFeedbackByCode,
     getAreaFeedbackByCodes,
-  } from '/@/api/shared/area'
+  } from '@/api/shared/area'
 
   // TODO 888
   interface InternalProps {

@@ -24,7 +24,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, pathResolve(envDir)) as ImportMetaEnv
 
   const alias = {
-    '/@': pathResolve('src'),
+    '@': pathResolve('src'),
   }
 
   return {

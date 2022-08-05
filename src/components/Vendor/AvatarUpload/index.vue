@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-  import type { WCropperInst } from '/@/components/Vendor/Cropper'
+  import type { WCropperInst } from '@/components/Vendor/Cropper'
   import { AliOSSClient } from '../../Vendor/OSSUpload/client'
 
   const emits = defineEmits(['change'])

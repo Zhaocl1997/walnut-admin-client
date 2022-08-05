@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts" setup>
-  import type { WAvatarUploadInst } from '/@/components/Vendor/AvatarUpload'
+  import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
   import { pick } from 'lodash-es'
   import WAvatar from '../components/avatar.vue'
-  import { userAPI } from '/@/api/system/user'
+  import { userAPI } from '@/api/system/user'
 
   const { t } = useAppI18n()
   const userProfile = useAppStoreUserProfile()

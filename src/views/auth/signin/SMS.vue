@@ -7,17 +7,17 @@
 </template>
 
 <script lang="tsx" setup>
-  import type { WButtonInst } from '/@/components/UI/Button'
-  import type { WVerifyInst } from '/@/components/Extra/Verify'
+  import type { WButtonInst } from '@/components/UI/Button'
+  import type { WVerifyInst } from '@/components/Extra/Verify'
 
   // TODO 99
   import { NRadio, NText, NInput } from 'naive-ui'
-  import WButton from '/@/components/UI/Button'
+  import WButton from '@/components/UI/Button'
 
   import {
     AppAuthPrivacyPolicyPath,
     AppAuthServiceAgreementPath,
-  } from '/@/router/constant'
+  } from '@/router/constant'
 
   const { t } = useAppI18n()
 

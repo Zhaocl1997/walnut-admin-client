@@ -19,25 +19,24 @@ declare global {
     import('vue-router').RouteLocationNormalizedLoaded
 
   // value of const
-  type ValueOfAppConstDevice = import('/@/const').ValueOfAppConstDevice
+  type ValueOfAppConstDevice = import('@/const').ValueOfAppConstDevice
   type ValueOfAppConstTabDeleteType =
-    import('/@/const').ValueOfAppConstTabDeleteType
-  type ValueOfAppConstDarkMode = import('/@/const').ValueOfAppConstDarkMode
-  type ValueOfAppConstLocale = import('/@/const').ValueOfAppConstLocale
-  type ValueOfAppConstMenuType = import('/@/const').ValueOfAppConstMenuType
-  type ValueOfAppConstMenuTernal = import('/@/const').ValueOfAppConstMenuTernal
-  type ValueOfAppConstPersistKey = import('/@/const').ValueOfAppConstPersistKey
-  type ValueOfAppConstStorageType =
-    import('/@/const').ValueOfAppConstStorageType
-  type ValueOfAppConstSymbolKey = import('/@/const').ValueOfAppConstSymbolKey
+    import('@/const').ValueOfAppConstTabDeleteType
+  type ValueOfAppConstDarkMode = import('@/const').ValueOfAppConstDarkMode
+  type ValueOfAppConstLocale = import('@/const').ValueOfAppConstLocale
+  type ValueOfAppConstMenuType = import('@/const').ValueOfAppConstMenuType
+  type ValueOfAppConstMenuTernal = import('@/const').ValueOfAppConstMenuTernal
+  type ValueOfAppConstPersistKey = import('@/const').ValueOfAppConstPersistKey
+  type ValueOfAppConstStorageType = import('@/const').ValueOfAppConstStorageType
+  type ValueOfAppConstSymbolKey = import('@/const').ValueOfAppConstSymbolKey
   type ValueOfAppConstTransitionName =
-    import('/@/const').ValueOfAppConstTransitionName
+    import('@/const').ValueOfAppConstTransitionName
   type ValueOfAppConstCollapseMode =
-    import('/@/const').ValueOfAppConstCollapseMode
+    import('@/const').ValueOfAppConstCollapseMode
   type ValueOfAppConstTabStyleMode =
-    import('/@/const').ValueOfAppConstTabStyleMode
-  type ValueOfAppConstLayoutMode = import('/@/const').ValueOfAppConstLayoutMode
-  type ValueOfAppConstLockMode = import('/@/const').ValueOfAppConstLockMode
+    import('@/const').ValueOfAppConstTabStyleMode
+  type ValueOfAppConstLayoutMode = import('@/const').ValueOfAppConstLayoutMode
+  type ValueOfAppConstLockMode = import('@/const').ValueOfAppConstLockMode
 
   // vite
   type VitePlugin = import('vite').PluginOption
@@ -56,11 +55,11 @@ declare global {
   type DeepMaybeRef<T> = import('@vueuse/core').DeepMaybeRef<T>
 
   // App Relatives
-  type BaseListParams<T = any> = import('/@/utils/axios').BaseListParams<T>
-  type BaseSortParams<T = any> = import('/@/utils/axios').BaseSortParams<T>
-  type BaseListResponse<T = any> = import('/@/utils/axios').BaseListResponse<T>
+  type BaseListParams<T = any> = import('@/utils/axios').BaseListParams<T>
+  type BaseSortParams<T = any> = import('@/utils/axios').BaseSortParams<T>
+  type BaseListResponse<T = any> = import('@/utils/axios').BaseListResponse<T>
   type BaseResponseStructure<T = any> =
-    import('/@/utils/axios').BaseResponseStructure<T>
+    import('@/utils/axios').BaseResponseStructure<T>
   type AppSettings = import('./settings').AppSettings
 
   // echarts option

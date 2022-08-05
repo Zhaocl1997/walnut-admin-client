@@ -32,7 +32,7 @@ const comp = {
     'Title',
     'Transition',
     'TransitionSelect',
-    'Verify'
+    'Verify',
   ],
   UI: [
     'Button',
@@ -68,7 +68,7 @@ const comp = {
 
 export const createComponentPlugin = (): VitePlugin => {
   return Components({
-    dirs: ['/@/components'],
+    dirs: ['@/components'],
 
     extensions: ['vue', 'ts', 'tsx'],
 
@@ -97,7 +97,7 @@ export const createComponentPlugin = (): VitePlugin => {
           Object.entries(comp).map(([key, value]) => {
             for (let i = 0; i < value.length; i++) {
               if (componentName === value[i]) {
-                path = `/@/components/${key}/${componentName}`
+                path = `@/components/${key}/${componentName}`
               }
             }
           })

@@ -9,9 +9,9 @@
 </script>
 
 <script lang="ts" setup>
-  import type { WForm } from '/@/components/UI/Form'
+  import type { WForm } from '@/components/UI/Form'
 
-  import { localeAPI } from '/@/api/system/locale'
+  import { localeAPI } from '@/api/system/locale'
 
   import { useLangList } from './useLangList'
 

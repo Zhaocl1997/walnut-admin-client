@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-  import type { WVerifyInst } from '/@/components/Extra/Verify'
+  import type { WVerifyInst } from '@/components/Extra/Verify'
 
   const verify = ref<WVerifyInst>()
   const verify2 = ref<WVerifyInst>()

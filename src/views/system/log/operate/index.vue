@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { logOperateAPI } from '/@/api/system/log'
+  import { logOperateAPI } from '@/api/system/log'
 
   // locale unique key
   const key = 'log:operate'

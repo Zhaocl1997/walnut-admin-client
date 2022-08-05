@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts" setup>
-  import type { WAbsImageInst } from '/@/components/Extra/AbsImage'
+  import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 
   const blobURL = ref<string>()
   const base64 = ref<string>()

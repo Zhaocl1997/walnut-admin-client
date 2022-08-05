@@ -72,12 +72,12 @@
   import { cloneDeep } from 'lodash-es'
 
   // TODO 99
-  import WIcon from '/@/components/UI/Icon'
-  import WButton from '/@/components/UI/Button'
-  import WTransition from '/@/components/Extra/Transition'
+  import WIcon from '@/components/UI/Icon'
+  import WButton from '@/components/UI/Button'
+  import WTransition from '@/components/Extra/Transition'
 
-  import { usePropsAdvanced } from '/@/hooks/core/usePropsAdvanced'
-  import { useDropdown } from '/@/components/UI/Dropdown'
+  import { usePropsAdvanced } from '@/hooks/core/usePropsAdvanced'
+  import { useDropdown } from '@/components/UI/Dropdown'
 
   // TODO 888
   interface WTreeEmits extends WTree.Emit.Entry {}

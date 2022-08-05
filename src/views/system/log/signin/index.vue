@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { logSigninAPI } from '/@/api/system/log'
+  import { logSigninAPI } from '@/api/system/log'
 
   // locale unique key
   const key = 'log:signin'

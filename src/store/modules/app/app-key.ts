@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
-import { getSecretKeys } from '/@/api/auth'
+import { getSecretKeys } from '@/api/auth'
 
 const useAppStoreSecretKeyInside = defineStore(StoreKeys.APP_KEY, {
   state: (): AppKeyState => ({}),

@@ -1,5 +1,5 @@
 import type { RadioGroupProps } from 'naive-ui'
-import type { WithValueProp } from '/@/components/HOC/WithValue'
+import type { WithValueProp } from '@/components/HOC/WithValue'
 
 import { props } from './props'
 

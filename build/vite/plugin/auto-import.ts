@@ -31,12 +31,12 @@ export const creatAutoImportPlugin = (): VitePlugin => {
 
       // custom
       {
-        '/@/components/UI/Form': ['useForm'],
-        '/@/components/UI/Table': ['useTable'],
-        '/@/components/Advanced/CRUD': ['useCRUD'],
+        '@/components/UI/Form': ['useForm'],
+        '@/components/UI/Table': ['useTable'],
+        '@/components/Advanced/CRUD': ['useCRUD'],
 
         // table preset columns
-        '/@/components/UI/Table/src/utils/presetColumns': [
+        '@/components/UI/Table/src/utils/presetColumns': [
           'WTablePresetOrderColumn',
           'WTablePresetStatusColumn',
           'WTablePresetCreatedAtColumn',

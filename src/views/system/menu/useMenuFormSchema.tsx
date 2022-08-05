@@ -1,4 +1,4 @@
-import type { WForm } from '/@/components/UI/Form'
+import type { WForm } from '@/components/UI/Form'
 import { findPath } from 'easy-fns-ts'
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 

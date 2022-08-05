@@ -4,7 +4,7 @@ import { arrToTree, orderTree } from 'easy-fns-ts'
 
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
-import { AppRootName } from '/@/router/constant'
+import { AppRootName } from '@/router/constant'
 
 const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
   state: (): AppMenuState => ({

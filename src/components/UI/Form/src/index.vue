@@ -4,8 +4,8 @@
   import { renderSlot } from 'vue'
   import { easyOmit, isUndefined } from 'easy-fns-ts'
 
-  import { useExpose } from '/@/hooks/core/useExpose'
-  import { useProps } from '/@/hooks/core/useProps'
+  import { useExpose } from '@/hooks/core/useExpose'
+  import { useProps } from '@/hooks/core/useProps'
 
   import { useFormSchemas } from './hooks/useFormSchemas'
   import { setFormContext } from './hooks/useFormContext'

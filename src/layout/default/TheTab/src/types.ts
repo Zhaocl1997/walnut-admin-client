@@ -1,4 +1,4 @@
-import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
+import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
 export interface AppTabUtilListItem {
   icon: string

@@ -17,7 +17,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { dictDataAPI } from '/@/api/system/dict'
+  import { dictDataAPI } from '@/api/system/dict'
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()

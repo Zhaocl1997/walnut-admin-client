@@ -21,8 +21,8 @@
   import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface'
 
   // TODO 99
-  import WIcon from '/@/components/UI/Icon'
-  import WAvatar from '/@/views/account/settings/components/avatar.vue'
+  import WIcon from '@/components/UI/Icon'
+  import WAvatar from '@/views/account/settings/components/avatar.vue'
 
   const { t } = useAppI18n()
   const userProfile = useAppStoreUserProfile()

@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 
-import { refreshToken, signin, signout } from '/@/api/auth'
-import { AppCoreFn1 } from '/@/core'
-import { AppAuthName } from '/@/router/constant'
+import { refreshToken, signin, signout } from '@/api/auth'
+import { AppCoreFn1 } from '@/core'
+import { AppAuthName } from '@/router/constant'
 
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'

@@ -29,7 +29,7 @@ export const getViewsOptions = () => {
     ) {
       viewOptions.push({
         value: field,
-        label: `/@/views/${field}.vue`,
+        label: `@/views/${field}.vue`,
         name: value.default.name,
       })
     }

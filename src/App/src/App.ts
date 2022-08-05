@@ -1,10 +1,10 @@
 import StarportPlugin from 'vue-starport'
 
-import { setupI18n } from '/@/locales'
-import { setupRouter } from '/@/router'
-import { setupStore } from '/@/store/pinia'
+import { setupI18n } from '@/locales'
+import { setupRouter } from '@/router'
+import { setupStore } from '@/store/pinia'
 
-import '/@/components/UI/Icon/src/utils/bundle'
+import '@/components/UI/Icon/src/utils/bundle'
 
 const setupErrorhandler = (app: App) => {
   app.config.errorHandler = (error) => {

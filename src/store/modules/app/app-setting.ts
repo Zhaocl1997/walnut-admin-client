@@ -3,7 +3,7 @@ import { clone } from 'lodash-es'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-import AppSettingsFromJson from '/@/settings.json'
+import AppSettingsFromJson from '@/settings.json'
 
 const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
   state: (): AppSettingState => ({

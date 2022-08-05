@@ -1,6 +1,6 @@
-import type { BaseAPIType } from '/@/api/base'
-import type { WForm } from '/@/components/UI/Form'
-import type { WTable } from '/@/components/UI/Table'
+import type { BaseAPIType } from '@/api/base'
+import type { WForm } from '@/components/UI/Form'
+import type { WTable } from '@/components/UI/Table'
 
 export declare namespace WCrud {
   type SetProps<T> = (p: Partial<Props<T>>) => void

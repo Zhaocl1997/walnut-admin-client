@@ -1,5 +1,5 @@
 import type { AppTabUtilListItem } from '../types'
-import type { WScrollbarInst } from '/@/components/Extra/Scrollbar'
+import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
 export const useTabsUtils = (
   scrollRef: Ref<Nullable<WScrollbarInst>>,

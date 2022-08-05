@@ -1,4 +1,4 @@
-import { langAPI } from '/@/api/system/lang'
+import { langAPI } from '@/api/system/lang'
 
 export const useLangList = () => {
   const langList = ref<OptionDataItem[]>([])

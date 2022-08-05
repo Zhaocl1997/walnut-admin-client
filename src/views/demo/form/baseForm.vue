@@ -20,7 +20,7 @@
 </template>
 
 <script lang="tsx">
-  import type { WForm } from '/@/components/UI/Form'
+  import type { WForm } from '@/components/UI/Form'
 
   import { getTreeData, options } from '../data'
 

@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { WDescriptionsItem } from '/@/components/UI/Descriptions'
+  import { WDescriptionsItem } from '@/components/UI/Descriptions'
   import pkg from '/package.json'
 
   const { t } = useAppI18n()

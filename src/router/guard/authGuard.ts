@@ -1,7 +1,7 @@
 import { easyIsEmpty } from 'easy-fns-ts'
 
 import { AppAuthPath, RouteWhiteLists } from '../constant'
-import { AppCoreFn1 } from '/@/core'
+import { AppCoreFn1 } from '@/core'
 
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {

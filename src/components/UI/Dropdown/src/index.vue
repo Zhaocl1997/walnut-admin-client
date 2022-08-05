@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
   import type { WDropdown } from './types'
-  import { useProps } from '/@/hooks/core/useProps'
+  import { useProps } from '@/hooks/core/useProps'
 
   // avoid error
   interface WDropdownProps extends WDropdown.Props {}

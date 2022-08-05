@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-  import type { WAvatarUploadInst } from '/@/components/Vendor/AvatarUpload'
+  import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
 
   const srcValue = ref<string>('/assets/auth_bg.jpg')
   const cropperValue = ref<string>()

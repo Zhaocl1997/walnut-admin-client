@@ -17,12 +17,12 @@
 
   import { toJpeg } from 'html-to-image'
 
-  import { getThemeOverridesCommon } from '/@/App/src/naive/src/theme'
+  import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
   import { getTabsContext } from '../hooks/useTabsContext'
 
   // TODO 99
-  import WIcon from '/@/components/UI/Icon'
+  import WIcon from '@/components/UI/Icon'
 
   const { t } = useAppI18n()
   const { currentRoute } = useAppRouter()

@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { HelloAPI } from '/@/api'
+  import { HelloAPI } from '@/api'
 
   const Hello = defineComponent({
     props: {

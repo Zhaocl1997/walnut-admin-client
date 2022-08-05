@@ -86,7 +86,7 @@
 </template>
 
 <script lang="ts" setup>
-  import WDict from '/@/components/UI/Form/src/components/Extend/Dict.vue'
+  import WDict from '@/components/UI/Form/src/components/Extend/Dict.vue'
 
   const state = reactive({
     dict1: null,

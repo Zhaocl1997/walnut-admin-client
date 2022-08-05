@@ -80,8 +80,8 @@
 <script lang="tsx" setup>
   import { omit } from 'lodash-es'
 
-  import { menuAPI } from '/@/api/system/menu'
-  import { useTree } from '/@/components/UI/Tree'
+  import { menuAPI } from '@/api/system/menu'
+  import { useTree } from '@/components/UI/Tree'
 
   import { useMenuFormSchema } from './useMenuFormSchema'
   import { useMenuTree } from '../role/useMenuTree'

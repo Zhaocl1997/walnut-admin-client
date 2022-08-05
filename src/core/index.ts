@@ -1,8 +1,8 @@
-import { getPermissions } from '/@/api/auth'
+import { getPermissions } from '@/api/auth'
 
-import { AppRootName, AppRootPath } from '/@/router/constant'
+import { AppRootName, AppRootPath } from '@/router/constant'
 
-import { buildRoutes } from '/@/router/utils/route'
+import { buildRoutes } from '@/router/utils/route'
 
 /**
  * @description App Core Function 1 - Routes & Menus & KeepAliveRouteNameList. Will add permissions handle logic here later.
