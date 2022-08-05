@@ -24,3 +24,11 @@ html[color-mode="contrast"] {
 html[color-mode="grayscale"] {
   filter: grayscale(100%);
 }
+
+html[color-mode="inverted"] {
+  filter: invert(100%);
+}
+
+html[color-mode="grayscale-inverted"] {
+  filter: grayscale(100%) invert(100%);
+}

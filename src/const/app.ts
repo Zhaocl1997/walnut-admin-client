@@ -71,6 +71,8 @@ export const AppConstColorMode = {
   CAFE: 'cafe',
   CONTRAST: 'contrast',
   GRAYSCALE: 'grayscale',
+  GRAYSCALE_INVERTED: 'grayscale-inverted',
+  INVERTED: 'inverted',
 } as const
 
 export type ValueOfAppConstColorMode =
