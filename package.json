@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "5.0.0",
+    "@types/intro.js": "^5.1.0",
     "@vueuse/core": "^9.1.0",
     "@vueuse/integrations": "^9.1.0",
     "ali-oss": "^6.17.1",
@@ -51,6 +52,7 @@
     "echarts": "^5.3.3",
     "highlight.js": "^11.6.0",
     "html-to-image": "^1.9.0",
+    "intro.js": "^6.0.0",
     "lodash-es": "^4.17.21",
     "pinia": "^2.0.17",
     "qrcode": "^1.5.1",

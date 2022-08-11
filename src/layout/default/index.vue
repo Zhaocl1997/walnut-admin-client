@@ -1,7 +1,7 @@
 <template>
   <n-layout has-sider>
     <w-transition appear name="slide-left">
-      <TheAside v-if="appSetting.getShowNormalAside" />
+      <TheAside v-if="appSetting.getShowNormalAside" class="walnut-aside" />
     </w-transition>
 
     <n-drawer
@@ -15,12 +15,16 @@
     </n-drawer>
 
     <div class="vstack flex-1 h-screen w-full overflow-x-hidden">
-      <TheMainHeader v-if="appSetting.settings.app.fixHeader" />
+      <TheMainHeader
+        v-if="appSetting.settings.app.fixHeader"
+        class="walnut-header"
+      />
 
       <n-layout-content
         bordered
         :native-scrollbar="false"
         :content-style="{ height: '100%' }"
+        class="walnut-content"
       >
         <TheMainHeader v-if="!appSetting.settings.app.fixHeader" />
 
@@ -60,6 +64,10 @@
   import TheMainHeader from './MainHeader.vue'
   import TheAppWatermark from '@/components/App/AppWatermark'
 
+  import introJS from 'intro.js'
+  import 'intro.js/minified/introjs.min.css'
+  // import 'intro.js/themes/introjs-dark.css'
+
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
 
@@ -85,5 +93,46 @@
     if (currentRoute.value.query.full) {
       appSetting.toggleLeftMenuLayout()
     }
+  })
+
+  onMounted(() => {
+    const intro = introJS()
+
+    intro.setOptions({
+      doneLabel: '完成',
+      nextLabel: '下一步',
+      prevLabel: '上一步',
+      exitOnOverlayClick: false,
+
+      steps: [
+        {
+          element: '#walnut-fullscreen',
+          intro: 'This is intro one',
+        },
+        {
+          element: '#walnut-lock',
+          intro: 'This is intro two',
+        },
+        {
+          element: '#walnut-search',
+          intro: 'This is intro three',
+        },
+        {
+          element: '#walnut-locale',
+          intro: 'This is intro four',
+        },
+        {
+          element: '#walnut-dark',
+          intro: 'This is intro five',
+        },
+      ],
+      dontShowAgain: true,
+      dontShowAgainLabel: '不再出现',
+      dontShowAgainCookieDays: 7,
+    })
+
+    useTimeoutFn(() => {
+      intro.start()
+    }, 1500)
   })
 </script>

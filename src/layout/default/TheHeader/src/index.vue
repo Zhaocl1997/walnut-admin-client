@@ -39,16 +39,26 @@
         w:children="cursor-pointer flex items-center px-0.5 h-full"
       >
         <WAppFullScreen
+          id="walnut-fullscreen"
           :isFullscreen="isFullscreen"
           :click-event="toggle"
           v-if="
             !appAdapter.isMobile && appSetting.settings.header.showFullScreen
           "
         />
-        <WAppLock v-if="appSetting.settings.header.showLock" />
-        <WAppSearch v-if="appSetting.settings.header.showSearch" />
-        <WAppLocalePicker v-if="appSetting.settings.header.showLocale" />
-        <WAppDarkMode v-if="appSetting.settings.header.showDarkMode" />
+        <WAppLock id="walnut-lock" v-if="appSetting.settings.header.showLock" />
+        <WAppSearch
+          id="walnut-search"
+          v-if="appSetting.settings.header.showSearch"
+        />
+        <WAppLocalePicker
+          id="walnut-locale"
+          v-if="appSetting.settings.header.showLocale"
+        />
+        <WAppDarkMode
+          id="walnut-dark"
+          v-if="appSetting.settings.header.showDarkMode"
+        />
         <HeaderDropdown />
       </div>
     </div>
