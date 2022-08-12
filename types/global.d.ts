@@ -41,8 +41,6 @@ declare type DeepMaybeRefSelf<T> = T extends Ref<infer V>
   ? T
   : T extends boolean // boolean
   ? MaybeRefSelf<boolean>
-  : T extends string // string
-  ? MaybeRefSelf<string>
   : T extends Array<any> | object
   ? {
       [K in keyof T]: DeepMaybeRefSelf<T[K]>
