@@ -89,7 +89,7 @@
     "chalk": "^5.0.1",
     "commitizen": "^4.2.5",
     "conventional-changelog-cli": "^2.2.2",
-    "cz-customizable": "^6.9.1",
+    "cz-customizable": "6.9.0",
     "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^9.3.0",
