@@ -13,6 +13,7 @@ export interface WFormItemDividerProps {
   startIndex?: number
   endIndex?: number
   index?: number
+  titleClass?: string
 }
 
 export interface WFormItemQueryProps {

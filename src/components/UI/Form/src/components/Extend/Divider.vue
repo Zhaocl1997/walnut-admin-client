@@ -5,7 +5,12 @@
     :title-placement="titlePlacement"
     :dashed="dashed"
   >
-    <w-title :help-message="getHelpMsg" :prefix="prefix" :type="type">
+    <w-title
+      :class="titleClass"
+      :help-message="getHelpMsg"
+      :prefix="prefix"
+      :type="type"
+    >
       {{ t(title!) }}
     </w-title>
 
@@ -42,6 +47,7 @@
     startIndex?: number
     endIndex?: number
     index?: number
+    titleClass?: string
   }
 
   const props = withDefaults(defineProps<InternalProps>(), {

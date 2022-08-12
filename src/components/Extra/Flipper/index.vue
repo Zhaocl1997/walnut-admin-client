@@ -10,6 +10,7 @@
     <div class="Flipper__face Flipper__face--front" :style="getStyle.face">
       <slot name="front" />
     </div>
+
     <div class="Flipper__face Flipper__face--back" :style="getStyle.face">
       <slot name="back" />
     </div>
@@ -17,6 +18,8 @@
 </template>
 
 <script lang="ts">
+  import type { CSSProperties } from 'vue'
+
   export default defineComponent({
     name: 'WFlipper',
 
@@ -50,21 +53,34 @@
         type: String as PropType<Extract<ComponentTrigger, 'click' | 'hover'>>,
         default: 'click',
       },
+
+      defaultFace: {
+        type: Boolean as PropType<boolean>,
+        default: true,
+      },
     },
 
     emits: ['click'],
 
-    setup(props, { emit }) {
+    setup(props, { emit, expose }) {
       const flipped = ref(false)
 
       const getStyle = computed(() => {
         const { width, height, duration, transitionTimingFunction } = props
         return {
-          wrapper: { width: width, height: height },
-          face: {
-            transitionDuration: duration,
-            transitionTimingFunction: transitionTimingFunction,
-          },
+          wrapper: { width: width, height: height } as CSSProperties,
+          face: Object.assign(
+            {
+              transitionDuration: duration,
+              transitionTimingFunction: transitionTimingFunction,
+            },
+            props.defaultFace
+              ? {
+                  borderRadius: '20px',
+                  boxShadow: '0 3px 15px rgba(64, 64, 64, 0.45)',
+                }
+              : {}
+          ) as CSSProperties,
         }
       })
 
@@ -82,6 +98,10 @@
           flipped.value = !flipped.value
         }
       }
+
+      expose({
+        onFlip: onClick,
+      })
 
       return {
         flipped,
@@ -106,8 +126,6 @@
     left: 0;
     right: 0;
     display: block;
-    border-radius: 20px;
-    box-shadow: 0 3px 15px rgba(#000, 0.45);
     transform-style: preserve-3d;
     backface-visibility: hidden;
     cursor: pointer;

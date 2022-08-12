@@ -126,6 +126,9 @@
           intro: 'This is intro five',
         },
       ],
+
+      // @ts-ignore
+      // these three options exist but the `@types` not updated
       dontShowAgain: true,
       dontShowAgainLabel: '不再出现',
       dontShowAgainCookieDays: 7,

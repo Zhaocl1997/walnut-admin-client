@@ -82,7 +82,12 @@
                     : {}
                 }
               >
-                <WFormItemExtendDivider index={index} {...item.componentProp} />
+                <w-transition {...item?.transitionProp} appear>
+                  <WFormItemExtendDivider
+                    index={index}
+                    {...item.componentProp}
+                  />
+                </w-transition>
               </n-gi>
             )
           }
