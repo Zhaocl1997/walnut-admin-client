@@ -5,7 +5,7 @@
       :bar-width="28"
       animated
       default-value="account"
-      pane-class="h-64 "
+      pane-class="min-h-64"
       type="line"
       justify-content="space-around"
     >
@@ -41,5 +41,7 @@
 <script lang="ts">
   export default defineComponent({
     name: 'AuthSignin',
+
+    defaultView: false,
   })
 </script>

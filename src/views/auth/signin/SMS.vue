@@ -97,6 +97,10 @@
             autocomplete: 'phone',
           },
         },
+        transitionProp: {
+          name: 'fade-right-big',
+          duration: 500,
+        },
       },
       {
         type: 'Base:Render',
@@ -125,6 +129,10 @@
               </div>
             )
           },
+        },
+        transitionProp: {
+          name: 'fade-right-big',
+          duration: 700,
         },
       },
       {
@@ -177,6 +185,10 @@
             )
           },
         },
+        transitionProp: {
+          name: 'fade-right-big',
+          duration: 900,
+        },
       },
       {
         type: 'Base:Button',
@@ -196,6 +208,10 @@
           class:
             'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500',
           onClick: onSubmit,
+        },
+        transitionProp: {
+          name: 'fade-right-big',
+          duration: 1100,
         },
       },
     ],

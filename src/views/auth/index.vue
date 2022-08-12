@@ -55,13 +55,51 @@
               </span>
             </h1>
 
-            <SignIn />
+            <w-flipper
+              ref="flipper"
+              trigger="click"
+              width="300px"
+              height="340px"
+              :default-face="false"
+            >
+              <template #front>
+                <div class="relative" @click.stop="() => {}">
+                  <SignIn />
+
+                  <w-transition name="fade-left-big" appear :duration="1700">
+                    <n-text
+                      type="info"
+                      class="text-xs absolute right-0 -bottom-4"
+                      @click="flipper.onFlip()"
+                    >
+                      {{ t('app.signin.goSignup') }} →
+                    </n-text>
+                  </w-transition>
+                </div>
+              </template>
+
+              <template #back>
+                <div class="relative" @click.stop="() => {}">
+                  <SignUp />
+
+                  <w-transition name="fade-right-big" appear :duration="1700">
+                    <n-text
+                      type="info"
+                      class="text-xs absolute right-0 -bottom-4"
+                      @click="flipper.onFlip()"
+                    >
+                      {{ t('app.signup.goSignin') }} →
+                    </n-text>
+                  </w-transition>
+                </div>
+              </template>
+            </w-flipper>
           </div>
         </n-card>
 
         <n-text
           class="absolute bottom-4 right-1/2 translate-x-1/2 cursor-pointer"
-          @click="onClick"
+          @click="onClickBeian"
         >
           黑ICP备2022002207号
         </n-text>
@@ -77,7 +115,9 @@
   const { t } = useAppI18n()
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
-  const onClick = () => {
+  const flipper = ref()
+
+  const onClickBeian = () => {
     openExternalLink('http://beian.miit.gov.cn/')
   }
 
