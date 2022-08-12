@@ -1,5 +1,6 @@
 import { upperFirst } from 'easy-fns-ts'
-import { Transition, TransitionGroup, renderSlot, TransitionProps } from 'vue'
+import { isNumber } from 'lodash-es'
+import { Transition, TransitionGroup, renderSlot } from 'vue'
 
 export type TransitionMode = 'in-out' | 'out-in'
 
@@ -28,9 +29,9 @@ const props = {
           leave: number
         }
     >,
-    default: () => ({ enter: 500, leave: 500 }),
+    default: 500,
   },
-}
+} as const
 
 export type WTransitionProps = ExtractPropTypes<typeof props>
 
@@ -52,6 +53,14 @@ export default defineComponent({
       return props.name + m
     }
 
+    const getDurationSeconds = () =>
+      (isNumber(props.duration) ? props.duration : props.duration.enter) / 1000
+
+    const onBeforeEnter = (el: Element) => {
+      // @ts-ignore
+      el.style.animationDuration = `${getDurationSeconds()}s`
+    }
+
     return () => {
       const Tag = !props.group ? Transition : TransitionGroup
 
@@ -65,7 +74,7 @@ export default defineComponent({
           )}`}
           mode={props.mode}
           appear={props.appear}
-          duration={props.duration}
+          onBeforeEnter={onBeforeEnter}
         >
           {() => renderSlot(slots, 'default')}
         </Tag>
