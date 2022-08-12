@@ -47,15 +47,11 @@
                 size="small"
                 animated
               >
-                <n-tab-pane
-                  v-for="i in iconCollectionsNameList"
-                  :name="i"
-                  :tab="i"
-                >
+                <n-tab-pane v-for="i in tabLists" :key="i" :name="i" :tab="i">
                 </n-tab-pane>
               </n-tabs>
 
-              <div class="h-58 w-full hstack">
+              <div class="h-full w-full">
                 <div class="">
                   <span
                     v-for="(icon, index) in lists"
@@ -77,7 +73,10 @@
                   </span>
                 </div>
 
-                <n-empty class="pt-12" v-show="lists.length === 0" />
+                <n-empty
+                  class="flex justify-center items-center my-16"
+                  v-show="lists.length === 0"
+                />
               </div>
 
               <n-pagination
@@ -145,9 +144,11 @@
       rootInputRef: null as Nullable<InputInst>,
       searchInputRef: null as Nullable<InputInst>,
       loading: false,
-      currentTab: 'ant-design',
+      currentTab: 'all',
     })
   )
+
+  const tabLists = computed(() => ['all', ...iconCollectionsNameList])
 
   watch(currentTab, () => onInit())
 
@@ -157,7 +158,9 @@
     if (props.value && needFeedback) {
       const index =
         iconLists
-          .filter((i) => i.includes(currentTab.value))
+          .filter((i) =>
+            currentTab.value === 'all' ? true : i.includes(currentTab.value)
+          )
           .findIndex((item) => item === props.value) + 1
 
       const shouldGoPageNum = Math.floor(index / pageSize.value) + 1
@@ -166,7 +169,9 @@
     }
 
     const filtered = iconLists.filter(
-      (i) => i.includes(filters.value) && i.includes(currentTab.value)
+      (i) =>
+        i.includes(filters.value) &&
+        (currentTab.value === 'all' ? true : i.includes(currentTab.value))
     )
 
     const filterdRes = mockListApi(filtered)({
