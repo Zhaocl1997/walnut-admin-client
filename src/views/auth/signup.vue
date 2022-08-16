@@ -12,7 +12,6 @@
     phoneNumber: undefined,
     SMSVerificationCode: undefined,
     password: undefined,
-    confirmPassword: undefined,
   })
 
   const loading = ref(false)
@@ -25,7 +24,7 @@
 
       try {
         // call api here
-        console.log(formData)
+        console.log(formData.value)
       } finally {
         loading.value = false
       }
@@ -43,6 +42,7 @@
         type: 'Base:Input',
         formProp: {
           path: 'userName',
+          ruleType: 'string',
         },
         componentProp: {
           clearable: true,
@@ -52,6 +52,7 @@
         type: 'Base:Input',
         formProp: {
           path: 'phoneNumber',
+          ruleType: 'string',
         },
         componentProp: {
           clearable: true,
@@ -61,27 +62,20 @@
         type: 'Base:Input',
         formProp: {
           path: 'SMSVerificationCode',
+          ruleType: 'string',
         },
         componentProp: {
           clearable: true,
         },
       },
       {
-        type: 'Base:Input',
+        type: 'Extend:Password',
         formProp: {
           path: 'password',
+          ruleType: 'string',
         },
         componentProp: {
-          clearable: true,
-        },
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'confirmPassword',
-        },
-        componentProp: {
-          clearable: true,
+          confirm: true,
         },
       },
       {

@@ -65,23 +65,13 @@
         },
       },
       {
-        type: 'Base:Input',
+        type: 'Extend:Password',
         formProp: {
           path: 'password',
           ruleType: 'string',
         },
         componentProp: {
-          clearable: true,
-          type: 'password',
-          showPasswordOn: 'click',
-          onKeyup: (e) => {
-            if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-              onSubmit()
-            }
-          },
-          inputProps: {
-            autocomplete: 'current-password',
-          },
+          onSubmit: onSubmit,
         },
         transitionProp: {
           name: 'fade-left-big',

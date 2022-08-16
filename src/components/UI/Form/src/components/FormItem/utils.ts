@@ -77,6 +77,13 @@ componentMap.set(
     () => import('../../../../../Advanced/LocaleSelect/index.ts')
   )
 )
+componentMap.set(
+  'Password',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../../../../../Extra/Password/index.ts')
+  )
+)
 
 BUILTIN_FORM_TYPE.map((key) => {
   componentMap.set(key, allComponents[key])
