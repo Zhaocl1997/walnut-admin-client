@@ -79,7 +79,7 @@
       }
 
       expose({
-        onStartRetry: () => onRetry(),
+        onStartCountdown: () => onRetry(),
       })
 
       const renderButton = () =>

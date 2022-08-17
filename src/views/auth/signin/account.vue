@@ -113,17 +113,14 @@
         },
         componentProp: {
           textProp: () => (
-            <span class="text-light-800">{t('app:base:signin')}</span>
+            <span class="text-light-800 text-lg font-black uppercase">
+              {t('app:base:signin')}
+            </span>
           ),
           loading: loading,
           disabled: loading,
-          style: {
-            width: '100%',
-            fontSize: '18px',
-            fontWeight: '900',
-          },
           class:
-            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-2',
+            'w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-2',
           onClick: onSubmit,
         },
         transitionProp: {

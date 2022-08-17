@@ -55,45 +55,33 @@
               </span>
             </h1>
 
-            <w-flipper
-              ref="flipper"
-              trigger="click"
-              width="300px"
-              height="340px"
-              :default-face="false"
-            >
-              <template #front>
-                <div class="relative" @click.stop="() => {}">
-                  <SignIn />
+            <template v-if="!back">
+              <SignIn />
 
-                  <w-transition name="fade-left-big" appear :duration="1700">
-                    <n-text
-                      type="info"
-                      class="text-xs absolute right-0 -bottom-4"
-                      @click="flipper.onFlip()"
-                    >
-                      {{ t('app.signin.goSignup') }} →
-                    </n-text>
-                  </w-transition>
-                </div>
-              </template>
+              <w-transition name="fade-left-big" appear :duration="1700">
+                <n-text
+                  type="info"
+                  class="text-xs cursor-pointer text-right w-full"
+                  @click="onToggle"
+                >
+                  {{ t('app.signin.goSignup') }} →
+                </n-text>
+              </w-transition>
+            </template>
 
-              <template #back>
-                <div class="relative" @click.stop="() => {}">
-                  <SignUp />
+            <template v-else>
+              <SignUp />
 
-                  <w-transition name="fade-right-big" appear :duration="1700">
-                    <n-text
-                      type="info"
-                      class="text-xs absolute right-0 -bottom-4"
-                      @click="flipper.onFlip()"
-                    >
-                      {{ t('app.signup.goSignin') }} →
-                    </n-text>
-                  </w-transition>
-                </div>
-              </template>
-            </w-flipper>
+              <w-transition name="fade-up-big" appear :duration="1900">
+                <n-text
+                  type="info"
+                  class="text-xs cursor-pointer text-right w-full"
+                  @click="onToggle"
+                >
+                  {{ t('app.signup.goSignin') }} →
+                </n-text>
+              </w-transition>
+            </template>
           </div>
         </n-card>
 
@@ -115,7 +103,7 @@
   const { t } = useAppI18n()
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
-  const flipper = ref()
+  const back = ref(false)
 
   const onClickBeian = () => {
     openExternalLink('http://beian.miit.gov.cn/')
@@ -125,6 +113,8 @@
     closable: false,
     duration: 5000,
   })
+
+  const onToggle = () => (back.value = !back.value)
 </script>
 
 <script lang="ts">

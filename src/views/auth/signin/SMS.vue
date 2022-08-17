@@ -1,18 +1,10 @@
 <template>
-  <div>
-    <w-form @hook="register" :model="SMSFormData"> </w-form>
-
-    <WVerify ref="verifyRef" @success="onVerifySuccess" />
-  </div>
+  <w-form @hook="register" :model="SMSFormData"> </w-form>
 </template>
 
 <script lang="tsx" setup>
-  import type { WButtonInst } from '@/components/UI/Button'
-  import type { WVerifyInst } from '@/components/Extra/Verify'
-
   // TODO 99
-  import { NRadio, NText, NInput } from 'naive-ui'
-  import WButton from '@/components/UI/Button'
+  import { NRadio, NText } from 'naive-ui'
 
   import {
     AppAuthPrivacyPolicyPath,
@@ -21,8 +13,6 @@
 
   const { t } = useAppI18n()
 
-  const verifyRef = ref<Nullable<WVerifyInst>>(null)
-  const verifyButton = ref<Nullable<WButtonInst>>(null)
   const loading = ref(false)
 
   const SMSFormData = reactive({
@@ -45,20 +35,6 @@
         }, 1500)
       }
     }
-  }
-
-  const onSendCaptcha = async () => {
-    const valid = await validate(['phone'])
-
-    if (!valid) return
-
-    verifyRef.value!.onOpenModal()
-  }
-
-  const onVerifySuccess = () => {
-    nextTick(() => {
-      verifyButton.value!.onStartRetry()
-    })
   }
 
   const [register, { validate }] = useForm<typeof SMSFormData>({
@@ -103,32 +79,31 @@
         },
       },
       {
-        type: 'Base:Render',
+        type: 'Extend:SMSInput',
         formProp: {
           path: 'captcha',
           ruleType: 'string',
         },
         componentProp: {
-          render({ formData }) {
-            return (
-              <div class="relative w-full">
-                <NInput vModel={[formData.captcha, 'value']}></NInput>
+          onBeforeCountdown: async () => {
+            // valid phone before count down
+            const valid = await validate(['phone'])
 
-                <WButton
-                  ref={verifyButton}
-                  retry={60}
-                  manual-retry
-                  text
-                  size="small"
-                  type="info"
-                  class="absolute top-1/2 right-4 -translate-y-1/2"
-                  onClick={onSendCaptcha}
-                >
-                  {t('form:app:signin:sendCaptcha')}
-                </WButton>
-              </div>
-            )
+            if (!valid) return false
+
+            return true
           },
+
+          onSuccess: async (startCountdown) => {
+            // here to call SMS endpoint
+            setTimeout(() => {
+              useAppMsgSuccess('Send Success')
+              startCountdown()
+            }, 1500)
+          },
+
+          // use simple canvas verify, no endpopint support
+          simpleVerify: true,
         },
         transitionProp: {
           name: 'fade-right-big',

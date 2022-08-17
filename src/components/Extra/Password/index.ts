@@ -6,7 +6,6 @@ export interface WPasswordProps {
   maxlength?: number
   minlength?: number
   progress?: boolean
-  confirm?: boolean
   capslock?: boolean
   onSubmit?: () => Promise<void>
 }

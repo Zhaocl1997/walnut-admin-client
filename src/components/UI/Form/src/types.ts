@@ -30,6 +30,7 @@ import type { WTree } from '../../Tree'
 import type { WFormPropType } from './props'
 import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
 import type { WPasswordProps } from '@/components/Extra/Password'
+import type { WSMSInputProps } from '@/components/Extra/SMSInput'
 import type {
   WFormItemDictProps,
   WFormItemDividerProps,
@@ -153,6 +154,7 @@ export declare namespace WForm {
       }
       'Extend:AreaCascader': WAreaCascaderProps
       'Extend:Password': WPasswordProps
+      'Extend:SMSInput': WSMSInputProps
       'Extend:Dict': WFormItemDictProps
       'Extend:Locale': WLocaleSelectProps
 
@@ -263,6 +265,7 @@ export declare namespace WForm {
     type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
     type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Extend:AreaCascader', D>
     type PasswordSchema<D> = DynamicSchemaItemProps<'Extend:Password', D>
+    type SMSInputSchema<D> = DynamicSchemaItemProps<'Extend:SMSInput', D>
 
     type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
 
@@ -295,6 +298,7 @@ export declare namespace WForm {
       | RoleSelectSchema<D>
       | AreaCacaderSchema<D>
       | PasswordSchema<D>
+      | SMSInputSchema<D>
       | TinymceSchema<D>
       | RenderSchema<D>
       | SlotSchema<D>

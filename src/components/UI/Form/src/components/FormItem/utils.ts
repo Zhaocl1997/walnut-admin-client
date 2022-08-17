@@ -84,6 +84,13 @@ componentMap.set(
     () => import('../../../../../Extra/Password/index.ts')
   )
 )
+componentMap.set(
+  'SMSInput',
+  createAsyncComponent(
+    // @ts-ignore
+    () => import('../../../../../Extra/SMSInput/index.ts')
+  )
+)
 
 BUILTIN_FORM_TYPE.map((key) => {
   componentMap.set(key, allComponents[key])

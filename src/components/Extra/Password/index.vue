@@ -45,12 +45,19 @@
     maxlength?: number
     minlength?: number
     progress?: boolean
-    confirm?: boolean
     capslock?: boolean
     onSubmit?: () => Promise<void>
   }
 
   const { t } = useAppI18n()
+
+  const props = withDefaults(defineProps<InternalProps>(), {
+    maxlength: 24,
+    minlength: 8,
+    progress: false,
+  })
+
+  const emits = defineEmits(['update:value', 'submit'])
 
   const percentage = ref(0)
   const status = ref('success')
@@ -68,14 +75,6 @@
       tooltipShow.value = false
     }
   }
-
-  const props = withDefaults(defineProps<InternalProps>(), {
-    maxlength: 24,
-    minlength: 8,
-    progress: false,
-  })
-
-  const emits = defineEmits(['update:value', 'submit'])
 
   watchEffect(onShowTooltip)
 
