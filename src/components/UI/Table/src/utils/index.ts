@@ -79,13 +79,13 @@ export const getTableTranslated = (
 
   const isLocale = key && getBoolean(item.locale)
 
-  const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
+  const isHelpMsg = (key: string) => (helpMsg ? `${key}.helpMsg` : key)
 
   const path = item.key
 
   return isLocale && path
     ? defaultAppLocaleMessageKeys.includes(path!)
-      ? t(`app:base:${path}`)
-      : t(isHelpMsg(`table:${key}:${path}`) as string)
+      ? t(`app.base.${path}`)
+      : t(isHelpMsg(`table.${key}.${path}`) as string)
     : item.title
 }

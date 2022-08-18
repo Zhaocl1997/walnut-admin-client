@@ -34,7 +34,7 @@
         class="my-2"
         @close="state.copyTarget = {}"
       >
-        {{ t('comp:tree:copy:msg') }}
+        {{ t('comp.tree.copy.msg') }}
       </n-alert>
     </w-transition>
 
@@ -140,7 +140,7 @@
       children: [
         {
           key: 'expand',
-          label: t('app:button:expand'),
+          label: t('app.button.expand'),
           icon: () => (
             <WIcon height="20" icon="mdi:arrow-expand-vertical"></WIcon>
           ),
@@ -149,7 +149,7 @@
 
         {
           key: 'collapse',
-          label: t('app:button:collapse'),
+          label: t('app.button.collapse'),
           icon: () => (
             <WIcon height="20" icon="mdi:arrow-collapse-vertical"></WIcon>
           ),
@@ -165,13 +165,13 @@
       children: [
         {
           key: 'check',
-          label: t('app:button:check'),
+          label: t('app.button.check'),
           icon: () => <WIcon height="20" icon="mdi:select-all"></WIcon>,
           disabled: state.value.checkAll || !getProps.value.multiple,
         },
         {
           key: 'inverse',
-          label: t('app:button:inverse'),
+          label: t('app.button.inverse'),
           icon: () => <WIcon height="20" icon="mdi:select-inverse"></WIcon>,
           disabled: !state.value.checkAll || !getProps.value.multiple,
         },
@@ -185,7 +185,7 @@
       children: [
         {
           key: 'cascade',
-          label: t('app:button:cascade'),
+          label: t('app.button.cascade'),
           icon: () => (
             <WIcon height="20" icon="carbon:checkbox-indeterminate"></WIcon>
           ),
@@ -194,7 +194,7 @@
         },
         {
           key: 'independent',
-          label: t('app:button:independent'),
+          label: t('app.button.independent'),
           icon: () => (
             <WIcon height="20" icon="carbon:checkbox-checked"></WIcon>
           ),
@@ -208,13 +208,13 @@
   const contextMenuOptions = computed((): DropdownOption[] => [
     {
       key: 'copy',
-      label: t('app:button:copy'),
+      label: t('app.button.copy'),
       disabled: !!state.value.copyTarget[getKeyField.value],
       icon: () => <WIcon height="20" icon="mdi:content-copy"></WIcon>,
     },
     {
       key: 'paste',
-      label: t('app:button:paste'),
+      label: t('app.button.paste'),
       disabled: !state.value.copyTarget[getKeyField.value],
       icon: () => <WIcon height="20" icon="mdi:content-paste"></WIcon>,
     },
@@ -348,7 +348,7 @@
                   confirm
                   icon-button
                   icon="ant-design:delete-outlined"
-                  text-prop={t('app:button:delete')}
+                  text-prop={t('app.button.delete')}
                   onClick={() => {
                     getProps.value.onTreeNodeItemDelete!(toRaw(option))
                   }}

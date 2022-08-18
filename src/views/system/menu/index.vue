@@ -9,7 +9,7 @@
         <template #header>
           <WAppAuthorize value="system:menu:create">
             <n-button @click="onCreate">
-              {{ t('app:button:create') }}
+              {{ t('app.button.create') }}
 
               <template #icon>
                 <w-icon icon="ant-design:plus-outlined"></w-icon>
@@ -49,16 +49,16 @@
             <span v-show="actionType === 'update'">
               {{
                 formData.title
-                  ? t('app:button:read') + ': ' + t(formData.title)
-                  : t('page:menu:permission')
+                  ? t('app.button.read') + ': ' + t(formData.title)
+                  : t('page.menu.permission')
               }}
             </span>
-            <span v-show="!actionType">{{ t('page:menu:defTitle') }}</span>
+            <span v-show="!actionType">{{ t('page.menu.defTitle') }}</span>
           </div>
         </template>
 
         <template #>
-          <n-alert :title="t('page:menu:alert')" type="info" />
+          <n-alert :title="t('page.menu.alert')" type="info" />
 
           <w-form
             v-show="treeMenuValue || actionType === 'create'"
@@ -195,7 +195,7 @@
           componentProp: {
             groups: [
               {
-                textProp: () => t('app:button:save'),
+                textProp: () => t('app.button.save'),
                 type: 'primary',
                 auth: 'system:menu:update',
                 onClick: async () => {
@@ -212,7 +212,7 @@
                 },
               },
               {
-                textProp: () => t('app:button:reset'),
+                textProp: () => t('app.button.reset'),
                 onClick: async () => {
                   await restoreValidation()
                   resetFormData()
@@ -240,6 +240,6 @@
   const onCreate = () => {
     actionType.value = 'create'
     resetFormData()
-    panelTitle.value = t('app:button:create')
+    panelTitle.value = t('app.button.create')
   }
 </script>

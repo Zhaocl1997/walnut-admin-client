@@ -7,7 +7,7 @@
       :loading="getUploadLoading"
       class="mb-2"
     >
-      {{ t('comp:alioss:upload') }}
+      {{ t('comp.alioss.upload') }}
     </n-button>
 
     <n-upload
@@ -35,7 +35,7 @@
         <n-space size="small">
           <n-upload-trigger #="{ handleClick }" abstract>
             <n-button @click="handleClick" :disabled="getChooseDisabled">
-              {{ t('comp:alioss:choose') }}
+              {{ t('comp.alioss.choose') }}
             </n-button>
           </n-upload-trigger>
 
@@ -46,8 +46,8 @@
           >
             {{
               getUploadLoading
-                ? t('comp:alioss:uploading')
-                : t('comp:alioss:upload')
+                ? t('comp.alioss.uploading')
+                : t('comp.alioss.upload')
             }}
           </n-button>
         </n-space>

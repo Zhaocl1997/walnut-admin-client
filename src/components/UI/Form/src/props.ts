@@ -68,8 +68,8 @@ export const extendProps = {
 
   /**
    * @description locale middle unique key implement with back end messages
-   * @example `form:${uniqueKey}:${path}` used for label locale
-   * @example `form:${uniqueKey}:${path}:helpMsg` built in for label help message
+   * @example `form.${uniqueKey}.${path}` used for label locale
+   * @example `form.${uniqueKey}.${path}.helpMsg` built in for label help message
    * So in this rule, all we need to do is provide a `localeUniqueKey` and config the messages in `Locale Manage`
    * No need to privide a label property in `schema item formProp`, the built in logic will handle the label properly.
    */

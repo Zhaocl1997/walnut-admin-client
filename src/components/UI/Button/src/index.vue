@@ -53,7 +53,7 @@
         disabled.value = true
 
         const intervalId = setInterval(() => {
-          buttonText.value = t('comp:button:retry', {
+          buttonText.value = t('comp.button.retry', {
             retryDelay: retryDelay.value,
           })
 
@@ -117,7 +117,7 @@
         props.confirm ? (
           <n-popconfirm onPositiveClick={onClick}>
             {{
-              default: () => t('app:base:confirm'),
+              default: () => t('app.base.confirm'),
               trigger: () => renderButton(),
             }}
           </n-popconfirm>

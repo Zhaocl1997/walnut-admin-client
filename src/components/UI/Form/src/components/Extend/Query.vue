@@ -8,7 +8,7 @@
         :disabled="formProps.disabled"
         :loading="formProps.disabled"
       >
-        <template #>{{ t('app:button:query') }}</template>
+        <template #>{{ t('app.button.query') }}</template>
         <template #icon>
           <w-icon icon="ant-design:search-outlined"></w-icon>
         </template>
@@ -20,7 +20,7 @@
         @click="onFormReset"
         :disabled="formProps.disabled"
       >
-        <template #>{{ t('app:button:reset') }}</template>
+        <template #>{{ t('app.button.reset') }}</template>
         <template #icon>
           <w-icon icon="carbon:reset"></w-icon>
         </template>
@@ -66,7 +66,7 @@
   const active = ref(props.defaultFold)
 
   const getText = computed(() =>
-    active.value ? t('app:button:expand') : t('app:button:collapse')
+    active.value ? t('app.button.expand') : t('app.button.collapse')
   )
 
   const { formEvent, formSchemas, setProps, formProps } = useFormContext()

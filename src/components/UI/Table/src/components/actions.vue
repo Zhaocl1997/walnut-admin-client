@@ -25,7 +25,7 @@
       type="warning"
     >
       {{
-        t('table:header:action:checkedText', { checked: checkedRowKeys.length })
+        t('table.header.action.checkedText', { checked: checkedRowKeys.length })
       }}
     </n-text>
   </div>
@@ -59,32 +59,32 @@
       {
         type: 'create' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
-        text: t('app:button:create'),
+        text: t('app.button.create'),
         auth: tableProps.value.auths?.create,
       },
       {
         type: 'update' as WTable.HeaderActionType,
         icon: 'ant-design:edit-outlined',
-        text: t('app:button:read'),
+        text: t('app.button.read'),
         auth: tableProps.value.auths?.update,
       },
       {
         type: 'delete' as WTable.HeaderActionType,
         icon: 'ant-design:delete-outlined',
-        text: t('app:button:delete'),
+        text: t('app.button.delete'),
         disabled: getDeleteDisabled.value,
         auth: tableProps.value.auths?.deleteMany,
       },
       {
         type: 'import' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
-        text: t('app:button:import'),
+        text: t('app.button.import'),
         auth: tableProps.value.auths?.import,
       },
       {
         type: 'export' as WTable.HeaderActionType,
         icon: 'ant-design:plus-outlined',
-        text: t('app:button:export'),
+        text: t('app.button.export'),
         auth: tableProps.value.auths?.export,
       },
     ].filter((i) => isShow(i.type))

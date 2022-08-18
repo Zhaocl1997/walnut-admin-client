@@ -68,16 +68,16 @@ export const useFormAdvanced = (
 
     if (props.value.useDescription && uniqueKey) {
       return (
-        t(`table:${uniqueKey}:advancedTitle`) + ' ' + t('app:button:detail')
+        t(`table.${uniqueKey}.advancedTitle`) + ' ' + t('app.button.detail')
       )
     }
 
     const actionType = unref(props.value?.advancedProps?.actionType)
 
     return uniqueKey && actionType
-      ? t(`app:button:${actionType}`) +
+      ? t(`app.button.${actionType}`) +
           ' ' +
-          t(`table:${uniqueKey}:advancedTitle`)
+          t(`table.${uniqueKey}.advancedTitle`)
       : title
   }
 

@@ -9,15 +9,15 @@
       type="line"
       justify-content="space-around"
     >
-      <n-tab-pane name="account" :tab="t('form:app:signin:tab:account')">
+      <n-tab-pane name="account" :tab="t('form.app.signin.tab.account')">
         <SignInWithAccount class="w-72 text-justify mt-2" />
       </n-tab-pane>
 
-      <n-tab-pane name="SMS" :tab="t('form:app:signin:tab:sms')">
+      <n-tab-pane name="SMS" :tab="t('form.app.signin.tab.sms')">
         <SignInWitSMS class="w-72 text-justify mt-2" />
       </n-tab-pane>
 
-      <n-tab-pane name="QR" :tab="t('form:app:signin:tab:qr')">
+      <n-tab-pane name="QR" :tab="t('form.app.signin.tab.qr')">
         <SignInWithQR class="w-72 text-justify mt-2" />
       </n-tab-pane>
     </n-tabs>

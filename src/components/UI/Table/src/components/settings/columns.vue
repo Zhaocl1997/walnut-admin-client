@@ -1,6 +1,6 @@
 <template>
   <n-tooltip trigger="hover">
-    {{ t('table:base:settings') }}
+    {{ t('table.base.settings') }}
     <template #trigger>
       <n-popover
         v-model:show="popoverShow"
@@ -24,7 +24,7 @@
             :indeterminate="getIndeterminate"
             @update-checked="onUpdateCheckAllChecked"
           >
-            {{ t('app:button:check') }}
+            {{ t('app.button.check') }}
           </n-checkbox>
         </template>
 
@@ -56,7 +56,7 @@
                     </n-button>
                   </template>
 
-                  {{ t('table:base:settings:column:drag') }}
+                  {{ t('table.base.settings.column.drag') }}
                 </n-tooltip>
 
                 <n-checkbox
@@ -91,8 +91,8 @@
 
                   {{
                     item.fixed === 'left'
-                      ? t('table:base:settings:column:unfix')
-                      : t('table:base:settings:column:fixLeft')
+                      ? t('table.base.settings.column.unfix')
+                      : t('table.base.settings.column.fixLeft')
                   }}
                 </n-tooltip>
 
@@ -120,8 +120,8 @@
 
                   {{
                     item.fixed === 'right'
-                      ? t('table:base:settings:column:unfix')
-                      : t('table:base:settings:column:fixRight')
+                      ? t('table.base.settings.column.unfix')
+                      : t('table.base.settings.column.fixRight')
                   }}
                 </n-tooltip>
               </div>
@@ -218,7 +218,7 @@
       return item.titleText()
     }
 
-    return t('app:base:selection')
+    return t('app.base.selection')
   }
 </script>
 

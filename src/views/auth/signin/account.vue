@@ -41,7 +41,7 @@
   }
 
   const [register, { validate }] = useForm<typeof accountFormData>({
-    localeUniqueKey: 'app:signin',
+    localeUniqueKey: 'app.signin',
     baseRules: true,
     showLabel: false,
     xGap: 0,
@@ -87,7 +87,7 @@
           render: ({ formData }) => (
             <div class="hstack justify-between w-full mb-2">
               <NCheckbox vModel={[formData.rememberMe, 'checked']}>
-                {t('form:app:signin:remember')}
+                {t('form.app.signin.remember')}
               </NCheckbox>
 
               <NButton
@@ -96,7 +96,7 @@
                 type="tertiary"
                 onClick={onForgetPassword}
               >
-                {t('form:app:signin:forget')}
+                {t('form.app.signin.forget')}
               </NButton>
             </div>
           ),
@@ -114,7 +114,7 @@
         componentProp: {
           textProp: () => (
             <span class="text-light-800 text-lg font-black uppercase">
-              {t('app:base:signin')}
+              {t('app.base.signin')}
             </span>
           ),
           loading: loading,

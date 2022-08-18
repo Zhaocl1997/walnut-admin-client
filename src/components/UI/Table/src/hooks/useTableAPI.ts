@@ -43,7 +43,7 @@ export const useTableAPI = (
   const onApiTableList = async () => {
     // no list auth, return
     if (!hasPermission(props.value.auths?.list)) {
-      useAppNotiError(t('sys:msg:noAuthority'))
+      useAppNotiError(t('sys.msg.noAuthority'))
       return
     }
 
@@ -90,7 +90,7 @@ export const useTableAPI = (
             ApiTableListParams.value.page!.pageSize = p
             await onApiTableList()
           },
-          prefix: () => t('comp:pagination:total', { total: res.total }),
+          prefix: () => t('comp.pagination.total', { total: res.total }),
         },
       })
     } finally {

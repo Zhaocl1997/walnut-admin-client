@@ -157,7 +157,7 @@ export const useTableColumns = (
                       auth={props.value.auths?.create}
                       icon-button
                       icon="ant-design:plus-outlined"
-                      text-prop={t('app:button:create')}
+                      text-prop={t('app.button.create')}
                       onClick={() =>
                         tItem.onExtendActionType!({
                           type: 'create',
@@ -174,7 +174,7 @@ export const useTableColumns = (
                       auth={props.value.auths?.read}
                       icon-button
                       icon="ant-design:edit-outlined"
-                      text-prop={t('app:button:read')}
+                      text-prop={t('app.button.read')}
                       onClick={() =>
                         tItem.onExtendActionType!({
                           type: 'read',
@@ -192,7 +192,7 @@ export const useTableColumns = (
                       confirm
                       icon-button
                       icon="ant-design:delete-outlined"
-                      text-prop={t('app:button:delete')}
+                      text-prop={t('app.button.delete')}
                       onClick={() =>
                         tItem.onExtendActionType!({
                           type: 'delete',
@@ -209,7 +209,7 @@ export const useTableColumns = (
                       auth={props.value.auths?.read}
                       icon-button
                       icon="ant-design:eye-outlined"
-                      text-prop={t('app:button:detail')}
+                      text-prop={t('app.button.detail')}
                       onClick={() =>
                         tItem.onExtendActionType!({
                           type: 'detail',

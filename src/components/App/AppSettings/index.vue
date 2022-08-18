@@ -11,7 +11,7 @@
   <w-drawer
     v-model:show="show"
     :width="350"
-    :title="t('app:settings:title')"
+    :title="t('app.settings.title')"
     @yes="() => (show = false)"
     @no="() => (show = false)"
   >
@@ -31,9 +31,9 @@
       @click="onCopy"
       icon-placement="right"
     >
-      {{ copied ? t('form:app:app:copy:success') : t('form:app:app:copy') }}
+      {{ copied ? t('form.app.app.copy.success') : t('form.app.app.copy') }}
       <template v-if="copied" #icon>
-        <w-message :msg="t('form:app:app:copy:helpMsg')"></w-message>
+        <w-message :msg="t('form.app.app.copy.helpMsg')"></w-message>
       </template>
     </n-button>
   </w-drawer>
@@ -110,7 +110,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme',
+          title: 'app.settings.theme',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -124,7 +124,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme:primary',
+          title: 'app.settings.theme.primary',
           titlePlacement: 'center',
         },
       },
@@ -144,7 +144,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme:info',
+          title: 'app.settings.theme.info',
           titlePlacement: 'center',
         },
       },
@@ -164,7 +164,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme:success',
+          title: 'app.settings.theme.success',
           titlePlacement: 'center',
         },
       },
@@ -184,7 +184,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme:warning',
+          title: 'app.settings.theme.warning',
           titlePlacement: 'center',
         },
       },
@@ -204,7 +204,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme:error',
+          title: 'app.settings.theme.error',
           titlePlacement: 'center',
         },
       },
@@ -224,7 +224,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme:body',
+          title: 'app.settings.theme.body',
           titlePlacement: 'center',
         },
       },
@@ -244,7 +244,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:theme:inverted',
+          title: 'app.settings.theme.inverted',
           titlePlacement: 'center',
           helpMessage: true,
         },
@@ -268,7 +268,7 @@
   })
 
   const [register1] = useForm<typeof appRelatives.value>({
-    localeUniqueKey: 'app:app',
+    localeUniqueKey: 'app.app',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
@@ -278,7 +278,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:app',
+          title: 'app.settings.app',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -465,7 +465,7 @@
   })
 
   const [register2] = useForm<typeof menuRelatives.value>({
-    localeUniqueKey: 'app:menu',
+    localeUniqueKey: 'app.menu',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
@@ -476,7 +476,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:menu',
+          title: 'app.settings.menu',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -583,7 +583,7 @@
   })
 
   const [register3] = useForm<typeof headerRelatives.value>({
-    localeUniqueKey: 'app:header',
+    localeUniqueKey: 'app.header',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
@@ -594,7 +594,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:header',
+          title: 'app.settings.header',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -659,7 +659,7 @@
   })
 
   const [register4] = useForm<typeof breadcrumbRelatives.value>({
-    localeUniqueKey: 'app:bc',
+    localeUniqueKey: 'app.bc',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
@@ -673,7 +673,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:breadcrumb',
+          title: 'app.settings.breadcrumb',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -708,7 +708,7 @@
   })
 
   const [register5] = useForm<typeof tabRelatives.value>({
-    localeUniqueKey: 'app:tab',
+    localeUniqueKey: 'app.tab',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
@@ -719,7 +719,7 @@
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app:settings:tab',
+          title: 'app.settings.tab',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,

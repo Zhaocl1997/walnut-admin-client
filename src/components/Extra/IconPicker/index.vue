@@ -4,7 +4,7 @@
     v-model:value="value"
     readonly
     clearable
-    :placeholder="t('comp:iconPicker:title')"
+    :placeholder="t('comp.iconPicker.title')"
     @click="onOpenPopover"
     @clear="onClear"
   >
@@ -16,7 +16,7 @@
         :style="{ width: '480px', position: 'relative', right: '0px' }"
       >
         <!-- <template #header>
-          <n-text type="info">{{ t('comp:iconPicker:title') }}</n-text>
+          <n-text type="info">{{ t('comp.iconPicker.title') }}</n-text>
         </template> -->
 
         <template #trigger>
@@ -36,7 +36,7 @@
                 v-model:value="filters"
                 size="small"
                 clearable
-                :placeholder="t('comp:iconPicker:ph')"
+                :placeholder="t('comp.iconPicker.ph')"
                 @input="debouncedInit"
                 class="w-full mt-1 mb-3 border-b-cool-gray-50"
               ></n-input>
@@ -90,7 +90,7 @@
               >
                 <template #suffix>
                   <span class="whitespace-nowrap">
-                    {{ t('comp:pagination:total', { total }) }}
+                    {{ t('comp.pagination.total', { total }) }}
                   </span>
                 </template>
               </n-pagination>

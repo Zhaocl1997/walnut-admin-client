@@ -38,7 +38,7 @@
   }
 
   const [register, { validate }] = useForm<typeof SMSFormData>({
-    localeUniqueKey: 'app:signin',
+    localeUniqueKey: 'app.signin',
     baseRules: true,
     showLabel: false,
     xGap: 0,
@@ -60,7 +60,7 @@
                 if (!value) return Promise.resolve()
 
                 if (!isPhoneNumber(value)) {
-                  return Promise.reject(t('form:app:signin:phone:rule'))
+                  return Promise.reject(t('form.app.signin.phone.rule'))
                 }
                 return Promise.resolve()
               },
@@ -131,7 +131,7 @@
                 ></NRadio>
 
                 <span class="ml-2 text-xs text-gray-500 cursor-pointer break-all">
-                  {t('form:app:signin:continue')}
+                  {t('form.app.signin.continue')}
                   <NText
                     type="info"
                     strong
@@ -141,7 +141,7 @@
                     }}
                   >
                     {' '}
-                    {t('form:app:signin:sa')}{' '}
+                    {t('form.app.signin.sa')}{' '}
                   </NText>
                   、
                   <NText
@@ -153,7 +153,7 @@
                     }}
                   >
                     {' '}
-                    {t('form:app:signin:pp')}{' '}
+                    {t('form.app.signin.pp')}{' '}
                   </NText>
                 </span>
               </div>
@@ -169,7 +169,7 @@
         type: 'Base:Button',
         componentProp: {
           textProp: () => (
-            <span class="text-light-800">{t('app:base:signin')}</span>
+            <span class="text-light-800">{t('app.base.signin')}</span>
           ),
           loading: loading,
           disabled: computed(

@@ -16,15 +16,15 @@
   const darkModeOptions = computed(() => [
     {
       value: AppConstDarkMode.LIGHT,
-      label: t('sys:dark:light'),
+      label: t('sys.dark.light'),
     },
     {
       value: AppConstDarkMode.DARK,
-      label: t('sys:dark:dark'),
+      label: t('sys.dark.dark'),
     },
     {
       value: AppConstDarkMode.SYSTEM,
-      label: t('sys:dark:sys'),
+      label: t('sys.dark.sys'),
     },
   ])
 </script>

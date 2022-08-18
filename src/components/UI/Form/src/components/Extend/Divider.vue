@@ -77,7 +77,7 @@
 
   const getHelpMsg = computed(() => {
     if (props.helpMessage === true) {
-      return t(`${props.title}:helpMsg`)
+      return t(`${props.title}.helpMsg`)
     }
     return props.helpMessage === false ? '' : props.helpMessage
   })

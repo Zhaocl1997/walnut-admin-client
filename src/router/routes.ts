@@ -5,7 +5,7 @@ export const AppAuthRoute: RouteRecordRaw = {
   path: constant.AppAuthPath,
   component: () => import('../views/auth/index.vue'),
   meta: {
-    title: 'sys:menu:auth',
+    title: 'sys.menu.auth',
   },
 }
 
@@ -14,7 +14,7 @@ export const AppAuthPrivacyPolicyRoute: RouteRecordRaw = {
   path: constant.AppAuthPrivacyPolicyPath,
   component: () => import('../views/auth/privacy-policy.vue'),
   meta: {
-    title: 'form:app:signin:pp',
+    title: 'form.app.signin.pp',
   },
 }
 
@@ -23,7 +23,7 @@ export const AppAuthServiceAgreementRoute: RouteRecordRaw = {
   path: constant.AppAuthServiceAgreementPath,
   component: () => import('../views/auth/service-agreement.vue'),
   meta: {
-    title: 'form:app:signin:sa',
+    title: 'form.app.signin.sa',
   },
 }
 

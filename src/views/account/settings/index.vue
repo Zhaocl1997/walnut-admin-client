@@ -1,5 +1,5 @@
 <template>
-  <n-card :title="t('sys:menu:account:setting')">
+  <n-card :title="t('sys.menu.account.setting')">
     <n-tabs type="card" animated>
       <n-tab-pane name="info" display-directive="show" tab="Basic Info">
         <AccountSettingTabInfo />

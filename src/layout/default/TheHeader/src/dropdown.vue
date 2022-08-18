@@ -31,7 +31,7 @@
   const dropdownOptions = computed<DropdownMixedOption[]>(() => [
     {
       key: '1',
-      label: t('desc:about:info:doc'),
+      label: t('desc.about.info.doc'),
       icon: () => <WIcon icon="mdi:file-document"></WIcon>,
     },
 
@@ -41,12 +41,12 @@
 
     {
       key: '2',
-      label: t('app:user:center'),
+      label: t('app.user.center'),
       icon: () => <WIcon icon="ant-design:profile-outlined"></WIcon>,
     },
     {
       key: '99',
-      label: t('app:user:signout'),
+      label: t('app.user.signout'),
       icon: () => <WIcon icon="ant-design:logout-outlined"></WIcon>,
     },
   ])
@@ -61,7 +61,7 @@
     }
 
     if (val === '99') {
-      const res = await useAppConfirm(t('app:user:signout:warning'))
+      const res = await useAppConfirm(t('app.user.signout.warning'))
 
       if (res) {
         await userAuth.Signout()

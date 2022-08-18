@@ -10,11 +10,11 @@
       <div class="abs-center">
         <template v-if="!isActive">
           <div class="mb-2 whitespace-nowrap font-bold text-gray-200">
-            {{ t('form:app:signin:qrcode:expired') }}
+            {{ t('form.app.signin.qrcode.expired') }}
           </div>
 
           <n-button size="tiny" type="info" round @click="onRefresh">
-            {{ t('form:app:signin:qrcode:refresh') }}
+            {{ t('form.app.signin.qrcode.refresh') }}
           </n-button>
         </template>
 
@@ -22,7 +22,7 @@
           v-if="success"
           size="small"
           status="success"
-          :description="t('app:base:success')"
+          :description="t('app.base.success')"
         >
         </n-result>
       </div>

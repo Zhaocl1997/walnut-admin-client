@@ -53,7 +53,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const appMenu = useAppStoreMenu()
 
       const res = await signin({
-        username: payload.userName,
+        userName: payload.userName,
         password: payload.password,
       })
 

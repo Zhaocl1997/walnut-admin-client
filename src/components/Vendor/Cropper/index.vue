@@ -102,7 +102,7 @@
               height="16"
               placement="bottom"
               icon="ant-design:picture-outlined"
-              :help-message="t('comp:cropper:choose')"
+              :help-message="t('comp.cropper.choose')"
             >
             </w-a-icon>
           </w-abs-image>
@@ -262,22 +262,22 @@
     {
       icon: 'ant-design:zoom-in-outlined',
       event: () => onZoom(0.1),
-      helpMessage: () => t('comp:cropper:zoomin'),
+      helpMessage: () => t('comp.cropper.zoomin'),
     },
     {
       icon: 'ant-design:zoom-out-outlined',
       event: () => onZoom(-0.1),
-      helpMessage: () => t('comp:cropper:zoomout'),
+      helpMessage: () => t('comp.cropper.zoomout'),
     },
     {
       icon: 'mdi:flip-horizontal',
       event: () => onScale(1),
-      helpMessage: () => t('comp:cropper:fliph'),
+      helpMessage: () => t('comp.cropper.fliph'),
     },
     {
       icon: 'mdi:flip-vertical',
       event: () => onScale(2),
-      helpMessage: () => t('comp:cropper:flipv'),
+      helpMessage: () => t('comp.cropper.flipv'),
     },
     {
       icon: 'ant-design:rotate-right-outlined',
@@ -292,12 +292,12 @@
     {
       icon: 'ant-design:reload-outlined',
       event: () => onReset(),
-      helpMessage: () => t('app:button:reset'),
+      helpMessage: () => t('app.button.reset'),
     },
     {
       icon: 'ant-design:download-outlined',
       event: () => onDownload(),
-      helpMessage: () => t('app:button:download'),
+      helpMessage: () => t('app.button.download'),
     },
   ]
 

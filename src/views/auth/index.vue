@@ -19,9 +19,9 @@
       <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
       <div class="w-full px-24 z-10">
         <h1 class="text-5xl font-bold text-left tracking-wide text-gray-50">
-          {{ t('app:signin:h1') }}
+          {{ t('app.signin.h1') }}
         </h1>
-        <p class="text-3xl my-4 text-gray-50">{{ t('app:signin:h2') }}</p>
+        <p class="text-3xl my-4 text-gray-50">{{ t('app.signin.h2') }}</p>
       </div>
     </div>
 

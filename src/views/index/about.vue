@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-2">
     <w-card
-      :title="t('about:title:info')"
+      :title="t('about.title.info')"
       size="small"
       :segmented="{
         content: true,
@@ -19,7 +19,7 @@
     </w-card>
 
     <w-card
-      :title="t('about:title:deps')"
+      :title="t('about.title.deps')"
       size="small"
       :segmented="{
         content: true,
@@ -37,7 +37,7 @@
     </w-card>
 
     <w-card
-      :title="t('about:title:devdeps')"
+      :title="t('about.title.devdeps')"
       size="small"
       :segmented="{
         content: true,
@@ -68,7 +68,7 @@
     () =>
       [
         {
-          label: t('desc:about:info:version'),
+          label: t('desc.about.info.version'),
           value: pkg.version,
           type: 'tag',
           typeProps: {
@@ -76,8 +76,8 @@
           },
         },
         {
-          label: t('desc:about:info:doc'),
-          value: t('desc:about:info:doc'),
+          label: t('desc.about.info.doc'),
+          value: t('desc.about.info.doc'),
           type: 'link',
           typeProps: {
             type: 'primary',
@@ -85,8 +85,8 @@
           },
         },
         {
-          label: t('desc:about:info:preview'),
-          value: t('desc:about:info:preview'),
+          label: t('desc.about.info.preview'),
+          value: t('desc.about.info.preview'),
           type: 'link',
           typeProps: {
             type: 'primary',
@@ -94,8 +94,8 @@
           },
         },
         {
-          label: t('desc:about:info:code'),
-          value: t('desc:about:info:code'),
+          label: t('desc.about.info.code'),
+          value: t('desc.about.info.code'),
           type: 'link',
           typeProps: {
             type: 'primary',
@@ -103,7 +103,7 @@
           },
         },
         {
-          label: t('desc:about:info:buildTime'),
+          label: t('desc.about.info.buildTime'),
           value: lastBuildTime,
           type: 'tag',
           typeProps: {

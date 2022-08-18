@@ -59,7 +59,7 @@
           <span class="whitespace-pre-wrap break-all">
             {(typeof item.formatter === 'function'
               ? item.formatter(item.value as string)
-              : item.value) || t('app:base:none')}
+              : item.value) || t('app.base.none')}
           </span>
         )
       }

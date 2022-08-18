@@ -1,7 +1,7 @@
 <template>
   <w-modal
     v-model:show="show"
-    :title="t('comp:verify:title')"
+    :title="t('comp.verify.title')"
     :close-on-esc="false"
     :default-button="false"
     :fullscreen="false"
@@ -73,7 +73,7 @@
           v-show="!mouseDown"
           class="abs-center truncate text-center text-sm w-full"
         >
-          {{ t('comp:verify:slider') }}
+          {{ t('comp.verify.slider') }}
         </div>
 
         <!-- 滑块本体 -->
@@ -157,7 +157,7 @@
   const mouseDown = ref(false) // 鼠标是否按下
 
   const getInfoText = computed(() =>
-    isSuccess.value ? t('comp:verify:success') : t('comp:verify:fail')
+    isSuccess.value ? t('comp.verify.success') : t('comp.verify.fail')
   )
 
   // 处理一下sliderSize，弄成整数，以免计算有偏差

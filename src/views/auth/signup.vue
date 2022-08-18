@@ -35,7 +35,7 @@
   }
 
   const [register, { validate }] = useForm<typeof formData>({
-    localeUniqueKey: 'app:signup',
+    localeUniqueKey: 'app.signup',
     baseRules: true,
     showLabel: false,
     xGap: 0,
@@ -115,7 +115,7 @@
         componentProp: {
           textProp: () => (
             <span class="text-light-800 text-lg font-black uppercase">
-              {t('app:base:signup')}
+              {t('app.base.signup')}
             </span>
           ),
           loading: loading,

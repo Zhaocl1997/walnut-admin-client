@@ -37,7 +37,7 @@
     <template #action>
       <n-space size="small" class="float-right" v-if="defaultButton">
         <n-button size="small" :onClick="() => $emit('no')" :disabled="loading">
-          {{ t('app:button:no') }}
+          {{ t('app.button.no') }}
         </n-button>
 
         <n-button
@@ -47,7 +47,7 @@
           :disabled="loading"
           :loading="loading"
         >
-          {{ t('app:button:yes') }}
+          {{ t('app.button.yes') }}
         </n-button>
       </n-space>
     </template>

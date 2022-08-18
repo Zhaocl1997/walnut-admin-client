@@ -117,7 +117,7 @@
       {
         type: 'Base:Button',
         componentProp: {
-          textProp: () => t('form:userInfo:submit'),
+          textProp: () => t('form.userInfo.submit'),
           type: 'primary',
           loading: computed(() => loading.value),
           disabled: computed(() => loading.value),

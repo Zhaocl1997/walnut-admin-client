@@ -170,7 +170,7 @@ export const transform: AxiosTransform = {
     if (err.message === 'Demonstrate') {
       // TODO 93
       // @ts-ignore
-      useAppNotiError(t('app:base:demonstrate'))
+      useAppNotiError(t('app.base.demonstrate'))
     } else {
       const statusCode = err.response?.data.statusCode
       const msg = err.response?.data.detail?.message

@@ -30,7 +30,7 @@ export const useAppMsgSuccess = (
   msg?: string,
   options?: Omit<AppMessageOptions, 'type'>
 ) =>
-  AppMsg(msg ?? AppI18n.global?.t('app:base:operation:success'), {
+  AppMsg(msg ?? AppI18n.global?.t('app.base.operation.success'), {
     ...options,
     type: 'success',
   })

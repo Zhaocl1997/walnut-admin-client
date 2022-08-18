@@ -5,7 +5,7 @@
       height="20"
       @click="onApiTableList"
       :disabled="tableProps.loading"
-      :help-message="t('app:base:refresh')"
+      :help-message="t('app.base.refresh')"
     ></w-a-icon>
 
     <WTableSettingsColumns />

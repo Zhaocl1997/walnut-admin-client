@@ -12,14 +12,14 @@ export const useTabsUtils = (
   const leftUtils: AppTabUtilListItem[] = [
     {
       icon: 'ant-design:double-left-outlined',
-      helpMessage: computed(() => t('app:tab:utils:scrollToLeft')),
+      helpMessage: computed(() => t('app.tab.utils.scrollToLeft')),
       event: () => {
         scrollRef.value?.scrollToStart()
       },
     },
     {
       icon: 'ant-design:aim-outlined',
-      helpMessage: computed(() => t('app:tab:utils:scrollToCurrent')),
+      helpMessage: computed(() => t('app.tab.utils.scrollToCurrent')),
       event: () => {
         scrollRef.value?.scrollToIndex(currentRouteTabIndex.value)
         nextTick(() => {
@@ -35,14 +35,14 @@ export const useTabsUtils = (
   const rightUtils: AppTabUtilListItem[] = [
     {
       icon: 'ant-design:sync-outlined',
-      helpMessage: computed(() => t('app:tab:utils:refresh')),
+      helpMessage: computed(() => t('app.tab.utils.refresh')),
       event: async () => {
         await useRedirect()
       },
     },
     {
       icon: 'ant-design:double-right-outlined',
-      helpMessage: computed(() => t('app:tab:utils:scrollToRight')),
+      helpMessage: computed(() => t('app.tab.utils.scrollToRight')),
       event: () => {
         scrollRef.value?.scrollToEnd()
       },

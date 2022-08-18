@@ -12,7 +12,7 @@
           :type="copied ? 'success' : 'info'"
           @click="() => copy()"
         >
-          {{ copied ? t('app:base:success') : t('app:button:copy') }}
+          {{ copied ? t('app.base.success') : t('app.button.copy') }}
         </n-button>
       </w-transition>
     </div>

@@ -35,16 +35,16 @@ export const getFormTranslated = (
     getBoolean(item.formProp?.localeWithTable) &&
     getBoolean(props.value.localeWithTable)
 
-  const isHelpMsg = (key: string) => (helpMsg ? `${key}:helpMsg` : key)
+  const isHelpMsg = (key: string) => (helpMsg ? `${key}.helpMsg` : key)
 
   const path = item.formProp?.path
 
   return isLocale && path
     ? defaultAppLocaleMessageKeys.includes(path!)
-      ? t(`app:base:${path}`)
+      ? t(`app.base.${path}`)
       : isLocaleWithTable
-      ? t(isHelpMsg(`table:${key}:${path}`) as string)
-      : t(isHelpMsg(`form:${key}:${path}`))
+      ? t(isHelpMsg(`table.${key}.${path}`) as string)
+      : t(isHelpMsg(`form.${key}.${path}`))
     : helpMsg
     ? item.formProp?.labelHelpMessage
     : item.formProp?.label
@@ -69,11 +69,11 @@ export const generateBaseRules = (
         type: i.formProp?.ruleType || 'any',
         trigger: ['change', 'input'],
         required: true,
-        message: t('comp:form:rule', {
+        message: t('comp.form.rule', {
           type:
             i?.type === 'Base:Input'
-              ? t('comp:base:input')
-              : t('comp:base:choose'),
+              ? t('comp.base.input')
+              : t('comp.base.choose'),
           label: getFormTranslated(t, props, i),
         }),
       },

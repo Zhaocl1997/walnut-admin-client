@@ -2,7 +2,7 @@
   <div>
     <n-tooltip trigger="hover">
       <template #>
-        {{ isFullscreen ? t('app:button:minimize') : t('app:button:maximize') }}
+        {{ isFullscreen ? t('app.button.minimize') : t('app.button.maximize') }}
       </template>
 
       <template #trigger>
