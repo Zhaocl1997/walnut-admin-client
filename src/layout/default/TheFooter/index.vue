@@ -15,7 +15,7 @@
             icon="ant-design:copyright-circle-outlined"
           ></w-icon>
 
-          <span class="whitespace-nowrap overflow-y-auto">
+          <span class="whitespace-nowrap">
             2020-present {{ getAppTitle }}. All Rights Reserved.
           </span>
         </div>

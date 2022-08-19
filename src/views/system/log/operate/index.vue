@@ -11,8 +11,8 @@
 <script lang="ts" setup>
   import { logOperateAPI } from '@/api/system/log'
 
-  // locale unique key
-  const key = 'log.operate'
+  const localeKey = 'log.operate'
+  const authKey = 'log:operate'
 
   const [
     register,
@@ -26,7 +26,7 @@
     baseAPI: logOperateAPI,
 
     tableProps: {
-      localeUniqueKey: key,
+      localeUniqueKey: localeKey,
       rowKey: (row) => row._id!,
       maxHeight: 600,
       striped: true,
@@ -34,9 +34,9 @@
       singleLine: false,
 
       auths: {
-        list: `system:${key}:list`,
-        read: `system:${key}:read`,
-        deleteMany: `system:${key}:deleteMany`,
+        list: `system:${authKey}:list`,
+        read: `system:${authKey}:read`,
+        deleteMany: `system:${authKey}:deleteMany`,
       },
 
       headerActions: ['delete'],
@@ -53,7 +53,7 @@
       },
 
       queryFormProps: {
-        localeUniqueKey: key,
+        localeUniqueKey: localeKey,
         localeWithTable: true,
         span: 6,
         showFeedback: false,
@@ -207,7 +207,7 @@
     },
 
     formProps: {
-      localeUniqueKey: key,
+      localeUniqueKey: localeKey,
       localeWithTable: true,
       preset: 'drawer',
       baseRules: true,

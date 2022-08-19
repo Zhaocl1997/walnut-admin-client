@@ -21,6 +21,8 @@
 </template>
 
 <script lang="ts" setup>
+  // TODO noti and mess max config
+  // TODO inline-theme-disabled config
   // notice that `cls-preifx` is not recommended to change
   // the reason is that there are some class-selectors which starts with `.w-` influence the style
   import { hljs } from './src/hljs'

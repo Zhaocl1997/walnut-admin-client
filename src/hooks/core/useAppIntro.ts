@@ -2,6 +2,7 @@ import introJS from 'intro.js'
 import 'intro.js/minified/introjs.min.css'
 
 export const useAppIntro = () => {
+  // TODO configuable
   const intro = introJS()
   const { t } = useAppI18n()
 

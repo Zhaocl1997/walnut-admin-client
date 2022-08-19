@@ -17,6 +17,8 @@
 </template>
 
 <script lang="tsx">
+  import type { WForm } from '@/components/UI/Form'
+
   export default defineComponent({
     name: 'QueryForm',
 
@@ -121,10 +123,14 @@
         register1,
         register2,
 
-        onReset: (v: any) => {
-          console.log('reset', v)
+        onReset: ({ done }: WForm.FinishLoading) => {
+          console.log('reset')
+
+          setTimeout(() => {
+            done()
+          }, 2000)
         },
-        onQuery: ({ done }: any) => {
+        onQuery: ({ done }: WForm.FinishLoading) => {
           console.log('query')
 
           setTimeout(() => {

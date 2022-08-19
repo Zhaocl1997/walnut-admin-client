@@ -12,13 +12,14 @@
   import { logSigninAPI } from '@/api/system/log'
 
   // locale unique key
-  const key = 'log.signin'
+  const localeKey = 'log.signin'
+  const authKey = 'log:signin'
 
   const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
     baseAPI: logSigninAPI,
 
     tableProps: {
-      localeUniqueKey: key,
+      localeUniqueKey: localeKey,
       rowKey: (row) => row._id!,
       maxHeight: 600,
       striped: true,
@@ -26,8 +27,8 @@
       singleLine: false,
 
       auths: {
-        list: `system:${key}:list`,
-        deleteMany: `system:${key}:deleteMany`,
+        list: `system:${authKey}:list`,
+        deleteMany: `system:${authKey}:deleteMany`,
       },
 
       headerActions: ['delete'],
@@ -44,7 +45,7 @@
       },
 
       queryFormProps: {
-        localeUniqueKey: key,
+        localeUniqueKey: localeKey,
         localeWithTable: true,
         span: 6,
         showFeedback: false,
