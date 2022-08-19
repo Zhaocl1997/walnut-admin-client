@@ -1,5 +1,5 @@
 <template>
-  <div class="hstack justify-between p-1">
+  <div id="walnut-tab" class="hstack justify-between p-1">
     <div
       v-if="appSetting.settings.tab.showUtils"
       class="hstack flex-none justify-start"

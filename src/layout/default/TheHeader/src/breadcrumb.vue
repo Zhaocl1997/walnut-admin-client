@@ -79,6 +79,7 @@
 
       return () => (
         <n-config-provider
+          id="walnut-breadcrumb"
           theme={
             (!appDark.isDark && appSetting.settings.header.inverted) ||
             appDark.isDark

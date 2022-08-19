@@ -86,6 +86,7 @@
       return () => (
         <w-scrollbar height="100%">
           <n-menu
+            id="walnut-sider"
             mode={
               appSetting.settings.app.layout === AppConstLayoutMode.LEFT_MENU
                 ? 'vertical'

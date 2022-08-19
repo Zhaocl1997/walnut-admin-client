@@ -64,14 +64,12 @@
   import TheMainHeader from './MainHeader.vue'
   import TheAppWatermark from '@/components/App/AppWatermark'
 
-  import introJS from 'intro.js'
-  import 'intro.js/minified/introjs.min.css'
-  // import 'intro.js/themes/introjs-dark.css'
-
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
 
   const { currentRoute } = useAppRouter()
+  const { start } = useAppIntro()
+  start()
 
   // TODO layout
   // watchEffect(() => {
@@ -93,49 +91,5 @@
     if (currentRoute.value.query.full) {
       appSetting.toggleLeftMenuLayout()
     }
-  })
-
-  onMounted(() => {
-    const intro = introJS()
-
-    intro.setOptions({
-      doneLabel: '完成',
-      nextLabel: '下一步',
-      prevLabel: '上一步',
-      exitOnOverlayClick: false,
-
-      steps: [
-        {
-          element: '#walnut-fullscreen',
-          intro: 'This is intro one',
-        },
-        {
-          element: '#walnut-lock',
-          intro: 'This is intro two',
-        },
-        {
-          element: '#walnut-search',
-          intro: 'This is intro three',
-        },
-        {
-          element: '#walnut-locale',
-          intro: 'This is intro four',
-        },
-        {
-          element: '#walnut-dark',
-          intro: 'This is intro five',
-        },
-      ],
-
-      // @ts-ignore
-      // these three options exist but the `@types` not updated
-      dontShowAgain: true,
-      dontShowAgainLabel: '不再出现',
-      dontShowAgainCookieDays: 7,
-    })
-
-    useTimeoutFn(() => {
-      intro.start()
-    }, 1500)
   })
 </script>

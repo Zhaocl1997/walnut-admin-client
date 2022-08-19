@@ -6,7 +6,11 @@
     :options="dropdownOptions"
   >
     <div class="hstack items-center justify-center">
-      <Starport v-if="$route.name !== 'AccountSetting'" port="w-avatar">
+      <Starport
+        v-if="$route.name !== 'AccountSetting'"
+        port="w-avatar"
+        style="height: 32px; width: 32px"
+      >
         <WAvatar :size="32"> </WAvatar>
       </Starport>
 
