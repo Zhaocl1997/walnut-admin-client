@@ -1,5 +1,5 @@
 import type { WForm } from '../types'
-import { getEPBooleanValue } from '../utils'
+import { getFormBooleanField } from '../utils'
 
 export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
   const formSchemas = ref<WForm.Schema.Item<any>[]>([])
@@ -14,8 +14,8 @@ export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
         .filter(
           // @ts-ignore
           (i) =>
-            getEPBooleanValue(i, props.value, 'vIf') &&
-            getEPBooleanValue(i, props.value, 'vShow')
+            getFormBooleanField(i, props.value, 'vIf') &&
+            getFormBooleanField(i, props.value, 'vShow')
         )
     },
     {

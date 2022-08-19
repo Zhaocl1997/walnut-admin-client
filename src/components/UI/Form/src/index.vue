@@ -1,8 +1,7 @@
 <script lang="tsx">
   import type { WForm } from './types'
-  import type { WDescriptionsItem } from '../../Descriptions'
   import { renderSlot } from 'vue'
-  import { easyOmit, isUndefined } from 'easy-fns-ts'
+  import { easyOmit } from 'easy-fns-ts'
 
   import { useExpose } from '@/hooks/core/useExpose'
   import { useProps } from '@/hooks/core/useProps'
@@ -12,13 +11,14 @@
   import { useFormEvents } from './hooks/useFormEvents'
   import { useFormAdvanced } from './hooks/useFormAdvanced'
   import { useFormBaseRules } from './hooks/useFormBaseRules'
+  import { useFormDict } from './hooks/useFormDict'
+  import { useFormDesc } from './hooks/useFormDesc'
+  import { useFormMethods } from './hooks/useFormMethods'
 
   import { props, extendProps } from './props'
+  import { components } from './utils/component'
 
   import WFormItem from './components/FormItem/index.vue'
-  import WFormItemExtendQuery from './components/Extend/Query.vue'
-  import WFormItemExtendDivider from './components/Extend/Divider.vue'
-  import { getFormTranslated } from './utils'
 
   export default defineComponent({
     name: 'WForm',
@@ -26,6 +26,8 @@
     inheritAttrs: false,
 
     props,
+
+    components,
 
     emits: ['hook', 'reset', 'query'],
 
@@ -38,12 +40,9 @@
 
       const { formSchemas } = useFormSchemas(getProps)
 
-      ;(async () => {
-        // cached for dict form item
-        await Promise.all(
-          formSchemas.value?.map((i) => useDict(i.componentProp?.dictType))
-        )
-      })()
+      // cached for dict form item
+      // @ts-ignore
+      useFormDict(formSchemas)
 
       const { onEvent } = useFormEvents(getProps)
 
@@ -63,8 +62,15 @@
         formSchemas.value.map((item, index) => {
           if (item.type === 'Extend:Query') {
             return (
-              <n-gi key="query" span={4} suffix={true}>
-                <WFormItemExtendQuery {...item.componentProp} />
+              <n-gi
+                key="query"
+                class="flex items-center justify-end"
+                span={unref(getProps).span}
+                suffix={true}
+              >
+                <w-form-item-extend-query
+                  {...item.componentProp}
+                ></w-form-item-extend-query>
               </n-gi>
             )
           }
@@ -72,7 +78,7 @@
           if (item.type === 'Extend:Divider') {
             return (
               <n-gi
-                v-show={item._internalShow}
+                vShow={item._internalShow}
                 key={item.formProp?.path}
                 span={24}
                 class={item.extraProp?.sticky ? 'sticky top-0 z-10' : ''}
@@ -83,10 +89,10 @@
                 }
               >
                 <w-transition {...item?.transitionProp} appear>
-                  <WFormItemExtendDivider
+                  <w-form-item-extend-divider
                     index={index}
                     {...item.componentProp}
-                  />
+                  ></w-form-item-extend-divider>
                 </w-transition>
               </n-gi>
             )
@@ -94,7 +100,7 @@
 
           return (
             <n-gi
-              v-show={item._internalShow}
+              vShow={item._internalShow}
               key={item.formProp?.path}
               {...(item?.gridProp ?? { span: unref(getProps).span })}
             >
@@ -113,29 +119,18 @@
         easyOmit(getProps.value, Object.keys(extendProps))
       )
 
-      const getDefaultDescItemsBySchemas = computed(() => {
-        return formSchemas.value.map((i) => ({
-          type: i.descriptionProp?.type,
-          dictType: i.descriptionProp?.dictType!,
-          label: getFormTranslated(t, getProps, i),
-          value: getProps.value.model![i.formProp?.path!],
-          span:
-            i.descriptionProp?.span ?? getProps.value.descriptionProps?.column,
-          formatter: i.descriptionProp?.formatter,
-        })) as WDescriptionsItem[]
-      })
+      const renderBaseContent = () => {
+        if (unref(getProps).useDescription) {
+          const { descProps } = useFormDesc(getProps, formSchemas, t)
 
-      const renderBaseContent = () =>
-        unref(getProps).useDescription ? (
-          <w-descriptions
-            {...unref(getProps).descriptionProps}
-            items={
-              isUndefined(unref(getProps).descriptionProps?.items)
-                ? getDefaultDescItemsBySchemas.value
-                : unref(getProps).descriptionProps?.items
-            }
-          ></w-descriptions>
-        ) : (
+          return (
+            <w-form-extend-descriptions
+              {...descProps}
+            ></w-form-extend-descriptions>
+          )
+        }
+
+        return (
           <n-form
             ref={formRef}
             {...getNFormProps.value}
@@ -151,34 +146,15 @@
             </n-grid>
           </n-form>
         )
+      }
+
+      const { methods } = useFormMethods(formRef)
 
       const { renderAdvanced, ...advancedMethods } = useFormAdvanced(
         renderBaseContent,
         getProps,
         formRef
       )
-
-      const methods = {
-        validate: (fields?: string[]) => {
-          if (!fields || fields.length === 0) {
-            return new Promise<boolean>((reslove) => {
-              formRef.value?.validate((err) => {
-                reslove(!err ? true : false)
-              })
-            })
-          } else {
-            return new Promise<boolean>((reslove) => {
-              formRef.value?.validate(
-                (err) => {
-                  reslove(!err ? true : false)
-                },
-                (rule) => fields?.includes(rule?.key as string)
-              )
-            })
-          }
-        },
-        restoreValidation: () => formRef.value?.restoreValidation(),
-      }
 
       // expose
       useExpose({

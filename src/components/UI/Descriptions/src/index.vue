@@ -8,9 +8,11 @@
   export default defineComponent({
     name: 'WDescriptions',
 
+    inheritAttrs: false,
+
     props,
 
-    setup(props: WDescriptionProps) {
+    setup(props: WDescriptionProps, { attrs }) {
       const { t } = useAppI18n()
 
       const renderItemsContent = (item: WDescriptionsItem) => {
@@ -87,7 +89,7 @@
         )
       })
 
-      return () => <n-descriptions>{renderItems()}</n-descriptions>
+      return () => <n-descriptions {...attrs}>{renderItems()}</n-descriptions>
     },
   })
 </script>

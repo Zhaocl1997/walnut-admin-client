@@ -56,6 +56,12 @@ export const BUILTIN_FORM_TYPE = [
 export declare namespace WForm {
   type preset = 'modal' | 'drawer'
 
+  type LocaleType = 'origin' | 'helpMsg' | 'rule' | 'placeholder'
+
+  type MaybeBooleanField = 'vIf' | 'vShow'
+
+  type DictComponentType = 'select' | 'checkbox' | 'radio'
+
   type FinishLoading = { done: Fn }
 
   type onFinishFormLoadingCallback = Fn<FinishLoading, void | Promise<void>>
@@ -179,6 +185,8 @@ export declare namespace WForm {
            * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
            */
           defaultValue?: BaseDataType | BaseDataType[] | undefined | null
+
+          placeholder?: string
         }
 
       formProp?: Omit<FormItemProps, 'rule' | 'label'> & {

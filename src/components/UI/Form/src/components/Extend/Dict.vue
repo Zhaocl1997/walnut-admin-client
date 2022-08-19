@@ -34,6 +34,7 @@
 </script>
 
 <script lang="ts" setup>
+  import type { WForm } from '../../types'
   import type { AppDictTypeCommon } from '@/api/system/dict'
   import type { WCheckboxProps } from '@/components/UI/Checkbox'
   import type { WRadioProps } from '@/components/UI/Radio'
@@ -42,7 +43,7 @@
   interface InternalProps {
     value?: any
     dictType: string
-    dictRenderType?: 'select' | 'checkbox' | 'radio'
+    dictRenderType?: WForm.DictComponentType
     renderComponentProps?: WSelectProps | WCheckboxProps | WRadioProps
   }
 

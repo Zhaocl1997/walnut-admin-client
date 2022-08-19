@@ -1,5 +1,5 @@
 import type {
-  DescriptionProps,
+  DescriptionsProps,
   DescriptionItemProps,
   TagProps,
   TextProps,
@@ -39,4 +39,4 @@ export type WDescriptionsItem = DescriptionItemProps &
 
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 
-export interface WDescriptionProps extends DescriptionProps, ExtendProps {}
+export interface WDescriptionProps extends DescriptionsProps, ExtendProps {}

@@ -3,16 +3,16 @@ import type { WForm } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 
 // get target field boolean value
-export const getEPBooleanValue = (
+export const getFormBooleanField = (
   item: WForm.Schema.Item | undefined,
-  formProps: WForm.Props,
-  field: string,
+  props: WForm.Props,
+  field: WForm.MaybeBooleanField,
   defaultValue = true
 ) => {
   const maybeBool = item?.extraProp?.[field]
 
   if (typeof maybeBool === 'function') {
-    return maybeBool({ formData: formProps.model! })
+    return maybeBool({ formData: props.model! })
   }
 
   return getBoolean(maybeBool, defaultValue)
@@ -25,29 +25,66 @@ export const getFormTranslated = (
   t: Fn,
   props: ComputedRef<WForm.Props>,
   item: WForm.Schema.Item,
-  helpMsg = false
+  type: WForm.LocaleType = 'origin'
 ) => {
   const key = props.value.localeUniqueKey
 
   const isLocale = key && getBoolean(item.formProp?.locale)
 
+  const path = item.formProp?.path
+
+  // no locale nor no path
+  // just return target field
+  if (!isLocale || !path) {
+    if (type === 'origin') return item.formProp?.label
+    if (type === 'helpMsg') return item.formProp?.labelHelpMessage
+    if (type === 'placeholder') return item.componentProp?.placeholder
+    return
+  }
+
+  // in default app locale messages keys
+  if (defaultAppLocaleMessageKeys.includes(path)) return t(`app.base.${path}`)
+
   const isLocaleWithTable =
     getBoolean(item.formProp?.localeWithTable) &&
     getBoolean(props.value.localeWithTable)
 
-  const isHelpMsg = (key: string) => (helpMsg ? `${key}.helpMsg` : key)
+  const format = (key: string) => {
+    if (type === 'origin') return key
+    if (type === 'helpMsg') return `${key}.helpMsg`
+    if (type === 'placeholder') return `${key}.PH`
+    if (type === 'rule') return `${key}.rule`
+  }
 
-  const path = item.formProp?.path
+  // locale with table, means locale key startsWith `table` insteadof `form`
+  if (isLocaleWithTable) return t(`table.${format(`${key}.${path}`)}`)
 
-  return isLocale && path
-    ? defaultAppLocaleMessageKeys.includes(path!)
-      ? t(`app.base.${path}`)
-      : isLocaleWithTable
-      ? t(isHelpMsg(`table.${key}.${path}`) as string)
-      : t(isHelpMsg(`form.${key}.${path}`))
-    : helpMsg
-    ? item.formProp?.labelHelpMessage
-    : item.formProp?.label
+  return t(`form.${format(`${key}.${path}`)}`)
+}
+
+/**
+ * form item type that need to show `input` something
+ */
+export const inputFormItemTypeList = [
+  'Base:Input',
+  'Extend:Password',
+  'Extend:SMSInput',
+]
+
+/**
+ * generate different default rule message through based on `inputFormItemTypeList`
+ */
+export const generateRuleMessage = (
+  t: Fn,
+  p: ComputedRef<WForm.Props>,
+  i: WForm.Schema.Item
+) => {
+  return t('comp.form.rule', {
+    type: inputFormItemTypeList.includes(i.type)
+      ? t('comp.base.input')
+      : t('comp.base.choose'),
+    label: getFormTranslated(t, p, i),
+  })
 }
 
 /**
@@ -69,13 +106,7 @@ export const generateBaseRules = (
         type: i.formProp?.ruleType || 'any',
         trigger: ['change', 'input'],
         required: true,
-        message: t('comp.form.rule', {
-          type:
-            i?.type === 'Base:Input'
-              ? t('comp.base.input')
-              : t('comp.base.choose'),
-          label: getFormTranslated(t, props, i),
-        }),
+        message: generateRuleMessage(t, props, i),
       },
     ]
 

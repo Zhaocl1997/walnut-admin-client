@@ -3,9 +3,13 @@
 
   import { clone, omit, isFunction, isBoolean } from 'lodash-es'
 
-  import { componentMap } from './utils'
+  import { componentMap } from './componentMap'
   import { useFormContext } from '../../hooks/useFormContext'
-  import { getEPBooleanValue, getFormTranslated } from '../../utils'
+  import {
+    generateRuleMessage,
+    getFormBooleanField,
+    getFormTranslated,
+  } from '../../utils'
 
   export default defineComponent({
     name: 'WFormItem',
@@ -47,14 +51,36 @@
                     ]}
                     {...item?.componentProp}
                     class={formProps.value.formItemComponentClass}
+                    // TODO
+                    placeholder={generateRuleMessage(t, formProps, item!)}
                   ></component>
                 )
               )
             }
 
+      const renderLabel = () => {
+        if (item?.type === 'Extend:Dict' && item?.formProp?.label === true) {
+          const res = AppDictMap.get(item?.componentProp?.dictType!)
+
+          if (!res) return
+
+          return t(res.name)
+        }
+
+        return getFormTranslated(t, formProps, item!)
+      }
+
+      const renderLabelHelpMessage = () =>
+        item?.formProp?.labelHelpMessage && (
+          <w-message
+            class="inline"
+            msg={getFormTranslated(t, formProps, item!, 'helpMsg')}
+          ></w-message>
+        )
+
       const renderNFormItem = () => (
         <n-form-item
-          vShow={getEPBooleanValue(item, formProps.value, 'vShow')}
+          vShow={getFormBooleanField(item, formProps.value, 'vShow')}
           {...(isBoolean(item?.formProp?.rule) &&
           isBoolean(item?.formProp?.label)
             ? omit(clone(item?.formProp), 'rule', 'label')
@@ -67,46 +93,17 @@
         >
           {{
             default: () => renderBase(),
-            label: () => {
-              if (
-                item?.type === 'Extend:Dict' &&
-                item?.formProp?.label === true
-              ) {
-                const res = AppDictMap.get(item?.componentProp?.dictType!)
-
-                if (!res) return
-
-                return (
-                  <>
-                    {t(res?.name!)}{' '}
-                    {item?.formProp?.labelHelpMessage && (
-                      <w-message
-                        class="inline"
-                        msg={getFormTranslated(t, formProps, item!, true)}
-                      />
-                    )}
-                  </>
-                )
-              }
-
-              return (
-                <>
-                  {getFormTranslated(t, formProps, item!)}{' '}
-                  {item?.formProp?.labelHelpMessage && (
-                    <w-message
-                      class="inline"
-                      msg={getFormTranslated(t, formProps, item!, true)}
-                    />
-                  )}
-                </>
-              )
-            },
+            label: () => (
+              <>
+                {renderLabel()} {renderLabelHelpMessage()}
+              </>
+            ),
           }}
         </n-form-item>
       )
 
       return () =>
-        getEPBooleanValue(item, formProps.value, 'vIf') && renderNFormItem()
+        getFormBooleanField(item, formProps.value, 'vIf') && renderNFormItem()
     },
   })
 </script>
