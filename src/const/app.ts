@@ -68,6 +68,7 @@ export type ValueOfAppConstAnimationMode =
   typeof AppConstAnimationMode[keyof typeof AppConstAnimationMode]
 
 export const AppConstColorMode = {
+  DEFAULT: 'default',
   CAFE: 'cafe',
   CONTRAST: 'contrast',
   GRAYSCALE: 'grayscale',

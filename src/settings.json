@@ -37,7 +37,8 @@
     "idleMS": 60000,
     "contentPadding": 10,
     "showWatermark": false,
-    "watermarkContent": "walnut-admin"
+    "watermarkContent": "walnut-admin",
+    "colorMode": "default"
   },
   "menu": {
     "showCollapse": true,

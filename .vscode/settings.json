@@ -512,7 +512,10 @@
                         "enum": [
                             "cafe",
                             "contrast",
-                            "grayscale"
+                            "default",
+                            "grayscale",
+                            "grayscale-inverted",
+                            "inverted"
                         ],
                         "type": "string"
                     },

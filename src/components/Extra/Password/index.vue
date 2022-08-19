@@ -6,7 +6,7 @@
           :value="value"
           type="password"
           show-password-on="click"
-          placeholder="Please input your password"
+          :placeholder="$attrs.placeholder"
           :maxlength="maxlength"
           :minlength="minlength"
           clearable

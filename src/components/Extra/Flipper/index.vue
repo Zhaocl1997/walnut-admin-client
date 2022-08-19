@@ -7,19 +7,11 @@
     @mouseenter="onMouseEnterAndLeave"
     @mouseleave="onMouseEnterAndLeave"
   >
-    <div
-      v-if="!flipped"
-      class="Flipper__face Flipper__face--front"
-      :style="getStyle.face"
-    >
+    <div class="Flipper__face Flipper__face--front" :style="getStyle.face">
       <slot name="front" />
     </div>
 
-    <div
-      v-else
-      class="Flipper__face Flipper__face--back"
-      :style="getStyle.face"
-    >
+    <div class="Flipper__face Flipper__face--back" :style="getStyle.face">
       <slot name="back" />
     </div>
   </div>
