@@ -64,7 +64,7 @@
                   class="text-xs cursor-pointer text-right w-full"
                   @click="onToggle"
                 >
-                  {{ t('app.signin.goSignup') }} →
+                  {{ t('app.signin.goSignup') }}
                 </n-text>
               </w-transition>
             </template>
@@ -78,7 +78,7 @@
                   class="text-xs cursor-pointer text-right w-full"
                   @click="onToggle"
                 >
-                  {{ t('app.signup.goSignin') }} →
+                  {{ t('app.signup.goSignin') }}
                 </n-text>
               </w-transition>
             </template>

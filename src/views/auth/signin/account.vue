@@ -134,7 +134,7 @@
           showFeedback: false,
         },
         componentProp: {
-          title: computed(() => t('app.signin.other')),
+          title: 'app.signin.other',
           titleClass: 'text-xs',
         },
         transitionProp: {

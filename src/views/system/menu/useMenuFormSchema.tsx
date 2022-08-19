@@ -38,7 +38,7 @@ export const useMenuFormSchema = (
     {
       type: 'Extend:Divider',
       componentProp: {
-        title: 'form:menu:divider1',
+        title: 'form.menu.divider1',
       },
     },
 
@@ -115,7 +115,7 @@ export const useMenuFormSchema = (
     {
       type: 'Extend:Divider',
       componentProp: {
-        title: 'form:menu:divider2',
+        title: 'form.menu.divider2',
       },
       extraProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
@@ -208,7 +208,7 @@ export const useMenuFormSchema = (
     {
       type: 'Extend:Divider',
       componentProp: {
-        title: 'form:menu:divider3',
+        title: 'form.menu.divider3',
       },
     },
 

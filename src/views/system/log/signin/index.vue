@@ -12,7 +12,7 @@
   import { logSigninAPI } from '@/api/system/log'
 
   // locale unique key
-  const key = 'log:signin'
+  const key = 'log.signin'
 
   const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
     baseAPI: logSigninAPI,

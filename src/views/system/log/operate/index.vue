@@ -12,7 +12,7 @@
   import { logOperateAPI } from '@/api/system/log'
 
   // locale unique key
-  const key = 'log:operate'
+  const key = 'log.operate'
 
   const [
     register,
