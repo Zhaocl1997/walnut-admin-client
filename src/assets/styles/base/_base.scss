@@ -32,3 +32,14 @@ html[color-mode="inverted"] {
 html[color-mode="grayscale-inverted"] {
   filter: grayscale(100%) invert(100%);
 }
+
+html[reduce="true"] {
+  transition-duration: 0.001ms !important;
+  animation: none !important;
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+
+  --animate-duration: 0 !important;
+  --animate-deply: 0 !important;
+  --animate-repeat: 0 !important;
+}

@@ -199,6 +199,12 @@
           })),
         },
       },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'reducedMotion',
+        },
+      },
     ],
   })
 </script>

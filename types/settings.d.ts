@@ -133,6 +133,11 @@ interface AppSettings {
      * Custom color mode
      */
     colorMode: ValueOfAppConstColorMode
+
+    /**
+     * reactive prefers-reduced-motion
+     */
+    reducedMotion: boolean
   }
 
   menu: {

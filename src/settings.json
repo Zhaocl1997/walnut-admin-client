@@ -38,7 +38,8 @@
     "contentPadding": 10,
     "showWatermark": false,
     "watermarkContent": "walnut-admin",
-    "colorMode": "default"
+    "colorMode": "default",
+    "reducedMotion": true
   },
   "menu": {
     "showCollapse": true,

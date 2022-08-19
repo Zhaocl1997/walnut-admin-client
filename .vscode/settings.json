@@ -249,6 +249,10 @@
                             "colorMode": {
                                 "$ref": "#/definitions/ValueOfAppConstColorMode",
                                 "description": "Custom color mode"
+                            },
+                            "reducedMotion": {
+                                "description": "reactive preferred-reduced-motion",
+                                "type": "boolean"
                             }
                         },
                         "required": [
@@ -263,6 +267,7 @@
                             "keepAlive",
                             "layout",
                             "pageLeaveLock",
+                            "reducedMotion",
                             "showAnimation",
                             "showFooter",
                             "showHeader",

@@ -30,4 +30,5 @@
   useAppAutoLock()
   useAppTextSelection()
   useAppColorMode()
+  useAppReducedMotion()
 </script>
