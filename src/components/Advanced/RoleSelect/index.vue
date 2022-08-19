@@ -8,7 +8,7 @@
     label-field="roleName"
     :multiple="multiple"
     :valueSeparator="valueSeparator"
-  />
+  ></ApiSelect>
 </template>
 
 <script lang="ts" setup>

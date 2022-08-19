@@ -8,7 +8,7 @@
       :help-message="t('app.base.refresh')"
     ></w-a-icon>
 
-    <WTableSettingsColumns />
+    <WTableSettingsColumns></WTableSettingsColumns>
   </div>
 </template>
 

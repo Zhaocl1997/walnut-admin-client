@@ -28,7 +28,7 @@ export const setupApp = async (app: App) => {
 
   setupErrorhandler(app)
 
-  app.use(StarportPlugin({ keepAlive: true }))
+  app.use(StarportPlugin())
 
   if (isDev()) {
     app.config.performance = true

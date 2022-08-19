@@ -59,7 +59,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors v-model={[formData.primaryColor]} />
+            <AppColors v-model={[formData.primaryColor]}></AppColors>
           ),
         },
       },
@@ -79,7 +79,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors v-model={[formData.infoColor]} />
+            <AppColors v-model={[formData.infoColor]}></AppColors>
           ),
         },
       },
@@ -99,7 +99,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors v-model={[formData.successColor]} />
+            <AppColors v-model={[formData.successColor]}></AppColors>
           ),
         },
       },
@@ -119,7 +119,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors v-model={[formData.warningColor]} />
+            <AppColors v-model={[formData.warningColor]}></AppColors>
           ),
         },
       },
@@ -139,7 +139,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors v-model={[formData.errorColor]} />
+            <AppColors v-model={[formData.errorColor]}></AppColors>
           ),
         },
       },
@@ -159,7 +159,7 @@
         },
         componentProp: {
           render: ({ formData }) => (
-            <AppColors v-model={[formData.bodyColor]} />
+            <AppColors v-model={[formData.bodyColor]}></AppColors>
           ),
         },
       },
@@ -183,7 +183,7 @@
             <AppColors
               v-model={[formData.invertedColor]}
               disabled={appDark.isDark}
-            />
+            ></AppColors>
           ),
         },
       },

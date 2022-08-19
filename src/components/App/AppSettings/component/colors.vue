@@ -34,7 +34,7 @@
               title={color}
             >
               {props.modelValue === color && (
-                <WIcon height="18" icon="ant-design:check-outlined" />
+                <WIcon height="18" icon="ant-design:check-outlined"></WIcon>
               )}
             </span>
           ))}

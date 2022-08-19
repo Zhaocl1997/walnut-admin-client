@@ -57,14 +57,14 @@
         <>
           {getProps.value.queryFormProps && (
             <n-card class="mb-1">
-              <QueryForm />
+              <QueryForm></QueryForm>
             </n-card>
           )}
 
           <n-card>
             <div class="mb-2 flex justify-between items-center">
-              <HeaderActions />
-              <Utils />
+              <HeaderActions></HeaderActions>
+              <Utils></Utils>
             </div>
 
             <n-data-table

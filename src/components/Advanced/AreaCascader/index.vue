@@ -12,7 +12,7 @@
     max-tag-count="responsive"
     check-strategy="child"
     :on-load="onLoad"
-  />
+  ></n-cascader>
 </template>
 
 <script lang="ts" setup>

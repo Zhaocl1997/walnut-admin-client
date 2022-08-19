@@ -6,7 +6,7 @@
     }"
   >
     <template #header>
-      <n-skeleton v-if="loading" text width="20%" />
+      <n-skeleton v-if="loading" text width="20%"></n-skeleton>
 
       <n-h2 v-else prefix="bar" align-text :type="headerExtra?.tagProps.type">
         <n-text>
@@ -16,7 +16,7 @@
     </template>
 
     <template #header-extra>
-      <n-skeleton v-if="loading" round width="80px" height="28px" />
+      <n-skeleton v-if="loading" round width="80px" height="28px"></n-skeleton>
 
       <n-tag v-else v-bind="headerExtra?.tagProps">
         <n-gradient-text :type="headerExtra?.tagProps.type">
@@ -27,18 +27,17 @@
 
     <template #>
       <div v-if="loading" class="hstack justify-between">
-        <n-skeleton height="42px" width="60%" round />
-        <n-skeleton height="42px" circle />
+        <n-skeleton height="42px" width="60%" round></n-skeleton>
+        <n-skeleton height="42px" circle></n-skeleton>
       </div>
 
       <div v-else class="relative text-3xl">
         <div class="hstack items-center">
           <n-number-animation
-            ref="numberAnimationInstRef"
             :from="0"
             :to="number"
             show-separator
-          />
+          ></n-number-animation>
 
           <w-transition appear name="slide-up">
             <n-tag

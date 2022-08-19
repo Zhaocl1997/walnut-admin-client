@@ -21,12 +21,12 @@
     @yes="() => (show = false)"
     @no="() => (show = false)"
   >
-    <SettingsFormTheme />
-    <SettingsFormApp />
-    <SettingsFormMenu />
-    <SettingsFormHeader />
-    <SettingsFormBreadcrumb />
-    <SettingsFormTab />
+    <SettingsFormTheme></SettingsFormTheme>
+    <SettingsFormApp></SettingsFormApp>
+    <SettingsFormMenu></SettingsFormMenu>
+    <SettingsFormHeader></SettingsFormHeader>
+    <SettingsFormBreadcrumb></SettingsFormBreadcrumb>
+    <SettingsFormTab></SettingsFormTab>
 
     <n-button
       type="primary"

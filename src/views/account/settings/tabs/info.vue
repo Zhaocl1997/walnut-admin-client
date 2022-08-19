@@ -6,7 +6,11 @@
 
     <n-gi>
       <div class="vstack justify-center items-center">
-        <Starport v-if="$route.name === 'AccountSetting'" port="w-avatar">
+        <Starport
+          v-if="$route.name === 'AccountSetting'"
+          port="w-avatar"
+          style="height: 240px; width: 240px"
+        >
           <WAvatar :value="tempSrcUrl ?? formData.avatar" :size="240">
           </WAvatar>
         </Starport>

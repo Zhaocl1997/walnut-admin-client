@@ -1,7 +1,10 @@
 <template>
   <n-layout has-sider>
     <w-transition appear name="slide-left">
-      <TheAside v-if="appSetting.getShowNormalAside" class="walnut-aside" />
+      <TheAside
+        v-if="appSetting.getShowNormalAside"
+        class="walnut-aside"
+      ></TheAside>
     </w-transition>
 
     <n-drawer
@@ -11,14 +14,14 @@
       placement="left"
       :native-scrollbar="false"
     >
-      <TheAside />
+      <TheAside></TheAside>
     </n-drawer>
 
     <div class="vstack flex-1 h-screen w-full overflow-x-hidden">
       <TheMainHeader
         v-if="appSetting.settings.app.fixHeader"
         class="walnut-header"
-      />
+      ></TheMainHeader>
 
       <n-layout-content
         bordered
@@ -26,7 +29,9 @@
         :content-style="{ height: '100%' }"
         class="walnut-content"
       >
-        <TheMainHeader v-if="!appSetting.settings.app.fixHeader" />
+        <TheMainHeader
+          v-if="!appSetting.settings.app.fixHeader"
+        ></TheMainHeader>
 
         <div
           :id="String($route.name)"
@@ -37,20 +42,22 @@
               : appSetting.settings.app.contentPadding + 'px',
           }"
         >
-          <TheIFrameWrapper />
-          <TheContent />
+          <TheIFrameWrapper></TheIFrameWrapper>
+          <TheContent></TheContent>
         </div>
 
-        <TheFooter v-if="!appSetting.settings.app.fixFooter" />
+        <TheFooter v-if="!appSetting.settings.app.fixFooter"></TheFooter>
 
-        <WAppSettings />
+        <WAppSettings></WAppSettings>
 
-        <n-back-top />
+        <n-back-top></n-back-top>
       </n-layout-content>
 
-      <TheFooter v-if="appSetting.settings.app.fixFooter" />
+      <TheFooter v-if="appSetting.settings.app.fixFooter"></TheFooter>
 
-      <TheAppWatermark v-if="appSetting.settings.app.showWatermark" />
+      <TheAppWatermark
+        v-if="appSetting.settings.app.showWatermark"
+      ></TheAppWatermark>
     </div>
   </n-layout>
 </template>

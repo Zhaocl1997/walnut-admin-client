@@ -53,7 +53,7 @@
         </n-space>
 
         <div class="mt-2">
-          <n-upload-file-list />
+          <n-upload-file-list></n-upload-file-list>
         </div>
       </template>
     </n-upload>

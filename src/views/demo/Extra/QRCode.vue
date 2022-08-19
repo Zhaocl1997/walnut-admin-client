@@ -4,13 +4,13 @@
       <n-list-item>
         <w-title prefix="bar">Basic usage</w-title>
 
-        <WQRCode url="https://walnut-admin-doc.netlify.app/" />
+        <WQRCode url="https://walnut-admin-doc.netlify.app/"></WQRCode>
       </n-list-item>
 
       <n-list-item>
         <w-title prefix="bar">With specific expired seconds</w-title>
 
-        <WQRCode :url="url2" :expire-seconds="3" @refresh="onRefresh" />
+        <WQRCode :url="url2" :expire-seconds="3" @refresh="onRefresh"></WQRCode>
       </n-list-item>
 
       <n-list-item>
@@ -22,7 +22,7 @@
           <WQRCode
             url="https://walnut-admin-doc.netlify.app/"
             :success="success"
-          />
+          ></WQRCode>
         </n-space>
       </n-list-item>
     </n-list>

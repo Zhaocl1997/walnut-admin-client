@@ -23,7 +23,7 @@
         size="18"
         :isFullscreen="isFullscreen"
         :click-event="onFullScreen"
-      />
+      ></WAppFullScreen>
     </template>
 
     <template #>

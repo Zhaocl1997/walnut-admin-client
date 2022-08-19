@@ -36,8 +36,8 @@
           class="absolute bottom-7.5 right-4"
           style="transform: translateX(-50%)"
         >
-          <Battery class="mr-2" />
-          <Network />
+          <Battery class="mr-2"></Battery>
+          <Network></Network>
         </div>
 
         <div class="text-white absolute top-2 left-2">{{ fps }}</div>
@@ -62,6 +62,7 @@
 </template>
 
 <script lang="ts" setup>
+  // TODO need to make lock a router not a modal
   import { darkTheme } from 'naive-ui'
 
   import Battery from './src/Battery.vue'

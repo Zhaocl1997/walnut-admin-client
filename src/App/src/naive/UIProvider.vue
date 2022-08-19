@@ -12,7 +12,7 @@
       <n-dialog-provider>
         <n-notification-provider :max="3" :placement="appMsg.notiPlacement">
           <n-message-provider :max="5" :placement="appMsg.msgPlacement">
-            <slot />
+            <slot></slot>
           </n-message-provider>
         </n-notification-provider>
       </n-dialog-provider>

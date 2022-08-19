@@ -15,7 +15,7 @@
         <AsideLogo
           v-if="appSetting.settings.app.showLogo"
           :class="[{ fixed: appSetting.settings.app.fixLogo }]"
-        />
+        ></AsideLogo>
       </w-transition>
 
       <w-transition appear name="slide-left">
@@ -35,10 +35,12 @@
                 ? appSetting.settings.header.height
                 : 0) + 'px',
           }"
-        />
+        ></AsideMenu>
       </w-transition>
 
-      <MenuCollpaseButton v-if="appSetting.getShowMenuCollapseButton" />
+      <MenuCollpaseButton
+        v-if="appSetting.getShowMenuCollapseButton"
+      ></MenuCollpaseButton>
     </div>
   </n-layout-sider>
 </template>

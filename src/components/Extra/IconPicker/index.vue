@@ -69,14 +69,14 @@
                         },
                       ]"
                       @click="onChooseIcon(icon)"
-                    />
+                    ></w-icon>
                   </span>
                 </div>
 
                 <n-empty
                   class="flex justify-center items-center my-16"
                   v-show="lists.length === 0"
-                />
+                ></n-empty>
               </div>
 
               <n-pagination

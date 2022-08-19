@@ -14,7 +14,11 @@
     </template>
   </n-input>
 
-  <WVerify v-if="simpleVerify" ref="verifyRef" @success="onVerifySuccess" />
+  <WVerify
+    v-if="simpleVerify"
+    ref="verifyRef"
+    @success="onVerifySuccess"
+  ></WVerify>
 </template>
 
 <script lang="ts" setup>

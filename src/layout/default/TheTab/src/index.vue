@@ -23,8 +23,11 @@
       <TabsUtils :lists="rightUtils"></TabsUtils>
     </div>
 
-    <TabsContextMenu v-if="appSetting.settings.tab.contextMenu" />
-    <TabsDevTools v-if="getShowDevTools" />
+    <TabsContextMenu
+      v-if="appSetting.settings.tab.contextMenu"
+    ></TabsContextMenu>
+
+    <TabsDevTools v-if="getShowDevTools"></TabsDevTools>
   </div>
 </template>
 

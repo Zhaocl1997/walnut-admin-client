@@ -38,7 +38,7 @@
                 :src="base64"
                 alt="base64 render"
                 class="h-48 w-48"
-              />
+              ></n-image>
             </n-space>
 
             <n-space vertical>
@@ -51,7 +51,7 @@
                 :src="blobURL"
                 alt="blobURL render"
                 class="h-48 w-48"
-              />
+              ></n-image>
             </n-space>
           </n-space>
         </n-space>

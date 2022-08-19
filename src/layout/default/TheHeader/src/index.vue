@@ -11,12 +11,14 @@
         />
 
         <template v-else>
-          <HeaderCollapse v-if="appSetting.getShowMenuCollapseIcon" />
+          <HeaderCollapse
+            v-if="appSetting.getShowMenuCollapseIcon"
+          ></HeaderCollapse>
 
           <w-transition name="slide-left">
             <HeaderBreadCrumb
               v-if="appSetting.settings.header.showBreadcrumb"
-            />
+            ></HeaderBreadCrumb>
           </w-transition>
         </template>
 
@@ -25,8 +27,8 @@
             v-if="appSetting.settings.app.layout === 'top-menu'"
             class="hstack items-center justify-between"
           >
-            <TheLogo class="mr-16" />
-            <TheMenu />
+            <TheLogo class="mr-16"></TheLogo>
+            <TheMenu></TheMenu>
           </div>
         </w-transition>
       </div>
@@ -45,21 +47,29 @@
           v-if="
             !appAdapter.isMobile && appSetting.settings.header.showFullScreen
           "
-        />
-        <WAppLock id="walnut-lock" v-if="appSetting.settings.header.showLock" />
+        ></WAppFullScreen>
+
+        <WAppLock
+          id="walnut-lock"
+          v-if="appSetting.settings.header.showLock"
+        ></WAppLock>
+
         <WAppSearch
           id="walnut-search"
           v-if="appSetting.settings.header.showSearch"
-        />
+        ></WAppSearch>
+
         <WAppLocalePicker
           id="walnut-locale"
           v-if="appSetting.settings.header.showLocale"
-        />
+        ></WAppLocalePicker>
+
         <WAppDarkMode
           id="walnut-dark"
           v-if="appSetting.settings.header.showDarkMode"
-        />
-        <HeaderDropdown />
+        ></WAppDarkMode>
+
+        <HeaderDropdown></HeaderDropdown>
       </div>
     </div>
   </div>

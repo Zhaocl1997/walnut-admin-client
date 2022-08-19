@@ -1,5 +1,5 @@
 <template>
-  <Icon v-bind="$props" />
+  <Icon v-bind="$props"></Icon>
 </template>
 
 <script lang="ts" setup>

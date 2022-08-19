@@ -5,10 +5,10 @@
       class="hstack space-x-4 absolute top-8 right-8 z-50 children:cursor-pointer"
     >
       <n-button text>
-        <WAppLocalePicker />
+        <WAppLocalePicker></WAppLocalePicker>
       </n-button>
       <n-button text>
-        <WAppDarkMode />
+        <WAppDarkMode></WAppDarkMode>
       </n-button>
     </div>
 
@@ -56,7 +56,7 @@
             </h1>
 
             <template v-if="!back">
-              <SignIn />
+              <SignIn></SignIn>
 
               <w-transition name="fade-left-big" appear :duration="1700">
                 <n-text
@@ -70,7 +70,7 @@
             </template>
 
             <template v-else>
-              <SignUp />
+              <SignUp></SignUp>
 
               <w-transition name="fade-up-big" appear :duration="1900">
                 <n-text

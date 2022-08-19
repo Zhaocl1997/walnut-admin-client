@@ -11,19 +11,25 @@
         style="z-index: 50"
         type="block"
       >
-        <n-anchor-link title="Icon" href="#Icon" />
-        <n-anchor-link title="Button" href="#Button" />
-        <n-anchor-link title="Input" href="#Input" />
-        <n-anchor-link title="Select" href="#Select" />
-        <n-anchor-link title="Checkbox" href="#Checkbox" />
-        <n-anchor-link title="Dict" href="#Dict" />
+        <n-anchor-link title="Icon" href="#Icon"></n-anchor-link>
+        <n-anchor-link title="Button" href="#Button"></n-anchor-link>
+        <n-anchor-link title="Input" href="#Input"></n-anchor-link>
+        <n-anchor-link title="Select" href="#Select"></n-anchor-link>
+        <n-anchor-link title="Checkbox" href="#Checkbox"></n-anchor-link>
+        <n-anchor-link title="Dict" href="#Dict"></n-anchor-link>
 
-        <n-anchor-link title="Tree" href="#Tree" />
-        <n-anchor-link title="AreaCascader" href="#AreaCascader" />
-        <n-anchor-link title="Location" href="#Location" />
-        <n-anchor-link title="Radio" href="#Radio" />
-        <n-anchor-link title="DynamicTags" href="#DynamicTags" />
-        <n-anchor-link title="LocaleSelect" href="#LocaleSelect" />
+        <n-anchor-link title="Tree" href="#Tree"></n-anchor-link>
+        <n-anchor-link
+          title="AreaCascader"
+          href="#AreaCascader"
+        ></n-anchor-link>
+        <n-anchor-link title="Location" href="#Location"></n-anchor-link>
+        <n-anchor-link title="Radio" href="#Radio"></n-anchor-link>
+        <n-anchor-link title="DynamicTags" href="#DynamicTags"></n-anchor-link>
+        <n-anchor-link
+          title="LocaleSelect"
+          href="#LocaleSelect"
+        ></n-anchor-link>
       </n-anchor>
     </div>
 
@@ -34,21 +40,21 @@
       ]"
     >
       <div class="children:my-2">
-        <DemoIcon id="Icon" />
-        <DemoButton id="Button" />
-        <DemoInput id="Input" />
-        <DemoSelect id="Select" />
-        <DemoCheckbox id="Checkbox" />
-        <DemoDict id="Dict" />
+        <DemoIcon id="Icon"></DemoIcon>
+        <DemoButton id="Button"></DemoButton>
+        <DemoInput id="Input"></DemoInput>
+        <DemoSelect id="Select"></DemoSelect>
+        <DemoCheckbox id="Checkbox"></DemoCheckbox>
+        <DemoDict id="Dict"></DemoDict>
       </div>
 
       <div class="children:my-2">
-        <DemoTree id="Tree" />
-        <DemoAreaCascader id="AreaCascader" />
-        <DemoLocation id="Location" />
-        <DemoRadio id="Radio" />
-        <DemoDynamicTags id="DynamicTags" />
-        <DemoLocaleSelect id="LocaleSelect" />
+        <DemoTree id="Tree"></DemoTree>
+        <DemoAreaCascader id="AreaCascader"></DemoAreaCascader>
+        <DemoLocation id="Location"></DemoLocation>
+        <DemoRadio id="Radio"></DemoRadio>
+        <DemoDynamicTags id="DynamicTags"></DemoDynamicTags>
+        <DemoLocaleSelect id="LocaleSelect"></DemoLocaleSelect>
       </div>
     </div>
   </div>

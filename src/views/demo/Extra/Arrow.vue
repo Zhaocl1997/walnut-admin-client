@@ -2,15 +2,15 @@
   <w-demo-card title="Arrow">
     <n-form :model="arrow" inline label-placement="left" :label-width="60">
       <n-form-item label="Active" path="active">
-        <n-switch v-model:value="arrow.active" />
+        <n-switch v-model:value="arrow.active"></n-switch>
       </n-form-item>
 
       <n-form-item label="Left" path="left">
-        <n-switch v-model:value="arrow.left" />
+        <n-switch v-model:value="arrow.left"></n-switch>
       </n-form-item>
 
       <n-form-item label="Right" path="right">
-        <n-switch v-model:value="arrow.right" />
+        <n-switch v-model:value="arrow.right"></n-switch>
       </n-form-item>
     </n-form>
 

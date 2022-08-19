@@ -9,7 +9,7 @@
         <TheHeader
           class="flex-none px-2"
           :style="{ height: appSetting.settings.header.height + 'px' }"
-        />
+        ></TheHeader>
       </n-layout-header>
     </w-transition>
 
@@ -22,7 +22,7 @@
         <TheTab
           class="flex-none px-2"
           :style="{ height: appSetting.settings.tab.height + 'px' }"
-        />
+        ></TheTab>
       </n-layout-header>
     </w-transition>
   </div>

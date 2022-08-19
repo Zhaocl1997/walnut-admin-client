@@ -11,22 +11,22 @@
         style="z-index: 50"
         type="block"
       >
-        <n-anchor-link title="Arrow" href="#Arrow" />
-        <n-anchor-link title="IconPicker" href="#IconPicker" />
-        <n-anchor-link title="JSON" href="#JSON" />
-        <n-anchor-link title="Verify" href="#Verify" />
-        <n-anchor-link title="QRCode" href="#QRCode" />
-        <n-anchor-link title="NaiveMsg" href="#NaiveMsg" />
-        <n-anchor-link title="Modal" href="#Modal" />
-        <n-anchor-link title="Drawer" href="#Drawer" />
+        <n-anchor-link title="Arrow" href="#Arrow"></n-anchor-link>
+        <n-anchor-link title="IconPicker" href="#IconPicker"></n-anchor-link>
+        <n-anchor-link title="JSON" href="#JSON"></n-anchor-link>
+        <n-anchor-link title="Verify" href="#Verify"></n-anchor-link>
+        <n-anchor-link title="QRCode" href="#QRCode"></n-anchor-link>
+        <n-anchor-link title="NaiveMsg" href="#NaiveMsg"></n-anchor-link>
+        <n-anchor-link title="Modal" href="#Modal"></n-anchor-link>
+        <n-anchor-link title="Drawer" href="#Drawer"></n-anchor-link>
 
-        <n-anchor-link title="Message" href="#Message" />
-        <n-anchor-link title="Flipper" href="#Flipper" />
-        <n-anchor-link title="Scrollbar" href="#Scrollbar" />
-        <n-anchor-link title="Title" href="#Title" />
-        <n-anchor-link title="Transition" href="#Transition" />
-        <n-anchor-link title="Axios" href="#Axios" />
-        <n-anchor-link title="File" href="#File" />
+        <n-anchor-link title="Message" href="#Message"></n-anchor-link>
+        <n-anchor-link title="Flipper" href="#Flipper"></n-anchor-link>
+        <n-anchor-link title="Scrollbar" href="#Scrollbar"></n-anchor-link>
+        <n-anchor-link title="Title" href="#Title"></n-anchor-link>
+        <n-anchor-link title="Transition" href="#Transition"></n-anchor-link>
+        <n-anchor-link title="Axios" href="#Axios"></n-anchor-link>
+        <n-anchor-link title="File" href="#File"></n-anchor-link>
       </n-anchor>
     </div>
 
@@ -37,24 +37,24 @@
       ]"
     >
       <div class="children:my-2">
-        <DemoArrow id="Arrow" />
-        <DemoIconPicker id="IconPicker" />
-        <DemoJSON id="JSON" />
-        <DemoVerify id="Verify" />
-        <DemoQRCode id="QRCode" />
-        <DemoNaiveMsg id="NaiveMsg" />
-        <DemoModal id="Modal" />
-        <DemoDrawer id="Drawer" />
+        <DemoArrow id="Arrow"></DemoArrow>
+        <DemoIconPicker id="IconPicker"></DemoIconPicker>
+        <DemoJSON id="JSON"></DemoJSON>
+        <DemoVerify id="Verify"></DemoVerify>
+        <DemoQRCode id="QRCode"></DemoQRCode>
+        <DemoNaiveMsg id="NaiveMsg"></DemoNaiveMsg>
+        <DemoModal id="Modal"></DemoModal>
+        <DemoDrawer id="Drawer"></DemoDrawer>
       </div>
 
       <div class="children:my-2">
-        <DemoMessage id="Message" />
-        <DemoFlipper id="Flipper" />
-        <DemoScrollbar id="Scrollbar" />
-        <DemoTitle id="Title" />
-        <DemoTransition id="Transition" />
-        <DemoAxios id="Axios" />
-        <DemoFile id="File" />
+        <DemoMessage id="Message"></DemoMessage>
+        <DemoFlipper id="Flipper"></DemoFlipper>
+        <DemoScrollbar id="Scrollbar"></DemoScrollbar>
+        <DemoTitle id="Title"></DemoTitle>
+        <DemoTransition id="Transition"></DemoTransition>
+        <DemoAxios id="Axios"></DemoAxios>
+        <DemoFile id="File"></DemoFile>
       </div>
     </div>
   </div>

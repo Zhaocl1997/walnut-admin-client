@@ -155,7 +155,7 @@ export const useMenuFormSchema = (
                 v-model={[formData.name, 'value']}
                 clearable
                 valueModifiers={{ capitalize: true }}
-              />
+              ></w-input>
             )
           }
 
@@ -170,7 +170,7 @@ export const useMenuFormSchema = (
                 filterable
                 disabled
                 options={nameOptions}
-              />
+              ></n-select>
             )
           }
         },

@@ -282,12 +282,12 @@
     {
       icon: 'ant-design:rotate-right-outlined',
       event: () => onRotate('-45deg'),
-      helpMessage: () => t('comp:cropper:clockwise-rotate'),
+      helpMessage: () => t('comp.cropper.clockwise-rotate'),
     },
     {
       icon: 'ant-design:rotate-left-outlined',
       event: () => onRotate('45deg'),
-      helpMessage: () => t('comp:cropper:anti-clockwise-rotate'),
+      helpMessage: () => t('comp.cropper.anti-clockwise-rotate'),
     },
     {
       icon: 'ant-design:reload-outlined',

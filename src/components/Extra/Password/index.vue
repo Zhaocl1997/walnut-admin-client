@@ -32,7 +32,7 @@
       :percentage="percentage"
       :show-indicator="false"
       :status="status"
-    />
+    ></n-progress>
   </div>
 </template>
 

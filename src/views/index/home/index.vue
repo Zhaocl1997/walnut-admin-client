@@ -8,7 +8,10 @@
           :key="index"
           class="w-full md:w-1/2 xl:w-1/3 pt-1 px-1 md:pr-1 rounded-2xl transition duration-300 ease-in-out"
         >
-          <WHomeNumberCard v-bind="item" :loading="numberCardLoading" />
+          <WHomeNumberCard
+            v-bind="item"
+            :loading="numberCardLoading"
+          ></WHomeNumberCard>
         </div>
       </w-transition>
     </div>
@@ -21,7 +24,10 @@
           :key="index"
           class="w-full md:w-1/2 xl:w-1/2 pt-1 px-1 md:pr-1 rounded-2xl transition duration-300 ease-in-out"
         >
-          <WHomeChartCard v-bind="item" :loading="chartCardLoading" />
+          <WHomeChartCard
+            v-bind="item"
+            :loading="chartCardLoading"
+          ></WHomeChartCard>
         </div>
       </w-transition>
     </div>

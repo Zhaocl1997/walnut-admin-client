@@ -8,7 +8,7 @@
       model-events="change keydown blur focus paste"
       @change="onChange"
       :disabled="disabled"
-    />
+    ></TinymceEditor>
   </n-spin>
 </template>
 

@@ -6,7 +6,7 @@
     }"
   >
     <template #header>
-      <n-skeleton v-if="loading" text width="20%" />
+      <n-skeleton v-if="loading" text width="20%"></n-skeleton>
 
       <n-h2 v-else prefix="bar" align-text :type="headerExtra?.tagProps.type">
         <n-text>
@@ -16,7 +16,7 @@
     </template>
 
     <template #header-extra>
-      <n-skeleton v-if="loading" round width="80px" height="28px" />
+      <n-skeleton v-if="loading" round width="80px" height="28px"></n-skeleton>
 
       <n-tag v-else v-bind="headerExtra?.tagProps">
         <n-gradient-text :type="headerExtra?.tagProps.type">
@@ -26,9 +26,14 @@
     </template>
 
     <template #>
-      <n-skeleton v-if="loading" width="100%" height="44vh" :sharp="false" />
+      <n-skeleton
+        v-if="loading"
+        width="100%"
+        height="44vh"
+        :sharp="false"
+      ></n-skeleton>
 
-      <w-echarts v-else :option="option" />
+      <w-echarts v-else :option="option"></w-echarts>
     </template>
   </n-card>
 </template>

@@ -8,11 +8,11 @@
     @mouseleave="onMouseEnterAndLeave"
   >
     <div class="Flipper__face Flipper__face--front" :style="getStyle.face">
-      <slot name="front" />
+      <slot name="front"></slot>
     </div>
 
     <div class="Flipper__face Flipper__face--back" :style="getStyle.face">
-      <slot name="back" />
+      <slot name="back"></slot>
     </div>
   </div>
 </template>

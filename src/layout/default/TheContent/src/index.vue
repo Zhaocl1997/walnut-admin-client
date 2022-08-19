@@ -13,10 +13,10 @@
         v-if="appSetting.settings.app.keepAlive"
         :include="getKeepAliveInclude"
       >
-        <component :is="Component" :key="route.fullPath" />
+        <component :is="Component" :key="route.fullPath"></component>
       </keep-alive>
 
-      <component v-else :is="Component" :key="route.fullPath" />
+      <component v-else :is="Component" :key="route.fullPath"></component>
     </w-transition>
   </router-view>
 </template>

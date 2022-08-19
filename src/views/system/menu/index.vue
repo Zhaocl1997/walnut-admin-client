@@ -58,7 +58,7 @@
         </template>
 
         <template #>
-          <n-alert :title="t('page.menu.alert')" type="info" />
+          <n-alert :title="t('page.menu.alert')" type="info"></n-alert>
 
           <w-form
             v-show="treeMenuValue || actionType === 'create'"

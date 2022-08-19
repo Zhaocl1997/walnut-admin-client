@@ -11,7 +11,7 @@
     :x-offset="12"
     :y-offset="60"
     :z-index="999999"
-  />
+  ></n-watermark>
 </template>
 
 <script lang="ts" setup>
