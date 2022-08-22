@@ -124,6 +124,7 @@
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-inspect": "^0.6.0",
     "vite-plugin-mkcert": "^1.9.0",
+    "vite-plugin-restart": "^0.2.0",
     "vite-plugin-terminal": "^1.0.1",
     "vue-tsc": "0.39.4"
   },

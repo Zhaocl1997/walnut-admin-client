@@ -8,5 +8,5 @@ export const createHTMLPlugin = (title: string): VitePlugin[] => {
         title: title,
       },
     },
-  })
+  }) as unknown as VitePlugin[]
 }

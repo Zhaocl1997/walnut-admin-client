@@ -12,6 +12,7 @@ import { createHTMLPlugin } from './html'
 import { creatAutoImportPlugin } from './auto-import'
 import { createUnoCSSPlugin } from './unocss'
 import { createBannerPlugin } from './banner'
+import { createRestartPlugin } from './restart'
 
 export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   const vitePlugins: (VitePlugin | VitePlugin[])[] = [
@@ -32,13 +33,19 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   // https://github.com/patak-dev/vite-plugin-terminal
   // I'm pretty sure that this package will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
-  if (dev) vitePlugins.push(Terminal({ output: ['console', 'terminal'] }))
+  if (dev)
+    vitePlugins.push(
+      Terminal({ output: ['console', 'terminal'] }) as unknown as VitePlugin
+    )
 
   // https://github.com/liuweiGL/vite-plugin-mkcert
   if (dev) vitePlugins.push(mkcert({ source: 'coding' }))
 
   // https://github.com/antfu/vite-plugin-inspect
   if (dev) vitePlugins.push(Inspect())
+
+  // https://github.com/antfu/vite-plugin-restart
+  if (dev) vitePlugins.push(createRestartPlugin())
 
   // https://github.com/antfu/unplugin-auto-import
   vitePlugins.push(creatAutoImportPlugin())

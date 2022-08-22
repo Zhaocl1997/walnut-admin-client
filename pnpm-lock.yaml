@@ -80,6 +80,7 @@ specifiers:
   vite-plugin-html: ^3.2.0
   vite-plugin-inspect: ^0.6.0
   vite-plugin-mkcert: ^1.9.0
+  vite-plugin-restart: ^0.2.0
   vite-plugin-terminal: ^1.0.1
   vue: ^3.2.37
   vue-i18n: 9.2.0
@@ -173,6 +174,7 @@ devDependencies:
   vite-plugin-html: 3.2.0_vite@3.0.4
   vite-plugin-inspect: 0.6.0_vite@3.0.4
   vite-plugin-mkcert: 1.9.0_sass@1.54.0
+  vite-plugin-restart: 0.2.0_vite@3.0.4
   vite-plugin-terminal: 1.0.1_rollup@2.77.2+vite@3.0.4
   vue-tsc: 0.39.4_typescript@4.7.4
 
@@ -8736,6 +8738,15 @@ packages:
       - stylus
       - supports-color
       - terser
+    dev: true
+
+  /vite-plugin-restart/0.2.0_vite@3.0.4:
+    resolution: {integrity: sha512-DDgZh2EM0b2ZvqMpk3AOiXMP/ZOLhrJhUvcYkV21qbBl85tM5ezzt2OUXamV0wIsOzz3UDFAnLcHs3k6G3QMWw==}
+    peerDependencies:
+      vite: ^2.9.0 || ^3.0.0
+    dependencies:
+      micromatch: 4.0.5
+      vite: 3.0.4_sass@1.54.0
     dev: true
 
   /vite-plugin-terminal/1.0.1_rollup@2.77.2+vite@3.0.4:
