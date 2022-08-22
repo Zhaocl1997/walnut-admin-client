@@ -74,10 +74,6 @@
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
 
-  const { currentRoute } = useAppRouter()
-  const { start } = useAppIntro()
-  start()
-
   // TODO layout
   // watchEffect(() => {
   //   if (setting.app.layout === AppConstLayoutMode.LEFT_MENU) {
@@ -94,9 +90,11 @@
   //   }
   // })
 
-  watchEffect(() => {
-    if (currentRoute.value.query.full) {
-      appSetting.toggleLeftMenuLayout()
-    }
-  })
+  useAppIntro()
+  useAppContentFull()
+  useAppPageLeave()
+  useAppAutoLock()
+  useAppTextSelection()
+  useAppColorMode()
+  useAppReducedMotion()
 </script>

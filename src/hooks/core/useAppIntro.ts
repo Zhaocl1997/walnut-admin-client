@@ -1,7 +1,7 @@
 import introJS from 'intro.js'
 import 'intro.js/minified/introjs.min.css'
 
-export const useAppIntro = () => {
+export const useAppIntro = (delay = 1500) => {
   // TODO configuable
   const intro = introJS()
   const { t } = useAppI18n()
@@ -68,10 +68,7 @@ export const useAppIntro = () => {
     dontShowAgainCookieDays: 7,
   })
 
-  return {
-    start: () =>
-      setTimeout(() => {
-        intro.start()
-      }, 1500),
-  }
+  setTimeout(() => {
+    intro.start()
+  }, delay)
 }

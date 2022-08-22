@@ -95,50 +95,12 @@
           disabled: computed(() => !appRelatives.value.showFooter),
         },
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'showAnimation',
-        },
-        componentProp: {
-          disabled: getCanAnimation,
-        },
-      },
-      {
-        type: 'Base:Select',
-        formProp: {
-          path: 'animationMode',
-        },
-        componentProp: {
-          disabled: computed(
-            () => getCanAnimation.value || !appRelatives.value.showAnimation
-          ),
-          options: Object.values(AppConstAnimationMode).map((i) => ({
-            label: i,
-            value: i,
-          })),
-        },
-      },
-      {
-        type: 'Extend:TransitionSelect',
-        formProp: {
-          path: 'animationName',
-        },
-        componentProp: {
-          disabled: computed(
-            () =>
-              getCanAnimation.value ||
-              appRelatives.value.animationMode ===
-                AppConstAnimationMode.SCOPE ||
-              !appRelatives.value.showAnimation
-          ),
-          tooltip: true,
-        },
-      },
+
       {
         type: 'Base:Switch',
         formProp: {
           path: 'keepAlive',
+          labelHelpMessage: true,
         },
       },
       {
@@ -200,12 +162,6 @@
         },
       },
       {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'showWatermark',
-        },
-      },
-      {
         type: 'Base:Select',
         formProp: {
           path: 'colorMode',
@@ -218,14 +174,57 @@
           })),
         },
       },
+
       {
         type: 'Base:Switch',
         formProp: {
           path: 'reducedMotion',
+          labelHelpMessage: true,
         },
         componentProp: {
           // disable this switch when system prefers reduced motion
           disabled: !getSystemCanAnimtion,
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'showAnimation',
+        },
+        componentProp: {
+          disabled: getCanAnimation,
+        },
+      },
+      {
+        type: 'Base:Select',
+        formProp: {
+          path: 'animationMode',
+          labelHelpMessage: true,
+        },
+        componentProp: {
+          disabled: computed(
+            () => getCanAnimation.value || !appRelatives.value.showAnimation
+          ),
+          options: Object.values(AppConstAnimationMode).map((i) => ({
+            label: i,
+            value: i,
+          })),
+        },
+      },
+      {
+        type: 'Extend:TransitionSelect',
+        formProp: {
+          path: 'animationName',
+        },
+        componentProp: {
+          disabled: computed(
+            () =>
+              getCanAnimation.value ||
+              appRelatives.value.animationMode ===
+                AppConstAnimationMode.SCOPE ||
+              !appRelatives.value.showAnimation
+          ),
+          tooltip: true,
         },
       },
     ],
