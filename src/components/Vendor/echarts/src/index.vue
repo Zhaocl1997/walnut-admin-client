@@ -20,6 +20,7 @@
 
   const appDark = useAppStoreDark()
   const appLocale = useAppStoreLocale()
+  const appSettings = useAppStoreSetting()
 
   const getSkinName = computed(() => (appDark.isDark ? 'dark' : undefined))
 
@@ -55,8 +56,13 @@
 
     chartInst.value!.setOption(
       appDark.isDark
-        ? Object.assign(props.option, { backgroundColor: 'transparent' })
-        : props.option
+        ? Object.assign(props.option, {
+            backgroundColor: 'transparent',
+            animation: !appSettings.settings.app.reducedMotion,
+          })
+        : Object.assign(props.option, {
+            animation: !appSettings.settings.app.reducedMotion,
+          })
     )
   }
 

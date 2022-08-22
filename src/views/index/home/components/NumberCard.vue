@@ -37,6 +37,7 @@
             :from="0"
             :to="number"
             show-separator
+            :duration="appSettings.settings.app.reducedMotion ? 0 : 3000"
           ></n-number-animation>
 
           <w-transition appear name="slide-up">
@@ -94,6 +95,8 @@
   }
 
   const props = defineProps<InternalProps>()
+
+  const appSettings = useAppStoreSetting()
 
   const trend = ref(0)
   const showTrend = ref(true)

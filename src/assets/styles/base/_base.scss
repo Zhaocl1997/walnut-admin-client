@@ -12,34 +12,3 @@ body {
   height: 100%;
   overflow: hidden;
 }
-
-html[color-mode="cafe"] {
-  filter: sepia(0.9) hue-rotate(315deg) brightness(0.9);
-}
-
-html[color-mode="contrast"] {
-  filter: contrast(2);
-}
-
-html[color-mode="grayscale"] {
-  filter: grayscale(100%);
-}
-
-html[color-mode="inverted"] {
-  filter: invert(100%);
-}
-
-html[color-mode="grayscale-inverted"] {
-  filter: grayscale(100%) invert(100%);
-}
-
-html[reduce="true"] {
-  transition-duration: 0.001ms !important;
-  animation: none !important;
-  animation-duration: 0.001ms !important;
-  animation-iteration-count: 1 !important;
-
-  --animate-duration: 0 !important;
-  --animate-deply: 0 !important;
-  --animate-repeat: 0 !important;
-}

@@ -5,6 +5,18 @@
 <script lang="ts" setup>
   import { appRelatives, modalColor } from '../shared'
 
+  const preferredReducedMotion = usePreferredReducedMotion()
+
+  const appSettings = useAppStoreSetting()
+
+  const getSystemCanAnimtion = computed(
+    () => preferredReducedMotion.value === 'no-preference'
+  )
+
+  const getCanAnimation = computed(
+    () => getSystemCanAnimtion && appSettings.settings.app.reducedMotion
+  )
+
   const [register] = useForm<typeof appRelatives.value>({
     localeUniqueKey: 'app.app',
     showFeedback: false,
@@ -88,6 +100,9 @@
         formProp: {
           path: 'showAnimation',
         },
+        componentProp: {
+          disabled: getCanAnimation,
+        },
       },
       {
         type: 'Base:Select',
@@ -95,7 +110,9 @@
           path: 'animationMode',
         },
         componentProp: {
-          disabled: computed(() => !appRelatives.value.showAnimation),
+          disabled: computed(
+            () => getCanAnimation.value || !appRelatives.value.showAnimation
+          ),
           options: Object.values(AppConstAnimationMode).map((i) => ({
             label: i,
             value: i,
@@ -110,8 +127,10 @@
         componentProp: {
           disabled: computed(
             () =>
+              getCanAnimation.value ||
               appRelatives.value.animationMode ===
-                AppConstAnimationMode.SCOPE || !appRelatives.value.showAnimation
+                AppConstAnimationMode.SCOPE ||
+              !appRelatives.value.showAnimation
           ),
           tooltip: true,
         },
@@ -203,6 +222,10 @@
         type: 'Base:Switch',
         formProp: {
           path: 'reducedMotion',
+        },
+        componentProp: {
+          // disable this switch when system prefers reduced motion
+          disabled: !getSystemCanAnimtion,
         },
       },
     ],

@@ -1,5 +1,6 @@
 export const useAppReducedMotion = () => {
   const appSetting = useAppStoreSetting()
+  const prefersReducedMotion = usePreferredReducedMotion()
 
   watch(
     () => appSetting.settings.app.reducedMotion,
@@ -10,4 +11,9 @@ export const useAppReducedMotion = () => {
       immediate: true,
     }
   )
+
+  watchEffect(() => {
+    appSetting.settings.app.reducedMotion =
+      prefersReducedMotion.value === 'reduce'
+  })
 }

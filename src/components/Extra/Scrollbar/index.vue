@@ -31,6 +31,12 @@
     setup(props, { attrs, slots, emit, expose }) {
       const id = ref(genString(8))
 
+      const appSettings = useAppStoreSetting()
+
+      const getBehavior = computed(() =>
+        appSettings.settings.app.reducedMotion ? 'auto' : 'smooth'
+      )
+
       const scrollRef =
         ref<Nullable<ScrollbarInst & { scrollbarInstRef: Recordable }>>(null)
 
@@ -47,14 +53,14 @@
         scrollTo: (opt) => {
           scrollRef.value!.scrollTo({
             ...(opt as Object),
-            behavior: props.behavior,
+            behavior: getBehavior.value,
           })
         },
 
         scrollToStart: () => {
           scrollRef.value!.scrollTo({
             position: 'top',
-            behavior: props.behavior,
+            behavior: getBehavior.value,
           })
         },
 
@@ -64,12 +70,12 @@
               ? {
                   left: scrollRef.value!.scrollbarInstRef.containerRef
                     ?.scrollWidth,
-                  behavior: props.behavior,
+                  behavior: getBehavior.value,
                 }
               : {
                   top: scrollRef.value!.scrollbarInstRef.containerRef
                     ?.scrollHeight,
-                  behavior: props.behavior,
+                  behavior: getBehavior.value,
                 }
           )
         },
@@ -87,11 +93,11 @@
             props.vertical
               ? {
                   left: node['offsetLeft'],
-                  behavior: props.behavior,
+                  behavior: getBehavior.value,
                 }
               : {
                   top: node['offsetTop'],
-                  behavior: props.behavior,
+                  behavior: getBehavior.value,
                 }
           )
         },
