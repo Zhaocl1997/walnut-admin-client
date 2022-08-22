@@ -4,7 +4,11 @@
     text
     size="large"
     class="absolute bottom-0 w-full bg-base-color py-1"
-    :style="{ backgroundColor: 'var(--inverted-color)' }"
+    :style="{
+      backgroundColor: appSettings.settings.menu.inverted
+        ? 'var(--inverted-color)'
+        : 'transparent',
+    }"
     :icon="
       appMenu.collapse
         ? 'ant-design:double-right-outlined'
@@ -16,6 +20,7 @@
 
 <script lang="ts" setup>
   const appMenu = useAppStoreMenu()
+  const appSettings = useAppStoreSetting()
 
   const onToogleCollapse = () => {
     appMenu.setCollapse(!appMenu.collapse)
