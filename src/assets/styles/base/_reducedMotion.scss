@@ -2,6 +2,7 @@
 html[reduce="true"] *,
 ::before,
 ::after {
+  transition: none !important;
   transition-duration: 0.001ms !important;
   transition-delay: 0s !important;
   animation: none !important;
@@ -19,6 +20,7 @@ html[reduce="true"] *,
   *,
   ::before,
   ::after {
+    transition: none !important;
     transition-duration: 0.001ms !important;
     transition-delay: 0s !important;
     animation: none !important;
