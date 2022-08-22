@@ -1,10 +1,10 @@
 <template>
   <w-demo-card title="Scrollbar">
-    <w-title prefix="bar">Vertical Position: {{ position }}</w-title>
+    <w-title prefix="bar"
+      >Vertical Position: {{ position }} || Overflow: {{ overflow }}</w-title
+    >
 
     <n-space size="small">
-      <n-text>Is Overflow: {{ overflow }}</n-text>
-
       <n-button @click="scrollRef?.scrollTo({ top: 800 })"
         >Scroll to 800px</n-button
       >
@@ -38,12 +38,11 @@
     <n-divider></n-divider>
 
     <w-title prefix="bar"
-      >Horizontal Position: {{ positionHorizontal }}</w-title
+      >Horizontal Position: {{ positionHorizontal }} || Overflow:
+      {{ overflowHorizontal }}</w-title
     >
 
     <n-space size="small">
-      <n-text>Is Overflow: {{ overflowHorizontal }}</n-text>
-
       <n-button @click="scrollHorizontalRef?.scrollTo({ left: 800 })"
         >Scroll to 800px</n-button
       >
