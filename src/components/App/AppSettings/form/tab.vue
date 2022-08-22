@@ -77,6 +77,15 @@
         },
       },
       {
+        type: 'Extend:TransitionSelect',
+        formProp: {
+          path: 'animationName',
+        },
+        componentProp: {
+          tooltip: true,
+        },
+      },
+      {
         type: 'Base:Switch',
         formProp: {
           path: 'persistent',

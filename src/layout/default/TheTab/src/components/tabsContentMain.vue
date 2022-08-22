@@ -6,7 +6,7 @@
     :height="appSetting.settings.tab.height + 'px'"
   >
     <ul id="tabSortable" class="hstack">
-      <w-transition appear name="fade-down" group>
+      <w-transition appear :name="appSetting.settings.tab.animationName" group>
         <li
           v-for="(item, index) in appTab.tabs"
           :key="item.name"

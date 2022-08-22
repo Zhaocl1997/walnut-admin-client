@@ -251,7 +251,7 @@
                                 "description": "Custom color mode"
                             },
                             "reducedMotion": {
-                                "description": "reactive preferred-reduced-motion",
+                                "description": "reactive prefers-reduced-motion",
                                 "type": "boolean"
                             }
                         },
@@ -411,9 +411,14 @@
                             "persistent": {
                                 "description": "With persistent support",
                                 "type": "boolean"
+                            },
+                            "animationName": {
+                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                                "description": "Tab animation name"
                             }
                         },
                         "required": [
+                            "animationName",
                             "contextMenu",
                             "devtool",
                             "height",

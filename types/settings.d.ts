@@ -269,6 +269,11 @@ interface AppSettings {
      * With persistent support
      */
     persistent: boolean
+
+    /**
+     * Tab animation name
+     */
+    animationName: ValueOfAppConstTransitionName
   }
 
   breadcrumb: {

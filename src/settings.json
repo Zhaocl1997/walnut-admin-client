@@ -70,6 +70,7 @@
     "sortable": true,
     "styleMode": "card",
     "devtool": true,
+    "animationName": "fade-down",
     "persistent": true
   },
   "breadcrumb": {
