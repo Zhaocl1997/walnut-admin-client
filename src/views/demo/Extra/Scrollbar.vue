@@ -1,13 +1,15 @@
 <template>
   <w-demo-card title="Scrollbar">
-    <w-title prefix="bar">Horizontal Position: {{ position }}</w-title>
+    <w-title prefix="bar">Vertical Position: {{ position }}</w-title>
 
     <n-space size="small">
+      <n-text>Is Overflow: {{ overflow }}</n-text>
+
       <n-button @click="scrollRef?.scrollTo({ top: 800 })"
-        >Scroll to 800px position</n-button
+        >Scroll to 800px</n-button
       >
       <n-button @click="scrollRef?.scrollTo({ top: 1600 })"
-        >Scroll to 1600px position</n-button
+        >Scroll to 1600px</n-button
       >
 
       <n-button @click="scrollRef?.scrollToStart()">Scroll to Top</n-button>
@@ -35,38 +37,43 @@
 
     <n-divider></n-divider>
 
-    <w-title prefix="bar">Vertical Position: {{ positionVertival }}</w-title>
+    <w-title prefix="bar"
+      >Horizontal Position: {{ positionHorizontal }}</w-title
+    >
 
     <n-space size="small">
-      <n-button @click="scrollVerticalRef?.scrollTo({ left: 800 })"
-        >Scroll to 800px position</n-button
+      <n-text>Is Overflow: {{ overflowHorizontal }}</n-text>
+
+      <n-button @click="scrollHorizontalRef?.scrollTo({ left: 800 })"
+        >Scroll to 800px</n-button
       >
-      <n-button @click="scrollVerticalRef?.scrollTo({ left: 1600 })"
-        >Scroll to 1600px position</n-button
+      <n-button @click="scrollHorizontalRef?.scrollTo({ left: 1600 })"
+        >Scroll to 1600px</n-button
       >
 
-      <n-button @click="scrollVerticalRef?.scrollToStart()"
+      <n-button @click="scrollHorizontalRef?.scrollToStart()"
         >Scroll to Left</n-button
       >
-      <n-button @click="scrollVerticalRef?.scrollToEnd()"
+      <n-button @click="scrollHorizontalRef?.scrollToEnd()"
         >Scroll to Right</n-button
       >
 
-      <n-button @click="scrollVerticalRef?.scrollToIndex(40)"
+      <n-button @click="scrollHorizontalRef?.scrollToIndex(40)"
         >Scroll to index 40</n-button
       >
 
-      <n-button @click="scrollVerticalRef?.scrollToIndex(80)"
+      <n-button @click="scrollHorizontalRef?.scrollToIndex(80)"
         >Scroll to index 80</n-button
       >
     </n-space>
 
     <div class="mt-2 border border-2 border-gray-600 rounded-sm h-12">
       <w-scrollbar
-        ref="scrollVerticalRef"
-        v-model="positionVertival"
+        ref="scrollHorizontalRef"
+        v-model="positionHorizontal"
         vertical
         height="100px"
+        width="600px"
       >
         <div class="hstack whitespace-nowrap">
           <div v-for="i in 100" :key="i" class="text-3xl mx-3">
@@ -82,10 +89,29 @@
   import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
   const position = ref(0)
-  const positionVertival = ref(0)
+  const positionHorizontal = ref(0)
+
+  const overflow = ref(false)
+  const overflowHorizontal = ref(false)
 
   const scrollRef = ref<Nullable<WScrollbarInst>>(null)
-  const scrollVerticalRef = ref<Nullable<WScrollbarInst>>(null)
+  const scrollHorizontalRef = ref<Nullable<WScrollbarInst>>(null)
+
+  watch(
+    () => position.value,
+    () => {
+      overflow.value = scrollRef.value?.getIsOverflow()!
+    },
+    { immediate: true }
+  )
+
+  watch(
+    () => positionHorizontal.value,
+    () => {
+      overflowHorizontal.value = scrollHorizontalRef.value?.getIsOverflow()!
+    },
+    { immediate: true }
+  )
 </script>
 
 <script lang="ts">

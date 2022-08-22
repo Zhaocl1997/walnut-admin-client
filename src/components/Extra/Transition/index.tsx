@@ -29,7 +29,7 @@ const props = {
           leave: number
         }
     >,
-    default: 500,
+    default: 300,
   },
 } as const
 

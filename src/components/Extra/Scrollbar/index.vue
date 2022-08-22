@@ -29,9 +29,10 @@
     emits: ['update:modelValue', 'scroll'],
 
     setup(props, { attrs, slots, emit, expose }) {
-      const id = ref(genString(8))
-
       const appSettings = useAppStoreSetting()
+
+      const id = ref(genString(8))
+      const isOverflow = ref(false)
 
       const getBehavior = computed(() =>
         appSettings.settings.app.reducedMotion ? 'auto' : 'smooth'
@@ -40,14 +41,26 @@
       const scrollRef =
         ref<Nullable<ScrollbarInst & { scrollbarInstRef: Recordable }>>(null)
 
-      const onScroll = useThrottleFn((e: WheelEvent) => {
+      const onScroll = (e: Event) => {
         emit(
           'update:modelValue',
           props.vertical
-            ? (e.target as HTMLElement).scrollLeft
-            : (e.target as HTMLElement).scrollTop
+            ? Number((e.target as HTMLElement).scrollLeft.toFixed(2))
+            : Number((e.target as HTMLElement).scrollTop.toFixed(2))
         )
-      }, 300)
+
+        if (props.vertical) {
+          isOverflow.value =
+            (e.target as HTMLElement).scrollWidth >
+            (e.target as HTMLElement).clientWidth
+        } else {
+          isOverflow.value =
+            (e.target as HTMLElement).scrollHeight >
+            (e.target as HTMLElement).clientHeight
+        }
+
+        emit('scroll', isOverflow.value)
+      }
 
       const methods: WScrollbarInst = {
         scrollTo: (opt) => {
@@ -101,48 +114,11 @@
                 }
           )
         },
+
+        getIsOverflow: () => {
+          return isOverflow.value
+        },
       }
-
-      /**
-       * @description Capture wheel event so be able to handle x axias scroll
-       */
-      const onVerticalScroll = (event: WheelEvent) => {
-        // get scroll direction
-        const detail = event.deltaY || event.detail
-
-        // define direction
-        const moveForwardStep = 1
-        const moveBackStep = -1
-
-        // define step
-        let step = 0
-
-        // nagative means scroll to right, positive means scroll to left
-        if (detail < 0) {
-          step = moveForwardStep * 100
-        } else {
-          step = moveBackStep * 100
-        }
-
-        // move action
-        scrollRef.value!.scrollbarInstRef.containerRef.scrollLeft += step
-
-        emit('scroll')
-      }
-
-      onMounted(() => {
-        props.vertical &&
-          useEventListener(
-            document.getElementById(id.value),
-            'wheel',
-            onVerticalScroll,
-            {
-              passive: true,
-              once: false,
-              capture: true,
-            }
-          )
-      })
 
       useExpose({
         apis: methods,

@@ -5,6 +5,7 @@ export interface WScrollbarInst {
   scrollToStart: () => void
   scrollToEnd: () => void
   scrollToIndex: (index: number) => void
+  getIsOverflow: () => boolean
 }
 
 export { default } from './index.vue'
