@@ -2,7 +2,7 @@
   <w-scrollbar
     ref="scrollRef"
     @scroll="onCloseCtxMenu"
-    vertical
+    x-scrollable
     :height="appSetting.settings.tab.height + 'px'"
   >
     <ul id="tabSortable" class="hstack">

@@ -10,7 +10,7 @@
 
     props: {
       modelValue: Number as PropType<number>,
-      vertical: Boolean as PropType<boolean>,
+      xScrollable: Boolean as PropType<boolean>,
       height: {
         type: String as PropType<string>,
         default: '0',
@@ -44,12 +44,12 @@
       const onScroll = (e: Event) => {
         emit(
           'update:modelValue',
-          props.vertical
+          props.xScrollable
             ? Number((e.target as HTMLElement).scrollLeft.toFixed(2))
             : Number((e.target as HTMLElement).scrollTop.toFixed(2))
         )
 
-        if (props.vertical) {
+        if (props.xScrollable) {
           isOverflow.value =
             (e.target as HTMLElement).scrollWidth >
             (e.target as HTMLElement).clientWidth
@@ -79,7 +79,7 @@
 
         scrollToEnd: () => {
           scrollRef.value!.scrollTo(
-            props.vertical
+            props.xScrollable
               ? {
                   left: scrollRef.value!.scrollbarInstRef.containerRef
                     ?.scrollWidth,
@@ -103,7 +103,7 @@
               ?.children[0]?.children[index]
 
           scrollRef.value!.scrollTo(
-            props.vertical
+            props.xScrollable
               ? {
                   left: node['offsetLeft'],
                   behavior: getBehavior.value,
@@ -135,7 +135,7 @@
               height: props.height,
               width: props.width,
             }}
-            x-scrollable={props.vertical}
+            x-scrollable={props.xScrollable}
           >
             {slots}
           </n-scrollbar>

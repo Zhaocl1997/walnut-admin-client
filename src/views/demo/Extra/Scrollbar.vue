@@ -71,7 +71,7 @@
       <w-scrollbar
         ref="scrollHorizontalRef"
         v-model="positionHorizontal"
-        vertical
+        x-scrollable
         height="100px"
         width="600px"
       >
