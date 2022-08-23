@@ -72,7 +72,6 @@
         v-model="positionHorizontal"
         x-scrollable
         height="100px"
-        width="600px"
       >
         <div class="hstack whitespace-nowrap">
           <div v-for="i in 100" :key="i" class="text-3xl mx-3">

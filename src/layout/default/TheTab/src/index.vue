@@ -1,27 +1,31 @@
 <template>
   <div id="walnut-tab" class="hstack justify-between p-1">
-    <div
-      v-if="appSetting.settings.tab.showUtils"
-      class="hstack flex-none justify-start"
-    >
-      <TabsUtils :lists="leftUtils"></TabsUtils>
-    </div>
+    <w-transition appear name="fade-left">
+      <div
+        v-if="appSetting.settings.tab.showUtils && isOverflow"
+        class="hstack flex-none justify-start"
+      >
+        <TabsUtils :lists="leftUtils"></TabsUtils>
+      </div>
+    </w-transition>
 
-    <div
+    <TabsContentMain
       class="flex flex-grow"
       :style="{
-        width: `calc(100vw - ${appSetting.settings.menu.width}px - 120px)`,
+        width: `calc(100vw - ${appSetting.settings.menu.width}px - ${
+          isOverflow ? '120px' : '0px'
+        })`,
       }"
-    >
-      <TabsContentMain></TabsContentMain>
-    </div>
+    ></TabsContentMain>
 
-    <div
-      v-if="appSetting.settings.tab.showUtils"
-      class="hstack flex-none justify-end"
-    >
-      <TabsUtils :lists="rightUtils"></TabsUtils>
-    </div>
+    <w-transition appear name="fade-right">
+      <div
+        v-if="appSetting.settings.tab.showUtils && isOverflow"
+        class="hstack flex-none justify-end"
+      >
+        <TabsUtils :lists="rightUtils"></TabsUtils>
+      </div>
+    </w-transition>
 
     <TabsContextMenu
       v-if="appSetting.settings.tab.contextMenu"
@@ -62,7 +66,7 @@
     () => isDev() && !appAdapter.isMobile && appSetting.settings.tab.devtool
   )
 
-  const { scrollRef, getCurrentRouteTabIndex } = useTabs()
+  const { scrollRef, isOverflow, getCurrentRouteTabIndex } = useTabs()
 
   const {
     devToolX,

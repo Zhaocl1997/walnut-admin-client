@@ -11,6 +11,7 @@ export const useTabs = () => {
   const { currentRoute } = useAppRouter()
 
   const scrollRef = ref<Nullable<WScrollbarInst>>(null)
+  const isOverflow = ref(false)
 
   const getCurrentRouteTabIndex = computed(() =>
     appTab.tabs.findIndex((item) => item.name === currentRoute.value.name)
@@ -34,7 +35,7 @@ export const useTabs = () => {
       // Build tab
       appTab.createTabs(appTab.createTabByRoute(route))
 
-      // Scroll
+      // use device to trigger Scroll
       appAdapter.device && onScrollToCurrentTab()
     },
     {
@@ -43,5 +44,18 @@ export const useTabs = () => {
     }
   )
 
-  return { scrollRef, getCurrentRouteTabIndex }
+  watch(
+    appTab.tabs,
+    () => {
+      // check scroll content is overflow or not, do some judgement
+      isOverflow.value = scrollRef.value?.getIsOverflow()!
+    },
+    {
+      deep: true,
+      immediate: true,
+      flush: 'post',
+    }
+  )
+
+  return { scrollRef, isOverflow, getCurrentRouteTabIndex }
 }

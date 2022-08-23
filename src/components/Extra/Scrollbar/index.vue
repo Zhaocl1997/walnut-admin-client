@@ -32,7 +32,6 @@
       const appSettings = useAppStoreSetting()
 
       const id = ref(genString(8))
-      const isOverflow = ref(false)
 
       const getBehavior = computed(() =>
         appSettings.settings.app.reducedMotion ? 'auto' : 'smooth'
@@ -49,17 +48,7 @@
             : Number((e.target as HTMLElement).scrollTop.toFixed(2))
         )
 
-        if (props.xScrollable) {
-          isOverflow.value =
-            (e.target as HTMLElement).scrollWidth >
-            (e.target as HTMLElement).clientWidth
-        } else {
-          isOverflow.value =
-            (e.target as HTMLElement).scrollHeight >
-            (e.target as HTMLElement).clientHeight
-        }
-
-        emit('scroll', isOverflow.value)
+        emit('scroll')
       }
 
       const methods: WScrollbarInst = {
@@ -78,16 +67,16 @@
         },
 
         scrollToEnd: () => {
+          const target = scrollRef.value!.scrollbarInstRef.containerRef
+
           scrollRef.value!.scrollTo(
             props.xScrollable
               ? {
-                  left: scrollRef.value!.scrollbarInstRef.containerRef
-                    ?.scrollWidth,
+                  left: target?.scrollWidth,
                   behavior: getBehavior.value,
                 }
               : {
-                  top: scrollRef.value!.scrollbarInstRef.containerRef
-                    ?.scrollHeight,
+                  top: target?.scrollHeight,
                   behavior: getBehavior.value,
                 }
           )
@@ -116,7 +105,22 @@
         },
 
         getIsOverflow: () => {
-          return isOverflow.value
+          if (props.xScrollable) {
+            console.log(
+              scrollRef.value!.scrollbarInstRef.containerRef.scrollWidth,
+              scrollRef.value!.scrollbarInstRef.containerRef.clientWidth
+            )
+
+            return (
+              scrollRef.value!.scrollbarInstRef.containerRef.scrollWidth >
+              scrollRef.value!.scrollbarInstRef.containerRef.clientWidth
+            )
+          } else {
+            return (
+              scrollRef.value!.scrollbarInstRef.containerRef.scrollHeight >
+              scrollRef.value!.scrollbarInstRef.containerRef.clientHeight
+            )
+          }
         },
       }
 
