@@ -2,7 +2,6 @@
   import type { MenuOption } from 'naive-ui'
 
   import { findPath, formatTree } from 'easy-fns-ts'
-  import { filterTree } from '@/utils/shared'
   import { cloneDeep } from 'lodash-es'
 
   export default defineComponent({

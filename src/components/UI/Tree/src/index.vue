@@ -76,7 +76,6 @@
   import WButton from '@/components/UI/Button'
   import WTransition from '@/components/Extra/Transition'
 
-  import { usePropsAdvanced } from '@/hooks/core/usePropsAdvanced'
   import { useDropdown } from '@/components/UI/Dropdown'
 
   // TODO 888

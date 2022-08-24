@@ -1,5 +1,4 @@
 import type Sortable from 'sortablejs'
-import { useSortable } from '@/hooks/component/useSortable'
 
 let inst: Sortable
 

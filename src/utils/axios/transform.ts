@@ -7,7 +7,6 @@ import {
 import { merge } from 'lodash-es'
 
 import { checkReponseErrorStatus } from './checkStatus'
-import { BussinessCodeConst } from '@/const/axios'
 import { AppResponseEncryption, AppRequestEncryption } from '../crypto'
 
 const userAuth = useAppStoreUserAuth()

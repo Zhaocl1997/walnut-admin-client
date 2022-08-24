@@ -110,7 +110,6 @@
 
 <script lang="ts" setup>
   import type { InputInst } from 'naive-ui'
-  import { mockListApi } from '@/utils/mockListApi'
   import { iconCollectionsNameList } from '@/components/UI/Icon/src/utils/collections'
   import iconLists from '@/components/UI/Icon/src/utils/list'
 

@@ -3,8 +3,6 @@
 
   import { omit } from 'lodash-es'
 
-  import { useProps } from '@/hooks/core/useProps'
-
   import { setTableContext } from './hooks/useTableContext'
   import { useTableEvents } from './hooks/useTableEvents'
   import { useTableColumns } from './hooks/useTableColumns'

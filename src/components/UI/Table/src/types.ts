@@ -9,7 +9,6 @@ import type { useEventParams } from '@/hooks/component/useEvent'
 import type { WForm } from '../../Form'
 import type { WButtonProps } from '../../Button'
 import type { WTablePropType } from './props'
-import { type } from 'os'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'
