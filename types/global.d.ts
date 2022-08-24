@@ -34,7 +34,8 @@ declare type RecordNullable<T> = {
 
 declare type MaybeRefSelf<T> = T | Ref<T> | ComputedRef<T>
 
-// TODO extend string => form type not intelligence
+// TODO type
+// extend string => form type not intelligence
 // not extend string => other string not working
 declare type DeepMaybeRefSelf<T> = T extends Ref<infer V>
   ? MaybeRefSelf<V>

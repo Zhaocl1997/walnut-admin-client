@@ -240,7 +240,6 @@
                 path: 'formTree',
               },
               componentProp: {
-                // TODO emit value do not trigger reset validation status
                 treeProps: {
                   data: getTreeData(),
                   labelField: '_label',
@@ -313,7 +312,6 @@
             {
               type: 'Vendor:Tinymce',
               formProp: {
-                // TODO emit value do not trigger reset validation status
                 label: 'Tinymce',
                 path: 'formTinymce',
               },

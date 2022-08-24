@@ -25,9 +25,7 @@
       onApiTableReadAndOpenUpdateForm,
       onApiTableDelete,
       onApiTableDeleteMany,
-      // TODO ts-error
       onGetActionType,
-      // TODO ts-error
       onGetFormData,
     },
   ] = useCRUD<AppSystemRole>({
@@ -191,7 +189,9 @@
           },
           componentProp: {
             clearable: true,
-            disabled: computed(() => onGetActionType().value === 'update'),
+            disabled: computed(
+              (): boolean => onGetActionType().value === 'update'
+            ) as unknown as boolean,
           },
         },
         {
@@ -248,8 +248,8 @@
               keyField: '_id',
               labelField: 'title',
               disabled: computed(
-                () => onGetFormData().value.roleName === 'admin'
-              ),
+                (): boolean => onGetFormData().value.roleName === 'admin'
+              ) as unknown as boolean,
 
               renderLabel: ({ option }) =>
                 option.type === AppConstMenuType.ELEMENT

@@ -93,7 +93,7 @@ export const transform: AxiosTransform = {
     if (code === BussinessCodeConst.ACCESS_TOKEN_EXPIRED) {
       const config = res.config
 
-      // TODO
+      // TODO bug
       // router push too fast, which means last page going on requesting, then go to another page, will cause fake death of page
 
       if (!isRefreshing) {

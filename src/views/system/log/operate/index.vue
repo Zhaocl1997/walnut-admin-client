@@ -19,7 +19,6 @@
     {
       onApiTableReadAndOpenUpdateForm,
       onApiTableDeleteMany,
-      // TODO ts-error
       onGetApiTableListParams,
     },
   ] = useCRUD<AppSystemLogOperate>({
@@ -153,10 +152,13 @@
             value: i,
             label: i,
           })),
-          filterOptionValues: computed(() => {
+          filterOptionValues: computed((): string[] => {
             const listParams = onGetApiTableListParams()
-            return listParams.value.query.method ?? []
-          }),
+
+            return listParams.value.query?.method
+              ? [listParams.value.query?.method]
+              : []
+          }) as unknown as string[],
         },
 
         {
