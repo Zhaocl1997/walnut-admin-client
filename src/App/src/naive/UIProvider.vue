@@ -10,8 +10,14 @@
   >
     <n-loading-bar-provider>
       <n-dialog-provider>
-        <n-notification-provider :max="3" :placement="appMsg.notiPlacement">
-          <n-message-provider :max="5" :placement="appMsg.msgPlacement">
+        <n-notification-provider
+          :max="appMsg.notiMax"
+          :placement="appMsg.notiPlacement"
+        >
+          <n-message-provider
+            :max="appMsg.msgMax"
+            :placement="appMsg.msgPlacement"
+          >
             <slot></slot>
           </n-message-provider>
         </n-notification-provider>
@@ -21,8 +27,6 @@
 </template>
 
 <script lang="ts" setup>
-  // TODO noti and mess max config
-  // TODO inline-theme-disabled config
   // notice that `cls-preifx` is not recommended to change
   // the reason is that there are some class-selectors which starts with `.w-` influence the style
   import { hljs } from './src/hljs'

@@ -80,6 +80,8 @@ declare global {
    * App naive ui message/notificaiton placement state
    */
   interface AppMsgState {
+    notiMax: number
+    msgMax: number
     notiPlacement: NotificationPlacement
     msgPlacement: MessagePlacement
   }

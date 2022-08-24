@@ -4,6 +4,8 @@ import { store } from '../../pinia'
 
 const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
   state: (): AppMsgState => ({
+    notiMax: 3,
+    msgMax: 5,
     notiPlacement: 'top-right',
     msgPlacement: 'top',
   }),
