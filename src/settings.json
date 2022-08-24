@@ -66,6 +66,7 @@
     "height": 32,
     "showIcon": false,
     "showUtils": true,
+    "showUtilsMode": "overflow",
     "contextMenu": true,
     "sortable": true,
     "styleMode": "card",

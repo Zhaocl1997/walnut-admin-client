@@ -106,11 +106,6 @@
 
         getIsOverflow: () => {
           if (props.xScrollable) {
-            console.log(
-              scrollRef.value!.scrollbarInstRef.containerRef.scrollWidth,
-              scrollRef.value!.scrollbarInstRef.containerRef.clientWidth
-            )
-
             return (
               scrollRef.value!.scrollbarInstRef.containerRef.scrollWidth >
               scrollRef.value!.scrollbarInstRef.containerRef.clientWidth

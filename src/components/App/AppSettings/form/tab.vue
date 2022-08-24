@@ -46,6 +46,20 @@
         },
       },
       {
+        type: 'Base:Select',
+        formProp: {
+          path: 'showUtilsMode',
+          labelHelpMessage: true,
+        },
+        componentProp: {
+          options: Object.values(AppConstTabUtilsShowMode).map((i) => ({
+            value: i,
+            label: i,
+          })),
+          disabled: computed(() => !tabRelatives.value.showUtils),
+        },
+      },
+      {
         type: 'Base:Switch',
         formProp: {
           path: 'contextMenu',

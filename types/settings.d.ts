@@ -12,6 +12,7 @@ import {
   ValueOfAppConstAnimationMode,
   ValueOfAppConstColorMode,
 } from '../src/const/app'
+import { ValueOfAppConstTabUtilsShowMode } from '../src/const/tab'
 
 interface AppSettings {
   /**
@@ -244,6 +245,11 @@ interface AppSettings {
      * Tab aside utils visibility
      */
     showUtils: boolean
+
+    /**
+     * Tab aside utils display mode
+     */
+    showUtilsMode: ValueOfAppConstTabUtilsShowMode
 
     /**
      * Tab context menu visibility

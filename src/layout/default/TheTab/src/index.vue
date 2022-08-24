@@ -1,10 +1,7 @@
 <template>
   <div id="walnut-tab" class="hstack justify-between p-1">
     <w-transition appear name="fade-left">
-      <div
-        v-if="appSetting.settings.tab.showUtils && isOverflow"
-        class="hstack flex-none justify-start"
-      >
+      <div v-if="getShowUtils" class="hstack flex-none justify-start">
         <TabsUtils :lists="leftUtils"></TabsUtils>
       </div>
     </w-transition>
@@ -19,10 +16,7 @@
     ></TabsContentMain>
 
     <w-transition appear name="fade-right">
-      <div
-        v-if="appSetting.settings.tab.showUtils && isOverflow"
-        class="hstack flex-none justify-end"
-      >
+      <div v-if="getShowUtils" class="hstack flex-none justify-end">
         <TabsUtils :lists="rightUtils"></TabsUtils>
       </div>
     </w-transition>
@@ -64,6 +58,16 @@
 
   const getShowDevTools = computed(
     () => isDev() && !appAdapter.isMobile && appSetting.settings.tab.devtool
+  )
+
+  const getShowUtils = computed(
+    () =>
+      appSetting.settings.tab.showUtils &&
+      (appSetting.settings.tab.showUtilsMode ===
+        AppConstTabUtilsShowMode.ALWAYS ||
+        (appSetting.settings.tab.showUtilsMode ===
+          AppConstTabUtilsShowMode.OVERFLOW &&
+          isOverflow.value))
   )
 
   const { scrollRef, isOverflow, getCurrentRouteTabIndex } = useTabs()

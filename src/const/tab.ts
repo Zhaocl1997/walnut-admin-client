@@ -6,4 +6,13 @@ export const AppConstTabDeleteType = {
   TAB_ALL: 'TAB_ALL',
 } as const
 
-export type ValueOfAppConstTabDeleteType = ValueOf<typeof AppConstTabDeleteType>
+export type ValueOfAppConstTabDeleteType =
+  typeof AppConstTabDeleteType[keyof typeof AppConstTabDeleteType]
+
+export const AppConstTabUtilsShowMode = {
+  ALWAYS: 'always',
+  OVERFLOW: 'overflow',
+} as const
+
+export type ValueOfAppConstTabUtilsShowMode =
+  typeof AppConstTabUtilsShowMode[keyof typeof AppConstTabUtilsShowMode]

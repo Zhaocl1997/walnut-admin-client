@@ -392,6 +392,10 @@
                                 "description": "Tab aside utils visibility",
                                 "type": "boolean"
                             },
+                            "showUtilsMode": {
+                                "$ref": "#/definitions/ValueOfAppConstTabUtilsShowMode",
+                                "description": "Tab aside utils display mode"
+                            },
                             "contextMenu": {
                                 "description": "Tab context menu visibility",
                                 "type": "boolean"
@@ -425,6 +429,7 @@
                             "persistent",
                             "showIcon",
                             "showUtils",
+                            "showUtilsMode",
                             "sortable",
                             "styleMode"
                         ]
@@ -535,6 +540,13 @@
                             "bar",
                             "button",
                             "icon"
+                        ],
+                        "type": "string"
+                    },
+                    "ValueOfAppConstTabUtilsShowMode": {
+                        "enum": [
+                            "always",
+                            "overflow"
                         ],
                         "type": "string"
                     },
