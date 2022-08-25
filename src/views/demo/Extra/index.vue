@@ -27,6 +27,7 @@
         <n-anchor-link title="Transition" href="#Transition"></n-anchor-link>
         <n-anchor-link title="Axios" href="#Axios"></n-anchor-link>
         <n-anchor-link title="File" href="#File"></n-anchor-link>
+        <n-anchor-link title="LayoutTab" href="#LayoutTab"></n-anchor-link>
       </n-anchor>
     </div>
 
@@ -37,6 +38,7 @@
       ]"
     >
       <div class="children:my-2">
+        <DemoNaiveMsg id="NaiveMsg"></DemoNaiveMsg>
         <DemoArrow id="Arrow"></DemoArrow>
         <DemoIconPicker id="IconPicker"></DemoIconPicker>
         <DemoJSON id="JSON"></DemoJSON>
@@ -55,6 +57,7 @@
         <DemoTransition id="Transition"></DemoTransition>
         <DemoAxios id="Axios"></DemoAxios>
         <DemoFile id="File"></DemoFile>
+        <DemoLayoutTab id="LayoutTab"></DemoLayoutTab>
       </div>
     </div>
   </div>
@@ -76,6 +79,7 @@
   import DemoDrawer from './Drawer.vue'
   import DemoNaiveMsg from './NaiveMsg.vue'
   import DemoFile from './File.vue'
+  import DemoLayoutTab from './LayoutTab.vue'
 
   const appAdapter = useAppStoreAdapter()
 </script>

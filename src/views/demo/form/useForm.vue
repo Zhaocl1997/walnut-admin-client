@@ -37,7 +37,8 @@
           labelPlacement: 'left',
           bordered: true,
           column: 3,
-          // TODO column not working
+          // TODO bug
+          // column not working
         },
         schemas: [
           {

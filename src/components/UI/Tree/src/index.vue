@@ -8,6 +8,7 @@
       clearable
       round
       size="small"
+      :disabled="getProps.treeProps?.disabled"
     >
       <template #suffix>
         <n-dropdown
@@ -16,6 +17,7 @@
           @select="onToolbarSelect"
           show-arrow
           size="small"
+          :disabled="getProps.treeProps?.disabled"
         >
           <WIcon
             height="20"
