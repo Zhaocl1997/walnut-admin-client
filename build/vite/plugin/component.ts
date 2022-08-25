@@ -23,6 +23,7 @@ const comp = {
     'AbsImage',
     'Arrow',
     'DemoCard',
+    'FlipClock',
     'Flipper',
     'IconPicker',
     'JSON',
