@@ -1,26 +1,51 @@
 import { defineStore } from 'pinia'
+import { clone, isEmpty } from 'lodash-es'
+
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
   state: (): AppLockState => ({
-    lockMode: useAppStorage(
-      AppConstPersistKey.LOCK_MODE,
-      AppConstLockMode.AUTO,
-      Infinity
-    ),
     isLock: useAppStorage(AppConstPersistKey.IS_LOCK, false, Infinity),
+    lockRoute: useAppStorage(AppConstPersistKey.LOCK_ROUTE, {}, Infinity),
   }),
 
   getters: {},
 
   actions: {
-    setLockMode(payload: ValueOfAppConstLockMode) {
-      this.lockMode = payload
-    },
-
     setIsLock(payload: boolean) {
       this.isLock = payload
+    },
+
+    setLockRoute(payload: AppLockRoute) {
+      this.lockRoute = payload
+    },
+
+    async lock(route: Ref<RouteLocationNormalizedLoaded>) {
+      this.setIsLock(true)
+
+      this.setLockRoute({
+        name: route.value.name as string,
+        query: route.value.query,
+        params: route.value.params,
+      })
+
+      await useAppRouterPush({ name: AppLockName })
+    },
+
+    async unLock() {
+      const appMenu = useAppStoreMenu()
+
+      this.setIsLock(false)
+
+      const lockRoute = clone(this.lockRoute)
+      this.setLockRoute({})
+
+      if (isEmpty(lockRoute)) {
+        await appMenu.goIndex()
+      } else {
+        await useAppRouterPush(lockRoute)
+      }
     },
   },
 })

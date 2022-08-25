@@ -11,6 +11,7 @@
           <div class="shadow"></div>
           <div class="inn">{{ key }}</div>
         </div>
+
         <div class="down">
           <div class="shadow"></div>
           <div class="inn">{{ key }}</div>
@@ -26,8 +27,6 @@
     total: number
     current: number
   }
-
-  const addAdapter = useAppStoreAdapter()
 
   const props = withDefaults(defineProps<InternalProps>(), {
     total: 9,
@@ -137,7 +136,7 @@
       }
     }
   }
-  .play {
+  html[reduce='false'] .play {
     .item {
       &.before {
         z-index: 3;
@@ -183,7 +182,7 @@
       z-index: 4;
     }
   }
-  .play {
+  html[reduce='false'] .play {
     .shadow {
       position: absolute;
       width: 100%;

@@ -109,6 +109,7 @@
           path: 'layout',
         },
         componentProp: {
+          disabled: true,
           options: Object.values(AppConstLayoutMode).map((i) => ({
             value: i,
             label: i,
@@ -116,9 +117,15 @@
         },
       },
       {
-        type: 'Base:Switch',
+        type: 'Base:Select',
         formProp: {
-          path: 'pageLeaveLock',
+          path: 'lockMode',
+        },
+        componentProp: {
+          options: Object.values(AppConstLockMode).map((i) => ({
+            value: i,
+            label: i,
+          })),
         },
       },
       {
@@ -132,6 +139,9 @@
           suffix: 'ms',
           showButton: false,
           disabled: true,
+        },
+        extraProp: {
+          vShow: ({ formData }) => formData.lockMode === AppConstLockMode.IDLE,
         },
       },
       {

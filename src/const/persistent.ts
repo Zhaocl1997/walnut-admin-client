@@ -1,14 +1,14 @@
 export const AppConstPersistKey = {
-  AUTH: 'AUTH',
-  APP: 'APP',
-  TOKEN: 'TOKEN',
+  ACCESS_TOKEN: 'ACCESS_TOKEN',
   REFRESH_TOKEN: 'REFRESH_TOKEN',
+  REMEMBER: 'REMEMBER',
 
   DARK_MODE: 'DARK_MODE',
   IS_DARK: 'IS_DARK',
 
   LOCK_MODE: 'LOCK_MODE',
   IS_LOCK: 'IS_LOCK',
+  LOCK_ROUTE: 'LOCK_ROUTE',
 
   LOCALE: 'LOCALE',
 } as const

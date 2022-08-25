@@ -39,7 +39,7 @@
 
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
-  const onGoIndex = () => {
-    useAppRouterPush({ name: appMenu.indexMenuName })
+  const onGoIndex = async () => {
+    await appMenu.goIndex()
   }
 </script>

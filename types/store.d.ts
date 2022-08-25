@@ -28,6 +28,15 @@ declare global {
   }
 
   /**
+   * Lock route info
+   */
+  interface AppLockRoute {
+    name?: string
+    query?: Recordable
+    params?: Recordable
+  }
+
+  /**
    * App adapter state
    */
   interface AppAdapterState {
@@ -60,8 +69,8 @@ declare global {
    * App lock state
    */
   interface AppLockState {
-    lockMode: RemovableRef<ValueOfAppConstLockMode>
     isLock: RemovableRef<boolean>
+    lockRoute: RemovableRef<AppLockRoute>
   }
 
   /**

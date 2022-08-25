@@ -110,6 +110,13 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
         .filter(Boolean)
         .concat(AppRootName)
     },
+
+    /**
+     * @description go to index menu
+     */
+    async goIndex() {
+      await useAppRouterPush({ name: this.indexMenuName })
+    },
   },
 })
 

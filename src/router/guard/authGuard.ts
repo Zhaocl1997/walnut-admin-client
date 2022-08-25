@@ -9,6 +9,7 @@ export const createAuthGuard = (router: Router) => {
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
     const appKey = useAppStoreSecretKey()
+    const appLock = useAppStoreLock()
 
     // Paths in `RouteWhiteLists` will enter directly
     if (RouteWhiteLists.includes(to.path)) {
@@ -23,13 +24,21 @@ export const createAuthGuard = (router: Router) => {
 
     // No token, next to auth page and return
     if (!userAuth.access_token) {
-      const redirectData = {
+      next({
         path: AppAuthPath,
         replace: true,
-      }
-
-      next(redirectData)
+      })
       return
+    }
+
+    // handle lock logic
+    if (appLock.isLock && appLock.lockRoute) {
+      if (to.name !== AppLockName) {
+        next({
+          name: AppLockName,
+        })
+        return
+      }
     }
 
     // Get user info

@@ -40,6 +40,15 @@ export const AppRedirectRoute: RouteRecordRaw = {
   component: () => import('../layout/default/TheRedirect/index.vue'),
 }
 
+export const AppLockRoute: RouteRecordRaw = {
+  name: constant.AppLockName,
+  path: constant.AppLockPath,
+  component: () => import('../components/App/AppLock/lock.vue'),
+  meta: {
+    title: 'sys.menu.lock',
+  },
+}
+
 export const App404Route: RouteRecordRaw = {
   name: constant.App404Name,
   path: constant.App404Path,
@@ -58,5 +67,6 @@ export const routes: RouteRecordRaw[] = [
   AppAuthServiceAgreementRoute,
   AppRootRoute,
   AppRedirectRoute,
+  AppLockRoute,
   App500Route,
 ]

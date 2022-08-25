@@ -11,6 +11,7 @@ import {
   ValueOfAppConstTabStyleMode,
   ValueOfAppConstAnimationMode,
   ValueOfAppConstColorMode,
+  ValueOfAppConstLockMode,
 } from '../src/const/app'
 import { ValueOfAppConstTabUtilsShowMode } from '../src/const/tab'
 
@@ -106,9 +107,9 @@ interface AppSettings {
     layout: ValueOfAppConstLayoutMode
 
     /**
-     * Mouse leave page, lock app
+     * App lock mode
      */
-    pageLeaveLock: boolean
+    lockMode: ValueOfAppConstLockMode
 
     /**
      * User inactive milliseconds to lock app

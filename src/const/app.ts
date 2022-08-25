@@ -52,8 +52,9 @@ export type ValueOfAppConstLayoutMode =
   typeof AppConstLayoutMode[keyof typeof AppConstLayoutMode]
 
 export const AppConstLockMode = {
-  MANUAL: 'manual',
-  AUTO: 'auto',
+  DEFAULT: 'default',
+  SECURITY: 'security',
+  IDLE: 'idle',
 } as const
 
 export type ValueOfAppConstLockMode =

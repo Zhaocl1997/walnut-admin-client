@@ -9,9 +9,9 @@ import { store } from '../../pinia'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): UserAuthState => ({
-    access_token: useAppStorage('access_token', ''),
-    refresh_token: useAppStorage('refresh_token', ''),
-    remember: useAppStorage('remember', {
+    access_token: useAppStorage(AppConstPersistKey.ACCESS_TOKEN, ''),
+    refresh_token: useAppStorage(AppConstPersistKey.REFRESH_TOKEN, ''),
+    remember: useAppStorage(AppConstPersistKey.REMEMBER, {
       userName: '',
       password: '',
     }),
@@ -74,7 +74,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       await AppCoreFn1()
 
       // push to the index menu
-      await useAppRouterPush({ name: appMenu.indexMenuName })
+      await appMenu.goIndex()
     },
 
     /**

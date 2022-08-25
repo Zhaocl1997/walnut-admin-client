@@ -226,9 +226,9 @@
                                 "$ref": "#/definitions/ValueOfAppConstLayoutMode",
                                 "description": "App Layout"
                             },
-                            "pageLeaveLock": {
-                                "description": "Mouse leave page, lock app",
-                                "type": "boolean"
+                            "lockMode": {
+                                "$ref": "#/definitions/ValueOfAppConstLockMode",
+                                "description": "App lock mode"
                             },
                             "idleMS": {
                                 "description": "User inactive milliseconds to lock app",
@@ -266,7 +266,7 @@
                             "idleMS",
                             "keepAlive",
                             "layout",
-                            "pageLeaveLock",
+                            "lockMode",
                             "reducedMotion",
                             "showAnimation",
                             "showFooter",
@@ -520,6 +520,16 @@
                         "enum": [
                             "left-menu",
                             "top-menu"
+                        ],
+                        "type": "string"
+                    },
+                    "ValueOfAppConstLockMode": {
+                        "enum": [
+                            "auto",
+                            "default",
+                            "idle",
+                            "manual",
+                            "security"
                         ],
                         "type": "string"
                     },

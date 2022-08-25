@@ -69,7 +69,10 @@
 
   import TheIFrameWrapper from '../iframe/wrapper.vue'
   import TheMainHeader from './MainHeader.vue'
+
   import TheAppWatermark from '@/components/App/AppWatermark'
+
+  import { useAppLock } from '@/components/App/AppLock/useAppLock'
 
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
@@ -92,8 +95,7 @@
 
   useAppIntro()
   useAppContentFull()
-  useAppPageLeave()
-  useAppAutoLock()
+  useAppLock()
   useAppTextSelection()
   useAppColorMode()
   useAppReducedMotion()
