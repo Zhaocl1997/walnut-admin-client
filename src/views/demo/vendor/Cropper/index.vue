@@ -38,6 +38,8 @@
 </template>
 
 <script lang="ts" setup>
+  // TODO
+  // this page open cache, go to other page and back will cause errors
   import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
 
   const srcValue = ref<string>('/assets/auth_bg.jpg')

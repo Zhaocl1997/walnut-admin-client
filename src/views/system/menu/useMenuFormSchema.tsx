@@ -220,8 +220,8 @@ export const useMenuFormSchema = (
         labelHelpMessage: true,
       },
       componentProp: {
-        // key start with `sys:menu:` are all menu title
-        prefix: 'sys:menu:',
+        // key start with `sys.menu.` are all menu title
+        prefix: 'sys.menu.',
       },
       extraProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,

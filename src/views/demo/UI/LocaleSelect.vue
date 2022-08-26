@@ -18,12 +18,12 @@
         <n-space vertical>
           <w-locale-select
             v-model:value="state.locale3"
-            prefix="sys:menu:"
+            prefix="sys.menu."
           ></w-locale-select>
 
           <w-locale-select
             v-model:value="state.locale4"
-            prefix="sys:menu:"
+            prefix="sys.menu."
           ></w-locale-select>
         </n-space>
       </n-list-item>
