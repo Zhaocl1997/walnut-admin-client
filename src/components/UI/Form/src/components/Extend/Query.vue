@@ -8,7 +8,7 @@
         :disabled="formProps.disabled"
         :loading="formProps.disabled"
       >
-        <template #>{{ t('app.button.query') }}</template>
+        <template #>{{ t('app.button.search') }}</template>
         <template #icon>
           <w-icon icon="ant-design:search-outlined"></w-icon>
         </template>

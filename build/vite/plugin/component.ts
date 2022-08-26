@@ -59,6 +59,7 @@ const comp = {
   ],
   Vendor: [
     'AvatarUpload',
+    'CodeMirror',
     'Cropper',
     'Echarts',
     'LocationPicker',
