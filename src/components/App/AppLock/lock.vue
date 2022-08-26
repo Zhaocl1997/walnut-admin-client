@@ -6,13 +6,12 @@
       text
       @click="onUnlock"
       :disabled="loading"
-      class="absolute top-8 left-1/2"
-      style="transform: translateX(-50%)"
+      class="absolute top-8 left-1/2 -translate-x-1/2"
     >
       <w-icon icon="ant-design:unlock-outlined" height="24"></w-icon>
     </n-button>
 
-    <div class="absolute bottom-8 left-1/2" style="transform: translateX(-50%)">
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
       <n-time
         :time="now"
         format="yyyy/MM/dd"

@@ -23,6 +23,7 @@ specifiers:
   '@types/lodash-es': ^4.17.6
   '@types/node': ^18.6.3
   '@types/rollup-plugin-visualizer': ^4.2.1
+  '@types/signature_pad': ^2.3.2
   '@types/sortablejs': ^1.13.0
   '@typescript-eslint/eslint-plugin': ^5.32.0
   '@typescript-eslint/parser': ^5.32.0
@@ -68,6 +69,7 @@ specifiers:
   rollup: ^2.77.2
   rollup-plugin-visualizer: ^5.7.1
   sass: ^1.54.0
+  signature_pad: ^4.0.7
   sortablejs: ^1.15.0
   standard-version: ^9.5.0
   stylelint: ^14.9.1
@@ -120,6 +122,7 @@ dependencies:
   lodash-es: 4.17.21
   pinia: 2.0.17_j6bzmzd4ujpabbp5objtwxyjp4
   qrcode: 1.5.1
+  signature_pad: 4.0.7
   sortablejs: 1.15.0
   tinymce: 6.1.2
   vue: 3.2.37
@@ -144,6 +147,7 @@ devDependencies:
   '@types/lodash-es': 4.17.6
   '@types/node': 18.6.3
   '@types/rollup-plugin-visualizer': 4.2.1
+  '@types/signature_pad': 2.3.2
   '@types/sortablejs': 1.13.0
   '@typescript-eslint/eslint-plugin': 5.32.0_iosr3hrei2tubxveewluhu5lhy
   '@typescript-eslint/parser': 5.32.0_qugx7qdu5zevzvxaiqyxfiwquq
@@ -1674,6 +1678,10 @@ packages:
     dependencies:
       '@types/node': 18.6.3
       rollup: 2.77.2
+    dev: true
+
+  /@types/signature_pad/2.3.2:
+    resolution: {integrity: sha512-dDfWIgRcdzAaeVOpLRmLHIumGwc5inSD4Dj2Duis3yUEoSADZECLJHKkUQphbaANQ7kSC2bkf1JzyBPSmTlrPQ==}
     dev: true
 
   /@types/sortablejs/1.13.0:
@@ -7540,6 +7548,10 @@ packages:
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
+
+  /signature_pad/4.0.7:
+    resolution: {integrity: sha512-2edcoEa6hDKeu/cIEda841Zhf8o3AyIscebzTJQdrBszSRRUvhbgqScNGmZuzo4iWn5FWYfFF6zZEl7mqvp8gA==}
+    dev: false
 
   /sirv/2.0.2:
     resolution: {integrity: sha512-4Qog6aE29nIjAOKe/wowFTxOdmbEZKb+3tsLljaBRzJwtqto0BChD2zzH0LhgCSXiI+V7X+Y45v14wBZQ1TK3w==}

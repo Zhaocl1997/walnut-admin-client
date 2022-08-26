@@ -64,6 +64,7 @@ const comp = {
     'Echarts',
     'LocationPicker',
     'OSSUpload',
+    'SignPad',
     'Tinymce',
   ],
 }
