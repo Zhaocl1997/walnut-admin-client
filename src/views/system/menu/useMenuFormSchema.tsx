@@ -192,6 +192,7 @@ export const useMenuFormSchema = (
         clearable: true,
         options: viewOptions,
         filterable: true,
+        tooltip: true,
         onUpdateValue: (val: string) => {
           // Get the name property automatically from vue `name` property
           const target = viewOptions.find((item) => item.value === val)

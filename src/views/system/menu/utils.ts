@@ -13,24 +13,24 @@ export const deepKeys = function* (t: Recordable, pre: any[] = []): Generator {
  * see more https://vitejs.dev/guide/features.html#glob-import
  */
 export const getViewsOptions = () => {
-  const views = import.meta.globEager('../../../views/**/*.vue')
+  const views = import.meta.glob('@/views/**/*.vue', {
+    eager: true,
+    import: 'default',
+  }) as Record<string, { name: string; defaultView: boolean }>
 
   const viewOptions: OptionDataItem<{ name?: string }>[] = []
 
   Object.entries(views).map(([key, value]) => {
-    const field = key.replace('../../../views/', '').replace('.vue', '')
+    const field = key.replace('/src/views/', '').replace('.vue', '')
 
     // This is custom prop for filter vue files
     // If don't want vue file to be seen in `viewOptions`, set `defaultView` to false
     // For example, we set `defaultView` false in `404/500/auth` pages, so these pages won't be able to config in `system/menu` page
-    if (
-      value.default.defaultView === undefined ||
-      value.default.defaultView === true
-    ) {
+    if (getBoolean(value.defaultView)) {
       viewOptions.push({
         value: field,
         label: `@/views/${field}.vue`,
-        name: value.default.name,
+        name: value.name,
       })
     }
   })
