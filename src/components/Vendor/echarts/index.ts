@@ -1,1 +1,1 @@
-export { default } from './src/index.vue'
+export default createAsyncComponent(() => import('./index.vue'))
