@@ -77,8 +77,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         overlay: false,
       },
 
-      https: true,
+      // https: true,
     },
+
+    // esbuild: {
+    //   pure: ['console.log', 'debugger'],
+    // },
 
     build: {
       target: 'es2015',
@@ -89,14 +93,14 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
       sourcemap: mode === 'staging',
 
-      minify: 'terser',
-      // https://terser.org/docs/api-reference#minify-options
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          drop_console: mode === 'production',
-        },
-      },
+      // minify: 'terser',
+      // // https://terser.org/docs/api-reference#minify-options
+      // terserOptions: {
+      //   compress: {
+      //     keep_infinity: true,
+      //     drop_console: mode === 'production',
+      //   },
+      // },
 
       rollupOptions: {
         external: ['virtual:terminal'],

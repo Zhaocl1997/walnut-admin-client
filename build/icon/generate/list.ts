@@ -6,7 +6,7 @@ import { BuildUtilsLog } from '../../utils/log'
 import menuIcons from '../../../src/components/UI/Icon/src/utils/menu'
 import { genIconLists } from '../../../src/components/UI/Icon/src/utils/index'
 import { iconCollections } from '../../../src/components/UI/Icon/src/utils/collections'
-import { BuildUtilsWriteFile, BuildUtilsReadFile } from 'build/utils/fs'
+import { BuildUtilsWriteFile, BuildUtilsReadFile } from '../../utils/fs'
 
 /**
  * @description Used to generate icon list for scanning src

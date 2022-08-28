@@ -20,7 +20,15 @@ export const iconCollections: IconifyJSON[] = [
   emojiv1Icons,
 ]
 
+// TODO auto generate and do not influnce build
 /**
  * @description Used for icon category filter.
  */
-export const iconCollectionsNameList = iconCollections.map((i) => i.prefix)
+export const iconCollectionsNameList = [
+  'w-svg',
+  'ant-design',
+  'mdi',
+  'simple-icons',
+  'carbon',
+  'emojione-v1',
+]
