@@ -18,8 +18,6 @@
 </template>
 
 <script lang="ts">
-  import type { CSSProperties } from 'vue'
-
   export default defineComponent({
     name: 'WFlipper',
 

@@ -10,7 +10,10 @@
       justify-content="space-around"
     >
       <n-tab-pane name="account" :tab="t('form.app.signin.tab.account')">
-        <SignInWithAccount class="w-72 text-justify mt-2"></SignInWithAccount>
+        <SignInWithAccount
+          ref="account"
+          class="w-72 text-justify mt-2"
+        ></SignInWithAccount>
       </n-tab-pane>
 
       <n-tab-pane name="SMS" :tab="t('form.app.signin.tab.sms')">
@@ -33,9 +36,14 @@
 
   const { t, locale } = useAppI18n()
 
-  const tabsInstRef = ref<Nullable<TabsInst>>(null)
+  const tabsInstRef = ref<TabsInst>()
+  const account = ref<{ setFormData: (n: string, p: string) => {} }>()
 
   watch(locale, () => nextTick(() => tabsInstRef.value?.syncBarPosition()))
+
+  defineExpose({
+    setFormData: (n: string, p: string) => account.value?.setFormData(n, p),
+  })
 </script>
 
 <script lang="ts">

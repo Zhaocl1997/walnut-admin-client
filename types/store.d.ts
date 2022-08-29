@@ -1,5 +1,9 @@
 import type { RemovableRef } from '@vueuse/core'
-import type { NotificationPlacement } from 'naive-ui'
+import type {
+  MessageReactive,
+  NotificationReactive,
+  NotificationPlacement,
+} from 'naive-ui'
 
 declare global {
   /**
@@ -93,6 +97,8 @@ declare global {
     msgMax: number
     notiPlacement: NotificationPlacement
     msgPlacement: MessagePlacement
+    currentNotiInst: Nullable<NotificationReactive>
+    currentMsgInst: Nullable<MessageReactive>
   }
 
   /**

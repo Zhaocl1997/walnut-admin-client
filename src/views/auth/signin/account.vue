@@ -9,6 +9,7 @@
 
   const { t } = useAppI18n()
   const appAuth = useAppStoreUserAuth()
+  const appNaive = useAppStoreNaive()
 
   const loading = ref(false)
 
@@ -28,6 +29,9 @@
         await appAuth.SignInWithPassword(accountFormData)
       } finally {
         loading.value = false
+
+        // close demonstrate notification
+        appNaive.destroyCurrentNotiInst()
       }
     }
   }
@@ -196,9 +200,17 @@
     ],
   })
 
+  const setFormData = (userName: string, password: string) => {
+    accountFormData.userName = userName
+    accountFormData.password = password
+  }
+
   onMounted(() => {
-    accountFormData.userName = appAuth.remember?.userName!
-    accountFormData.password = appAuth.remember?.password!
+    setFormData(appAuth.remember?.userName!, appAuth.remember?.password!)
+  })
+
+  defineExpose({
+    setFormData,
   })
 </script>
 

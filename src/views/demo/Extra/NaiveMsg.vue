@@ -16,6 +16,8 @@
           <n-button @click="onOpenNoti(4)">
             Error (position: top-right)
           </n-button>
+          <n-button @click="onOpenNoti(5)"> Close current noti </n-button>
+          <n-button @click="onOpenNoti(6)"> Close all noti </n-button>
         </n-space>
       </n-list-item>
 
@@ -47,12 +49,16 @@
 </template>
 
 <script lang="ts" setup>
+  const appNaive = useAppStoreNaive()
+
   const onOpenNoti = (type: number) => {
     type === 1 && useAppNotiSuccess('Notification Success')
     type === 2 && useAppNotiInfo('Notification Info', { closable: false })
     type === 3 && useAppNotiWarning('Notification Warning', { duration: 1000 })
     type === 4 &&
       useAppNotiError('Notification Error', { placement: 'top-left' })
+    type === 5 && appNaive.destroyCurrentNotiInst()
+    type === 6 && appNaive.destroyAllNotiInst()
   }
 
   const onOpenMsg = (type: number) => {

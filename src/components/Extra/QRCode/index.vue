@@ -23,6 +23,7 @@
           size="small"
           status="success"
           :description="t('app.base.success')"
+          class="text-gray-100"
         >
         </n-result>
       </div>
