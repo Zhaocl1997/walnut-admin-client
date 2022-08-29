@@ -4,7 +4,7 @@
       <n-list-item>
         <w-title prefix="bar">Basic usage</w-title>
 
-        <WQRCode url="https://walnut-admin-doc.netlify.app/"></WQRCode>
+        <WQRCode :url="url"></WQRCode>
       </n-list-item>
 
       <n-list-item>
@@ -19,10 +19,7 @@
 
           <n-button @click="success = !success">make it success</n-button>
 
-          <WQRCode
-            url="https://walnut-admin-doc.netlify.app/"
-            :success="success"
-          ></WQRCode>
+          <WQRCode :url="url" :success="success"></WQRCode>
         </n-space>
       </n-list-item>
     </n-list>
@@ -31,6 +28,8 @@
 
 <script lang="ts" setup>
   const getUrl = () => `https://www.baidu.com/?t=${Date.now()}`
+
+  const url = ref(URLS.docUrl)
 
   const url2 = ref(getUrl())
   const success = ref(false)

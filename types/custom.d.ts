@@ -8,6 +8,8 @@ declare global {
   type InjectionKey<T> = import('vue').InjectionKey<T>
   type VNode = import('vue').VNode
   type ToRefs<T> = import('vue').ToRefs<T>
+  type VNodeChild = import('vue').VNodeChild
+  type CSSProperties = import('vue').CSSProperties
 
   // vue-router
   type Router = import('vue-router').Router

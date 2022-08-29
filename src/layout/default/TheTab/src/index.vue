@@ -41,20 +41,12 @@
   import { useTabsUtils } from './hooks/useTabsUtils'
   import { useTabsDevTools } from './hooks/useTabsDevTools'
   import { useTabsDot } from './hooks/useTabsDot'
+  import { useTabsPersistent } from './hooks/useTabsPersistent'
 
   import { setTabsContext } from './hooks/useTabsContext'
 
-  const appTab = useAppStoreTab()
   const appSetting = useAppStoreSetting()
   const appAdapter = useAppStoreAdapter()
-
-  watchEffect(() => {
-    if (appSetting.settings.tab.persistent) {
-      localStorage.setItem('tab', JSON.stringify(appTab.tabs))
-    } else {
-      localStorage.removeItem('tab')
-    }
-  })
 
   const getShowDevTools = computed(
     () => isDev() && !appAdapter.isMobile && appSetting.settings.tab.devtool
@@ -96,6 +88,9 @@
     startBounce,
     stopBounce
   )
+
+  // tab persistent
+  useTabsPersistent()
 
   // set context
   setTabsContext({

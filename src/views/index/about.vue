@@ -81,7 +81,7 @@
           type: 'link',
           typeProps: {
             type: 'primary',
-            link: 'https://walnut-admin-doc.netlify.app/',
+            link: URLS.docUrl,
           },
         },
         {
@@ -90,7 +90,7 @@
           type: 'link',
           typeProps: {
             type: 'primary',
-            link: 'http://152.136.25.175',
+            link: URLS.onlinePreview,
           },
         },
         {
@@ -99,7 +99,7 @@
           type: 'link',
           typeProps: {
             type: 'primary',
-            link: 'https://github.com/Zhaocl1997',
+            link: URLS.myGithub,
           },
         },
         {

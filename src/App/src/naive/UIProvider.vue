@@ -11,12 +11,12 @@
     <n-loading-bar-provider>
       <n-dialog-provider>
         <n-notification-provider
-          :max="appMsg.notiMax"
-          :placement="appMsg.notiPlacement"
+          :max="appNaive.notiMax"
+          :placement="appNaive.notiPlacement"
         >
           <n-message-provider
-            :max="appMsg.msgMax"
-            :placement="appMsg.msgPlacement"
+            :max="appNaive.msgMax"
+            :placement="appNaive.msgPlacement"
           >
             <slot></slot>
           </n-message-provider>
@@ -33,7 +33,7 @@
   import { getLocale, getDateLocale } from './src/locale'
   import { getTheme, getThemeOverrides } from './src/theme'
 
-  const appMsg = useAppStoreNaive()
+  const appNaive = useAppStoreNaive()
 </script>
 
 <script lang="ts">

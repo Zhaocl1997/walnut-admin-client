@@ -11,6 +11,8 @@ export const AppConstPersistKey = {
   LOCK_ROUTE: 'LOCK_ROUTE',
 
   LOCALE: 'LOCALE',
+
+  TABS: 'TABS',
 } as const
 
 export const AppConstStorageType = {

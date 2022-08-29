@@ -1,14 +1,11 @@
-import type { NotificationType } from 'naive-ui'
+import type { NotificationOptions } from 'naive-ui'
 import { formatTime } from 'easy-fns-ts'
 
 export const useAppNotification = () => {
   return window.$notification
 }
 
-interface AppNotiOptions {
-  type?: NotificationType
-  duration?: number
-  closable?: boolean
+interface AppNotiOptions extends NotificationOptions {
   placement?: NotificationPlacement
 }
 
@@ -16,18 +13,20 @@ interface AppNotiOptions {
  * @description notification usage
  */
 export const AppNoti = (msg: string, options: AppNotiOptions) => {
-  const appMsg = useAppStoreNaive()
+  const appNaive = useAppStoreNaive()
 
-  appMsg.setNotiPlacement(options?.placement ?? 'top-right')
+  appNaive.setNotiPlacement(options?.placement ?? 'top-right')
 
-  useAppNotification().create({
-    title: import.meta.env.VITE_APP_TITLE,
-    content: msg,
+  const inst = useAppNotification().create({
+    ...options,
+    title: options.title ?? import.meta.env.VITE_APP_TITLE,
+    content: options.content ?? msg,
     duration: options?.duration ?? 5000,
     closable: options?.closable ?? true,
-    meta: formatTime(new Date()),
-    type: options.type,
+    meta: options.meta ?? formatTime(new Date()),
   })
+
+  appNaive.setCurrentNotiInst(inst)
 }
 
 export const useAppNotiSuccess = (

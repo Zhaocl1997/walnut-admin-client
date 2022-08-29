@@ -63,7 +63,7 @@
 
   const { t } = useAppI18n()
 
-  const active = ref(props.defaultFold)
+  const active = ref(false)
 
   const getText = computed(() =>
     active.value ? t('app.button.expand') : t('app.button.collapse')
@@ -103,11 +103,15 @@
     }
   }
 
-  onMounted(() => {
-    if (props.defaultFold) {
-      for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
-        formSchemas.value[i]._internalShow = false
+  watch(
+    () => props.defaultFold,
+    (v) => {
+      if (v) {
+        onToggle()
       }
+    },
+    {
+      immediate: true,
     }
-  })
+  )
 </script>

@@ -55,33 +55,33 @@
               </span>
             </h1>
 
-            <template v-if="!back">
-              <SignIn></SignIn>
+            <div v-if="!back" class="w-full">
+              <SignIn ref="signInRef"></SignIn>
 
               <w-transition name="fade-left-big" appear :duration="1700">
                 <n-text
                   type="info"
-                  class="text-xs cursor-pointer text-right w-full"
+                  class="text-xs cursor-pointer float-right"
                   @click="onToggle"
                 >
                   {{ t('app.signin.goSignup') }}
                 </n-text>
               </w-transition>
-            </template>
+            </div>
 
-            <template v-else>
+            <div v-else class="w-full">
               <SignUp></SignUp>
 
               <w-transition name="fade-up-big" appear :duration="1900">
                 <n-text
                   type="info"
-                  class="text-xs cursor-pointer text-right w-full"
+                  class="text-xs cursor-pointer float-right"
                   @click="onToggle"
                 >
                   {{ t('app.signup.goSignin') }}
                 </n-text>
               </w-transition>
-            </template>
+            </div>
           </div>
         </n-card>
 
@@ -96,28 +96,26 @@
   </section>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
   import SignIn from './signin/index.vue'
   import SignUp from './signup.vue'
+  import { useDemonstrate } from './useDemonstrate'
 
   const { t } = useAppI18n()
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
 
   const back = ref(false)
 
+  const { signInRef } = useDemonstrate()
+
   const onClickBeian = () => {
     openExternalLink('http://beian.miit.gov.cn/')
   }
 
-  useAppNotiInfo('Demonstrate only \nAccount: visitor \nPassword: 2020', {
-    closable: false,
-    duration: 5000,
-  })
-
   const onToggle = () => (back.value = !back.value)
 </script>
 
-<script lang="ts">
+<script lang="tsx">
   export default defineComponent({
     name: 'Auth',
 

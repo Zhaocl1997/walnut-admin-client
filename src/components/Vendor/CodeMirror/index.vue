@@ -9,6 +9,7 @@
       :tab-size="2"
       :extensions="extensions"
       :disabled="disabled"
+      :phrases="phrases"
       @ready="onReady"
       @change="onChange"
       @focus="onFocus"
@@ -40,10 +41,9 @@
 </template>
 
 <script lang="ts" setup>
-  // TODO phrases i18n
   import { Codemirror } from 'vue-codemirror'
-  import { ViewUpdate } from '@codemirror/view'
 
+  import { EditorView, ViewUpdate } from '@codemirror/view'
   import { oneDark } from '@codemirror/theme-one-dark'
   import { redo, undo } from '@codemirror/commands'
   import { openSearchPanel, closeSearchPanel } from '@codemirror/search'
@@ -80,15 +80,39 @@
   })
 
   const searchPanelOpen = ref(false)
+  const phrases = ref()
 
   const appDark = useAppStoreDark()
+  const appLocale = useAppStoreLocale()
+
+  watch(
+    () => appLocale.locale,
+    async (v) => {
+      const modules = import.meta.glob(
+        '/public/vendor/codeMirror/langs/zh_CN.js'
+      )
+
+      for (const path in modules) {
+        const res = (await modules[path]()) as { default: Recordable }
+
+        if (v === AppConstLocale.ZH_CN) {
+          phrases.value = res.default
+        } else {
+          phrases.value = {}
+        }
+      }
+    },
+    {
+      immediate: true,
+    }
+  )
 
   const extensions = computed(() =>
     appDark.isDark ? [...languages, oneDark] : languages
   )
 
   // @codemirror/view
-  const view = shallowRef()
+  const view = shallowRef<EditorView>()
 
   const onReady = (payload: any) => {
     view.value = payload.view
@@ -134,9 +158,9 @@
 
   const onSearch = () => {
     if (!searchPanelOpen.value) {
-      openSearchPanel(view.value)
+      openSearchPanel(view.value!)
     } else {
-      closeSearchPanel(view.value)
+      closeSearchPanel(view.value!)
     }
 
     searchPanelOpen.value = !searchPanelOpen.value
