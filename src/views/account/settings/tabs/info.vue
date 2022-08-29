@@ -129,9 +129,11 @@
             loading.value = true
 
             try {
+              // TODO upload refactor
               // upload avatar and get real avatar url
               const isAvatarUploadSuccess =
                 await avatarUploadRef.value?.onOSSUpload()
+
               if (!isAvatarUploadSuccess) return
 
               // set the new avatar url

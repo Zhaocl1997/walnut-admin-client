@@ -58,9 +58,9 @@ export const getThemeOverrides = computed(
 
     // TODO should not solve in this way
     // menu/dropdown hover icon change color
-    Dropdown: {
-      optionColorHover: 'white',
-    },
+    // Dropdown: {
+    //   optionColorHover: 'white',
+    // },
   })
 )
 

@@ -17,7 +17,7 @@ const onGetCards = (
       },
     },
     number: ns[0],
-    icon: 'emojione:winking-face',
+    icon: 'emojione-v1:winking-face',
     loading: loading.value,
   },
   {

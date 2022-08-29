@@ -356,7 +356,7 @@
                 path: 'formLocale',
               },
               componentProp: {
-                prefix: 'dict:',
+                prefix: 'dict.',
               },
             },
           ]
