@@ -6,13 +6,15 @@
     :options="dropdownOptions"
   >
     <div class="hstack items-center justify-center">
-      <Starport
-        v-if="$route.name !== 'AccountSetting'"
-        port="w-avatar"
-        style="height: 32px; width: 32px"
-      >
-        <WAvatar :size="32"> </WAvatar>
-      </Starport>
+      <div style="height: 32px; width: 32px">
+        <Starport
+          v-if="$route.name !== 'AccountSetting'"
+          port="w-avatar"
+          style="height: 32px; width: 32px"
+        >
+          <WAvatar :size="32"> </WAvatar>
+        </Starport>
+      </div>
 
       <div class="text-base font-semibold pl-1 my-auto">
         {{ userProfile.getDisplayName }}
@@ -40,11 +42,17 @@
     },
 
     {
+      key: '2',
+      label: t('desc.about.info.code'),
+      icon: () => <WIcon icon="ant-design:github-outlined"></WIcon>,
+    },
+
+    {
       type: 'divider',
     },
 
     {
-      key: '2',
+      key: '3',
       label: t('app.user.center'),
       icon: () => <WIcon icon="ant-design:profile-outlined"></WIcon>,
     },
@@ -57,10 +65,14 @@
 
   const onSelect = async (val: string) => {
     if (val === '1') {
-      openExternalLink('https://walnut-admin-doc.netlify.app/')
+      openExternalLink(URLS.docUrl)
     }
 
     if (val === '2') {
+      openExternalLink(URLS.projectGithub)
+    }
+
+    if (val === '3') {
       useAppRouterPush({ name: 'AccountSetting' })
     }
 

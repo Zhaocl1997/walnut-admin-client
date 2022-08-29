@@ -73,6 +73,7 @@
   import TheAppWatermark from '@/components/App/AppWatermark'
 
   import { useAppLock } from '@/components/App/AppLock/useAppLock'
+  import { useStarOnGithub } from './useStarOnGithub'
 
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
@@ -99,4 +100,5 @@
   useAppTextSelection()
   useAppColorMode()
   useAppReducedMotion()
+  useStarOnGithub()
 </script>
