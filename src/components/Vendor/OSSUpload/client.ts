@@ -53,6 +53,9 @@ export class AliOSSClient {
     data: UploadFileInfo,
     folder: string
   ): Promise<{ id: string; value: string } | undefined> {
+    // TODO temporary disabled in prod
+    if (isProd()) return
+
     const headers = {
       // 指定该Object被下载时网页的缓存行为。
       // 'Cache-Control': 'no-cache',
@@ -99,6 +102,9 @@ export class AliOSSClient {
     folder: string,
     onProcessCallback: (e: { percent: number }) => void
   ): Promise<{ id: string; value: string } | undefined> {
+    // TODO temporary disabled in prod
+    if (isProd()) return
+
     const headers = {
       // 指定该Object被下载时网页的缓存行为。
       // 'Cache-Control': 'no-cache',
