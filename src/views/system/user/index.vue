@@ -96,7 +96,7 @@
 
         {
           key: 'userName',
-          width: 'auto',
+          width: 100,
         },
 
         {
@@ -121,6 +121,7 @@
           key: 'action',
           width: 80,
           extendType: 'action',
+          fixed: 'right',
           onExtendActionType: async ({ type, rowData }) => {
             switch (type) {
               case 'read':
