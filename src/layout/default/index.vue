@@ -100,5 +100,8 @@
   useAppTextSelection()
   useAppColorMode()
   useAppReducedMotion()
-  useStarOnGithub()
+
+  useTimeoutFn(() => {
+    useStarOnGithub()
+  }, 500)
 </script>

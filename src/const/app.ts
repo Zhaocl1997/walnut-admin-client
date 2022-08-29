@@ -31,6 +31,7 @@ export const AppConstCollapseMode = {
   ARROW_CIRCLE: 'arrow-circle',
   BUTTON: 'button',
 } as const
+
 export type ValueOfAppConstCollapseMode =
   typeof AppConstCollapseMode[keyof typeof AppConstCollapseMode]
 
