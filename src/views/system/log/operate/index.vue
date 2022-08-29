@@ -106,8 +106,7 @@
             type: 'Extend:Query',
             componentProp: {
               foldable: true,
-              // TODO internalShow not trigger rerender
-              //   defaultFold: true,
+              defaultFold: true,
               countToFold: 2,
             },
           },
