@@ -42,8 +42,8 @@
 
 <script lang="ts" setup>
   import { Codemirror } from 'vue-codemirror'
-  import { ViewUpdate } from '@codemirror/view'
 
+  import { EditorView, ViewUpdate } from '@codemirror/view'
   import { oneDark } from '@codemirror/theme-one-dark'
   import { redo, undo } from '@codemirror/commands'
   import { openSearchPanel, closeSearchPanel } from '@codemirror/search'
@@ -101,6 +101,9 @@
           phrases.value = {}
         }
       }
+    },
+    {
+      immediate: true,
     }
   )
 
@@ -109,7 +112,7 @@
   )
 
   // @codemirror/view
-  const view = shallowRef()
+  const view = shallowRef<EditorView>()
 
   const onReady = (payload: any) => {
     view.value = payload.view
@@ -155,9 +158,9 @@
 
   const onSearch = () => {
     if (!searchPanelOpen.value) {
-      openSearchPanel(view.value)
+      openSearchPanel(view.value!)
     } else {
-      closeSearchPanel(view.value)
+      closeSearchPanel(view.value!)
     }
 
     searchPanelOpen.value = !searchPanelOpen.value
