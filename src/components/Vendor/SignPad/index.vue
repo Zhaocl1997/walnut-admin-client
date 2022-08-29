@@ -1,5 +1,6 @@
 <template>
   <n-watermark
+    :id="wrapperId"
     :content="content"
     :font-size="16"
     :line-height="16"
@@ -23,7 +24,10 @@
         :disabled="disabled"
       ></canvas>
 
-      <div class="absolute top-1/2 left-4 -translate-y-1/2 z-{9999}">
+      <!-- left utils -->
+      <div
+        class="signpad-utils absolute top-1/2 left-4 -translate-y-1/2 z-{9999}"
+      >
         <n-space vertical>
           <n-tooltip :disabled="disabled" trigger="click" placement="right">
             <template #trigger>
@@ -83,6 +87,37 @@
           </n-button>
         </n-space>
       </div>
+
+      <!-- right utils -->
+      <div
+        class="signpad-utils absolute top-1/2 right-2 -translate-y-1/2 z-{9999}"
+      >
+        <n-space vertical>
+          <n-button
+            :disabled="disabled"
+            type="primary"
+            text
+            @click="onDownload('png')"
+          >
+            <div class="hstack justify-center items-center gap-2">
+              <span> png </span>
+              <w-icon icon="ant-design:download-outlined" width="20"></w-icon>
+            </div>
+          </n-button>
+
+          <n-button
+            :disabled="disabled"
+            type="primary"
+            text
+            @click="onDownload('jpeg')"
+          >
+            <div class="hstack justify-center items-center gap-2">
+              <span> jpeg </span>
+              <w-icon icon="ant-design:download-outlined" width="20"></w-icon>
+            </div>
+          </n-button>
+        </n-space>
+      </div>
     </div>
   </n-watermark>
 </template>
@@ -91,7 +126,7 @@
   // TODO watermark wrap optimise
   import type { Options } from 'signature_pad'
   import SignaturePad from 'signature_pad'
-
+  import { toJpeg, toPng } from 'html-to-image'
   import { genString } from 'easy-fns-ts'
 
   interface InternalProps {
@@ -106,10 +141,12 @@
   const props = withDefaults(defineProps<InternalProps>(), {
     width: '100%',
     height: '100%',
+    // @ts-ignore
     options: {},
   })
 
   const signPadId = ref('signpad-' + genString(8))
+  const wrapperId = ref('wrapper-' + genString(8))
 
   const signPadInst = shallowRef<Nullable<SignaturePad>>(null)
   const signPadRef = ref<Nullable<HTMLCanvasElement>>(null)
@@ -127,44 +164,6 @@
     'rgb(0,188,212)',
     'rgb(239,239,239)',
   ]
-
-  // const props = defineProps({
-  //   sigOption: {
-  //     type: Object,
-  //     default: () => {
-  //       return {
-  //         backgroundColor: 'rgb(255,255,255)',
-  //         penColor: 'rgb(0, 0, 0)',
-  //       }
-  //     },
-  //   },
-  //   w: {
-  //     type: String,
-  //     default: '100%',
-  //   },
-  //   h: {
-  //     type: String,
-  //     default: '100%',
-  //   },
-  //   clearOnResize: {
-  //     type: Boolean,
-  //     default: false,
-  //   },
-  //   waterMark: {
-  //     type: Object,
-  //     default: () => {
-  //       return {}
-  //     },
-  //   },
-  //   disabled: {
-  //     type: Boolean,
-  //     default: false,
-  //   },
-  //   defaultUrl: {
-  //     type: String,
-  //     default: '',
-  //   },
-  // })
 
   watchEffect(() => {
     if (props.disabled) {
@@ -207,7 +206,7 @@
 
     signPadInst.value = new SignaturePad(
       canvas,
-      Object.assign(props.options, { backgroundColor: 'rgb(255,255,255)' })
+      Object.assign(props.options!, { backgroundColor: 'rgb(255,255,255)' })
     )
 
     onResize(canvas)
@@ -231,22 +230,37 @@
     signPadInst.value?.clear()
   }
 
-  const save = (format?: string) => {
-    return format
+  const save = (format?: string) =>
+    format
       ? signPadInst.value?.toDataURL(format)
       : signPadInst.value?.toDataURL()
-    // signaturePad.toDataURL(); // save image as PNG
-    // signaturePad.toDataURL("image/jpeg"); // save image as JPEG
-    // signaturePad.toDataURL("image/svg+xml"); // save image as SVG
+
+  const onDownload = (type: string) => {
+    const target = document.getElementById(wrapperId.value)!
+
+    const filter = (node: Element) => {
+      const exclusionClasses = ['signpad-utils']
+      return !exclusionClasses.some((classname) => {
+        if (node.classList) {
+          return Array.from(node.classList).includes(classname)
+        }
+      })
+    }
+
+    if (type === 'png') {
+      toPng(target, { filter }).then((dataUrl) => downloadByBase64(dataUrl))
+    }
+
+    if (type === 'jpeg') {
+      toJpeg(target, { filter }).then((dataUrl) => downloadByBase64(dataUrl))
+    }
   }
 
   const fromDataURL = (url: string) => {
     signPadInst.value?.fromDataURL(url)
   }
 
-  const isEmpty = () => {
-    return signPadInst.value?.isEmpty()
-  }
+  const isEmpty = () => signPadInst.value?.isEmpty()
 
   const undo = () => {
     const data = signPadInst.value?.toData()
