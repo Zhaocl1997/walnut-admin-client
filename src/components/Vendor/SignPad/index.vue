@@ -123,7 +123,6 @@
 </template>
 
 <script lang="ts" setup>
-  // TODO watermark wrap optimise
   import type { Options } from 'signature_pad'
   import SignaturePad from 'signature_pad'
   import { toJpeg, toPng } from 'html-to-image'

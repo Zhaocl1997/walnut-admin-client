@@ -74,41 +74,47 @@
 
           if (item.type === 'Extend:Divider') {
             return (
-              <n-gi
-                vShow={item._internalShow}
-                key={item.formProp?.path}
-                span={24}
-                class={item.extraProp?.sticky ? 'sticky top-0 z-10' : ''}
-                style={
-                  item.extraProp?.sticky
-                    ? { backgroundColor: item.extraProp.bgColor }
-                    : {}
-                }
-              >
-                <w-transition {...item?.transitionProp} appear>
-                  <w-form-item-extend-divider
-                    index={index}
-                    {...item.componentProp}
-                  ></w-form-item-extend-divider>
-                </w-transition>
-              </n-gi>
+              // TODO temporary solution
+              // should use v-show, but get errors
+              item._internalShow && (
+                <n-gi
+                  key={item.formProp?.path}
+                  span={24}
+                  class={item.extraProp?.sticky ? 'sticky top-0 z-10' : ''}
+                  style={
+                    item.extraProp?.sticky
+                      ? { backgroundColor: item.extraProp.bgColor }
+                      : {}
+                  }
+                >
+                  <w-transition {...item?.transitionProp} appear>
+                    <w-form-item-extend-divider
+                      index={index}
+                      {...item.componentProp}
+                    ></w-form-item-extend-divider>
+                  </w-transition>
+                </n-gi>
+              )
             )
           }
 
           return (
-            <n-gi
-              vShow={item._internalShow}
-              key={item.formProp?.path}
-              {...(item?.gridProp ?? { span: unref(getProps).span })}
-            >
-              <w-transition {...item?.transitionProp} appear>
-                <WFormItem item={item}>
-                  {item.type === 'Base:Slot' &&
-                    Object.keys(slots).includes(item.formProp?.path!) &&
-                    renderSlot(slots, item.formProp?.path!)}
-                </WFormItem>
-              </w-transition>
-            </n-gi>
+            // TODO temporary solution
+            // should use v-show, but get errors
+            item._internalShow && (
+              <n-gi
+                key={item.formProp?.path}
+                {...(item?.gridProp ?? { span: unref(getProps).span })}
+              >
+                <w-transition {...item?.transitionProp} appear>
+                  <WFormItem item={item}>
+                    {item.type === 'Base:Slot' &&
+                      Object.keys(slots).includes(item.formProp?.path!) &&
+                      renderSlot(slots, item.formProp?.path!)}
+                  </WFormItem>
+                </w-transition>
+              </n-gi>
+            )
           )
         })
 
