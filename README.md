@@ -8,14 +8,14 @@
   <p align="center">
     面向开发者的中后台管理系统模板
     <br />
-    <a href="https://walnut-admin-doc.netlify.app/"><strong>探索本项目的文档 »</strong></a>
+    <a target="_blank" href="https://walnut-admin-doc.netlify.app/"><strong>探索本项目的文档 »</strong></a>
     <br />
     <br />
-    <a href="https://www.walnut-admin.com">查看Demo</a>
+    <a target="_blank" href="https://www.walnut-admin.com">查看Demo</a>
     ·
-    <a href="https://github.com/Zhaocl1997/walnut-admin-client/issues">报告Bug</a>
+    <a target="_blank" href="https://github.com/Zhaocl1997/walnut-admin-client/issues">报告Bug</a>
     ·
-    <a href="https://github.com/Zhaocl1997/walnut-admin-client/issues">提出新特性</a>
+    <a target="_blank" href="https://github.com/Zhaocl1997/walnut-admin-client/issues">提出新特性</a>
   </p>
 
 </p>
@@ -51,11 +51,11 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重
 
 ### 更新日志
 
-请阅读[CHANGELOG.md](https://github.com/Zhaocl1997/walnut-admin-client/blob/main/CHANGELOG.md) 查阅为该项目的更新日志。
+请阅读[CHANGELOG.md](./CHANGELOG.md) 查阅为该项目的更新日志。
 
 ### 项目架构
 
-请阅读[ARCHITECTURE.md](https://github.com/Zhaocl1997/walnut-admin-client/blob/main/ARCHITECTURE.md) 查阅为该项目的架构。
+请阅读[ARCHITECTURE.md](./ARCHITECTURE.md) 查阅为该项目的架构。
 
 
 ### 作者
