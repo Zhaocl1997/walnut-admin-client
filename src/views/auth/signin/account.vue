@@ -60,7 +60,7 @@
         componentProp: {
           clearable: true,
           inputProps: {
-            autocomplete: 'userName',
+            autocomplete: 'username',
           },
         },
         transitionProp: {
