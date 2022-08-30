@@ -5,8 +5,6 @@ import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
 import IFrameReal from '@/layout/iframe/index.vue'
 
-import { App404Route } from '@/router/routes'
-
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
  */

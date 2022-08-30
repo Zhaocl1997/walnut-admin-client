@@ -6,11 +6,6 @@
   // TODO 99
   import { NRadio, NText } from 'naive-ui'
 
-  import {
-    AppAuthPrivacyPolicyPath,
-    AppAuthServiceAgreementPath,
-  } from '@/router/constant'
-
   const { t } = useAppI18n()
 
   const loading = ref(false)

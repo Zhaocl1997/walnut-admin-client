@@ -1,7 +1,5 @@
 import { getPermissions } from '@/api/auth'
 
-import { AppRootName, AppRootPath } from '@/router/constant'
-
 import { buildRoutes } from '@/router/utils/route'
 
 /**

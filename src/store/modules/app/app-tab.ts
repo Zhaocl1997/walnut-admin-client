@@ -2,13 +2,6 @@ import { merge } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
-import {
-  App403Name,
-  App404Name,
-  App500Name,
-  AppAuthName,
-  AppRedirectName,
-} from '@/router/constant'
 
 const nameBlackList: string[] = [
   AppAuthName,
@@ -16,6 +9,7 @@ const nameBlackList: string[] = [
   App500Name,
   App403Name,
   AppRedirectName,
+  AppLockName,
 ]
 
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
