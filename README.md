@@ -26,8 +26,11 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重
 
 项目跑起来需要[后台][walnut-admin-server]（**后端仓库暂时私有，后期会开放的**），是 [NestJS][nestjs-url] 的一个单体应用的架子。数据库用的 [mongoDB](https://www.mongodb.com/)。更多信息可查看文档。
 
+## Discord
 
-### 接下来的计划  
+[点击这里](https://discord.gg/kfVuasVXs2)
+
+## TODOS  
 
 - [ ] long vue-tsc 错误全部消除  
 - [ ] long layout 扩展 
@@ -49,20 +52,20 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重
 - [ ] 99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)
 
 
-### 更新日志
+## 更新日志
 
 请阅读[CHANGELOG.md](./CHANGELOG.md) 查阅为该项目的更新日志。
 
-### 项目架构
+## 项目架构
 
 请阅读[ARCHITECTURE.md](./ARCHITECTURE.md) 查阅为该项目的架构。
 
 
-### 作者
+## 作者
 
 [zhaocl1997][author-url]
 
-### 版权说明
+## 版权说明
 
 该项目签署了 MIT 授权许可，详情请参阅 [LICENSE][license-url]
 
