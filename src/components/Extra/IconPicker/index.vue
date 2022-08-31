@@ -15,10 +15,6 @@
         trigger="click"
         :style="{ width: '480px', position: 'relative', right: '0px' }"
       >
-        <!-- <template #header>
-          <n-text type="info">{{ t('comp.iconPicker.title') }}</n-text>
-        </template> -->
-
         <template #trigger>
           <div class="cursor-pointer -mb-2 -ml-1">
             <w-icon
@@ -52,26 +48,21 @@
               </n-tabs>
 
               <div class="h-full w-full">
-                <div class="">
-                  <span
-                    v-for="(icon, index) in lists"
-                    :key="icon"
-                    :title="icon"
-                  >
-                    <w-icon
-                      :icon="icon"
-                      width="36"
-                      :class="[
-                        'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
-                        {
-                          'bg-light-blue-300': icon === value,
-                          'hover:bg-warm-gray-300': icon !== value,
-                        },
-                      ]"
-                      @click="onChooseIcon(icon)"
-                    ></w-icon>
-                  </span>
-                </div>
+                <w-icon
+                  v-for="(icon, index) in lists"
+                  :key="icon"
+                  :title="icon"
+                  :icon="icon"
+                  width="36"
+                  :class="[
+                    'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
+                    {
+                      'bg-light-blue-300': icon === value,
+                      'hover:bg-warm-gray-300': icon !== value,
+                    },
+                  ]"
+                  @click="onChooseIcon(icon)"
+                ></w-icon>
 
                 <n-empty
                   class="flex justify-center items-center my-16"
@@ -110,8 +101,9 @@
 
 <script lang="ts" setup>
   import type { InputInst } from 'naive-ui'
+  import { listIcons } from '@iconify/vue'
+
   import { iconCollectionsNameList } from '@/components/UI/Icon/src/utils/collections'
-  import iconLists from '@/components/UI/Icon/src/utils/list'
 
   interface IconPickerProps {
     value?: string
@@ -143,35 +135,33 @@
       rootInputRef: null as Nullable<InputInst>,
       searchInputRef: null as Nullable<InputInst>,
       loading: false,
-      currentTab: 'all',
+      currentTab: 'All',
     })
   )
 
-  const tabLists = computed(() => ['all', ...iconCollectionsNameList])
+  const tabLists = computed(() => ['All', ...iconCollectionsNameList])
 
   watch(currentTab, () => onInit())
+
+  const iconLists = computed(() =>
+    listIcons().filter((i) =>
+      currentTab.value === 'All' ? true : i.includes(currentTab.value)
+    )
+  )
 
   const onInit = (needFeedback = false) => {
     loading.value = true
 
     if (props.value && needFeedback) {
       const index =
-        iconLists
-          .filter((i) =>
-            currentTab.value === 'all' ? true : i.includes(currentTab.value)
-          )
-          .findIndex((item) => item === props.value) + 1
+        iconLists.value.findIndex((item) => item === props.value) + 1
 
       const shouldGoPageNum = Math.floor(index / pageSize.value) + 1
 
       page.value = shouldGoPageNum
     }
 
-    const filtered = iconLists.filter(
-      (i) =>
-        i.includes(filters.value) &&
-        (currentTab.value === 'all' ? true : i.includes(currentTab.value))
-    )
+    const filtered = iconLists.value.filter((i) => i.includes(filters.value))
 
     const filterdRes = mockListApi(filtered)({
       page: {
