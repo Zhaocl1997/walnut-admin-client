@@ -10,7 +10,10 @@ export const useAppColorMode = () => {
     attribute: 'color-mode',
   })
 
-  watchEffect(() => {
-    mode.value = appSetting.settings.app.colorMode
-  })
+  watch(
+    () => appSetting.settings.app.colorMode,
+    (v) => {
+      mode.value = v
+    }
+  )
 }

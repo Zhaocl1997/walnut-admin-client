@@ -54,7 +54,7 @@
     "@codemirror/theme-one-dark": "^6.0.0",
     "@codemirror/view": "^6.2.1",
     "@tinymce/tinymce-vue": "5.0.0",
-    "@vueuse/core": "^9.1.0",
+    "@vueuse/core": "^9.1.1",
     "@vueuse/integrations": "^9.1.0",
     "ali-oss": "^6.17.1",
     "animate.css": "^4.1.1",
