@@ -9,10 +9,10 @@
     },
 
     setup(props, { slots }) {
-      const { hasPermission } = usePermissions()
+      const userPermission = useAppStoreUserPermission()
 
       const render = () => {
-        if (hasPermission(props.value!)) {
+        if (userPermission.hasPermission(props.value!)) {
           return renderSlot(slots, 'default')
         }
         return null

@@ -29,7 +29,7 @@ export const props = {
     default: false,
   },
 
-  /* relative to usePermissions */
+  /* permission string */
   auth: {
     type: String as PropType<string>,
     default: '',

@@ -13,7 +13,7 @@
     setup(props: WButtonProps, { attrs, slots, emit, expose }) {
       const { t } = useAppI18n()
 
-      const { hasPermission } = usePermissions()
+      const userPermission = useAppStoreUserPermission()
 
       const disabled = ref(false)
 
@@ -125,7 +125,7 @@
           renderButton()
         )
 
-      return () => hasPermission(props.auth) && renderConfirm()
+      return () => userPermission.hasPermission(props.auth) && renderConfirm()
     },
   })
 </script>
