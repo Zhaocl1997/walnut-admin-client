@@ -39,8 +39,6 @@
       watch(
         () => props.icon,
         (v) => {
-          console.log(1)
-
           check(v!)
         },
         { immediate: true }
@@ -52,7 +50,9 @@
         }
       })
 
-      const getSize = computed(() => parseInt(props.width! || props.height!))
+      const getSize = computed(() =>
+        parseInt(props.width! || props.height! || '16')
+      )
 
       return () => {
         if (loaded.value) {
@@ -60,6 +60,7 @@
         } else {
           return (
             <NSkeleton
+              animated={false}
               circle
               width={getSize.value}
               height={getSize.value}

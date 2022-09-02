@@ -16,12 +16,11 @@
         :style="{ width: '480px', position: 'relative', right: '0px' }"
       >
         <template #trigger>
-          <div class="cursor-pointer -mb-2 -ml-1">
-            <w-icon
-              :icon="value || 'ant-design:home-outlined'"
-              width="24"
-            ></w-icon>
-          </div>
+          <w-icon
+            class="cursor-pointer h-auto mr-2"
+            :icon="value || 'ant-design:home-outlined'"
+            width="24"
+          ></w-icon>
         </template>
 
         <template #default>
@@ -141,7 +140,10 @@
 
   const tabLists = computed(() => ['All', ...iconCollectionsNameList])
 
-  watch(currentTab, () => onInit())
+  watch(currentTab, () => {
+    page.value = 1
+    onInit()
+  })
 
   const iconLists = computed(() =>
     listIcons().filter((i) =>
