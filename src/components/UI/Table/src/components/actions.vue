@@ -21,7 +21,10 @@
     </w-button>
 
     <n-text
-      v-if="isShow('delete') && hasPermission(tableProps.auths?.deleteMany)"
+      v-if="
+        isShow('delete') &&
+        userPermission.hasPermission(tableProps.auths?.deleteMany)
+      "
       type="warning"
     >
       {{
@@ -37,7 +40,7 @@
 
   const { t } = useI18n()
 
-  const { hasPermission } = usePermissions()
+  const userPermission = useAppStoreUserPermission()
 
   const { onEvent, tableProps, checkedRowKeys } = useTableContext()
 

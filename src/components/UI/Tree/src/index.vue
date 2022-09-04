@@ -108,7 +108,7 @@
 
   const { t } = useAppI18n()
 
-  const { hasPermission } = usePermissions()
+  const userPermission = useAppStoreUserPermission()
 
   const state = ref<{
     selectedKeys: StringOrNumber[] | undefined
@@ -335,7 +335,7 @@
         {getProps.value.value === option[getKeyField.value] && (
           <div class="flex items-center">
             {getProps.value.treeProps!.draggable &&
-              hasPermission(getProps.value.auths?.update) && (
+              userPermission.hasPermission(getProps.value.auths?.update) && (
                 <WIcon
                   height="18"
                   class="cursor-move"
@@ -344,7 +344,7 @@
               )}
 
             {getProps.value.deletable &&
-              hasPermission(getProps.value.auths?.delete) && (
+              userPermission.hasPermission(getProps.value.auths?.delete) && (
                 <WButton
                   confirm
                   icon-button

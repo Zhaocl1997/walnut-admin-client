@@ -20,7 +20,7 @@ export const useTableAPI = (
   setProps: WTable.SetProps
 ) => {
   const { t } = useAppI18n()
-  const { hasPermission } = usePermissions()
+  const userPermission = useAppStoreUserPermission()
 
   const {
     stateRef: ApiTableListParams,
@@ -42,7 +42,7 @@ export const useTableAPI = (
   // api list
   const onApiTableList = async () => {
     // no list auth, return
-    if (!hasPermission(props.value.auths?.list)) {
+    if (!userPermission.hasPermission(props.value.auths?.list)) {
       useAppNotiError(t('sys.msg.noAuthority'))
       return
     }
