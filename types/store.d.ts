@@ -127,8 +127,8 @@ declare global {
    * User auth state
    */
   interface UserAuthState {
-    access_token?: RemovableRef<string>
-    refresh_token?: RemovableRef<string>
+    accessToken?: RemovableRef<string>
+    refreshToken?: RemovableRef<string>
     remember?: RemovableRef<Omit<PasswordSigninPayload, 'rememberMe'>>
   }
 

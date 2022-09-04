@@ -32,7 +32,7 @@ export const transform: AxiosTransform = {
 
     // carry token
     if (mergedCustomOptions.needAuth) {
-      userAuth.access_token && setTokenInRequest(config, userAuth.access_token)
+      userAuth.accessToken && setTokenInRequest(config, userAuth.accessToken)
     }
 
     // add timestamp

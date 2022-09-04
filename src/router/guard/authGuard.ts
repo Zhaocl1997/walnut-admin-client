@@ -14,7 +14,7 @@ export const createAuthGuard = (router: Router) => {
     // Paths in `RouteWhiteLists` will enter directly
     if (RouteWhiteLists.includes(to.path)) {
       // Login and push to auth page, will go index menu
-      if (to.path === AppAuthPath && userAuth.access_token) {
+      if (to.path === AppAuthPath && userAuth.accessToken) {
         next({ name: appMenu.indexMenuName })
         return
       }
@@ -23,7 +23,7 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // No token, next to auth page and return
-    if (!userAuth.access_token) {
+    if (!userAuth.accessToken) {
       next({
         path: AppAuthPath,
         replace: true,

@@ -15,8 +15,8 @@ enum AuthEnum {
  */
 export const signin = (data: PasswordSigninPayload) => {
   return AppAxios.post<{
-    access_token: string
-    refresh_token: string
+    accessToken: string
+    refreshToken: string
   }>(
     {
       url: AuthEnum.SIGNIN,
@@ -36,11 +36,11 @@ export const signout = () => {
 }
 
 /**
- * @description Refresh access_token use refresh_token
+ * @description Refresh accessToken use refresh_token
  */
 export const refreshToken = (data: { refresh_token: string }) => {
   return AppAxios.post<{
-    access_token: string
+    accessToken: string
   }>({
     url: AuthEnum.REFRESH_TOKEN,
     data,

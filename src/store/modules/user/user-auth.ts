@@ -8,8 +8,8 @@ import { store } from '../../pinia'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): UserAuthState => ({
-    access_token: useAppStorage(AppConstPersistKey.ACCESS_TOKEN, ''),
-    refresh_token: useAppStorage(AppConstPersistKey.REFRESH_TOKEN, ''),
+    accessToken: useAppStorage(AppConstPersistKey.ACCESS_TOKEN, ''),
+    refreshToken: useAppStorage(AppConstPersistKey.REFRESH_TOKEN, ''),
     remember: useAppStorage(AppConstPersistKey.REMEMBER, {
       userName: '',
       password: '',
@@ -20,10 +20,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
   actions: {
     setAccessToken(payload: string) {
-      this.access_token = payload
+      this.accessToken = payload
     },
     setRefreshToken(payload: string) {
-      this.refresh_token = payload
+      this.refreshToken = payload
     },
     setRemember(payload: PasswordSigninPayload | undefined) {
       this.remember = payload
@@ -38,11 +38,11 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description get new access token use refresh token
      */
     async GetNewATWithRT(): Promise<string> {
-      const res = await refreshToken({ refresh_token: this.refresh_token! })
+      const res = await refreshToken({ refresh_token: this.refreshToken! })
 
-      this.setAccessToken(res.access_token)
+      this.setAccessToken(res.accessToken)
 
-      return res.access_token
+      return res.accessToken
     },
 
     /**
@@ -57,8 +57,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       })
 
       // set tokens
-      this.setAccessToken(res.access_token)
-      this.setRefreshToken(res.refresh_token)
+      this.setAccessToken(res.accessToken)
+      this.setRefreshToken(res.refreshToken)
 
       const { userName, password, rememberMe } = payload
 
