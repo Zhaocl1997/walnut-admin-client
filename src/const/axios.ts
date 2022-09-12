@@ -7,6 +7,8 @@ export const BussinessCodeConst = {
 
   PERMISSION_DENIED: 4003,
 
+  USER_EXIST: 4009,
+
   SIGNIN_USER_NOT_FOUND: 4010,
 
   SIGNIN_PASS_NOT_VALID: 4011,
@@ -20,6 +22,8 @@ export const BussinessCodeConst = {
   DATA_DELETE_ERROR: 4022,
 
   DATA_ERROR: 4023,
+
+  VERIFY_CODE_ERROR: 4024,
 
   DATA_BAD_ID: 4030,
 
