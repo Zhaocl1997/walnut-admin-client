@@ -55,6 +55,8 @@
       )
 
       return () => {
+        if (!props.icon) return null
+
         if (loaded.value) {
           return <Icon {...props}></Icon>
         } else {
