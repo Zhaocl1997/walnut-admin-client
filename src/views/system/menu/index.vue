@@ -239,6 +239,7 @@
 
   const onCreate = () => {
     actionType.value = 'create'
+    treeMenuValue.value = ''
     resetFormData()
     panelTitle.value = t('app.button.create')
   }

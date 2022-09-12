@@ -14,7 +14,8 @@
   const { t } = useAppI18n()
 
   // locale unique key
-  const key = 'dictType'
+  const localeKey = 'dictType'
+  const authKey = 'dict:type'
 
   const [
     register,
@@ -27,7 +28,7 @@
     baseAPI: dictTypeAPI,
 
     tableProps: {
-      localeUniqueKey: key,
+      localeUniqueKey: localeKey,
       rowKey: (row) => row._id!,
       maxHeight: 600,
       striped: true,
@@ -36,12 +37,12 @@
       headerActions: ['create'],
 
       auths: {
-        list: `system:${key}:list`,
-        create: `system:${key}:create`,
-        read: `system:${key}:read`,
-        update: `system:${key}:update`,
-        delete: `system:${key}:delete`,
-        deleteMany: `system:${key}:deleteMany`,
+        list: `system:${authKey}:list`,
+        create: `system:${authKey}:create`,
+        read: `system:${authKey}:read`,
+        update: `system:${authKey}:update`,
+        delete: `system:${authKey}:delete`,
+        deleteMany: `system:${authKey}:deleteMany`,
       },
 
       onTableHeaderActions: ({ type }) => {
@@ -56,7 +57,7 @@
       },
 
       queryFormProps: {
-        localeUniqueKey: key,
+        localeUniqueKey: localeKey,
         localeWithTable: true,
         span: 6,
         showFeedback: false,
@@ -189,7 +190,7 @@
     },
 
     formProps: {
-      localeUniqueKey: key,
+      localeUniqueKey: localeKey,
       localeWithTable: true,
       preset: 'modal',
       baseRules: true,

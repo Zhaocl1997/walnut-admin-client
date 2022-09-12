@@ -8,7 +8,7 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
   state: (): AppLocaleState => ({
     locale: useAppStorage(
       AppConstPersistKey.LOCALE,
-      preferredLanguages.value[0].replace('-', '_') as ValueOfAppConstLocale,
+      preferredLanguages.value[0] as ValueOfAppConstLocale,
       Infinity
     ),
   }),

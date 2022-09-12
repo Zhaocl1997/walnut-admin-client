@@ -128,12 +128,12 @@
 
         {
           key: 'ip',
-          width: 120,
+          width: 160,
         },
 
         {
           key: 'location',
-          width: 120,
+          width: 160,
           extendType: 'formatter',
           formatter: (row) => row.location || '-',
           ellipsis: {
@@ -167,7 +167,7 @@
 
         {
           key: 'success',
-          width: 120,
+          width: 140,
           sorter: true,
           extendType: 'dict',
           dictType: 'sys_shared_success',
