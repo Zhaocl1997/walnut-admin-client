@@ -10,9 +10,9 @@
 
   const loading = ref(false)
 
-  const SMSFormData = reactive({
-    phone: '',
-    captcha: '',
+  const SMSFormData = reactive<AppAuth.PhoneNumber & { agree: string }>({
+    phoneNumber: '',
+    verifyCode: '',
     agree: '',
   })
 
@@ -33,7 +33,7 @@
   }
 
   const [register, { validate }] = useForm<typeof SMSFormData>({
-    localeUniqueKey: 'app.signin',
+    localeUniqueKey: 'app.auth',
     baseRules: true,
     showLabel: false,
     xGap: 0,
@@ -42,12 +42,14 @@
       {
         type: 'Base:Input',
         formProp: {
-          path: 'phone',
+          path: 'phoneNumber',
           ruleType: 'string',
           first: true,
+          locale: false,
+          label: computed(() => t('app.base.phoneNumber')),
           rule: [
             {
-              key: 'phone',
+              key: 'phoneNumber',
               type: 'string',
               trigger: ['input', 'change'],
               validator: (rule, value) => {
@@ -55,8 +57,9 @@
                 if (!value) return Promise.resolve()
 
                 if (!isPhoneNumber(value)) {
-                  return Promise.reject(t('form.app.signin.phone.rule'))
+                  return Promise.reject(t('app.base.phoneNumber.rule'))
                 }
+
                 return Promise.resolve()
               },
             },
@@ -65,24 +68,28 @@
         componentProp: {
           clearable: true,
           inputProps: {
-            autocomplete: 'phone',
+            autocomplete: 'phoneNumber',
           },
         },
         transitionProp: {
-          name: 'fade-right-big',
+          name: 'fade-down-big',
           duration: 500,
         },
       },
       {
         type: 'Extend:SMSInput',
         formProp: {
-          path: 'captcha',
+          path: 'verifyCode',
           ruleType: 'string',
+          label: computed(() => t('app.base.verifyCode')),
+          locale: false,
         },
         componentProp: {
+          clearable: true,
+
           onBeforeCountdown: async () => {
-            // valid phone before count down
-            const valid = await validate(['phone'])
+            // valid phoneNumber before count down
+            const valid = await validate(['phoneNumber'])
 
             if (!valid) return false
 
@@ -101,7 +108,7 @@
           simpleVerify: true,
         },
         transitionProp: {
-          name: 'fade-right-big',
+          name: 'fade-down-big',
           duration: 700,
         },
       },
@@ -126,7 +133,7 @@
                 ></NRadio>
 
                 <span class="ml-2 text-xs text-gray-500 cursor-pointer break-all">
-                  {t('form.app.signin.continue')}
+                  {t('form.app.auth.continue')}
                   <NText
                     type="info"
                     strong
@@ -136,7 +143,7 @@
                     }}
                   >
                     {' '}
-                    {t('form.app.signin.sa')}{' '}
+                    {t('form.app.auth.sa')}{' '}
                   </NText>
                   、
                   <NText
@@ -148,7 +155,7 @@
                     }}
                   >
                     {' '}
-                    {t('form.app.signin.pp')}{' '}
+                    {t('form.app.auth.pp')}{' '}
                   </NText>
                 </span>
               </div>
@@ -156,15 +163,20 @@
           },
         },
         transitionProp: {
-          name: 'fade-right-big',
+          name: 'fade-down-big',
           duration: 900,
         },
       },
       {
         type: 'Base:Button',
+        formProp: {
+          showFeedback: false,
+        },
         componentProp: {
           textProp: () => (
-            <span class="text-light-800">{t('app.base.signin')}</span>
+            <span class="text-light-800">
+              {t('app.base.signin')} / {t('app.base.signup')}
+            </span>
           ),
           loading: loading,
           disabled: computed(
@@ -176,11 +188,11 @@
             fontWeight: '900',
           },
           class:
-            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500',
+            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-2',
           onClick: onSubmit,
         },
         transitionProp: {
-          name: 'fade-right-big',
+          name: 'fade-down-big',
           duration: 1100,
         },
       },

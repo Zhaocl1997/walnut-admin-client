@@ -1,12 +1,12 @@
 <template>
-  <div class="vstack items-center justify-center gap-y-2 mt-8">
+  <div class="vstack items-center justify-center gap-y-2 mt-4">
     <WQRCode
       :url="url"
       :expire-seconds="5"
       @refresh="onRefreshQRCode"
     ></WQRCode>
 
-    <span class="break-all">{{ t('form.app.signin.scan') }}</span>
+    <span class="break-all">{{ t('form.app.auth.scan') }}</span>
   </div>
 </template>
 

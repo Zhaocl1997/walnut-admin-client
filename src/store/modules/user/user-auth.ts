@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { refreshToken, signin, signout } from '@/api/auth'
+import { refreshToken, signin, signout, signupWithEmail } from '@/api/auth'
 import { AppCoreFn1 } from '@/core'
 
 import { StoreKeys } from '../../constant'
@@ -25,7 +25,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     setRefreshToken(payload: string) {
       this.refreshToken = payload
     },
-    setRemember(payload: PasswordSigninPayload | undefined) {
+    setRemember(payload: AppAuth.Password | undefined) {
       this.remember = payload
     },
 
@@ -46,11 +46,22 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     },
 
     /**
-     * @description basic signin with userName and password
+     * @description core function after signin to excute
      */
-    async SignInWithPassword(payload: PasswordSigninPayload) {
+    async ExcuteCoreFnAfterSignin() {
       const appMenu = useAppStoreMenu()
 
+      // get menus/permissions/keys etc
+      await AppCoreFn1()
+
+      // push to the index menu
+      await appMenu.goIndex()
+    },
+
+    /**
+     * @description password way to auth
+     */
+    async AuthWithBasicPassword(payload: AppAuth.Password) {
       const res = await signin({
         userName: payload.userName,
         password: payload.password,
@@ -69,11 +80,22 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         this.setRemember(undefined)
       }
 
-      // get menus/permissions/keys etc
-      await AppCoreFn1()
+      // excute core fn
+      this.ExcuteCoreFnAfterSignin()
+    },
 
-      // push to the index menu
-      await appMenu.goIndex()
+    /**
+     * @description email way to auth
+     */
+    async AuthWithEmailAddress(payload: AppAuth.EmailAddress) {
+      const res = await signupWithEmail(payload)
+
+      // set tokens
+      this.setAccessToken(res.accessToken)
+      this.setRefreshToken(res.refreshToken)
+
+      // excute core fn
+      this.ExcuteCoreFnAfterSignin()
     },
 
     /**

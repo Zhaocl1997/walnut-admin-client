@@ -19,9 +19,9 @@
       <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
       <div class="w-full px-24 z-10">
         <h1 class="text-5xl font-bold text-left tracking-wide text-gray-50">
-          {{ t('app.signin.h1') }}
+          {{ t('app.auth.h1') }}
         </h1>
-        <p class="text-3xl my-4 text-gray-50">{{ t('app.signin.h2') }}</p>
+        <p class="text-3xl my-4 text-gray-50">{{ t('app.auth.h2') }}</p>
       </div>
     </div>
 
@@ -55,31 +55,10 @@
               </span>
             </h1>
 
-            <div v-if="!back" class="w-full">
-              <SignIn ref="signInRef"></SignIn>
+            <div class="w-full">
+              <AuthFormTab ref="signInRef"></AuthFormTab>
 
               <w-transition name="fade-left-big" appear :duration="1700">
-                <n-text
-                  type="info"
-                  class="text-xs cursor-pointer float-right"
-                  @click="onToggle"
-                >
-                  {{ t('app.signin.goSignup') }}
-                </n-text>
-              </w-transition>
-            </div>
-
-            <div v-else class="w-full">
-              <SignUp></SignUp>
-
-              <w-transition name="fade-up-big" appear :duration="1900">
-                <n-text
-                  type="info"
-                  class="text-xs cursor-pointer float-right"
-                  @click="onToggle"
-                >
-                  {{ t('app.signup.goSignin') }}
-                </n-text>
               </w-transition>
             </div>
           </div>
@@ -97,22 +76,17 @@
 </template>
 
 <script lang="tsx" setup>
-  import SignIn from './signin/index.vue'
-  import SignUp from './signup.vue'
+  import AuthFormTab from './src/index.vue'
   import { useDemonstrate } from './useDemonstrate'
 
   const { t } = useAppI18n()
   const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
-
-  const back = ref(false)
 
   const { signInRef } = useDemonstrate()
 
   const onClickBeian = () => {
     openExternalLink('http://beian.miit.gov.cn/')
   }
-
-  const onToggle = () => (back.value = !back.value)
 </script>
 
 <script lang="tsx">

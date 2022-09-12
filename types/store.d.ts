@@ -23,15 +23,6 @@ declare global {
   type NotificationPlacement = NotificationPlacement
 
   /**
-   * Use password and user name to sign in interface
-   */
-  interface PasswordSigninPayload {
-    userName: string
-    password: string
-    rememberMe?: boolean
-  }
-
-  /**
    * Lock route info
    */
   interface AppLockRoute {
@@ -129,7 +120,7 @@ declare global {
   interface UserAuthState {
     accessToken?: RemovableRef<string>
     refreshToken?: RemovableRef<string>
-    remember?: RemovableRef<Omit<PasswordSigninPayload, 'rememberMe'>>
+    remember?: RemovableRef<Omit<AppAuth.Password, 'rememberMe'>>
   }
 
   /**

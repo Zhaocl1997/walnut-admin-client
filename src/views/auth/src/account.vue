@@ -5,7 +5,6 @@
 <script lang="tsx" setup>
   // TODO 99
   import { NCheckbox, NButton } from 'naive-ui'
-  import WIcon from '@/components/UI/Icon'
 
   const { t } = useAppI18n()
   const appAuth = useAppStoreUserAuth()
@@ -13,7 +12,7 @@
 
   const loading = ref(false)
 
-  const accountFormData = reactive({
+  const accountFormData = reactive<AppAuth.Password>({
     userName: '',
     password: '',
     rememberMe: true,
@@ -26,7 +25,7 @@
       loading.value = true
 
       try {
-        await appAuth.SignInWithPassword(accountFormData)
+        await appAuth.AuthWithBasicPassword(accountFormData)
       } finally {
         loading.value = false
 
@@ -40,12 +39,8 @@
     useAppMsgSuccess('Forget password')
   }
 
-  const onOtherWaySignin = (type: string) => {
-    useAppMsgSuccess(type)
-  }
-
   const [register, { validate }] = useForm<typeof accountFormData>({
-    localeUniqueKey: 'app.signin',
+    localeUniqueKey: 'app.auth',
     baseRules: true,
     showLabel: false,
     xGap: 0,
@@ -91,7 +86,7 @@
           render: ({ formData }) => (
             <div class="hstack justify-between w-full mb-2">
               <NCheckbox vModel={[formData.rememberMe, 'checked']}>
-                {t('form.app.signin.remember')}
+                {t('form.app.auth.remember')}
               </NCheckbox>
 
               <NButton
@@ -100,7 +95,7 @@
                 type="tertiary"
                 onClick={onForgetPassword}
               >
-                {t('form.app.signin.forget')}
+                {t('form.app.auth.forget')}
               </NButton>
             </div>
           ),
@@ -130,71 +125,6 @@
         transitionProp: {
           name: 'fade-left-big',
           duration: 1100,
-        },
-      },
-      {
-        type: 'Extend:Divider',
-        formProp: {
-          showFeedback: false,
-        },
-        componentProp: {
-          title: 'app.signin.other',
-          titleClass: 'text-xs',
-        },
-        transitionProp: {
-          name: 'fade-left-big',
-          duration: 1300,
-        },
-      },
-      {
-        type: 'Base:Render',
-        formProp: {
-          showFeedback: false,
-        },
-        componentProp: {
-          render: () => {
-            const iconArr = [
-              {
-                key: 'wechat',
-                icon: 'ant-design:wechat-outlined',
-                title: t('app.signin.other.wechat'),
-              },
-              {
-                key: 'alipay',
-                icon: 'ant-design:alipay-circle-outlined',
-                title: t('app.signin.other.alipay'),
-              },
-              {
-                key: 'qq',
-                icon: 'ant-design:qq-outlined',
-                title: t('app.signin.other.qq'),
-              },
-              {
-                key: 'weibo',
-                icon: 'ant-design:weibo-outlined',
-                title: t('app.signin.other.weibo'),
-              },
-              {
-                key: 'github',
-                icon: 'ant-design:github-outlined',
-                title: t('app.signin.other.github'),
-              },
-            ]
-
-            return (
-              <div class="w-full hstack justify-evenly children:cursor-pointer hover:children:text-primary">
-                {iconArr.map((i) => (
-                  <span title={i.title} onClick={() => onOtherWaySignin(i.key)}>
-                    <WIcon width="20" icon={i.icon}></WIcon>
-                  </span>
-                ))}
-              </div>
-            )
-          },
-        },
-        transitionProp: {
-          name: 'fade-left-big',
-          duration: 1500,
         },
       },
     ],

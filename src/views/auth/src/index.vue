@@ -5,25 +5,31 @@
       :bar-width="28"
       animated
       default-value="account"
-      pane-class="min-h-64"
+      pane-class="h-58"
       type="line"
       justify-content="space-around"
     >
-      <n-tab-pane name="account" :tab="t('form.app.signin.tab.account')">
+      <n-tab-pane name="account" :tab="t('form.app.auth.tab.account')">
         <SignInWithAccount
           ref="account"
           class="w-72 text-justify mt-2"
         ></SignInWithAccount>
       </n-tab-pane>
 
-      <n-tab-pane name="SMS" :tab="t('form.app.signin.tab.sms')">
+      <n-tab-pane name="SMS" :tab="t('form.app.auth.tab.sms')">
         <SignInWitSMS class="w-72 text-justify mt-2"></SignInWitSMS>
       </n-tab-pane>
 
-      <n-tab-pane name="QR" :tab="t('form.app.signin.tab.qr')">
+      <n-tab-pane name="email" :tab="t('form.app.auth.tab.email')">
+        <SignInWitEmail class="w-72 text-justify mt-2"></SignInWitEmail>
+      </n-tab-pane>
+
+      <n-tab-pane name="QR" :tab="t('form.app.auth.tab.qr')">
         <SignInWithQR class="w-72 text-justify mt-2"></SignInWithQR>
       </n-tab-pane>
     </n-tabs>
+
+    <SharedOther></SharedOther>
   </div>
 </template>
 
@@ -32,7 +38,10 @@
 
   import SignInWithAccount from './account.vue'
   import SignInWitSMS from './SMS.vue'
+  import SignInWitEmail from './email.vue'
   import SignInWithQR from './QR.vue'
+
+  import SharedOther from './shared/other.vue'
 
   const { t, locale } = useAppI18n()
 

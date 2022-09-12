@@ -1,7 +1,7 @@
 enum AuthEnum {
   SIGNIN = '/auth/signin',
+  SIGNUP_EMAIL = '/auth/signup/email',
   SIGNOUT = '/auth/signout',
-  SIGNUP = '/auth/signup',
 
   REFRESH_TOKEN = '/auth/refresh',
 
@@ -10,20 +10,32 @@ enum AuthEnum {
   KEYS = '/auth/keys',
 }
 
+interface AppTokenPayload {
+  accessToken: string
+  refreshToken: string
+}
+
 /**
  * @description Sign in
  */
-export const signin = (data: PasswordSigninPayload) => {
-  return AppAxios.post<{
-    accessToken: string
-    refreshToken: string
-  }>(
+export const signin = (data: AppAuth.Password) => {
+  return AppAxios.post<AppTokenPayload>(
     {
       url: AuthEnum.SIGNIN,
       data,
     },
     { autoEncryptRequestData: true, encryptFields: ['password'] }
   )
+}
+
+/**
+ * @description Sign up with email
+ */
+export const signupWithEmail = (data: AppAuth.EmailAddress) => {
+  return AppAxios.post<AppTokenPayload>({
+    url: AuthEnum.SIGNUP_EMAIL,
+    data,
+  })
 }
 
 /**
