@@ -9,7 +9,7 @@
         manual-retry
         @click="onClick"
       >
-        {{ t('form.app.signin.sendCaptcha') }}
+        {{ t('comp.verifyInput.send') }}
       </w-button>
     </template>
   </n-input>
