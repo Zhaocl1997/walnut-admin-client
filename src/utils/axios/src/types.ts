@@ -27,7 +27,7 @@ export interface AxiosTransform {
   /**
    * @description Axios original response error catch
    */
-  responseInterceptorsCatch?: (error: AxiosError) => void
+  responseInterceptorsCatch?: <T = any>(error: AxiosError<T>) => void
 }
 
 /**
@@ -45,12 +45,6 @@ export interface AxiosCustomConfig {
    * @default true
    */
   needAuth?: boolean
-
-  /**
-   * @description Is for demonstrate
-   * @default false
-   */
-  demonstrate?: boolean
 
   /**
    * @description cached for same request

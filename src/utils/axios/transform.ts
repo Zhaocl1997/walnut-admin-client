@@ -28,7 +28,7 @@ export const transform: AxiosTransform = {
     const mergedCustomOptions = config.customConfig!
 
     // adapt for backend locale messages
-    config.headers!['Accept-Language'] = appLocale.locale.replace('_', '-')
+    config.headers!['x-language'] = appLocale.locale
 
     // carry token
     if (mergedCustomOptions.needAuth) {
@@ -38,11 +38,6 @@ export const transform: AxiosTransform = {
     // add timestamp
     if (mergedCustomOptions.timestamp) {
       config.url += `?_t=${Date.now()}`
-    }
-
-    // Demonstrate purpose API
-    if (mergedCustomOptions.demonstrate) {
-      return Promise.reject(new Error('Demonstrate'))
     }
 
     // filter null value in config.data
@@ -163,22 +158,14 @@ export const transform: AxiosTransform = {
 
   // Here handle response error
   responseInterceptorsCatch: (err) => {
-    const { t } = AppI18n.global
-
     if (err.message === 'Network Error') {
       useAppRouterPush({ name: '500' })
       return
     }
 
-    if (err.message === 'Demonstrate') {
-      // TODO 93
-      // @ts-ignore
-      useAppNotiError(t('app.base.demonstrate'))
-    } else {
-      const statusCode = err.response?.data.statusCode
-      const msg = err.response?.data.detail?.message
-      checkReponseErrorStatus(statusCode, msg)
-    }
+    const statusCode = (err.response?.data as any).statusCode
+    const msg = (err.response?.data as any).detail?.message
+    checkReponseErrorStatus(statusCode, msg)
 
     return Promise.reject(err)
   },

@@ -20,9 +20,7 @@ export class BaseAPI<T> {
         url: `${this.baseAPI}`,
         data,
       },
-      {
-        demonstrate: isProd(),
-      }
+      {}
     )
   }
 
@@ -38,9 +36,7 @@ export class BaseAPI<T> {
         url: `${this.baseAPI}`,
         data,
       },
-      {
-        demonstrate: isProd(),
-      }
+      {}
     )
   }
 
@@ -49,9 +45,7 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/${id}`,
       },
-      {
-        demonstrate: isProd(),
-      }
+      {}
     )
   }
 
@@ -60,9 +54,7 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/deleteMany/${id}`,
       },
-      {
-        demonstrate: isProd(),
-      }
+      {}
     )
   }
 }

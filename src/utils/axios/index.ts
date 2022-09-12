@@ -28,9 +28,6 @@ const axiosConfig: AxiosRequestConfigExtend = {
     // carry token
     needAuth: true,
 
-    // api only work in dev mode
-    demonstrate: false,
-
     // no cache
     cache: false,
 
