@@ -15,7 +15,7 @@ export const getFormBooleanField = (
     return maybeBool({ formData: props.model! })
   }
 
-  return getBoolean(maybeBool, defaultValue)
+  return getBoolean(unref(maybeBool), defaultValue)
 }
 
 /**
