@@ -235,7 +235,7 @@
             path: 'label',
           },
           componentProp: {
-            prefix: 'dict:',
+            prefix: 'dict.',
           },
         },
 

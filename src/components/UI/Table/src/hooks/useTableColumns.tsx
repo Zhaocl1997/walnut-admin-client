@@ -107,6 +107,11 @@ export const useTableColumns = (
           return {
             ...tItem,
 
+            // handle dict column title
+            title: tItem.useDictNameAsTitle
+              ? () => t(`dict.name.${tItem.dictType}`)
+              : tItem.title,
+
             filterOptions: computed(() =>
               tItem.filter
                 ? AppDictMap.get(tItem.dictType)?.dictData.map((i) => ({

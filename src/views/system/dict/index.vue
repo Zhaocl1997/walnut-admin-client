@@ -204,7 +204,7 @@
             path: 'name',
           },
           componentProp: {
-            prefix: 'dict:name:',
+            prefix: 'dict.name.',
           },
         },
 

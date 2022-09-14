@@ -4,19 +4,19 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'LogSignin',
+    name: 'LogAuth',
   })
 </script>
 
 <script lang="ts" setup>
-  import { logSigninAPI } from '@/api/system/log'
+  import { logAuthAPI } from '@/api/system/log'
 
   // locale unique key
-  const localeKey = 'log.signin'
-  const authKey = 'log:signin'
+  const localeKey = 'log.auth'
+  const authKey = 'log:auth'
 
   const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
-    baseAPI: logSigninAPI,
+    baseAPI: logAuthAPI,
 
     tableProps: {
       localeUniqueKey: localeKey,
@@ -85,7 +85,7 @@
           {
             type: 'Base:DatePicker',
             formProp: {
-              path: 'signinAt',
+              path: 'authTime',
             },
             componentProp: {
               type: 'daterange',
@@ -122,7 +122,7 @@
 
         {
           key: 'userName',
-          width: 100,
+          width: 120,
           sorter: true,
         },
 
@@ -176,7 +176,19 @@
         },
 
         {
-          key: 'signinAt',
+          key: 'type',
+          width: 160,
+          sorter: true,
+          extendType: 'dict',
+          dictType: 'sys_auth_type',
+          filter: true,
+
+          // use dict name as column title
+          useDictNameAsTitle: true,
+        },
+
+        {
+          key: 'authTime',
           width: 200,
           sorter: true,
           defaultSortOrder: 'descend',

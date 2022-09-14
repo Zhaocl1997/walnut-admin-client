@@ -141,6 +141,9 @@ export declare namespace WTable {
     type Dictionary<T = RowData> = BaseExtend<T, 'dict'> & {
       dictType: string
       tagProps?: RenderFn<T, TagProps>
+
+      // set this true means use `dict.name` as table column label
+      useDictNameAsTitle?: boolean
     }
 
     /**

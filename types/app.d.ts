@@ -136,7 +136,7 @@ declare global {
     userName?: string
     msg?: string
     success?: boolean
-    signinAt?: Date
+    authTime?: Date
   }
 
   // shared area

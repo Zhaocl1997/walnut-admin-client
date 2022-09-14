@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { refreshToken, signin, signout, signupWithEmail } from '@/api/auth'
+import { refreshToken, authWithPwd, signout, authWithEmail } from '@/api/auth'
 import { AppCoreFn1 } from '@/core'
 
 import { StoreKeys } from '../../constant'
@@ -62,7 +62,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description password way to auth
      */
     async AuthWithBasicPassword(payload: AppAuth.Password) {
-      const res = await signin({
+      const res = await authWithPwd({
         userName: payload.userName,
         password: payload.password,
       })
@@ -88,7 +88,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description email way to auth
      */
     async AuthWithEmailAddress(payload: AppAuth.EmailAddress) {
-      const res = await signupWithEmail(payload)
+      const res = await authWithEmail(payload)
 
       // set tokens
       this.setAccessToken(res.accessToken)
