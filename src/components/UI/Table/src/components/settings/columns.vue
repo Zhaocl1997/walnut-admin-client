@@ -135,7 +135,6 @@
 
 <script lang="ts" setup>
   import type Sortable from 'sortablejs'
-  import type { TableBaseColumn } from 'naive-ui/lib/data-table/src/interface'
   import type { WTable } from '../../types'
 
   import { useTableContext } from '../../hooks/useTableContext'
@@ -207,14 +206,17 @@
   }
 
   const getTitle = (item: WTable.Column) => {
-    if (typeof (item as TableBaseColumn).title === 'string') {
-      return (item as TableBaseColumn).title
+    if (typeof item.title === 'string') {
+      return item.title
     }
 
-    // @ts-expect-error
-    if (typeof item.titleText === 'function') {
-      // @ts-expect-error
-      return item.titleText()
+    // handle dict column title
+    if (item.extendType === 'dict' && item.useDictNameAsTitle) {
+      return t(`dict.name.${item.dictType}`)
+    }
+
+    if (typeof item._titleText === 'function') {
+      return item._titleText()
     }
 
     return t('app.base.selection')

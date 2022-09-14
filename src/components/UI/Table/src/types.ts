@@ -105,6 +105,14 @@ export declare namespace WTable {
        */
       locale?: boolean
 
+      /**
+       * @description used for column setting title
+       */
+      _titleText?: () => string
+
+      /**
+       * @description internal show flag
+       */
       _internalShow?: boolean
     }
 
