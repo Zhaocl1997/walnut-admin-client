@@ -89,7 +89,7 @@
     () => appLocale.locale,
     async (v) => {
       const modules = import.meta.glob(
-        '/public/vendor/codeMirror/langs/zh_CN.js'
+        '/public/vendor/codeMirror/langs/zh-CN.js'
       )
 
       for (const path in modules) {
