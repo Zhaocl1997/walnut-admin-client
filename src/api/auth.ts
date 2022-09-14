@@ -2,7 +2,7 @@ enum AuthEnum {
   PWD = '/auth/pwd',
   EMAIL = '/auth/email',
 
-  SIGNOUT = '/auth/signout',
+  SIGNOUT = '/auth/pwd/signout',
 
   REFRESH_TOKEN = '/auth/refresh',
 
