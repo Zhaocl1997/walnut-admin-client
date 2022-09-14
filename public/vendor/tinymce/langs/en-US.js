@@ -1,4 +1,4 @@
-tinymce.addI18n('en_US', {
+tinymce.addI18n('en-US', {
   Cut: 'Cut',
   'Heading 5': 'Heading 5',
   'Header 2': 'Header 2',
