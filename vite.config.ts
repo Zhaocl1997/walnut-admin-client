@@ -1,7 +1,7 @@
 import type { UserConfig, ConfigEnv } from 'vite'
 
 import { resolve } from 'path'
-import { loadEnv } from 'vite'
+import { loadEnv, splitVendorChunkPlugin } from 'vite'
 
 import { getNow } from 'easy-fns-ts/dist/lib'
 
@@ -41,7 +41,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
 
-    plugins: createVitePlugins(mode, env),
+    plugins: [...createVitePlugins(mode, env), splitVendorChunkPlugin()],
 
     resolve: {
       alias,
@@ -86,12 +86,13 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
     build: {
       target: 'es2015',
+      minify: 'esbuild',
       outDir,
       reportCompressedSize: false,
 
       chunkSizeWarningLimit: 600,
 
-      sourcemap: mode === 'staging',
+      // sourcemap: mode === 'staging',
 
       // minify: 'terser',
       // // https://terser.org/docs/api-reference#minify-options
@@ -109,20 +110,36 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           chunkFileNames: 'js/[name].[hash].js',
           entryFileNames: 'js/[name].[hash].js',
 
-          // https://rollupjs.org/guide/en/#outputmanualchunks
-          manualChunks(id) {
-            if (id.includes('node_modules/.pnpm')) {
-              return id
-                .toString()
-                .split('node_modules/.pnpm/')[1]
-                .split('/')[0]
-                .toString()
-            }
-
-            // if (id.includes('src/')) {
-            //   return 'src'
-            // }
+          manualChunks: {
+            'lodash-es': ['lodash-es'],
+            'naive-ui': ['naive-ui'],
+            'ali-oss': ['ali-oss'],
+            echarts: ['echarts'],
+            tinymce: ['tinymce'],
+            sortablejs: ['sortablejs'],
+            axios: ['axios'],
+            signature_pad: ['signature_pad'],
+            'vue-i18n': ['vue-i18n'],
+            'highlight.js': ['highlight.js'],
+            'intro.js': ['intro.js'],
+            codemirror: ['codemirror'],
+            cropperjs: ['cropperjs'],
           },
+
+          // https://rollupjs.org/guide/en/#outputmanualchunks
+          // manualChunks(id) {
+          //   if (id.includes('node_modules/.pnpm')) {
+          //     return id
+          //       .toString()
+          //       .split('node_modules/.pnpm/')[1]
+          //       .split('/')[0]
+          //       .toString()
+          //   }
+
+          //   // if (id.includes('src/')) {
+          //   //   return 'src'
+          //   // }
+          // },
         },
       },
     },
