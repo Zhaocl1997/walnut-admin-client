@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 
-import { refreshToken, authWithPwd, signout, authWithEmail } from '@/api/auth'
+import { refreshToken, authWithPwd, signout } from '@/api/auth'
+import { authWithEmail } from '@/api/auth/email'
 import { AppCoreFn1 } from '@/core'
 
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
+import { authWithPhoneNumber } from '@/api/auth/phone'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): UserAuthState => ({
@@ -48,7 +50,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description core function after signin to excute
      */
-    async ExcuteCoreFnAfterSignin() {
+    async ExcuteCoreFnAfterAuth() {
       const appMenu = useAppStoreMenu()
 
       // get menus/permissions/keys etc
@@ -81,7 +83,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       }
 
       // excute core fn
-      this.ExcuteCoreFnAfterSignin()
+      this.ExcuteCoreFnAfterAuth()
     },
 
     /**
@@ -95,7 +97,21 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       this.setRefreshToken(res.refreshToken)
 
       // excute core fn
-      this.ExcuteCoreFnAfterSignin()
+      this.ExcuteCoreFnAfterAuth()
+    },
+
+    /**
+     * @description text message way to auth
+     */
+    async AuthWithPhoneNumber(payload: AppAuth.PhoneNumber) {
+      const res = await authWithPhoneNumber(payload)
+
+      // set tokens
+      this.setAccessToken(res.accessToken)
+      this.setRefreshToken(res.refreshToken)
+
+      // excute core fn
+      this.ExcuteCoreFnAfterAuth()
     },
 
     /**

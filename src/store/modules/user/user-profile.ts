@@ -32,7 +32,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
 
     async getProfile() {
       const res = await getUserInfo()
-      this.setProfile(res)
+      this.setProfile(res.user)
     },
 
     clearProfile() {

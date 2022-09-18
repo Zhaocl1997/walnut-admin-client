@@ -5,7 +5,7 @@
 <script lang="tsx" setup>
   // TODO 99
   import { NRadio, NText } from 'naive-ui'
-  import { sendSignupEmail } from '@/api/email'
+  import { sendAuthEmail } from '@/api/auth/email'
 
   const { t } = useAppI18n()
   const appAuth = useAppStoreUserAuth()
@@ -27,11 +27,11 @@
 
       try {
         await appAuth.AuthWithEmailAddress(emailFormData)
-      } finally {
-        loading.value = false
 
         // close demonstrate notification
         appNaive.destroyCurrentNotiInst()
+      } finally {
+        loading.value = false
       }
     }
   }
@@ -101,7 +101,7 @@
 
           onSuccess: async (startCountdown) => {
             // here to call emailAddress endpoint
-            await sendSignupEmail(emailFormData)
+            await sendAuthEmail(emailFormData)
 
             useAppMsgSuccess()
 

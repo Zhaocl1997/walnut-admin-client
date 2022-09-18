@@ -18,6 +18,11 @@ declare global {
       phoneNumber: string
       verifyCode: string
     }
+
+    interface TokenPayload {
+      accessToken: string
+      refreshToken: string
+    }
   }
 }
 

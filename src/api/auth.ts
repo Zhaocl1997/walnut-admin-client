@@ -1,6 +1,5 @@
 enum AuthEnum {
   PWD = '/auth/pwd',
-  EMAIL = '/auth/email',
 
   SIGNOUT = '/auth/pwd/signout',
 
@@ -11,32 +10,17 @@ enum AuthEnum {
   KEYS = '/auth/keys',
 }
 
-interface AppTokenPayload {
-  accessToken: string
-  refreshToken: string
-}
-
 /**
  * @description auth with pwd
  */
 export const authWithPwd = (data: AppAuth.Password) => {
-  return AppAxios.post<AppTokenPayload>(
+  return AppAxios.post<AppAuth.TokenPayload>(
     {
       url: AuthEnum.PWD,
       data,
     },
     { autoEncryptRequestData: true, encryptFields: ['password'] }
   )
-}
-
-/**
- * @description auth with email
- */
-export const authWithEmail = (data: AppAuth.EmailAddress) => {
-  return AppAxios.post<AppTokenPayload>({
-    url: AuthEnum.EMAIL,
-    data,
-  })
 }
 
 /**
@@ -73,7 +57,7 @@ export const getPermissions = () => {
  * @description Signin user detail info api
  */
 export const getUserInfo = () => {
-  return AppAxios.get<AppSystemUser>({
+  return AppAxios.get<{ user: AppSystemUser; roleNames: string[] }>({
     url: AuthEnum.PROFILE,
   })
 }

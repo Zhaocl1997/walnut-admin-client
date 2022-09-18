@@ -4,9 +4,12 @@
 
 <script lang="tsx" setup>
   // TODO 99
+  import { sendAuthTextMsg } from '@/api/auth/phone'
   import { NRadio, NText } from 'naive-ui'
 
   const { t } = useAppI18n()
+  const appAuth = useAppStoreUserAuth()
+  const appNaive = useAppStoreNaive()
 
   const loading = ref(false)
 
@@ -23,11 +26,12 @@
       loading.value = true
 
       try {
-        console.log(SMSFormData)
+        await appAuth.AuthWithPhoneNumber(SMSFormData)
+
+        // close demonstrate notification
+        appNaive.destroyCurrentNotiInst()
       } finally {
-        setTimeout(() => {
-          loading.value = false
-        }, 1500)
+        loading.value = false
       }
     }
   }
@@ -97,11 +101,12 @@
           },
 
           onSuccess: async (startCountdown) => {
-            // here to call SMS endpoint
-            setTimeout(() => {
-              useAppMsgSuccess('Send Success')
-              startCountdown()
-            }, 1500)
+            // here to call phone number text message endpoint
+            await sendAuthTextMsg(SMSFormData)
+
+            useAppMsgSuccess()
+
+            startCountdown()
           },
 
           // use simple canvas verify, no endpopint support

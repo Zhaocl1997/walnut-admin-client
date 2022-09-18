@@ -127,6 +127,28 @@
         },
 
         {
+          key: 'success',
+          width: 140,
+          sorter: true,
+          extendType: 'dict',
+          dictType: 'sys_shared_success',
+          filter: true,
+          filterMultiple: false,
+        },
+
+        {
+          key: 'type',
+          width: 160,
+          sorter: true,
+          extendType: 'dict',
+          dictType: 'sys_auth_type',
+          filter: true,
+
+          // use dict name as column title
+          useDictNameAsTitle: true,
+        },
+
+        {
           key: 'ip',
           width: 160,
         },
@@ -163,28 +185,6 @@
           ellipsis: {
             tooltip: true,
           },
-        },
-
-        {
-          key: 'success',
-          width: 140,
-          sorter: true,
-          extendType: 'dict',
-          dictType: 'sys_shared_success',
-          filter: true,
-          filterMultiple: false,
-        },
-
-        {
-          key: 'type',
-          width: 160,
-          sorter: true,
-          extendType: 'dict',
-          dictType: 'sys_auth_type',
-          filter: true,
-
-          // use dict name as column title
-          useDictNameAsTitle: true,
         },
 
         {
