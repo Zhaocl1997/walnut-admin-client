@@ -33,9 +33,9 @@ export const signout = () => {
 }
 
 /**
- * @description Refresh accessToken use refresh_token
+ * @description Refresh accessToken use refreshToken
  */
-export const refreshToken = (data: { refresh_token: string }) => {
+export const refreshToken = (data: { refreshToken: string }) => {
   return AppAxios.post<{
     accessToken: string
   }>({

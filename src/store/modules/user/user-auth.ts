@@ -40,7 +40,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description get new access token use refresh token
      */
     async GetNewATWithRT(): Promise<string> {
-      const res = await refreshToken({ refresh_token: this.refreshToken! })
+      const res = await refreshToken({ refreshToken: this.refreshToken! })
 
       this.setAccessToken(res.accessToken)
 
