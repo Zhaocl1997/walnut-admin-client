@@ -87,6 +87,7 @@ export const useFormAdvanced = (
         <w-modal
           v-model={[show.value, 'show']}
           title={onGetTitle(props.value.advancedProps?.title as string)}
+          width={(props.value.advancedProps as DrawerProps)?.width + 'px'}
           maskClosable={
             !loading.value && props.value.advancedProps?.maskClosable
           }
