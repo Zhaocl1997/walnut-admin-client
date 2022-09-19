@@ -145,6 +145,14 @@ declare global {
     name?: string
     pcode?: string
   }
+
+  // app setting
+  interface AppSettingsModel extends BaseAppModel {
+    settingName?: string
+    settingKey?: string
+    settingValue?: string
+    remark?: string
+  }
 }
 
 export {}
