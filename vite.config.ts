@@ -9,6 +9,8 @@ import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
 import { outDir, publicDir } from './build/constant'
 
+import { createRollupObfuscatorPlugin } from './build/rollup'
+
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
 }
@@ -80,10 +82,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // https: true,
     },
 
-    // esbuild: {
-    //   pure: ['console.log', 'debugger'],
-    // },
-
     build: {
       target: 'es2015',
       minify: 'esbuild',
@@ -94,15 +92,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
       // sourcemap: mode === 'staging',
 
-      // minify: 'terser',
-      // // https://terser.org/docs/api-reference#minify-options
-      // terserOptions: {
-      //   compress: {
-      //     keep_infinity: true,
-      //     drop_console: mode === 'production',
-      //   },
-      // },
-
       rollupOptions: {
         external: ['virtual:terminal'],
         output: {
@@ -110,6 +99,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           chunkFileNames: 'js/[name].[hash].js',
           entryFileNames: 'js/[name].[hash].js',
 
+          // https://rollupjs.org/guide/en/#outputmanualchunks
           manualChunks: {
             'lodash-es': ['lodash-es'],
             'naive-ui': ['naive-ui'],
@@ -126,20 +116,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
             cropperjs: ['cropperjs'],
           },
 
-          // https://rollupjs.org/guide/en/#outputmanualchunks
-          // manualChunks(id) {
-          //   if (id.includes('node_modules/.pnpm')) {
-          //     return id
-          //       .toString()
-          //       .split('node_modules/.pnpm/')[1]
-          //       .split('/')[0]
-          //       .toString()
-          //   }
-
-          //   // if (id.includes('src/')) {
-          //   //   return 'src'
-          //   // }
-          // },
+          plugins: [createRollupObfuscatorPlugin()],
         },
       },
     },
