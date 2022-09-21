@@ -30,7 +30,7 @@ type WDescTypeDict = {
 
 type WDescItemExtend = {
   value: StringOrNumber
-  formatter: (val: string) => string
+  formatter?: (val: string) => string
 }
 
 export type WDescriptionsItem = DescriptionItemProps &
