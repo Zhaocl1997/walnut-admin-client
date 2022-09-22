@@ -45,7 +45,7 @@ export const useTabs = () => {
   )
 
   watch(
-    appTab.tabs,
+    () => appTab.tabs,
     () => {
       // check scroll content is overflow or not, do some judgement
       isOverflow.value = scrollRef.value?.getIsOverflow()!
