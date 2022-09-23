@@ -20,9 +20,15 @@
       presetHeight: String as PropType<string>,
     },
 
-    setup(props, { slots }) {
+    emits: ['iptc-success'],
+
+    setup(props, { slots, emit }) {
       const userPermission = useAppStoreUserPermission()
       const { t } = useAppI18n()
+
+      const onIPTCSuccess = () => {
+        emit('iptc-success', props.value)
+      }
 
       const render = () => {
         // this need higher priority
@@ -34,6 +40,7 @@
               permission={props.value}
               presetWidth={props.presetWidth}
               presetHeight={props.presetHeight}
+              onSuccess={onIPTCSuccess}
             >
               {renderSlot(slots, 'default')}
             </AppAuthorizeIPTC>
@@ -50,12 +57,16 @@
 
         if (props.preset === 'tip') {
           return (
-            <n-result
+            <div
+              class="flex items-center justify-center"
               style={{ width: props.presetWidth, height: props.presetHeight }}
-              status="403"
-              title={t('app.authorize.tip.title')}
-              description={t('app.authorize.tip.desc')}
-            ></n-result>
+            >
+              <n-result
+                status="403"
+                title={t('app.authorize.tip.title')}
+                description={t('app.authorize.tip.desc')}
+              ></n-result>
+            </div>
           )
         }
       }

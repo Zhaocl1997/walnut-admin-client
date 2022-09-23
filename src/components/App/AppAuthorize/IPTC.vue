@@ -34,10 +34,30 @@
     presetHeight: string
   }>()
 
+  const emits = defineEmits(['success'])
+
   const inputValue = ref<string>()
   const state = ref(false)
 
   const { t } = useAppI18n()
+  const userPermission = useAppStoreUserPermission()
+
+  const onSuccess = () => {
+    emits('success')
+    state.value = true
+  }
+
+  watch(
+    () => props.permission,
+    (v) => {
+      if (userPermission.hasPermission(v)) {
+        onSuccess()
+      }
+    },
+    {
+      immediate: true,
+    }
+  )
 
   const rule = {
     trigger: ['blur'],
@@ -49,7 +69,7 @@
         return new Error(t('app.authorize.iptc.error'))
       }
 
-      state.value = true
+      onSuccess()
       return true
     },
   }
@@ -61,7 +81,7 @@
         return
       }
 
-      state.value = true
+      onSuccess()
     }
   }
 </script>
