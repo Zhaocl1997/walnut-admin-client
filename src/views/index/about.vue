@@ -7,7 +7,7 @@
         content: true,
         footer: 'soft',
       }"
-      collapse
+      header-preset="collapse"
     >
       <w-descriptions
         size="small"
@@ -25,7 +25,7 @@
         content: true,
         footer: 'soft',
       }"
-      collapse
+      header-preset="collapse"
     >
       <w-descriptions
         size="small"
@@ -43,13 +43,13 @@
         content: true,
         footer: 'soft',
       }"
-      collapse
+      header-preset="collapse"
     >
       <w-descriptions
         size="small"
         label-placement="left"
         bordered
-        :column="3"
+        :column="2"
         :items="DevDepItems"
       ></w-descriptions>
     </w-card>
