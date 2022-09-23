@@ -11,12 +11,12 @@
         style="z-index: 50"
         type="block"
       >
+        <n-anchor-link title="NaiveMsg" href="#NaiveMsg"></n-anchor-link>
         <n-anchor-link title="Arrow" href="#Arrow"></n-anchor-link>
         <n-anchor-link title="IconPicker" href="#IconPicker"></n-anchor-link>
         <n-anchor-link title="JSON" href="#JSON"></n-anchor-link>
         <n-anchor-link title="Verify" href="#Verify"></n-anchor-link>
         <n-anchor-link title="QRCode" href="#QRCode"></n-anchor-link>
-        <n-anchor-link title="NaiveMsg" href="#NaiveMsg"></n-anchor-link>
         <n-anchor-link title="Modal" href="#Modal"></n-anchor-link>
         <n-anchor-link title="Drawer" href="#Drawer"></n-anchor-link>
 
@@ -28,6 +28,7 @@
         <n-anchor-link title="Axios" href="#Axios"></n-anchor-link>
         <n-anchor-link title="File" href="#File"></n-anchor-link>
         <n-anchor-link title="LayoutTab" href="#LayoutTab"></n-anchor-link>
+        <n-anchor-link title="Authorize" href="#Authorize"></n-anchor-link>
       </n-anchor>
     </div>
 
@@ -44,7 +45,6 @@
         <DemoJSON id="JSON"></DemoJSON>
         <DemoVerify id="Verify"></DemoVerify>
         <DemoQRCode id="QRCode"></DemoQRCode>
-        <DemoNaiveMsg id="NaiveMsg"></DemoNaiveMsg>
         <DemoModal id="Modal"></DemoModal>
         <DemoDrawer id="Drawer"></DemoDrawer>
       </div>
@@ -58,6 +58,7 @@
         <DemoAxios id="Axios"></DemoAxios>
         <DemoFile id="File"></DemoFile>
         <DemoLayoutTab id="LayoutTab"></DemoLayoutTab>
+        <DemoAuthorize id="Authorize"></DemoAuthorize>
       </div>
     </div>
   </div>
@@ -80,6 +81,7 @@
   import DemoNaiveMsg from './NaiveMsg.vue'
   import DemoFile from './File.vue'
   import DemoLayoutTab from './LayoutTab.vue'
+  import DemoAuthorize from './Authorize.vue'
 
   const appAdapter = useAppStoreAdapter()
 </script>
