@@ -85,6 +85,11 @@ export interface AxiosCustomConfig {
    * @description pick field to encrypt
    */
   encryptFields?: string[]
+
+  /**
+   * @description add extra header here
+   */
+  extraHeader?: Recordable
 }
 
 /**

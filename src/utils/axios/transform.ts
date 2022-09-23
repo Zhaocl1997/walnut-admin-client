@@ -62,6 +62,12 @@ export const transform: AxiosTransform = {
       config.data = merge(config.data, cryptedObj)
     }
 
+    // extra custom header for per request
+    if (mergedCustomOptions.extraHeader) {
+      config.headers!['x-scope-permission'] =
+        mergedCustomOptions.extraHeader['scoped-permission']
+    }
+
     return config
   },
 
