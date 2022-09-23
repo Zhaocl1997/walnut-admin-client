@@ -1,135 +1,71 @@
 <template>
-  <div class="flex flex-wrap">
-    <w-card
-      class="md:w-1/2 xl:w-1/2 pt-1 px-1 md:pr-1"
-      :title="t('server.cpu')"
-      size="small"
-      :segmented="{
-        content: true,
-        footer: 'soft',
-      }"
-    >
-      <w-descriptions
-        size="small"
-        label-placement="left"
-        bordered
-        :column="1"
-        :items="item1"
-      ></w-descriptions>
-    </w-card>
+  <n-grid
+    cols="1 s:2 m:2 l:2 xl:2 2xl:2"
+    :x-gap="8"
+    :y-gap="8"
+    responsive="screen"
+  >
+    <n-grid-item>
+      <AppMonitorServerCPU></AppMonitorServerCPU>
+    </n-grid-item>
 
-    <w-card
-      class="md:w-1/2 xl:w-1/2 pt-1 px-1 md:pr-1"
-      :title="t('server.mem')"
-      size="small"
-      :segmented="{
-        content: true,
-        footer: 'soft',
-      }"
-    >
-      <w-descriptions
-        size="small"
-        label-placement="left"
-        bordered
-        :column="1"
-        :items="item2"
-      ></w-descriptions>
-    </w-card>
+    <n-grid-item>
+      <w-app-authorize
+        value="app:monitor:server:memory"
+        preset="tip"
+        preset-width="100%"
+        preset-height="230px"
+      >
+        <AppMonitorServerMem></AppMonitorServerMem>
+      </w-app-authorize>
+    </n-grid-item>
 
-    <w-card
-      class="md:w-1/2 xl:w-1/2 pt-1 px-1 md:pr-1"
-      :title="t('server.os')"
-      size="small"
-      :segmented="{
-        content: true,
-        footer: 'soft',
-      }"
-    >
-      <w-descriptions
-        size="small"
-        label-placement="left"
-        bordered
-        :column="1"
-        :items="item3"
-      ></w-descriptions>
-    </w-card>
+    <n-grid-item>
+      <AppMonitorServerOS></AppMonitorServerOS>
+    </n-grid-item>
 
-    <w-card
-      class="md:w-1/2 xl:w-1/2 pt-1 px-1 md:pr-1"
-      :title="t('server.mem')"
-      size="small"
-      :segmented="{
-        content: true,
-        footer: 'soft',
-      }"
-    >
-      <w-descriptions
-        size="small"
-        label-placement="left"
-        bordered
-        :column="1"
-        :items="item2"
-      ></w-descriptions>
-    </w-card>
-  </div>
+    <n-grid-item>
+      <w-app-authorize
+        value="app:monitor:server:system"
+        preset="IPTC"
+        preset-width="100%"
+        preset-height="230px"
+        @iptc-success="onAuthorizeSuccess"
+      >
+        <AppMonitorServerSystem
+          :extra-permission="extraPermission"
+        ></AppMonitorServerSystem>
+      </w-app-authorize>
+    </n-grid-item>
+
+    <n-grid-item>
+      <AppMonitorServerDisk></AppMonitorServerDisk>
+    </n-grid-item>
+
+    <n-grid-item>
+      <AppMonitorServerBattery></AppMonitorServerBattery>
+    </n-grid-item>
+
+    <n-grid-item>
+      <AppMonitorServerTime></AppMonitorServerTime>
+    </n-grid-item>
+  </n-grid>
 </template>
 
 <script lang="ts" setup>
-  import type { WDescriptionsItem } from '@/components/UI/Descriptions'
-  import { getAppMonitorServerInfo } from '@/api/app/monitor/server'
+  import AppMonitorServerCPU from './src/cpu.vue'
+  import AppMonitorServerMem from './src/mem.vue'
+  import AppMonitorServerOS from './src/os.vue'
+  import AppMonitorServerSystem from './src/system.vue'
+  import AppMonitorServerDisk from './src/disk.vue'
+  import AppMonitorServerBattery from './src/battery.vue'
+  import AppMonitorServerTime from './src/time.vue'
 
-  const { t } = useAppI18n()
+  const extraPermission = ref()
 
-  const item1 = ref<WDescriptionsItem[]>([])
-  const item2 = ref<WDescriptionsItem[]>([])
-  const item3 = ref<WDescriptionsItem[]>([])
-
-  const onInit = async () => {
-    // const res = await getAppMonitorServerInfo()
-    const res = {
-      cpu: {
-        total: 8,
-        usage: 24.45,
-        free: 69.28999999999999,
-        model: 'Intel(R) Core(TM) i7-10510U CPU @ 1.80GHz',
-      },
-      memory: {
-        totalMemMb: 16216.74,
-        usedMemMb: 9220.91,
-        freeMemMb: 6995.83,
-        usedMemPercentage: 56.86,
-        freeMemPercentage: 43.14,
-      },
-      os: {
-        platform: 'win32',
-        uptime: 580893,
-        ip: '192.168.3.69',
-        hostname: 'DESKTOP-53KHIPB',
-        type: 'Windows_NT',
-        arch: 'x64',
-        version: 'Windows 10 Home',
-      },
-    }
-
-    console.log(res)
-
-    item1.value = Object.entries(res.cpu).map(([k, v]) => ({
-      value: v,
-      label: k,
-    }))
-
-    item2.value = Object.entries(res.memory).map(([k, v]) => ({
-      value: v,
-      label: k,
-    }))
-
-    item3.value = Object.entries(res.os).map(([k, v]) => ({
-      value: v,
-      label: k,
-    }))
+  const onAuthorizeSuccess = (p: string) => {
+    extraPermission.value = p
   }
-
-  onMounted(onInit)
 </script>
 
 <script lang="ts">

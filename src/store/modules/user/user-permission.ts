@@ -22,13 +22,27 @@ const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
       this.setPermissions([])
     },
 
+    deletePermission(payload?: string) {
+      if (!payload) return true
+
+      const index = this.permissions.findIndex((i) => i === payload)
+      this.permissions.splice(index, 1)
+    },
+
+    togglePermission(payload?: string) {
+      if (!payload) return true
+
+      if (this.hasPermission(payload)) {
+        this.deletePermission(payload)
+      } else {
+        this.permissions.push(payload)
+      }
+    },
+
     hasPermission(payload?: string) {
       if (!payload) return true
-      // TODO
-      const appPermissionMode = 'eleShow'
-      return (
-        appPermissionMode === 'eleShow' || this.permissions.includes(payload)
-      )
+
+      return this.permissions.includes(payload)
     },
   },
 })

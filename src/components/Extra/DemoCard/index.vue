@@ -1,5 +1,5 @@
 <template>
-  <w-card collapse>
+  <w-card header-preset="collapse">
     <template #header>
       <w-title :help-message="description">{{ title }}</w-title>
     </template>

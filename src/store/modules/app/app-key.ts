@@ -16,7 +16,7 @@ const useAppStoreSecretKeyInside = defineStore(StoreKeys.APP_KEY, {
     async getSecretKeys() {
       const res = await getSecretKeys()
 
-      this.setBaiduAK(res.B!)
+      this.setBaiduAK(res?.B!)
     },
 
     clearKeys() {
