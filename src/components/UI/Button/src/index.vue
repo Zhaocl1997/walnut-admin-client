@@ -88,7 +88,13 @@
             {{
               trigger: () => (
                 <w-a-icon
-                  onClick={props.confirm ? () => {} : onClick}
+                  onClick={
+                    props.confirm
+                      ? (e: MouseEvent) => {
+                          e.stopPropagation()
+                        }
+                      : onClick
+                  }
                   icon={props.icon}
                   height={attrs.height ?? '20'}
                   class="cursor-pointer"

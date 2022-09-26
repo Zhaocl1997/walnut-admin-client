@@ -35,7 +35,7 @@
     "layout": "left-menu",
     "lockMode": "default",
     "idleMS": 5000,
-    "contentPadding": 10,
+    "contentPadding": 2,
     "showWatermark": false,
     "watermarkContent": "walnut-admin",
     "colorMode": "default",
