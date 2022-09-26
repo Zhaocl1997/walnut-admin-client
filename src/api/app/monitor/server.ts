@@ -47,6 +47,13 @@ export namespace IServerInfo {
     timezone: string
     timezoneName: string
   }
+
+  export interface Network {
+    iface: string
+    ip4: string
+    mac: string
+    netSpeed: string
+  }
 }
 
 export const getCpuInfo = () => {
@@ -67,14 +74,14 @@ export const getOSInfo = () => {
   })
 }
 
-export const getSysInfo = (extraPermission?: string) => {
+export const getSysInfo = (scopePermission?: string) => {
   return AppAxios.get<IServerInfo.System>(
     {
       url: '/app/monitor/server/sys',
     },
     {
       extraHeader: {
-        'scoped-permission': extraPermission,
+        'scoped-permission': scopePermission,
       },
     }
   )
@@ -96,4 +103,17 @@ export const getTimeInfo = () => {
   return AppAxios.get<IServerInfo.Time>({
     url: '/app/monitor/server/time',
   })
+}
+
+export const getNetworkInfo = (scopePermission?: string) => {
+  return AppAxios.get<IServerInfo.Network>(
+    {
+      url: '/app/monitor/server/network',
+    },
+    {
+      extraHeader: {
+        'scoped-permission': scopePermission,
+      },
+    }
+  )
 }

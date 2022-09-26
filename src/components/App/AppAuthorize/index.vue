@@ -58,7 +58,7 @@
         if (props.preset === 'tip') {
           return (
             <div
-              class="flex items-center justify-center"
+              class="flex items-center justify-center border border-gray-500/50"
               style={{ width: props.presetWidth, height: props.presetHeight }}
             >
               <n-result

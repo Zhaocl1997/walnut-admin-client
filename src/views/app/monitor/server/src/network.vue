@@ -1,6 +1,6 @@
 <template>
   <w-card
-    :title="t('app.monitor.server.system')"
+    :title="t('app.monitor.server.network')"
     size="small"
     :segmented="{
       content: true,
@@ -37,18 +37,18 @@
   import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 
   import type { IServerInfo } from '@/api/app/monitor/server'
-  import { getSysInfo } from '@/api/app/monitor/server'
+  import { getNetworkInfo } from '@/api/app/monitor/server'
 
-  const props = defineProps<{ systemPermission: string }>()
+  const props = defineProps<{ networkPermission: string }>()
 
   const { t } = useAppI18n()
 
-  const info = ref<IServerInfo.System>()
+  const info = ref<IServerInfo.Network>()
   const loading = ref(false)
 
   const items = computed<WDescriptionsItem[]>(() =>
     Object.entries(info.value ?? {}).map(([k, v]) => ({
-      label: t(`app.monitor.server.system.${k}`),
+      label: t(`app.monitor.server.network.${k}`),
       value: v,
     }))
   )
@@ -57,7 +57,7 @@
     loading.value = true
 
     try {
-      const res = await getSysInfo(props.systemPermission)
+      const res = await getNetworkInfo(props.networkPermission)
 
       info.value = res
     } finally {
@@ -70,7 +70,7 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'AppMonitorServerSystem',
+    name: 'AppMonitorServerNetwork',
 
     defaultView: false,
   })

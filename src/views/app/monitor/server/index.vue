@@ -1,53 +1,91 @@
 <template>
   <n-grid
-    cols="1 s:2 m:2 l:2 xl:2 2xl:2"
-    :x-gap="8"
-    :y-gap="8"
+    cols="1 s:1 m:1 l:2 xl:2 2xl:2"
+    :x-gap="4"
+    :y-gap="4"
     responsive="screen"
   >
     <n-grid-item>
-      <AppMonitorServerCPU></AppMonitorServerCPU>
+      <n-grid cols="1" :x-gap="4" :y-gap="4" responsive="screen">
+        <n-grid-item>
+          <w-transition name="fade-down" appear>
+            <AppMonitorServerCPU></AppMonitorServerCPU>
+          </w-transition>
+        </n-grid-item>
+
+        <n-grid-item>
+          <w-app-authorize
+            value="app:monitor:server:memory"
+            preset="tip"
+            preset-width="100%"
+            preset-height="230px"
+          >
+            <w-transition name="fade-down" appear :duration="400">
+              <AppMonitorServerMem></AppMonitorServerMem>
+            </w-transition>
+          </w-app-authorize>
+        </n-grid-item>
+
+        <n-grid-item>
+          <w-transition name="fade-down" appear :duration="500">
+            <AppMonitorServerOS></AppMonitorServerOS>
+          </w-transition>
+        </n-grid-item>
+
+        <n-grid-item>
+          <w-app-authorize
+            value="app:monitor:server:system"
+            preset="IPTC"
+            preset-width="100%"
+            preset-height="230px"
+            @iptc-success="onSystemAuthorizeSuccess"
+          >
+            <w-transition name="fade-down" appear :duration="600">
+              <AppMonitorServerSystem
+                :system-permission="systemPermission"
+              ></AppMonitorServerSystem>
+            </w-transition>
+          </w-app-authorize>
+        </n-grid-item>
+      </n-grid>
     </n-grid-item>
 
     <n-grid-item>
-      <w-app-authorize
-        value="app:monitor:server:memory"
-        preset="tip"
-        preset-width="100%"
-        preset-height="230px"
-      >
-        <AppMonitorServerMem></AppMonitorServerMem>
-      </w-app-authorize>
-    </n-grid-item>
+      <n-grid cols="1" :x-gap="4" :y-gap="4" responsive="screen">
+        <n-grid-item>
+          <w-transition name="fade-down" appear :duration="700">
+            <AppMonitorServerDisk></AppMonitorServerDisk>
+          </w-transition>
+        </n-grid-item>
 
-    <n-grid-item>
-      <AppMonitorServerOS></AppMonitorServerOS>
-    </n-grid-item>
+        <n-grid-item>
+          <w-transition name="fade-down" appear :duration="800">
+            <AppMonitorServerBattery></AppMonitorServerBattery>
+          </w-transition>
+        </n-grid-item>
 
-    <n-grid-item>
-      <w-app-authorize
-        value="app:monitor:server:system"
-        preset="IPTC"
-        preset-width="100%"
-        preset-height="230px"
-        @iptc-success="onAuthorizeSuccess"
-      >
-        <AppMonitorServerSystem
-          :extra-permission="extraPermission"
-        ></AppMonitorServerSystem>
-      </w-app-authorize>
-    </n-grid-item>
+        <n-grid-item>
+          <w-transition name="fade-down" appear :duration="900">
+            <AppMonitorServerTime></AppMonitorServerTime>
+          </w-transition>
+        </n-grid-item>
 
-    <n-grid-item>
-      <AppMonitorServerDisk></AppMonitorServerDisk>
-    </n-grid-item>
-
-    <n-grid-item>
-      <AppMonitorServerBattery></AppMonitorServerBattery>
-    </n-grid-item>
-
-    <n-grid-item>
-      <AppMonitorServerTime></AppMonitorServerTime>
+        <n-grid-item>
+          <w-app-authorize
+            value="app:monitor:server:network"
+            preset="IPTC"
+            preset-width="100%"
+            preset-height="230px"
+            @iptc-success="onNetworkAuthorizeSuccess"
+          >
+            <w-transition name="fade-down" appear :duration="1000">
+              <AppMonitorServerNetwork
+                :network-permission="networkPermission"
+              ></AppMonitorServerNetwork>
+            </w-transition>
+          </w-app-authorize>
+        </n-grid-item>
+      </n-grid>
     </n-grid-item>
   </n-grid>
 </template>
@@ -60,11 +98,17 @@
   import AppMonitorServerDisk from './src/disk.vue'
   import AppMonitorServerBattery from './src/battery.vue'
   import AppMonitorServerTime from './src/time.vue'
+  import AppMonitorServerNetwork from './src/network.vue'
 
-  const extraPermission = ref()
+  const systemPermission = ref()
+  const networkPermission = ref()
 
-  const onAuthorizeSuccess = (p: string) => {
-    extraPermission.value = p
+  const onSystemAuthorizeSuccess = (p: string) => {
+    systemPermission.value = p
+  }
+
+  const onNetworkAuthorizeSuccess = (p: string) => {
+    networkPermission.value = p
   }
 </script>
 
