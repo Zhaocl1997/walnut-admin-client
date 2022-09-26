@@ -29,9 +29,13 @@ export const useMenuFormSchema = (
           .join('/') + '/'
   )
 
+  const treeExpandedKeys = ref<string[]>()
+
   // get tree select expanded keys
-  const getTreeSelectExpandKeys = computed(() =>
-    (getCurrentNode.value as AppSystemMenu[])?.map((i) => i._id!)
+  const getTreeSelectExpandKeys = computed(
+    () =>
+      treeExpandedKeys.value ??
+      (getCurrentNode.value as AppSystemMenu[])?.map((i) => i._id!)
   )
 
   return [
@@ -91,6 +95,9 @@ export const useMenuFormSchema = (
         labelField: 'title',
         // @ts-ignore
         expandedKeys: getTreeSelectExpandKeys,
+        onUpdateExpandedKeys: (v) => {
+          treeExpandedKeys.value = v
+        },
       },
     },
 
