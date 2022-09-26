@@ -102,6 +102,6 @@
   useAppReducedMotion()
 
   useTimeoutFn(() => {
-    useStarOnGithub()
+    !isDev() && useStarOnGithub()
   }, 500)
 </script>

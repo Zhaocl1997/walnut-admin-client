@@ -29,7 +29,7 @@
         </template>
 
         <template #default>
-          <div id="tableSortable">
+          <div ref="tableColumnSettingRef" id="tableSortable">
             <div
               v-for="(item, index) in tableColumns"
               :key="item.key"
@@ -134,7 +134,6 @@
 </template>
 
 <script lang="ts" setup>
-  import type Sortable from 'sortablejs'
   import type { WTable } from '../../types'
 
   import { useTableContext } from '../../hooks/useTableContext'
@@ -144,6 +143,20 @@
   const { tableColumns } = useTableContext()
 
   const popoverShow = ref(false)
+
+  const { el: tableColumnSettingRef } = useSortable(
+    {
+      draggable: '.table-column-draggable',
+      onEnd: (evt) => {
+        const { oldIndex, newIndex } = evt
+
+        const current = tableColumns.value![oldIndex!]
+        tableColumns.value?.splice(oldIndex!, 1)
+        tableColumns.value?.splice(newIndex!, 0, current)
+      },
+    },
+    popoverShow
+  )
 
   const blackList: StringOrNumber[] = ['selection', 'index', 'action']
 
@@ -159,29 +172,9 @@
       tableColumns.value.some((i) => i._internalShow)
   )
 
-  let inst: Sortable
-
   // open column setting popover
   const onOpenPopover = () => {
     popoverShow.value = true
-
-    nextTick(() => {
-      if (inst) {
-        inst.destroy()
-      }
-
-      const el = document.getElementById('tableSortable')!
-      inst = useSortable(el, {
-        draggable: '.table-column-draggable',
-        onEnd: (evt) => {
-          const { oldIndex, newIndex } = evt
-
-          const current = tableColumns.value![oldIndex!]
-          tableColumns.value?.splice(oldIndex!, 1)
-          tableColumns.value?.splice(newIndex!, 0, current)
-        },
-      })
-    })
   }
 
   // check one column

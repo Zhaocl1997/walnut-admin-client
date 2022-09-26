@@ -5,7 +5,7 @@
     x-scrollable
     :height="appSetting.settings.tab.height + 'px'"
   >
-    <ul id="tabSortable" class="hstack">
+    <ul ref="sortableRef" class="hstack">
       <w-transition appear :name="appSetting.settings.tab.animationName" group>
         <li
           v-for="(item, index) in appTab.tabs"
@@ -101,6 +101,10 @@
   const appSetting = useAppStoreSetting()
   const appAdapter = useAppStoreAdapter()
 
+  const { el: sortableRef } = useTabsSortable(
+    computed(() => appSetting.settings.tab.sortable)
+  )
+
   const AppConstTabStyleModeInside = AppConstTabStyleMode
 
   const {
@@ -172,11 +176,4 @@
       isRemoveable && onTabRemove(name)
     }
   }
-
-  watchEffect(() => {
-    nextTick(() => {
-      // tab sortable
-      useTabsSortable(appSetting.settings.tab.sortable)
-    })
-  })
 </script>
