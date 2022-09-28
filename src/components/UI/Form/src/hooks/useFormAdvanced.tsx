@@ -119,6 +119,7 @@ export const useFormAdvanced = (
           onNo={onNo}
           loading={loading.value}
           defaultButton={props.value.advancedProps?.defaultButton}
+          autoFocus={props.value.advancedProps?.autoFocus}
           resizable={props.value.advancedProps?.resizable}
           defaultWidth={props.value.advancedProps?.defaultWidth}
           defaultHeight={props.value.advancedProps?.defaultHeight}
