@@ -297,7 +297,7 @@ export const useTableColumns = (
           !whiteList[0].includes(i.type!) &&
           !whiteList[1].includes(i.extendType!)
         ) {
-          return i.width
+          return i.width || i.minWidth
         } else {
           return 80
         }
