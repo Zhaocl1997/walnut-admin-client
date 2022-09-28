@@ -25,7 +25,7 @@ const createI18nOptions = async (): Promise<I18nOptions> => {
     // missingWarn: false,
 
     messages: {
-      [locale]: backendMsg.data,
+      [locale]: backendMsg,
     },
   }
 }

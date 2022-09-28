@@ -21,7 +21,7 @@ export const AppI18nGetLangLists = async () => {
  * Called 2: change language, need to request for new messages by new language
  */
 export const AppI18nGetI18nMsg = async (lang: string, cache = 1) => {
-  const messages = await AppAxios.get<{ data: Recordable; _id: string }>({
+  const messages = await AppAxios.get<Recordable>({
     url: `/system/locale/message/${lang}`,
     params: {
       cache,

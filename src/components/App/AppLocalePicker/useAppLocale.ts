@@ -16,7 +16,7 @@ export const useAppLocale = () => {
 
     const backendMsg = await AppI18nGetI18nMsg(locale)
 
-    AppI18n.global.setLocaleMessage(locale, backendMsg.data)
+    AppI18n.global.setLocaleMessage(locale, backendMsg)
 
     return nextTick()
   }
