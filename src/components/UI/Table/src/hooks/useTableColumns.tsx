@@ -1,5 +1,7 @@
 import type { WTable } from '../types'
 
+import { sortBy } from 'lodash-es'
+
 import { getTableTranslated } from '../utils'
 
 // Extend Naive UI columns
@@ -150,15 +152,19 @@ export const useTableColumns = (
         // action
         if (tItem.extendType === 'action') {
           const isShow = (t: WTable.ColumnActionType) =>
-            (tItem.extendActionType ?? ['delete', 'read']).includes(t)
+            (tItem.extendActionType ?? ['read', 'delete']).includes(t)
 
           return {
             ...tItem,
 
             render(rowData, rowIndex) {
-              return (
-                <div class="flex items-center justify-center space-x-2 whitespace-nowrap">
-                  {isShow('create') && (
+              const buttonGroups: {
+                key: WTable.ColumnActionType
+                content: any
+              }[] = [
+                {
+                  key: 'create',
+                  content: (
                     <w-button
                       auth={props.value.auths?.create}
                       icon-button
@@ -173,9 +179,11 @@ export const useTableColumns = (
                       }
                       type="success"
                     ></w-button>
-                  )}
-
-                  {isShow('read') && (
+                  ),
+                },
+                {
+                  key: 'read',
+                  content: (
                     <w-button
                       auth={props.value.auths?.read}
                       icon-button
@@ -190,9 +198,11 @@ export const useTableColumns = (
                       }
                       type="info"
                     ></w-button>
-                  )}
-
-                  {isShow('delete') && (
+                  ),
+                },
+                {
+                  key: 'delete',
+                  content: (
                     <w-button
                       auth={props.value.auths?.delete}
                       confirm
@@ -208,9 +218,11 @@ export const useTableColumns = (
                       }
                       type="error"
                     ></w-button>
-                  )}
-
-                  {isShow('detail') && (
+                  ),
+                },
+                {
+                  key: 'detail',
+                  content: (
                     <w-button
                       auth={props.value.auths?.read}
                       icon-button
@@ -225,7 +237,17 @@ export const useTableColumns = (
                       }
                       type="success"
                     ></w-button>
-                  )}
+                  ),
+                },
+              ]
+
+              return (
+                <div class="flex items-center justify-center space-x-2 whitespace-nowrap">
+                  {sortBy(buttonGroups, (i) =>
+                    tItem.extendActionType?.indexOf(i.key)
+                  )
+                    .filter((i) => isShow(i.key))
+                    .map((i) => i.content)}
                 </div>
               )
             },
