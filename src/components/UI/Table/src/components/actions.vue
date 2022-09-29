@@ -1,5 +1,6 @@
 <template>
   <div class="hstack space-x-2 items-center">
+    <!-- preset buttons -->
     <w-button
       v-for="item in options"
       :key="item.type"
@@ -18,6 +19,10 @@
       :confirm="item.type === 'delete'"
       :auth="item.auth"
     >
+    </w-button>
+
+    <!-- extra custom buttons -->
+    <w-button v-for="item in tableProps.extraHeaderActions" v-bind="item">
     </w-button>
 
     <n-text
@@ -55,8 +60,8 @@
   const options: ComputedRef<
     {
       type: WTable.HeaderActionType
-      icon: string
       text: string
+      icon: string
       disabled?: boolean
       auth?: string
     }[]

@@ -23,6 +23,7 @@ export const useCRUD = <T = RowData>(
     onTableOpenCreateForm: () => wCrudRef.value?.onTableOpenCreateForm(),
     onApiTableReadAndOpenUpdateForm: async (id: StringOrNumber) =>
       await wCrudRef.value?.onApiTableReadAndOpenUpdateForm(id),
+    onApiTableList: async () => await wCrudRef.value?.onApiTableList(),
     onApiTableDelete: async (id: StringOrNumber) =>
       await wCrudRef.value?.onApiTableDelete(id),
     onApiTableDeleteMany: async () =>

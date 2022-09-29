@@ -88,6 +88,7 @@
   // emit
   emit('hook', {
     setProps,
+    onApiTableList,
     onTableOpenCreateForm,
     onApiTableReadAndOpenUpdateForm,
     onApiTableDelete,

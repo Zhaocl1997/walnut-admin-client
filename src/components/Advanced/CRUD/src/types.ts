@@ -22,6 +22,7 @@ export declare namespace WCrud {
       onGetFormData: () => Ref<T>
       onGetActionType: () => Ref<ActionType>
       onGetApiTableListParams: () => Ref<BaseListParams<T>>
+      onApiTableList: () => Promise<void>
     }
   }
 

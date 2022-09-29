@@ -1,5 +1,6 @@
 import type { DataTableProps } from 'naive-ui'
 import type { WForm } from '../../Form'
+import type { WButtonProps } from '../../Button'
 import type { WTable } from './types'
 
 import { NDataTable } from 'naive-ui'
@@ -14,6 +15,11 @@ export const extendProps = {
   headerActions: {
     type: Array as PropType<WTable.HeaderActionType[]>,
     default: () => ['create', 'delete'],
+  },
+
+  extraHeaderActions: {
+    type: Array as PropType<WButtonProps[]>,
+    default: () => [],
   },
 
   // TODO prop and generic, need to make a choice

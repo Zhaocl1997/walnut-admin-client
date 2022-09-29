@@ -51,6 +51,7 @@ export const extendProps = {
         Partial<Pick<WForm.Inst.WFormInst, 'onYes' | 'onNo'>> & {
           actionType?: WTable.HeaderActionType
           defaultButton?: boolean
+          detailTitle?: boolean
         }
     >,
     default: undefined,

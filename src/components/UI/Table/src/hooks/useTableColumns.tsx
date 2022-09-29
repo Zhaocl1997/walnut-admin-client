@@ -68,7 +68,7 @@ export const useTableColumns = (
           return {
             ...tItem,
 
-            width: 60,
+            width: 70,
 
             render(_, index) {
               return (
