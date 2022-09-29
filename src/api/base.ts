@@ -57,4 +57,13 @@ export class BaseAPI<T> {
       {}
     )
   }
+
+  clear() {
+    return AppAxios.delete(
+      {
+        url: `${this.baseAPI}/clear`,
+      },
+      {}
+    )
+  }
 }

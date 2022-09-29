@@ -153,6 +153,16 @@ declare global {
     settingValue?: string
     remark?: string
   }
+
+  // app cache
+  interface AppCacheModel extends BaseAppModel {
+    key?: string
+    value?: string
+    valueBytes?: string
+    expire?: string
+    startTime?: string
+    expireTime?: string
+  }
 }
 
 export {}

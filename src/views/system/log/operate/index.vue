@@ -135,7 +135,7 @@
 
         {
           key: 'actionType',
-          width: 120,
+          width: 140,
           extendType: 'dict',
           dictType: 'sys_operate_type',
           sorter: true,
@@ -190,7 +190,7 @@
 
         {
           key: 'action',
-          width: 60,
+          width: 80,
           extendType: 'action',
           extendActionType: ['detail'],
           onExtendActionType: async ({ type, rowData }) => {
@@ -227,6 +227,7 @@
         defaultButton: false,
         width: '40%',
         closable: true,
+        autoFocus: false,
       },
 
       schemas: [
