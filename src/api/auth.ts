@@ -13,8 +13,8 @@ enum AuthEnum {
 /**
  * @description auth with pwd
  */
-export const authWithPwd = (data: AppAuth.Password) => {
-  return AppAxios.post<AppAuth.TokenPayload>(
+export const authWithPwd = (data: AppPayloadAuth.Password) => {
+  return AppAxios.post<AppPayloadAuth.TokenPayload>(
     {
       url: AuthEnum.PWD,
       data,

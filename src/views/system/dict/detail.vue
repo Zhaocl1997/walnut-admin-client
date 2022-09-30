@@ -1,10 +1,7 @@
 <template>
   <div>
     <n-card>
-      <n-page-header
-        :title="t($route.query.name)"
-        @back="onBack"
-      ></n-page-header>
+      <n-page-header :title="title" @back="onBack"></n-page-header>
     </n-card>
     <WCRUD @hook="register"></WCRUD>
   </div>
@@ -29,6 +26,12 @@
   const onBack = () => {
     useAppRouterPush({ name: 'Dict', replace: true })
   }
+
+  const title = computed(
+    () =>
+      (currentRoute.value.query?.name &&
+        t(currentRoute.value.query.name as string)) as string
+  )
 
   const [
     register,

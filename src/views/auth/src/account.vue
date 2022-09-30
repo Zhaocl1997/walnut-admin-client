@@ -12,7 +12,7 @@
 
   const loading = ref(false)
 
-  const accountFormData = reactive<AppAuth.Password>({
+  const accountFormData = reactive<AppPayloadAuth.Password>({
     userName: '',
     password: '',
     rememberMe: true,

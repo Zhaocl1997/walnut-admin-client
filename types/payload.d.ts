@@ -1,5 +1,5 @@
 declare global {
-  namespace AppAuth {
+  namespace AppPayloadAuth {
     // password payload
     interface Password {
       userName: string
@@ -22,6 +22,15 @@ declare global {
     interface TokenPayload {
       accessToken: string
       refreshToken: string
+    }
+  }
+
+  namespace AppPayloadSetting {
+    interface AuthSetting {
+      account: number
+      email: number
+      phone: number
+      qrcode: number
     }
   }
 }

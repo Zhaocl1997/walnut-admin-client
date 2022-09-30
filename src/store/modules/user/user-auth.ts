@@ -27,7 +27,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     setRefreshToken(payload: string) {
       this.refreshToken = payload
     },
-    setRemember(payload: AppAuth.Password | undefined) {
+    setRemember(payload: AppPayloadAuth.Password | undefined) {
       this.remember = payload
     },
 
@@ -63,7 +63,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description password way to auth
      */
-    async AuthWithBasicPassword(payload: AppAuth.Password) {
+    async AuthWithBasicPassword(payload: AppPayloadAuth.Password) {
       const res = await authWithPwd({
         userName: payload.userName,
         password: payload.password,
@@ -89,7 +89,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description email way to auth
      */
-    async AuthWithEmailAddress(payload: AppAuth.EmailAddress) {
+    async AuthWithEmailAddress(payload: AppPayloadAuth.EmailAddress) {
       const res = await authWithEmail(payload)
 
       // set tokens
@@ -103,7 +103,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description text message way to auth
      */
-    async AuthWithPhoneNumber(payload: AppAuth.PhoneNumber) {
+    async AuthWithPhoneNumber(payload: AppPayloadAuth.PhoneNumber) {
       const res = await authWithPhoneNumber(payload)
 
       // set tokens

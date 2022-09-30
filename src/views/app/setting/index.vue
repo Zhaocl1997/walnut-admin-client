@@ -120,6 +120,15 @@
         },
 
         {
+          key: 'settingType',
+          width: 120,
+          extendType: 'dict',
+          dictType: 'app_setting_type',
+          filter: true,
+          useDictNameAsTitle: true,
+        },
+
+        {
           key: 'remark',
           width: 200,
           ellipsis: {
@@ -199,6 +208,19 @@
           },
           componentProp: {
             clearable: true,
+          },
+        },
+
+        {
+          type: 'Extend:Dict',
+          formProp: {
+            path: 'settingType',
+
+            // use dict name as label
+            label: true,
+          },
+          componentProp: {
+            dictType: 'app_setting_type',
           },
         },
 

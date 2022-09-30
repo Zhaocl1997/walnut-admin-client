@@ -93,6 +93,13 @@ declare global {
   }
 
   /**
+   * App setting retrieved from backend state
+   */
+  interface AppSettingBackendState {
+    auth: Partial<AppPayloadSetting.AuthSetting>
+  }
+
+  /**
    * App setting state
    */
   interface AppSettingState {
@@ -120,7 +127,7 @@ declare global {
   interface UserAuthState {
     accessToken?: RemovableRef<string>
     refreshToken?: RemovableRef<string>
-    remember?: RemovableRef<Omit<AppAuth.Password, 'rememberMe'>>
+    remember?: RemovableRef<Omit<AppPayloadAuth.Password, 'rememberMe'>>
   }
 
   /**

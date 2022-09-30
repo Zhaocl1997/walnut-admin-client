@@ -81,7 +81,7 @@
 
     const res = await AppI18nGetI18nMsg(locale, 0)
 
-    AppI18n.global.setLocaleMessage(locale, res.data)
+    AppI18n.global.setLocaleMessage(locale, res)
 
     loading.value = false
   }

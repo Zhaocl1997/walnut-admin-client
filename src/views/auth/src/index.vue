@@ -11,20 +11,33 @@
     >
       <n-tab-pane name="account" :tab="t('form.app.auth.tab.account')">
         <SignInWithAccount
+          v-if="appAuthSettings.getAccountEnabled"
           ref="account"
           class="w-72 text-justify mt-2"
         ></SignInWithAccount>
       </n-tab-pane>
 
-      <n-tab-pane name="SMS" :tab="t('form.app.auth.tab.sms')">
+      <n-tab-pane
+        v-if="appAuthSettings.getPhoneEnabled"
+        name="SMS"
+        :tab="t('form.app.auth.tab.sms')"
+      >
         <SignInWitSMS class="w-72 text-justify mt-2"></SignInWitSMS>
       </n-tab-pane>
 
-      <n-tab-pane name="email" :tab="t('form.app.auth.tab.email')">
+      <n-tab-pane
+        v-if="appAuthSettings.getEmailEnabled"
+        name="email"
+        :tab="t('form.app.auth.tab.email')"
+      >
         <SignInWitEmail class="w-72 text-justify mt-2"></SignInWitEmail>
       </n-tab-pane>
 
-      <n-tab-pane name="QR" :tab="t('form.app.auth.tab.qr')">
+      <n-tab-pane
+        v-if="appAuthSettings.getQrcodeEnabled"
+        name="QR"
+        :tab="t('form.app.auth.tab.qr')"
+      >
         <SignInWithQR class="w-72 text-justify mt-2"></SignInWithQR>
       </n-tab-pane>
     </n-tabs>
@@ -47,11 +60,23 @@
 
   const tabsInstRef = ref<TabsInst>()
   const account = ref<{ setFormData: (n: string, p: string) => {} }>()
+  const appAuthSettings = useAppStoreSettingBackend()
 
-  watch(locale, () => nextTick(() => tabsInstRef.value?.syncBarPosition()))
+  watch(
+    () => [locale, appAuthSettings.auth],
+    () => nextTick(() => tabsInstRef.value?.syncBarPosition()),
+    {
+      deep: true,
+      immediate: true,
+    }
+  )
 
   defineExpose({
     setFormData: (n: string, p: string) => account.value?.setFormData(n, p),
+  })
+
+  onMounted(async () => {
+    await appAuthSettings.getAppAuthSettings()
   })
 </script>
 

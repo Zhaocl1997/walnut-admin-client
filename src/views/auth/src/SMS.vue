@@ -13,7 +13,7 @@
 
   const loading = ref(false)
 
-  const SMSFormData = reactive<AppAuth.PhoneNumber & { agree: string }>({
+  const SMSFormData = reactive<AppPayloadAuth.PhoneNumber & { agree: string }>({
     phoneNumber: '',
     verifyCode: '',
     agree: '',

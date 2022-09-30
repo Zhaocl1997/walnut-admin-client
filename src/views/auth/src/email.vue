@@ -13,7 +13,9 @@
 
   const loading = ref(false)
 
-  const emailFormData = reactive<AppAuth.EmailAddress & { agree: string }>({
+  const emailFormData = reactive<
+    AppPayloadAuth.EmailAddress & { agree: string }
+  >({
     emailAddress: '',
     verifyCode: '',
     agree: '',
