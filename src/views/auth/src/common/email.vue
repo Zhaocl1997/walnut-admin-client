@@ -6,12 +6,13 @@
   // TODO 99
   import { NRadio, NText } from 'naive-ui'
   import { sendAuthEmail } from '@/api/auth/email'
+  import { useAuthContext } from '../hooks/useAuthContext'
 
   const { t } = useAppI18n()
   const appAuth = useAppStoreUserAuth()
   const appNaive = useAppStoreNaive()
 
-  const loading = ref(false)
+  const { loading } = useAuthContext()
 
   const emailFormData = reactive<
     AppPayloadAuth.EmailAddress & { agree: string }

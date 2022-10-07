@@ -22,4 +22,5 @@
   useAppResize()
   useAppDarkMode()
   useAppLocale()
+  useFingerprint()
 </script>

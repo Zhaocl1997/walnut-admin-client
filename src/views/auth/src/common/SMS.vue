@@ -6,12 +6,13 @@
   // TODO 99
   import { sendAuthTextMsg } from '@/api/auth/phone'
   import { NRadio, NText } from 'naive-ui'
+  import { useAuthContext } from '../hooks/useAuthContext'
 
   const { t } = useAppI18n()
   const appAuth = useAppStoreUserAuth()
   const appNaive = useAppStoreNaive()
 
-  const loading = ref(false)
+  const { loading } = useAuthContext()
 
   const SMSFormData = reactive<AppPayloadAuth.PhoneNumber & { agree: string }>({
     phoneNumber: '',

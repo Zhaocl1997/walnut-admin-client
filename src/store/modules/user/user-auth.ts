@@ -50,7 +50,11 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description core function after signin to excute
      */
-    async ExcuteCoreFnAfterAuth() {
+    async ExcuteCoreFnAfterAuth(at: string, rt: string) {
+      // set tokens
+      this.setAccessToken(at)
+      this.setRefreshToken(rt)
+
       const appMenu = useAppStoreMenu()
 
       // get menus/permissions/keys etc
@@ -69,9 +73,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         password: payload.password,
       })
 
-      // set tokens
-      this.setAccessToken(res.accessToken)
-      this.setRefreshToken(res.refreshToken)
+      // excute core fn
+      this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
 
       const { userName, password, rememberMe } = payload
 
@@ -81,9 +84,6 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       } else {
         this.setRemember(undefined)
       }
-
-      // excute core fn
-      this.ExcuteCoreFnAfterAuth()
     },
 
     /**
@@ -92,12 +92,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     async AuthWithEmailAddress(payload: AppPayloadAuth.EmailAddress) {
       const res = await authWithEmail(payload)
 
-      // set tokens
-      this.setAccessToken(res.accessToken)
-      this.setRefreshToken(res.refreshToken)
-
       // excute core fn
-      this.ExcuteCoreFnAfterAuth()
+      this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
     },
 
     /**
@@ -106,12 +102,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     async AuthWithPhoneNumber(payload: AppPayloadAuth.PhoneNumber) {
       const res = await authWithPhoneNumber(payload)
 
-      // set tokens
-      this.setAccessToken(res.accessToken)
-      this.setRefreshToken(res.refreshToken)
-
       // excute core fn
-      this.ExcuteCoreFnAfterAuth()
+      this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
     },
 
     /**

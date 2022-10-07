@@ -12,7 +12,9 @@
           :title="item.title"
           @click="onClick(item.key)"
         >
-          <w-icon :icon="item.icon" width="20"></w-icon>
+          <n-button text :disabled="loading">
+            <w-icon :icon="item.icon" width="20" :disabled="loading"></w-icon>
+          </n-button>
         </span>
       </div>
     </w-transition>
@@ -20,7 +22,14 @@
 </template>
 
 <script lang="ts" setup>
+  import { getGithubUri, getGiteeUri } from '@/api/auth/third'
+  import { delFP } from '@/api/auth/fingerprint'
+  import { fpId } from '@/hooks/web/useFingerprint'
+  import { useAuthContext } from '../hooks/useAuthContext'
+
   const { t } = useAppI18n()
+  const userAuth = useAppStoreUserAuth()
+  const { loading } = useAuthContext()
 
   const iconArr = computed(() => [
     {
@@ -48,10 +57,60 @@
       icon: 'ant-design:github-outlined',
       title: t('app.auth.other.github'),
     },
+    {
+      key: 'gitee',
+      icon: 'simple-icons:gitee',
+      title: t('app.auth.other.github'),
+    },
   ])
 
-  const onClick = (key: string) => {
-    useAppMsgSuccess(key)
+  const onOAuth = async (getUri: Fn, ssePath: string) => {
+    loading.value = true
+
+    const res = await getUri()
+
+    const child = openOAuthWindow(res)
+
+    const eventSource = new EventSource(
+      `${realAPIURL}/auth/third/${ssePath}/check/${fpId.value}`
+    )
+
+    eventSource.onmessage = async ({ data }) => {
+      const res = JSON.parse(data)
+
+      if (res?.accessToken) {
+        useAppMsgSuccess(t('app.oauth.success'))
+        eventSource.close()
+        await userAuth.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
+        await delFP()
+        loading.value = false
+      }
+    }
+
+    const { pause } = useIntervalFn(() => {
+      if (child?.closed) {
+        pause()
+        loading.value = false
+        setTimeout(() => {
+          eventSource.close()
+        }, 1500)
+      }
+    })
+  }
+
+  const onClick = async (key: string) => {
+    if (!['github', 'gitee'].includes(key)) {
+      useAppMessage().warning(t('app.base.wip'))
+      return
+    }
+
+    if (key === 'github') {
+      onOAuth(getGithubUri, 'github')
+    }
+
+    if (key === 'gitee') {
+      onOAuth(getGiteeUri, 'gitee')
+    }
   }
 </script>
 

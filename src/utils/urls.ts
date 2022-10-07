@@ -4,3 +4,6 @@ export const URLS = {
   projectGithub: 'https://github.com/Zhaocl1997/walnut-admin-client',
   onlinePreview: 'https://www.walnut-admin.com',
 }
+
+export const realAPIURL =
+  import.meta.env.VITE_API_TARGET + import.meta.env.VITE_API_PREFIX

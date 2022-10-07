@@ -8,6 +8,7 @@ import { merge } from 'lodash-es'
 
 import { checkReponseErrorStatus } from './checkStatus'
 import { AppResponseEncryption, AppRequestEncryption } from '../crypto'
+import { fpId } from '@/hooks/web/useFingerprint'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
@@ -29,6 +30,7 @@ export const transform: AxiosTransform = {
 
     // adapt for backend locale messages
     config.headers!['x-language'] = appLocale.locale
+    config.headers!['x-fingerprint'] = fpId.value
 
     // carry token
     if (mergedCustomOptions.needAuth) {

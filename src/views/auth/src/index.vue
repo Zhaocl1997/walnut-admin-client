@@ -49,18 +49,22 @@
 <script lang="ts" setup>
   import type { TabsInst } from 'naive-ui'
 
-  import SignInWithAccount from './account.vue'
-  import SignInWitSMS from './SMS.vue'
-  import SignInWitEmail from './email.vue'
-  import SignInWithQR from './QR.vue'
+  import SignInWithAccount from './common/account.vue'
+  import SignInWitSMS from './common/SMS.vue'
+  import SignInWitEmail from './common/email.vue'
+  import SignInWithQR from './common/QR.vue'
 
   import SharedOther from './shared/other.vue'
+
+  import { setAuthContext } from './hooks/useAuthContext'
 
   const { t, locale } = useAppI18n()
 
   const tabsInstRef = ref<TabsInst>()
   const account = ref<{ setFormData: (n: string, p: string) => {} }>()
   const appAuthSettings = useAppStoreSettingBackend()
+
+  const loading = ref(false)
 
   watch(
     () => [locale, appAuthSettings.auth],
@@ -74,6 +78,8 @@
   defineExpose({
     setFormData: (n: string, p: string) => account.value?.setFormData(n, p),
   })
+
+  setAuthContext({ loading })
 
   onMounted(async () => {
     await appAuthSettings.getAppAuthSettings()

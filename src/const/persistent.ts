@@ -13,6 +13,8 @@ export const AppConstPersistKey = {
   LOCALE: 'LOCALE',
 
   TABS: 'TABS',
+
+  FP_ID: 'FPID',
 } as const
 
 export const AppConstStorageType = {

@@ -5,12 +5,13 @@
 <script lang="tsx" setup>
   // TODO 99
   import { NCheckbox, NButton } from 'naive-ui'
+  import { useAuthContext } from '../hooks/useAuthContext'
 
   const { t } = useAppI18n()
   const appAuth = useAppStoreUserAuth()
   const appNaive = useAppStoreNaive()
 
-  const loading = ref(false)
+  const { loading } = useAuthContext()
 
   const accountFormData = reactive<AppPayloadAuth.Password>({
     userName: '',
@@ -119,7 +120,7 @@
           loading: loading,
           disabled: loading,
           class:
-            'w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-2',
+            'w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mt-3',
           onClick: onSubmit,
         },
         transitionProp: {
