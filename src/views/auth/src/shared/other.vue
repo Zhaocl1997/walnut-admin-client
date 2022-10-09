@@ -22,47 +22,53 @@
 </template>
 
 <script lang="ts" setup>
-  import { getGithubUri, getGiteeUri } from '@/api/auth/third'
-  import { delFP } from '@/api/auth/fingerprint'
+  import { getGithubUri, getGiteeUri, getWeiboUri } from '@/api/auth/third'
+  import { setFP } from '@/api/auth/fingerprint'
   import { fpId } from '@/hooks/web/useFingerprint'
   import { useAuthContext } from '../hooks/useAuthContext'
 
   const { t } = useAppI18n()
   const userAuth = useAppStoreUserAuth()
+  const appAuthSettings = useAppStoreSettingBackend()
   const { loading } = useAuthContext()
 
-  const iconArr = computed(() => [
-    {
-      key: 'wechat',
-      icon: 'ant-design:wechat-outlined',
-      title: t('app.auth.other.wechat'),
-    },
-    {
-      key: 'alipay',
-      icon: 'ant-design:alipay-circle-outlined',
-      title: t('app.auth.other.alipay'),
-    },
-    {
-      key: 'qq',
-      icon: 'ant-design:qq-outlined',
-      title: t('app.auth.other.qq'),
-    },
-    {
-      key: 'weibo',
-      icon: 'ant-design:weibo-outlined',
-      title: t('app.auth.other.weibo'),
-    },
-    {
-      key: 'github',
-      icon: 'ant-design:github-outlined',
-      title: t('app.auth.other.github'),
-    },
-    {
-      key: 'gitee',
-      icon: 'simple-icons:gitee',
-      title: t('app.auth.other.github'),
-    },
-  ])
+  const iconArr = computed(() =>
+    [
+      {
+        key: 'wechat',
+        icon: 'ant-design:wechat-outlined',
+        title: t('app.auth.other.wechat'),
+      },
+      {
+        key: 'alipay',
+        icon: 'ant-design:alipay-circle-outlined',
+        title: t('app.auth.other.alipay'),
+      },
+      {
+        key: 'qq',
+        icon: 'ant-design:qq-outlined',
+        title: t('app.auth.other.qq'),
+      },
+      {
+        key: 'weibo',
+        icon: 'ant-design:weibo-outlined',
+        title: t('app.auth.other.weibo'),
+        show: appAuthSettings.getWeiboEnabled,
+      },
+      {
+        key: 'github',
+        icon: 'ant-design:github-outlined',
+        title: t('app.auth.other.github'),
+        show: appAuthSettings.getGitHubEnabled,
+      },
+      {
+        key: 'gitee',
+        icon: 'simple-icons:gitee',
+        title: t('app.auth.other.gitee'),
+        show: appAuthSettings.getGiteeEnabled,
+      },
+    ].filter((i) => i.show ?? true)
+  )
 
   const onOAuth = async (getUri: Fn, ssePath: string) => {
     loading.value = true
@@ -82,7 +88,7 @@
         useAppMsgSuccess(t('app.oauth.success'))
         eventSource.close()
         await userAuth.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
-        await delFP()
+        await setFP()
         loading.value = false
       }
     }
@@ -91,15 +97,16 @@
       if (child?.closed) {
         pause()
         loading.value = false
-        setTimeout(() => {
+        const id = setTimeout(() => {
           eventSource.close()
+          clearTimeout(id)
         }, 1500)
       }
     })
   }
 
   const onClick = async (key: string) => {
-    if (!['github', 'gitee'].includes(key)) {
+    if (['wechat', 'alipay', 'qq'].includes(key)) {
       useAppMessage().warning(t('app.base.wip'))
       return
     }
@@ -110,6 +117,10 @@
 
     if (key === 'gitee') {
       onOAuth(getGiteeUri, 'gitee')
+    }
+
+    if (key === 'weibo') {
+      onOAuth(getWeiboUri, 'weibo')
     }
   }
 </script>

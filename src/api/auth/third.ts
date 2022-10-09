@@ -1,6 +1,7 @@
 enum ThirdEnum {
   GITHUB = '/auth/third/github/oauth',
   GITEE = '/auth/third/gitee/oauth',
+  WEIBO = '/auth/third/weibo/oauth',
 }
 
 /**
@@ -18,5 +19,14 @@ export const getGithubUri = () => {
 export const getGiteeUri = () => {
   return AppAxios.get<string>({
     url: ThirdEnum.GITEE,
+  })
+}
+
+/**
+ * @description get weibo oauth uri
+ */
+export const getWeiboUri = () => {
+  return AppAxios.get<string>({
+    url: ThirdEnum.WEIBO,
   })
 }

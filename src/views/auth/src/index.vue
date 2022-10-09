@@ -9,9 +9,12 @@
       type="line"
       justify-content="space-around"
     >
-      <n-tab-pane name="account" :tab="t('form.app.auth.tab.account')">
+      <n-tab-pane
+        v-if="appAuthSettings.getAccountEnabled"
+        name="account"
+        :tab="t('form.app.auth.tab.account')"
+      >
         <SignInWithAccount
-          v-if="appAuthSettings.getAccountEnabled"
           ref="account"
           class="w-72 text-justify mt-2"
         ></SignInWithAccount>

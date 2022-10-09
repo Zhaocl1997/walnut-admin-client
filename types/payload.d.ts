@@ -31,6 +31,9 @@ declare global {
       email: number
       phone: number
       qrcode: number
+      gitee: number
+      github: number
+      weibo: number
     }
   }
 }

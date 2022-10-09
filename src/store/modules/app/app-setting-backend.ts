@@ -26,6 +26,18 @@ const useAppStoreSettingBackendInside = defineStore(
       getQrcodeEnabled(state) {
         return +state.auth?.qrcode! === 1
       },
+
+      getGiteeEnabled(state) {
+        return +state.auth?.gitee! === 1
+      },
+
+      getGitHubEnabled(state) {
+        return +state.auth?.github! === 1
+      },
+
+      getWeiboEnabled(state) {
+        return +state.auth?.weibo! === 1
+      },
     },
 
     actions: {
