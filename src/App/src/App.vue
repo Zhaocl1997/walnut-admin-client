@@ -23,4 +23,5 @@
   useAppDarkMode()
   useAppLocale()
   useFingerprint()
+  useAppMonitor()
 </script>

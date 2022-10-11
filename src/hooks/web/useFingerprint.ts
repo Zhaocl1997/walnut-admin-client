@@ -1,5 +1,5 @@
 import { setFP } from '@/api/auth/fingerprint'
-import FingerprintJS from '@fingerprintjs/fingerprintjs'
+import FingerprintJS, { UnknownComponents } from '@fingerprintjs/fingerprintjs'
 
 // Initialize an agent at application startup.
 const fpPromise = FingerprintJS.load({ monitoring: false })
@@ -8,10 +8,20 @@ export const fpId = useAppStorage(AppConstPersistKey.FP_ID, '')
 
 export const useFingerprint = () => {
   ;(async () => {
+    if (fpId.value) return
+
     // Get the visitor identifier when you need it.
     const fp = await fpPromise
     const result = await fp.get()
-    fpId.value = result.visitorId
+
+    const components: UnknownComponents = {
+      ...result.components,
+      ua: { value: window.navigator.userAgent, duration: Infinity },
+    }
+
+    const visiterId = FingerprintJS.hashComponents(components)
+
+    fpId.value = visiterId
 
     await setFP()
   })()
