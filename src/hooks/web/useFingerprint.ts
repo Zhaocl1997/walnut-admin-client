@@ -10,6 +10,8 @@ export const useFingerprint = () => {
   ;(async () => {
     if (fpId.value) return
 
+    const userProfile = useAppStoreUserProfile()
+
     // Get the visitor identifier when you need it.
     const fp = await fpPromise
     const result = await fp.get()
@@ -17,6 +19,8 @@ export const useFingerprint = () => {
     const components: UnknownComponents = {
       ...result.components,
       ua: { value: window.navigator.userAgent, duration: Infinity },
+      ip: { value: userProfile.ip, duration: Infinity },
+      cityName: { value: userProfile.cityName, duration: Infinity },
     }
 
     const visiterId = FingerprintJS.hashComponents(components)
