@@ -27,6 +27,8 @@ export const getFormTranslated = (
   item: WForm.Schema.Item,
   type: WForm.LocaleType = 'origin'
 ) => {
+  if (item.formProp?.label === true) return
+
   const key = props.value.localeUniqueKey
 
   const isLocale = key && getBoolean(item.formProp?.locale)
