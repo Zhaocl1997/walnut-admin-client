@@ -8,7 +8,6 @@ import { merge } from 'lodash-es'
 
 import { checkReponseErrorStatus } from './checkStatus'
 import { AppResponseEncryption, AppRequestEncryption } from '../crypto'
-import { fpId } from '@/hooks/web/useFingerprint'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
@@ -26,11 +25,17 @@ const setTokenInRequest = (config: AxiosRequestConfigExtend, token: string) => {
 export const transform: AxiosTransform = {
   // Here handler request logic
   requestInterceptors: (config) => {
+    const userProfile = useAppStoreUserProfile()
+
     const mergedCustomOptions = config.customConfig!
 
-    // adapt for backend locale messages
+    // custom headers
     config.headers!['x-language'] = appLocale.locale
     config.headers!['x-fingerprint'] = fpId.value
+
+    if (userProfile.cityName) {
+      config.headers!['x-location'] = wbtoa(userProfile.cityName)
+    }
 
     // carry token
     if (mergedCustomOptions.needAuth) {
@@ -172,6 +177,8 @@ export const transform: AxiosTransform = {
       useAppRouterPush({ name: '500' })
       return
     }
+
+    console.log(err)
 
     const statusCode = (err.response?.data as any).statusCode
     const msg = (err.response?.data as any).detail?.message

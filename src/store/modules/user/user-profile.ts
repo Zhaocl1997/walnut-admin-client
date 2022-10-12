@@ -7,6 +7,8 @@ import { upperFirst } from 'easy-fns-ts'
 const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
   state: (): UserProfileState => ({
     profile: {},
+    ip: '',
+    cityName: '',
   }),
 
   getters: {
@@ -28,6 +30,14 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
   actions: {
     setProfile(payload: Partial<AppSystemUser>) {
       this.profile = payload
+    },
+
+    setIP(payload: string) {
+      this.ip = payload
+    },
+
+    setCityName(payload: string) {
+      this.cityName = payload
     },
 
     async getProfile() {
