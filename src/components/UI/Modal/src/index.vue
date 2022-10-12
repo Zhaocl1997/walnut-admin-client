@@ -9,7 +9,7 @@
       content: 'soft',
       footer: 'soft',
     }"
-    @update:show="(v) => $emit('update:show', v)"
+    @update:show="onUpdateShow"
   >
     <template #header>
       <w-title prefix="bar" :help-message="helpMessage">
@@ -36,14 +36,14 @@
 
     <template #action>
       <n-space size="small" class="float-right" v-if="defaultButton">
-        <n-button size="small" :onClick="() => $emit('no')" :disabled="loading">
+        <n-button size="small" :onClick="onNo" :disabled="loading">
           {{ t('app.button.no') }}
         </n-button>
 
         <n-button
           size="small"
           type="primary"
-          :onClick="() => $emit('yes')"
+          :onClick="onYes"
           :disabled="loading"
           :loading="loading"
         >
@@ -108,6 +108,22 @@
     isFullscreen.value = !isFullscreen.value
 
     toggleClass(dragDom, 'modal-fullscreen', isFullscreen.value)
+  }
+
+  const onNo = () => {
+    emits('no')
+  }
+
+  const onYes = () => {
+    emits('yes')
+  }
+
+  const onUpdateShow = (v: boolean) => {
+    emits('update:show', v)
+
+    if (!v) {
+      onNo()
+    }
   }
 </script>
 
