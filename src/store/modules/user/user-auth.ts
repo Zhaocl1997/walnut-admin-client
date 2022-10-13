@@ -62,6 +62,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
       // push to the index menu
       await appMenu.goIndex()
+
+      // send beacon request
+      sendBeacon({ focus: true, left: false })
     },
 
     /**
@@ -132,6 +135,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
       // clear tab
       appTab.clearTabs()
+
+      // send beacon request
+      sendBeacon({ focus: true, left: false })
 
       useTimeoutFn(() => {
         // push to signin page

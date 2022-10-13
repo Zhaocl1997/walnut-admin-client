@@ -119,6 +119,8 @@ declare global {
    */
   interface UserProfileState {
     profile: Partial<AppSystemUser>
+    ip: string
+    cityName: string
   }
 
   /**

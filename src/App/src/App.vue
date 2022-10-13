@@ -18,10 +18,12 @@
   import { useAppDarkMode } from '@/components/App/AppDarkMode/useAppDarkMode'
   import { useAppLocale } from '@/components/App/AppLocalePicker/useAppLocale'
 
+  useSohuApi().then(() => {
+    useFingerprint()
+    useAppMonitor()
+  })
   useAppTitle()
   useAppResize()
   useAppDarkMode()
   useAppLocale()
-  useFingerprint()
-  useAppMonitor()
 </script>

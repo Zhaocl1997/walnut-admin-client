@@ -24,7 +24,6 @@
 <script lang="ts" setup>
   import { getGithubUri, getGiteeUri, getWeiboUri } from '@/api/auth/third'
   import { setFP } from '@/api/auth/fingerprint'
-  import { fpId } from '@/hooks/web/useFingerprint'
   import { useAuthContext } from '../hooks/useAuthContext'
 
   const { t } = useAppI18n()

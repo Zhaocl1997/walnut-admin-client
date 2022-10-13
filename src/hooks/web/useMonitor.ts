@@ -1,15 +1,37 @@
+interface sendBeaconData {
+  focus?: boolean
+  left?: boolean
+  currentRouter?: string
+}
+
+export const sendBeacon = (data: sendBeaconData) => {
+  const userProfile = useAppStoreUserProfile()
+  const userAuth = useAppStoreUserAuth()
+
+  navigator.sendBeacon(
+    `${realAPIURL}/app/monitor/user`,
+    JSON.stringify({
+      fp: fpId.value,
+      ...data,
+      auth: !!userAuth.accessToken,
+      location: wbtoa(userProfile.cityName),
+      userId: userProfile?.profile?._id,
+      userName: userProfile?.profile?.userName,
+    })
+  )
+}
+
 export const useAppMonitor = () => {
-  // TODO optimise
   const visibility = useDocumentVisibility()
 
   // hidden
   const stopVisibleWatch = watch(
     () => visibility.value,
     (v) => {
-      navigator.sendBeacon(
-        `${realAPIURL}/app/monitor/user`,
-        JSON.stringify({ fp: fpId.value, focus: v === 'visible', left: false })
-      )
+      sendBeacon({
+        focus: v === 'visible',
+        left: false,
+      })
     },
     {
       flush: 'post',
@@ -22,19 +44,13 @@ export const useAppMonitor = () => {
     () => {
       stopVisibleWatch()
 
-      navigator.sendBeacon(
-        `${realAPIURL}/app/monitor/user`,
-        JSON.stringify({ fp: fpId.value, focus: false, left: true })
-      )
+      sendBeacon({ focus: false, left: true })
     },
     false
   )
 
   // initial
   tryOnMounted(() => {
-    navigator.sendBeacon(
-      `${realAPIURL}/app/monitor/user`,
-      JSON.stringify({ fp: fpId.value, focus: true, left: false })
-    )
+    sendBeacon({ focus: true, left: false })
   })
 }
