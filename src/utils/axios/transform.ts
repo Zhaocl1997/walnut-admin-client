@@ -1,4 +1,4 @@
-import type { AxiosRequestConfigExtend, AxiosTransform } from './src/types'
+import type { AxiosTransform } from './src/types'
 
 import {
   easyFilterEmptyValue,
@@ -8,18 +8,10 @@ import { merge } from 'lodash-es'
 
 import { checkReponseErrorStatus } from './checkStatus'
 import { AppResponseEncryption, AppRequestEncryption } from '../crypto'
+import { RefreshTokenLogic, setTokenInRequest } from './refreshToken'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
-
-// flag to judge if calling refreshing token api
-let isRefreshing = false
-// waiting queue
-let requestsQueue: ((token: string) => void)[] = []
-
-const setTokenInRequest = (config: AxiosRequestConfigExtend, token: string) => {
-  config.headers!['Authorization'] = `Bearer ${token}`
-}
 
 // custom transform for req and res interceptors
 export const transform: AxiosTransform = {
@@ -103,39 +95,7 @@ export const transform: AxiosTransform = {
 
       // TODO bug
       // router push too fast, which means last page going on requesting, then go to another page, will cause fake death of page
-
-      if (!isRefreshing) {
-        isRefreshing = true
-
-        return userAuth
-          .GetNewATWithRT()
-          .then((refresh_token) => {
-            if (!refresh_token) return
-
-            setTokenInRequest(config, refresh_token)
-
-            // token already refreshed, call the waiting request
-            requestsQueue.forEach((cb) => cb(refresh_token))
-            // clean queue
-            requestsQueue = []
-
-            // add customConfig
-            // @ts-ignore
-            return AppAxios.request(config, config.customConfig)
-          })
-          .finally(() => {
-            isRefreshing = false
-          })
-      } else {
-        // when refreshing token, return a promise that haven't called resolve
-        return new Promise((resolve) => {
-          // push resolve into queue, using an anonymous function to wrap it. ASAP token refresh is done, excute
-          requestsQueue.push((t) => {
-            setTokenInRequest(config, t)
-            resolve(AppAxios.request(config))
-          })
-        })
-      }
+      return RefreshTokenLogic(config)
     }
 
     // refresh token is expired, so this user need to signout and re-signin
