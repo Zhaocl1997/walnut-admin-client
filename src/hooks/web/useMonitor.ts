@@ -8,17 +8,21 @@ export const sendBeacon = (data: sendBeaconData) => {
   const userProfile = useAppStoreUserProfile()
   const userAuth = useAppStoreUserAuth()
 
-  navigator.sendBeacon(
-    `${realAPIURL}/app/monitor/user`,
-    JSON.stringify({
-      fp: fpId.value,
-      ...data,
-      auth: !!userAuth.accessToken,
-      location: wbtoa(userProfile.cityName),
-      userId: userProfile?.profile?._id,
-      userName: userProfile?.profile?.userName,
-    })
+  const blob = new Blob(
+    [
+      JSON.stringify({
+        fp: fpId.value,
+        ...data,
+        auth: !!userAuth.accessToken,
+        location: wbtoa(userProfile.cityName),
+        userId: userProfile?.profile?._id,
+        userName: userProfile?.profile?.userName,
+      }),
+    ],
+    { type: 'application/json; charset=UTF-8' }
   )
+
+  navigator.sendBeacon(`${realAPIURL}/app/monitor/user`, blob)
 }
 
 export const useAppMonitor = () => {
