@@ -142,6 +142,7 @@ export const useTableAPI = (
   const onApiTableReset: WTable.FinishLoadingCallback = async ({ done }) => {
     resetParams()
     inst.value?.clearSorter()
+    inst.value?.clearFilters()
     await onApiTableList()
     done()
   }
@@ -222,14 +223,7 @@ export const useTableAPI = (
   }
 
   const handleDictFilter = () => {
-    if (
-      props.value.columns?.some((i) => i.extendType === 'dict') &&
-      (
-        props.value.columns?.find(
-          (i) => i.extendType === 'dict'
-        ) as TableBaseColumn
-      ).filter === true
-    ) {
+    if (props.value.columns?.some((i) => i.filter === true)) {
       setProps({
         onUpdateFilters: async (filters) => {
           ApiTableListParams.value.query = Object.assign(
