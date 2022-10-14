@@ -17,11 +17,12 @@
 
   import { useAppDarkMode } from '@/components/App/AppDarkMode/useAppDarkMode'
   import { useAppLocale } from '@/components/App/AppLocalePicker/useAppLocale'
+  ;(async function () {
+    await useSohuApi()
+    await useFingerprint()
+    await useAppMonitor()
+  })()
 
-  useSohuApi().then(() => {
-    useFingerprint()
-    useAppMonitor()
-  })
   useAppTitle()
   useAppResize()
   useAppDarkMode()
