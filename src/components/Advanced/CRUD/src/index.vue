@@ -2,7 +2,11 @@
   <div>
     <w-table @hook="registerTable"></w-table>
 
-    <w-form @hook="registerForm" :model="formData"></w-form>
+    <w-form
+      v-if="getProps.formProps"
+      @hook="registerForm"
+      :model="formData"
+    ></w-form>
   </div>
 </template>
 
