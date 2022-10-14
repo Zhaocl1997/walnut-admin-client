@@ -4,7 +4,6 @@
     @query="onApiTableQuery"
     @reset="onApiTableReset"
     :model="ApiTableListParams.query"
-    :disabled="tableProps.loading"
   ></w-form>
 </template>
 
@@ -16,5 +15,9 @@
 
   // @ts-ignore
   // @link https://stackoverflow.com/questions/57798016/how-to-ignore-type-instantiation-is-excessively-deep-and-possibly-infinite-ts
-  const [register] = useForm({ ...tableProps.value?.queryFormProps! })
+  const [register] = useForm({
+    ...tableProps.value?.queryFormProps!,
+    // @ts-ignore
+    disabled: computed(() => tableProps.value.loading),
+  })
 </script>

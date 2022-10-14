@@ -1,6 +1,6 @@
 import { BaseAPI } from '../../base'
 
-export const cacheAPI = new BaseAPI<AppCacheModel>({
+export const monitorCacheAPI = new BaseAPI<AppMonitorCacheModel>({
   model: 'app',
   section: 'monitor/cache',
 })

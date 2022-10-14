@@ -5,13 +5,15 @@ interface sendBeaconData {
 }
 
 export const sendBeacon = (data: sendBeaconData) => {
+  if (!fpId.value) return
+
   const userProfile = useAppStoreUserProfile()
   const userAuth = useAppStoreUserAuth()
 
   const blob = new Blob(
     [
       JSON.stringify({
-        fp: fpId.value,
+        visitorId: fpId.value,
         ...data,
         auth: !!userAuth.accessToken,
         location: wbtoa(userProfile.cityName),

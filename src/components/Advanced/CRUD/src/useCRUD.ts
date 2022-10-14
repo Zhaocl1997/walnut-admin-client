@@ -1,7 +1,7 @@
 import type { WCrud } from './types'
 
 export const useCRUD = <T = RowData>(
-  props: WCrud.Props<T>
+  props: DeepMaybeRefSelf<WCrud.Props<T>> | WCrud.Props<T>
 ): WCrud.useFormReturnType<T> => {
   isInSetup()
 

@@ -9,7 +9,7 @@
 </script>
 
 <script lang="tsx" setup>
-  import { cacheAPI } from '@/api/app/monitor/cache'
+  import { monitorCacheAPI } from '@/api/app/monitor/cache'
 
   // locale unique key
   const localeKey = 'appCache'
@@ -20,8 +20,8 @@
   const [
     register,
     { onApiTableReadAndOpenUpdateForm, onApiTableDelete, onApiTableList },
-  ] = useCRUD<AppCacheModel>({
-    baseAPI: cacheAPI,
+  ] = useCRUD<AppMonitorCacheModel>({
+    baseAPI: monitorCacheAPI,
 
     tableProps: {
       localeUniqueKey: localeKey,
@@ -49,7 +49,7 @@
             const res = await useAppConfirm(t('app.cache.clear.confirm'))
 
             if (res) {
-              await cacheAPI.clear()
+              await monitorCacheAPI.clear()
               useAppMsgSuccess()
               await onApiTableList()
             }

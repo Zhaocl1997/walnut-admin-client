@@ -154,14 +154,34 @@ declare global {
     remark?: string
   }
 
-  // app cache
-  interface AppCacheModel extends BaseAppModel {
+  // app monitor cache model
+  interface AppMonitorCacheModel extends BaseAppModel {
     key?: string
     value?: string
     valueBytes?: string
     expire?: string
     startTime?: string
     expireTime?: string
+  }
+
+  // app monitor user model
+  interface AppMonitorUserModel extends BaseAppModel {
+    visitorId: string
+    auth: boolean
+    focus: boolean
+    left: boolean
+    currentRouter: string
+
+    ip?: string
+    location?: string
+    os?: string
+    browser?: string
+    userId?: string
+    userName?: string
+
+    authTime: string
+
+    lastActiveAt?: Date
   }
 }
 

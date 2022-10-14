@@ -31,7 +31,7 @@
         size="small"
         type="default"
         icon-placement="right"
-        @click="onToggle"
+        @click="() => onToggle()"
         :disabled="formProps.disabled"
       >
         <template #>{{ getText }}</template>
@@ -95,22 +95,24 @@
     })
   }
 
-  const onToggle = () => {
-    active.value = !active.value
+  const onToggle = (v?: boolean) => {
+    active.value = v ?? !active.value
 
     for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
       formSchemas.value[i]._internalShow = !formSchemas.value[i]._internalShow
     }
   }
 
+  // TODO bug to fix
   watch(
-    () => props.defaultFold,
-    (v) => {
-      if (v) {
-        onToggle()
+    () => [props, formProps],
+    () => {
+      if (props.defaultFold) {
+        onToggle(active.value)
       }
     },
     {
+      deep: true,
       immediate: true,
     }
   )

@@ -8,4 +8,10 @@ export const defaultAppLocaleMessageKeys = [
   'status',
   'description',
   'index',
+  'ip',
+  'location',
+  'os',
+  'browser',
+  'userId',
+  'userName',
 ]
