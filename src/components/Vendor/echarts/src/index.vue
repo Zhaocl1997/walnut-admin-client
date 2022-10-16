@@ -37,11 +37,15 @@
     chartInst.value?.resize()
   })
 
-  const onInit = () => {
+  const onDispose = () => {
     if (chartInst.value) {
       chartInst.value.dispose()
       chartInst.value = null
     }
+  }
+
+  const onInit = () => {
+    onDispose()
 
     const target = document.getElementById(chartId.value)!
 
@@ -71,11 +75,13 @@
     flush: 'post',
   })
 
-  onMounted(() => {
-    onInit()
-  })
+  tryOnMounted(onInit)
+
+  tryOnUnmounted(onDispose)
 
   onActivated(onInit)
+
+  onDeactivated(onDispose)
 </script>
 
 <script lang="ts">
