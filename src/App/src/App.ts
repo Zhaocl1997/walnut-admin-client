@@ -1,5 +1,7 @@
 import StarportPlugin from 'vue-starport'
 
+import '@/socket'
+
 import { setupI18n } from '@/locales'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store/pinia'

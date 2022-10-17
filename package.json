@@ -72,6 +72,7 @@
     "pinia": "2.0.23",
     "qrcode": "1.5.1",
     "signature_pad": "4.0.10",
+    "socket.io-client": "^4.5.3",
     "sortablejs": "1.15.0",
     "tinymce": "6.2.0",
     "vue": "3.2.41",
