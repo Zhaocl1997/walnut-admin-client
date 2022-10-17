@@ -151,3 +151,6 @@ export const extractDefaultFormDataFromSchemas = (
       .filter((i) => i[0])!
   )
 }
+
+export const generateFormItemId = (item: WForm.Schema.Item, index: number) =>
+  wbtoa(`${item.type}-${index}-${item?.formProp?.path}`)
