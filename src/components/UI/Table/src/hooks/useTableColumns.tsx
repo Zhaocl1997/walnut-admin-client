@@ -1,6 +1,6 @@
 import type { WTable } from '../types'
 
-import { sortBy } from 'lodash-es'
+import { omit, sortBy } from 'lodash-es'
 
 import { getTableTranslated } from '../utils'
 
@@ -241,13 +241,18 @@ export const useTableColumns = (
                 },
               ]
 
+              const extendActionButtons = tItem.extendActionButtons
+                ?.filter((i) => (i?.show ? i.show(rowData) : true))
+                .map((i) => <w-button {...omit(i, 'show')}></w-button>)
+
               return (
                 <div class="flex items-center justify-center space-x-2 whitespace-nowrap">
                   {sortBy(buttonGroups, (i) =>
                     tItem.extendActionType?.indexOf(i.key)
                   )
                     .filter((i) => isShow(i.key))
-                    .map((i) => i.content)}
+                    .map((i) => i.content)
+                    .concat(extendActionButtons)}
                 </div>
               )
             },

@@ -167,10 +167,15 @@ export declare namespace WTable {
      */
     type Action<T = RowData> = BaseExtend<T, 'action'> & {
       /**
-       * @description action column button config
+       * @description action column button config, order sensitive
        * @default ['create', 'delete', 'read']
        */
       extendActionType?: ColumnActionType[]
+
+      /**
+       * @description extend action button
+       */
+      extendActionButtons?: (WButtonProps & { show?: RenderFn<T, boolean> })[]
 
       /**
        * @description action column button click event

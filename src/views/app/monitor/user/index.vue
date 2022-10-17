@@ -229,25 +229,40 @@
           ],
         },
 
-        // {
-        //   key: 'action',
-        //   width: 80,
-        //   extendType: 'action',
-        //   fixed: 'right',
-        //   extendActionType: ['detail', 'delete'],
-        //   onExtendActionType: async ({ type, rowData }) => {
-        //     switch (type) {
-        //       case 'detail':
-        //         await onApiTableReadAndOpenUpdateForm(rowData.key!)
-        //         break
-        //       case 'delete':
-        //         await onApiTableDelete(rowData.key!)
-        //         break
-        //       default:
-        //         break
-        //     }
-        //   },
-        // },
+        {
+          key: 'action',
+          width: 80,
+          extendType: 'action',
+          fixed: 'right',
+          extendActionType: [],
+          extendActionButtons: [
+            {
+              iconButton: true,
+              icon: 'ant-design:logout-outlined',
+              type: 'error',
+              textProp: () => t('app.monitor.user.forceLogout'),
+              confirm: true,
+              show: (row) => {
+                return row.auth === true
+              },
+              onClick: () => {
+                console.log(123)
+              },
+            },
+          ],
+          // onExtendActionType: async ({ type, rowData }) => {
+          // switch (type) {
+          //   case 'detail':
+          //     await onApiTableReadAndOpenUpdateForm(rowData.key!)
+          //     break
+          //   case 'delete':
+          //     await onApiTableDelete(rowData.key!)
+          //     break
+          //   default:
+          //     break
+          // }
+          // },
+        },
       ],
     },
   })
