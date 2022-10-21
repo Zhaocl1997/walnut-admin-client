@@ -17,7 +17,6 @@
       @touchmove.prevent
     >
       <canvas
-        ref="signPadRef"
         :id="signPadId"
         class="w-full h-full"
         :data-uid="signPadId"
@@ -97,7 +96,7 @@
             :disabled="disabled"
             type="primary"
             text
-            @click="onDownload('png')"
+            @click="onFinalAction('png')"
           >
             <div class="hstack justify-center items-center gap-2">
               <span> png </span>
@@ -109,7 +108,7 @@
             :disabled="disabled"
             type="primary"
             text
-            @click="onDownload('jpeg')"
+            @click="onFinalAction('jpeg')"
           >
             <div class="hstack justify-center items-center gap-2">
               <span> jpeg </span>
@@ -128,6 +127,7 @@
   import { toJpeg, toPng } from 'html-to-image'
   import { genString } from 'easy-fns-ts'
 
+  // TODO 888
   interface InternalProps {
     options?: Options
     height?: string
@@ -148,7 +148,6 @@
   const wrapperId = ref('wrapper-' + genString(8))
 
   const signPadInst = shallowRef<Nullable<SignaturePad>>(null)
-  const signPadRef = ref<Nullable<HTMLCanvasElement>>(null)
 
   const url = ref<string>()
   const color = ref<string>('rgb(0, 0, 0)')
@@ -234,9 +233,13 @@
       ? signPadInst.value?.toDataURL(format)
       : signPadInst.value?.toDataURL()
 
-  const onDownload = (type: string) => {
+  const onFinalAction = async (
+    type: 'png' | 'jpeg' = 'png',
+    way: 'download' | 'get' = 'download'
+  ) => {
     const target = document.getElementById(wrapperId.value)!
 
+    // filter left/right custom utils
     const filter = (node: Element) => {
       const exclusionClasses = ['signpad-utils']
       return !exclusionClasses.some((classname) => {
@@ -247,11 +250,23 @@
     }
 
     if (type === 'png') {
-      toPng(target, { filter }).then((dataUrl) => downloadByBase64(dataUrl))
+      const res = await toPng(target, { filter })
+
+      if (way === 'download') {
+        downloadByBase64(res)
+      } else {
+        return res
+      }
     }
 
     if (type === 'jpeg') {
-      toJpeg(target, { filter }).then((dataUrl) => downloadByBase64(dataUrl))
+      const res = await toJpeg(target, { filter })
+
+      if (way === 'download') {
+        downloadByBase64(res)
+      } else {
+        return res
+      }
     }
   }
 
@@ -270,6 +285,8 @@
     }
   }
 
+  const getImage = (type: string = 'png') => onFinalAction(type, 'get')
+
   onMounted(() => {
     onInit()
   })
@@ -280,6 +297,7 @@
     isEmpty,
     undo,
     fromDataURL,
+    getImage,
   })
 </script>
 
