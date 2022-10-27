@@ -4,7 +4,7 @@
       <n-list-item>
         <w-title prefix="bar"> Basic (javascript) </w-title>
 
-        <WCodeMirror v-model="code1"></WCodeMirror>
+        <w-code-mirror v-model:value="code1"></w-code-mirror>
       </n-list-item>
     </n-list>
 
@@ -12,7 +12,7 @@
       <n-list-item>
         <w-title prefix="bar"> Disabled (javascript) </w-title>
 
-        <WCodeMirror v-model="code2" disabled></WCodeMirror>
+        <w-code-mirror v-model:value="code2" disabled></w-code-mirror>
       </n-list-item>
     </n-list>
   </w-demo-card>

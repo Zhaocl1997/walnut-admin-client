@@ -68,7 +68,6 @@
   } from 'naive-ui'
 
   import { genString } from 'easy-fns-ts'
-  import { downloadByUrl } from '../../../utils/file/download'
   import { AliOSSClient } from './client'
 
   // TODO 888
@@ -93,7 +92,7 @@
     folder: 'example',
     max: 10,
     size: 1024 * 10,
-    crossoverSize: 1024 * 10,
+    crossoverSize: 1024 * 30,
   })
   const emits = defineEmits(['update:value'])
 
@@ -201,7 +200,7 @@
   }
 
   const onDownload = (file: UploadFileInfo) => {
-    downloadByUrl({ url: file.url!, fileName: file.name })
+    downloadByUrl(file.url!, file.name)
   }
 
   const onBeforeUpload = (data: {

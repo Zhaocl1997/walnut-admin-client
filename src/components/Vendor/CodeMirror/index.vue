@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <Codemirror
-      :model-value="modelValue"
+      :model-value="value"
       :placeholder="placeholder"
       :style="{ height: height }"
       :autofocus="autofocus"
@@ -50,8 +50,9 @@
 
   import { languages } from './language'
 
+  // TODO 888
   interface InternalProps {
-    modelValue: string
+    value: string
     placeholder?: string
     disabled?: boolean
     height?: string
@@ -63,7 +64,7 @@
     height: '300px',
     autofocus: false,
   })
-  const emits = defineEmits(['update:modelValue', 'blur', 'focus'])
+  const emits = defineEmits(['update:value', 'blur', 'focus'])
 
   const { t } = useAppI18n()
 
@@ -119,7 +120,7 @@
   }
 
   const onChange = (v: string, e: ViewUpdate) => {
-    emits('update:modelValue', v)
+    emits('update:value', v)
   }
 
   const onFocus = (e: ViewUpdate) => {
