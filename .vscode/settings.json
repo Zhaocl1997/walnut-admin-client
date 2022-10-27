@@ -525,10 +525,8 @@
                     },
                     "ValueOfAppConstLockMode": {
                         "enum": [
-                            "auto",
                             "default",
                             "idle",
-                            "manual",
                             "security"
                         ],
                         "type": "string"
