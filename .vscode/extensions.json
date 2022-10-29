@@ -2,35 +2,31 @@
   "recommendations": [
     /* cn */
     "MS-CEINTL.vscode-language-pack-zh-hans",
-
     /* html */
     "formulahendry.auto-close-tag",
     "formulahendry.auto-complete-tag",
     "formulahendry.auto-rename-tag",
-
     /* env */
     "mikestead.dotenv",
-
     /* i18n */
     "lokalise.i18n-ally",
-
     /* windicss */
     "voorjaar.windicss-intellisense",
-
     /* vue3 tsc */
     "Vue.volar",
-
+    "hollowtree.vue-snippets",
     /* todo tree */
     "Gruntfuggly.todo-tree",
-
     /* icons */
     "vscode-icons-team.vscode-icons",
-
-    /* prettier */
-    "esbenp.prettier-vscode",
-
     /* functional */
     "techer.open-in-browser",
-    "shd101wyy.markdown-preview-enhanced"
-  ]
+    "shd101wyy.markdown-preview-enhanced",
+    /* git */
+    "eamodio.gitlens",
+    "donjayamanne.githistory"
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur"
+  ],
 }

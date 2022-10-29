@@ -1,7 +1,7 @@
 {
     "prettier.configPath": "config/prettier/.prettierrc.js",
     "prettier.ignorePath": "config/prettier/.prettierignore",
-    "prettier.jsxBracketSameLine": true,
+    "prettier.bracketSameLine": true,
     "prettier.jsxSingleQuote": true,
     "prettier.semi": false,
     "prettier.singleQuote": true,
@@ -31,7 +31,7 @@
         "vue"
     ],
     "volar.codeLens.pugTools": false,
-    "volar.takeOverMode.enabled": true,
+    "volar.takeOverMode.enabled": "auto",
     "[vue]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
