@@ -32,6 +32,8 @@ export const setupApp = async (app: App) => {
 
   app.use(StarportPlugin())
 
+  useCleanLocalStroage()
+
   if (isDev()) {
     app.config.performance = true
   }
