@@ -38,6 +38,18 @@ const useAppStoreSettingBackendInside = defineStore(
       getWeiboEnabled(state) {
         return +state.auth?.weibo! === 1
       },
+
+      getQQEnabled(state) {
+        return +state.auth?.qq! === 1
+      },
+
+      getAliPayEnabled(state) {
+        return +state.auth?.alipay! === 1
+      },
+
+      getWechatEnabled(state) {
+        return +state.auth?.wechat! === 1
+      },
     },
 
     actions: {

@@ -34,6 +34,9 @@ declare global {
       gitee: number
       github: number
       weibo: number
+      qq: number
+      alipay: number
+      wechat: number
     }
   }
 }

@@ -37,16 +37,19 @@
         key: 'wechat',
         icon: 'ant-design:wechat-outlined',
         title: t('app.auth.other.wechat'),
+        show: appAuthSettings.getWechatEnabled,
       },
       {
         key: 'alipay',
         icon: 'ant-design:alipay-circle-outlined',
         title: t('app.auth.other.alipay'),
+        show: appAuthSettings.getAliPayEnabled,
       },
       {
         key: 'qq',
         icon: 'ant-design:qq-outlined',
         title: t('app.auth.other.qq'),
+        show: appAuthSettings.getQQEnabled,
       },
       {
         key: 'weibo',
@@ -77,7 +80,7 @@
     const child = openOAuthWindow(res)
 
     const eventSource = new EventSource(
-      `${realAPIURL}/auth/third/${ssePath}/check/${fpId.value}`
+      `/api/auth/third/${ssePath}/check/${fpId.value}`
     )
 
     eventSource.onmessage = async ({ data }) => {
