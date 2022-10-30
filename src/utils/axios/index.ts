@@ -7,15 +7,16 @@ export * from './src/types'
 import { Axios } from './src/Axios'
 import { cacheAdapterEnhancer } from './src/adapter'
 import { transform } from './transform'
-import { isDev } from '../constant/vue'
+
+const { axiosTimeout, axiosCache } = useAppEnv('seconds')
+
+const { httpUrl } = useAppEnv('proxy')
 
 const axiosConfig: AxiosRequestConfigExtend = {
-  baseURL: isDev()
-    ? import.meta.env.VITE_PROXY_PREFIX
-    : import.meta.env.VITE_PROXY_PREFIX ?? realAPIURL,
+  baseURL: httpUrl,
 
   // time out, default is 10s
-  timeout: Number(import.meta.env.VITE_AXIOS_TIMEOUT_SECOND) * 1000,
+  timeout: Number(axiosTimeout) * 1000,
 
   transform,
 
@@ -37,7 +38,7 @@ const axiosConfig: AxiosRequestConfigExtend = {
     transformStringBoolean: true,
 
     // custom each api cached time
-    cachedSeconds: Number(import.meta.env.VITE_AXIOS_CACHE_SECOND) * 1000,
+    cachedSeconds: Number(axiosCache) * 1000,
 
     // default is not to auto decrypt response data
     // used for to get some keys from backend
@@ -50,7 +51,7 @@ const axiosConfig: AxiosRequestConfigExtend = {
 
   // adapter for cache, default is 5s
   adapter: cacheAdapterEnhancer(axios.defaults.adapter!, {
-    cachedSeconds: Number(import.meta.env.VITE_AXIOS_CACHE_SECOND) * 1000,
+    cachedSeconds: Number(axiosCache) * 1000,
   }),
 }
 

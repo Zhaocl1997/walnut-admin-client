@@ -14,12 +14,13 @@ interface AppNotiOptions extends NotificationOptions {
  */
 export const AppNoti = (msg: string, options: AppNotiOptions) => {
   const appNaive = useAppStoreNaive()
+  const { title } = useAppEnv('title')
 
   appNaive.setNotiPlacement(options?.placement ?? 'top-right')
 
   const inst = useAppNotification().create({
     ...options,
-    title: options.title ?? import.meta.env.VITE_APP_TITLE,
+    title: options.title ?? title,
     content: options.content ?? msg,
     duration: options?.duration ?? 5000,
     closable: options?.closable ?? true,

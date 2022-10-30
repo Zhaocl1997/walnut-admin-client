@@ -1,13 +1,15 @@
 import { storagePrefix } from '../../constant/prefix'
 import { isProd } from '../../constant/vue'
 
+const { persist } = useAppEnv('seconds')
+
 // app storage
 // default cache 7 days
 // defualt only encrypt in prod
 export const useAppStorage = <T>(
   key: string,
   initialValue: MaybeComputedRef<T>,
-  expire: number = import.meta.env.VITE_APP_PERSIST_SECOND * 1000,
+  expire: number = +persist! * 1000,
   storage = localStorage
 ) => {
   const wholeKey = `${storagePrefix}__${key

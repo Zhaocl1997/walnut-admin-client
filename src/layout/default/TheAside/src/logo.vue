@@ -15,18 +15,14 @@
     }"
   >
     <div class="hstack justify-between items-center h-full w-full">
-      <img
-        src="/assets/logo.png"
-        :alt="`${getAppTitle} Logo`"
-        class="h-9 w-9"
-      />
+      <img src="/assets/logo.png" :alt="`${AppTitle} Logo`" class="h-9 w-9" />
 
       <w-transition name="zoom-down">
         <div
           v-show="!appMenu.collapse"
           class="text-xl not-italic font-bold text-center"
         >
-          {{ getAppTitle }}
+          {{ AppTitle }}
         </div>
       </w-transition>
     </div>
@@ -37,7 +33,7 @@
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
 
-  const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
+  const { title: AppTitle } = useAppEnv('title')
 
   const onGoIndex = async () => {
     await appMenu.goIndex()

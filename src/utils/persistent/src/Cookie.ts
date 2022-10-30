@@ -1,5 +1,7 @@
 import { isString } from 'easy-fns-ts'
 
+const { persist } = useAppEnv('seconds')
+
 export interface CookieOptions {
   prefixKey: string
   encrypt: boolean
@@ -18,12 +20,8 @@ export class Cookie {
     return `${this.prefixKey}__${key}`.toLocaleUpperCase()
   }
 
-  set(
-    key: string,
-    value: any,
-    expire = import.meta.env.VITE_APP_PERSIST_SECOND * 1000,
-    path = '/'
-  ) {
+  // default 7 days
+  set(key: string, value: any, expire = +persist! * 1000, path = '/') {
     value = isString(value) ? value : JSON.stringify(value)
     const finalValue = this.encrypt
       ? AppPersistEncryption.encrypt(value)

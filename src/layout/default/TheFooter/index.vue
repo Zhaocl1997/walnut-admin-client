@@ -16,7 +16,7 @@
           ></w-icon>
 
           <span class="whitespace-nowrap">
-            2020-present {{ getAppTitle }}. All Rights Reserved.
+            2020-present {{ AppTitle }}. All Rights Reserved.
           </span>
         </div>
       </div>
@@ -29,5 +29,5 @@
 
   const appSetting = useAppStoreSetting()
 
-  const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
+  const { title: AppTitle } = useAppEnv('title')
 </script>

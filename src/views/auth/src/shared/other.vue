@@ -30,6 +30,7 @@
   const userAuth = useAppStoreUserAuth()
   const appAuthSettings = useAppStoreSettingBackend()
   const { loading } = useAuthContext()
+  const { httpUrl } = useAppEnv('proxy')
 
   const iconArr = computed(() =>
     [
@@ -80,7 +81,7 @@
     const child = openOAuthWindow(res)
 
     const eventSource = new EventSource(
-      `/api/auth/third/${ssePath}/check/${fpId.value}`
+      `${httpUrl}/auth/third/${ssePath}/check/${fpId.value}`
     )
 
     eventSource.onmessage = async ({ data }) => {

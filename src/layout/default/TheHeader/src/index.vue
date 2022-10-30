@@ -5,7 +5,7 @@
         <img
           v-if="appAdapter.isMobile"
           src="/assets/logo.png"
-          :alt="`${getAppTitle} Logo`"
+          :alt="`${AppTitle} Logo`"
           class="h-9 w-9 m-1"
           @click="onShowAside"
         />
@@ -86,7 +86,7 @@
   const appAdapter = useAppStoreAdapter()
   const appMenu = useAppStoreMenu()
 
-  const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
+  const { title: AppTitle } = useAppEnv('title')
 
   const { isFullscreen, toggle } = useFullscreen()
 

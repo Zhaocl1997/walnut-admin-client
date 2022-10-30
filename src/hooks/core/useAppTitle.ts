@@ -7,6 +7,7 @@ export const useAppTitle = () => {
 
   const { t, locale } = useAppI18n()
   const { currentRoute } = useAppRouter()
+  const { title: envTitle } = useAppEnv('title')
 
   watch(
     () => [currentRoute.value.path, locale, visibility],
@@ -16,10 +17,10 @@ export const useAppTitle = () => {
           title.value = t('app.title')
         } else {
           const translateTitle = t(currentRoute.value.meta.title as string)
-          title.value = `${translateTitle} - ${import.meta.env.VITE_APP_TITLE}`
+          title.value = `${translateTitle} - ${envTitle}`
         }
       } catch (error) {
-        title.value = `${import.meta.env.VITE_APP_TITLE}`
+        title.value = `${envTitle}`
       }
     },
     {

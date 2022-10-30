@@ -87,6 +87,7 @@
 
   const appDark = useAppStoreDark()
   const appLocale = useAppStoreLocale()
+  const { publicPath } = useAppEnv('build')
 
   const getSkinName = computed(() =>
     appDark.isDark ? 'tinymce-5-dark' : 'tinymce-5'
@@ -95,8 +96,6 @@
   const getLangName = computed(() => appLocale.locale)
 
   const tinymceOptions = computed((): RawEditorOptions => {
-    const publicPath = import.meta.env.VITE_PUBLIC_PATH
-
     return {
       selector: `#${editorId.value}`,
 

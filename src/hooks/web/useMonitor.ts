@@ -4,6 +4,8 @@ interface sendBeaconData {
   currentRouter?: string
 }
 
+const { httpUrl } = useAppEnv('proxy')
+
 export const sendBeacon = (data: sendBeaconData) => {
   if (!fpId.value) return
 
@@ -24,7 +26,7 @@ export const sendBeacon = (data: sendBeaconData) => {
     { type: 'application/json; charset=UTF-8' }
   )
 
-  navigator.sendBeacon(`${realAPIURL}/app/monitor/user`, blob)
+  navigator.sendBeacon(`${httpUrl}/app/monitor/user`, blob)
 }
 
 export const useAppMonitor = () => {

@@ -45,13 +45,13 @@
             <h1 class="hstack items-center justify-center mb-4">
               <img
                 src="/assets/logo.png"
-                :alt="getAppTitle"
+                :alt="envTitle"
                 class="w-16 sm:w-12 md:w-16 lg:w-16 xl:w-16 2xl:w-16"
               />
               <span
                 class="md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-3xl ml-4 whitespace-nowrap"
               >
-                {{ getAppTitle }}
+                {{ envTitle }}
               </span>
             </h1>
 
@@ -80,7 +80,7 @@
   import { useDemonstrate } from './useDemonstrate'
 
   const { t } = useAppI18n()
-  const getAppTitle = computed(() => import.meta.env.VITE_APP_TITLE)
+  const { title: envTitle } = useAppEnv('title')
 
   const { signInRef } = useDemonstrate()
 
