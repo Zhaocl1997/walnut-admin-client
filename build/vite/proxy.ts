@@ -1,17 +1,35 @@
-import type { HttpProxy } from 'vite'
+import type { ProxyOptions } from 'vite'
+import { useAppEnv } from '../../src/hooks/core/useAppEnv'
 
 export const createViteProxy = (mode: string, env: ImportMetaEnv) => {
-  const ret = {}
+  const ret: Record<string, ProxyOptions> = {}
 
-  const prefix = env.VITE_PROXY_PREFIX
+  const { api, ws } = useAppEnv('proxy', env)
 
-  ret[prefix] = {
-    target: env.VITE_API_TARGET,
-    changeOrigin: true,
-    rewrite: (path: string) =>
-      path.replace(new RegExp(`^${prefix}`), env.VITE_API_PREFIX),
-    secure: false,
-  } as HttpProxy.ServerOptions
+  if (+api[0] === 1) {
+    const prefix = api[1]
+    const target = api[2]
+
+    ret[prefix] = {
+      target,
+      changeOrigin: true,
+      rewrite: (path: string) => path.replace(new RegExp(`^${prefix}`), ''),
+      secure: false,
+    }
+  }
+
+  if (+ws[0] === 1) {
+    const prefix = ws[1]
+    const target = `${ws[2]}${ws[3]}`
+
+    ret[prefix] = {
+      target,
+      changeOrigin: true,
+      rewrite: (path: string) => path.replace(new RegExp(`^${prefix}`), ''),
+      secure: false,
+      ws: true,
+    }
+  }
 
   return ret
 }
