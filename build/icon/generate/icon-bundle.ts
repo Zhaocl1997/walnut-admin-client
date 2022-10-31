@@ -12,8 +12,8 @@
  */
 import type { IconifyJSON, IconifyMetaData } from '@iconify/types'
 
-import { promises as fs } from 'fs'
-import { dirname } from 'path'
+import { promises as fs } from 'node:fs'
+import { dirname } from 'node:path'
 
 // Installation: npm install --save-dev @iconify/tools @iconify/utils @iconify/json @iconify/iconify
 import {
@@ -25,11 +25,14 @@ import {
 } from '@iconify/tools'
 import { getIcons, stringToIcon, minifyIconSet } from '@iconify/utils'
 
-import iconifyIcons from '../../../src/components/UI/Icon/src/utils/list'
-import { bundlePath, svgJSONFilePath } from '../../utils/paths'
-import { WSvgPrefix } from '../../utils/svg'
-import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils/fs'
-import { BuildUtilsLog } from '../../utils/log'
+import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
+import {
+  IconLog,
+  WSvgPrefix,
+  iconBundlePath,
+  iconSVGPath,
+  iconListPath,
+} from '../src'
 
 /**
  * Script configuration
@@ -66,41 +69,6 @@ interface BundleScriptConfig {
   json?: (string | BundleScriptCustomJSONConfig)[]
 }
 
-const sources: BundleScriptConfig = {
-  // svg: [
-  //   {
-  //     dir: 'svg',
-  //     monotone: true,
-  //     prefix: 'svg',
-  //   },
-  //   {
-  //     dir: 'emojis',
-  //     monotone: false,
-  //     prefix: 'emoji',
-  //   },
-  // ],
-
-  icons: iconifyIcons,
-
-  // json: [
-  //   // Custom JSON file
-  //   'json/gg.json',
-  //   // Iconify JSON file (@iconify/json is a package name, /json/ is directory where files are, then filename)
-  //   require.resolve('@iconify/json/json/tabler.json'),
-  //   // Custom file with only few icons
-  //   {
-  //     filename: require.resolve('@iconify/json/json/line-md.json'),
-  //     icons: [
-  //       'home-twotone-alt',
-  //       'github',
-  //       'document-list',
-  //       'document-code',
-  //       'image-twotone',
-  //     ],
-  //   },
-  // ],
-}
-
 // Iconify component (this changes import statement in generated file)
 // Available options: '@iconify/react' for React, '@iconify/vue' for Vue 3, '@iconify/vue2' for Vue 2, '@iconify/svelte' for Svelte
 const component = '@iconify/vue'
@@ -109,12 +77,52 @@ const component = '@iconify/vue'
 const CommonJS = false
 
 // File to save bundle to
-const target = bundlePath
+const target = iconBundlePath
 
 /**
  * Do stuff!
  */
-;(async function () {
+export const generateIconUsedBundle = async () => {
+  const iconPools = await BuildUtilsReadFile(iconListPath)
+  const allIconsArr = Array.from<string>(
+    JSON.parse(iconPools.replace('export default ', ''))
+  )
+
+  const sources: BundleScriptConfig = {
+    // svg: [
+    //   {
+    //     dir: 'svg',
+    //     monotone: true,
+    //     prefix: 'svg',
+    //   },
+    //   {
+    //     dir: 'emojis',
+    //     monotone: false,
+    //     prefix: 'emoji',
+    //   },
+    // ],
+
+    icons: allIconsArr,
+
+    // json: [
+    //   // Custom JSON file
+    //   'json/gg.json',
+    //   // Iconify JSON file (@iconify/json is a package name, /json/ is directory where files are, then filename)
+    //   require.resolve('@iconify/json/json/tabler.json'),
+    //   // Custom file with only few icons
+    //   {
+    //     filename: require.resolve('@iconify/json/json/line-md.json'),
+    //     icons: [
+    //       'home-twotone-alt',
+    //       'github',
+    //       'document-list',
+    //       'document-code',
+    //       'image-twotone',
+    //     ],
+    //   },
+    // ],
+  }
+
   let bundle = CommonJS
     ? "const { addCollection } = require('" + component + "');\n\n"
     : "import { addCollection } from '" + component + "';\n\n"
@@ -146,7 +154,7 @@ const target = bundlePath
         })
       } else {
         sourcesJSON.push({
-          filename: svgJSONFilePath,
+          filename: iconSVGPath,
           icons: organizedList[prefix],
         })
       }
@@ -179,7 +187,7 @@ const target = bundlePath
       removeMetaData(content)
       minifyIconSet(content)
       bundle += 'addCollection(' + JSON.stringify(content) + ');\n'
-      BuildUtilsLog(`Bundled icons from ${filename}`)
+      IconLog('Icon Bundle', `Bundled icons from ${filename}`)
     }
   }
 
@@ -248,10 +256,13 @@ const target = bundlePath
   // Save to file
   await BuildUtilsWriteFile(target, bundle)
 
-  BuildUtilsLog(`Saved bundle icons at: ${target} (${bundle.length} bytes)`)
-})().catch((err) => {
-  console.error(err)
-})
+  IconLog(
+    'Icon Bundle',
+    `Saved bundle icons at: ${target} (${Number(bundle.length / 1024).toFixed(
+      2
+    )} KB)`
+  )
+}
 
 /**
  * Remove metadata from icon set

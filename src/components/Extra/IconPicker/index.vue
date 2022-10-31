@@ -101,8 +101,8 @@
 <script lang="ts" setup>
   import type { InputInst } from 'naive-ui'
   import { listIcons } from '@iconify/vue'
-
-  import { iconCollectionsNameList } from '@/components/UI/Icon/src/utils/collections'
+  import allIcons from '/build/_generated/icon-list.ts'
+  import { IconBundleConfig } from '/build/icon/config.ts'
 
   interface IconPickerProps {
     value?: string
@@ -138,15 +138,17 @@
     })
   )
 
-  const tabLists = computed(() => ['All', ...iconCollectionsNameList])
+  const tabLists = computed(() => ['All', ...IconBundleConfig.list])
 
   watch(currentTab, () => {
     page.value = 1
     onInit()
   })
 
+  console.log(listIcons().length)
+
   const iconLists = computed(() =>
-    listIcons().filter((i) =>
+    allIcons.filter((i) =>
       currentTab.value === 'All' ? true : i.includes(currentTab.value)
     )
   )

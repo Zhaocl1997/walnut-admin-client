@@ -3,14 +3,18 @@ import {
   cleanupSVG,
   runSVGO,
   parseColors,
-  isEmptyColor,
 } from '@iconify/tools'
 
-import { svgJSONFilePath } from '../../utils/paths'
-import { WSvgPrefix } from '../../utils/svg'
-import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils/fs'
-import { BuildUtilsLog } from 'build/utils/log'
-;(async () => {
+import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
+import { IconLog, iconSVGPath, WSvgPrefix } from '../src'
+
+export const generateIconSvg = async () => {
+  // build the empty json file
+  await BuildUtilsWriteFile(
+    iconSVGPath,
+    JSON.stringify({ icons: {}, prefix: WSvgPrefix })
+  )
+
   // Import icons
   const iconSet = await importDirectory('.svg', {
     prefix: WSvgPrefix,
@@ -69,11 +73,14 @@ import { BuildUtilsLog } from 'build/utils/log'
   //   console.log(`Saved .svg/${name}.svg (${svg.length} bytes)`)
   // })
 
-  BuildUtilsLog(`Detecting custom svg icon number: ${iconSet.count()}`)
+  IconLog(
+    'Icon SVG',
+    `Detecting ${iconSet.count()} custom svg icon, writing into file: ${iconSVGPath}`
+  )
 
   // Generate to icon list
   await iconSet.forEach(async (name) => {
-    const data = await BuildUtilsReadFile(svgJSONFilePath)
+    const data = await BuildUtilsReadFile(iconSVGPath)
 
     const svgObj = JSON.parse(data.toString())
 
@@ -86,6 +93,6 @@ import { BuildUtilsLog } from 'build/utils/log'
       body,
     }
 
-    await BuildUtilsWriteFile(svgJSONFilePath, JSON.stringify(svgObj, null, 2))
+    await BuildUtilsWriteFile(iconSVGPath, JSON.stringify(svgObj, null, 2))
   })
-})()
+}
