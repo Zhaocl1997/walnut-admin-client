@@ -20,6 +20,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
       'src/store/modules/**',
       'src/hooks/**',
       'src/utils/**',
+      'src/socket/**',
     ],
 
     imports: [
