@@ -35,15 +35,15 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重
 - [ ] long vue-tsc 错误全部消除  
 - [ ] long layout 扩展 
 - [ ] long 主题扩展
-- [ ] long 打包优化+自动化部署
+- [x] long 打包优化+自动化部署
 - [x] long 后台自定义code
-- [ ] long 后台入参校验
+- [x] long 后台入参校验
 - [x] long 登录日志/操作日志
 - [ ] long 第三方认证/注册/找回密码
 - [ ] long 模拟各种返回状态的demo页面
 - [ ] long 错误捕捉模块
 - [ ] long 前端监控
-- [ ] long 权限模块开发
+- [x] long 权限模块开发
 
 - [ ] 999 查看[issue](https://github.com/vuejs/vue-router-next/issues/626)。嵌套路由的keep-alive有问题，为了暂时让keep-alive好使，就把路由扁平化了。但是左侧menu和头部的breadcrumb需要做相应的变动（路由不再是树状结构，但在左侧菜单和面包屑的位置逻辑还是原来树状的逻辑）
 
@@ -51,6 +51,15 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重
 
 - [ ] 99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)
 
+- case police
+- rrweb
+- hover css
+- pdf/word/excel plugin
+- error monitor (femonitor-web)
+- untyper
+- closure-compiler (hard to do)
+- markdown (vditor)
+- fullcalendar
 
 ## 更新日志
 

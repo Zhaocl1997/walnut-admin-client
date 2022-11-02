@@ -1,7 +1,6 @@
 import 'uno.css'
 import '@unocss/reset/normalize.css'
 import 'animate.css'
-
 import './assets/styles/main.scss'
 
 import { App, setupApp } from './App'

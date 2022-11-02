@@ -1,6 +1,8 @@
 node_modules
 .DS_Store
 dist
+dist-staging
+dist-production
 dist-ssr
 *.local
 report/*
@@ -8,3 +10,6 @@ report/*
 types/auto-import.d.ts
 types/components.d.ts
 build/_generated/*.ts
+build/_generated/*.json
+build/_generated/*.txt
+*.zip

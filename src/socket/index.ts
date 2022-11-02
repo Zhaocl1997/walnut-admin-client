@@ -1,11 +1,34 @@
 import { io } from 'socket.io-client'
 
-export const socket = io(import.meta.env.VITE_API_TARGET)
+// five params in config
+// fourth is custom socket path => https://socket.io/docs/v4/client-options/#path
+// fifth is custom socket namespace => https://socket.io/docs/v4/namespaces/
+const { ws } = useAppEnv('proxy')
 
-socket.on('connect', () => {
+const useProxy = +ws[0] === 1
+
+// use proxy,
+const url = useProxy ? `/${ws[4]}` : `${ws[2]}/${ws[4]}`
+const path = useProxy ? ws[1] : ws[3]
+
+console.log(url, path)
+
+export const AppSocket = io(url, {
+  path: path,
+})
+
+AppSocket.on('connect', () => {
   AppLog('Socket connected.')
 })
 
-socket.on('onMessage', (data) => {
+AppSocket.on('error', (e) => {
+  console.log(e)
+})
+
+AppSocket.on('ping', () => {
+  console.log('socket ping')
+})
+
+AppSocket.on('onMessage', (data) => {
   console.log(data)
 })

@@ -1,15 +1,16 @@
 import type { UserConfig, ConfigEnv } from 'vite'
 
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import { loadEnv, splitVendorChunkPlugin } from 'vite'
 
 import { getNow } from 'easy-fns-ts/dist/lib'
 
 import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
-import { outDir, publicDir } from './build/constant'
-
+import { envDir, publicDir } from './build/constant'
 import { createRollupObfuscatorPlugin } from './build/rollup'
+
+import { useAppEnv } from './src/hooks/core/useAppEnv'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
@@ -21,16 +22,19 @@ const __APP_INFO__ = {
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfig => {
-  const envDir = 'env'
+  const root = process.cwd()
 
   const env = loadEnv(mode, pathResolve(envDir)) as ImportMetaEnv
 
-  const alias = {
-    '@': pathResolve('src'),
-  }
+  const { obfuscator, dropConsole, outDir, publicPath } = useAppEnv(
+    'build',
+    env
+  )
 
   return {
-    base: env.VITE_PUBLIC_PATH,
+    root,
+
+    base: publicPath,
 
     envDir,
 
@@ -46,7 +50,9 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     plugins: [...createVitePlugins(mode, env), splitVendorChunkPlugin()],
 
     resolve: {
-      alias,
+      alias: {
+        '@': pathResolve('src'),
+      },
     },
 
     css: {
@@ -64,6 +70,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           },
         ],
       },
+    },
+
+    esbuild: {
+      pure: dropConsole ? ['console.log', 'debugger'] : [],
     },
 
     server: {
@@ -93,7 +103,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // sourcemap: mode === 'staging',
 
       rollupOptions: {
-        external: ['virtual:terminal'],
+        external: ['chalk', /^node:.*/],
         output: {
           assetFileNames: '[ext]/[name].[hash].[ext]',
           chunkFileNames: 'js/[name].[hash].js',
@@ -116,7 +126,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
             cropperjs: ['cropperjs'],
           },
 
-          plugins: [createRollupObfuscatorPlugin()],
+          plugins: [obfuscator ? createRollupObfuscatorPlugin() : {}],
         },
       },
     },
