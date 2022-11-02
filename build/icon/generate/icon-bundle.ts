@@ -84,6 +84,7 @@ const target = iconBundlePath
  */
 export const generateIconUsedBundle = async () => {
   const iconPools = await BuildUtilsReadFile(iconListPath)
+
   const allIconsArr = Array.from<string>(
     JSON.parse(iconPools.replace('export default ', ''))
   )
