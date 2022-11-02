@@ -7,7 +7,7 @@ import type {
 
 declare global {
   /**
-   * Naive ui message placement type
+   * Naive UI message placement type
    */
   type MessagePlacement =
     | 'top'
@@ -18,7 +18,7 @@ declare global {
     | 'bottom-right'
 
   /**
-   * Naive ui notification placement type
+   * Naive UI notification placement type
    */
   type NotificationPlacement = NotificationPlacement
 

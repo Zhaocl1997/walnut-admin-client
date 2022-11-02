@@ -24,7 +24,7 @@
 
 Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。重点是前台，后台和数据库有点规模，但是不成体系。现仍在开发阶段中。技术栈使用了 `Vue3`, `NaiveUI`, `Vite3`, `TypeScript`, `VueUse`, `pnpm`, `unocss` 等, 用于学习和交流！
 
-项目跑起来需要[后台][walnut-admin-server]（**后端仓库暂时私有，后期会开放的**），是 [NestJS][nestjs-url] 的一个单体应用的架子。数据库用的 [mongoDB](https://www.mongodb.com/)。更多信息可查看文档。
+项目跑起来需要[后台][walnut-admin-server]（**后端仓库暂时私有，后期会开放的**），是 [NestJS][nestjs-url] 的一个单体应用的架子。数据库用的 [MongoDB](https://www.mongodb.com/)。更多信息可查看文档。
 
 ## Discord
 

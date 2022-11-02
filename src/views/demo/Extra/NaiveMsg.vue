@@ -1,5 +1,5 @@
 <template>
-  <w-demo-card title="Naive ui message/notification/confirm usage">
+  <w-demo-card title="Naive UI message/notification/confirm usage">
     <n-list>
       <n-list-item>
         <w-title

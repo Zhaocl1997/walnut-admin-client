@@ -60,7 +60,7 @@ const onGetCards = (
     loading: loading.value,
   },
   {
-    title: 'Vueuse',
+    title: 'VueUse',
     headerExtra: {
       text: 'Year',
       tagProps: {
@@ -73,7 +73,7 @@ const onGetCards = (
     loading: loading.value,
   },
   {
-    title: 'Nestjs',
+    title: 'NestJS',
     headerExtra: {
       text: 'Decade',
       tagProps: {
