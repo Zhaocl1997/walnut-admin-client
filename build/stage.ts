@@ -1,7 +1,11 @@
-import { writeIntoLog, stagingBuildLogPath } from './utils'
+import { writeIntoLog, stagingBuildLogPath, BuildUtilsExec } from './utils'
+;(async function () {
+  const done = await BuildUtilsExec('npm run icon:prod')
 
-writeIntoLog(
-  'Staging Build',
-  'npm run icon:prod && npx vite build --mode staging',
-  stagingBuildLogPath
-)
+  done &&
+    writeIntoLog(
+      'Staging Build',
+      'npx vite build --mode staging',
+      stagingBuildLogPath
+    )
+})()

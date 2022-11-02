@@ -58,7 +58,8 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   vitePlugins.push(createHTMLPlugin(env.VITE_APP_TITLE))
 
   // https://github.com/jeddygong/vite-plugin-progress
-  if (stage || prod) vitePlugins.push(createBuildProgressPlugin())
+  // this is fun, but using this progress plugin will not output content in `stage.log` file
+  // if (stage || prod) vitePlugins.push(createBuildProgressPlugin())
 
   // https://github.com/btd/rollup-plugin-visualizer
   if (stage) vitePlugins.push(createVisualizerPlugin(env.VITE_APP_TITLE))
@@ -70,7 +71,7 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   if (prod) vitePlugins.push(createCompressionPlugin())
 
   // https://github.com/chengpeiquan/vite-plugin-banner
-  if (prod) vitePlugins.push(createBannerPlugin())
+  if (prod) vitePlugins.push(createBannerPlugin(env.VITE_BUILD_OUT_DIR))
 
   return vitePlugins
 }
