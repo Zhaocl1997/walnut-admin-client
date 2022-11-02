@@ -1,2 +1,2 @@
-export const outDir = 'dist'
+export const envDir = 'env'
 export const publicDir = 'public'

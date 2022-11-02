@@ -1,3 +1,5 @@
-import { exec } from 'child_process'
-
-exec('esno build/generate/genPaths.ts')
+import { BuildUtilsExec } from '../utils'
+;(async function () {
+  await BuildUtilsExec('esno build/generate/genPaths.ts')
+  await BuildUtilsExec('esno build/generate/genJSONSchemas.ts')
+})()

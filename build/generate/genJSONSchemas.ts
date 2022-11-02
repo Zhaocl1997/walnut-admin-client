@@ -1,5 +1,4 @@
-import { resolve } from 'path'
-import { writeFileSync, readFileSync } from 'fs'
+import { resolve } from 'node:path'
 
 import * as TJS from 'typescript-json-schema'
 
@@ -8,6 +7,7 @@ import {
   AppSettingsJSONFilePath,
   AppSettingsInterfaceFilePath,
 } from '../utils/paths'
+import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../utils'
 
 const settings: TJS.PartialArgs = {
   required: true,
@@ -24,9 +24,11 @@ const program = TJS.getProgramFromFiles(
 
 const shapeSchema = TJS.generateSchema(program, 'AppSettings', settings)
 
-;(() => {
-  const data = readFileSync(VScodeSettingsFilePath)
+;(async () => {
+  const data = await BuildUtilsReadFile(VScodeSettingsFilePath)
   const obj = JSON.parse(data.toString())
+
+  if (!obj['json.schemas']) obj['json.schemas'] = []
 
   obj['json.schemas'][0] = {
     fileMatch: [AppSettingsJSONFilePath],
@@ -35,5 +37,5 @@ const shapeSchema = TJS.generateSchema(program, 'AppSettings', settings)
 
   const newData = JSON.stringify(obj, null, 4)
 
-  writeFileSync(VScodeSettingsFilePath, newData)
+  await BuildUtilsWriteFile(VScodeSettingsFilePath, newData)
 })()
