@@ -47,21 +47,20 @@
               </n-tabs>
 
               <div class="h-full w-full">
-                <w-icon
-                  v-for="(icon, index) in lists"
-                  :key="icon"
-                  :title="icon"
-                  :icon="icon"
-                  width="36"
-                  :class="[
-                    'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
-                    {
-                      'bg-light-blue-300': icon === value,
-                      'hover:bg-warm-gray-300': icon !== value,
-                    },
-                  ]"
-                  @click="onChooseIcon(icon)"
-                ></w-icon>
+                <span v-for="(icon, index) in lists" :key="icon" :title="icon">
+                  <w-icon
+                    :icon="icon"
+                    width="36"
+                    :class="[
+                      'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
+                      {
+                        'bg-light-blue-300': icon === value,
+                        'hover:bg-warm-gray-300': icon !== value,
+                      },
+                    ]"
+                    @click="onChooseIcon(icon)"
+                  ></w-icon>
+                </span>
 
                 <n-empty
                   class="flex justify-center items-center my-16"
@@ -100,9 +99,8 @@
 
 <script lang="ts" setup>
   import type { InputInst } from 'naive-ui'
-  import { listIcons } from '@iconify/vue'
   import allIcons from '/build/_generated/icon-list.ts'
-  import { IconBundleConfig } from '/build/icon/config.ts'
+  import { IconBundleConfig } from '/build/icon/src/config.ts'
 
   interface IconPickerProps {
     value?: string
@@ -145,10 +143,8 @@
     onInit()
   })
 
-  console.log(listIcons().length)
-
-  const iconLists = computed(() =>
-    allIcons.filter((i) =>
+  const iconLists = computed<string[]>(() =>
+    (allIcons as string[]).filter((i) =>
       currentTab.value === 'All' ? true : i.includes(currentTab.value)
     )
   )
@@ -209,6 +205,7 @@
   }
 
   const onClear = () => {
+    page.value = 1
     emit('update:value', null)
   }
 </script>
