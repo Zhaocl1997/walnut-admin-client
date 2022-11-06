@@ -1,25 +1,16 @@
-import type { TabDotInst } from '../components/dot'
+import type { AppTabItemInst } from '../types'
 
 export const useTabsDot = () => {
-  const item = ref<TabDotInst>()
+  const itemInst = ref<AppTabItemInst>()
 
   const setItemRef = (el: any) => {
     if (el) {
-      item.value = el
+      itemInst.value = el
     }
   }
 
-  const startBounce = () => {
-    item.value!.start()
-  }
-
-  const stopBounce = () => {
-    item.value!.stop()
-  }
-
   return {
+    itemInst,
     setItemRef,
-    startBounce,
-    stopBounce,
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="walnut-tab" class="hstack justify-between p-1">
+  <div id="walnut-tab" class="hstack justify-between">
     <w-transition appear name="fade-left">
       <div v-if="getShowUtils" class="hstack flex-none justify-start">
         <TabsUtils :lists="leftUtils"></TabsUtils>
@@ -7,11 +7,12 @@
     </w-transition>
 
     <TabsContentMain
-      class="flex flex-grow"
       :style="{
-        width: `calc(100vw - ${appSetting.settings.menu.width}px - ${
-          isOverflow ? '120px' : '0px'
-        })`,
+        width: appAdapter.isMobile
+          ? '100vw'
+          : `calc(100vw - ${appSetting.settings.menu.width}px - ${
+              isOverflow ? '120px' : '0px'
+            })`,
       }"
     ></TabsContentMain>
 
@@ -48,12 +49,11 @@
   const appSetting = useAppStoreSetting()
   const appAdapter = useAppStoreAdapter()
 
-  const getShowDevTools = computed(
-    () => isDev() && !appAdapter.isMobile && appSetting.settings.tab.devtool
-  )
+  const getShowDevTools = computed(() => isDev() && !appAdapter.isMobile)
 
   const getShowUtils = computed(
     () =>
+      !appAdapter.isMobile &&
       appSetting.settings.tab.showUtils &&
       (appSetting.settings.tab.showUtilsMode ===
         AppConstTabUtilsShowMode.ALWAYS ||
@@ -62,31 +62,28 @@
           isOverflow.value))
   )
 
-  const { scrollRef, isOverflow, getCurrentRouteTabIndex } = useTabs()
+  const { scrollRef, isOverflow, onScrollToCurrentTab, onUpdateOverflow } =
+    useTabs()
 
   const {
-    devToolX,
-    devToolY,
+    devToolShow,
     currentMouseTab,
     currentMouseTabIndex,
-    devToolShow,
-    timeoutId,
     onOpenDevTool,
     onOpenFile,
   } = useTabsDevTools()
 
-  const { onTabClick, onTabRemove } = useTabsActions()
+  const { onTabClick, onTabRemove } = useTabsActions(onUpdateOverflow)
 
   const { x, y, ctxMenuShow, onOpenCtxMenu, onCloseCtxMenu } =
     useTabsContextMenu()
 
-  const { setItemRef, startBounce, stopBounce } = useTabsDot()
+  const { itemInst, setItemRef } = useTabsDot()
 
   const { leftUtils, rightUtils } = useTabsUtils(
     scrollRef,
-    getCurrentRouteTabIndex,
-    startBounce,
-    stopBounce
+    onScrollToCurrentTab,
+    itemInst
   )
 
   // tab persistent
@@ -95,6 +92,7 @@
   // set context
   setTabsContext({
     scrollRef,
+    onScrollToCurrentTab,
 
     onTabClick,
     onTabRemove,
@@ -105,17 +103,12 @@
     onOpenCtxMenu,
     onCloseCtxMenu,
 
-    devToolX,
-    devToolY,
+    devToolShow,
     currentMouseTab,
     currentMouseTabIndex,
-    devToolShow,
-    timeoutId,
     onOpenDevTool,
     onOpenFile,
 
     setItemRef,
-    startBounce,
-    stopBounce,
   })
 </script>

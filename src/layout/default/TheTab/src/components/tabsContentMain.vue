@@ -3,40 +3,54 @@
     ref="scrollRef"
     @scroll="onCloseCtxMenu"
     x-scrollable
-    :height="appSetting.settings.tab.height + 'px'"
+    height="100%"
+    hide-scrollbar
   >
-    <ul ref="sortableRef" class="hstack">
+    <div
+      ref="sortableRef"
+      :class="[
+        'hstack',
+        {
+          'divide-x-1 divide-gray-400': isCardType,
+          'gap-x-1': isRoundType,
+        },
+      ]"
+    >
       <w-transition appear :name="appSetting.settings.tab.animationName" group>
-        <li
+        <div
           v-for="(item, index) in appTab.tabs"
           :key="item.name"
+          :title="t(item.meta.title!)"
           :class="[
-            {
-              'text-primary hover:text-primaryHover': $route.name === item.name,
-            },
+            'hover:text-primaryHover my-1',
+
+            $route.name === item.name && 'text-primary',
 
             /* card */
-            appSetting.settings.tab.styleMode ===
-              AppConstTabStyleModeInside.CARD &&
-              ($route.name === item.name
-                ? 'border border-primary'
-                : 'border border-gray-400 hover:border-primaryHover hover:text-primaryHover'),
+            isCardType &&
+              !appSetting.settings.app.reducedMotion &&
+              'hvr-sweep-to-right',
+            isCardType &&
+              $route.name === item.name &&
+              'bg-primary text-bodyColor',
 
             /* flex */
-            appSetting.settings.tab.styleMode ===
-              AppConstTabStyleModeInside.FLEX &&
-              ($route.name === item.name
-                ? 'tab-flex border-primary'
-                : 'hover:border-primaryHover hover:text-primaryHover hover:tab-flex'),
+            isFlexType &&
+              !appSetting.settings.app.reducedMotion &&
+              'hvr-underline-from-left',
+            isFlexType &&
+              $route.name === item.name &&
+              'border-b-1 border-primaryHover',
 
             /* round */
-            appSetting.settings.tab.styleMode ===
-              AppConstTabStyleModeInside.ROUND &&
-              ($route.name === item.name
-                ? 'rounded-xl bg-primary text-light-100'
-                : 'rounded-xl hover:bg-primaryHover hover:text-bodyColor'),
+            isRoundType &&
+              `${
+                !appSetting.settings.app.reducedMotion
+                  ? 'hvr-round-corners'
+                  : ''
+              } rounded border-0.5 border-solid border-primaryHover`,
+            isRoundType && $route.name === item.name && 'rounded-2xl',
 
-            'hstack cursor-pointer items-center w-auto select-none space-x-1 shadow mx-0.5 px-2 p-px',
             {
               'tab-draggable': !item.meta.affix,
             },
@@ -44,62 +58,23 @@
           @click="onTabClick(item)"
           @mouseup="onMouseUp($event, item.name)"
           @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
-          @mouseenter="onMouseEnter($event, item, index)"
-          @mouseleave="onMouseLeave(item)"
         >
-          <w-icon
-            v-if="
-              !appAdapter.isMobile &&
-              !appSetting.settings.tab.showIcon &&
-              item.meta.affix
-            "
-            height="16"
-            icon="ant-design:pushpin-filled"
-          ></w-icon>
-
-          <TabDot
-            :ref="setItemRef"
-            v-else-if="
-              !appAdapter.isMobile &&
-              !appSetting.settings.tab.showIcon &&
-              $route.name === item.name
-            "
-          ></TabDot>
-
-          <w-icon
-            v-if="appSetting.settings.tab.showIcon"
-            :icon="item.meta.icon"
-            height="16"
-          ></w-icon>
-
-          <span class="text-sm whitespace-nowrap">
-            {{ t(item.meta.title!) }}
-          </span>
-
-          <w-icon
-            v-if="!item.meta.affix"
-            icon="ant-design:close-outlined"
-            width="12"
-            class="hover:text-error hover:scale-125 rounded-full transform"
-            @click.prevent.stop="onTabRemove(item.name)"
-          ></w-icon>
-        </li>
+          <TabsItem :ref="setItemRef" :item="item" :index="index"></TabsItem>
+        </div>
       </w-transition>
-    </ul>
+    </div>
   </w-scrollbar>
 </template>
 
 <script lang="ts" setup>
-  import TabDot from './dot'
+  import TabsItem from './tabsItem.vue'
   import { getTabsContext } from '../hooks/useTabsContext'
   import { useTabsSortable } from '../hooks/useTabsSortable'
 
   const { t } = useAppI18n()
-  const { currentRoute } = useAppRouter()
 
   const appTab = useAppStoreTab()
   const appSetting = useAppStoreSetting()
-  const appAdapter = useAppStoreAdapter()
 
   const { el: sortableRef } = useTabsSortable(
     computed(() => appSetting.settings.tab.sortable)
@@ -107,61 +82,34 @@
 
   const AppConstTabStyleModeInside = AppConstTabStyleMode
 
+  const isCardType = computed(
+    () => appSetting.settings.tab.styleMode === AppConstTabStyleModeInside.CARD
+  )
+  const isFlexType = computed(
+    () => appSetting.settings.tab.styleMode === AppConstTabStyleModeInside.FLEX
+  )
+  const isRoundType = computed(
+    () => appSetting.settings.tab.styleMode === AppConstTabStyleModeInside.ROUND
+  )
+
   const {
     scrollRef,
     onTabClick,
     onTabRemove,
     onOpenCtxMenu,
     onCloseCtxMenu,
-    onOpenDevTool,
-    timeoutId,
-    ctxMenuShow,
+
     currentMouseTab,
     currentMouseTabIndex,
     setItemRef,
-    startBounce,
-    stopBounce,
   } = getTabsContext()
 
   const onOpenContextMenu = (e: MouseEvent, item: AppTab, index: number) => {
     currentMouseTab.value = item
     currentMouseTabIndex.value = index
 
-    // clear time out id for devTool when open ctxMenu
-    clearTimeout(timeoutId.value!)
-
     // open ctx menu
     onOpenCtxMenu(e)
-  }
-
-  const onMouseEnter = (e: MouseEvent, item: AppTab, index: number) => {
-    // open devtool
-    onOpenDevTool(e, item, index, ctxMenuShow.value)
-
-    // start bounce
-    if (
-      !appSetting.settings.tab.showIcon &&
-      !appAdapter.isMobile &&
-      !item.meta.affix &&
-      item.name === currentRoute.value.name
-    ) {
-      startBounce()
-    }
-  }
-
-  const onMouseLeave = (item: AppTab) => {
-    // clear the setTimeout for devTool when mouse leave
-    clearTimeout(timeoutId.value!)
-
-    // stop bounce
-    if (
-      !appSetting.settings.tab.showIcon &&
-      !appAdapter.isMobile &&
-      !item.meta.affix &&
-      currentMouseTab.value?.name === currentRoute.value.name
-    ) {
-      stopBounce()
-    }
   }
 
   const onMouseUp = (e: MouseEvent, name: string) => {

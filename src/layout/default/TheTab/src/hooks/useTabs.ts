@@ -29,6 +29,10 @@ export const useTabs = () => {
     })
   }
 
+  const onUpdateOverflow = () => {
+    isOverflow.value = scrollRef.value?.getIsOverflow()!
+  }
+
   watch(
     route,
     () => {
@@ -47,8 +51,7 @@ export const useTabs = () => {
   watch(
     () => appTab.tabs,
     () => {
-      // check scroll content is overflow or not, do some judgement
-      isOverflow.value = scrollRef.value?.getIsOverflow()!
+      onUpdateOverflow()
     },
     {
       deep: true,
@@ -57,5 +60,10 @@ export const useTabs = () => {
     }
   )
 
-  return { scrollRef, isOverflow, getCurrentRouteTabIndex }
+  return {
+    scrollRef,
+    isOverflow,
+    onUpdateOverflow,
+    onScrollToCurrentTab,
+  }
 }

@@ -12,6 +12,8 @@ import {
   ValueOfAppConstAnimationMode,
   ValueOfAppConstColorMode,
   ValueOfAppConstLockMode,
+  ValueOfAppConstTabCloseMode,
+  ValueOfAppConstTabAffixMode,
 } from '../src/const/app'
 import { ValueOfAppConstTabUtilsShowMode } from '../src/const/tab'
 
@@ -238,6 +240,11 @@ interface AppSettings {
     height: number
 
     /**
+     * Tab item width
+     */
+    width: number
+
+    /**
      * Tab icon visibility
      */
     showIcon: boolean
@@ -268,11 +275,6 @@ interface AppSettings {
     styleMode: ValueOfAppConstTabStyleMode
 
     /**
-     * Tab devtool, only work in dev env
-     */
-    devtool: boolean
-
-    /**
      * With persistent support
      */
     persistent: boolean
@@ -281,6 +283,16 @@ interface AppSettings {
      * Tab animation name
      */
     animationName: ValueOfAppConstTransitionName
+
+    /**
+     * Tab close mode
+     */
+    closeMode: ValueOfAppConstTabCloseMode
+
+    /**
+     * Tab affix mode
+     */
+    affixMode: ValueOfAppConstTabAffixMode
   }
 
   breadcrumb: {

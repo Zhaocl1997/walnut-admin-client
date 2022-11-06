@@ -384,6 +384,10 @@
                                 "description": "Tab height",
                                 "type": "number"
                             },
+                            "width": {
+                                "description": "Tab item width",
+                                "type": "number"
+                            },
                             "showIcon": {
                                 "description": "Tab icon visibility",
                                 "type": "boolean"
@@ -408,10 +412,6 @@
                                 "$ref": "#/definitions/ValueOfAppConstTabStyleMode",
                                 "description": "Tab style mode"
                             },
-                            "devtool": {
-                                "description": "Tab devtool, only work in dev env",
-                                "type": "boolean"
-                            },
                             "persistent": {
                                 "description": "With persistent support",
                                 "type": "boolean"
@@ -419,19 +419,29 @@
                             "animationName": {
                                 "$ref": "#/definitions/ValueOfAppConstTransitionName",
                                 "description": "Tab animation name"
+                            },
+                            "closeMode": {
+                                "$ref": "#/definitions/ValueOfAppConstTabCloseMode",
+                                "description": "Tab close mode"
+                            },
+                            "affixMode": {
+                                "$ref": "#/definitions/ValueOfAppConstTabAffixMode",
+                                "description": "Tab affix mode"
                             }
                         },
                         "required": [
+                            "affixMode",
                             "animationName",
+                            "closeMode",
                             "contextMenu",
-                            "devtool",
                             "height",
                             "persistent",
                             "showIcon",
                             "showUtils",
                             "showUtilsMode",
                             "sortable",
-                            "styleMode"
+                            "styleMode",
+                            "width"
                         ]
                     },
                     "breadcrumb": {
@@ -563,6 +573,20 @@
                             "card",
                             "flex",
                             "round"
+                        ],
+                        "type": "string"
+                    },
+                    "ValueOfAppConstTabCloseMode": {
+                        "enum": [
+                            "always",
+                            "hover"
+                        ],
+                        "type": "string"
+                    },
+                    "ValueOfAppConstTabAffixMode": {
+                        "enum": [
+                            "icon",
+                            "pin"
                         ],
                         "type": "string"
                     }

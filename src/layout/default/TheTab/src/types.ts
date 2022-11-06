@@ -2,12 +2,18 @@ import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
 export interface AppTabUtilListItem {
   icon: string
-  helpMessage: ComputedRef<string>
+  helpMessage: Fn<void, string>
   event: Fn
+}
+
+export interface AppTabItemInst {
+  start: Fn
+  stop: Fn
 }
 
 export interface AppTabContext {
   scrollRef: Ref<Nullable<WScrollbarInst>>
+  onScrollToCurrentTab: Fn
 
   x: Ref<number>
   y: Ref<number>
@@ -19,21 +25,11 @@ export interface AppTabContext {
   onOpenCtxMenu: (event: MouseEvent) => void
   onCloseCtxMenu: () => void
 
-  devToolX: Ref<number>
-  devToolY: Ref<number>
+  devToolShow: Ref<boolean>
   currentMouseTab: Ref<AppTab | undefined>
   currentMouseTabIndex: Ref<number>
-  devToolShow: Ref<boolean>
-  timeoutId: Ref<NodeJS.Timeout | undefined>
-  onOpenDevTool: (
-    event: MouseEvent,
-    payload: AppTab,
-    index: number,
-    ctxMenuShow: boolean
-  ) => void
+  onOpenDevTool: Fn
   onOpenFile: Fn
 
   setItemRef: Fn
-  startBounce: Fn
-  stopBounce: Fn
 }

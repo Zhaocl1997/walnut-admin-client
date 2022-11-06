@@ -64,15 +64,17 @@
   },
   "tab": {
     "height": 32,
-    "showIcon": false,
+    "width": 120,
+    "showIcon": true,
     "showUtils": true,
     "showUtilsMode": "overflow",
     "contextMenu": true,
     "sortable": true,
     "styleMode": "card",
-    "devtool": true,
     "animationName": "fade-down",
-    "persistent": true
+    "persistent": true,
+    "closeMode": "hover",
+    "affixMode": "icon"
   },
   "breadcrumb": {
     "showIcon": true,

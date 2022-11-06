@@ -34,11 +34,13 @@
   const {
     x,
     y,
+    onScrollToCurrentTab,
     ctxMenuShow,
     onTabRemove,
     onCloseCtxMenu,
     currentMouseTab,
     currentMouseTabIndex,
+    onOpenDevTool,
   } = getTabsContext()
 
   const getTabsLength = computed(() => appTab.tabs.length)
@@ -103,6 +105,8 @@
       })
 
       appTab.sortTabs()
+
+      onScrollToCurrentTab()
     }
 
     if (key === 'Snapshot') {
@@ -129,6 +133,10 @@
 
     if (key === 'NewWindow') {
       openExternalLink(currentMouseTab.value?.path + '?full=1')
+    }
+
+    if (key === 'DevTool') {
+      onOpenDevTool()
     }
 
     onCloseCtxMenu()
@@ -198,7 +206,7 @@
     },
 
     {
-      key: 'd1',
+      key: 'd2',
       type: 'divider',
     },
 
@@ -230,6 +238,19 @@
       key: 'NewWindow',
       label: t('app.tab.ctx.newWindow'),
       icon: () => <WIcon height="24" icon="mdi:dock-window"></WIcon>,
+    },
+
+    {
+      key: 'd3',
+      type: 'divider',
+      show: isDev(),
+    },
+
+    {
+      key: 'DevTool',
+      label: 'DevTool',
+      icon: () => <WIcon height="24" icon="mdi:developer-board"></WIcon>,
+      show: isDev(),
     },
   ])
 </script>

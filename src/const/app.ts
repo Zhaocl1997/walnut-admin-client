@@ -44,6 +44,22 @@ export const AppConstTabStyleMode = {
 export type ValueOfAppConstTabStyleMode =
   typeof AppConstTabStyleMode[keyof typeof AppConstTabStyleMode]
 
+export const AppConstTabCloseMode = {
+  ALWAYS: 'always',
+  HOVER: 'hover',
+} as const
+
+export type ValueOfAppConstTabCloseMode =
+  typeof AppConstTabCloseMode[keyof typeof AppConstTabCloseMode]
+
+export const AppConstTabAffixMode = {
+  ICON: 'icon',
+  PIN: 'pin',
+} as const
+
+export type ValueOfAppConstTabAffixMode =
+  typeof AppConstTabAffixMode[keyof typeof AppConstTabAffixMode]
+
 export const AppConstLayoutMode = {
   LEFT_MENU: 'left-menu',
   TOP_MENU: 'top-menu',

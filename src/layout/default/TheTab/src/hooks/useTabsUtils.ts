@@ -1,31 +1,31 @@
-import type { AppTabUtilListItem } from '../types'
+import type { AppTabItemInst, AppTabUtilListItem } from '../types'
 import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
 export const useTabsUtils = (
   scrollRef: Ref<Nullable<WScrollbarInst>>,
-  currentRouteTabIndex: Ref<number>,
-  startBounce: Fn,
-  stopBounce: Fn
+  scrollToCurrentTab: Fn,
+  itemInst: Ref<AppTabItemInst | undefined>
 ) => {
   const { t } = useAppI18n()
 
   const leftUtils: AppTabUtilListItem[] = [
     {
       icon: 'ant-design:double-left-outlined',
-      helpMessage: computed(() => t('app.tab.utils.scrollToLeft')),
+      helpMessage: () => t('app.tab.utils.scrollToLeft'),
       event: () => {
         scrollRef.value?.scrollToStart()
       },
     },
     {
       icon: 'ant-design:aim-outlined',
-      helpMessage: computed(() => t('app.tab.utils.scrollToCurrent')),
+      helpMessage: () => t('app.tab.utils.scrollToCurrent'),
       event: () => {
-        scrollRef.value?.scrollToIndex(currentRouteTabIndex.value)
+        scrollToCurrentTab()
+
         nextTick(() => {
-          startBounce()
+          itemInst.value?.start()
           setTimeout(() => {
-            stopBounce()
+            itemInst.value?.stop()
           }, 3000)
         })
       },
@@ -35,14 +35,14 @@ export const useTabsUtils = (
   const rightUtils: AppTabUtilListItem[] = [
     {
       icon: 'ant-design:sync-outlined',
-      helpMessage: computed(() => t('app.tab.utils.refresh')),
+      helpMessage: () => t('app.tab.utils.refresh'),
       event: async () => {
         await useRedirect()
       },
     },
     {
       icon: 'ant-design:double-right-outlined',
-      helpMessage: computed(() => t('app.tab.utils.scrollToRight')),
+      helpMessage: () => t('app.tab.utils.scrollToRight'),
       event: () => {
         scrollRef.value?.scrollToEnd()
       },

@@ -19,10 +19,7 @@
         bordered
         :inverted="appSetting.settings.header.inverted"
       >
-        <TheTab
-          class="flex-none px-2"
-          :style="{ height: appSetting.settings.tab.height + 'px' }"
-        ></TheTab>
+        <TheTab></TheTab>
       </n-layout-header>
     </w-transition>
   </div>
