@@ -42,3 +42,11 @@
     appTab.deleteTabs(`name-${index.value}`)
   }
 </script>
+
+<script lang="ts">
+  export default defineComponent({
+    name: 'LayoutDemoTab',
+
+    defaultView: false,
+  })
+</script>

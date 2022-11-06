@@ -1,5 +1,6 @@
 <template>
   <n-input
+    v-if="preset === 'input'"
     ref="rootInputRef"
     v-model:value="value"
     readonly
@@ -9,86 +10,105 @@
     @clear="onClear"
   >
     <template #prefix>
-      <n-popover
-        v-model:show="show"
-        placement="top"
-        trigger="click"
-        :style="{ width: '480px', position: 'relative', right: '0px' }"
-      >
-        <template #trigger>
-          <w-icon
-            class="cursor-pointer h-auto mr-2"
-            :icon="value || 'ant-design:home-outlined'"
-            width="24"
-          ></w-icon>
-        </template>
-
-        <template #default>
-          <n-spin :show="loading">
-            <div class="vstack justify-center items-center">
-              <n-input
-                ref="searchInputRef"
-                v-model:value="filters"
-                size="small"
-                clearable
-                :placeholder="t('comp.iconPicker.ph')"
-                @input="debouncedInit"
-                class="w-full mt-1 mb-3 border-b-cool-gray-50"
-              ></n-input>
-
-              <n-tabs
-                v-model:value="currentTab"
-                type="line"
-                size="small"
-                animated
-              >
-                <n-tab-pane v-for="i in tabLists" :key="i" :name="i" :tab="i">
-                </n-tab-pane>
-              </n-tabs>
-
-              <div class="h-full w-full">
-                <span v-for="(icon, index) in lists" :key="icon" :title="icon">
-                  <w-icon
-                    :icon="icon"
-                    width="36"
-                    :class="[
-                      'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
-                      {
-                        'bg-light-blue-300': icon === value,
-                        'hover:bg-warm-gray-300': icon !== value,
-                      },
-                    ]"
-                    @click="onChooseIcon(icon)"
-                  ></w-icon>
-                </span>
-
-                <n-empty
-                  class="flex justify-center items-center my-16"
-                  v-show="lists.length === 0"
-                ></n-empty>
-              </div>
-
-              <n-pagination
-                v-model:page="page"
-                :page-size="pageSize"
-                :item-count="total"
-                size="small"
-                class="text-sm"
-                :page-slot="7"
-                @update:page="onInit(false)"
-              >
-                <template #suffix>
-                  <span class="whitespace-nowrap">
-                    {{ t('comp.pagination.total', { total }) }}
-                  </span>
-                </template>
-              </n-pagination>
-            </div>
-          </n-spin>
-        </template>
-      </n-popover>
+      <w-icon
+        class="cursor-pointer h-auto mr-2"
+        :icon="value || defaultIcon"
+        width="24"
+      ></w-icon>
     </template>
   </n-input>
+
+  <w-icon
+    v-if="preset === 'icon'"
+    @click="onOpenPopover"
+    class="cursor-pointer h-auto mr-2"
+    :icon="value || defaultIcon"
+    width="24"
+  ></w-icon>
+
+  <w-modal
+    v-model:show="show"
+    preset="card"
+    style="width: 600px"
+    :title="t('comp.iconPicker.title')"
+    :auto-focus="false"
+    :default-button="false"
+    :segmented="false"
+  >
+    <n-spin :show="loading">
+      <div class="relative vstack justify-center items-center">
+        <n-input
+          v-model:value="filters"
+          size="small"
+          clearable
+          :placeholder="t('comp.iconPicker.ph')"
+          class="w-full mt-1 mb-3 border-b-cool-gray-50"
+          @change="page = 1"
+        ></n-input>
+
+        <n-tabs
+          v-model:value="currentTab"
+          @update:value="page = 1"
+          type="line"
+          size="small"
+          animated
+        >
+          <n-tab-pane v-for="i in getTabLists" :key="i" :name="i" :tab="i">
+          </n-tab-pane>
+        </n-tabs>
+
+        <div
+          class="h-full w-full grid grid-cols-12 gap-2"
+          @mouseleave="onMouseLeave"
+        >
+          <div class="col-span-3 flex items-center justify-center">
+            <w-icon
+              :icon="currentIcon || defaultIcon"
+              height="96"
+              class="drop-shadow-2xl"
+            ></w-icon>
+          </div>
+
+          <div class="col-span-9 h-60">
+            <span v-for="(icon, index) in getLists" :key="icon" :title="icon">
+              <w-icon
+                :icon="icon"
+                width="36"
+                :class="[
+                  'inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer',
+                  {
+                    'bg-light-blue-300': icon === value,
+                    'hover:bg-warm-gray-300': icon !== value,
+                  },
+                ]"
+                @click="onChooseIcon(icon)"
+                @mouseenter="onMouseEnter(icon)"
+              ></w-icon>
+            </span>
+
+            <div class="h-full flex justify-center items-center">
+              <n-empty v-show="getLists.length === 0"></n-empty>
+            </div>
+          </div>
+        </div>
+
+        <n-pagination
+          v-model:page="page"
+          :page-size="pageSize"
+          :item-count="getTotal"
+          size="small"
+          class="text-sm"
+          :page-slot="9"
+        >
+          <template #suffix>
+            <span class="whitespace-nowrap">
+              {{ t('comp.pagination.total', { total: getTotal }) }}
+            </span>
+          </template>
+        </n-pagination>
+      </div>
+    </n-spin>
+  </w-modal>
 </template>
 
 <script lang="ts">
@@ -102,97 +122,90 @@
   import allIcons from '/build/_generated/icon-list.ts'
   import { IconBundleConfig } from '/build/icon/src/config.ts'
 
+  const ALL = 'All'
+
   interface IconPickerProps {
     value?: string
+    defaultIcon?: string
+    preset?: 'input' | 'icon'
   }
 
-  const props = defineProps<IconPickerProps>()
+  const props = withDefaults(defineProps<IconPickerProps>(), {
+    defaultIcon: 'ant-design:home-outlined',
+    preset: 'input',
+  })
   const emit = defineEmits(['update:value'])
 
   const { t } = useAppI18n()
   const {
-    lists,
-    total,
     page,
     pageSize,
     show,
     filters,
     rootInputRef,
-    searchInputRef,
+
     loading,
     currentTab,
+    currentIcon,
   } = toRefs(
     reactive({
-      lists: [] as string[],
-      total: 0,
       page: 1,
-      pageSize: 55,
+      pageSize: 50,
       show: false,
       filters: '',
       rootInputRef: null as Nullable<InputInst>,
-      searchInputRef: null as Nullable<InputInst>,
+
       loading: false,
-      currentTab: 'All',
+      currentTab: ALL,
+      currentIcon: '',
     })
   )
 
-  const tabLists = computed(() => ['All', ...IconBundleConfig.list])
+  const getTabLists = computed(() => [ALL, ...IconBundleConfig.list])
 
-  watch(currentTab, () => {
-    page.value = 1
-    onInit()
-  })
-
-  const iconLists = computed<string[]>(() =>
+  const getIconListsWithTab = computed<string[]>(() =>
     (allIcons as string[]).filter((i) =>
-      currentTab.value === 'All' ? true : i.includes(currentTab.value)
+      currentTab.value === ALL ? true : i.startsWith(currentTab.value)
     )
   )
 
-  const onInit = (needFeedback = false) => {
-    loading.value = true
-
-    if (props.value && needFeedback) {
-      const index =
-        iconLists.value.findIndex((item) => item === props.value) + 1
-
-      const shouldGoPageNum = Math.floor(index / pageSize.value) + 1
-
-      page.value = shouldGoPageNum
-    }
-
-    const filtered = iconLists.value.filter((i) => i.includes(filters.value))
-
-    const filterdRes = mockListApi(filtered)({
+  const getResponse = computed(() => {
+    return mockListApi(
+      getIconListsWithTab.value.filter((i) => i.includes(filters.value))
+    )({
       page: {
         page: page.value,
         pageSize: pageSize.value,
       },
     })
+  })
 
-    setTimeout(() => {
-      total.value = filterdRes.total
-      lists.value = filterdRes.data
-      loading.value = false
-    }, 200)
-  }
+  // tab change & search opertaions, need to set page to 1
+  const getLists = computed(() => getResponse.value.data)
+  const getTotal = computed(() => getResponse.value.total)
 
-  const debouncedInit = useDebounceFn(() => {
-    page.value = 1
-    onInit()
-  }, 300)
+  watch(
+    () => getLists,
+    () => {
+      loading.value = true
+
+      setTimeout(() => {
+        loading.value = false
+      }, 500)
+    },
+    {
+      deep: true,
+      immediate: true,
+    }
+  )
 
   const onOpenPopover = () => {
-    filters.value = ''
+    onFeedback()
+
     show.value = true
-    onInit(true)
-    nextTick(() => {
-      searchInputRef.value?.focus()
-    })
   }
 
   const onChooseIcon = (icon: string) => {
-    page.value = 1
     show.value = false
 
     emit('update:value', icon)
@@ -208,4 +221,33 @@
     page.value = 1
     emit('update:value', null)
   }
+
+  const onMouseEnter = (icon: string) => {
+    currentIcon.value = icon
+  }
+
+  const onMouseLeave = () => {
+    currentIcon.value = props?.value ?? ''
+  }
+
+  const onFeedback = () => {
+    if (!props.value) return
+
+    // set currentIcon
+    currentIcon.value = props.value
+
+    // set currentTab
+    currentTab.value = IconBundleConfig.list.find((i: string) =>
+      props.value?.startsWith(i)
+    )
+
+    // set current page
+    const index =
+      getIconListsWithTab.value.findIndex((item) => item === props.value) + 1
+    page.value = Math.floor(index / pageSize.value) + 1
+  }
+
+  onMounted(() => {
+    onFeedback()
+  })
 </script>

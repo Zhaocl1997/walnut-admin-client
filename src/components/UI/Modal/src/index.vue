@@ -5,10 +5,14 @@
     :show="show"
     :show-icon="false"
     :style="{ width }"
-    :segmented="{
-      content: 'soft',
-      footer: 'soft',
-    }"
+    :segmented="
+      segmented
+        ? {
+            content: 'soft',
+            footer: 'soft',
+          }
+        : {}
+    "
     @update:show="onUpdateShow"
   >
     <template #header>
@@ -69,6 +73,7 @@
     draggable?: boolean
     fullscreen?: boolean
     defaultButton?: boolean
+    segmented?: boolean
   }
 
   const props = withDefaults(defineProps<InternalProps>(), {
@@ -78,6 +83,7 @@
     draggable: true,
     fullscreen: true,
     defaultButton: true,
+    segmented: true,
   })
 
   const emits = defineEmits(['yes', 'no', 'update:show'])

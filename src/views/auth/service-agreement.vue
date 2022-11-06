@@ -9,5 +9,7 @@
 <script lang="ts">
   export default defineComponent({
     name: 'ServiceAgreement',
+
+    defaultView: false,
   })
 </script>

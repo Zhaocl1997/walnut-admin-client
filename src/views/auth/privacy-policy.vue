@@ -9,5 +9,7 @@
 <script lang="ts">
   export default defineComponent({
     name: 'PrivacyPolicy',
+
+    defaultView: false,
   })
 </script>
