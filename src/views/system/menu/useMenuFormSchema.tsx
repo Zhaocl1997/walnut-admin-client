@@ -5,7 +5,8 @@ import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 export const useMenuFormSchema = (
   actionType: Ref<ActionType>,
   formData: Ref<RecordNullable<AppSystemMenu>>,
-  treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>
+  treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>,
+  menuActiveNamesOptions: Ref<{ name: string; title: string }[]>
 ): DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]> => {
   // get view options and name options
   const { viewOptions, nameOptions } = getViewsOptions()
@@ -341,7 +342,12 @@ export const useMenuFormSchema = (
         rule: false,
       },
       componentProp: {
-        options: nameOptions,
+        options: computed(() =>
+          menuActiveNamesOptions.value.map((i) => ({
+            value: i.name,
+            label: AppI18n.global.t(i.title),
+          }))
+        ),
         filterable: true,
         clearable: true,
       },

@@ -7,6 +7,7 @@ export const useMenuTree = () => {
 
   const menuDataRef = ref<TreeNodeItem<AppSystemMenu>[]>([])
   const treeSelectDataRef = ref<TreeNodeItem<AppSystemMenu>[]>([])
+  const menuActiveNamesOptions = ref<{ name: string; title: string }[]>([])
 
   // left menu tree data, do not need root node
   const getLeftMenu = computed(() => {
@@ -56,11 +57,17 @@ export const useMenuTree = () => {
 
     menuDataRef.value = menuData
     treeSelectDataRef.value = treeSelectData
+    menuActiveNamesOptions.value = res.data
+      .filter((i) => i.type === AppConstMenuType.MENU)
+      .map((i) => ({
+        name: i.name!,
+        title: i.title!,
+      }))
   }
 
   onMounted(() => {
     onInit()
   })
 
-  return { getLeftMenu, getTreeSelect, onInit }
+  return { getLeftMenu, getTreeSelect, menuActiveNamesOptions, onInit }
 }

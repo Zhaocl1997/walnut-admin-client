@@ -93,7 +93,8 @@
   const treeMenuValue = ref<string>('')
   const panelTitle = ref<string>('')
 
-  const { getLeftMenu, getTreeSelect, onInit } = useMenuTree()
+  const { getLeftMenu, getTreeSelect, onInit, menuActiveNamesOptions } =
+    useMenuTree()
 
   const [registerTree] = useTree<AppSystemMenu>({
     presetPrefixIcon: true,
@@ -171,7 +172,12 @@
     })
 
   // schemas
-  const schemas = useMenuFormSchema(actionType, formData, getTreeSelect)
+  const schemas = useMenuFormSchema(
+    actionType,
+    formData,
+    getTreeSelect,
+    menuActiveNamesOptions
+  )
 
   // form
   const [registerForm, { validate, restoreValidation }] =
