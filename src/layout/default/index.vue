@@ -100,6 +100,7 @@
   useAppTextSelection()
   useAppColorMode()
   useAppReducedMotion()
+  useAppHijackF5()
 
   useTimeoutFn(() => {
     !isDev() && useStarOnGithub()
