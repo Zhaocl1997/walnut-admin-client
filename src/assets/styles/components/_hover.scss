@@ -1,0 +1,104 @@
+// copy from https://github.com/IanLunn/Hover/blob/master/css/hover.css#L1247
+// for tab card style
+.hvr-sweep-to-right {
+  // box-shadow: 0 0 1px rgba(0, 0, 0, 0); // modiefied
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0) !important;
+  transform: perspective(1px) translateZ(0) !important;
+  transition-property: color;
+  transition-property: color;
+  transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+.hvr-sweep-to-right::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--primary-color-hover); // modified
+  transform: scaleX(0) !important;
+  transform: scaleX(0) !important;
+  transform-origin: 0 50% !important;
+  transform-origin: 0 50% !important;
+  transition-property: transform !important;
+  transition-property: transform !important;
+  transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+  content: "";
+}
+
+.hvr-sweep-to-right:hover,
+.hvr-sweep-to-right:focus,
+.hvr-sweep-to-right:active {
+  color: var(--body-color); // modified
+}
+
+.hvr-sweep-to-right:hover::before,
+.hvr-sweep-to-right:focus::before,
+.hvr-sweep-to-right:active::before {
+  transform: scaleX(1) !important;
+  transform: scaleX(1) !important;
+}
+
+// copy from https://github.com/IanLunn/Hover/blob/master/css/hover.css#L2144
+// for tab flex style
+.hvr-underline-from-left {
+  // box-shadow: 0 0 1px rgba(0, 0, 0, 0); // modified
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0) !important;
+  transform: perspective(1px) translateZ(0) !important;
+}
+
+.hvr-underline-from-left::before {
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  left: 0;
+  right: 100%;
+  height: 2px; // modified
+  background: var(--primary-color-hover); // modified
+  transition-property: right !important;
+  transition-property: right !important;
+  transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+  content: "";
+}
+
+.hvr-underline-from-left:hover::before,
+.hvr-underline-from-left:focus::before,
+.hvr-underline-from-left:active::before {
+  right: 0;
+}
+
+// copy from https://github.com/IanLunn/Hover/blob/master/css/hover.css#L2128
+// for tab round style
+.hvr-round-corners {
+  display: inline-block;
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0) !important;
+  transform: perspective(1px) translateZ(0) !important;
+  transition-property: border-radius !important;
+  transition-property: border-radius !important;
+
+  // box-shadow: 0 0 1px rgba(0, 0, 0, 0); // modified
+  transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+.hvr-round-corners:hover,
+.hvr-round-corners:focus,
+.hvr-round-corners:active {
+  border-radius: 1em;
+}

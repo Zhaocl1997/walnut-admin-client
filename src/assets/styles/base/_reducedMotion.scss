@@ -2,13 +2,23 @@
 html[reduce="true"] *,
 ::before,
 ::after {
-  transition: none !important;
-  transition-duration: 0.001ms !important;
-  transition-delay: 0s !important;
+  transition-property: none !important;
+  transition-property: none !important;
+  transition-property: none !important;
+  transition-property: none !important;
+  transition-property: none !important;
+
+  // -o-transform: none !important;
+  // -moz-transform: none !important;
+  // -ms-transform: none !important;
+  // -webkit-transform: none !important;
+  // transform: none !important;
+
   animation: none !important;
-  animation-duration: 0.001ms !important;
-  animation-delay: -0.001ms !important;
-  animation-iteration-count: 1 !important;
+  animation: none !important;
+  animation: none !important;
+  animation: none !important;
+  animation: none !important;
 
   --animate-duration: 0 !important;
   --animate-delay: 0 !important;
@@ -20,13 +30,23 @@ html[reduce="true"] *,
   *,
   ::before,
   ::after {
-    transition: none !important;
-    transition-duration: 0.001ms !important;
-    transition-delay: 0s !important;
+    transition-property: none !important;
+    transition-property: none !important;
+    transition-property: none !important;
+    transition-property: none !important;
+    transition-property: none !important;
+
+    // -o-transform: none !important;
+    // -moz-transform: none !important;
+    // -ms-transform: none !important;
+    // -webkit-transform: none !important;
+    // transform: none !important;
+
     animation: none !important;
-    animation-duration: 0.001ms !important;
-    animation-delay: -0.001ms !important;
-    animation-iteration-count: 1 !important;
+    animation: none !important;
+    animation: none !important;
+    animation: none !important;
+    animation: none !important;
 
     --animate-duration: 0 !important;
     --animate-delay: 0 !important;

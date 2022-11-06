@@ -32,6 +32,22 @@
         formProp: {
           path: 'height',
         },
+        componentProp: {
+          min: 0,
+          precision: 0,
+          step: 2,
+        },
+      },
+      {
+        type: 'Base:InputNumber',
+        formProp: {
+          path: 'width',
+        },
+        componentProp: {
+          min: 0,
+          precision: 0,
+          step: 2,
+        },
       },
       {
         type: 'Base:Switch',
@@ -72,19 +88,36 @@
         },
       },
       {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'devtool',
-          labelHelpMessage: true,
-        },
-      },
-      {
         type: 'Base:Select',
         formProp: {
           path: 'styleMode',
         },
         componentProp: {
           options: Object.values(AppConstTabStyleMode).map((i) => ({
+            value: i,
+            label: i,
+          })),
+        },
+      },
+      {
+        type: 'Base:Select',
+        formProp: {
+          path: 'closeMode',
+        },
+        componentProp: {
+          options: Object.values(AppConstTabCloseMode).map((i) => ({
+            value: i,
+            label: i,
+          })),
+        },
+      },
+      {
+        type: 'Base:Select',
+        formProp: {
+          path: 'affixMode',
+        },
+        componentProp: {
+          options: Object.values(AppConstTabAffixMode).map((i) => ({
             value: i,
             label: i,
           })),
