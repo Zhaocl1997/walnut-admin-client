@@ -2,7 +2,7 @@ import type { IconConfig } from './types'
 import { WSvgPrefix } from './prefix'
 
 export const IconBundleConfig: IconConfig = {
-  online: true,
+  online: false,
 
   treeshake: true,
 
