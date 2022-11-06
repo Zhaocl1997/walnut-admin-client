@@ -23,6 +23,7 @@
         default: 'smooth',
       },
       elSize: Number as PropType<number>,
+      hideScrollbar: Boolean as PropType<boolean>,
     },
 
     emits: ['update:modelValue', 'scroll'],
@@ -36,8 +37,55 @@
         appSettings.settings.app.reducedMotion ? 'auto' : 'smooth'
       )
 
+      const wrapperRef = ref()
       const scrollRef =
         ref<Nullable<ScrollbarInst & { scrollbarInstRef: Recordable }>>(null)
+      const isHovered = useElementHover(wrapperRef)
+
+      onMounted(() => {
+        // handle hide scrollbar
+        if (props.hideScrollbar) {
+          const target = wrapperRef.value.querySelector(
+            `.w-scrollbar-rail--${
+              props.xScrollable ? 'horizontal' : 'vertical'
+            }`
+          )
+
+          if (target) {
+            target.style.display = 'none'
+          }
+        }
+      })
+
+      watchEffect(() => {
+        if (props.xScrollable && isHovered.value) {
+          useEventListener(
+            wrapperRef,
+            'wheel',
+            useThrottleFn((e: WheelEvent) => {
+              // prevent default wheel
+              e.preventDefault()
+
+              const node = scrollRef.value?.scrollbarInstRef?.containerRef
+
+              // @ts-ignore
+              if (e.wheelDelta < 0) {
+                scrollRef.value!.scrollTo({
+                  left: node.scrollLeft + 200,
+                  behavior: getBehavior.value,
+                })
+              } else {
+                scrollRef.value!.scrollTo({
+                  left: node.scrollLeft - 200,
+                  behavior: getBehavior.value,
+                })
+              }
+
+              onScroll(e)
+            }, 200)
+          )
+        }
+      })
 
       const onScroll = (e: Event) => {
         emit(
@@ -124,7 +172,7 @@
       })
 
       return () => (
-        <div class="w-full h-full">
+        <div ref={wrapperRef} class="w-full h-full">
           <n-scrollbar
             id={id.value}
             ref={scrollRef}
@@ -142,3 +190,9 @@
     },
   })
 </script>
+
+<style scoped>
+  :deep(.w-scrollbar-content) {
+    height: 100% !important;
+  }
+</style>
