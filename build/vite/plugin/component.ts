@@ -22,6 +22,7 @@ const comp = {
   Extra: [
     'AbsImage',
     'Arrow',
+    'Copy',
     'DemoCard',
     'FlipClock',
     'Flipper',

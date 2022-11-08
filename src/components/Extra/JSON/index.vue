@@ -1,19 +1,14 @@
 <template>
   <w-scrollbar :height="height">
-    <div ref="WJSONRef" class="relative">
+    <div ref="jsonRef" class="relative">
       <n-code :code="getJSON" language="json" word-wrap :trim="false"></n-code>
 
       <w-transition appear name="fade-right">
-        <n-button
-          class="absolute top-2 right-2"
+        <w-copy
           v-show="isHovered"
-          dashed
-          size="tiny"
-          :type="copied ? 'success' : 'info'"
-          @click="() => copy()"
-        >
-          {{ copied ? t('app.base.success') : t('app.button.copy') }}
-        </n-button>
+          :source="getJSON"
+          class="absolute top-2 right-2"
+        ></w-copy>
       </w-transition>
     </div>
   </w-scrollbar>
@@ -33,17 +28,14 @@
     width: '100%',
   })
 
-  const { t } = useAppI18n()
-
-  const WJSONRef = ref()
+  const jsonRef = ref()
   const getJSON = computed(() =>
     typeof props.value === 'string'
       ? JSON.stringify(JSON.parse(props.value), null, 2)
       : JSON.stringify(props.value, null, 2)
   )
 
-  const isHovered = useElementHover(WJSONRef)
-  const { copy, copied } = useClipboard({ source: getJSON })
+  const isHovered = useElementHover(jsonRef)
 </script>
 
 <script lang="ts">
