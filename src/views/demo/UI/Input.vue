@@ -89,12 +89,34 @@
           ></w-input>
         </n-space>
       </n-list-item>
+
+      <n-list-item>
+        <w-title prefix="bar">Copiable</w-title>
+
+        <n-space vertical>
+          <w-input
+            v-model:value="state.input9"
+            placeholder="Content inside can be copied"
+            clearable
+            copiable
+          ></w-input>
+
+          <w-input
+            v-model:value="state.input10"
+            placeholder="Content inside can be copied"
+            clearable
+            copiable
+          ></w-input>
+        </n-space>
+      </n-list-item>
     </n-list>
   </w-demo-card>
 </template>
 
 <script lang="ts" setup>
-  const state = reactive<Recordable>({})
+  const state = reactive<Recordable>({
+    input10: 'walnut-copiable-input',
+  })
 
   const onChange = (value: string) => {
     console.log('[w-input change]', value)

@@ -1,11 +1,14 @@
 <script lang="tsx">
   import type { WInputProps } from './types'
 
+  import { omit } from 'lodash-es'
   import { clearIllegalChars, upperFirst } from 'easy-fns-ts'
-  import { props } from './props'
+  import { extendedProps, props } from './props'
 
   export default defineComponent({
     name: 'WInput',
+
+    inheritAttrs: false,
 
     props,
 
@@ -30,6 +33,11 @@
           (def.suffix = () => <w-icon icon={props.suffixIcon}></w-icon>)
         props.prefixIcon &&
           (def.prefix = () => <w-icon icon={props.prefixIcon}></w-icon>)
+
+        // copy component for input
+        props.copiable &&
+          props.value &&
+          (def.suffix = () => <w-copy icon source={props.value}></w-copy>)
 
         // help message
         props.helpMessage &&
@@ -64,7 +72,12 @@
       }
 
       return () => (
-        <n-input onInput={onUpdateValue}>{unref(inputSlots)}</n-input>
+        <n-input
+          {...omit(props, Object.keys(extendedProps))}
+          onInput={onUpdateValue}
+        >
+          {unref(inputSlots)}
+        </n-input>
       )
     },
   })

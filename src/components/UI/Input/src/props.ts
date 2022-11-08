@@ -1,4 +1,6 @@
-export const props = {
+import { inputProps } from 'naive-ui'
+
+export const extendedProps = {
   blackList: {
     type: Array as PropType<string[]>,
     default: () => [],
@@ -29,6 +31,11 @@ export const props = {
     default: '',
   },
 
+  copiable: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
+
   // Just add your own modifiers here!
   valueModifiers: {
     type: Object as PropType<{
@@ -43,4 +50,9 @@ export const props = {
       uppercase: false,
     }),
   },
-}
+} as const
+
+export const props = {
+  ...inputProps,
+  ...extendedProps,
+} as const
