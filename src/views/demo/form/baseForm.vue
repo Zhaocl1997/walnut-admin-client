@@ -36,6 +36,7 @@
         formSelect: null,
         formRadio: null,
         formCheckbox: null,
+        formColorPicker: null,
         formSwitch: true,
         formTimePicker: null,
         formDatePicker: null,
@@ -168,6 +169,14 @@
                 valueType: 'number',
                 multiple: true,
               },
+            },
+            {
+              type: 'Base:ColorPicker',
+              formProp: {
+                label: 'Color Picker',
+                path: 'formColorPicker',
+              },
+              componentProp: {},
             },
             {
               type: 'Base:Switch',

@@ -41,6 +41,7 @@ const comp = {
     'ButtonGroup',
     'Card',
     'Checkbox',
+    'ColorPicker',
     'DatePicker',
     'Descriptions',
     'Drawer',

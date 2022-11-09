@@ -30,6 +30,7 @@
           title="LocaleSelect"
           href="#LocaleSelect"
         ></n-anchor-link>
+        <n-anchor-link title="ColorPicker" href="#ColorPicker"></n-anchor-link>
       </n-anchor>
     </div>
 
@@ -55,6 +56,7 @@
         <DemoRadio id="Radio"></DemoRadio>
         <DemoDynamicTags id="DynamicTags"></DemoDynamicTags>
         <DemoLocaleSelect id="LocaleSelect"></DemoLocaleSelect>
+        <DemoColorPicker id="ColorPicker"></DemoColorPicker>
       </div>
     </div>
   </div>
@@ -73,6 +75,7 @@
   import DemoLocaleSelect from './LocaleSelect.vue'
   import DemoLocation from './LocationPicker.vue'
   import DemoDict from './Dict.vue'
+  import DemoColorPicker from './ColorPicker.vue'
 
   const appAdapter = useAppStoreAdapter()
 </script>

@@ -26,6 +26,9 @@ import type { WTimePickerProps } from '../../TimePicker'
 import type { WDatePickerProps } from '../../DatePicker'
 import type { WDynamicTagsProps } from '../../DynamicTags'
 import type { WTree } from '../../Tree'
+import type { WColorPickerProps } from '../../ColorPicker'
+
+import type { WDescriptionsItem } from '../../Descriptions'
 
 import type { WFormPropType } from './props'
 import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
@@ -36,12 +39,12 @@ import type {
   WFormItemDividerProps,
   WFormItemQueryProps,
 } from './components/Extend/types'
-import type { WDescriptionsItem } from '../../Descriptions'
 
 export const BUILTIN_FORM_TYPE = [
   'Button',
   'ButtonGroup',
   'Checkbox',
+  'ColorPicker',
   'DatePicker',
   'DynamicTags',
   'Input',
@@ -142,6 +145,7 @@ export declare namespace WForm {
       'Base:Select': WSelectProps
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
+      'Base:ColorPicker': WColorPickerProps
       'Base:Switch': WSwitchProps
       'Base:TimePicker': WTimePickerProps
       'Base:DatePicker': WDatePickerProps
@@ -288,6 +292,7 @@ export declare namespace WForm {
     type SelectSchema<D> = DynamicSchemaItemProps<'Base:Select', D>
     type RadioSchema<D> = DynamicSchemaItemProps<'Base:Radio', D>
     type CheckboxSchema<D> = DynamicSchemaItemProps<'Base:Checkbox', D>
+    type ColorPickerSchema<D> = DynamicSchemaItemProps<'Base:ColorPicker', D>
     type SwitchSchema<D> = DynamicSchemaItemProps<'Base:Switch', D>
     type TimePickerSchema<D> = DynamicSchemaItemProps<'Base:TimePicker', D>
     type DatePickerSchema<D> = DynamicSchemaItemProps<'Base:DatePicker', D>
@@ -318,6 +323,7 @@ export declare namespace WForm {
       | SelectSchema<D>
       | RadioSchema<D>
       | CheckboxSchema<D>
+      | ColorPickerSchema<D>
       | SwitchSchema<D>
       | TimePickerSchema<D>
       | DatePickerSchema<D>
