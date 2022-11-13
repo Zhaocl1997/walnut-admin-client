@@ -6,7 +6,6 @@ export const useAppLock = () => {
 
   const isLeft = usePageLeave()
   const { idle } = useIdle(appSetting.settings.app.idleMS)
-  const visibility = useDocumentVisibility()
 
   // detect user idle
   watch(idle, async (v) => {
@@ -31,12 +30,15 @@ export const useAppLock = () => {
   )
 
   // detect window visibility
-  watch(visibility, async (v) => {
-    if (
-      appSetting.settings.app.lockMode === AppConstLockMode.SECURITY &&
-      v === 'hidden'
-    ) {
-      await appLock.lock(currentRoute)
+  watch(
+    () => appDocumentVisibility.value,
+    async (v) => {
+      if (
+        appSetting.settings.app.lockMode === AppConstLockMode.SECURITY &&
+        v === 'hidden'
+      ) {
+        await appLock.lock(currentRoute)
+      }
     }
-  })
+  )
 }
