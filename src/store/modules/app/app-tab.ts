@@ -12,13 +12,26 @@ const nameBlackList: string[] = [
   AppLockName,
 ]
 
+const _title_map = new Map()
+const _icon_map = new Map()
+
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
   state: (): AppTabState => ({
     tabs: [],
     visitedTabs: new Map(),
   }),
 
-  getters: {},
+  getters: {
+    getCurrentIndex(state): number {
+      return state.tabs.findIndex(
+        (i) => AppRouter.currentRoute.value.name === i.name
+      )
+    },
+
+    getCurrentTab(state): AppTab {
+      return state.tabs[this.getCurrentIndex]
+    },
+  },
 
   actions: {
     /**
@@ -26,6 +39,163 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      */
     setTab(index: number, payload: Partial<AppTab>) {
       this.tabs[index] = merge(this.tabs[index], payload)
+    },
+
+    /**
+     * @description set tab dynamic title
+     * support speed and title horizontal scrolling
+     */
+    setTabTitle(
+      name: string,
+      title: string,
+      options: AppTabExtendTitleOptions = {
+        timeout: 5000,
+        maxLength: 10,
+        speed: 5000,
+      }
+    ) {
+      const index = this.tabs.findIndex((i) => i.name === name)
+
+      if (index === -1) return
+
+      const { timeout = 5000, maxLength = 10, speed = timeout } = options!
+
+      this.setTab(index, {
+        meta: {
+          _title: title,
+          _title_maxLength: maxLength,
+          _title_speed: speed,
+        },
+      })
+
+      if (timeout) {
+        const name = this.tabs[index].name
+
+        const { stop } = useTimeoutFn(() => {
+          this.recoverTabTitle(name)
+        }, timeout)
+
+        _title_map.set(name, stop)
+      }
+    },
+
+    /**
+     * @description recover tab title
+     */
+    recoverTabTitle(name: string) {
+      const index = this.tabs.findIndex((i) => i.name === name)
+
+      if (index === -1) return
+
+      this.setTab(index, {
+        meta: {
+          _title: this.tabs[index].meta.title,
+        },
+      })
+
+      _title_map.get(name) && _title_map.get(name)()
+      _title_map.delete(name)
+    },
+
+    /**
+     * @description set current tab dynamic title
+     * support timeout and title scrolling
+     */
+    setCurrentTabTitle(
+      title: string,
+      options: AppTabExtendTitleOptions = {
+        timeout: 5000,
+        maxLength: 10,
+        speed: 5000,
+      }
+    ) {
+      this.setTabTitle(this.tabs[this.getCurrentIndex].name, title, options)
+    },
+
+    /**
+     * @description recover current tab title
+     */
+    recoverCurrentTabTitle() {
+      this.recoverTabTitle(this.tabs[this.getCurrentIndex].name)
+    },
+
+    /**
+     * @description set tab dynamic icon
+     * support timeout and bounce animate
+     */
+    setTabIcon(
+      name: string,
+      icon: string,
+      options: AppTabExtendIconOptions = {
+        timeout: 5000,
+        animate: false,
+        duration: 1000,
+      }
+    ) {
+      const index = this.tabs.findIndex((i) => i.name === name)
+
+      if (index === -1) return
+
+      const { timeout = 5000, animate = false, duration = 1000 } = options!
+
+      this.setTab(index, {
+        meta: {
+          _icon: icon,
+          _icon_animate: animate,
+          _icon_animate_duration: duration,
+        },
+      })
+
+      if (timeout) {
+        const name = this.tabs[index].name
+
+        const { stop } = useTimeoutFn(() => {
+          this.recoverTabIcon(name)
+        }, timeout)
+
+        _icon_map.set(name, stop)
+      }
+    },
+
+    /**
+     * @description recover tab icon
+     */
+    recoverTabIcon(name: string) {
+      const index = this.tabs.findIndex((i) => i.name === name)
+
+      if (index === -1) return
+
+      this.setTab(index, {
+        meta: {
+          _icon: this.tabs[index].meta.icon,
+          _icon_animate: false,
+        },
+      })
+
+      _icon_map.get(name) && _icon_map.get(name)()
+      _icon_map.delete(name)
+    },
+
+    /**
+     * @description set current tab dynamic icon
+     * support timeout and bounce animate
+     */
+    setCurrentTabIcon(
+      icon: string,
+      options: AppTabExtendIconOptions = {
+        timeout: 5000,
+        animate: false,
+        duration: 1000,
+      }
+    ) {
+      this.setTabIcon(this.tabs[this.getCurrentIndex].name, icon, options)
+    },
+
+    /**
+     * @description recover current tab icon
+     */
+    recoverCurrentTabIcon() {
+      this.recoverTabIcon(this.tabs[this.getCurrentIndex].name)
     },
 
     setTabs(payload: AppTab[]) {

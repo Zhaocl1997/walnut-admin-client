@@ -29,18 +29,34 @@
 
     <w-icon
       v-if="getShowIcon"
-      :icon="item.meta.icon"
+      :icon="item.meta._icon ?? item.meta.icon"
       height="16"
-      class="col-span-2 flex items-center"
+      :class="[
+        'col-span-2 flex items-center',
+        { 'animate-bounce': item.meta._icon_animate },
+        { 'animate-duration-1000': item.meta._icon_animate_duration === 1000 },
+        { 'animate-duration-2000': item.meta._icon_animate_duration === 2000 },
+        { 'animate-duration-3000': item.meta._icon_animate_duration === 3000 },
+        { 'animate-duration-4000': item.meta._icon_animate_duration === 4000 },
+      ]"
     ></w-icon>
 
     <w-transition appear name="fade-left" :duration="100">
-      <span v-if="getShowTite" class="col-span-10 text-sm whitespace-nowrap">
-        {{ t(item.meta.title!) }}
-      </span>
+      <w-text-scroll
+        v-if="getShowTite"
+        :class="[
+          'col-span-10 text-sm whitespace-nowrap truncate',
+          { 'pr-4': isHovered },
+        ]"
+        :title="getTitle"
+        :maxLength="item.meta._title_maxLength ?? 12"
+        :speed="item.meta._title_speed"
+      >
+        {{ getTitle }}
+      </w-text-scroll>
     </w-transition>
 
-    <w-transition appear name="fade-left">
+    <w-transition appear name="fade-right">
       <w-icon
         v-if="getShowCloseIcon"
         icon="ant-design:close-outlined"
@@ -124,6 +140,10 @@
       !props.item.meta.affix ||
       (props.item.meta.affix &&
         appSetting.settings.tab.affixMode === AppConstTabAffixMode.PIN)
+  )
+
+  const getTitle = computed(() =>
+    t(props.item.meta._title! ?? props.item.meta.title!)
   )
 
   const start = () => {

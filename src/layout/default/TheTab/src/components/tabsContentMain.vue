@@ -20,7 +20,6 @@
         <div
           v-for="(item, index) in appTab.tabs"
           :key="item.name"
-          :title="t(item.meta.title!)"
           :class="[
             'hover:text-primaryHover my-1',
 

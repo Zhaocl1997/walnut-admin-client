@@ -19,6 +19,7 @@
         <n-anchor-link title="QRCode" href="#QRCode"></n-anchor-link>
         <n-anchor-link title="Modal" href="#Modal"></n-anchor-link>
         <n-anchor-link title="Drawer" href="#Drawer"></n-anchor-link>
+        <n-anchor-link title="TextScroll" href="#TextScroll"></n-anchor-link>
 
         <n-anchor-link title="Message" href="#Message"></n-anchor-link>
         <n-anchor-link title="Flipper" href="#Flipper"></n-anchor-link>
@@ -47,6 +48,7 @@
         <DemoQRCode id="QRCode"></DemoQRCode>
         <DemoModal id="Modal"></DemoModal>
         <DemoDrawer id="Drawer"></DemoDrawer>
+        <DemoTextScroll id="TextScroll"></DemoTextScroll>
       </div>
 
       <div class="children:my-2">
@@ -82,6 +84,7 @@
   import DemoFile from './File.vue'
   import DemoLayoutTab from './LayoutTab.vue'
   import DemoAuthorize from './Authorize.vue'
+  import DemoTextScroll from './TextScroll.vue'
 
   const appAdapter = useAppStoreAdapter()
 </script>

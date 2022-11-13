@@ -5,7 +5,10 @@ declare global {
     B?: string
   }
 
-  interface BaseAppModel {
+  /**
+   * @description app base database schema model
+   */
+  abstract interface AppBaseModel {
     _id?: string
 
     /**
@@ -17,18 +20,72 @@ declare global {
     updatedAt?: Date
   }
 
+  /**
+   * @description app tab meta extend fields
+   */
+  interface AppTabMetaExtend {
+    /**
+     * @description this is a hack for the changed title
+     * first try to render this, normally undefined
+     * then try to render title
+     * used for dynamic tab title
+     */
+    _title?: string
+
+    /**
+     * @description _title scroll speed
+     */
+    _title_speed?: number
+
+    /**
+     * @description max length to scroll
+     * default is 10
+     */
+    _title_maxLength?: number
+
+    /**
+     * @description this is a hack for the changed icon
+     * first try to render this, normally undefined
+     * then try to render icon
+     * used for dynamic tab icon
+     */
+    _icon?: string
+
+    /**
+     * @description _icon animate type
+     */
+    _icon_animate?: boolean
+
+    /**
+     * @description _icon animate speed
+     */
+    _icon_animate_duration?: 1000 | 2000 | 3000 | 4000
+  }
+
+  interface AppTabExtendTitleOptions {
+    timeout?: number
+    speed?: number
+    maxLength?: number
+  }
+
+  interface AppTabExtendIconOptions {
+    timeout?: number
+    animate?: boolean
+    duration?: 1000 | 2000 | 3000 | 4000
+  }
+
   // tab
   // almost same as RouteRecord
   interface AppTab {
     name: string
     path: string
-    meta: RouteMeta
+    meta: RouteMeta & AppTabMetaExtend
     query?: Recordable
     params?: Recordable
   }
 
   // system menu
-  interface AppSystemMenu extends BaseAppModel {
+  interface AppSystemMenu extends AppBaseModel {
     pid?: string
     type?: ValueOfAppConstMenuType
     path?: string
@@ -50,7 +107,7 @@ declare global {
   }
 
   // system role
-  interface AppSystemRole extends BaseAppModel {
+  interface AppSystemRole extends AppBaseModel {
     roleName?: string
     description?: string
     order?: number
@@ -59,7 +116,7 @@ declare global {
   }
 
   // system user
-  interface AppSystemUser extends BaseAppModel {
+  interface AppSystemUser extends AppBaseModel {
     userName?: string
     nickName?: string
     age?: number
@@ -73,7 +130,7 @@ declare global {
   }
 
   // system lang
-  interface AppSystemLang extends BaseAppModel {
+  interface AppSystemLang extends AppBaseModel {
     lang?: string
     description?: string
     order?: number
@@ -81,7 +138,7 @@ declare global {
   }
 
   // system locale
-  interface AppSystemLocale extends BaseAppModel {
+  interface AppSystemLocale extends AppBaseModel {
     langId?: string
     key?: string
     value?: string
@@ -89,7 +146,7 @@ declare global {
   }
 
   // system dict type
-  interface AppSystemDictType extends BaseAppModel {
+  interface AppSystemDictType extends AppBaseModel {
     name?: string
     type?: string
     status?: boolean
@@ -97,7 +154,7 @@ declare global {
   }
 
   // system dict data
-  interface AppSystemDictData extends BaseAppModel {
+  interface AppSystemDictData extends AppBaseModel {
     typeId?: string
     label?: string
     value?: string
@@ -108,7 +165,7 @@ declare global {
   }
 
   // system operate log
-  interface AppSystemLogOperate extends BaseAppModel {
+  interface AppSystemLogOperate extends AppBaseModel {
     title?: string
     action?: string
     method?: string
@@ -127,7 +184,7 @@ declare global {
   }
 
   // system signin log
-  interface AppSystemLogSignin extends BaseAppModel {
+  interface AppSystemLogSignin extends AppBaseModel {
     ip?: string
     location?: string
     os?: string
@@ -147,7 +204,7 @@ declare global {
   }
 
   // app setting
-  interface AppSettingsModel extends BaseAppModel {
+  interface AppSettingsModel extends AppBaseModel {
     settingName?: string
     settingKey?: string
     settingValue?: string
@@ -155,7 +212,7 @@ declare global {
   }
 
   // app monitor cache model
-  interface AppMonitorCacheModel extends BaseAppModel {
+  interface AppMonitorCacheModel extends AppBaseModel {
     key?: string
     value?: string
     valueBytes?: string
@@ -165,7 +222,7 @@ declare global {
   }
 
   // app monitor user model
-  interface AppMonitorUserModel extends BaseAppModel {
+  interface AppMonitorUserModel extends AppBaseModel {
     visitorId: string
     auth: boolean
     focus: boolean
