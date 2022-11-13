@@ -4,7 +4,11 @@ import { isUndefined } from 'easy-fns-ts'
 import { filter, isEmpty } from 'lodash-es'
 
 export const getDefaultSlotText = (slots: Slots): string => {
-  return ((slots.default && slots.default()[0].children) as string) || ''
+  const str = (slots.default && slots.default()[0].children) as string
+
+  if (str) return str.trimStart().trimEnd()
+
+  return ''
 }
 
 export const isInSetup = () => {
