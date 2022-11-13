@@ -44,12 +44,12 @@
           clearable
           :placeholder="t('comp.iconPicker.ph')"
           class="w-full mt-1 mb-3 border-b-cool-gray-50"
-          @change="page = 1"
+          @change="onPageInit"
         ></n-input>
 
         <n-tabs
           v-model:value="currentTab"
-          @update:value="page = 1"
+          @update:value="onPageInit"
           type="line"
           size="small"
           animated
@@ -115,6 +115,8 @@
 <script lang="ts">
   export default defineComponent({
     name: 'WIconPicker',
+
+    inheritAttrs: false,
   })
 </script>
 
@@ -171,20 +173,27 @@
   )
 
   const getResponse = computed(() => {
-    return mockListApi(
-      getIconListsWithTab.value.filter((i) => i.includes(filters.value))
-    )({
+    const filtered = getIconListsWithTab.value.filter((i) =>
+      i.includes(filters.value)
+    )
+
+    const mock = mockListApi(filtered)
+
+    const res = mock({
       page: {
         page: page.value,
         pageSize: pageSize.value,
       },
     })
+
+    return res
   })
 
   // tab change & search opertaions, need to set page to 1
   const getLists = computed(() => getResponse.value.data)
   const getTotal = computed(() => getResponse.value.total)
 
+  // use watch to fake the loading
   watch(
     () => getLists,
     () => {
@@ -192,10 +201,34 @@
 
       setTimeout(() => {
         loading.value = false
-      }, 500)
+      }, 300)
     },
     {
       deep: true,
+      immediate: true,
+    }
+  )
+
+  // filter input change
+  // immediate set page to 1
+  watch(
+    () => filters.value,
+    () => {
+      page.value = 1
+    },
+    {
+      immediate: true,
+    }
+  )
+
+  // show change
+  // set filters to empty string
+  watch(
+    () => show.value,
+    () => {
+      filters.value = ''
+    },
+    {
       immediate: true,
     }
   )
@@ -219,7 +252,7 @@
   }
 
   const onClear = () => {
-    page.value = 1
+    onPageInit()
     emit('update:value', null)
   }
 
@@ -229,6 +262,10 @@
 
   const onMouseLeave = () => {
     currentIcon.value = props?.value ?? ''
+  }
+
+  const onPageInit = () => {
+    page.value = 1
   }
 
   const onFeedback = () => {
@@ -243,9 +280,10 @@
     )
 
     // set current page
-    const index =
-      getIconListsWithTab.value.findIndex((item) => item === props.value) + 1
-    page.value = Math.floor(index / pageSize.value) + 1
+    const iconIndex = getIconListsWithTab.value.findIndex(
+      (item) => item === props.value
+    )
+    page.value = Math.floor(iconIndex / pageSize.value) + 1
   }
 
   onMounted(() => {
