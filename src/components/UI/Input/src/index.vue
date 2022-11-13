@@ -8,8 +8,6 @@
   export default defineComponent({
     name: 'WInput',
 
-    inheritAttrs: false,
-
     props,
 
     emits: ['update:value'],
@@ -37,7 +35,15 @@
         // copy component for input
         props.copiable &&
           props.value &&
-          (def.suffix = () => <w-copy icon source={props.value}></w-copy>)
+          (def.suffix = () => (
+            <w-copy
+              icon
+              source={props.value}
+              onClick={(e: MouseEvent) => {
+                e.stopPropagation()
+              }}
+            ></w-copy>
+          ))
 
         // help message
         props.helpMessage &&
