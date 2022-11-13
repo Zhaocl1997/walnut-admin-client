@@ -20,7 +20,7 @@
         const getTexts = slotsText
           ? slotsText.length > props.maxLength
             ? Array.from({ length: 4 }, () => slotsText)
-            : []
+            : slotsText
           : props.texts
 
         if (slotsText && slotsText.length < props.maxLength) {
