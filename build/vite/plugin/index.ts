@@ -37,7 +37,7 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   if (dev) vitePlugins.push(createTerminalPlugin())
 
   // https://github.com/liuweiGL/vite-plugin-mkcert
-  if (dev) vitePlugins.push(createHttpsPlugin())
+  // if (dev) vitePlugins.push(createHttpsPlugin())
 
   // https://github.com/antfu/vite-plugin-inspect
   if (dev) vitePlugins.push(createInspectPlugin())

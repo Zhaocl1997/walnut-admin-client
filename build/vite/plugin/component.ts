@@ -31,6 +31,8 @@ const comp = {
     'Message',
     'QRCode',
     'Scrollbar',
+    'SMSInput',
+    'TextScroll',
     'Title',
     'Transition',
     'TransitionSelect',

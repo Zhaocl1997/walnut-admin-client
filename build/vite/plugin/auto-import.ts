@@ -19,6 +19,7 @@ export const creatAutoImportPlugin = (): VitePlugin => {
       'src/router',
       'src/store/modules/**',
       'src/hooks/**',
+      'src/utils/*',
       'src/utils/**',
       'src/socket/**',
     ],
