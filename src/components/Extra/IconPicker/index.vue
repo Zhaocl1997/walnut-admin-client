@@ -1,5 +1,5 @@
 <template>
-  <n-input
+  <w-input
     v-if="preset === 'input'"
     ref="rootInputRef"
     v-model:value="value"
@@ -8,6 +8,7 @@
     :placeholder="t('comp.iconPicker.title')"
     @click="onOpenPopover"
     @clear="onClear"
+    copiable
   >
     <template #prefix>
       <w-icon
@@ -16,7 +17,7 @@
         width="24"
       ></w-icon>
     </template>
-  </n-input>
+  </w-input>
 
   <w-icon
     v-if="preset === 'icon'"
@@ -211,10 +212,10 @@
     emit('update:value', icon)
 
     // fix not trigger rule in form
-    rootInputRef.value?.focus()
-    nextTick(() => {
-      rootInputRef.value?.blur()
-    })
+    // rootInputRef.value?.focus()
+    // nextTick(() => {
+    //   rootInputRef.value?.blur()
+    // })
   }
 
   const onClear = () => {
