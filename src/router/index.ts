@@ -9,6 +9,11 @@ export const AppRouter = createRouter({
   routes,
   strict: true,
   // https://github.com/wukang0718/vueRouterEncryption
+  scrollBehavior: (to, from, savedPosition) => {
+    console.log(23)
+
+    return { top: 0, left: 0, behavior: 'smooth' }
+  },
 })
 
 export const setupRouter = (app: App) => {

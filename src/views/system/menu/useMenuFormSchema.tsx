@@ -7,7 +7,9 @@ export const useMenuFormSchema = (
   formData: Ref<RecordNullable<AppSystemMenu>>,
   treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>,
   menuActiveNamesOptions: Ref<{ name: string; title: string }[]>
-): DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]> => {
+):
+  | DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]>
+  | WForm.Schema.Item<AppSystemMenu>[] => {
   // get view options and name options
   const { viewOptions, nameOptions } = getViewsOptions()
 
@@ -365,6 +367,67 @@ export const useMenuFormSchema = (
       extraProp: {
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU && !!formData.menuActiveName,
+      },
+    },
+
+    {
+      type: 'Extend:TransitionSelect',
+      formProp: {
+        path: 'animationName',
+        rule: false,
+      },
+      componentProp: {
+        clearable: true,
+      },
+      extraProp: {
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
+      },
+    },
+
+    {
+      type: 'Extend:IconPicker',
+      formProp: {
+        path: 'activeIcon',
+        rule: false,
+      },
+      extraProp: {
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
+      },
+    },
+
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'badge',
+        rule: false,
+      },
+      componentProp: {
+        clearable: true,
+      },
+      extraProp: {
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
+      },
+    },
+
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'position',
+        rule: false,
+      },
+      extraProp: {
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
+      },
+    },
+
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'leaveTip',
+        rule: false,
+      },
+      extraProp: {
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
   ]

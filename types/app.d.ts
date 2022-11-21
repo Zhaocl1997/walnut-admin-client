@@ -104,6 +104,11 @@ declare global {
     badge?: string
     menuActiveName?: string
     menuActiveSameTab?: boolean
+    badge?: string
+    animationName?: string
+    activeIcon?: string
+    position?: boolean
+    leaveTip?: boolean
   }
 
   // system role

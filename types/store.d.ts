@@ -138,6 +138,10 @@ declare global {
   interface UserPermissionState {
     permissions: string[]
   }
+
+  interface UserScrollState {
+    scrollMap: RemovableRef<Map<string, { top: number; left?: number }>>
+  }
 }
 
 export {}

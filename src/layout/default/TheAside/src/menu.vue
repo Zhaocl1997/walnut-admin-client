@@ -1,8 +1,12 @@
 <script lang="tsx">
   import type { MenuOption } from 'naive-ui'
-
   import { findPath, formatTree } from 'easy-fns-ts'
-  import { cloneDeep } from 'lodash-es'
+
+  interface MenuMeta {
+    type: ValueOfAppConstMenuType
+    ternal: ValueOfAppConstMenuTernal
+    url: string
+  }
 
   export default defineComponent({
     setup() {
@@ -15,77 +19,86 @@
 
       const expandedKeys = ref<string[]>()
 
-      const getTransformName = computed(() =>
+      const getMenuValue = computed(() =>
         currentRoute.value.meta.menuActiveName
           ? currentRoute.value.meta.menuActiveName
           : currentRoute.value.name
       )
 
-      // below, clone to not affect original menu data, then filter the `show` field deeply
-      // finally format to naive-ui menu option data structure
-      const getMenu = computed(() =>
-        formatTree<AppSystemMenu, MenuOption>(
-          filterTree<AppSystemMenu, Omit<AppSystemMenu, 'show'>>(
-            cloneDeep(appMenu.menus),
-            (node) => node.show!
-          ),
-          {
-            format: (node) => ({
-              key: node.name,
-              label: t(node.title!),
-              icon: () => <w-icon icon={node.icon}></w-icon>,
-              meta: {
-                type: node.type,
-                ternal: node.ternal,
-                url: node.url,
-              },
-              // extra: () => (node.badge && <n-badge value="hot"></n-badge>)
-            }),
-          }
-        )
+      // format to naive-ui menu option data structure
+      const getMenuOptions = computed(() =>
+        formatTree<AppSystemMenu, MenuOption>(toRaw(appMenu.menus), {
+          format: (node) => ({
+            key: node.name,
+            label: t(node.title!),
+            icon: () => {
+              if (
+                (node.type === AppConstMenuType.CATALOG &&
+                  expandedKeys.value?.includes(node.name!)) ||
+                node.name === getMenuValue.value
+              ) {
+                return (
+                  <w-icon
+                    icon={node.activeIcon ? node.activeIcon : node.icon}
+                  ></w-icon>
+                )
+              }
+
+              return <w-icon icon={node.icon}></w-icon>
+            },
+            meta: {
+              type: node.type,
+              ternal: node.ternal,
+              url: node.url,
+            } as MenuMeta,
+            extra: () =>
+              node.badge && <n-badge size="small" value={node.badge}></n-badge>,
+          }),
+        })
       )
 
-      watchEffect(() => {
-        // TODO 999
-        const paths = findPath(
-          toRaw(appMenu.menus),
-          (n) => n.name === getTransformName.value
-        ) as AppSystemMenu[]
+      // handle expanded-keys logic
+      watch(
+        () => getMenuValue.value,
+        (v) => {
+          const paths = findPath<AppSystemMenu>(
+            toRaw(appMenu.menus),
+            (n) => n.name === v
+          )
 
-        if (paths) {
-          expandedKeys.value = paths.map((i) => i.name!)
+          if (paths) {
+            expandedKeys.value = (paths as AppSystemMenu[]).map((i) => i.name!)
+          }
+        },
+        {
+          immediate: true,
         }
-      })
+      )
 
-      const onUpdateValue = (key: string, item: MenuOption) => {
+      const onUpdateValue = (key: string, item: { meta: MenuMeta }) => {
         // If isMobile and showAside true, set showAside to false to close drawer
         if (appAdapter.isMobile && appMenu.showAside) {
           appMenu.showAside = false
         }
 
-        if ((item.meta as AppSystemMenu).type === AppConstMenuType.CATALOG) {
+        if (item.meta.type === AppConstMenuType.CATALOG) {
           useAppMessage().info('Catalog Menu has no page!')
           return
         }
 
-        if (
-          (item.meta as AppSystemMenu).ternal === AppConstMenuTernal.EXTERNAL
-        ) {
-          openExternalLink((item.meta as AppSystemMenu).url!)
+        if (item.meta.ternal === AppConstMenuTernal.EXTERNAL) {
+          openExternalLink(item.meta.url!)
           return
         }
 
         useAppRouterPush({ name: key })
       }
 
-      const onUpdateExpandedKeys = (keys: string[]) => {
-        expandedKeys.value = keys
-      }
-
       return () => (
         <w-scrollbar height="100%">
           <n-menu
             id="walnut-sider"
+            v-model:expanded-keys={expandedKeys.value}
             mode={
               appSetting.settings.app.layout === AppConstLayoutMode.LEFT_MENU
                 ? 'vertical'
@@ -97,12 +110,10 @@
             collapsedIconSize={appSetting.settings.menu.collapsedIconSize}
             iconSize={appSetting.settings.menu.iconSize}
             indent={appSetting.settings.menu.indent}
-            options={getMenu.value}
+            options={getMenuOptions.value}
             collapsed={appMenu.collapse}
-            value={getTransformName.value}
+            value={getMenuValue.value}
             on-update:value={onUpdateValue}
-            expanded-keys={expandedKeys.value}
-            on-update:expanded-keys={onUpdateExpandedKeys}
           ></n-menu>
         </w-scrollbar>
       )

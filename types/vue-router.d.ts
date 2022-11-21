@@ -12,5 +12,9 @@ declare module 'vue-router' {
     badge?: string
     menuActiveName?: string
     menuActiveSameTab?: boolean
+    animationName?: string
+    activeIcon?: string
+    position?: boolean
+    leaveTip?: boolean
   }
 }

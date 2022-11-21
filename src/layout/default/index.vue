@@ -33,24 +33,31 @@
           v-if="!appSetting.settings.app.fixHeader"
         ></TheMainHeader>
 
-        <div
+        <TheIFrameWrapper></TheIFrameWrapper>
+
+        <!-- <n-scrollbar v-if="$route.name" height="100%" @scroll="onScroll"> -->
+        <TheContent
           :id="String($route.name)"
-          class="w-full h-full"
+          class="h-full overflow-y-auto"
           :style="{
             padding: $route.meta.url
               ? 0
               : appSetting.settings.app.contentPadding + 'px',
           }"
+          @scroll="onScroll"
         >
-          <TheIFrameWrapper></TheIFrameWrapper>
-          <TheContent></TheContent>
-        </div>
+        </TheContent>
+        <!-- </n-scrollbar> -->
 
         <TheFooter v-if="!appSetting.settings.app.fixFooter"></TheFooter>
 
         <WAppSettings></WAppSettings>
 
-        <n-back-top></n-back-top>
+        <n-back-top
+          v-if="show"
+          :listen-to="`#${String($route.name)}`"
+        ></n-back-top>
+        <!-- TODO -->
       </n-layout-content>
 
       <TheFooter v-if="appSetting.settings.app.fixFooter"></TheFooter>
@@ -62,7 +69,7 @@
   </n-layout>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
   import TheAside from './TheAside'
   import TheContent from './TheContent'
   import TheFooter from './TheFooter'
@@ -75,8 +82,27 @@
   import { useAppLock } from '@/components/App/AppLock/useAppLock'
   import { useStarOnGithub } from './useStarOnGithub'
 
+  const { currentRoute } = useAppRouter()
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
+  const show = ref(true)
+
+  const onScroll = (e: Event) => {
+    console.log((e.target as HTMLElement).scrollTop)
+  }
+
+  watch(
+    () => currentRoute.value.name,
+    () => {
+      show.value = false
+      setTimeout(() => {
+        show.value = true
+      }, 1000)
+    },
+    {
+      immediate: true,
+    }
+  )
 
   // TODO layout
   // watchEffect(() => {

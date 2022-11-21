@@ -169,6 +169,10 @@
       permission: null,
       menuActiveName: null,
       menuActiveSameTab: false,
+
+      activeIcon: null,
+      badge: null,
+      animationName: null,
     })
 
   // schemas

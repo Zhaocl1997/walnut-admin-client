@@ -443,12 +443,12 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     /**
      * @description leave some room for tab index for beauty
      */
-    initAffixedTabs(payload: AppSystemMenu[]) {
+    setAffixedTabs(payload: AppSystemMenu[]) {
       const appMenu = useAppStoreMenu()
 
-      // unshift the affixed-visibled-ordered tab into tab store
+      // unshift the affixed-ordered tablized-menu into tab store
       payload
-        .filter((i) => i.affix)
+        .filter((i) => i.type === AppConstMenuType.MENU && i.affix)
         .sort((a, b) => b.order! - a.order!)
         // tab got almost same structure as route object
         .map((i) => this.createTabs(appMenu.createRouteByMenu(i), 'unshift'))

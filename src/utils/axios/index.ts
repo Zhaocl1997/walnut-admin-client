@@ -32,7 +32,8 @@ const axiosConfig: AxiosRequestConfigExtend = {
     cache: false,
 
     // filter null value
-    filterNull: true,
+    // TODO cannot remember why doing this
+    filterNull: false,
 
     // transform "true"/"false" to true/false
     transformStringBoolean: true,

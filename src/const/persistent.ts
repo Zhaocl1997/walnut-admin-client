@@ -14,6 +14,8 @@ export const AppConstPersistKey = {
 
   TABS: 'TABS',
 
+  SCROLL: 'SCROLL',
+
   FP_ID: 'FPID',
 } as const
 

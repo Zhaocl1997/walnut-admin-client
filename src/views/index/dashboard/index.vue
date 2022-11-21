@@ -1,5 +1,9 @@
 <template>
-  <div>dashboard</div>
+  <div>
+    dashboard
+
+    <div v-for="(item, index) in 500" :key="index">aabbccddeeff</div>
+  </div>
 </template>
 
 <script lang="ts" setup>

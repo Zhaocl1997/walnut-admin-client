@@ -1,5 +1,6 @@
-import { getPermissions } from '@/api/auth'
+import { cloneDeep } from 'lodash-es'
 
+import { getPermissions } from '@/api/auth'
 import { buildRoutes } from '@/router/utils/route'
 
 /**
@@ -10,6 +11,7 @@ import { buildRoutes } from '@/router/utils/route'
  */
 export const AppCoreFn1 = async () => {
   const appMenu = useAppStoreMenu()
+  const appTab = useAppStoreTab()
   const userPermission = useAppStoreUserPermission()
 
   const { addRoute, getRoutes } = AppRouter
@@ -20,8 +22,11 @@ export const AppCoreFn1 = async () => {
   // Here is where we request from back end to get login user permissions.
   const res = await getPermissions()
 
-  // set aside menu
-  appMenu.setMenus(appMenu.createMenus(res)!)
+  // set menu tree
+  appMenu.setMenus(appMenu.createMenus(cloneDeep(res))!)
+
+  // set affixed tabs
+  appTab.setAffixedTabs(cloneDeep(res))
 
   // set permission string array
   userPermission.setPermissions(userPermission.createPermissions(res))

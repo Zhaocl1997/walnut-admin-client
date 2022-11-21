@@ -55,6 +55,11 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
           component: node.component,
           menuActiveName: node.menuActiveName,
           menuActiveSameTab: node.menuActiveSameTab,
+          animationName: node.animationName,
+          badge: node.badge,
+          activeIcon: node.activeIcon,
+          position: node.position,
+          leaveTip: node.leaveTip,
         },
       }
     },
@@ -63,24 +68,19 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
      * @description create menus main function, filter and build/order tree
      */
     createMenus(payload: AppSystemMenu[]) {
-      const appTab = useAppStoreTab()
-
-      // filter `catalog` and `menu`
-      // in order to fit menu show in breadcrumb but do not show in menus, `show` filter is done in `TheAside` => `menu.vue`
-      const filtered = cloneDeep(payload).filter(
-        (i) => i.type !== AppConstMenuType.ELEMENT
+      // no element item
+      // and show item
+      const inputPayload = payload.filter(
+        (i) => i.type !== AppConstMenuType.ELEMENT && i.show
       )
 
-      // init the affixed tabs
-      appTab.initAffixedTabs(filtered)
-
       // build tree
-      const menuTree = arrToTree(filtered, { id: '_id' })
+      const treeMenu = arrToTree(inputPayload, { id: '_id' })
 
       // just pick the root children
-      const menus = orderTree(menuTree)[0].children
+      const treeOrdered = orderTree(treeMenu)
 
-      return menus
+      return treeOrdered[0].children
     },
 
     /**
