@@ -17,24 +17,10 @@
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
 
-  const { currentRoute } = useAppRouter()
-
   const getKeepAliveInclude = computed(() => {
     if (!appSetting.settings.app.keepAlive) return []
     return appMenu.keepAliveRouteNames
   })
 
-  const getTransitionName = computed(() => {
-    const setting = appSetting.settings.app
-    if (setting.showAnimation) {
-      if (setting.animationMode === AppConstAnimationMode.GLOBAL) {
-        return setting.animationName
-      } else {
-        return (
-          currentRoute.value.meta?.animationName || AppConstTransitionName.FADE
-        )
-      }
-    }
-    return null
-  })
+  const { getTransitionName } = useAppTransitionName()
 </script>

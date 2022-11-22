@@ -4,15 +4,7 @@
     v-for="item in getAllIFramePages"
     :key="item.name"
   >
-    <w-transition
-      :name="
-        appSetting.settings.app.showAnimation
-          ? appSetting.settings.app.animationName
-          : null
-      "
-      mode="out-in"
-      appear
-    >
+    <w-transition :name="getTransitionName" mode="out-in" appear>
       <WIFrame
         v-if="item.url && appTab.tabs.map((i) => i.name).includes(item.name!)"
         v-show="item.name === $route.name"
@@ -27,9 +19,10 @@
   import { cloneDeep } from 'lodash-es'
   import WIFrame from './index.vue'
 
-  const appSetting = useAppStoreSetting()
   const appMenu = useAppStoreMenu()
   const appTab = useAppStoreTab()
+
+  const { getTransitionName } = useAppTransitionName()
 
   const getAllIFramePages = computed(() =>
     treeToArr(cloneDeep(appMenu.menus))
