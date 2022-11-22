@@ -16,5 +16,7 @@ declare module 'vue-router' {
     activeIcon?: string
     position?: boolean
     leaveTip?: boolean
+
+    _top?: number
   }
 }

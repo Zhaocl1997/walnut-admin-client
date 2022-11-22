@@ -33,12 +33,12 @@
           v-if="!appSetting.settings.app.fixHeader"
         ></TheMainHeader>
 
-        <TheIFrameWrapper></TheIFrameWrapper>
-
-        <!-- <n-scrollbar v-if="$route.name" height="100%" @scroll="onScroll"> -->
-        <TheContent
-          :id="String($route.name)"
-          class="h-full overflow-y-auto"
+        <div
+          :id="$route.name"
+          :class="[
+            'h-full',
+            { 'overflow-y-auto styled-scrollbars': !$route.meta.url },
+          ]"
           :style="{
             padding: $route.meta.url
               ? 0
@@ -46,18 +46,18 @@
           }"
           @scroll="onScroll"
         >
-        </TheContent>
-        <!-- </n-scrollbar> -->
+          <TheIFrameWrapper></TheIFrameWrapper>
+          <TheContent></TheContent>
+        </div>
 
         <TheFooter v-if="!appSetting.settings.app.fixFooter"></TheFooter>
 
         <WAppSettings></WAppSettings>
 
         <n-back-top
-          v-if="show"
+          v-if="showBackToTop"
           :listen-to="`#${String($route.name)}`"
         ></n-back-top>
-        <!-- TODO -->
       </n-layout-content>
 
       <TheFooter v-if="appSetting.settings.app.fixFooter"></TheFooter>
@@ -82,27 +82,10 @@
   import { useAppLock } from '@/components/App/AppLock/useAppLock'
   import { useStarOnGithub } from './useStarOnGithub'
 
-  const { currentRoute } = useAppRouter()
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
-  const show = ref(true)
 
-  const onScroll = (e: Event) => {
-    console.log((e.target as HTMLElement).scrollTop)
-  }
-
-  watch(
-    () => currentRoute.value.name,
-    () => {
-      show.value = false
-      setTimeout(() => {
-        show.value = true
-      }, 1000)
-    },
-    {
-      immediate: true,
-    }
-  )
+  const { onscroll, showBackToTop } = useAppScroll()
 
   // TODO layout
   // watchEffect(() => {
@@ -132,3 +115,22 @@
     !isDev() && useStarOnGithub()
   }, 500)
 </script>
+
+<style>
+  .styled-scrollbars {
+    /* Foreground, Background */
+    scrollbar-color: #999 #333;
+  }
+  .styled-scrollbars::-webkit-scrollbar {
+    width: 8px; /* Mostly for vertical scrollbars */
+    height: 10px; /* Mostly for horizontal scrollbars */
+  }
+  .styled-scrollbars::-webkit-scrollbar-thumb {
+    /* Foreground */
+    background: #999;
+  }
+  .styled-scrollbars::-webkit-scrollbar-track {
+    /* Background */
+    background: #333;
+  }
+</style>

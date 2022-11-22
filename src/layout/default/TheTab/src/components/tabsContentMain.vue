@@ -70,8 +70,6 @@
   import { getTabsContext } from '../hooks/useTabsContext'
   import { useTabsSortable } from '../hooks/useTabsSortable'
 
-  const { t } = useAppI18n()
-
   const appTab = useAppStoreTab()
   const appSetting = useAppStoreSetting()
 

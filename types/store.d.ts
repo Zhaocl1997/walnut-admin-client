@@ -140,7 +140,7 @@ declare global {
   }
 
   interface UserScrollState {
-    scrollMap: RemovableRef<Map<string, { top: number; left?: number }>>
+    scrollEntries: RemovableRef<[string, { top: number; left?: number }][]>
   }
 }
 

@@ -42,6 +42,21 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     },
 
     /**
+     * @description set tab scroll top
+     */
+    setTabScrollTop(name: string, top: number) {
+      const index = this.tabs.findIndex((i) => i.name === name)
+
+      if (index === -1) return
+
+      this.setTab(index, {
+        meta: {
+          _top: top,
+        },
+      })
+    },
+
+    /**
      * @description set tab dynamic title
      * support speed and title horizontal scrolling
      */

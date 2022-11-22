@@ -4,14 +4,30 @@ import { store } from '../../pinia'
 
 const useAppStoreUserScrollInside = defineStore(StoreKeys.USER_SCROLL, {
   state: (): UserScrollState => ({
-    scrollMap: useAppStorage(AppConstPersistKey.SCROLL, new Map()),
+    scrollEntries: useAppStorage(AppConstPersistKey.SCROLL, [], Infinity),
   }),
 
-  getters: {},
+  getters: {
+    getScrollMap(state) {
+      return Object.fromEntries(state.scrollEntries)
+    },
+  },
 
   actions: {
     setScrollTop(name: string, top: number) {
-      this.scrollMap.set(name, { top })
+      const index = this.scrollEntries.findIndex((i) => i[0] === name)
+      if (index === -1) {
+        this.scrollEntries.push([name, { top }])
+      } else {
+        this.scrollEntries[index] = [name, { top }]
+      }
+    },
+
+    getScrollTop(name: string) {
+      if (this.getScrollMap[name]) {
+        return this.getScrollMap[name].top
+      }
+      return 0
     },
   },
 })
