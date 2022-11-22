@@ -3,6 +3,8 @@ import { easyIsEmpty } from 'easy-fns-ts'
 import { AppAuthPath, RouteWhiteLists } from '../constant'
 import { AppCoreFn1 } from '@/core'
 
+let removeEvent: Fn
+
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
     const userAuth = useAppStoreUserAuth()
@@ -10,6 +12,35 @@ export const createAuthGuard = (router: Router) => {
     const appMenu = useAppStoreMenu()
     const appKey = useAppStoreSecretKey()
     const appLock = useAppStoreLock()
+
+    // enter the `leaveTip` page, hang on the unload event
+    if (to.meta.leaveTip) {
+      removeEvent = useEventListener('beforeunload', (e) => {
+        e.preventDefault()
+        e.returnValue = '关闭提示'
+        return '关闭提示'
+      })
+    }
+
+    // when leaving from the `leaveTip` page
+    // ask user for confirm
+    // also remember to remove the unload event to make sure this only work on the `leaveTip` page
+    if (from.meta.leaveTip) {
+      const res = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
+        closable: false,
+        closeOnEsc: false,
+        maskClosable: false,
+      })
+
+      if (!res) {
+        next({ ...from, replace: true })
+        return
+      }
+
+      next()
+      removeEvent()
+      return
+    }
 
     // Paths in `RouteWhiteLists` will enter directly
     if (RouteWhiteLists.includes(to.path)) {

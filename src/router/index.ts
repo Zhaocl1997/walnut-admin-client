@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import { isInSetup } from '../utils/shared'
 import { routes } from './routes'
 import { createRouterGuard } from './guard'
 
@@ -8,12 +7,7 @@ export const AppRouter = createRouter({
   history: createWebHistory(),
   routes,
   strict: true,
-  // https://github.com/wukang0718/vueRouterEncryption
-  scrollBehavior: (to, from, savedPosition) => {
-    console.log(23)
-
-    return { top: 0, left: 0, behavior: 'smooth' }
-  },
+  // https://github.com/wukang0718/vueRouterEncryption,
 })
 
 export const setupRouter = (app: App) => {

@@ -38,6 +38,8 @@ const allViewModules = import.meta.glob('../../views/**/*.vue')
  * @description Util Function 4 - Resolve `views` dynamically base on `node.component` which equal to `path`
  */
 const resolveViewModules = (component: string) => {
+  if (!component) return
+
   const keys = Object.keys(allViewModules)
 
   // find the file location same index
