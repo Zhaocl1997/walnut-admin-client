@@ -1,3 +1,5 @@
+import type { DialogOptions } from 'naive-ui'
+
 export const useAppDialog = () => {
   return window.$dialog
 }
@@ -5,7 +7,7 @@ export const useAppDialog = () => {
 /**
  * @description some cases need to ask for user confirm to continue next action
  */
-export const useAppConfirm = (msg: string) => {
+export const useAppConfirm = (msg: string, options?: DialogOptions) => {
   const dialog = useAppDialog()
 
   return new Promise<boolean>((res) => {
@@ -15,6 +17,7 @@ export const useAppConfirm = (msg: string) => {
       negativeText: AppI18n.global?.t('app.button.no'),
       positiveText: AppI18n.global?.t('app.button.yes'),
       autoFocus: false,
+      ...options,
       onPositiveClick: () => {
         res(true)
       },
