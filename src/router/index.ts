@@ -2,12 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import { routes } from './routes'
 import { createRouterGuard } from './guard'
+import { stringifyQuery, parseQuery } from './utils/query'
 
 export const AppRouter = createRouter({
   history: createWebHistory(),
   routes,
   strict: true,
-  // https://github.com/wukang0718/vueRouterEncryption,
+  stringifyQuery: stringifyQuery,
+  parseQuery: parseQuery,
 })
 
 export const setupRouter = (app: App) => {
