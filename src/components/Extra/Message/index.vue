@@ -13,11 +13,17 @@
 
     setup(props, { attrs, slots, emit, expose }) {
       const formatMessage = () =>
-        typeof props.msg === 'string'
-          ? props.msg.includes('\\n')
-            ? props.msg.split('\\n').map((i) => <div>{i}</div>)
-            : props.msg
-          : props.msg?.map((i) => <div>{i}</div>)
+        typeof props.msg === 'string' ? (
+          props.msg.includes('\n') ? (
+            props.msg
+              .split('\n')
+              .map((i) => <div class="whitespace-pre-line">{i}</div>)
+          ) : (
+            <div class="whitespace-pre-line">{props.msg}</div>
+          )
+        ) : (
+          props.msg?.map((i) => <div>{i}</div>)
+        )
 
       return () => (
         <div>
