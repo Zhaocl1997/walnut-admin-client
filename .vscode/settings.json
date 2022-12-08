@@ -132,81 +132,86 @@
                         "properties": {
                             "layout": {
                                 "$ref": "#/definitions/ValueOfAppConstLayoutMode",
-                                "description": "App Layout",
+                                "description": "DX config\nApp Layout",
                                 "default": "left-menu"
                             },
                             "keepAlive": {
-                                "description": "Keep Alive component, vue features",
+                                "description": "DX config\nKeep Alive component, vue features",
                                 "default": true,
                                 "type": "boolean"
                             },
                             "contentPadding": {
-                                "description": "Content padding px",
+                                "description": "DX config\nContent padding px",
                                 "default": 2,
                                 "type": "number"
                             },
                             "routeQueryMode": {
                                 "$ref": "#/definitions/ValueOfAppConstRouteQueryMode",
-                                "description": "Rotue Query Features\n'normal' => no change to route query\n'enhanced' => make route query unreadable",
+                                "description": "DX config\nRotue Query Features\n'normal' => no change to route query\n'enhanced' => make route query unreadable",
                                 "default": "normal"
                             },
                             "routeQueryEnhancedMode": {
                                 "$ref": "#/definitions/ValueOfAppConstRouteQueryEnhancedMode",
-                                "description": "Route Query Enhanced Mode\nOnly works when `routeQueryMode` => 'enhanced'\n'base64' => stringify and transform to base64\n'cryptojs' => use `crypto-js` to encrypt/decrypt route query",
+                                "description": "DX config\nRoute Query Enhanced Mode\nOnly works when `routeQueryMode` => 'enhanced'\n'base64' => stringify and transform to base64\n'cryptojs' => use `crypto-js` to encrypt/decrypt route query",
                                 "default": "base64"
                             },
                             "transitionStatus": {
-                                "description": "Transition Component, vue features",
+                                "description": "DX config\nTransition Component, vue features",
                                 "default": true,
                                 "type": "boolean"
                             },
                             "transitionMode": {
                                 "$ref": "#/definitions/ValueOfAppConstBasicMode",
-                                "description": "Transition Mode\n'global' => use `transitionName` for transition name\n'scope' => use the transition info in route `meta` object",
+                                "description": "DX config\nTransition Mode\n'global' => use `transitionName` for transition name\n'scope' => use the transition info in route `meta` object",
                                 "default": "scope"
                             },
                             "transitionName": {
                                 "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "Global Transition Name\nOnly works when `transitionMode` => 'global'",
+                                "description": "DX config\nGlobal Transition Name\nOnly works when `transitionMode` => 'global'",
                                 "default": "fade"
                             },
                             "watermarkStatus": {
-                                "description": "Watermark features on use or not",
+                                "description": "DX config\nWatermark features on use or not",
                                 "default": true,
                                 "type": "boolean"
                             },
                             "watermarkMode": {
                                 "$ref": "#/definitions/ValueOfAppConstBasicMode",
-                                "description": "Watermark Mode\n'global' => use `watermarkContent` for watermark content\n'scope' => use the watermark info in route `meta` object",
+                                "description": "DX config\nWatermark Mode\n'global' => use `watermarkContent` for watermark content\n'scope' => use the watermark info in route `meta` object",
                                 "default": "scope"
                             },
                             "watermarkContent": {
-                                "description": "Global Watermark Content\nOnly works when `watermarkMode` => 'global'",
+                                "description": "DX config\nGlobal Watermark Content\nOnly works when `watermarkMode` => 'global'",
                                 "default": "walnut-admin",
                                 "type": "string"
                             },
                             "lockStatus": {
-                                "description": "Lock Features on use or not",
+                                "description": "DX config\nLock Features on use or not",
                                 "default": true,
                                 "type": "boolean"
                             },
                             "lockMode": {
                                 "$ref": "#/definitions/ValueOfAppConstLockMode",
-                                "description": "Lock Mode\n'default' => user can manually to lock tha application\n'security' => more secure usage, app would lock when user's mouse leave the app or change the browser/system tabs\n'idle' => app would auto lock when user is idle for some time",
+                                "description": "DX config\nLock Mode\n'default' => user can manually to lock tha application\n'security' => more secure usage, app would lock when user's mouse leave the app or change the browser/system tabs\n'idle' => app would auto lock when user is idle for some time",
                                 "default": "default"
                             },
                             "lockIdleSeconds": {
-                                "description": "User inactive seconds to lock app",
+                                "description": "DX config\nUser inactive seconds to lock app",
                                 "default": 5,
                                 "type": "number"
                             },
+                            "hijackRefresh": {
+                                "description": "DX config\nuse event listener to hijack the refresh action and use redirect to refresh the current route",
+                                "default": true,
+                                "type": "boolean"
+                            },
                             "colorMode": {
                                 "$ref": "#/definitions/ValueOfAppConstColorMode",
-                                "description": "More UX config, just different css tricks to fitler the app in view",
+                                "description": "UX config\njust different css tricks to fitler the app in view",
                                 "default": "default"
                             },
                             "reducedMotion": {
-                                "description": "More UX config, for those who cannot see animation viewing the internet",
+                                "description": "UX config\nfor those who cannot see animation viewing the internet",
                                 "default": false,
                                 "type": "boolean"
                             }
@@ -214,6 +219,7 @@
                         "required": [
                             "colorMode",
                             "contentPadding",
+                            "hijackRefresh",
                             "keepAlive",
                             "layout",
                             "lockIdleSeconds",

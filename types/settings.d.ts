@@ -23,24 +23,28 @@ import {
 
 interface AppSettingsForApp {
   /**
+   * DX config
    * App Layout
    * @default left-menu
    */
   layout: ValueOfAppConstLayoutMode
 
   /**
+   * DX config
    * Keep Alive component, vue features
    * @default true
    */
   keepAlive: boolean
 
   /**
+   * DX config
    * Content padding px
    * @default 2
    */
   contentPadding: number
 
   /**
+   * DX config
    * Rotue Query Features
    * 'normal' => no change to route query
    * 'enhanced' => make route query unreadable
@@ -49,6 +53,7 @@ interface AppSettingsForApp {
   routeQueryMode: ValueOfAppConstRouteQueryMode
 
   /**
+   * DX config
    * Route Query Enhanced Mode
    * Only works when `routeQueryMode` => 'enhanced'
    * 'base64' => stringify and transform to base64
@@ -58,12 +63,14 @@ interface AppSettingsForApp {
   routeQueryEnhancedMode: ValueOfAppConstRouteQueryEnhancedMode
 
   /**
+   * DX config
    * Transition Component, vue features
    * @default true
    */
   transitionStatus: boolean
 
   /**
+   * DX config
    * Transition Mode
    * 'global' => use `transitionName` for transition name
    * 'scope' => use the transition info in route `meta` object
@@ -72,6 +79,7 @@ interface AppSettingsForApp {
   transitionMode: ValueOfAppConstBasicMode
 
   /**
+   * DX config
    * Global Transition Name
    * Only works when `transitionMode` => 'global'
    * @default fade
@@ -79,12 +87,14 @@ interface AppSettingsForApp {
   transitionName: ValueOfAppConstTransitionName
 
   /**
+   * DX config
    * Watermark features on use or not
    * @default true
    */
   watermarkStatus: boolean
 
   /**
+   * DX config
    * Watermark Mode
    * 'global' => use `watermarkContent` for watermark content
    * 'scope' => use the watermark info in route `meta` object
@@ -93,6 +103,7 @@ interface AppSettingsForApp {
   watermarkMode: ValueOfAppConstBasicMode
 
   /**
+   * DX config
    * Global Watermark Content
    * Only works when `watermarkMode` => 'global'
    * @default walnut-admin
@@ -100,12 +111,14 @@ interface AppSettingsForApp {
   watermarkContent: string
 
   /**
+   * DX config
    * Lock Features on use or not
    * @default true
    */
   lockStatus: boolean
 
   /**
+   * DX config
    * Lock Mode
    * 'default' => user can manually to lock tha application
    * 'security' => more secure usage, app would lock when user's mouse leave the app or change the browser/system tabs
@@ -115,26 +128,37 @@ interface AppSettingsForApp {
   lockMode: ValueOfAppConstLockMode
 
   /**
+   * DX config
    * User inactive seconds to lock app
    * @default 5
    */
   lockIdleSeconds: number
 
   /**
-   * More UX config, just different css tricks to fitler the app in view
+   * DX config
+   * use event listener to hijack the refresh action and use redirect to refresh the current route
+   * @default true
+   */
+  hijackRefresh: boolean
+
+  /**
+   * UX config
+   * just different css tricks to fitler the app in view
    * @default default
    */
   colorMode: ValueOfAppConstColorMode
 
   /**
-   * More UX config, for those who cannot see animation viewing the internet
+   * UX config
+   * for those who cannot see animation viewing the internet
    * @default false
    */
   reducedMotion: boolean
 
   /**
    * TODO
-   * More UX config, should provide several configs like 10px/12px/14px/16px/18px/20px
+   * UX config
+   * should provide several configs like 10px/12px/14px/16px/18px/20px
    * @default 16
    */
   // baseFontSize: number

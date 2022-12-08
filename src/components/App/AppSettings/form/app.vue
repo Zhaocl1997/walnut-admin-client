@@ -215,6 +215,14 @@
       },
 
       {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'hijackRefresh',
+          labelHelpMessage: true,
+        },
+      },
+
+      {
         type: 'Base:Select',
         formProp: {
           path: 'colorMode',
