@@ -35,31 +35,6 @@ export const AppConstCollapseMode = {
 export type ValueOfAppConstCollapseMode =
   typeof AppConstCollapseMode[keyof typeof AppConstCollapseMode]
 
-export const AppConstTabStyleMode = {
-  ROUND: 'round',
-  FLEX: 'flex',
-  CARD: 'card',
-} as const
-
-export type ValueOfAppConstTabStyleMode =
-  typeof AppConstTabStyleMode[keyof typeof AppConstTabStyleMode]
-
-export const AppConstTabCloseMode = {
-  ALWAYS: 'always',
-  HOVER: 'hover',
-} as const
-
-export type ValueOfAppConstTabCloseMode =
-  typeof AppConstTabCloseMode[keyof typeof AppConstTabCloseMode]
-
-export const AppConstTabAffixMode = {
-  ICON: 'icon',
-  PIN: 'pin',
-} as const
-
-export type ValueOfAppConstTabAffixMode =
-  typeof AppConstTabAffixMode[keyof typeof AppConstTabAffixMode]
-
 export const AppConstLayoutMode = {
   LEFT_MENU: 'left-menu',
   TOP_MENU: 'top-menu',
@@ -77,13 +52,13 @@ export const AppConstLockMode = {
 export type ValueOfAppConstLockMode =
   typeof AppConstLockMode[keyof typeof AppConstLockMode]
 
-export const AppConstAnimationMode = {
+export const AppConstBasicMode = {
   GLOBAL: 'global',
   SCOPE: 'scope',
 } as const
 
-export type ValueOfAppConstAnimationMode =
-  typeof AppConstAnimationMode[keyof typeof AppConstAnimationMode]
+export type ValueOfAppConstBasicMode =
+  typeof AppConstBasicMode[keyof typeof AppConstBasicMode]
 
 export const AppConstColorMode = {
   DEFAULT: 'default',
@@ -96,3 +71,19 @@ export const AppConstColorMode = {
 
 export type ValueOfAppConstColorMode =
   typeof AppConstColorMode[keyof typeof AppConstColorMode]
+
+export const AppConstRouteQueryMode = {
+  NORMAL: 'normal',
+  ENHANCED: 'enhanced',
+} as const
+
+export type ValueOfAppConstRouteQueryMode =
+  typeof AppConstRouteQueryMode[keyof typeof AppConstRouteQueryMode]
+
+export const AppConstRouteQueryEnhancedMode = {
+  BASE64: 'base64',
+  CRYPTOJS: 'cryptojs',
+} as const
+
+export type ValueOfAppConstRouteQueryEnhancedMode =
+  typeof AppConstRouteQueryEnhancedMode[keyof typeof AppConstRouteQueryEnhancedMode]

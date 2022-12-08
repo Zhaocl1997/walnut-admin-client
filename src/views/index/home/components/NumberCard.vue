@@ -37,7 +37,7 @@
             :from="0"
             :to="number"
             show-separator
-            :duration="appSettings.settings.app.reducedMotion ? 0 : 3000"
+            :duration="appSettings.app.reducedMotion ? 0 : 3000"
           ></n-number-animation>
 
           <w-transition appear name="slide-up">

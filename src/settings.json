@@ -1,4 +1,22 @@
 {
+  "app": {
+    "layout": "left-menu",
+    "keepAlive": true,
+    "contentPadding": 2,
+    "routeQueryMode": "normal",
+    "routeQueryEnhancedMode": "base64",
+    "transitionStatus": true,
+    "transitionMode": "scope",
+    "transitionName": "fade",
+    "watermarkStatus": true,
+    "watermarkMode": "scope",
+    "watermarkContent": "walnut-admin",
+    "lockStatus": true,
+    "lockMode": "default",
+    "lockIdleSeconds": 5,
+    "colorMode": "default",
+    "reducedMotion": false
+  },
   "themes": {
     "light": {
       "primaryColor": "#18a058",
@@ -19,30 +37,54 @@
       "invertedColor": "#2C3E50"
     }
   },
-  "app": {
-    "showLogo": true,
-    "showMenu": true,
-    "showHeader": true,
-    "showTabs": true,
-    "showFooter": true,
-    "fixLogo": true,
-    "fixHeader": true,
-    "fixFooter": true,
-    "showAnimation": true,
-    "animationMode": "scope",
-    "animationName": "fade",
-    "keepAlive": true,
-    "layout": "left-menu",
-    "lockMode": "default",
-    "idleMS": 5000,
-    "contentPadding": 2,
-    "showWatermark": false,
-    "watermarkContent": "walnut-admin",
-    "colorMode": "default",
-    "reducedMotion": true
+  "logo": {
+    "id": "walnut-logo",
+    "fixed": true,
+    "status": true,
+    "transition": "slide-left"
+  },
+  "header": {
+    "id": "walnut-header",
+    "fixed": true,
+    "status": true,
+    "inverted": true,
+    "transition": "slide-up",
+    "height": 48,
+    "fullscreen": true,
+    "search": true
+  },
+  "tabs": {
+    "id": "walnut-tabs",
+    "fixed": true,
+    "status": true,
+    "inverted": true,
+    "transition": "slide-up",
+    "height": 40,
+    "itemWidth": 120,
+    "showIcon": true,
+    "showUtils": true,
+    "utilsMode": "overflow",
+    "contextMenu": true,
+    "sortable": true,
+    "styleMode": "card",
+    "itemTransition": "fade-down",
+    "persistent": true,
+    "closeMode": "hover",
+    "affixMode": "icon"
+  },
+  "breadcrumb": {
+    "id": "walnut-breadcrumb",
+    "status": true,
+    "transition": "fade-down",
+    "showIcon": true,
+    "showDropdown": true,
+    "separator": ">"
   },
   "menu": {
-    "showCollapse": true,
+    "id": "walnut-menu",
+    "status": true,
+    "transition": "slide-left",
+    "collapseStatus": true,
     "collapseMode": "bar",
     "width": 240,
     "collapsedWidth": 64,
@@ -52,33 +94,13 @@
     "indent": 16,
     "inverted": true
   },
-  "header": {
-    "height": 48,
-    "showBreadcrumb": true,
-    "showFullScreen": true,
-    "showLocale": true,
-    "showDarkMode": true,
-    "showLock": true,
-    "showSearch": true,
-    "inverted": true
-  },
-  "tab": {
-    "height": 32,
-    "width": 120,
-    "showIcon": true,
-    "showUtils": true,
-    "showUtilsMode": "overflow",
-    "contextMenu": true,
-    "sortable": true,
-    "styleMode": "card",
-    "animationName": "fade-down",
-    "persistent": true,
-    "closeMode": "hover",
-    "affixMode": "icon"
-  },
-  "breadcrumb": {
-    "showIcon": true,
-    "showDropdown": true,
-    "separator": ">"
+  "footer": {
+    "id": "walnut-footer",
+    "fixed": true,
+    "status": true,
+    "inverted": true,
+    "transition": "slide-down",
+    "height": 28,
+    "content": "Copyright © 2020-present Walnut Admin. All Rights Reserved."
   }
 }

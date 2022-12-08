@@ -1,14 +1,9 @@
 import { getMergedTheme } from '@/App/src/naive/src/theme'
 
-export const modalColor = computed(
-  () => getMergedTheme.value?.Drawer.common?.modalColor
-)
+const appSetting = useAppStoreSetting()
 
-export const appSetting = useAppStoreSetting()
-export const lightThemeRelatives = ref(appSetting.settings.themes.light)
-export const darkThemeRelatives = ref(appSetting.settings.themes.dark)
-export const appRelatives = ref(appSetting.settings.app)
-export const menuRelatives = ref(appSetting.settings.menu)
-export const headerRelatives = ref(appSetting.settings.header)
-export const breadcrumbRelatives = ref(appSetting.settings.breadcrumb)
-export const tabRelatives = ref(appSetting.settings.tab)
+export const modalColor = computed(() => getMergedTheme.value.common.bodyColor)
+
+export const getCanAnimate = computed(
+  () => _APP_CAN_SYSTEM_ANIMATE_.value && appSetting.app.reducedMotion
+)

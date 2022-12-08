@@ -1,33 +1,54 @@
 <template>
-  <div id="walnut-tab" class="hstack justify-between">
-    <w-transition appear name="fade-left">
-      <div v-if="getShowUtils" class="hstack flex-none justify-start">
-        <TabsUtils :lists="leftUtils"></TabsUtils>
-      </div>
-    </w-transition>
-
-    <TabsContentMain
-      :style="{
-        width: appAdapter.isMobile
-          ? '100vw'
-          : `calc(100vw - ${appSetting.settings.menu.width}px - ${
-              isOverflow ? '120px' : '0px'
-            })`,
+  <w-transition appear :name="appSetting.getTabsTrasition">
+    <n-layout-header
+      :id="appSetting.getTabsId"
+      v-if="appSetting.getTabsShow"
+      bordered
+      :inverted="appSetting.getTabsInverted"
+      :style="{ zIndex: 999, height: `${appSetting.tabs.height}px` }"
+      :class="{
+        'top-0': appSetting.getTabsFixed,
+        '!top-[48px]': appSetting.getHeaderShow && appSetting.getHeaderFixed,
       }"
-    ></TabsContentMain>
+      class="flex-none sticky left-0"
+    >
+      <div class="h-full hstack justify-between">
+        <!-- left utils -->
+        <w-transition appear name="fade-left">
+          <TabsUtils
+            v-if="getShowUtils"
+            class="hstack flex-none justify-start"
+            :lists="leftUtils"
+          ></TabsUtils>
+        </w-transition>
 
-    <w-transition appear name="fade-right">
-      <div v-if="getShowUtils" class="hstack flex-none justify-end">
-        <TabsUtils :lists="rightUtils"></TabsUtils>
+        <TabsContentMain
+          :style="{
+            width: appAdapter.isMobile
+              ? '100vw'
+              : `calc(100vw - ${appSetting.menu.width}px - ${
+                  isOverflow ? '120px' : '0px'
+                })`,
+          }"
+        ></TabsContentMain>
+
+        <!-- right utils -->
+        <w-transition appear name="fade-right">
+          <TabsUtils
+            v-if="getShowUtils"
+            class="hstack flex-none justify-end"
+            :lists="rightUtils"
+          ></TabsUtils>
+        </w-transition>
+
+        <!-- tabs contextmenu -->
+        <TabsContextMenu></TabsContextMenu>
+
+        <!-- dev tools -->
+        <TabsDevTools></TabsDevTools>
       </div>
-    </w-transition>
-
-    <TabsContextMenu
-      v-if="appSetting.settings.tab.contextMenu"
-    ></TabsContextMenu>
-
-    <TabsDevTools v-if="getShowDevTools"></TabsDevTools>
-  </div>
+    </n-layout-header>
+  </w-transition>
 </template>
 
 <script lang="ts" setup>
@@ -49,16 +70,12 @@
   const appSetting = useAppStoreSetting()
   const appAdapter = useAppStoreAdapter()
 
-  const getShowDevTools = computed(() => isDev() && !appAdapter.isMobile)
-
   const getShowUtils = computed(
     () =>
       !appAdapter.isMobile &&
-      appSetting.settings.tab.showUtils &&
-      (appSetting.settings.tab.showUtilsMode ===
-        AppConstTabUtilsShowMode.ALWAYS ||
-        (appSetting.settings.tab.showUtilsMode ===
-          AppConstTabUtilsShowMode.OVERFLOW &&
+      appSetting.tabs.showUtils &&
+      (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.ALWAYS ||
+        (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.OVERFLOW &&
           isOverflow.value))
   )
 

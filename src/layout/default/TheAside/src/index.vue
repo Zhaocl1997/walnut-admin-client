@@ -4,42 +4,19 @@
     bordered
     collapse-mode="width"
     class="h-screen"
-    :width="appSetting.settings.menu.width"
-    :collapsed-width="appSetting.settings.menu.collapsedWidth"
-    :show-trigger="appSetting.getShowMenuCollapseBuiltIn"
-    :inverted="appSetting.settings.menu.inverted"
+    :width="appSetting.menu.width"
+    :collapsed-width="appSetting.menu.collapsedWidth"
+    :show-trigger="appSetting.getMenuCollapseBuiltInStatus"
+    :inverted="appSetting.getMenuInverted"
     :native-scrollbar="false"
   >
     <div class="select-none overflow-hidden">
-      <w-transition appear name="slide-left">
-        <AsideLogo
-          v-if="appSetting.settings.app.showLogo"
-          :class="[{ fixed: appSetting.settings.app.fixLogo }]"
-        ></AsideLogo>
-      </w-transition>
+      <AsideLogo></AsideLogo>
 
-      <w-transition appear name="slide-left">
-        <AsideMenu
-          v-if="appSetting.settings.app.showMenu"
-          :class="[
-            'transition-all',
-            {
-              'pb-6': appSetting.getShowMenuCollapseButton,
-              absolute: appSetting.settings.app.fixLogo,
-            },
-          ]"
-          :style="{
-            paddingTop:
-              (appSetting.settings.app.showLogo &&
-              appSetting.settings.app.fixLogo
-                ? appSetting.settings.header.height
-                : 0) + 'px',
-          }"
-        ></AsideMenu>
-      </w-transition>
+      <AsideMenu></AsideMenu>
 
       <MenuCollpaseButton
-        v-if="appSetting.getShowMenuCollapseButton"
+        v-if="appSetting.getMenuCollapseButtonStatus"
       ></MenuCollpaseButton>
     </div>
   </n-layout-sider>

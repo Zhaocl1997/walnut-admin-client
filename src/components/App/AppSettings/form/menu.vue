@@ -3,19 +3,23 @@
 </template>
 
 <script lang="ts" setup>
-  import { appRelatives, menuRelatives, modalColor } from '../shared'
+  import { modalColor, getCanAnimate } from '../shared'
 
   const appMenu = useAppStoreMenu()
   const appDark = useAppStoreDark()
 
-  const [register] = useForm<typeof menuRelatives.value>({
-    localeUniqueKey: 'app.menu',
+  const appSetting = useAppStoreSetting()
+
+  const menuRelatives = appSetting.menu
+
+  const [register] = useForm<typeof menuRelatives>({
+    localeUniqueKey: 'app.settings.menu',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
-    formItemComponentClass: 'w-32 flex justify-end',
+    formItemComponentClass: '!w-32 flex justify-end',
     size: 'small',
-    disabled: computed(() => !appRelatives.value.showMenu),
+    disabled: computed(() => !menuRelatives.status),
     schemas: [
       {
         type: 'Extend:Divider',
@@ -33,43 +37,51 @@
       {
         type: 'Base:Switch',
         formProp: {
-          path: 'showCollapse',
+          path: 'status',
+        },
+        componentProp: {
+          disabled: false,
         },
       },
       {
-        type: 'Base:Select',
+        type: 'Base:Input',
         formProp: {
-          path: 'collapseMode',
-        },
-        componentProp: {
-          options: Object.values(AppConstCollapseMode).map((i) => ({
-            value: i,
-            label: i,
-          })),
-          disabled: computed(
-            () =>
-              !appRelatives.value.showMenu || !menuRelatives.value.showCollapse
-          ),
+          path: 'id',
         },
       },
-
+      {
+        type: 'Extend:TransitionSelect',
+        formProp: {
+          path: 'transition',
+        },
+        componentProp: {
+          disabled: computed(
+            () => !menuRelatives.status || getCanAnimate.value
+          ),
+          tooltip: true,
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'inverted',
+        },
+        componentProp: {
+          disabled: computed(() => !menuRelatives.status || appDark.isDark),
+        },
+      },
       {
         type: 'Base:InputNumber',
         formProp: {
           path: 'width',
         },
         componentProp: {
-          step: 10,
-          disabled: computed(() => appMenu.collapse),
-        },
-      },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'collapsedWidth',
-        },
-        componentProp: {
-          disabled: computed(() => !appMenu.collapse),
+          step: 1,
+          min: 0,
+          suffix: 'px',
+          showButton: false,
+          precision: 0,
+          disabled: computed(() => !menuRelatives.status || appMenu.collapse),
         },
       },
       {
@@ -84,16 +96,12 @@
           path: 'iconSize',
         },
         componentProp: {
-          disabled: computed(() => appMenu.collapse),
-        },
-      },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'collapsedIconSize',
-        },
-        componentProp: {
-          disabled: computed(() => !appMenu.collapse),
+          step: 1,
+          min: 0,
+          suffix: 'px',
+          showButton: false,
+          precision: 0,
+          disabled: computed(() => !menuRelatives.status || appMenu.collapse),
         },
       },
       {
@@ -102,16 +110,61 @@
           path: 'indent',
         },
         componentProp: {
-          disabled: computed(() => appMenu.collapse),
+          step: 1,
+          min: 0,
+          suffix: 'px',
+          showButton: false,
+          precision: 0,
+          disabled: computed(() => !menuRelatives.status || appMenu.collapse),
         },
       },
       {
         type: 'Base:Switch',
         formProp: {
-          path: 'inverted',
+          path: 'collapseStatus',
+        },
+      },
+      {
+        type: 'Base:Select',
+        formProp: {
+          path: 'collapseMode',
         },
         componentProp: {
-          disabled: computed(() => appDark.isDark),
+          options: Object.values(AppConstCollapseMode).map((i) => ({
+            value: i,
+            label: i,
+          })),
+          disabled: computed(
+            () => !menuRelatives.status || !menuRelatives.collapseStatus
+          ),
+        },
+      },
+      {
+        type: 'Base:InputNumber',
+        formProp: {
+          path: 'collapsedIconSize',
+        },
+        componentProp: {
+          step: 1,
+          min: 0,
+          suffix: 'px',
+          showButton: false,
+          precision: 0,
+          disabled: computed(() => !menuRelatives.status || !appMenu.collapse),
+        },
+      },
+      {
+        type: 'Base:InputNumber',
+        formProp: {
+          path: 'collapsedWidth',
+        },
+        componentProp: {
+          step: 1,
+          min: 0,
+          suffix: 'px',
+          showButton: false,
+          precision: 0,
+          disabled: computed(() => !menuRelatives.status || !appMenu.collapse),
         },
       },
     ],

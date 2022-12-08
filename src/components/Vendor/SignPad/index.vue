@@ -209,7 +209,7 @@
 
     onResize(canvas)
 
-    useResize(() => onResize(canvas))
+    useWindowResize(() => onResize(canvas))
   }
 
   const onChangePencil = (v: number) => {

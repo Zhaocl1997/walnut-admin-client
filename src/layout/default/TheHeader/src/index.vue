@@ -1,78 +1,81 @@
 <template>
-  <div class="select-none">
-    <div class="hstack justify-between h-full items-center">
-      <div class="hstack items-center justify-between space-x-2">
-        <img
-          v-if="appAdapter.isMobile"
-          src="/assets/logo.png"
-          :alt="`${AppTitle} Logo`"
-          class="h-9 w-9 m-1"
-          @click="onShowAside"
-        />
-
-        <template v-else>
-          <HeaderCollapse
-            v-if="appSetting.getShowMenuCollapseIcon"
-          ></HeaderCollapse>
-
-          <w-transition name="slide-left">
-            <HeaderBreadCrumb
-              v-if="appSetting.settings.header.showBreadcrumb"
-            ></HeaderBreadCrumb>
-          </w-transition>
-        </template>
-
-        <w-transition name="slide-up">
-          <div
-            v-if="appSetting.settings.app.layout === 'top-menu'"
-            class="hstack items-center justify-between"
-          >
-            <TheLogo class="mr-16"></TheLogo>
-            <TheMenu></TheMenu>
-          </div>
-        </w-transition>
-      </div>
-
+  <w-transition appear :name="appSetting.getHeaderTransition">
+    <n-layout-header
+      :id="appSetting.getHeaderId"
+      v-if="appSetting.getHeaderShow"
+      bordered
+      :inverted="appSetting.getHeaderInverted"
+      :style="{
+        zIndex: 999,
+        height: `${appSetting.header.height}px`,
+      }"
+      :class="{ 'top-0': appSetting.getHeaderFixed }"
+      class="flex-none sticky left-0"
+    >
       <div
-        :class="[
-          'hstack justify-end space-x-2 h-full',
-          { 'space-x-1': appAdapter.isMobile },
-        ]"
-        w:children="cursor-pointer flex items-center px-0.5 h-full"
+        class="h-full select-none px-2 hstack justify-between h-full items-center"
       >
-        <WAppFullScreen
-          id="walnut-fullscreen"
-          :isFullscreen="isFullscreen"
-          :click-event="toggle"
-          v-if="
-            !appAdapter.isMobile && appSetting.settings.header.showFullScreen
-          "
-        ></WAppFullScreen>
+        <!-- left -->
+        <div class="hstack items-center justify-between space-x-2">
+          <img
+            v-if="appAdapter.isMobile"
+            src="/assets/logo.png"
+            :alt="`${AppTitle} Logo`"
+            class="h-9 w-9 m-1"
+            @click="onShowAside"
+          />
 
-        <WAppLock
-          id="walnut-lock"
-          v-if="appSetting.settings.header.showLock"
-        ></WAppLock>
+          <template v-else>
+            <HeaderCollapse></HeaderCollapse>
 
-        <WAppSearch
-          id="walnut-search"
-          v-if="appSetting.settings.header.showSearch"
-        ></WAppSearch>
+            <HeaderBreadCrumb></HeaderBreadCrumb>
+          </template>
 
-        <WAppLocalePicker
-          id="walnut-locale"
-          v-if="appSetting.settings.header.showLocale"
-        ></WAppLocalePicker>
+          <!-- <w-transition name="slide-up">
+              <div
+                v-if="appSetting.app.layout === 'top-menu'"
+                class="hstack items-center justify-between"
+              >
+                <TheLogo class="mr-16"></TheLogo>
+                <TheMenu></TheMenu>
+              </div>
+            </w-transition> -->
+        </div>
 
-        <WAppDarkMode
-          id="walnut-dark"
-          v-if="appSetting.settings.header.showDarkMode"
-        ></WAppDarkMode>
+        <!-- right -->
+        <div
+          :class="[
+            'hstack justify-end space-x-2 h-full',
+            { 'space-x-1': appAdapter.isMobile },
+          ]"
+          w:children="cursor-pointer flex items-center px-0.5 h-full"
+        >
+          <WAppFullScreen
+            id="walnut-fullscreen"
+            :isFullscreen="isFullscreen"
+            :click-event="toggle"
+            v-if="!appAdapter.isMobile && appSetting.header.fullscreen"
+          ></WAppFullScreen>
 
-        <HeaderDropdown></HeaderDropdown>
+          <WAppLock
+            id="walnut-lock"
+            v-if="appSetting.app.lockStatus"
+          ></WAppLock>
+
+          <WAppSearch
+            id="walnut-search"
+            v-if="appSetting.header.search"
+          ></WAppSearch>
+
+          <WAppLocalePicker id="walnut-locale"></WAppLocalePicker>
+
+          <WAppDarkMode id="walnut-dark"></WAppDarkMode>
+
+          <HeaderDropdown></HeaderDropdown>
+        </div>
       </div>
-    </div>
-  </div>
+    </n-layout-header>
+  </w-transition>
 </template>
 
 <script lang="ts" setup>

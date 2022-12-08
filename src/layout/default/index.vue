@@ -2,15 +2,15 @@
   <n-layout has-sider>
     <w-transition appear name="slide-left">
       <TheAside
-        v-if="appSetting.getShowNormalAside"
+        v-if="appSetting.getMenuAdapterStatus"
         class="walnut-aside"
       ></TheAside>
     </w-transition>
 
     <n-drawer
-      v-if="!appSetting.getShowNormalAside"
+      v-if="!appSetting.getMenuAdapterStatus"
       v-model:show="appMenu.showAside"
-      :width="appSetting.settings.menu.width + 'px'"
+      :width="appSetting.menu.width + 'px'"
       placement="left"
       :native-scrollbar="false"
     >
@@ -18,53 +18,46 @@
     </n-drawer>
 
     <div class="vstack flex-1 h-screen w-full overflow-x-hidden">
-      <TheMainHeader
-        v-if="appSetting.settings.app.fixHeader"
-        class="walnut-header"
-      ></TheMainHeader>
-
       <n-layout-content
         bordered
         :native-scrollbar="false"
         :content-style="{ height: '100%' }"
-        class="walnut-content"
+        class="relative"
       >
-        <TheMainHeader
-          v-if="!appSetting.settings.app.fixHeader"
-        ></TheMainHeader>
-
         <div
           :id="$route.name"
           :class="[
-            'h-full',
-            { 'overflow-y-auto styled-scrollbars': !$route.meta.url },
+            'h-full relative flex flex-col',
+            {
+              'overflow-y-auto styled-scrollbars': !$route.meta.url,
+            },
           ]"
-          :style="{
-            padding: $route.meta.url
-              ? 0
-              : appSetting.settings.app.contentPadding + 'px',
-          }"
           @scroll="onScroll"
         >
+          <TheHeader></TheHeader>
+          <TheTabs></TheTabs>
+
           <TheIFrameWrapper></TheIFrameWrapper>
-          <TheContent></TheContent>
+
+          <!-- TODO min-w-fit a flag to controll? -->
+          <TheContent
+            class="grow"
+            :style="{
+              padding: $route.meta.url
+                ? 0
+                : appSetting.app.contentPadding + 'px',
+            }"
+          ></TheContent>
+
+          <WAppSettings></WAppSettings>
+
+          <TheFooter></TheFooter>
         </div>
 
-        <TheFooter v-if="!appSetting.settings.app.fixFooter"></TheFooter>
-
-        <WAppSettings></WAppSettings>
-
-        <n-back-top
-          v-if="showBackToTop"
-          :listen-to="`#${String($route.name)}`"
-        ></n-back-top>
+        <TheAppBackToTop></TheAppBackToTop>
       </n-layout-content>
 
-      <TheFooter v-if="appSetting.settings.app.fixFooter"></TheFooter>
-
-      <TheAppWatermark
-        v-if="appSetting.settings.app.showWatermark"
-      ></TheAppWatermark>
+      <TheAppWatermark></TheAppWatermark>
     </div>
   </n-layout>
 </template>
@@ -73,11 +66,13 @@
   import TheAside from './TheAside'
   import TheContent from './TheContent'
   import TheFooter from './TheFooter'
+  import TheHeader from './TheHeader'
+  import TheTabs from './TheTab'
 
   import TheIFrameWrapper from '../iframe/wrapper.vue'
-  import TheMainHeader from './MainHeader.vue'
 
-  import TheAppWatermark from '@/components/App/AppWatermark'
+  import TheAppWatermark from './Features/watermark.vue'
+  import TheAppBackToTop from './Features/backToTop.vue'
 
   import { useAppLock } from '@/components/App/AppLock/useAppLock'
   import { useStarOnGithub } from './useStarOnGithub'
@@ -85,7 +80,7 @@
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
 
-  const { onscroll, showBackToTop } = useAppScroll()
+  const { onScroll } = useAppScroll()
 
   // TODO layout
   // watchEffect(() => {

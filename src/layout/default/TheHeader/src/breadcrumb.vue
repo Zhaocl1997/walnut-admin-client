@@ -38,7 +38,7 @@
 
       const renderBase = (item: AppSystemMenu) => (
         <div class="inline">
-          {appSetting.settings.breadcrumb.showIcon && (
+          {appSetting.breadcrumb.showIcon && (
             <w-icon icon={item.icon} height="20" class="mr-1 -mb-1"></w-icon>
           )}
           <span class="">{t(item.title!)}</span>
@@ -56,7 +56,7 @@
               ({
                 key: i.name,
                 label: t(i?.title!),
-                icon: appSetting.settings.breadcrumb.showIcon
+                icon: appSetting.breadcrumb.showIcon
                   ? () => <w-icon icon={i?.icon} height="20"></w-icon>
                   : null,
                 children: genOptions(i.children),
@@ -78,25 +78,29 @@
       )
 
       return () => (
-        <n-config-provider
-          id="walnut-breadcrumb"
-          theme={
-            (!appDark.isDark && appSetting.settings.header.inverted) ||
-            appDark.isDark
-              ? darkTheme
-              : null
-          }
-        >
-          <n-breadcrumb separator={appSetting.settings.breadcrumb.separator}>
-            {getChildren.value?.map((item) => (
-              <n-breadcrumb-item>
-                {appSetting.settings.breadcrumb.showDropdown
-                  ? renderDropdown(item)
-                  : renderBase(item)}
-              </n-breadcrumb-item>
-            ))}
-          </n-breadcrumb>
-        </n-config-provider>
+        <w-transition appear name={appSetting.getBreadcrumbTransition}>
+          {appSetting.getBreadcrumbShow && (
+            <n-config-provider
+              id={appSetting.getBreadcrumbId}
+              theme={
+                (!appDark.isDark && appSetting.header.inverted) ||
+                appDark.isDark
+                  ? darkTheme
+                  : null
+              }
+            >
+              <n-breadcrumb separator={appSetting.breadcrumb.separator}>
+                {getChildren.value?.map((item) => (
+                  <n-breadcrumb-item>
+                    {appSetting.breadcrumb.showDropdown
+                      ? renderDropdown(item)
+                      : renderBase(item)}
+                  </n-breadcrumb-item>
+                ))}
+              </n-breadcrumb>
+            </n-config-provider>
+          )}
+        </w-transition>
       )
     },
   })

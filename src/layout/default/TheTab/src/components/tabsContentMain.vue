@@ -9,33 +9,31 @@
     <div
       ref="sortableRef"
       :class="[
-        'hstack',
+        'hstack h-full',
         {
           'divide-x-1 divide-gray-400': isCardType,
           'gap-x-1': isRoundType,
         },
       ]"
     >
-      <w-transition appear :name="appSetting.settings.tab.animationName" group>
+      <w-transition appear :name="appSetting.tabs.itemTransition" group>
         <div
           v-for="(item, index) in appTab.tabs"
           :key="item.name"
           :class="[
-            'hover:text-primaryHover my-1',
+            'my-1',
 
             $route.name === item.name && 'text-primary',
 
             /* card */
-            isCardType &&
-              !appSetting.settings.app.reducedMotion &&
-              'hvr-sweep-to-right',
+            isCardType && !appSetting.app.reducedMotion && 'hvr-sweep-to-right',
             isCardType &&
               $route.name === item.name &&
-              'bg-primary text-bodyColor',
+              'bg-primary !text-bodyColor',
 
             /* flex */
             isFlexType &&
-              !appSetting.settings.app.reducedMotion &&
+              !appSetting.app.reducedMotion &&
               'hvr-underline-from-left',
             isFlexType &&
               $route.name === item.name &&
@@ -44,9 +42,7 @@
             /* round */
             isRoundType &&
               `${
-                !appSetting.settings.app.reducedMotion
-                  ? 'hvr-round-corners'
-                  : ''
+                !appSetting.app.reducedMotion ? 'hvr-round-corners' : ''
               } rounded border-0.5 border-solid border-primaryHover`,
             isRoundType && $route.name === item.name && 'rounded-2xl',
 
@@ -74,19 +70,19 @@
   const appSetting = useAppStoreSetting()
 
   const { el: sortableRef } = useTabsSortable(
-    computed(() => appSetting.settings.tab.sortable)
+    computed(() => appSetting.tabs.sortable)
   )
 
   const AppConstTabStyleModeInside = AppConstTabStyleMode
 
   const isCardType = computed(
-    () => appSetting.settings.tab.styleMode === AppConstTabStyleModeInside.CARD
+    () => appSetting.tabs.styleMode === AppConstTabStyleModeInside.CARD
   )
   const isFlexType = computed(
-    () => appSetting.settings.tab.styleMode === AppConstTabStyleModeInside.FLEX
+    () => appSetting.tabs.styleMode === AppConstTabStyleModeInside.FLEX
   )
   const isRoundType = computed(
-    () => appSetting.settings.tab.styleMode === AppConstTabStyleModeInside.ROUND
+    () => appSetting.tabs.styleMode === AppConstTabStyleModeInside.ROUND
   )
 
   const {

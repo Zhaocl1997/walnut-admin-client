@@ -16,3 +16,28 @@ export const AppConstTabUtilsShowMode = {
 
 export type ValueOfAppConstTabUtilsShowMode =
   typeof AppConstTabUtilsShowMode[keyof typeof AppConstTabUtilsShowMode]
+
+export const AppConstTabStyleMode = {
+  ROUND: 'round',
+  FLEX: 'flex',
+  CARD: 'card',
+} as const
+
+export type ValueOfAppConstTabStyleMode =
+  typeof AppConstTabStyleMode[keyof typeof AppConstTabStyleMode]
+
+export const AppConstTabCloseMode = {
+  ALWAYS: 'always',
+  HOVER: 'hover',
+} as const
+
+export type ValueOfAppConstTabCloseMode =
+  typeof AppConstTabCloseMode[keyof typeof AppConstTabCloseMode]
+
+export const AppConstTabAffixMode = {
+  ICON: 'icon',
+  PIN: 'pin',
+} as const
+
+export type ValueOfAppConstTabAffixMode =
+  typeof AppConstTabAffixMode[keyof typeof AppConstTabAffixMode]

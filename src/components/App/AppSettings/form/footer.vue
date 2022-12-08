@@ -1,29 +1,29 @@
 <template>
-  <w-form @hook="register" :model="headerRelatives"></w-form>
+  <w-form @hook="register" :model="footerRelatives"></w-form>
 </template>
 
 <script lang="ts" setup>
-  import { getCanAnimate, modalColor } from '../shared'
+  import { modalColor, getCanAnimate } from '../shared'
 
   const appDark = useAppStoreDark()
 
   const appSetting = useAppStoreSetting()
 
-  const headerRelatives = appSetting.header
+  const footerRelatives = appSetting.footer
 
-  const [register] = useForm<typeof headerRelatives>({
-    localeUniqueKey: 'app.settings.header',
+  const [register] = useForm<typeof footerRelatives>({
+    localeUniqueKey: 'app.settings.footer',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
     formItemComponentClass: '!w-32 flex justify-end',
     size: 'small',
-    disabled: computed(() => !headerRelatives.status),
+    disabled: computed(() => !footerRelatives.status),
     schemas: [
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app.settings.header',
+          title: 'app.settings.footer',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -61,7 +61,7 @@
         },
         componentProp: {
           disabled: computed(
-            () => !headerRelatives.status || getCanAnimate.value
+            () => !footerRelatives.status || getCanAnimate.value
           ),
           tooltip: true,
         },
@@ -72,7 +72,7 @@
           path: 'inverted',
         },
         componentProp: {
-          disabled: computed(() => !headerRelatives.status || appDark.isDark),
+          disabled: computed(() => !footerRelatives.status || appDark.isDark),
         },
       },
       {
@@ -89,30 +89,11 @@
         },
       },
       {
-        type: 'Base:Switch',
+        type: 'Base:Input',
         formProp: {
-          path: 'fullscreen',
+          path: 'content',
         },
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'search',
-        },
-      },
-      // TODO below two should belong to system functionaility
-      // {
-      //   type: 'Base:Switch',
-      //   formProp: {
-      //     path: 'showLocale',
-      //   },
-      // },
-      // {
-      //   type: 'Base:Switch',
-      //   formProp: {
-      //     path: 'showDarkMode',
-      //   },
-      // },
     ],
   })
 </script>

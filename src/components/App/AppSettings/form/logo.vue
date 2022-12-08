@@ -1,27 +1,26 @@
 <template>
-  <w-form @hook="register4" :model="breadcrumbRelatives"></w-form>
+  <w-form @hook="register" :model="logoRelatives"></w-form>
 </template>
 
 <script lang="ts" setup>
-  import { getCanAnimate, modalColor } from '../shared'
+  import { modalColor, getCanAnimate } from '../shared'
 
   const appSetting = useAppStoreSetting()
 
-  const breadcrumbRelatives = appSetting.breadcrumb
+  const logoRelatives = appSetting.logo
 
-  const [register4] = useForm<typeof breadcrumbRelatives>({
-    localeUniqueKey: 'app.settings.breadcrumb',
+  const [register] = useForm<typeof logoRelatives>({
+    localeUniqueKey: 'app.settings',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
     formItemComponentClass: '!w-32 flex justify-end',
     size: 'small',
-    disabled: computed(() => !breadcrumbRelatives.status),
     schemas: [
       {
         type: 'Extend:Divider',
         componentProp: {
-          title: 'app.settings.breadcrumb',
+          title: 'app.settings.logo',
           prefix: 'bar',
           titlePlacement: 'left',
           foldable: true,
@@ -36,14 +35,23 @@
         formProp: {
           path: 'status',
         },
-        componentProp: {
-          disabled: false,
-        },
       },
       {
         type: 'Base:Input',
         formProp: {
           path: 'id',
+        },
+        componentProp: {
+          disabled: computed(() => !logoRelatives.status),
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'fixed',
+        },
+        componentProp: {
+          disabled: computed(() => !logoRelatives.status),
         },
       },
       {
@@ -53,30 +61,9 @@
         },
         componentProp: {
           disabled: computed(
-            () => !breadcrumbRelatives.status || getCanAnimate.value
+            () => !logoRelatives.status || getCanAnimate.value
           ),
           tooltip: true,
-        },
-      },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'showIcon',
-        },
-      },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'showDropdown',
-        },
-      },
-      {
-        type: 'Base:Select',
-        formProp: {
-          path: 'separator',
-        },
-        componentProp: {
-          options: ['>', '/'].map((i) => ({ value: i, label: i })),
         },
       },
     ],

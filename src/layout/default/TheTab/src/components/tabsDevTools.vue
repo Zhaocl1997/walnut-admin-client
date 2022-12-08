@@ -1,5 +1,5 @@
 <template>
-  <n-modal v-model:show="devToolShow">
+  <n-modal v-if="getShowDevTools" v-model:show="devToolShow">
     <n-card style="width: 600px" role="dialog" aria-modal="true">
       <w-JSON :value="currentMouseTab" height="auto"></w-JSON>
 
@@ -13,6 +13,10 @@
 
 <script lang="ts" setup>
   import { getTabsContext } from '../hooks/useTabsContext'
+
+  const appAdapter = useAppStoreAdapter()
+
+  const getShowDevTools = computed(() => isDev() && !appAdapter.isMobile)
 
   const { currentMouseTab, devToolShow, onOpenFile } = getTabsContext()
 </script>

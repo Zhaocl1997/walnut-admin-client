@@ -12,9 +12,7 @@ export const getTheme = computed(() =>
 )
 
 export const getThemeStyle = computed(() =>
-  appDark.isDark
-    ? appSettings.settings.themes.dark
-    : appSettings.settings.themes.light
+  appDark.isDark ? appSettings.themes.dark : appSettings.themes.light
 )
 
 export const getThemeOverridesCommon = computed(

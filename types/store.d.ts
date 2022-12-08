@@ -4,6 +4,16 @@ import type {
   NotificationReactive,
   NotificationPlacement,
 } from 'naive-ui'
+import {
+  AppSettingsForApp,
+  AppSettingsForBreadcrumb,
+  AppSettingsForFooter,
+  AppSettingsForHeader,
+  AppSettingsForLogo,
+  AppSettingsForMenu,
+  AppSettingsForTabs,
+  AppSettingsForTheme,
+} from './settings'
 
 declare global {
   /**
@@ -103,7 +113,21 @@ declare global {
    * App setting state
    */
   interface AppSettingState {
-    settings: AppSettings
+    themes: AppSettingsForTheme
+
+    app: AppSettingsForApp
+
+    logo: AppSettingsForLogo
+
+    header: AppSettingsForHeader
+
+    tabs: AppSettingsForTabs
+
+    breadcrumb: AppSettingsForBreadcrumb
+
+    menu: AppSettingsForMenu
+
+    footer: AppSettingsForFooter
   }
 
   /**

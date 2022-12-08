@@ -34,7 +34,7 @@
       const id = ref(genString(8))
 
       const getBehavior = computed(() =>
-        appSettings.settings.app.reducedMotion ? 'auto' : 'smooth'
+        appSettings.app.reducedMotion ? 'auto' : 'smooth'
       )
 
       const wrapperRef = ref()

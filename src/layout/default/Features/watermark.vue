@@ -1,6 +1,7 @@
 <template>
   <n-watermark
-    :content="appSetting.settings.app.watermarkContent"
+    v-if="appSetting.getShowGlobalWatermark"
+    :content="appSetting.app.watermarkContent"
     cross
     fullscreen
     :font-size="16"
@@ -20,6 +21,6 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'AppWatermark',
+    name: 'TheAppWatermark',
   })
 </script>

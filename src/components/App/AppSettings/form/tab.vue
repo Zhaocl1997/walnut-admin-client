@@ -3,16 +3,22 @@
 </template>
 
 <script lang="ts" setup>
-  import { appRelatives, modalColor, tabRelatives } from '../shared'
+  import { modalColor, getCanAnimate } from '../shared'
 
-  const [register] = useForm<typeof tabRelatives.value>({
-    localeUniqueKey: 'app.tab',
+  const appDark = useAppStoreDark()
+
+  const appSetting = useAppStoreSetting()
+
+  const tabRelatives = appSetting.tabs
+
+  const [register] = useForm<typeof tabRelatives>({
+    localeUniqueKey: 'app.settings.tab',
     showFeedback: false,
     xGap: 0,
     formItemClass: 'flex flex-row justify-between mb-2',
-    formItemComponentClass: 'w-32 flex justify-end',
+    formItemComponentClass: '!w-32 flex justify-end',
     size: 'small',
-    disabled: computed(() => !appRelatives.value.showTabs),
+    disabled: computed(() => !tabRelatives.status),
     schemas: [
       {
         type: 'Extend:Divider',
@@ -28,25 +34,69 @@
         },
       },
       {
-        type: 'Base:InputNumber',
+        type: 'Base:Switch',
         formProp: {
-          path: 'height',
+          path: 'status',
         },
         componentProp: {
-          min: 0,
-          precision: 0,
-          step: 2,
+          disabled: false,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'id',
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'fixed',
+        },
+      },
+      {
+        type: 'Extend:TransitionSelect',
+        formProp: {
+          path: 'transition',
+        },
+        componentProp: {
+          disabled: computed(() => !tabRelatives.status || getCanAnimate.value),
+          tooltip: true,
+        },
+      },
+      {
+        type: 'Base:Switch',
+        formProp: {
+          path: 'inverted',
+        },
+        componentProp: {
+          disabled: computed(() => appDark.isDark),
         },
       },
       {
         type: 'Base:InputNumber',
         formProp: {
-          path: 'width',
+          path: 'height',
         },
         componentProp: {
+          step: 1,
           min: 0,
+          suffix: 'px',
+          showButton: false,
           precision: 0,
-          step: 2,
+        },
+      },
+      {
+        type: 'Base:InputNumber',
+        formProp: {
+          path: 'itemWidth',
+        },
+        componentProp: {
+          step: 1,
+          min: 0,
+          suffix: 'px',
+          showButton: false,
+          precision: 0,
         },
       },
       {
@@ -64,7 +114,7 @@
       {
         type: 'Base:Select',
         formProp: {
-          path: 'showUtilsMode',
+          path: 'utilsMode',
           labelHelpMessage: true,
         },
         componentProp: {
@@ -72,7 +122,9 @@
             value: i,
             label: i,
           })),
-          disabled: computed(() => !tabRelatives.value.showUtils),
+          disabled: computed(
+            () => !tabRelatives.status || !tabRelatives.showUtils
+          ),
         },
       },
       {
@@ -126,7 +178,7 @@
       {
         type: 'Extend:TransitionSelect',
         formProp: {
-          path: 'animationName',
+          path: 'itemTransition',
         },
         componentProp: {
           tooltip: true,

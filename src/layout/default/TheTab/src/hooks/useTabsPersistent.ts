@@ -1,20 +1,20 @@
+const _storaged_tabs = useAppStorage<AppTab[]>(
+  AppConstPersistKey.TABS,
+  [],
+  Infinity
+)
+
 export const useTabsPersistent = () => {
   const appTab = useAppStoreTab()
   const appSetting = useAppStoreSetting()
 
-  const localTabs = useAppStorage<AppTab[]>(
-    AppConstPersistKey.TABS,
-    [],
-    Infinity
-  )
-
   watch(
-    () => [appSetting.settings.tab.persistent, appTab.tabs],
+    () => [appSetting.tabs.persistent, appTab.tabs],
     () => {
-      if (appSetting.settings.tab.persistent) {
-        localTabs.value = appTab.tabs
+      if (appSetting.tabs.persistent) {
+        _storaged_tabs.value = appTab.tabs
       } else {
-        localTabs.value = []
+        _storaged_tabs.value = []
       }
     },
     {
@@ -23,8 +23,8 @@ export const useTabsPersistent = () => {
   )
 
   onMounted(() => {
-    if (appSetting.settings.tab.persistent && localTabs.value.length) {
-      appTab.tabs = localTabs.value
+    if (appSetting.tabs.persistent && _storaged_tabs.value.length) {
+      appTab.tabs = _storaged_tabs.value
     }
   })
 }

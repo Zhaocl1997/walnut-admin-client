@@ -1,5 +1,6 @@
 <template>
   <n-dropdown
+    v-if="appSetting.tabs.contextMenu"
     placement="bottom-start"
     @select="onSelect"
     trigger="manual"
@@ -112,7 +113,7 @@
     if (key === 'Snapshot') {
       const target = document.getElementById(currentMouseTab.value?.name!)
 
-      const padding = appSetting.settings.app.contentPadding
+      const padding = appSetting.app.contentPadding
 
       toJpeg(target!, {
         width: target?.scrollWidth! + padding * 2,

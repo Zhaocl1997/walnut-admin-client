@@ -2,8 +2,7 @@
   <div
     ref="tabsItem"
     :style="{
-      height: `${appSetting.settings.tab.height}px`,
-      width: getShowTite ? `${appSetting.settings.tab.width}px` : 'max-content',
+      width: getShowTite ? `${appSetting.tabs.itemWidth}px` : 'max-content',
     }"
     :class="[
       'relative h-full grid grid-cols-12 gap-1 items-center cursor-pointer select-none px-2 py-1',
@@ -93,7 +92,7 @@
     () =>
       !appAdapter.isMobile &&
       props.item.meta.affix &&
-      appSetting.settings.tab.affixMode === AppConstTabAffixMode.PIN
+      appSetting.tabs.affixMode === AppConstTabAffixMode.PIN
   )
 
   // only show when tab not affixed and showIcon is true
@@ -101,9 +100,9 @@
   // only show when tab is affixed and affix mode is icon
   const getShowIcon = computed(
     () =>
-      (!props.item.meta.affix && appSetting.settings.tab.showIcon) ||
+      (!props.item.meta.affix && appSetting.tabs.showIcon) ||
       (props.item.meta.affix &&
-        appSetting.settings.tab.affixMode === AppConstTabAffixMode.ICON)
+        appSetting.tabs.affixMode === AppConstTabAffixMode.ICON)
   )
 
   // only show when not mobile
@@ -117,7 +116,7 @@
     () =>
       !appAdapter.isMobile &&
       !props.item.meta.affix &&
-      !appSetting.settings.tab.showIcon &&
+      !appSetting.tabs.showIcon &&
       currentRoute.value.name === props.item.name
   )
 
@@ -127,8 +126,8 @@
   const getShowCloseIcon = computed(
     () =>
       !props.item.meta.affix &&
-      (appSetting.settings.tab.closeMode === AppConstTabCloseMode.ALWAYS ||
-        (appSetting.settings.tab.closeMode === AppConstTabCloseMode.HOVER &&
+      (appSetting.tabs.closeMode === AppConstTabCloseMode.ALWAYS ||
+        (appSetting.tabs.closeMode === AppConstTabCloseMode.HOVER &&
           isHovered.value))
   )
 
@@ -139,7 +138,7 @@
     () =>
       !props.item.meta.affix ||
       (props.item.meta.affix &&
-        appSetting.settings.tab.affixMode === AppConstTabAffixMode.PIN)
+        appSetting.tabs.affixMode === AppConstTabAffixMode.PIN)
   )
 
   const getTitle = computed(() =>

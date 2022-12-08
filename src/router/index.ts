@@ -4,6 +4,10 @@ import { routes } from './routes'
 import { createRouterGuard } from './guard'
 import { stringifyQuery, parseQuery } from './utils/query'
 
+// TODO enhanced mode
+// views that out of the main framework
+// lock route should be dynamic added
+// 401/403/500 pages optimise
 export const AppRouter = createRouter({
   history: createWebHistory(),
   routes,

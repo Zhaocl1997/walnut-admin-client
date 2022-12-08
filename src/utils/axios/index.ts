@@ -18,7 +18,7 @@ const axiosConfig: AxiosRequestConfigExtend = {
   // time out, default is 10s
   timeout: Number(axiosTimeout) * 1000,
 
-  transform,
+  transform: transform,
 
   // Default Config
   customConfig: {

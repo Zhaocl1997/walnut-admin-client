@@ -14,4 +14,8 @@ export const defaultAppLocaleMessageKeys = [
   'browser',
   'userId',
   'userName',
+  'id',
+  'fixed',
+  'transition',
+  'inverted',
 ]

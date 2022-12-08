@@ -1,8 +1,8 @@
 <template>
   <router-view v-slot="{ Component, route }">
-    <w-transition :name="getTransitionName" mode="out-in" appear>
+    <w-transition :name="appSetting.getTransition" mode="out-in" appear>
       <keep-alive
-        v-if="appSetting.settings.app.keepAlive"
+        v-if="appSetting.app.keepAlive"
         :include="getKeepAliveInclude"
       >
         <component :is="Component" :key="route.fullPath"></component>
@@ -13,14 +13,12 @@
   </router-view>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
 
   const getKeepAliveInclude = computed(() => {
-    if (!appSetting.settings.app.keepAlive) return []
+    if (!appSetting.app.keepAlive) return []
     return appMenu.keepAliveRouteNames
   })
-
-  const { getTransitionName } = useAppTransitionName()
 </script>

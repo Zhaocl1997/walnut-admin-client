@@ -63,10 +63,10 @@
       appDark.isDark
         ? Object.assign(props.option, {
             backgroundColor: 'transparent',
-            animation: !appSettings.settings.app.reducedMotion,
+            animation: !appSettings.app.reducedMotion,
           })
         : Object.assign(props.option, {
-            animation: !appSettings.settings.app.reducedMotion,
+            animation: !appSettings.app.reducedMotion,
           })
     )
   }

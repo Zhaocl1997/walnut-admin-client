@@ -95,27 +95,41 @@
       }
 
       return () => (
-        <w-scrollbar height="100%">
-          <n-menu
-            id="walnut-sider"
-            v-model:expanded-keys={expandedKeys.value}
-            mode={
-              appSetting.settings.app.layout === AppConstLayoutMode.LEFT_MENU
-                ? 'vertical'
-                : 'horizontal'
-            }
-            inverted={appSetting.settings.menu.inverted}
-            collapsedWidth={appSetting.settings.menu.collapsedWidth}
-            accordion={appSetting.settings.menu.accordion}
-            collapsedIconSize={appSetting.settings.menu.collapsedIconSize}
-            iconSize={appSetting.settings.menu.iconSize}
-            indent={appSetting.settings.menu.indent}
-            options={getMenuOptions.value}
-            collapsed={appMenu.collapse}
-            value={getMenuValue.value}
-            on-update:value={onUpdateValue}
-          ></n-menu>
-        </w-scrollbar>
+        <w-transition appear name={appSetting.getMenuTransition}>
+          {appSetting.getMenuShow && (
+            <w-scrollbar
+              height="100%"
+              class={[
+                'transition-all',
+                {
+                  'pb-6': appSetting.getMenuCollapseButtonStatus,
+                  absolute: appSetting.getLogoFixed,
+                },
+              ]}
+              style={{
+                paddingTop:
+                  (appSetting.getLogoShow && appSetting.getLogoFixed
+                    ? appSetting.header.height
+                    : 0) + 'px',
+              }}
+            >
+              <n-menu
+                id={appSetting.getMenuId}
+                v-model:expanded-keys={expandedKeys.value}
+                inverted={appSetting.menu.inverted}
+                collapsedWidth={appSetting.menu.collapsedWidth}
+                accordion={appSetting.menu.accordion}
+                collapsedIconSize={appSetting.menu.collapsedIconSize}
+                iconSize={appSetting.menu.iconSize}
+                indent={appSetting.menu.indent}
+                options={getMenuOptions.value}
+                collapsed={appMenu.collapse}
+                value={getMenuValue.value}
+                on-update:value={onUpdateValue}
+              ></n-menu>
+            </w-scrollbar>
+          )}
+        </w-transition>
       )
     },
   })

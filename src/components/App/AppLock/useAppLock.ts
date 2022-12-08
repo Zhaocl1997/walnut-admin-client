@@ -5,14 +5,14 @@ export const useAppLock = () => {
   const appSetting = useAppStoreSetting()
 
   const isLeft = usePageLeave()
-  const { idle } = useIdle(appSetting.settings.app.idleMS)
+  const { idle } = useIdle(appSetting.app.lockIdleSeconds * 1000)
 
   // detect user idle
   watch(idle, async (v) => {
     if (
-      appSetting.settings.app.lockMode === AppConstLockMode.IDLE &&
+      appSetting.app.lockMode === AppConstLockMode.IDLE &&
       v &&
-      appSetting.settings.app.idleMS !== 0
+      appSetting.app.lockIdleSeconds !== 0
     ) {
       await appLock.lock(currentRoute)
     }
@@ -22,7 +22,7 @@ export const useAppLock = () => {
   debouncedWatch(
     isLeft,
     async (v) => {
-      if (appSetting.settings.app.lockMode === AppConstLockMode.SECURITY && v) {
+      if (appSetting.app.lockMode === AppConstLockMode.SECURITY && v) {
         await appLock.lock(currentRoute)
       }
     },
@@ -31,12 +31,9 @@ export const useAppLock = () => {
 
   // detect window visibility
   watch(
-    () => appDocumentVisibility.value,
+    () => _APP_DOCUMENT_VISIBLE_.value,
     async (v) => {
-      if (
-        appSetting.settings.app.lockMode === AppConstLockMode.SECURITY &&
-        v === 'hidden'
-      ) {
+      if (appSetting.app.lockMode === AppConstLockMode.SECURITY && v) {
         await appLock.lock(currentRoute)
       }
     }

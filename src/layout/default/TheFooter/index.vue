@@ -1,33 +1,24 @@
 <template>
-  <w-transition appear name="slide-down">
+  <w-transition appear :name="appSetting.getFooterTransition">
     <n-layout-footer
-      v-if="appSetting.settings.app.showFooter"
+      :id="appSetting.getFooterId"
+      v-if="appSetting.getFooterShow"
       bordered
-      :inverted="appSetting.settings.header.inverted"
+      :inverted="appSetting.getFooterInverted"
+      :style="{
+        zIndex: 999,
+        height: `${appSetting.footer.height}px`,
+      }"
+      :class="{ 'bottom-0': appSetting.getFooterFixed }"
+      class="flex-none sticky left-0"
     >
-      <div class="py-0.5">
-        <div class="hstack space-x-1 items-center justify-center">
-          <span>Copyright</span>
-
-          <w-icon
-            class=""
-            height="16"
-            icon="ant-design:copyright-circle-outlined"
-          ></w-icon>
-
-          <span class="whitespace-nowrap">
-            2020-present {{ AppTitle }}. All Rights Reserved.
-          </span>
-        </div>
+      <div class="h-full flex items-center justify-center whitespace-nowrap">
+        {{ appSetting.footer.content }}
       </div>
     </n-layout-footer>
   </w-transition>
 </template>
 
 <script lang="ts" setup>
-  import { NLayoutFooter } from 'naive-ui'
-
   const appSetting = useAppStoreSetting()
-
-  const { title: AppTitle } = useAppEnv('title')
 </script>
