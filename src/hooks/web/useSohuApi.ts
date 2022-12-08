@@ -10,8 +10,8 @@ export const useSohuApi = () => {
           userProfile.setIP(window?.returnCitySN.cip)
           userProfile.setCityName(window?.returnCitySN.cname)
           res()
-        } catch {
-          rej()
+        } catch (e) {
+          rej(e)
         }
       }
     )

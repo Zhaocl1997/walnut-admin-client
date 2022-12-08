@@ -9,10 +9,10 @@ export const useAppTitle = () => {
   const { title: envTitle } = useAppEnv('title')
 
   watch(
-    () => [currentRoute.value.path, locale, appDocumentVisibility],
-    () => {
+    () => [currentRoute.value.path, locale, _APP_DOCUMENT_VISIBLE_] as const,
+    ([_, __, visible]) => {
       try {
-        if (appDocumentVisibility.value === 'hidden') {
+        if (visible.value) {
           title.value = t('app.title')
         } else {
           const translateTitle = t(currentRoute.value.meta.title as string)

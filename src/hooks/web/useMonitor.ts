@@ -32,10 +32,10 @@ export const sendBeacon = (data: sendBeaconData) => {
 export const useAppMonitor = () => {
   // hidden
   const stopVisibleWatch = watch(
-    () => appDocumentVisibility.value,
+    () => _APP_DOCUMENT_VISIBLE_.value,
     (v) => {
       sendBeacon({
-        focus: v === 'visible',
+        focus: v,
         left: false,
       })
     },

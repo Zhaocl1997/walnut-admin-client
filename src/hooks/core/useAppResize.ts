@@ -1,6 +1,3 @@
-import { useResize } from './useResize'
-import { useAppBreakpoints } from './useBreakpoints'
-
 export const useAppResize = () => {
   const appAdapter = useAppStoreAdapter()
   const appMenu = useAppStoreMenu()
@@ -51,7 +48,7 @@ export const useAppResize = () => {
     }
   }
 
-  useResize(handler)
+  useWindowResize(handler)
 
   tryOnMounted(() => handler())
 }

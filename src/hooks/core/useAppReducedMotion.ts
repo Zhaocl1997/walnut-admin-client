@@ -3,7 +3,7 @@ export const useAppReducedMotion = () => {
   const prefersReducedMotion = usePreferredReducedMotion()
 
   watch(
-    () => appSetting.settings.app.reducedMotion,
+    () => appSetting.app.reducedMotion,
     (v) => {
       document.documentElement.setAttribute('reduce', `${v}`)
     },
@@ -13,7 +13,6 @@ export const useAppReducedMotion = () => {
   )
 
   watchEffect(() => {
-    appSetting.settings.app.reducedMotion =
-      prefersReducedMotion.value === 'reduce'
+    appSetting.app.reducedMotion = prefersReducedMotion.value === 'reduce'
   })
 }

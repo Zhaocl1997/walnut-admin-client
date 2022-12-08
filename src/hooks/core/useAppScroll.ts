@@ -3,8 +3,6 @@ export const useAppScroll = () => {
   const appTab = useAppStoreTab()
   const userScroll = useAppStoreUserScroll()
 
-  const showBackToTop = ref(true)
-
   const onScroll = useDebounceFn((e: Event) => {
     if (currentRoute.value.meta.position) {
       const top = (e.target as HTMLElement).scrollTop
@@ -13,21 +11,7 @@ export const useAppScroll = () => {
     }
   }, 250)
 
-  watch(
-    () => currentRoute.value.name,
-    () => {
-      showBackToTop.value = false
-      setTimeout(() => {
-        showBackToTop.value = true
-      }, 1000)
-    },
-    {
-      immediate: true,
-    }
-  )
-
   return {
-    onscroll,
-    showBackToTop,
+    onScroll,
   }
 }
