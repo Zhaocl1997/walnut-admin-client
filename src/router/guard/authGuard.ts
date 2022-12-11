@@ -63,7 +63,11 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // handle lock logic
-    if (appLock.isLock && appLock.lockRoute) {
+    if (
+      AppRouter.hasRoute(AppLockName) &&
+      appLock.isLock &&
+      appLock.lockRoute
+    ) {
       if (to.name !== AppLockName) {
         next({
           name: AppLockName,
