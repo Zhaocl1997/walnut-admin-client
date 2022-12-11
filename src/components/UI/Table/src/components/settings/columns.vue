@@ -144,19 +144,16 @@
 
   const popoverShow = ref(false)
 
-  const { el: tableColumnSettingRef } = useSortable(
-    {
-      draggable: '.table-column-draggable',
-      onEnd: (evt) => {
-        const { oldIndex, newIndex } = evt
+  const { el: tableColumnSettingRef } = useSortable(popoverShow, {
+    draggable: '.table-column-draggable',
+    onEnd: (evt) => {
+      const { oldIndex, newIndex } = evt
 
-        const current = tableColumns.value![oldIndex!]
-        tableColumns.value?.splice(oldIndex!, 1)
-        tableColumns.value?.splice(newIndex!, 0, current)
-      },
+      const current = tableColumns.value![oldIndex!]
+      tableColumns.value?.splice(oldIndex!, 1)
+      tableColumns.value?.splice(newIndex!, 0, current)
     },
-    popoverShow
-  )
+  })
 
   const blackList: StringOrNumber[] = ['selection', 'index', 'action']
 
