@@ -1,8 +1,7 @@
 // this is for manual reduce motion
-html[reduce="true"] *,
+html[reduced-motion="true"] *,
 ::before,
 ::after {
-  transition-property: none !important;
   transition-property: none !important;
   transition-property: none !important;
   transition-property: none !important;
@@ -13,8 +12,6 @@ html[reduce="true"] *,
   // -ms-transform: none !important;
   // -webkit-transform: none !important;
   // transform: none !important;
-
-  animation: none !important;
   animation: none !important;
   animation: none !important;
   animation: none !important;
@@ -34,15 +31,12 @@ html[reduce="true"] *,
     transition-property: none !important;
     transition-property: none !important;
     transition-property: none !important;
-    transition-property: none !important;
 
     // -o-transform: none !important;
     // -moz-transform: none !important;
     // -ms-transform: none !important;
     // -webkit-transform: none !important;
     // transform: none !important;
-
-    animation: none !important;
     animation: none !important;
     animation: none !important;
     animation: none !important;

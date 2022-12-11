@@ -1,19 +1,14 @@
 <template>
-  <div class="w-screen h-screen bg-bodyColor overflow-auto">
-    <div class="p-4 pt-0">
-      <SettingsFormApp></SettingsFormApp>
-      <SettingsFormLogo></SettingsFormLogo>
-      <SettingsFormHeader></SettingsFormHeader>
-      <SettingsFormTab></SettingsFormTab>
-      <SettingsFormBreadcrumb></SettingsFormBreadcrumb>
-      <SettingsFormMenu></SettingsFormMenu>
-      <SettingsFormFooter></SettingsFormFooter>
-    </div>
+  <div>
+    <SettingsFormApp></SettingsFormApp>
+    <SettingsFormLogo></SettingsFormLogo>
+    <SettingsFormHeader></SettingsFormHeader>
+    <SettingsFormTab></SettingsFormTab>
+    <SettingsFormBreadcrumb></SettingsFormBreadcrumb>
+    <SettingsFormMenu></SettingsFormMenu>
+    <SettingsFormFooter></SettingsFormFooter>
 
-    <div
-      style="z-index: 9999"
-      class="sticky bottom-0 h-auto w-full bg-bodyColor p-2"
-    >
+    <div class="sticky bottom-0 z-50" :style="{ background: modalColor }">
       <n-button
         type="primary"
         class="w-full"
@@ -38,6 +33,8 @@
 <script lang="ts" setup>
   import settings from '@/settings.json'
 
+  import { modalColor } from '../shared'
+
   import SettingsFormApp from './app.vue'
   import SettingsFormLogo from './logo.vue'
   import SettingsFormHeader from './header.vue'
@@ -49,22 +46,6 @@
   const appSetting = useAppStoreSetting()
 
   const keys = ['app', 'logo', 'header', 'tabs', 'breadcrumb', 'menu', 'footer']
-
-  keys.map((key) => {
-    watch(
-      () => appSetting[key],
-      (v) => {
-        window.parent.opener.postMessage(
-          JSON.stringify({ key: key, value: v }),
-          location.origin
-        )
-      },
-      {
-        deep: true,
-        immediate: true,
-      }
-    )
-  })
 
   const { copy, copied } = useClipboard({
     source: computed(() =>

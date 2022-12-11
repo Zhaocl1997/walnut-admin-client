@@ -16,14 +16,3 @@ export const openOAuthWindow = (url: string) => {
     'height=900, width=600, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no'
   )
 }
-
-/**
- * @description open settings window
- */
-export const openSettingsWindow = () => {
-  return window.open(
-    AppSettingsPath,
-    AppSettingsName,
-    'height=900,width=350,top=0,left=500,titlebar=no,toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,status=no,alwaysRaised=yes'
-  )
-}

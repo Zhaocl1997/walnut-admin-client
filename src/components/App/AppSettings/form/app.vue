@@ -244,7 +244,7 @@
         },
         componentProp: {
           // disable this switch when system prefers reduced motion
-          disabled: !_APP_CAN_SYSTEM_ANIMATE_,
+          disabled: _APP_CAN_SYSTEM_ANIMATE_,
         },
       },
     ],

@@ -2,34 +2,32 @@
   <div
     id="walnut-settings"
     class="fixed right-20 bottom-20 hover:text-primaryHover cursor-pointer"
-    style="z-index: 99999"
+    style="z-index: 1999"
   >
     <w-icon
       height="36"
       icon="ant-design:setting-outlined"
-      @click="onOpenSettings"
+      @click="() => (show = true)"
     ></w-icon>
   </div>
+
+  <w-drawer
+    v-model:show="show"
+    :width="350"
+    display-directive="show"
+    :title="$t('app.settings.title')"
+    @yes="() => (show = false)"
+    @no="() => (show = false)"
+    :default-button="false"
+  >
+    <AppSettingsForm></AppSettingsForm>
+  </w-drawer>
 </template>
 
 <script lang="ts" setup>
-  const appSetting = useAppStoreSetting()
+  import AppSettingsForm from './form/index.vue'
 
-  const onOpenSettings = () => {
-    openSettingsWindow()
-  }
-
-  useEventListener('message', (data) => {
-    AppLog('Recevied changed settings fron child window...')
-
-    const res = JSON.parse(data.data)
-
-    appSetting.setSettingsWithKey({ key: res.key, value: res.value })
-  })
-
-  if (import.meta.hot) {
-    openSettingsWindow()
-  }
+  const show = ref(false)
 </script>
 
 <script lang="ts">
