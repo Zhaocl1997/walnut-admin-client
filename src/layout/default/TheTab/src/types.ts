@@ -6,11 +6,6 @@ export interface AppTabUtilListItem {
   event: Fn
 }
 
-export interface AppTabItemInst {
-  start: Fn
-  stop: Fn
-}
-
 export interface AppTabContext {
   scrollRef: Ref<Nullable<WScrollbarInst>>
   onScrollToCurrentTab: Fn
@@ -30,6 +25,4 @@ export interface AppTabContext {
   currentMouseTabIndex: Ref<number>
   onOpenDevTool: Fn
   onOpenFile: Fn
-
-  setItemRef: Fn
 }

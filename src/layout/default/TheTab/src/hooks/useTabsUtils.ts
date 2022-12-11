@@ -1,12 +1,13 @@
-import type { AppTabItemInst, AppTabUtilListItem } from '../types'
+import type { AppTabUtilListItem } from '../types'
 import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
 export const useTabsUtils = (
   scrollRef: Ref<Nullable<WScrollbarInst>>,
-  scrollToCurrentTab: Fn,
-  itemInst: Ref<AppTabItemInst | undefined>
+  scrollToCurrentTab: Fn
 ) => {
   const { t } = useAppI18n()
+
+  const appTabs = useAppStoreTab()
 
   const leftUtils: AppTabUtilListItem[] = [
     {
@@ -22,12 +23,11 @@ export const useTabsUtils = (
       event: () => {
         scrollToCurrentTab()
 
-        nextTick(() => {
-          itemInst.value?.start()
-          setTimeout(() => {
-            itemInst.value?.stop()
-          }, 3000)
-        })
+        appTabs.setCurrentTabMeta({ _hovered: true })
+        const { stop } = useTimeoutFn(() => {
+          appTabs.setCurrentTabMeta({ _hovered: false })
+          stop()
+        }, 3000)
       },
     },
   ]

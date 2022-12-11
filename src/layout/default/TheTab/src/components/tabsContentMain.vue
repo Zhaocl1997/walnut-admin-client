@@ -54,7 +54,7 @@
           @mouseup="onMouseUp($event, item.name)"
           @contextmenu.prevent.native="onOpenContextMenu($event, item, index)"
         >
-          <TabsItem :ref="setItemRef" :item="item" :index="index"></TabsItem>
+          <TabsItem :item="item" :index="index"></TabsItem>
         </div>
       </w-transition>
     </div>
@@ -94,7 +94,6 @@
 
     currentMouseTab,
     currentMouseTabIndex,
-    setItemRef,
   } = getTabsContext()
 
   const onOpenContextMenu = (e: MouseEvent, item: AppTab, index: number) => {

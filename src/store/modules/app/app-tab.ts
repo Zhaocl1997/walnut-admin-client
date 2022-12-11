@@ -42,6 +42,26 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     },
 
     /**
+     * @description set single tab meta data
+     */
+    setTabMeta(name: string, meta: AppTabMeta) {
+      const index = this.tabs.findIndex((i) => i.name === name)
+
+      if (index === -1) return
+
+      this.setTab(index, {
+        meta: meta,
+      })
+    },
+
+    /**
+     * @description set current tab meta data
+     */
+    setCurrentTabMeta(meta: AppTabMeta) {
+      this.setTabMeta(this.tabs[this.getCurrentIndex].name, meta)
+    },
+
+    /**
      * @description set tab scroll top
      */
     setTabScrollTop(name: string, top: number) {

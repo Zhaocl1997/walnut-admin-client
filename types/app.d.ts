@@ -25,6 +25,11 @@ declare global {
    */
   interface AppTabMetaExtend {
     /**
+     * @description tab hover state, manually managed
+     */
+    _hovered?: boolean
+
+    /**
      * @description this is a hack for the changed title
      * first try to render this, normally undefined
      * then try to render title
@@ -74,12 +79,14 @@ declare global {
     duration?: 1000 | 2000 | 3000 | 4000
   }
 
+  type AppTabMeta = RouteMeta & AppTabMetaExtend
+
   // tab
   // almost same as RouteRecord
   interface AppTab {
     name: string
     path: string
-    meta: RouteMeta & AppTabMetaExtend
+    meta: AppTabMeta
     query?: Recordable
     params?: Recordable
   }

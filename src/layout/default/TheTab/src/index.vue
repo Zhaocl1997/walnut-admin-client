@@ -62,7 +62,6 @@
   import { useTabsContextMenu } from './hooks/useTabsContextMenu'
   import { useTabsUtils } from './hooks/useTabsUtils'
   import { useTabsDevTools } from './hooks/useTabsDevTools'
-  import { useTabsDot } from './hooks/useTabsDot'
   import { useTabsPersistent } from './hooks/useTabsPersistent'
 
   import { setTabsContext } from './hooks/useTabsContext'
@@ -95,12 +94,9 @@
   const { x, y, ctxMenuShow, onOpenCtxMenu, onCloseCtxMenu } =
     useTabsContextMenu()
 
-  const { itemInst, setItemRef } = useTabsDot()
-
   const { leftUtils, rightUtils } = useTabsUtils(
     scrollRef,
-    onScrollToCurrentTab,
-    itemInst
+    onScrollToCurrentTab
   )
 
   // tab persistent
@@ -125,7 +121,5 @@
     currentMouseTabIndex,
     onOpenDevTool,
     onOpenFile,
-
-    setItemRef,
   })
 </script>

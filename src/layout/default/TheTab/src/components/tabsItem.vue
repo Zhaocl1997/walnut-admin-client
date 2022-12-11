@@ -22,7 +22,7 @@
       v-else-if="getShowDot"
       :class="[
         'bg-info text-xl font-bold border-8 border-info shadow-xl rounded-full h-4 w-4 hover:border-infoHover col-span-2 flex items-center',
-        { 'animate-bounce': isHovered },
+        { 'animate-bounce': getHovered },
       ]"
     ></div>
 
@@ -45,7 +45,7 @@
         v-if="getShowTite"
         :class="[
           'col-span-10 text-sm whitespace-nowrap truncate',
-          { 'pr-4': isHovered },
+          { 'pr-4': getHovered },
         ]"
         :title="getTitle"
         :maxLength="item.meta._title_maxLength ?? 12"
@@ -80,6 +80,7 @@
 
   const tabsItem = ref()
   const isHovered = useElementHover(tabsItem)
+  const getHovered = computed(() => isHovered.value || props.item.meta._hovered)
 
   const { onTabRemove } = getTabsContext()
 
@@ -128,7 +129,7 @@
       !props.item.meta.affix &&
       (appSetting.tabs.closeMode === AppConstTabCloseMode.ALWAYS ||
         (appSetting.tabs.closeMode === AppConstTabCloseMode.HOVER &&
-          isHovered.value))
+          getHovered.value))
   )
 
   // only show when tab is not affixed
@@ -141,26 +142,10 @@
         appSetting.tabs.affixMode === AppConstTabAffixMode.PIN)
   )
 
+  // scroll title and real title
   const getTitle = computed(() =>
     t(props.item.meta._title! ?? props.item.meta.title!)
   )
-
-  const start = () => {
-    isHovered.value = true
-    const { stop } = useTimeoutFn(() => {
-      isHovered.value = false
-      stop()
-    }, 3000)
-  }
-
-  const stop = () => {
-    isHovered.value = false
-  }
-
-  defineExpose({
-    start,
-    stop,
-  })
 </script>
 
 <script lang="ts">
