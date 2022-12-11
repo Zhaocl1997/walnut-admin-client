@@ -57,10 +57,7 @@
             v-if="!appAdapter.isMobile && appSetting.header.fullscreen"
           ></WAppFullScreen>
 
-          <WAppLock
-            id="walnut-lock"
-            v-if="appSetting.app.lockStatus"
-          ></WAppLock>
+          <WAppLock id="walnut-lock" v-if="appSetting.getLockStatus"></WAppLock>
 
           <WAppSearch
             id="walnut-search"

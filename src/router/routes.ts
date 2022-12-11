@@ -61,19 +61,11 @@ export const App500Route: RouteRecordRaw = {
   component: () => import('../views/error/500/index.vue'),
 }
 
-export const AppSettingRoute: RouteRecordRaw = {
-  name: constant.AppSettingsName,
-  path: constant.AppSettingsPath,
-  component: () => import('../components/App/AppSettings/form/index.vue'),
-}
-
 export const routes: RouteRecordRaw[] = [
   AppAuthRoute,
   AppAuthPrivacyPolicyRoute,
   AppAuthServiceAgreementRoute,
   AppRootRoute,
   AppRedirectRoute,
-  AppLockRoute,
   App500Route,
-  AppSettingRoute,
 ]

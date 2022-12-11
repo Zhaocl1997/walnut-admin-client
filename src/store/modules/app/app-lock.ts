@@ -22,6 +22,12 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     },
 
     async lock(route: Ref<RouteLocationNormalizedLoaded>) {
+      const appSetting = useAppStoreSetting()
+
+      if (!appSetting.getLockStatus) {
+        return
+      }
+
       this.setIsLock(true)
 
       this.setLockRoute({
@@ -34,6 +40,12 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     },
 
     async unLock() {
+      const appSetting = useAppStoreSetting()
+
+      if (!appSetting.getLockStatus) {
+        return
+      }
+
       const appMenu = useAppStoreMenu()
 
       this.setIsLock(false)

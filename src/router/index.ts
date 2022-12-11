@@ -33,11 +33,18 @@ export const useAppRouter = () => {
 }
 
 export const useAppRouterPush = (info: RouteLocationRaw) => {
-  return AppRouter.push(info).catch(() => {
+  try {
+    return AppRouter.push(info).catch(() => {
+      // maybe error
+      useAppMessage().warning(AppI18n.global.t('app.menu.error'))
+
+      // finish the loadingbar
+      window.$loadingBar.finish()
+    })
+  } catch (error) {
+    console.log(error)
+
     // maybe error
     useAppMessage().warning(AppI18n.global.t('app.menu.error'))
-
-    // finish the loadingbar
-    window.$loadingBar.finish()
-  })
+  }
 }

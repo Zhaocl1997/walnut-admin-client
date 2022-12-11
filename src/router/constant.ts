@@ -25,9 +25,6 @@ export const App403Name = '403'
 export const App500Path = '/500'
 export const App500Name = '500'
 
-export const AppSettingsPath = '/settings'
-export const AppSettingsName = 'Settings'
-
 /**
  * @description public route that enter directly
  */

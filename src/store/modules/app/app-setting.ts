@@ -74,6 +74,10 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       return this.getLogoShow && this.getMenuShow
     },
 
+    getLockStatus(state) {
+      return state.app.lockStatus
+    },
+
     // Logo
     getLogoId(state) {
       return state.logo.id
