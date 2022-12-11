@@ -1,6 +1,3 @@
-import { storagePrefix } from '../../constant/prefix'
-import { isProd } from '../../constant/vue'
-
 const { persist } = useAppEnv('seconds')
 
 // app storage

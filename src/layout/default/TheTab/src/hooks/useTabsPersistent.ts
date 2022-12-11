@@ -1,30 +1,54 @@
-const _storaged_tabs = useAppStorage<AppTab[]>(
-  AppConstPersistKey.TABS,
-  [],
-  Infinity
-)
+import type { EffectScope } from 'vue'
 
 export const useTabsPersistent = () => {
+  let scope: EffectScope
+
   const appTab = useAppStoreTab()
   const appSetting = useAppStoreSetting()
 
   watch(
-    () => [appSetting.tabs.persistent, appTab.tabs],
-    () => {
-      if (appSetting.tabs.persistent) {
-        _storaged_tabs.value = appTab.tabs
+    () => appSetting.tabs.persistent,
+    (v) => {
+      if (v) {
+        scope = effectScope()
+
+        scope.run(() => {
+          const _storaged_tabs = useAppStorage<AppTab[]>(
+            AppConstPersistKey.TABS,
+            [],
+            Infinity
+          )
+
+          watch(
+            () => appTab.tabs,
+            (v) => {
+              _storaged_tabs.value = v
+            },
+            {
+              deep: true,
+            }
+          )
+
+          tryOnMounted(() => {
+            if (_storaged_tabs.value.length) {
+              appTab.tabs = _storaged_tabs.value
+            }
+          })
+
+          onScopeDispose(() => {
+            const key = Object.keys(localStorage).find((i) =>
+              i.includes(AppConstPersistKey.TABS)
+            )
+
+            key && localStorage.removeItem(key)
+          })
+        })
       } else {
-        _storaged_tabs.value = []
+        scope?.stop()
       }
     },
     {
-      deep: true,
+      immediate: true,
     }
   )
-
-  onMounted(() => {
-    if (appSetting.tabs.persistent && _storaged_tabs.value.length) {
-      appTab.tabs = _storaged_tabs.value
-    }
-  })
 }
