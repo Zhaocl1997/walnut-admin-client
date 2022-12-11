@@ -1,5 +1,4 @@
-const documentVisibility = useDocumentVisibility()
-
-export const _APP_DOCUMENT_VISIBLE_ = computed(
-  () => documentVisibility.value === 'visible'
-)
+export const useSharedDocumentVisibility = createSharedComposable(() => {
+  const documentVisibility = useDocumentVisibility()
+  return computed(() => documentVisibility.value === 'visible')
+})

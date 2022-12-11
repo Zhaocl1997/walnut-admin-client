@@ -4,15 +4,16 @@
 export const useAppTitle = () => {
   const title = useTitle()
 
+  const isVisible = useSharedDocumentVisibility()
   const { t, locale } = useAppI18n()
   const { currentRoute } = useAppRouter()
   const { title: envTitle } = useAppEnv('title')
 
   watch(
-    () => [currentRoute.value.path, locale, _APP_DOCUMENT_VISIBLE_] as const,
+    () => [currentRoute.value.path, locale, isVisible] as const,
     ([_, __, visible]) => {
       try {
-        if (visible.value) {
+        if (!visible.value) {
           title.value = t('app.title')
         } else {
           const translateTitle = t(currentRoute.value.meta.title as string)

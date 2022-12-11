@@ -1,10 +1,11 @@
 export const useAppColorMode = () => {
   const appSetting = useAppStoreSetting()
+  const appColorMode = useSharedColorMode()
 
   watch(
     () => appSetting.app.colorMode,
     (v) => {
-      _APP_COLOR_MODE_.value = v
+      appColorMode.value = v
     },
     {
       immediate: true,

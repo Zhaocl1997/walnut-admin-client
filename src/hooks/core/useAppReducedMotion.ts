@@ -1,5 +1,6 @@
 export const useAppReducedMotion = () => {
   const appSetting = useAppStoreSetting()
+  const isReducedMotion = useSharedPreferredReducedMotion()
 
   watch(
     () => appSetting.app.reducedMotion,
@@ -12,6 +13,6 @@ export const useAppReducedMotion = () => {
   )
 
   watchEffect(() => {
-    appSetting.app.reducedMotion = _APP_CAN_SYSTEM_ANIMATE_.value
+    appSetting.app.reducedMotion = isReducedMotion.value
   })
 }

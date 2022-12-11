@@ -6,6 +6,7 @@
   import { modalColor, getCanAnimate } from '../shared'
 
   const appSetting = useAppStoreSetting()
+  const isReducedMotion = useSharedPreferredReducedMotion()
 
   const appRelatives = appSetting.app
 
@@ -206,7 +207,7 @@
           min: 0,
           suffix: 's',
           showButton: false,
-          disabled: true,
+          precision: 0,
         },
         extraProp: {
           vShow: ({ formData }) => formData.lockMode === AppConstLockMode.IDLE,
@@ -244,7 +245,7 @@
         },
         componentProp: {
           // disable this switch when system prefers reduced motion
-          disabled: _APP_CAN_SYSTEM_ANIMATE_,
+          disabled: isReducedMotion,
         },
       },
     ],
