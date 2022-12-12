@@ -76,7 +76,9 @@
 
       const index = options.value.findIndex((i) => i.code === feedback[0].pcode)
 
-      options.value[index].children = feedback
+      if (options.value[index]?.children) {
+        options.value[index].children = feedback
+      }
     }
 
     // multiple feedback
@@ -94,7 +96,9 @@
       feedbacks.forEach((item) => {
         const index = options.value.findIndex((i) => i.code === item[0].pcode)
 
-        options.value[index].children = item as TreeNodeItem<AppSharedArea>[]
+        if (options.value[index]?.children) {
+          options.value[index].children = item as TreeNodeItem<AppSharedArea>[]
+        }
       })
     }
   }
