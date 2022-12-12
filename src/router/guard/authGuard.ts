@@ -2,6 +2,7 @@ import { easyIsEmpty } from 'easy-fns-ts'
 
 import { AppAuthPath, routeWhiteListPath } from '../constant'
 import { AppCoreFn1 } from '@/core'
+import { isUndefined } from 'lodash-es'
 
 let removeEvent: Fn
 
@@ -49,6 +50,15 @@ export const createAuthGuard = (router: Router) => {
         next({ name: appMenu.indexMenuName })
         return
       }
+      next()
+      return
+    }
+
+    // since almost all the routes are fetch from backend
+    // default _auth would be undefined
+    // this flag below should only works for hard-coded routes in frontend codes
+    // no need to excute the logic below, like profile or permisison
+    if (!isUndefined(to.meta?._auth) && !to.meta._auth) {
       next()
       return
     }

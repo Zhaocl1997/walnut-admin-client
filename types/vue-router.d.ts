@@ -18,5 +18,11 @@ declare module 'vue-router' {
     leaveTip?: boolean
 
     _top?: number
+
+    /**
+     * @description this is an option that only works for routes hard-coded in front-end code
+     * for those routes that do not need to fetch permissions from backend
+     */
+    _auth?: boolean
   }
 }
