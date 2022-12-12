@@ -1,18 +1,18 @@
-import { easyIsEmpty } from 'easy-fns-ts'
+import { isUndefined, isEmpty } from 'lodash-es'
 
-import { AppAuthPath, routeWhiteListPath } from '../constant'
 import { AppCoreFn1 } from '@/core'
-import { isUndefined } from 'lodash-es'
+import { _confirm_leave_map } from '@/store/modules/app/app-tab'
 
 let removeEvent: Fn
+
+const appKey = useAppStoreSecretKey()
+const appLock = useAppStoreLock()
 
 export const createAuthGuard = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
-    const appKey = useAppStoreSecretKey()
-    const appLock = useAppStoreLock()
 
     // enter the `leaveTip` page, hang on the unload event
     if (to.meta.leaveTip) {
@@ -26,7 +26,12 @@ export const createAuthGuard = (router: Router) => {
     // when leaving from the `leaveTip` page
     // ask user for confirm
     // also remember to remove the unload event to make sure this only work on the `leaveTip` page
-    if (from.meta.leaveTip && to.name !== from.name) {
+    if (
+      from.meta.leaveTip &&
+      to.name !== from.name &&
+      (_confirm_leave_map.get(from.name) === undefined ||
+        _confirm_leave_map.get(from.name) === false)
+    ) {
       const res = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,
         closeOnEsc: false,
@@ -38,8 +43,12 @@ export const createAuthGuard = (router: Router) => {
         return
       }
 
+      _confirm_leave_map.set(from.name, true)
+
       next()
       removeEvent()
+      _confirm_leave_map.set(from.name, false)
+
       return
     }
 
@@ -87,11 +96,11 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // Get user info
-    if (easyIsEmpty(userProfile.profile)) {
+    if (isEmpty(userProfile.profile)) {
       await userProfile.getProfile()
     }
 
-    if (easyIsEmpty(appKey.baiduAK)) {
+    if (isEmpty(appKey.baiduAK)) {
       await appKey.getSecretKeys()
     }
 

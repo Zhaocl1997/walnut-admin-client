@@ -30,6 +30,11 @@ declare global {
     _hovered?: boolean
 
     /**
+     * @description whether confirmed leave already, used to fixed the `tab-close-self` and `route-guard` conflict with each other
+     */
+    _confirm_leave?: boolean
+
+    /**
      * @description this is a hack for the changed title
      * first try to render this, normally undefined
      * then try to render title

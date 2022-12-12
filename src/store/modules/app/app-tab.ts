@@ -7,6 +7,7 @@ const appSetting = useAppStoreSetting()
 
 const _title_map = new Map()
 const _icon_map = new Map()
+export const _confirm_leave_map = new Map()
 
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
   state: (): AppTabState => ({
@@ -331,11 +332,28 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
       switch (type) {
         case AppConstTabDeleteType.TAB_SINGLE:
           {
-            // simple splice
-            this.tabs.splice(index, 1)
-
             // if close current tab, router push forward or backward
             if (currentRouteName === name) {
+              if (currentTab.meta.leaveTip) {
+                const res = await useAppConfirm(
+                  AppI18n.global.t('app.base.leaveTip'),
+                  {
+                    closable: false,
+                    closeOnEsc: false,
+                    maskClosable: false,
+                  }
+                )
+
+                if (res) {
+                  _confirm_leave_map.set(name, true)
+                  // simple splice
+                  this.tabs.splice(index, 1)
+                }
+              } else {
+                // simple splice
+                this.tabs.splice(index, 1)
+              }
+
               const next = this.tabs[index]
               const previous = this.tabs[index - 1]
 
@@ -346,6 +364,9 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
                 next ? next.query : previous.query,
                 next ? next.params : previous.params
               )
+            } else {
+              // simple splice
+              this.tabs.splice(index, 1)
             }
           }
           break
