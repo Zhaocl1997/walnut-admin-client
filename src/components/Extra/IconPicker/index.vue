@@ -251,7 +251,8 @@
     // })
   }
 
-  const onClear = () => {
+  const onClear = (e: MouseEvent) => {
+    e.stopPropagation()
     onPageInit()
     emit('update:value', null)
   }
