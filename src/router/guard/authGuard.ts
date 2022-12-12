@@ -26,7 +26,7 @@ export const createAuthGuard = (router: Router) => {
     // when leaving from the `leaveTip` page
     // ask user for confirm
     // also remember to remove the unload event to make sure this only work on the `leaveTip` page
-    if (from.meta.leaveTip) {
+    if (from.meta.leaveTip && to.name !== from.name) {
       const res = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,
         closeOnEsc: false,
