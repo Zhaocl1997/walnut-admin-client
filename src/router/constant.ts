@@ -22,6 +22,9 @@ export const App404Name = 'App404'
 export const App500Path = '/500'
 export const App500Name = 'App500'
 
+export const AppTestMainoutPath = '/test-mainout'
+export const AppTestMainoutName = 'TestMainout'
+
 /**
  * @description public route that enter directly
  */
