@@ -1,16 +1,9 @@
 import { merge } from 'lodash-es'
 import { defineStore } from 'pinia'
-import { StoreKeys } from '../../constant'
+import { StoreKeys, tabBlackListName } from '../../constant'
 import { store } from '../../pinia'
 
-const nameBlackList: string[] = [
-  AppAuthName,
-  App404Name,
-  App500Name,
-  App403Name,
-  AppRedirectName,
-  AppLockName,
-]
+const appSetting = useAppStoreSetting()
 
 const _title_map = new Map()
 const _icon_map = new Map()
@@ -30,6 +23,13 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
     getCurrentTab(state): AppTab {
       return state.tabs[this.getCurrentIndex]
+    },
+
+    // get tab name list that should not appear
+    getTabBlackListName() {
+      return appSetting.getLockStatus
+        ? tabBlackListName.concat(AppLockName)
+        : AppLockName
     },
   },
 
@@ -263,7 +263,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      */
     createTabs(payload: AppTab, method: 'push' | 'unshift' = 'push') {
       // redirect/404 etc pages do not need to add into tab
-      if (nameBlackList.includes(payload.name)) return
+      if (this.getTabBlackListName.includes(payload.name)) return
 
       const index = this.tabs.findIndex((item) => item.name === payload.name)
 

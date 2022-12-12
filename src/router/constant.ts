@@ -25,7 +25,7 @@ export const App500Name = 'App500'
 /**
  * @description public route that enter directly
  */
-export const RouteWhiteLists: string[] = [
+export const routeWhiteListPath: string[] = [
   AppAuthPath,
   AppAuthPrivacyPolicyPath,
   AppAuthServiceAgreementPath,

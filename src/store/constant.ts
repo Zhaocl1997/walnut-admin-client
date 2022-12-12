@@ -15,3 +15,13 @@ export const StoreKeys = {
   USER_PERMISSION: 'USER_PERMISSION',
   USER_SCROLL: 'USER_SCROLL',
 } as const
+
+/**
+ * @description route name list that should not appear in tabs
+ */
+export const tabBlackListName: string[] = [
+  AppAuthName,
+  App404Name,
+  App500Name,
+  AppRedirectName,
+]

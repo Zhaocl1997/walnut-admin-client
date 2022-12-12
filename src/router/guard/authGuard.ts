@@ -1,6 +1,6 @@
 import { easyIsEmpty } from 'easy-fns-ts'
 
-import { AppAuthPath, RouteWhiteLists } from '../constant'
+import { AppAuthPath, routeWhiteListPath } from '../constant'
 import { AppCoreFn1 } from '@/core'
 
 let removeEvent: Fn
@@ -42,8 +42,8 @@ export const createAuthGuard = (router: Router) => {
       return
     }
 
-    // Paths in `RouteWhiteLists` will enter directly
-    if (RouteWhiteLists.includes(to.path)) {
+    // Paths in `routeWhiteListPath` will enter directly
+    if (routeWhiteListPath.includes(to.path)) {
       // Login and push to auth page, will go index menu
       if (to.path === AppAuthPath && userAuth.accessToken) {
         next({ name: appMenu.indexMenuName })
