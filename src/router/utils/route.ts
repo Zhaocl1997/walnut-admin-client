@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash-es'
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
 import IFrameReal from '@/layout/iframe/index.vue'
+import { App404Route, App500Route } from '../routes/builtin'
 
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
@@ -105,6 +106,7 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
   // TODO 999
   const _tempRoutes = _tempFlatNestedRoutes(routes)
   _tempRoutes.push(App404Route)
+  _tempRoutes.push(App500Route)
   return _tempRoutes
 }
 

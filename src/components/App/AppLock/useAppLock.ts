@@ -1,4 +1,5 @@
 import type { EffectScope } from 'vue'
+import { AppLockRoute } from '@/router/routes/builtin'
 
 export const useAppLock = () => {
   let lockScope: EffectScope

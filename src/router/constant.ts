@@ -17,13 +17,10 @@ export const AppLockPath = '/lock'
 export const AppLockName = 'Lock'
 
 export const App404Path = '/:path(.*)*'
-export const App404Name = '404'
-
-export const App403Path = '/403'
-export const App403Name = '403'
+export const App404Name = 'App404'
 
 export const App500Path = '/500'
-export const App500Name = '500'
+export const App500Name = 'App500'
 
 /**
  * @description public route that enter directly
