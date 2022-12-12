@@ -53,12 +53,6 @@ export const getThemeOverrides = computed(
     Dialog: {
       contentMargin: '8px 0',
     },
-
-    // TODO should not solve in this way
-    // menu/dropdown hover icon change color
-    // Dropdown: {
-    //   optionColorHover: 'white',
-    // },
   })
 )
 

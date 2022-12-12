@@ -2,8 +2,20 @@
  * @description open external link safely
  * @link https://developer.mozilla.org/en-US/docs/Web/API/Window/open#noopener
  */
-export const openExternalLink = (url: string) => {
-  window.open(url, '_blank', 'noopener=yes, noreferrer=yes')
+export const openExternalLink = (
+  url: string,
+  safe = false,
+  target: '_blank' | '_self' = '_blank'
+) => {
+  if (safe) {
+    window.open(
+      `${AppOpenExternalPath}?url=${url}`,
+      target,
+      'noopener=yes, noreferrer=yes'
+    )
+  } else {
+    window.open(url, target, 'noopener=yes, noreferrer=yes')
+  }
 }
 
 /**

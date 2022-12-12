@@ -87,7 +87,7 @@
         }
 
         if (item.meta.ternal === AppConstMenuTernal.EXTERNAL) {
-          openExternalLink(item.meta.url!)
+          openExternalLink(item.meta.url!, true)
           return
         }
 
