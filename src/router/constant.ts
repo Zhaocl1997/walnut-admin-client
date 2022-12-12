@@ -25,6 +25,9 @@ export const App500Name = 'App500'
 export const AppTestMainoutPath = '/test-mainout'
 export const AppTestMainoutName = 'TestMainout'
 
+export const AppOpenExternalPath = '/external-link'
+export const AppOpenExternalName = 'ExternalLink'
+
 /**
  * @description public route that enter directly
  */

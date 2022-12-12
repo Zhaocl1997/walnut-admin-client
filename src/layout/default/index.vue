@@ -29,7 +29,8 @@
           :class="[
             'h-full relative flex flex-col',
             {
-              'overflow-y-auto styled-scrollbars': !$route.meta.url,
+              'overflow-y-auto overflow-x-hidden styled-scrollbars':
+                !$route.meta.url,
             },
           ]"
           @scroll="onScroll"

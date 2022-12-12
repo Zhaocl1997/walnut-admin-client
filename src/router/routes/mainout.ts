@@ -1,9 +1,24 @@
 import * as constant from '../constant'
 
-export const testRoute: RouteRecordRaw = {
+export const testMainoutRoute: RouteRecordRaw = {
   name: constant.AppTestMainoutName,
   path: constant.AppTestMainoutPath,
-  component: () => import('../../views/demo/mainout.vue'),
+  component: () => import('../../views/features/test-mainout.vue'),
+  meta: {
+    _auth: false,
+  },
 }
 
-export const mainoutRoutes: RouteRecordRaw[] = [testRoute]
+export const externalLinkRoute: RouteRecordRaw = {
+  name: constant.AppOpenExternalName,
+  path: constant.AppOpenExternalPath,
+  component: () => import('../../views/features/external-link.vue'),
+  meta: {
+    _auth: false,
+  },
+}
+
+export const mainoutRoutes: RouteRecordRaw[] = [
+  testMainoutRoute,
+  externalLinkRoute,
+]
