@@ -7,6 +7,15 @@ const appSetting = useAppStoreSetting()
 
 const _title_map = new Map()
 const _icon_map = new Map()
+
+/**
+ * only serve for one purpose
+ * when manually close the `leaveTip` tab, it would trigger twice
+ * first in tab close event(has to do it, otherwise the tab will disappear first and popup the confirm)
+ * second in route guard
+ * to fix trigger twice problem, i implement the map to record the `leaveTip` route confirmed state
+ * and with the new logic in route guard, it will work fine for once in tab close event
+ */
 export const _confirm_leave_map = new Map()
 
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
