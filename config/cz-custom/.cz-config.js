@@ -34,6 +34,7 @@ module.exports = {
   ],
 
   allowTicketNumber: false,
+  allowEmptyScopes: true,
   isTicketNumberRequired: false,
   ticketNumberPrefix: 'TICKET-',
   ticketNumberRegExp: '\\d{1,5}',
