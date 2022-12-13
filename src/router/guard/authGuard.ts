@@ -1,7 +1,7 @@
 import { isUndefined, isEmpty } from 'lodash-es'
 
 import { AppCoreFn1 } from '@/core'
-import { _confirm_leave_map } from '@/store/modules/app/app-tab'
+import { _confirm_leave_map_ } from '@/store/modules/app/app-tab'
 
 let removeEvent: Fn
 
@@ -16,6 +16,12 @@ export const createAuthGuard = (router: Router) => {
 
     // enter the `leaveTip` page, hang on the unload event
     if (to.meta.leaveTip) {
+      // set the confirm map
+      _confirm_leave_map_.set(to.name, false)
+
+      // if the old event listener not removed, remove it
+      if (removeEvent) removeEvent()
+
       removeEvent = useEventListener('beforeunload', (e) => {
         e.preventDefault()
         e.returnValue = '关闭提示'
@@ -29,8 +35,8 @@ export const createAuthGuard = (router: Router) => {
     if (
       from.meta.leaveTip &&
       to.name !== from.name &&
-      (_confirm_leave_map.get(from.name) === undefined ||
-        _confirm_leave_map.get(from.name) === false)
+      (_confirm_leave_map_.get(from.name) === undefined ||
+        _confirm_leave_map_.get(from.name) === false)
     ) {
       const res = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,
@@ -43,11 +49,11 @@ export const createAuthGuard = (router: Router) => {
         return
       }
 
-      _confirm_leave_map.set(from.name, true)
+      _confirm_leave_map_.set(from.name, true)
+
+      removeEvent()
 
       next()
-      removeEvent()
-      _confirm_leave_map.set(from.name, false)
 
       return
     }

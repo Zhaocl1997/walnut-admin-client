@@ -5,8 +5,11 @@ import { store } from '../../pinia'
 
 const appSetting = useAppStoreSetting()
 
-const _title_map = new Map()
-const _icon_map = new Map()
+/**
+ * below two only work for `timeout` title and icon
+ */
+const _title_map_ = new Map()
+const _icon_map_ = new Map()
 
 /**
  * only serve for one purpose
@@ -16,7 +19,7 @@ const _icon_map = new Map()
  * to fix trigger twice problem, i implement the map to record the `leaveTip` route confirmed state
  * and with the new logic in route guard, it will work fine for once in tab close event
  */
-export const _confirm_leave_map = new Map()
+export const _confirm_leave_map_ = new Map()
 
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
   state: (): AppTabState => ({
@@ -120,7 +123,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
           this.recoverTabTitle(name)
         }, timeout)
 
-        _title_map.set(name, stop)
+        _title_map_.set(name, stop)
       }
     },
 
@@ -138,8 +141,8 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
         },
       })
 
-      _title_map.get(name) && _title_map.get(name)()
-      _title_map.delete(name)
+      _title_map_.get(name) && _title_map_.get(name)()
+      _title_map_.delete(name)
     },
 
     /**
@@ -198,7 +201,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
           this.recoverTabIcon(name)
         }, timeout)
 
-        _icon_map.set(name, stop)
+        _icon_map_.set(name, stop)
       }
     },
 
@@ -217,8 +220,8 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
         },
       })
 
-      _icon_map.get(name) && _icon_map.get(name)()
-      _icon_map.delete(name)
+      _icon_map_.get(name) && _icon_map_.get(name)()
+      _icon_map_.delete(name)
     },
 
     /**
@@ -354,9 +357,11 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
                 )
 
                 if (res) {
-                  _confirm_leave_map.set(name, true)
+                  _confirm_leave_map_.set(name, true)
                   // simple splice
                   this.tabs.splice(index, 1)
+
+                  // TODO bug
                 }
               } else {
                 // simple splice
