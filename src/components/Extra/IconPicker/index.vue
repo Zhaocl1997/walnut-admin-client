@@ -2,7 +2,7 @@
   <w-input
     v-if="preset === 'input'"
     ref="rootInputRef"
-    v-model:value="value"
+    :value="value"
     readonly
     clearable
     :placeholder="t('comp.iconPicker.title')"
