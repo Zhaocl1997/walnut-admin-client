@@ -3,21 +3,18 @@ import type { UserConfig, ConfigEnv } from 'vite'
 import { resolve } from 'node:path'
 import { loadEnv, splitVendorChunkPlugin } from 'vite'
 
-import { getNow } from 'easy-fns-ts/dist/lib'
-
 import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
 import { envDir, publicDir } from './build/constant'
 import { createRollupObfuscatorPlugin } from './build/rollup'
-
-import { useAppEnv } from './src/hooks/core/useAppEnv'
+import { useLoadEnv } from './src/hooks/core/useLoadEnv'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
 }
 
 const __APP_INFO__ = {
-  lastBuildTime: getNow(),
+  lastBuildTime: new Date().toLocaleDateString(),
 }
 
 // https://vitejs.dev/config/
@@ -26,7 +23,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
   const env = loadEnv(mode, pathResolve(envDir)) as ImportMetaEnv
 
-  const { obfuscator, dropConsole, outDir, publicPath } = useAppEnv(
+  const { obfuscator, dropConsole, outDir, publicPath } = useLoadEnv(
     'build',
     env
   )
@@ -81,7 +78,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
       port: env.VITE_PORT,
 
-      proxy: createViteProxy(mode, env),
+      proxy: createViteProxy(env),
 
       open: '/',
 
@@ -90,6 +87,15 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
 
       // https: true,
+    },
+
+    envPrefix: 'VITE_',
+
+    preview: {
+      port: 8080,
+      strictPort: true,
+      host: true,
+      open: true,
     },
 
     build: {

@@ -1,10 +1,10 @@
 import type { ProxyOptions } from 'vite'
-import { useAppEnv } from '../../src/hooks/core/useAppEnv'
+import { useLoadEnv } from '../../src/hooks/core/useLoadEnv'
 
-export const createViteProxy = (mode: string, env: ImportMetaEnv) => {
+export const createViteProxy = (env: ImportMetaEnv) => {
   const ret: Record<string, ProxyOptions> = {}
 
-  const { api, ws } = useAppEnv('proxy', env)
+  const { api, ws } = useLoadEnv('proxy', env)
 
   if (+api[0] === 1) {
     const prefix = api[1]
