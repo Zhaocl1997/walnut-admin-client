@@ -51,9 +51,11 @@ const axiosConfig: AxiosRequestConfigExtend = {
   },
 
   // adapter for cache, default is 5s
-  adapter: cacheAdapterEnhancer(axios.defaults.adapter!, {
-    cachedSeconds: Number(axiosCache) * 1000,
-  }),
+  adapter: ['xhr', 'http'],
+  // TODO try axios-extensions
+  // cacheAdapterEnhancer(axios.defaults.adapter!, {
+  //   cachedSeconds: Number(axiosCache) * 1000,
+  // }),
 }
 
 export const AppAxios = new Axios(axiosConfig)
