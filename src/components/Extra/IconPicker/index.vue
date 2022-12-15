@@ -32,6 +32,7 @@
     preset="card"
     style="width: 600px"
     :title="t('comp.iconPicker.title')"
+    display-directive="show"
     :auto-focus="false"
     :default-button="false"
     :segmented="false"
