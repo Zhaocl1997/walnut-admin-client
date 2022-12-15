@@ -41,20 +41,6 @@ export const useTabs = () => {
 
       // use device to trigger Scroll
       appAdapter.device && onScrollToCurrentTab()
-
-      // TODO settimeout?
-      if (currentRoute.value.meta.position) {
-        setTimeout(() => {
-          const top =
-            appTab.getCurrentTab.meta?._top || currentRoute.value.meta?._top
-
-          const target = document.getElementById(
-            currentRoute.value.name as string
-          )
-
-          target?.scrollTo({ top, behavior: 'auto' })
-        }, 800)
-      }
     },
     {
       immediate: true,

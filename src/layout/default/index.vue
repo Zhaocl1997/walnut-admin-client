@@ -25,6 +25,7 @@
         class="relative"
       >
         <div
+          ref="scrollWrapper"
           :id="$route.name"
           :class="[
             'h-full relative flex flex-col',
@@ -33,7 +34,6 @@
                 !$route.meta.url,
             },
           ]"
-          @scroll="onScroll"
         >
           <TheHeader></TheHeader>
           <TheTabs></TheTabs>
@@ -80,7 +80,7 @@
   const appMenu = useAppStoreMenu()
   const appSetting = useAppStoreSetting()
 
-  const { onScroll } = useAppScroll()
+  const { scrollWrapper } = useAppScroll()
 
   // TODO layout
   // watchEffect(() => {

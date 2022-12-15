@@ -4,8 +4,6 @@ import { arrToTree, orderTree } from 'easy-fns-ts'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-const userScroll = useAppStoreUserScroll()
-
 const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
   state: (): AppMenuState => ({
     collapse: false,
@@ -43,8 +41,6 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
      * @description create route object based on menu object
      */
     createRouteByMenu(node: AppSystemMenu): AppTab {
-      const _top = userScroll.getScrollTop(node.name as string)
-
       return {
         path: node.path!,
         name: node.name!,
@@ -63,8 +59,6 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
           activeIcon: node.activeIcon,
           position: node.position,
           leaveTip: node.leaveTip,
-          // get scroll top
-          _top,
         },
       }
     },

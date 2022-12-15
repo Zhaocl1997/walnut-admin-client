@@ -1,17 +1,36 @@
 export const useAppScroll = () => {
-  const { currentRoute } = useAppRouter()
-  const appTab = useAppStoreTab()
   const userScroll = useAppStoreUserScroll()
 
-  const onScroll = useDebounceFn((e: Event) => {
-    if (currentRoute.value.meta.position) {
-      const top = (e.target as HTMLElement).scrollTop
-      userScroll.setScrollTop(currentRoute.value.name! as string, top)
-      appTab.setTabScrollTop(currentRoute.value.name! as string, top)
-    }
-  }, 250)
+  const { currentRoute } = useAppRouter()
 
-  return {
-    onScroll,
-  }
+  const scrollWrapper = ref<HTMLElement>()
+  const { x, y } = useScroll(scrollWrapper)
+
+  debouncedWatch(
+    () => [x.value, y.value] as const,
+    ([_, y]) => {
+      userScroll.setScrollTop(currentRoute.value.name as string, y)
+    },
+    { immediate: true, debounce: 200 }
+  )
+
+  watch(
+    () => currentRoute.value.meta.position,
+    (v) => {
+      if (v) {
+        const top = userScroll.getScrollTop(currentRoute.value.name as string)
+
+        nextTick(() => {
+          scrollWrapper.value?.scrollTo({ top: top, behavior: 'smooth' })
+        })
+      } else {
+        nextTick(() => {
+          scrollWrapper.value?.scrollTo({ top: 0, behavior: 'smooth' })
+        })
+      }
+    },
+    { immediate: true }
+  )
+
+  return { scrollWrapper }
 }
