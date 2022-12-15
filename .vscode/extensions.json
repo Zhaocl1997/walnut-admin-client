@@ -10,8 +10,8 @@
     "mikestead.dotenv",
     /* i18n */
     "lokalise.i18n-ally",
-    /* windicss */
-    "voorjaar.windicss-intellisense",
+    /* unocss */
+    "antfu.unocss",
     /* vue3 tsc */
     "Vue.volar",
     "hollowtree.vue-snippets",
@@ -24,7 +24,10 @@
     "shd101wyy.markdown-preview-enhanced",
     /* git */
     "eamodio.gitlens",
-    "donjayamanne.githistory"
+    "donjayamanne.githistory",
+    /* helper */
+    "usernamehw.errorlens",
+    "streetsidesoftware.code-spell-checker",
   ],
   "unwantedRecommendations": [
     "octref.vetur"
