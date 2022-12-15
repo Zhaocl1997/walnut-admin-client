@@ -9,7 +9,9 @@ export const useAppScroll = () => {
   debouncedWatch(
     () => [x.value, y.value] as const,
     ([_, y]) => {
-      userScroll.setScrollTop(currentRoute.value.name as string, y)
+      if (currentRoute.value.meta.position) {
+        userScroll.setScrollTop(currentRoute.value.name as string, y)
+      }
     },
     { immediate: true, debounce: 200 }
   )
@@ -20,9 +22,10 @@ export const useAppScroll = () => {
       if (v) {
         const top = userScroll.getScrollTop(currentRoute.value.name as string)
 
-        nextTick(() => {
+        // TODO nextTick just do not work here
+        setTimeout(() => {
           scrollWrapper.value?.scrollTo({ top: top, behavior: 'smooth' })
-        })
+        }, 500)
       } else {
         nextTick(() => {
           scrollWrapper.value?.scrollTo({ top: 0, behavior: 'smooth' })
