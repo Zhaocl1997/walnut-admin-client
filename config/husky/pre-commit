@@ -5,5 +5,8 @@
 # Disable hooks in CI
 [ -n "$CI" ] && exit 0
 
+# fix https://github.com/typicode/husky/issues/968#issuecomment-1176848345
+exec >/dev/tty 2>&1
+
 # Check out the code
 npm run lint:staged
