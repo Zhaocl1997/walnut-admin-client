@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { SortOrder } from 'naive-ui/lib/data-table/src/interface'
 
 /**
@@ -148,7 +148,7 @@ export interface BaseListResponse<T = RowData> {
 /**
  * @description Back list api params structure
  */
-export type BaseListParams<T = RowData> = {
+export interface BaseListParams<T = RowData> {
   /**
    * @description query object
    */
@@ -177,7 +177,7 @@ export type BaseSortParams<T = RowData> = {
 /**
  * @description base page params
  */
-export type BasePageParams = {
+export interface BasePageParams {
   page?: number
   pageSize?: number
 }

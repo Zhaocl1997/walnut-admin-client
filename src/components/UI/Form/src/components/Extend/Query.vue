@@ -1,28 +1,101 @@
+<script lang="ts">
+export default defineComponent({
+  name: 'WFormItemExtendQuery',
+})
+</script>
+
+<script lang="ts" setup>
+import { useFormContext } from '../../hooks/useFormContext'
+import { toggleFormItemId } from '../../hooks/useFormItemId'
+
+// TODO 888
+interface InternalProps {
+  countToFold?: number
+  foldable?: boolean
+  defaultFold?: boolean
+}
+
+const props = defineProps<InternalProps>()
+
+const { t } = useAppI18n()
+
+const active = ref(false)
+
+const getText = computed(() =>
+  active.value ? t('app.button.expand') : t('app.button.collapse'),
+)
+
+const { formEvent, formSchemas, setProps, formProps } = useFormContext()
+
+const done = () => {
+  setProps({ disabled: false })
+}
+
+const onFormReset = () => {
+  setProps({ disabled: true })
+  formEvent({
+    name: 'reset',
+    params: {
+      done,
+    },
+  })
+}
+
+const onQuery = () => {
+  setProps({ disabled: true })
+  formEvent({
+    name: 'query',
+    params: {
+      done,
+    },
+  })
+}
+
+const onToggle = () => {
+  active.value = !active.value
+
+  for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
+    const item = formSchemas.value[i]
+
+    toggleFormItemId(item, i)
+  }
+}
+
+onMounted(() => {
+  if (props.defaultFold)
+    onToggle()
+})
+</script>
+
 <template>
   <n-form-item>
     <n-space :wrap="false" size="small">
       <n-button
         size="small"
         type="primary"
-        @click="onQuery"
         :disabled="formProps.disabled"
         :loading="formProps.disabled"
+        @click="onQuery"
       >
-        <template #>{{ t('app.button.search') }}</template>
+        <template #default>
+          {{ t('app.button.search') }}
+        </template>
         <template #icon>
-          <w-icon icon="ant-design:search-outlined"></w-icon>
+          <w-icon icon="ant-design:search-outlined" />
         </template>
       </n-button>
 
       <n-button
         size="small"
         type="info"
-        @click="onFormReset"
         :disabled="formProps.disabled"
+        @click="onFormReset"
       >
-        <template #>{{ t('app.button.reset') }}</template>
+        <template #default>
+          {{ t('app.button.reset') }}
+        </template>
         <template #icon>
-          <w-icon icon="carbon:reset"></w-icon>
+          <w-icon icon="carbon:reset" />
         </template>
       </n-button>
 
@@ -31,84 +104,16 @@
         size="small"
         type="default"
         icon-placement="right"
-        @click="onToggle"
         :disabled="formProps.disabled"
+        @click="onToggle"
       >
-        <template #>{{ getText }}</template>
+        <template #default>
+          {{ getText }}
+        </template>
         <template #icon>
-          <w-arrow :active="!active" class="mt-0.5"></w-arrow>
+          <w-arrow :active="!active" class="mt-0.5" />
         </template>
       </n-button>
     </n-space>
   </n-form-item>
 </template>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'WFormItemExtendQuery',
-  })
-</script>
-
-<script lang="ts" setup>
-  import { useFormContext } from '../../hooks/useFormContext'
-  import { toggleFormItemId } from '../../hooks/useFormItemId'
-
-  // TODO 888
-  interface InternalProps {
-    countToFold?: number
-    foldable?: boolean
-    defaultFold?: boolean
-  }
-
-  const props = defineProps<InternalProps>()
-
-  const { t } = useAppI18n()
-
-  const active = ref(false)
-
-  const getText = computed(() =>
-    active.value ? t('app.button.expand') : t('app.button.collapse')
-  )
-
-  const { formEvent, formSchemas, setProps, formProps } = useFormContext()
-
-  const done = () => {
-    setProps({ disabled: false })
-  }
-
-  const onFormReset = () => {
-    setProps({ disabled: true })
-    formEvent({
-      name: 'reset',
-      params: {
-        done,
-      },
-    })
-  }
-
-  const onQuery = () => {
-    setProps({ disabled: true })
-    formEvent({
-      name: 'query',
-      params: {
-        done,
-      },
-    })
-  }
-
-  const onToggle = () => {
-    active.value = !active.value
-
-    for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
-      const item = formSchemas.value[i]
-
-      toggleFormItemId(item, i)
-    }
-  }
-
-  onMounted(() => {
-    if (props.defaultFold) {
-      onToggle()
-    }
-  })
-</script>

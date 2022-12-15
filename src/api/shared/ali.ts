@@ -12,6 +12,6 @@ export const getAliSTSToken = () => {
     {
       url: '/shared/ali/sts',
     },
-    { autoDecryptResponseData: true }
+    { autoDecryptResponseData: true },
   )
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
-  export default defineComponent({
-    name: 'WAccountSettingsTabAccount',
+export default defineComponent({
+  name: 'WAccountSettingsTabAccount',
 
-    defaultView: false,
-  })
+  defaultView: false,
+})
 </script>

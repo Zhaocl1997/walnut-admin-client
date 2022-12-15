@@ -9,7 +9,7 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
     locale: useAppStorage(
       AppConstPersistKey.LOCALE,
       preferredLanguages.value[0] as ValueOfAppConstLocale,
-      Infinity
+      Infinity,
     ),
   }),
 
@@ -25,6 +25,7 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
 const useAppStoreLocaleOutside = () => useAppStoreLocaleInside(store)
 
 export const useAppStoreLocale = () => {
-  if (getCurrentInstance()) return useAppStoreLocaleInside()
+  if (getCurrentInstance())
+    return useAppStoreLocaleInside()
   return useAppStoreLocaleOutside()
 }

@@ -83,7 +83,7 @@ export const getSysInfo = (scopePermission?: string) => {
       extraHeader: {
         'scoped-permission': scopePermission,
       },
-    }
+    },
   )
 }
 
@@ -114,6 +114,6 @@ export const getNetworkInfo = (scopePermission?: string) => {
       extraHeader: {
         'scoped-permission': scopePermission,
       },
-    }
+    },
   )
 }

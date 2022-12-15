@@ -1,10 +1,10 @@
-import type { WForm } from '../types'
 import type { DrawerProps } from 'naive-ui'
+import type { WForm } from '../types'
 
 export const useFormAdvanced = (
   render: Fn,
   props: ComputedRef<WForm.Props>,
-  formRef: Ref<Nullable<WForm.Inst.NFormInst>>
+  formRef: Ref<Nullable<WForm.Inst.NFormInst>>,
 ) => {
   const { t } = useAppI18n()
 
@@ -42,10 +42,12 @@ export const useFormAdvanced = (
         if (ret) {
           onClose()
           useAppMsgSuccess()
-        } else {
-          return Promise.reject()
         }
-      } finally {
+        else {
+          return Promise.reject(new Error('Error'))
+        }
+      }
+      finally {
         done()
       }
     }
@@ -57,9 +59,9 @@ export const useFormAdvanced = (
   }
 
   const onNo = () => {
-    if (!props.value.useDescription) {
+    if (!props.value.useDescription)
       formRef.value!.restoreValidation()
-    }
+
     props.value.advancedProps?.onNo!(onClose)
   }
 
@@ -67,20 +69,20 @@ export const useFormAdvanced = (
     const uniqueKey = props.value.localeUniqueKey
 
     if (
-      uniqueKey &&
-      (props.value.useDescription || props.value.advancedProps?.detailTitle)
+      uniqueKey
+      && (props.value.useDescription || props.value.advancedProps?.detailTitle)
     ) {
       return (
-        t(`table.${uniqueKey}.advancedTitle`) + ' ' + t('app.button.detail')
+        `${t(`table.${uniqueKey}.advancedTitle`)} ${t('app.button.detail')}`
       )
     }
 
     const actionType = unref(props.value?.advancedProps?.actionType)
 
     return uniqueKey && actionType
-      ? t(`app.button.${actionType}`) +
-          ' ' +
-          t(`table.${uniqueKey}.advancedTitle`)
+      ? `${t(`app.button.${actionType}`)
+          } ${
+          t(`table.${uniqueKey}.advancedTitle`)}`
       : title
   }
 
@@ -90,7 +92,7 @@ export const useFormAdvanced = (
         <w-modal
           v-model={[show.value, 'show']}
           title={onGetTitle(props.value.advancedProps?.title as string)}
-          width={(props.value.advancedProps as DrawerProps)?.width + 'px'}
+          width={`${(props.value.advancedProps as DrawerProps)?.width}px`}
           maskClosable={
             !loading.value && props.value.advancedProps?.maskClosable
           }

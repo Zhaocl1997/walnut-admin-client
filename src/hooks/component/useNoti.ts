@@ -32,20 +32,20 @@ export const AppNoti = (msg: string, options: AppNotiOptions) => {
 
 export const useAppNotiSuccess = (
   msg: string,
-  options?: Omit<AppNotiOptions, 'type'>
+  options?: Omit<AppNotiOptions, 'type'>,
 ) => AppNoti(msg, { ...options, type: 'success' })
 
 export const useAppNotiInfo = (
   msg: string,
-  options?: Omit<AppNotiOptions, 'type'>
+  options?: Omit<AppNotiOptions, 'type'>,
 ) => AppNoti(msg, { ...options, type: 'info' })
 
 export const useAppNotiWarning = (
   msg: string,
-  options?: Omit<AppNotiOptions, 'type'>
+  options?: Omit<AppNotiOptions, 'type'>,
 ) => AppNoti(msg, { ...options, type: 'warning' })
 
 export const useAppNotiError = (
   msg: string,
-  options?: Omit<AppNotiOptions, 'type'>
+  options?: Omit<AppNotiOptions, 'type'>,
 ) => AppNoti(msg, { ...options, type: 'error' })

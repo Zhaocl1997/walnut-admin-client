@@ -1,4 +1,4 @@
-import { arrToTree, orderTree, formatTree } from 'easy-fns-ts'
+import { arrToTree, formatTree, orderTree } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 import { menuAPI } from '@/api/system/menu'
 
@@ -13,9 +13,9 @@ export const useMenuTree = () => {
   const getLeftMenu = computed(() => {
     if (menuDataRef.value.length !== 0) {
       return formatTree<AppSystemMenu>(menuDataRef.value[0]?.children!, {
-        format: (node) => ({
+        format: node => ({
           ...node,
-          title: node.title ? t(node.title!) : node.title,
+          title: node.title ? t(node.title) : node.title,
         }),
       })
     }
@@ -25,9 +25,9 @@ export const useMenuTree = () => {
   const getTreeSelect = computed(() => {
     if (treeSelectDataRef.value.length !== 0) {
       return formatTree<AppSystemMenu>(treeSelectDataRef.value, {
-        format: (node) => ({
+        format: node => ({
           ...node,
-          title: node.title ? t(node.title!) : node.title,
+          title: node.title ? t(node.title) : node.title,
         }),
       })
     }
@@ -41,32 +41,32 @@ export const useMenuTree = () => {
       arrToTree<AppSystemMenu>(
         cloneDeep(res.data),
         { id: '_id' },
-        { transformEmptyChildrenToNull: true }
-      )
+        { transformEmptyChildrenToNull: true },
+      ),
     )
 
     const treeSelectData = orderTree<AppSystemMenu>(
       arrToTree<AppSystemMenu>(
-        cloneDeep(res.data).filter((i) => i.type !== AppConstMenuType.ELEMENT),
+        cloneDeep(res.data).filter(i => i.type !== AppConstMenuType.ELEMENT),
         { id: '_id' },
         {
           transformEmptyChildrenToNull: true,
-        }
-      )
+        },
+      ),
     )
 
     menuDataRef.value = menuData
     treeSelectDataRef.value = treeSelectData
     menuActiveNamesOptions.value = res.data
-      .filter((i) => i.type === AppConstMenuType.MENU)
-      .map((i) => ({
+      .filter(i => i.type === AppConstMenuType.MENU)
+      .map(i => ({
         name: i.name!,
         title: i.title!,
       }))
   }
 
-  onMounted(() => {
-    onInit()
+  onMounted(async () => {
+    await onInit()
   })
 
   return { getLeftMenu, getTreeSelect, menuActiveNamesOptions, onInit }

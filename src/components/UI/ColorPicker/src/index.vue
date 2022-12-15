@@ -1,17 +1,17 @@
-<template>
-  <n-color-picker show-preview></n-color-picker>
-</template>
-
 <script lang="ts">
-  import { props } from './props'
+import { props } from './props'
 
-  export default defineComponent({
-    name: 'WColorPicker',
+export default defineComponent({
+  name: 'WColorPicker',
 
-    props,
+  props,
 
-    setup(props) {
-      return {}
-    },
-  })
+  setup(props) {
+    return {}
+  },
+})
 </script>
+
+<template>
+  <n-color-picker show-preview />
+</template>

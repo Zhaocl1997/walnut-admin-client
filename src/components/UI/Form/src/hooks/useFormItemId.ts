@@ -1,4 +1,4 @@
-import { WForm } from '../types'
+import type { WForm } from '../types'
 import { generateFormItemId } from '../utils'
 
 export const formIdMap = ref(new Map())
@@ -6,7 +6,7 @@ export const formIdMap = ref(new Map())
 export const setFormItemId = (
   item: WForm.Schema.Item,
   index: number,
-  value: boolean
+  value: boolean,
 ) => {
   const id = generateFormItemId(item, index)
 

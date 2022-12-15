@@ -1,13 +1,13 @@
 <script lang="tsx">
-  export default defineComponent({
-    name: 'WTitle',
+export default defineComponent({
+  name: 'WTitle',
 
-    props: {
-      helpMessage: [String, Array] as PropType<string | string[]>,
-    },
+  props: {
+    helpMessage: [String, Array] as PropType<string | string[]>,
+  },
 
-    setup(props, { attrs, slots, emit, expose }) {
-      return () => (
+  setup(props, { attrs, slots, emit, expose }) {
+    return () => (
         <n-h4 class="m-0 hstack items-center">
           {{
             default: () => (
@@ -20,7 +20,7 @@
             ),
           }}
         </n-h4>
-      )
-    },
-  })
+    )
+  },
+})
 </script>

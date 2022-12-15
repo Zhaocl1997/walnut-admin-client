@@ -1,14 +1,13 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 
-import type {
-  AxiosRequestConfigExtend,
-  AxiosTransform,
-  AxiosCustomConfig,
-} from './types'
-
 import axios from 'axios'
 
 import { easyDeepMerge } from 'easy-fns-ts'
+import type {
+  AxiosCustomConfig,
+  AxiosRequestConfigExtend,
+  AxiosTransform,
+} from './types'
 
 export class Axios {
   private instance: AxiosInstance
@@ -45,7 +44,7 @@ export class Axios {
     this.createRequestInterceptor(requestInterceptors, requestInterceptorsCatch)
     this.createResponseInterceptor(
       responseInterceptors,
-      responseInterceptorsCatch
+      responseInterceptorsCatch,
     )
   }
 
@@ -68,7 +67,7 @@ export class Axios {
    */
   request<T>(
     config: AxiosRequestConfig,
-    options?: AxiosCustomConfig
+    options?: AxiosCustomConfig,
   ): Promise<T> {
     // Here merge default customConfig with individual customConfig
     const mergedConfig = easyDeepMerge<AxiosRequestConfig>(config, {
@@ -78,8 +77,8 @@ export class Axios {
     return new Promise((resolve, reject) => {
       this.instance
         .request<T, T>(mergedConfig!)
-        .then((res) => resolve(res))
-        .catch((err) => reject(err))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
     })
   }
 

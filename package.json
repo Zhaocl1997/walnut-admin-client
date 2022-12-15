@@ -7,14 +7,14 @@
     "email": "zhaocl97@foxmail.com",
     "url": "https://github.com/Zhaocl1997"
   },
-  "homepage": "https://github.com/Zhaocl1997/walnut-admin-client",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Zhaocl1997/walnut-admin-client/issues"
-  },
+  "homepage": "https://github.com/Zhaocl1997/walnut-admin-client",
   "repository": {
     "type": "git",
     "url": "https://github.com/Zhaocl1997/walnut-admin-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Zhaocl1997/walnut-admin-client/issues"
   },
   "scripts": {
     "predev": "esno build/generate/index.ts && npm run icon:dev",

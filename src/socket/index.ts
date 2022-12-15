@@ -14,7 +14,7 @@ const path = useProxy ? ws[1] : ws[3]
 console.log(url, path)
 
 export const AppSocket = io(url, {
-  path: path,
+  path,
 })
 
 AppSocket.on('connect', () => {

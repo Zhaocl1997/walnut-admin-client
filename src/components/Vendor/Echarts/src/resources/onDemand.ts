@@ -1,13 +1,13 @@
 import * as echarts from 'echarts/core'
-import { LineChart, BarChart, PieChart } from 'echarts/charts'
+import { BarChart, LineChart, PieChart } from 'echarts/charts'
 import {
-  GridComponent,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  DatasetComponent,
   DataZoomComponent,
+  DatasetComponent,
+  GridComponent,
+  LegendComponent,
+  TitleComponent,
   ToolboxComponent,
+  TooltipComponent,
 } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 

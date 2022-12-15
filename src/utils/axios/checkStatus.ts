@@ -2,11 +2,11 @@ const responseError = (msg: string) => {
   const { t } = AppI18n.global
 
   // TODO 93
-  // @ts-ignore
+  // @ts-expect-error
   useAppNotiError(t(msg))
 }
 
-export const checkReponseErrorStatus = (status?: number, msg?: string) => {
+export const checkReponseErrorStatus = async (status?: number, msg?: string) => {
   switch (status) {
     case 400:
       responseError(`${msg}`)
@@ -19,7 +19,7 @@ export const checkReponseErrorStatus = (status?: number, msg?: string) => {
 
         const userAuth = useAppStoreUserAuth()
 
-        userAuth.Signout()
+        await userAuth.Signout()
       }
       break
 

@@ -1,4 +1,4 @@
-import { NotificationReactive } from 'naive-ui'
+import type { NotificationReactive } from 'naive-ui'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
@@ -48,6 +48,7 @@ const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
 const useAppStoreNaiveOutside = () => useAppStoreNaiveInside(store)
 
 export const useAppStoreNaive = () => {
-  if (getCurrentInstance()) return useAppStoreNaiveInside()
+  if (getCurrentInstance())
+    return useAppStoreNaiveInside()
   return useAppStoreNaiveOutside()
 }

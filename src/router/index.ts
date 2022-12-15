@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import { routes } from './routes'
 import { createRouterGuard } from './guard'
-import { stringifyQuery, parseQuery } from './utils/query'
+import { parseQuery, stringifyQuery } from './utils/query'
 
 // TODO enhanced mode
 export const AppRouter = createRouter({
@@ -38,7 +38,8 @@ export const useAppRouterPush = (info: RouteLocationRaw) => {
       // finish the loadingbar
       window.$loadingBar.finish()
     })
-  } catch (error) {
+  }
+  catch (error) {
     console.log(error)
 
     // maybe error

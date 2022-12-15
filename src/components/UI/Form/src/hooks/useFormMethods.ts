@@ -1,23 +1,24 @@
 import type { WForm } from '../types'
 
 export const useFormMethods = (
-  formRef: Ref<Nullable<WForm.Inst.NFormInst>>
+  formRef: Ref<Nullable<WForm.Inst.NFormInst>>,
 ) => {
   const methods = {
     validate: (fields?: string[]) => {
       if (!fields || fields.length === 0) {
-        return new Promise<boolean>((reslove) => {
+        return new Promise<boolean>((resolve) => {
           formRef.value?.validate((err) => {
-            reslove(!err ? true : false)
+            resolve(!err)
           })
         })
-      } else {
-        return new Promise<boolean>((reslove) => {
+      }
+      else {
+        return new Promise<boolean>((resolve) => {
           formRef.value?.validate(
             (err) => {
-              reslove(!err ? true : false)
+              resolve(!err)
             },
-            (rule) => fields?.includes(rule?.key as string)
+            rule => fields?.includes(rule?.key as string),
           )
         })
       }

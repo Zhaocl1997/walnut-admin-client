@@ -1,21 +1,36 @@
 const { createBlobUrl } = useBlob()
 
 /**
- * @description Download online url resources
+ * @description Download url resources
  */
-export const downloadByOnlineUrl = async (url: string, fileName?: string) => {
-  const base64 = await imgUrlToBase64(url)
+export const downloadByUrl = (
+  url: string,
+  fileName?: string,
+  target: TargetContext = '_blank',
+) => {
+  return new Promise<boolean>((resolve, reject) => {
+    if (/(iP)/g.test(window.navigator.userAgent))
+      reject(new Error('Your browser does not support download!'))
 
-  await downloadByBase64(base64, fileName)
-}
+    try {
+      const a = document.createElement('a')
+      a.href = url
+      a.target = target
+      a.style.display = 'none'
 
-/**
- * @description Download base64 resources
- */
-export const downloadByBase64 = async (base64: string, fileName?: string) => {
-  const blob = await base64ToBlob(base64)
+      a.download
+        = fileName || url.substring(url.lastIndexOf('/') + 1, url.length)
 
-  await downloadByBlob(blob, fileName)
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+
+      resolve(true)
+    }
+    catch (error) {
+      reject(error)
+    }
+  })
 }
 
 /**
@@ -28,34 +43,19 @@ export const downloadByBlob = async (data: Blob, fileName?: string) => {
 }
 
 /**
- * @description Download url resources
+ * @description Download base64 resources
  */
-export const downloadByUrl = (
-  url: string,
-  fileName?: string,
-  target: TargetContext = '_blank'
-) => {
-  return new Promise<boolean>((resolve, reject) => {
-    if (/(iP)/g.test(window.navigator.userAgent)) {
-      reject('Your browser does not support download!')
-    }
+export const downloadByBase64 = async (base64: string, fileName?: string) => {
+  const blob = await base64ToBlob(base64)
 
-    try {
-      const a = document.createElement('a')
-      a.href = url
-      a.target = target
-      a.style.display = 'none'
+  await downloadByBlob(blob, fileName)
+}
 
-      a.download =
-        fileName || url.substring(url.lastIndexOf('/') + 1, url.length)
+/**
+ * @description Download online url resources
+ */
+export const downloadByOnlineUrl = async (url: string, fileName?: string) => {
+  const base64 = await imgUrlToBase64(url)
 
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-
-      resolve(true)
-    } catch (error) {
-      reject(error)
-    }
-  })
+  await downloadByBase64(base64, fileName)
 }

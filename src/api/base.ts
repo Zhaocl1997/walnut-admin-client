@@ -20,7 +20,7 @@ export class BaseAPI<T> {
         url: `${this.baseAPI}`,
         data,
       },
-      {}
+      {},
     )
   }
 
@@ -36,7 +36,7 @@ export class BaseAPI<T> {
         url: `${this.baseAPI}`,
         data,
       },
-      {}
+      {},
     )
   }
 
@@ -45,7 +45,7 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/${id}`,
       },
-      {}
+      {},
     )
   }
 
@@ -54,7 +54,7 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/deleteMany/${id}`,
       },
-      {}
+      {},
     )
   }
 
@@ -63,7 +63,7 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/clear`,
       },
-      {}
+      {},
     )
   }
 }

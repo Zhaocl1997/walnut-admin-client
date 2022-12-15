@@ -1,27 +1,27 @@
-<template>
-  <div></div>
-</template>
-
 <script lang="ts">
-  export default defineComponent({
-    name: 'Redirect',
+export default defineComponent({
+  name: 'Redirect',
 
-    setup() {
-      const { currentRoute, replace } = useAppRouter()
+  setup() {
+    const { currentRoute, replace } = useAppRouter()
 
-      const { params, query } = currentRoute.value
-      const { path } = params
+    const { params, query } = currentRoute.value
+    const { path } = params
 
-      const _path = Array.isArray(path) ? path.join('/') : path
+    const _path = Array.isArray(path) ? path.join('/') : path
 
-      replace({
-        path: '/' + _path,
-        query,
-      })
+    replace({
+      path: `/${_path}`,
+      query,
+    })
 
-      return {}
-    },
-  })
+    return {}
+  },
+})
 </script>
+
+<template>
+  <div />
+</template>
 
 <style lang="scss" scoped></style>

@@ -1,3 +1,51 @@
+<script lang="ts" setup>
+import type { TabsInst } from 'naive-ui'
+
+import SignInWithAccount from './common/account.vue'
+import SignInWitSMS from './common/SMS.vue'
+import SignInWitEmail from './common/email.vue'
+import SignInWithQR from './common/QR.vue'
+
+import SharedOther from './shared/other.vue'
+
+import { setAuthContext } from './hooks/useAuthContext'
+
+const { t, locale } = useAppI18n()
+
+const tabsInstRef = ref<TabsInst>()
+const account = ref<{ setFormData: (n: string, p: string) => {} }>()
+const appAuthSettings = useAppStoreSettingBackend()
+
+const loading = ref(false)
+
+watch(
+  () => [locale, appAuthSettings.auth],
+  () => nextTick(() => tabsInstRef.value?.syncBarPosition()),
+  {
+    deep: true,
+    immediate: true,
+  },
+)
+
+defineExpose({
+  setFormData: (n: string, p: string) => account.value?.setFormData(n, p),
+})
+
+setAuthContext({ loading })
+
+onMounted(async () => {
+  await appAuthSettings.getAppAuthSettings()
+})
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'AuthSignin',
+
+  defaultView: false,
+})
+</script>
+
 <template>
   <div class="text-center w-full">
     <n-tabs
@@ -17,7 +65,7 @@
         <SignInWithAccount
           ref="account"
           class="w-72 text-justify mt-2"
-        ></SignInWithAccount>
+        />
       </n-tab-pane>
 
       <n-tab-pane
@@ -25,7 +73,7 @@
         name="SMS"
         :tab="t('form.app.auth.tab.sms')"
       >
-        <SignInWitSMS class="w-72 text-justify mt-2"></SignInWitSMS>
+        <SignInWitSMS class="w-72 text-justify mt-2" />
       </n-tab-pane>
 
       <n-tab-pane
@@ -33,7 +81,7 @@
         name="email"
         :tab="t('form.app.auth.tab.email')"
       >
-        <SignInWitEmail class="w-72 text-justify mt-2"></SignInWitEmail>
+        <SignInWitEmail class="w-72 text-justify mt-2" />
       </n-tab-pane>
 
       <n-tab-pane
@@ -41,58 +89,10 @@
         name="QR"
         :tab="t('form.app.auth.tab.qr')"
       >
-        <SignInWithQR class="w-72 text-justify mt-2"></SignInWithQR>
+        <SignInWithQR class="w-72 text-justify mt-2" />
       </n-tab-pane>
     </n-tabs>
 
-    <SharedOther></SharedOther>
+    <SharedOther />
   </div>
 </template>
-
-<script lang="ts" setup>
-  import type { TabsInst } from 'naive-ui'
-
-  import SignInWithAccount from './common/account.vue'
-  import SignInWitSMS from './common/SMS.vue'
-  import SignInWitEmail from './common/email.vue'
-  import SignInWithQR from './common/QR.vue'
-
-  import SharedOther from './shared/other.vue'
-
-  import { setAuthContext } from './hooks/useAuthContext'
-
-  const { t, locale } = useAppI18n()
-
-  const tabsInstRef = ref<TabsInst>()
-  const account = ref<{ setFormData: (n: string, p: string) => {} }>()
-  const appAuthSettings = useAppStoreSettingBackend()
-
-  const loading = ref(false)
-
-  watch(
-    () => [locale, appAuthSettings.auth],
-    () => nextTick(() => tabsInstRef.value?.syncBarPosition()),
-    {
-      deep: true,
-      immediate: true,
-    }
-  )
-
-  defineExpose({
-    setFormData: (n: string, p: string) => account.value?.setFormData(n, p),
-  })
-
-  setAuthContext({ loading })
-
-  onMounted(async () => {
-    await appAuthSettings.getAppAuthSettings()
-  })
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'AuthSignin',
-
-    defaultView: false,
-  })
-</script>

@@ -1,60 +1,60 @@
+<script lang="ts">
+export default defineComponent({
+  name: 'DynamicInputForm',
+
+  setup() {
+    const configData = ref({})
+
+    const [register1] = useForm<typeof configData.value>({
+      span: 12,
+      labelWidth: 100,
+      schemas: [],
+    })
+
+    const formData = ref({})
+
+    const [register2] = useForm({
+      span: 24,
+      schemas: [
+        {
+          type: 'Base:DynamicInput',
+          formProp: {
+            path: 'dynamic1',
+            label: 'Base Dynamic',
+          },
+          componentProp: {},
+        },
+        {
+          type: 'Base:DynamicInput',
+          formProp: {
+            path: 'dynamic2',
+            label: 'Pair Key/Value',
+          },
+          componentProp: {
+            preset: 'pair',
+          },
+        },
+      ],
+    })
+
+    return {
+      configData,
+      register1,
+      formData,
+      register2,
+    }
+  },
+})
+</script>
+
 <template>
   <w-demo-card title="Dynamic Input Form" description="Dynamic Input Form.">
-    <w-form @hook="register1" :model="configData"></w-form>
+    <w-form :model="configData" @hook="register1" />
 
-    <w-JSON :value="formData"></w-JSON>
+    <w-JSON :value="formData" />
 
-    <w-form @hook="register2" :model="formData"></w-form>
+    <w-form :model="formData" @hook="register2" />
   </w-demo-card>
 </template>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'DynamicInputForm',
-
-    setup() {
-      const configData = ref({})
-
-      const [register1] = useForm<typeof configData.value>({
-        span: 12,
-        labelWidth: 100,
-        schemas: [],
-      })
-
-      const formData = ref({})
-
-      const [register2] = useForm({
-        span: 24,
-        schemas: [
-          {
-            type: 'Base:DynamicInput',
-            formProp: {
-              path: 'dynamic1',
-              label: 'Base Dynamic',
-            },
-            componentProp: {},
-          },
-          {
-            type: 'Base:DynamicInput',
-            formProp: {
-              path: 'dynamic2',
-              label: 'Pair Key/Value',
-            },
-            componentProp: {
-              preset: 'pair',
-            },
-          },
-        ],
-      })
-
-      return {
-        configData,
-        register1,
-        formData,
-        register2,
-      }
-    },
-  })
-</script>
 
 <style lang="scss" scoped></style>

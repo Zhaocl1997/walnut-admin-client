@@ -15,17 +15,19 @@ export const useAppTitle = () => {
       try {
         if (!visible.value) {
           title.value = t('app.title')
-        } else {
+        }
+        else {
           const translateTitle = t(currentRoute.value.meta.title as string)
           title.value = `${translateTitle} - ${envTitle}`
         }
-      } catch (error) {
+      }
+      catch (error) {
         title.value = `${envTitle}`
       }
     },
     {
       deep: true,
       immediate: true,
-    }
+    },
   )
 }

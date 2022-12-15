@@ -1,118 +1,118 @@
-<template>
-  <w-form @hook="register" :model="headerRelatives"></w-form>
-</template>
-
 <script lang="ts" setup>
-  import { getCanAnimate, modalColor } from '../shared'
+import { getCanAnimate, modalColor } from '../shared'
 
-  const appDark = useAppStoreDark()
+const appDark = useAppStoreDark()
 
-  const appSetting = useAppStoreSetting()
+const appSetting = useAppStoreSetting()
 
-  const headerRelatives = appSetting.header
+const headerRelatives = appSetting.header
 
-  const [register] = useForm<typeof headerRelatives>({
-    localeUniqueKey: 'app.settings.header',
-    showFeedback: false,
-    xGap: 0,
-    formItemClass: 'flex flex-row justify-between mb-2',
-    formItemComponentClass: '!w-32 flex justify-end',
-    size: 'small',
-    disabled: computed(() => !headerRelatives.status),
-    schemas: [
-      {
-        type: 'Extend:Divider',
-        componentProp: {
-          title: 'app.settings.header',
-          prefix: 'bar',
-          titlePlacement: 'left',
-          foldable: true,
-        },
-        extraProp: {
-          sticky: true,
-          bgColor: modalColor,
-        },
+const [register] = useForm<typeof headerRelatives>({
+  localeUniqueKey: 'app.settings.header',
+  showFeedback: false,
+  xGap: 0,
+  formItemClass: 'flex flex-row justify-between mb-2',
+  formItemComponentClass: '!w-32 flex justify-end',
+  size: 'small',
+  disabled: computed(() => !headerRelatives.status),
+  schemas: [
+    {
+      type: 'Extend:Divider',
+      componentProp: {
+        title: 'app.settings.header',
+        prefix: 'bar',
+        titlePlacement: 'left',
+        foldable: true,
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'status',
-        },
-        componentProp: {
-          disabled: false,
-        },
+      extraProp: {
+        sticky: true,
+        bgColor: modalColor,
       },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'id',
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'status',
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'fixed',
-        },
+      componentProp: {
+        disabled: false,
       },
-      {
-        type: 'Extend:TransitionSelect',
-        formProp: {
-          path: 'transition',
-        },
-        componentProp: {
-          disabled: computed(
-            () => !headerRelatives.status || getCanAnimate.value
-          ),
-          tooltip: true,
-        },
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'id',
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'inverted',
-        },
-        componentProp: {
-          disabled: computed(() => !headerRelatives.status || appDark.isDark),
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'fixed',
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'height',
-        },
-        componentProp: {
-          step: 1,
-          min: 0,
-          suffix: 'px',
-          showButton: false,
-          precision: 0,
-        },
+    },
+    {
+      type: 'Extend:TransitionSelect',
+      formProp: {
+        path: 'transition',
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'fullscreen',
-        },
+      componentProp: {
+        disabled: computed(
+          () => !headerRelatives.status || getCanAnimate.value,
+        ),
+        tooltip: true,
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'search',
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'inverted',
       },
-      // TODO below two should belong to system functionaility
-      // {
-      //   type: 'Base:Switch',
-      //   formProp: {
-      //     path: 'showLocale',
-      //   },
-      // },
-      // {
-      //   type: 'Base:Switch',
-      //   formProp: {
-      //     path: 'showDarkMode',
-      //   },
-      // },
-    ],
-  })
+      componentProp: {
+        disabled: computed(() => !headerRelatives.status || appDark.isDark),
+      },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'height',
+      },
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'fullscreen',
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'search',
+      },
+    },
+    // TODO below two should belong to system functionaility
+    // {
+    //   type: 'Base:Switch',
+    //   formProp: {
+    //     path: 'showLocale',
+    //   },
+    // },
+    // {
+    //   type: 'Base:Switch',
+    //   formProp: {
+    //     path: 'showDarkMode',
+    //   },
+    // },
+  ],
+})
 </script>
+
+<template>
+  <w-form :model="headerRelatives" @hook="register" />
+</template>

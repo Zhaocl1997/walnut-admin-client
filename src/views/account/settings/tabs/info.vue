@@ -1,7 +1,144 @@
+<script lang="ts" setup>
+import { pick } from 'lodash-es'
+import WAvatar from '../components/avatar.vue'
+import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
+import { userAPI } from '@/api/system/user'
+
+const { t } = useAppI18n()
+const userProfile = useAppStoreUserProfile()
+
+const avatarUploadRef = ref<WAvatarUploadInst>()
+const formData = ref<AppSystemUser>({
+  ...pick(userProfile.profile, [
+    '_id',
+    'userName',
+    'nickName',
+    'phoneNumber',
+    'emailAddress',
+    'description',
+    'gender',
+    'avatar',
+  ]),
+})
+
+const loading = ref(false)
+const tempSrcUrl = ref<string>()
+
+const onAvatarChange = (temp: string) => {
+  tempSrcUrl.value = temp
+}
+
+const [register] = useForm<typeof formData.value>({
+  localeUniqueKey: 'userInfo',
+  baseRules: true,
+  labelWidth: 120,
+
+  disabled: computed(() => loading.value),
+
+  schemas: [
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'userName',
+      },
+      componentProp: {},
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'nickName',
+      },
+      componentProp: {},
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'phoneNumber',
+        rule: false,
+      },
+      componentProp: {},
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'emailAddress',
+        rule: false,
+      },
+      componentProp: {},
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'description',
+        rule: false,
+      },
+      componentProp: {
+        type: 'textarea',
+      },
+    },
+    {
+      type: 'Extend:Dict',
+      formProp: {
+        path: 'gender',
+        label: true,
+        rule: false,
+      },
+      componentProp: {
+        dictType: 'gbt_sex',
+        dictRenderType: 'radio',
+        renderComponentProps: {
+          button: true,
+        },
+      },
+    },
+    {
+      type: 'Base:Button',
+      componentProp: {
+        textProp: () => t('form.userInfo.submit'),
+        type: 'primary',
+        loading: computed(() => loading.value),
+        disabled: computed(() => loading.value),
+        onClick: async () => {
+          loading.value = true
+
+          try {
+            // TODO upload refactor
+            // upload avatar and get real avatar url
+            const isAvatarUploadSuccess
+                = await avatarUploadRef.value?.onOSSUpload()
+
+            if (!isAvatarUploadSuccess)
+              return
+
+            // set the new avatar url
+            formData.value.avatar = tempSrcUrl.value
+
+            await userAPI.update(formData.value)
+            useAppMsgSuccess()
+            await userProfile.getProfile()
+          }
+          finally {
+            loading.value = false
+          }
+        },
+      },
+    },
+  ],
+})
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'WAccountSettingsTabInfo',
+
+  defaultView: false,
+})
+</script>
+
 <template>
   <n-grid x-gap="12" :cols="2">
     <n-gi>
-      <w-form @hook="register" :model="formData"></w-form>
+      <w-form :model="formData" @hook="register" />
     </n-gi>
 
     <n-gi>
@@ -11,151 +148,15 @@
           port="w-avatar"
           style="height: 240px; width: 240px"
         >
-          <WAvatar :value="tempSrcUrl ?? formData.avatar" :size="240">
-          </WAvatar>
+          <WAvatar :value="tempSrcUrl ?? formData.avatar" :size="240" />
         </Starport>
 
         <w-avatar-upload
           ref="avatarUploadRef"
           class="mt-4"
           @change="onAvatarChange"
-        ></w-avatar-upload>
+        />
       </div>
     </n-gi>
   </n-grid>
 </template>
-
-<script lang="ts" setup>
-  import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
-  import { pick } from 'lodash-es'
-  import WAvatar from '../components/avatar.vue'
-  import { userAPI } from '@/api/system/user'
-
-  const { t } = useAppI18n()
-  const userProfile = useAppStoreUserProfile()
-
-  const avatarUploadRef = ref<WAvatarUploadInst>()
-  const formData = ref<AppSystemUser>({
-    ...pick(userProfile.profile, [
-      '_id',
-      'userName',
-      'nickName',
-      'phoneNumber',
-      'emailAddress',
-      'description',
-      'gender',
-      'avatar',
-    ]),
-  })
-
-  const loading = ref(false)
-  const tempSrcUrl = ref<string>()
-
-  const onAvatarChange = (temp: string) => {
-    tempSrcUrl.value = temp
-  }
-
-  const [register] = useForm<typeof formData.value>({
-    localeUniqueKey: 'userInfo',
-    baseRules: true,
-    labelWidth: 120,
-
-    disabled: computed(() => loading.value),
-
-    schemas: [
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'userName',
-        },
-        componentProp: {},
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'nickName',
-        },
-        componentProp: {},
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'phoneNumber',
-          rule: false,
-        },
-        componentProp: {},
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'emailAddress',
-          rule: false,
-        },
-        componentProp: {},
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'description',
-          rule: false,
-        },
-        componentProp: {
-          type: 'textarea',
-        },
-      },
-      {
-        type: 'Extend:Dict',
-        formProp: {
-          path: 'gender',
-          label: true,
-          rule: false,
-        },
-        componentProp: {
-          dictType: 'gbt_sex',
-          dictRenderType: 'radio',
-          renderComponentProps: {
-            button: true,
-          },
-        },
-      },
-      {
-        type: 'Base:Button',
-        componentProp: {
-          textProp: () => t('form.userInfo.submit'),
-          type: 'primary',
-          loading: computed(() => loading.value),
-          disabled: computed(() => loading.value),
-          onClick: async () => {
-            loading.value = true
-
-            try {
-              // TODO upload refactor
-              // upload avatar and get real avatar url
-              const isAvatarUploadSuccess =
-                await avatarUploadRef.value?.onOSSUpload()
-
-              if (!isAvatarUploadSuccess) return
-
-              // set the new avatar url
-              formData.value.avatar = tempSrcUrl.value
-
-              await userAPI.update(formData.value)
-              useAppMsgSuccess()
-              await userProfile.getProfile()
-            } finally {
-              loading.value = false
-            }
-          },
-        },
-      },
-    ],
-  })
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'WAccountSettingsTabInfo',
-
-    defaultView: false,
-  })
-</script>

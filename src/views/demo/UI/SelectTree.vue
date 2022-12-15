@@ -1,3 +1,31 @@
+<script lang="ts">
+import { getTreeData } from '../data'
+
+export default defineComponent({
+  name: 'SelectTreeDemo',
+
+  defaultView: false,
+
+  setup() {
+    const state = reactive({
+      selectTree1: '9',
+      selectTree2: [10, 17],
+
+      data: getTreeData(),
+
+      props: {
+        id: '_id',
+        label: '_label',
+      },
+    })
+
+    return {
+      ...toRefs(state),
+    }
+  },
+})
+</script>
+
 <template>
   <w-demo-card title="Select Tree">
     <!-- <w-title show-left>Single 【{{ selectTree1 }}】 </w-title>
@@ -25,31 +53,3 @@
     <br /> -->
   </w-demo-card>
 </template>
-
-<script lang="ts">
-  import { getTreeData } from '../data'
-
-  export default defineComponent({
-    name: 'SelectTreeDemo',
-
-    defaultView: false,
-
-    setup() {
-      const state = reactive({
-        selectTree1: '9',
-        selectTree2: [10, 17],
-
-        data: getTreeData(),
-
-        props: {
-          id: '_id',
-          label: '_label',
-        },
-      })
-
-      return {
-        ...toRefs(state),
-      }
-    },
-  })
-</script>

@@ -1,26 +1,26 @@
 <script lang="tsx">
-  // TODO 99
-  import WIcon from '@/components/UI/Icon'
-  import { getThemeColors } from './utils'
+// TODO 99
+import { getThemeColors } from './utils'
+import WIcon from '@/components/UI/Icon'
 
-  export default defineComponent({
-    name: 'AppColors',
+export default defineComponent({
+  name: 'AppColors',
 
-    inheritAttrs: false,
+  inheritAttrs: false,
 
-    emits: ['update:modelValue'],
+  props: {
+    modelValue: String as PropType<string>,
+    disabled: Boolean as PropType<boolean>,
+  },
 
-    props: {
-      modelValue: String as PropType<string>,
-      disabled: Boolean as PropType<boolean>,
-    },
+  emits: ['update:modelValue'],
 
-    setup(props, { emit }) {
-      const colors = getThemeColors(props.modelValue!)
+  setup(props, { emit }) {
+    const colors = getThemeColors(props.modelValue!)
 
-      return () => (
+    return () => (
         <div class="hstack space-x-3">
-          {colors?.map((color) => (
+          {colors?.map(color => (
             <span
               onClick={() =>
                 !props.disabled && emit('update:modelValue', color)
@@ -39,7 +39,7 @@
             </span>
           ))}
         </div>
-      )
-    },
-  })
+    )
+  },
+})
 </script>

@@ -24,9 +24,8 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     async lock(route: Ref<RouteLocationNormalizedLoaded>) {
       const appSetting = useAppStoreSetting()
 
-      if (!appSetting.getLockStatus) {
+      if (!appSetting.getLockStatus)
         return
-      }
 
       this.setIsLock(true)
 
@@ -42,9 +41,8 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     async unLock() {
       const appSetting = useAppStoreSetting()
 
-      if (!appSetting.getLockStatus) {
+      if (!appSetting.getLockStatus)
         return
-      }
 
       const appMenu = useAppStoreMenu()
 
@@ -53,11 +51,10 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       const lockRoute = clone(this.lockRoute)
       this.setLockRoute({})
 
-      if (isEmpty(lockRoute)) {
+      if (isEmpty(lockRoute))
         await appMenu.goIndex()
-      } else {
+      else
         await useAppRouterPush(lockRoute)
-      }
     },
   },
 })
@@ -65,6 +62,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
 const useAppStoreLockOutside = () => useAppStoreLockInside(store)
 
 export const useAppStoreLock = () => {
-  if (getCurrentInstance()) return useAppStoreLockInside()
+  if (getCurrentInstance())
+    return useAppStoreLockInside()
   return useAppStoreLockOutside()
 }

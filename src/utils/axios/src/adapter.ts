@@ -1,7 +1,6 @@
 import type { AxiosAdapter, AxiosRequestConfig } from 'axios'
-import type { AxiosAdapterOptions, AxiosRequestConfigExtend } from './types'
-
 import { Memory } from 'easy-fns-ts'
+import type { AxiosAdapterOptions, AxiosRequestConfigExtend } from './types'
 
 const httpMempry = new Memory<any, any>()
 
@@ -18,7 +17,7 @@ const generateReqKey = (config: AxiosRequestConfig) => {
  */
 export const cacheAdapterEnhancer = (
   adapter: AxiosAdapter,
-  options?: AxiosAdapterOptions
+  options?: AxiosAdapterOptions,
 ) => {
   const { cachedSeconds: defaultCachedSeconds } = options!
 
@@ -37,7 +36,8 @@ export const cacheAdapterEnhancer = (
         responsePromise = (async () => {
           try {
             return await adapter(config)
-          } catch (reason) {
+          }
+          catch (reason) {
             httpMempry.remove(requestKey)
             throw reason
           }
@@ -46,7 +46,7 @@ export const cacheAdapterEnhancer = (
         httpMempry.set(
           requestKey,
           responsePromise,
-          cachedSeconds ?? defaultCachedSeconds
+          cachedSeconds ?? defaultCachedSeconds,
         )
         return responsePromise
       }

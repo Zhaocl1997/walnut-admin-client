@@ -1,4 +1,4 @@
-import type { ThemeCommonVars, GlobalThemeOverrides } from 'naive-ui'
+import type { GlobalThemeOverrides, ThemeCommonVars } from 'naive-ui'
 
 import { adjustColor } from 'easy-fns-ts'
 import { darkTheme, lightTheme } from 'naive-ui'
@@ -8,11 +8,11 @@ const appDark = useAppStoreDark()
 const appSettings = useAppStoreSetting()
 
 export const getTheme = computed(() =>
-  !appDark.isDark ? lightTheme : darkTheme
+  !appDark.isDark ? lightTheme : darkTheme,
 )
 
 export const getThemeStyle = computed(() =>
-  appDark.isDark ? appSettings.themes.dark : appSettings.themes.light
+  appDark.isDark ? appSettings.themes.dark : appSettings.themes.light,
 )
 
 export const getThemeOverridesCommon = computed(
@@ -40,7 +40,7 @@ export const getThemeOverridesCommon = computed(
 
     bodyColor: getThemeStyle.value.bodyColor,
     invertedColor: getThemeStyle.value.invertedColor,
-  })
+  }),
 )
 
 export const getThemeOverrides = computed(
@@ -53,9 +53,9 @@ export const getThemeOverrides = computed(
     Dialog: {
       contentMargin: '8px 0',
     },
-  })
+  }),
 )
 
 export const getMergedTheme = computed(() =>
-  merge(getTheme.value, getThemeOverrides.value)
+  merge(getTheme.value, getThemeOverrides.value),
 )

@@ -7,12 +7,12 @@ export const generateIconBundleImport = async (env: string) => {
 
   // dev env has a higher priority
   // just import the bundle file
-  const res =
-    env === 'dev'
+  const res
+    = env === 'dev'
       ? file.toString().replace('// ...', `import '/${iconBundlePath}'`)
       : IconBundleConfig.online
-      ? file.toString().replace(`import '/${iconBundlePath}'`, '// ...')
-      : file.toString().replace('// ...', `import '/${iconBundlePath}'`)
+        ? file.toString().replace(`import '/${iconBundlePath}'`, '// ...')
+        : file.toString().replace('// ...', `import '/${iconBundlePath}'`)
 
   await BuildUtilsWriteFile(iconBundleImportPath, res)
 }

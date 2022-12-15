@@ -1,210 +1,72 @@
-<template>
-  <WCRUD @hook="register"></WCRUD>
-</template>
-
 <script lang="ts">
-  export default defineComponent({
-    name: 'Dict',
-  })
+export default defineComponent({
+  name: 'Dict',
+})
 </script>
 
 <script lang="ts" setup>
-  import { dictTypeAPI } from '@/api/system/dict'
+import { dictTypeAPI } from '@/api/system/dict'
 
-  const { t } = useAppI18n()
+const { t } = useAppI18n()
 
-  // locale unique key
-  const localeKey = 'dictType'
-  const authKey = 'dict:type'
+// locale unique key
+const localeKey = 'dictType'
+const authKey = 'dict:type'
 
-  const [
-    register,
-    {
-      onTableOpenCreateForm,
-      onApiTableReadAndOpenUpdateForm,
-      onApiTableDelete,
-    },
-  ] = useCRUD<AppSystemDictType>({
-    baseAPI: dictTypeAPI,
+const [
+  register,
+  {
+    onTableOpenCreateForm,
+    onApiTableReadAndOpenUpdateForm,
+    onApiTableDelete,
+  },
+] = useCRUD<AppSystemDictType>({
+  baseAPI: dictTypeAPI,
 
-    tableProps: {
-      localeUniqueKey: localeKey,
-      rowKey: (row) => row._id!,
-      maxHeight: 600,
-      striped: true,
-      bordered: true,
-      singleLine: false,
-      headerActions: ['create'],
+  tableProps: {
+    localeUniqueKey: localeKey,
+    rowKey: row => row._id!,
+    maxHeight: 600,
+    striped: true,
+    bordered: true,
+    singleLine: false,
+    headerActions: ['create'],
 
-      auths: {
-        list: `system:${authKey}:list`,
-        create: `system:${authKey}:create`,
-        read: `system:${authKey}:read`,
-        update: `system:${authKey}:update`,
-        delete: `system:${authKey}:delete`,
-        deleteMany: `system:${authKey}:deleteMany`,
-      },
-
-      onTableHeaderActions: ({ type }) => {
-        switch (type) {
-          case 'create':
-            onTableOpenCreateForm()
-            break
-
-          default:
-            break
-        }
-      },
-
-      queryFormProps: {
-        localeUniqueKey: localeKey,
-        localeWithTable: true,
-        span: 6,
-        showFeedback: false,
-        labelWidth: 80,
-        // query form schemas
-        schemas: [
-          {
-            type: 'Base:Input',
-            formProp: {
-              path: 'name',
-            },
-            componentProp: {
-              clearable: true,
-            },
-          },
-
-          {
-            type: 'Base:Input',
-            formProp: {
-              path: 'type',
-            },
-            componentProp: {
-              clearable: true,
-            },
-          },
-
-          {
-            type: 'Base:Input',
-            formProp: {
-              path: 'description',
-            },
-            componentProp: {
-              clearable: true,
-            },
-          },
-
-          {
-            type: 'Extend:Query',
-          },
-        ],
-      },
-
-      columns: [
-        {
-          key: 'index',
-          extendType: 'index',
-          fixed: 'left',
-        },
-
-        {
-          key: 'name',
-          width: 120,
-          titleHelpMessage: true,
-          extendType: 'formatter',
-          formatter: (row) => t(row.name!),
-        },
-
-        {
-          key: 'type',
-          width: 140,
-          extendType: 'link',
-          onClick: (p) => {
-            // TODO simple encode
-            useAppRouterPush({
-              name: 'DictDetail',
-              params: { id: p._id },
-              query: { name: p.name },
-            })
-          },
-          ellipsis: {
-            tooltip: true,
-          },
-        },
-
-        {
-          key: 'dictDataCount',
-          width: 100,
-        },
-
-        {
-          key: 'description',
-          width: 200,
-          ellipsis: {
-            tooltip: true,
-          },
-        },
-
-        {
-          ...WTablePresetStatusColumn,
-          sorter: {
-            multiple: 2,
-          },
-        },
-
-        {
-          ...WTablePresetCreatedAtColumn,
-          sorter: {
-            multiple: 3,
-          },
-        },
-
-        {
-          ...WTablePresetUpdatedAtColumn,
-          sorter: {
-            multiple: 4,
-          },
-        },
-
-        {
-          key: 'action',
-          width: 80,
-          extendType: 'action',
-          fixed: 'right',
-          onExtendActionType: async ({ type, rowData }) => {
-            switch (type) {
-              case 'read':
-                await onApiTableReadAndOpenUpdateForm(rowData._id!)
-                break
-
-              case 'delete':
-                await onApiTableDelete(rowData._id!)
-                break
-
-              default:
-                break
-            }
-          },
-        },
-      ],
+    auths: {
+      list: `system:${authKey}:list`,
+      create: `system:${authKey}:create`,
+      read: `system:${authKey}:read`,
+      update: `system:${authKey}:update`,
+      delete: `system:${authKey}:delete`,
+      deleteMany: `system:${authKey}:deleteMany`,
     },
 
-    formProps: {
+    onTableHeaderActions: ({ type }) => {
+      switch (type) {
+        case 'create':
+          onTableOpenCreateForm()
+          break
+
+        default:
+          break
+      }
+    },
+
+    queryFormProps: {
       localeUniqueKey: localeKey,
       localeWithTable: true,
-      preset: 'modal',
-      baseRules: true,
-      labelWidth: 100,
-      xGap: 0,
-      // create/update form schemas
+      span: 6,
+      showFeedback: false,
+      labelWidth: 80,
+      // query form schemas
       schemas: [
         {
-          type: 'Extend:Locale',
+          type: 'Base:Input',
           formProp: {
             path: 'name',
           },
           componentProp: {
-            prefix: 'dict.name.',
+            clearable: true,
           },
         },
 
@@ -219,34 +81,172 @@
         },
 
         {
-          type: 'Extend:Dict',
+          type: 'Base:Input',
           formProp: {
-            path: 'status',
+            path: 'description',
           },
           componentProp: {
-            dictType: 'sys_shared_status',
-            dictRenderType: 'radio',
-            defaultValue: true,
-            renderComponentProps: {
-              button: true,
-            },
+            clearable: true,
           },
         },
 
         {
-          type: 'Base:Input',
-          formProp: {
-            path: 'description',
-            rule: false,
-          },
-          componentProp: {
-            clearable: true,
-            type: 'textarea',
-          },
+          type: 'Extend:Query',
         },
       ],
     },
-  })
+
+    columns: [
+      {
+        key: 'index',
+        extendType: 'index',
+        fixed: 'left',
+      },
+
+      {
+        key: 'name',
+        width: 120,
+        titleHelpMessage: true,
+        extendType: 'formatter',
+        formatter: row => t(row.name!),
+      },
+
+      {
+        key: 'type',
+        width: 140,
+        extendType: 'link',
+        onClick: (p) => {
+          // TODO simple encode
+          useAppRouterPush({
+            name: 'DictDetail',
+            params: { id: p._id },
+            query: { name: p.name },
+          })
+        },
+        ellipsis: {
+          tooltip: true,
+        },
+      },
+
+      {
+        key: 'dictDataCount',
+        width: 100,
+      },
+
+      {
+        key: 'description',
+        width: 200,
+        ellipsis: {
+          tooltip: true,
+        },
+      },
+
+      {
+        ...WTablePresetStatusColumn,
+        sorter: {
+          multiple: 2,
+        },
+      },
+
+      {
+        ...WTablePresetCreatedAtColumn,
+        sorter: {
+          multiple: 3,
+        },
+      },
+
+      {
+        ...WTablePresetUpdatedAtColumn,
+        sorter: {
+          multiple: 4,
+        },
+      },
+
+      {
+        key: 'action',
+        width: 80,
+        extendType: 'action',
+        fixed: 'right',
+        onExtendActionType: async ({ type, rowData }) => {
+          switch (type) {
+            case 'read':
+              await onApiTableReadAndOpenUpdateForm(rowData._id!)
+              break
+
+            case 'delete':
+              await onApiTableDelete(rowData._id!)
+              break
+
+            default:
+              break
+          }
+        },
+      },
+    ],
+  },
+
+  formProps: {
+    localeUniqueKey: localeKey,
+    localeWithTable: true,
+    preset: 'modal',
+    baseRules: true,
+    labelWidth: 100,
+    xGap: 0,
+    // create/update form schemas
+    schemas: [
+      {
+        type: 'Extend:Locale',
+        formProp: {
+          path: 'name',
+        },
+        componentProp: {
+          prefix: 'dict.name.',
+        },
+      },
+
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'type',
+        },
+        componentProp: {
+          clearable: true,
+        },
+      },
+
+      {
+        type: 'Extend:Dict',
+        formProp: {
+          path: 'status',
+        },
+        componentProp: {
+          dictType: 'sys_shared_status',
+          dictRenderType: 'radio',
+          defaultValue: true,
+          renderComponentProps: {
+            button: true,
+          },
+        },
+      },
+
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'description',
+          rule: false,
+        },
+        componentProp: {
+          clearable: true,
+          type: 'textarea',
+        },
+      },
+    ],
+  },
+})
 </script>
+
+<template>
+  <WCRUD @hook="register" />
+</template>
 
 <style lang="scss" scoped></style>

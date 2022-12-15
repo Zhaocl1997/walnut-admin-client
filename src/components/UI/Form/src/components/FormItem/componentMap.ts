@@ -1,6 +1,5 @@
+import { NDynamicInput, NSlider, NTreeSelect } from 'naive-ui'
 import { BUILTIN_FORM_TYPE } from '../../types'
-
-import { NSlider, NDynamicInput, NTreeSelect } from 'naive-ui'
 
 /**
  * @description Generate all usable components through `BUILTIN_FORM_TYPE`.
@@ -11,7 +10,7 @@ import { NSlider, NDynamicInput, NTreeSelect } from 'naive-ui'
 const getAllComponents = (type: typeof BUILTIN_FORM_TYPE) => {
   const ret: any = {}
 
-  type.map((key) => {
+  type.forEach((key) => {
     // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
     // Below for prod, no alias and must point to file with extension
     ret[key] = createAsyncComponent(() => import(`../../../../${key}/index.ts`))
@@ -31,68 +30,68 @@ componentMap.set('TreeSelect', NTreeSelect)
 componentMap.set(
   'IconPicker',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../../../../../Extra/IconPicker/index.ts')
-  )
+    // @ts-expect-error
+    () => import('../../../../../Extra/IconPicker/index.ts'),
+  ),
 )
 componentMap.set(
   'TransitionSelect',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../../../../../Extra/TransitionSelect/index.tsx')
-  )
+    // @ts-expect-error
+    () => import('../../../../../Extra/TransitionSelect/index.tsx'),
+  ),
 )
 componentMap.set(
   'RoleSelect',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../../../../../Advanced/RoleSelect/index.ts')
-  )
+    // @ts-expect-error
+    () => import('../../../../../Advanced/RoleSelect/index.ts'),
+  ),
 )
 componentMap.set(
   'Tinymce',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../../../../../Vendor/Tinymce/index.ts')
-  )
+    // @ts-expect-error
+    () => import('../../../../../Vendor/Tinymce/index.ts'),
+  ),
 )
 componentMap.set(
   'AreaCascader',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../../../../../Advanced/AreaCascader/index.ts')
-  )
+    // @ts-expect-error
+    () => import('../../../../../Advanced/AreaCascader/index.ts'),
+  ),
 )
 componentMap.set(
   'Dict',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../Extend/Dict.vue')
-  )
+    // @ts-expect-error
+    () => import('../Extend/Dict.vue'),
+  ),
 )
 componentMap.set(
   'Locale',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../../../../../Advanced/LocaleSelect/index.ts')
-  )
+    // @ts-expect-error
+    () => import('../../../../../Advanced/LocaleSelect/index.ts'),
+  ),
 )
 componentMap.set(
   'Password',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../../../../../Extra/Password/index.ts')
-  )
+    // @ts-expect-error
+    () => import('../../../../../Extra/Password/index.ts'),
+  ),
 )
 componentMap.set(
   'SMSInput',
   createAsyncComponent(
-    // @ts-ignore
-    () => import('../../../../../Extra/SMSInput/index.ts')
-  )
+    // @ts-expect-error
+    () => import('../../../../../Extra/SMSInput/index.ts'),
+  ),
 )
 
-BUILTIN_FORM_TYPE.map((key) => {
+BUILTIN_FORM_TYPE.forEach((key) => {
   componentMap.set(key, allComponents[key])
 })
 

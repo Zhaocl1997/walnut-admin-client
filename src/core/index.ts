@@ -16,8 +16,8 @@ export const AppCoreFn1 = async () => {
 
   const { addRoute, getRoutes } = AppRouter
 
-  const rootRoute =
-    getRoutes()[getRoutes().findIndex((i) => i.path === AppRootPath)]
+  const rootRoute
+    = getRoutes()[getRoutes().findIndex(i => i.path === AppRootPath)]
 
   // Here is where we request from back end to get login user permissions.
   const res = await getPermissions()

@@ -20,7 +20,7 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (tag) => tag.startsWith('cropper-'),
+          isCustomElement: tag => tag.startsWith('cropper-'),
         },
       },
     }),
@@ -34,16 +34,19 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   // https://github.com/patak-dev/vite-plugin-terminal
   // I'm pretty sure that this package will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
-  if (dev) vitePlugins.push(createTerminalPlugin())
+  if (dev)
+    vitePlugins.push(createTerminalPlugin())
 
   // https://github.com/liuweiGL/vite-plugin-mkcert
   // if (dev) vitePlugins.push(createHttpsPlugin())
 
   // https://github.com/antfu/vite-plugin-inspect
-  if (dev) vitePlugins.push(createInspectPlugin())
+  if (dev)
+    vitePlugins.push(createInspectPlugin())
 
   // https://github.com/antfu/vite-plugin-restart
-  if (dev) vitePlugins.push(createRestartPlugin())
+  if (dev)
+    vitePlugins.push(createRestartPlugin())
 
   // https://github.com/antfu/unplugin-auto-import
   vitePlugins.push(creatAutoImportPlugin())
@@ -62,16 +65,20 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   // if (stage || prod) vitePlugins.push(createBuildProgressPlugin())
 
   // https://github.com/btd/rollup-plugin-visualizer
-  if (stage) vitePlugins.push(createVisualizerPlugin(env.VITE_APP_TITLE))
+  if (stage)
+    vitePlugins.push(createVisualizerPlugin(env.VITE_APP_TITLE))
 
   // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
-  if (prod) vitePlugins.push(legacy())
+  if (prod)
+    vitePlugins.push(legacy())
 
   // https://github.com/anncwb/vite-plugin-compression
-  if (prod) vitePlugins.push(createCompressionPlugin())
+  if (prod)
+    vitePlugins.push(createCompressionPlugin())
 
   // https://github.com/chengpeiquan/vite-plugin-banner
-  if (prod) vitePlugins.push(createBannerPlugin(env.VITE_BUILD_OUT_DIR))
+  if (prod)
+    vitePlugins.push(createBannerPlugin(env.VITE_BUILD_OUT_DIR))
 
   return vitePlugins
 }

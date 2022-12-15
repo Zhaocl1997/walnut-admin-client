@@ -25,9 +25,9 @@ const props = {
     type: [Number, Object] as PropType<
       | number
       | {
-          enter: number
-          leave: number
-        }
+        enter: number
+        leave: number
+      }
     >,
     default: 300,
   },
@@ -57,7 +57,7 @@ export default defineComponent({
       (isNumber(props.duration) ? props.duration : props.duration.enter) / 1000
 
     const onBeforeEnter = (el: Element) => {
-      // @ts-ignore
+      // @ts-expect-error
       el.style.animationDuration = `${getDurationSeconds()}s`
     }
 
@@ -67,10 +67,10 @@ export default defineComponent({
       return (
         <Tag
           enter-active-class={`animate__animated animate__${getActiveClass(
-            'In'
+            'In',
           )}`}
           leave-active-class={`animate__animated animate__${getActiveClass(
-            'Out'
+            'Out',
           )}`}
           mode={props.mode}
           appear={props.appear}

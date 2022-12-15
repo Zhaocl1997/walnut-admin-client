@@ -2,9 +2,11 @@
  * @link https://stackoverflow.com/questions/47062922/how-to-get-all-keys-with-values-from-nested-objects
  */
 export const deepKeys = function* (t: Recordable, pre: any[] = []): Generator {
-  if (Array.isArray(t)) return
+  if (Array.isArray(t))
+    // eslint-disable-next-line no-useless-return
+    return
   else if (Object(t) === t)
-    for (const [k, v] of Object.entries(t)) yield* deepKeys(v, [...pre, k])
+    for (const [k, v] of Object.entries(t)) yield * deepKeys(v, [...pre, k])
   else yield { value: pre.join('.'), label: t }
 }
 
@@ -16,11 +18,11 @@ export const getViewsOptions = () => {
   const views = import.meta.glob('@/views/**/*.vue', {
     eager: true,
     import: 'default',
-  }) as Record<string, { name: string; defaultView: boolean }>
+  })
 
   const viewOptions: OptionDataItem<{ name?: string }>[] = []
 
-  Object.entries(views).map(([key, value]) => {
+  Object.entries(views).forEach(([key, value]) => {
     const field = key.replace('/src/views/', '').replace('.vue', '')
 
     // This is custom prop for filter vue files
@@ -35,7 +37,7 @@ export const getViewsOptions = () => {
     }
   })
 
-  const nameOptions = viewOptions.map((i) => ({
+  const nameOptions = viewOptions.map(i => ({
     value: i.name,
     label: i.name,
   }))

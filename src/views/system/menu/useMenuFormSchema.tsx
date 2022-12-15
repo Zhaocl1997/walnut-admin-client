@@ -1,35 +1,35 @@
-import type { WForm } from '@/components/UI/Form'
 import { findPath } from 'easy-fns-ts'
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
+import type { WForm } from '@/components/UI/Form'
 
 export const useMenuFormSchema = (
   actionType: Ref<ActionType>,
   formData: Ref<RecordNullable<AppSystemMenu>>,
   treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>,
-  menuActiveNamesOptions: Ref<{ name: string; title: string }[]>
+  menuActiveNamesOptions: Ref<{ name: string; title: string }[]>,
 ):
-  | DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]>
-  | WForm.Schema.Item<AppSystemMenu>[] => {
+| DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]>
+| WForm.Schema.Item<AppSystemMenu>[] => {
   // get view options and name options
   const { viewOptions, nameOptions } = getViewsOptions()
 
   // get node item from tree data
   const getCurrentNode = computed(
     () =>
-      treeData.value &&
-      findPath<AppSystemMenu>(
+      treeData.value
+      && findPath<AppSystemMenu>(
         treeData.value,
-        (n) => n._id === formData.value.pid
-      )
+        n => n._id === formData.value.pid,
+      ),
   )
 
   // for path prefix, better experience
   const getRoutePathPrefix = computed(() =>
     !getCurrentNode.value
       ? '/'
-      : (getCurrentNode.value as AppSystemMenu[])
-          .map((item) => item.path)
-          .join('/') + '/'
+      : `${(getCurrentNode.value as AppSystemMenu[])
+          .map(item => item.path)
+          .join('/')}/`,
   )
 
   const treeExpandedKeys = ref<string[]>()
@@ -37,8 +37,8 @@ export const useMenuFormSchema = (
   // get tree select expanded keys
   const getTreeSelectExpandKeys = computed(
     () =>
-      treeExpandedKeys.value ??
-      (getCurrentNode.value as AppSystemMenu[])?.map((i) => i._id!)
+      treeExpandedKeys.value
+      ?? (getCurrentNode.value as AppSystemMenu[])?.map(i => i._id!),
   )
 
   return [
@@ -74,8 +74,8 @@ export const useMenuFormSchema = (
                   formData.type === 'menu'
                     ? 'success'
                     : formData.type === 'element'
-                    ? 'warning'
-                    : 'info'
+                      ? 'warning'
+                      : 'info'
                 }
               >
                 {formData.type}
@@ -92,11 +92,11 @@ export const useMenuFormSchema = (
         path: 'pid',
       },
       componentProp: {
-        // @ts-ignore
+        // @ts-expect-error
         options: treeData,
         keyField: '_id',
         labelField: 'title',
-        // @ts-ignore
+        // @ts-expect-error
         expandedKeys: getTreeSelectExpandKeys,
         onUpdateExpandedKeys: (v) => {
           treeExpandedKeys.value = v
@@ -157,8 +157,8 @@ export const useMenuFormSchema = (
       componentProp: {
         render: ({ formData }) => {
           if (
-            formData.type === AppConstMenuType.CATALOG ||
-            formData.ternal !== AppConstMenuTernal.NONE
+            formData.type === AppConstMenuType.CATALOG
+            || formData.ternal !== AppConstMenuTernal.NONE
           ) {
             return (
               <w-input
@@ -170,8 +170,8 @@ export const useMenuFormSchema = (
           }
 
           if (
-            formData.type === AppConstMenuType.MENU &&
-            formData.ternal === AppConstMenuTernal.NONE
+            formData.type === AppConstMenuType.MENU
+            && formData.ternal === AppConstMenuTernal.NONE
           ) {
             return (
               <n-select
@@ -205,14 +205,14 @@ export const useMenuFormSchema = (
         tooltip: true,
         onUpdateValue: (val: string) => {
           // Get the name property automatically from vue `name` property
-          const target = viewOptions.find((item) => item.value === val)
+          const target = viewOptions.find(item => item.value === val)
           formData.value.name = target?.name
         },
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === AppConstMenuType.MENU &&
-          formData.ternal === AppConstMenuTernal.NONE,
+          formData.type === AppConstMenuType.MENU
+          && formData.ternal === AppConstMenuTernal.NONE,
       },
     },
 
@@ -268,8 +268,8 @@ export const useMenuFormSchema = (
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === AppConstMenuType.MENU &&
-          actionType.value === 'create',
+          formData.type === AppConstMenuType.MENU
+          && actionType.value === 'create',
       },
     },
 
@@ -283,8 +283,8 @@ export const useMenuFormSchema = (
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === AppConstMenuType.MENU &&
-          formData.ternal !== AppConstMenuTernal.NONE,
+          formData.type === AppConstMenuType.MENU
+          && formData.ternal !== AppConstMenuTernal.NONE,
       },
     },
 
@@ -297,8 +297,8 @@ export const useMenuFormSchema = (
       },
       extraProp: {
         vIf: ({ formData }) =>
-          formData.type === AppConstMenuType.MENU &&
-          formData.ternal !== AppConstMenuTernal.EXTERNAL,
+          formData.type === AppConstMenuType.MENU
+          && formData.ternal !== AppConstMenuTernal.EXTERNAL,
       },
     },
 
@@ -345,10 +345,10 @@ export const useMenuFormSchema = (
       },
       componentProp: {
         options: computed(() =>
-          menuActiveNamesOptions.value.map((i) => ({
+          menuActiveNamesOptions.value.map(i => ({
             value: i.name,
             label: AppI18n.global.t(i.title),
-          }))
+          })),
         ),
         filterable: true,
         clearable: true,

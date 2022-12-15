@@ -1,3 +1,22 @@
+<script lang="ts" setup>
+const { currentRoute } = useAppRouter()
+
+const onClick = () => {
+  const url = currentRoute.value.query.url as string
+
+  if (!url)
+    return
+
+  openExternalLink(url, false, '_self')
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'ExternalLink',
+})
+</script>
+
 <template>
   <div
     class="h-screen w-screen relative flex items-center justify-center bg-bodyColor"
@@ -32,7 +51,7 @@
             <div
               class="hstack items-center justify-center h-10 w-10 bg-gray-200 rounded-lg"
             >
-              <w-icon icon="ant-design:link-outlined" height="24"></w-icon>
+              <w-icon icon="ant-design:link-outlined" height="24" />
             </div>
             <div class="tracking-wide text-info">
               {{ $route.query.url }}
@@ -54,29 +73,11 @@
       class="hstack space-x-4 absolute top-8 right-8 z-50 children:cursor-pointer"
     >
       <n-button text>
-        <WAppLocalePicker></WAppLocalePicker>
+        <WAppLocalePicker />
       </n-button>
       <n-button text>
-        <WAppDarkMode></WAppDarkMode>
+        <WAppDarkMode />
       </n-button>
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  const { currentRoute } = useAppRouter()
-
-  const onClick = () => {
-    const url = currentRoute.value.query.url as string
-
-    if (!url) return
-
-    openExternalLink(url, false, '_self')
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'ExternalLink',
-  })
-</script>

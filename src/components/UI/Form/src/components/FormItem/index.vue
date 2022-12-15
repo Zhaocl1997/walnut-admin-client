@@ -1,48 +1,47 @@
 <script lang="tsx">
-  import type { WForm } from '../../types'
+import { clone, isBoolean, isFunction, omit } from 'lodash-es'
+import type { WForm } from '../../types'
 
-  import { clone, omit, isFunction, isBoolean } from 'lodash-es'
+import { useFormContext } from '../../hooks/useFormContext'
+import {
+  generateRuleMessage,
+  getFormBooleanField,
+  getFormTranslated,
+} from '../../utils'
+import { componentMap } from './componentMap'
 
-  import { componentMap } from './componentMap'
-  import { useFormContext } from '../../hooks/useFormContext'
-  import {
-    generateRuleMessage,
-    getFormBooleanField,
-    getFormTranslated,
-  } from '../../utils'
+export default defineComponent({
+  name: 'WFormItem',
 
-  export default defineComponent({
-    name: 'WFormItem',
+  inheritAttrs: false,
 
-    inheritAttrs: false,
+  props: {
+    item: Object as PropType<WForm.Schema.Item>,
+  },
 
-    props: {
-      item: Object as PropType<WForm.Schema.Item>,
-    },
+  emits: [],
 
-    emits: [],
+  setup(props, { attrs, slots, emit, expose }) {
+    const { item } = props
 
-    setup(props, { attrs, slots, emit, expose }) {
-      const { item } = props
+    const { t } = useAppI18n()
 
-      const { t } = useAppI18n()
+    const { formProps } = useFormContext()
 
-      const { formProps } = useFormContext()
-
-      const renderBase =
-        item?.type === 'Base:Render'
+    const renderBase
+        = item?.type === 'Base:Render'
           ? () =>
-              isFunction(item!.componentProp?.render) &&
-              item!.componentProp?.render!({
+              isFunction(item!.componentProp?.render)
+              && item!.componentProp?.render!({
                 formData: formProps.value.model!,
               })
           : item?.type === 'Base:Slot'
-          ? () => slots.default!()
-          : () => {
-              const component = componentMap.get(item?.type.split(':')[1])
+            ? () => slots.default!()
+            : () => {
+                const component = componentMap.get(item?.type.split(':')[1])
 
-              return (
-                component && (
+                return (
+                  component && (
                   <component
                     is={component}
                     v-model={[
@@ -54,42 +53,43 @@
                     // TODO
                     placeholder={generateRuleMessage(t, formProps, item!)}
                   ></component>
+                  )
                 )
-              )
-            }
+              }
 
-      const renderLabel = () => {
-        if (item?.type === 'Extend:Dict' && item?.formProp?.label === true) {
-          const res = AppDictMap.get(item?.componentProp?.dictType!)
+    const renderLabel = () => {
+      if (item?.type === 'Extend:Dict' && item?.formProp?.label === true) {
+        const res = AppDictMap.get(item?.componentProp?.dictType!)
 
-          if (!res) return
+        if (!res)
+          return
 
-          return t(res.name)
-        }
-
-        return getFormTranslated(t, formProps, item!)
+        return t(res.name)
       }
 
-      const renderLabelHelpMessage = () =>
-        item?.formProp?.labelHelpMessage && (
+      return getFormTranslated(t, formProps, item!)
+    }
+
+    const renderLabelHelpMessage = () =>
+      item?.formProp?.labelHelpMessage && (
           <w-message
             class="inline"
             msg={getFormTranslated(t, formProps, item!, 'helpMsg')}
           ></w-message>
-        )
+      )
 
-      const renderNFormItem = () => (
+    const renderNFormItem = () => (
         // TODO optimise
         <n-form-item
           vShow={getFormBooleanField(item, formProps.value, 'vShow')}
-          {...(isBoolean(item?.formProp?.rule) &&
-          isBoolean(item?.formProp?.label)
+          {...(isBoolean(item?.formProp?.rule)
+          && isBoolean(item?.formProp?.label)
             ? omit(clone(item?.formProp), 'rule', 'label')
             : isBoolean(item?.formProp?.rule)
-            ? omit(item?.formProp, 'rule')
-            : isBoolean(item?.formProp?.label)
-            ? omit(clone(item?.formProp), 'label')
-            : item?.formProp)}
+              ? omit(item?.formProp, 'rule')
+              : isBoolean(item?.formProp?.label)
+                ? omit(clone(item?.formProp), 'label')
+                : item?.formProp)}
           class={formProps.value.formItemClass}
         >
           {{
@@ -101,10 +101,10 @@
             ),
           }}
         </n-form-item>
-      )
+    )
 
-      return () =>
-        getFormBooleanField(item, formProps.value, 'vIf') && renderNFormItem()
-    },
-  })
+    return () =>
+      getFormBooleanField(item, formProps.value, 'vIf') && renderNFormItem()
+  },
+})
 </script>

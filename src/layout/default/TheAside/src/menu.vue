@@ -22,20 +22,20 @@
       const getMenuValue = computed(() =>
         currentRoute.value.meta.menuActiveName
           ? currentRoute.value.meta.menuActiveName
-          : currentRoute.value.name
+          : currentRoute.value.name,
       )
 
       // format to naive-ui menu option data structure
       const getMenuOptions = computed(() =>
         formatTree<AppSystemMenu, MenuOption>(toRaw(appMenu.menus), {
-          format: (node) => ({
+          format: node => ({
             key: node.name,
             label: t(node.title!),
             icon: () => {
               if (
-                (node.type === AppConstMenuType.CATALOG &&
-                  expandedKeys.value?.includes(node.name!)) ||
-                node.name === getMenuValue.value
+                (node.type === AppConstMenuType.CATALOG
+                  && expandedKeys.value?.includes(node.name!))
+                || node.name === getMenuValue.value
               ) {
                 return (
                   <w-icon
@@ -54,7 +54,7 @@
             extra: () =>
               node.badge && <n-badge size="small" value={node.badge}></n-badge>,
           }),
-        })
+        }),
       )
 
       // handle expanded-keys logic
@@ -63,23 +63,21 @@
         (v) => {
           const paths = findPath<AppSystemMenu>(
             toRaw(appMenu.menus),
-            (n) => n.name === v
+            n => n.name === v,
           )
 
-          if (paths) {
-            expandedKeys.value = (paths as AppSystemMenu[]).map((i) => i.name!)
-          }
+          if (paths)
+            expandedKeys.value = (paths as AppSystemMenu[]).map(i => i.name!)
         },
         {
           immediate: true,
-        }
+        },
       )
 
       const onUpdateValue = (key: string, item: { meta: MenuMeta }) => {
         // If isMobile and showAside true, set showAside to false to close drawer
-        if (appAdapter.isMobile && appMenu.showAside) {
+        if (appAdapter.isMobile && appMenu.showAside)
           appMenu.showAside = false
-        }
 
         if (item.meta.type === AppConstMenuType.CATALOG) {
           useAppMessage().info('Catalog Menu has no page!')
@@ -103,14 +101,14 @@
                 'transition-all',
                 {
                   'pb-6': appSetting.getMenuCollapseButtonStatus,
-                  absolute: appSetting.getLogoFixed,
+                  'absolute': appSetting.getLogoFixed,
                 },
               ]}
               style={{
                 paddingTop:
-                  (appSetting.getLogoShow && appSetting.getLogoFixed
+                  `${appSetting.getLogoShow && appSetting.getLogoFixed
                     ? appSetting.header.height
-                    : 0) + 'px',
+                    : 0}px`,
               }}
             >
               <n-menu

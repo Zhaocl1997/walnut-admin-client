@@ -10,15 +10,15 @@ export const useLoadEnv = (type: EnvFetchType, env: ImportMetaEnv) => {
 
   if (type === 'crypto') {
     const [cryptoPersistKey, cryptoPersistIV] = JSON.parse(
-      env.VITE_CRYPTO_PERSIST
+      env.VITE_CRYPTO_PERSIST,
     )
 
     const [cryptoRequestKey, cryptoRequestIV] = JSON.parse(
-      env.VITE_CRYPTO_REQUEST
+      env.VITE_CRYPTO_REQUEST,
     )
 
     const [cryptoResponseKey, cryptoResponseIV] = JSON.parse(
-      env.VITE_CRYPTO_RESPONSE
+      env.VITE_CRYPTO_RESPONSE,
     )
 
     return {

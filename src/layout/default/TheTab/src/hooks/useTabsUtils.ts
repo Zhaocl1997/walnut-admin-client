@@ -3,7 +3,7 @@ import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
 export const useTabsUtils = (
   scrollRef: Ref<Nullable<WScrollbarInst>>,
-  scrollToCurrentTab: Fn
+  scrollToCurrentTab: Fn,
 ) => {
   const { t } = useAppI18n()
 

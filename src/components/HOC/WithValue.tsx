@@ -16,7 +16,7 @@ export const WithValueProps = {
 export type WithValueProp = Partial<ExtractPropTypes<typeof WithValueProps>>
 
 export const WithValue = (
-  WrappedComponent: ReturnType<typeof defineComponent>
+  WrappedComponent: ReturnType<typeof defineComponent>,
 ) => {
   return defineComponent({
     name: 'WithValue',
@@ -30,19 +30,23 @@ export const WithValue = (
 
       const formateDefaultValue = (fn: Fn) => {
         !props.valueSeparator
-          ? (v.value = (props.value as string[]).map((ov) => fn(ov)))
-          : (v.value =
-              props.value &&
-              (props.value as string)
+          ? (v.value = (props.value as string[]).map(ov => fn(ov)))
+          : (v.value
+              = props.value
+              && (props.value as string)
                 .split(props.valueSeparator)
-                .map((ov) => fn(ov)))
+                .map(ov => fn(ov)))
       }
 
       const transformBoolean = (v: any) => {
-        if (v === true) return 'true'
-        if (v === false) return 'false'
-        if (v === 'true') return true
-        if (v === 'false') return false
+        if (v === true)
+          return 'true'
+        if (v === false)
+          return 'false'
+        if (v === 'true')
+          return true
+        if (v === 'false')
+          return false
       }
 
       watchEffect(() => {
@@ -52,21 +56,20 @@ export const WithValue = (
         }
 
         if (props.multiple === true) {
-          if (props.valueType === 'string') {
-            formateDefaultValue((ov) => ov.toString())
-          } else if (props.valueType === 'number') {
-            formateDefaultValue((ov) => +ov)
-          } else {
-            formateDefaultValue((ov) => transformBoolean(ov))
-          }
-        } else {
-          if (props.valueType === 'string') {
-            v.value = props.value + ''
-          } else if (props.valueType === 'number') {
+          if (props.valueType === 'string')
+            formateDefaultValue(ov => ov.toString())
+          else if (props.valueType === 'number')
+            formateDefaultValue(ov => +ov)
+          else
+            formateDefaultValue(ov => transformBoolean(ov))
+        }
+        else {
+          if (props.valueType === 'string')
+            v.value = `${props.value}`
+          else if (props.valueType === 'number')
             v.value = +props.value!
-          } else {
+          else
             v.value = transformBoolean(props.value)
-          }
         }
       })
 
@@ -77,8 +80,8 @@ export const WithValue = (
           props.valueType === 'boolean'
             ? transformBoolean(val)
             : !props.valueSeparator
-            ? val
-            : val.join(props.valueSeparator)
+                ? val
+                : val.join(props.valueSeparator),
         )
       }
 

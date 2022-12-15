@@ -14,7 +14,7 @@ export const usePropsAdvanced = <T>(props: T) => {
    * @description get props
    */
   const getProps = computed<T>(() =>
-    merge(cloneDeep(unref(props)), unref(propsRef))
+    merge(cloneDeep(unref(props)), unref(propsRef)),
   )
 
   return {

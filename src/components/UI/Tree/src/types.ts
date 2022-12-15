@@ -13,7 +13,7 @@ export declare namespace WTree {
   namespace Inst {
     type NTreeInst = InternalTreeInst
 
-    type EmitInst<T = RowData> = {
+    interface EmitInst<T = RowData> {
       setProps: SetProps<T>
     }
 
@@ -26,7 +26,7 @@ export declare namespace WTree {
   namespace Hook {
     type useTree<T = RowData> = [
       (instance: Inst.WTreeInst<T>) => void,
-      Inst.WTreeInst<T>
+      Inst.WTreeInst<T>,
     ]
   }
 
@@ -102,7 +102,7 @@ export declare namespace WTree {
 
     type SelectedKeys = StringOrNumber | StringOrNumber[] | undefined
 
-    type Entry<T = RowData> = {
+    interface Entry<T = RowData> {
       (event: 'hook', params: Hook<T>): void
       (event: 'update:value', params: SelectedKeys): void
     }

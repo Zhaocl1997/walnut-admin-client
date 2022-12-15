@@ -1,63 +1,21 @@
-<template>
-  <div class="hstack space-x-2 items-center">
-    <!-- preset buttons -->
-    <w-button
-      v-for="item in options"
-      :key="item.type"
-      :icon="item.icon"
-      :onClick="
-        () =>
-          onEvent({
-            name: 'tableHeaderActions',
-            params: { type: item.type },
-          })
-      "
-      :text-prop="item.text"
-      :disabled="
-        item.type === 'delete' ? getDeleteDisabled : tableProps.loading
-      "
-      :confirm="item.type === 'delete'"
-      :auth="item.auth"
-    >
-    </w-button>
-
-    <!-- extra custom buttons -->
-    <w-button v-for="item in tableProps.extraHeaderActions" v-bind="item">
-    </w-button>
-
-    <n-text
-      v-if="
-        isShow('delete') &&
-        userPermission.hasPermission(tableProps.auths?.deleteMany)
-      "
-      type="warning"
-    >
-      {{
-        t('table.header.action.checkedText', { checked: checkedRowKeys.length })
-      }}
-    </n-text>
-  </div>
-</template>
-
 <script lang="ts" setup>
-  import type { WTable } from '../types'
+import { sortBy } from 'lodash-es'
+import type { WTable } from '../types'
 
-  import { sortBy } from 'lodash-es'
+import { useTableContext } from '../hooks/useTableContext'
 
-  import { useTableContext } from '../hooks/useTableContext'
+const { t } = useI18n()
 
-  const { t } = useI18n()
+const userPermission = useAppStoreUserPermission()
 
-  const userPermission = useAppStoreUserPermission()
+const { onEvent, tableProps, checkedRowKeys } = useTableContext()
 
-  const { onEvent, tableProps, checkedRowKeys } = useTableContext()
+const getDeleteDisabled = computed(() => checkedRowKeys.value.length === 0)
 
-  const getDeleteDisabled = computed(() => checkedRowKeys.value.length === 0)
+const isShow = (t: WTable.HeaderActionType) =>
+  tableProps.value.headerActions!.includes(t)
 
-  const isShow = (t: WTable.HeaderActionType) =>
-    tableProps.value.headerActions!.includes(t)
-
-  const options: ComputedRef<
+const options: ComputedRef<
     {
       type: WTable.HeaderActionType
       text: string
@@ -100,7 +58,46 @@
           auth: tableProps.value.auths?.export,
         },
       ],
-      (i) => tableProps.value.headerActions?.indexOf(i.type)
-    ).filter((i) => isShow(i.type))
+      i => tableProps.value.headerActions?.indexOf(i.type),
+    ).filter(i => isShow(i.type)),
   )
 </script>
+
+<template>
+  <div class="hstack space-x-2 items-center">
+    <!-- preset buttons -->
+    <w-button
+      v-for="item in options"
+      :key="item.type"
+      :icon="item.icon"
+      :on-click="
+        () =>
+          onEvent({
+            name: 'tableHeaderActions',
+            params: { type: item.type },
+          })
+      "
+      :text-prop="item.text"
+      :disabled="
+        item.type === 'delete' ? getDeleteDisabled : tableProps.loading
+      "
+      :confirm="item.type === 'delete'"
+      :auth="item.auth"
+    />
+
+    <!-- extra custom buttons -->
+    <w-button v-for="(item, index) in tableProps.extraHeaderActions" :key="index" v-bind="item" />
+
+    <n-text
+      v-if="
+        isShow('delete')
+          && userPermission.hasPermission(tableProps.auths?.deleteMany)
+      "
+      type="warning"
+    >
+      {{
+        t('table.header.action.checkedText', { checked: checkedRowKeys.length })
+      }}
+    </n-text>
+  </div>
+</template>

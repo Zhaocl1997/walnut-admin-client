@@ -1,3 +1,6 @@
+import { defineStore } from 'pinia'
+import { StoreKeys } from '../../constant'
+import { store } from '../../pinia'
 import type {
   AppSettingsForApp,
   AppSettingsForBreadcrumb,
@@ -8,9 +11,6 @@ import type {
   AppSettingsForTabs,
   AppSettingsForTheme,
 } from '~/settings'
-import { defineStore } from 'pinia'
-import { StoreKeys } from '../../constant'
-import { store } from '../../pinia'
 
 import settings from '@/settings.json'
 
@@ -52,10 +52,11 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       if (setting.transitionStatus) {
         if (setting.transitionMode === AppConstBasicMode.GLOBAL) {
           return setting.transitionName
-        } else {
+        }
+        else {
           return (
-            currentRoute.value.meta?.animationName ||
-            AppConstTransitionName.FADE
+            currentRoute.value.meta?.animationName
+            || AppConstTransitionName.FADE
           )
         }
       }
@@ -65,8 +66,8 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
     getShowGlobalWatermark(state) {
       return (
-        state.app.watermarkStatus &&
-        state.app.watermarkMode === AppConstBasicMode.GLOBAL
+        state.app.watermarkStatus
+        && state.app.watermarkMode === AppConstBasicMode.GLOBAL
       )
     },
 
@@ -198,26 +199,26 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
     getMenuCollapseButtonStatus(): boolean {
       return (
-        this.getMenuCollapseStatus &&
-        this.getMenuCollapseMode === AppConstCollapseMode.BUTTON
+        this.getMenuCollapseStatus
+        && this.getMenuCollapseMode === AppConstCollapseMode.BUTTON
       )
     },
 
     getMenuCollapseIconStatus(): boolean {
       return (
-        this.getMenuCollapseStatus &&
-        this.getMenuCollapseMode === AppConstCollapseMode.ICON
+        this.getMenuCollapseStatus
+        && this.getMenuCollapseMode === AppConstCollapseMode.ICON
       )
     },
 
     getMenuCollapseBuiltInStatus(): boolean | string {
       if (
-        this.getMenuCollapseStatus &&
-        this.getMenuCollapseMode !== AppConstCollapseMode.ICON &&
-        this.getMenuCollapseMode !== AppConstCollapseMode.BUTTON
-      ) {
+        this.getMenuCollapseStatus
+        && this.getMenuCollapseMode !== AppConstCollapseMode.ICON
+        && this.getMenuCollapseMode !== AppConstCollapseMode.BUTTON
+      )
         return this.getMenuCollapseMode
-      }
+
       return false
     },
 
@@ -235,7 +236,7 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
   actions: {
     setSettingsWithKey(options: SetWithKeyOptions) {
       const { key, value } = options
-      // @ts-ignore
+      // @ts-expect-error
       this[key] = Object.assign(this[key], value)
     },
 
@@ -252,6 +253,7 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 const useAppStoreSettingOutside = () => useAppStoreSettingInside(store)
 
 export const useAppStoreSetting = () => {
-  if (getCurrentInstance()) return useAppStoreSettingInside()
+  if (getCurrentInstance())
+    return useAppStoreSettingInside()
   return useAppStoreSettingOutside()
 }

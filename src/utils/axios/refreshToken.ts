@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from 'axios'
-import { AxiosRequestConfigExtend } from './src/types'
+import type { AxiosRequestConfig } from 'axios'
+import type { AxiosRequestConfigExtend } from './src/types'
 
 // flag to judge if calling refreshing token api
 let isRefreshing = false
@@ -8,9 +8,9 @@ let requestsQueue: ((token: string) => void)[] = []
 
 export const setTokenInRequest = (
   config: AxiosRequestConfigExtend,
-  token: string
+  token: string,
 ) => {
-  config.headers!['Authorization'] = `Bearer ${token}`
+  config.headers!.Authorization = `Bearer ${token}`
 }
 
 const userAuth = useAppStoreUserAuth()
@@ -23,23 +23,25 @@ export const RefreshTokenLogic = (config: AxiosRequestConfig) => {
     return userAuth
       .GetNewATWithRT()
       .then((refresh_token) => {
-        if (!refresh_token) return
+        if (!refresh_token)
+          return
 
         setTokenInRequest(config, refresh_token)
 
         // token already refreshed, call the waiting request
-        requestsQueue.forEach((cb) => cb(refresh_token))
+        requestsQueue.forEach(cb => cb(refresh_token))
         // clean queue
         requestsQueue = []
 
         // add customConfig
-        // @ts-ignore
+        // @ts-expect-error
         return AppAxios.request(config, config.customConfig)
       })
       .finally(() => {
         isRefreshing = false
       })
-  } else {
+  }
+  else {
     // when refreshing token, return a promise that haven't called resolve
     return new Promise((resolve) => {
       // push resolve into queue, using an anonymous function to wrap it. ASAP token refresh is done, excute

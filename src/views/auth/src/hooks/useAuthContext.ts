@@ -1,4 +1,4 @@
-import { AuthContext } from '../types'
+import type { AuthContext } from '../types'
 
-export const { setContext: setAuthContext, getContext: useAuthContext } =
-  useContext<AuthContext>(Symbol(AppConstSymbolKey.AUTH_KEY))
+export const { setContext: setAuthContext, getContext: useAuthContext }
+  = useContext<AuthContext>(Symbol(AppConstSymbolKey.AUTH_KEY))

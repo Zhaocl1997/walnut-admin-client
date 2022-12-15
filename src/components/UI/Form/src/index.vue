@@ -1,64 +1,64 @@
 <script lang="tsx">
-  import type { WForm } from './types'
-  import { renderSlot } from 'vue'
-  import { easyOmit } from 'easy-fns-ts'
+import { renderSlot } from 'vue'
+import { easyOmit } from 'easy-fns-ts'
+import type { WForm } from './types'
 
-  import { useFormSchemas } from './hooks/useFormSchemas'
-  import { setFormContext } from './hooks/useFormContext'
-  import { useFormEvents } from './hooks/useFormEvents'
-  import { useFormAdvanced } from './hooks/useFormAdvanced'
-  import { useFormBaseRules } from './hooks/useFormBaseRules'
-  import { useFormDict } from './hooks/useFormDict'
-  import { useFormDesc } from './hooks/useFormDesc'
-  import { useFormMethods } from './hooks/useFormMethods'
+import { useFormSchemas } from './hooks/useFormSchemas'
+import { setFormContext } from './hooks/useFormContext'
+import { useFormEvents } from './hooks/useFormEvents'
+import { useFormAdvanced } from './hooks/useFormAdvanced'
+import { useFormBaseRules } from './hooks/useFormBaseRules'
+import { useFormDict } from './hooks/useFormDict'
+import { useFormDesc } from './hooks/useFormDesc'
+import { useFormMethods } from './hooks/useFormMethods'
 
-  import { props, extendProps } from './props'
-  import { components } from './utils/component'
+import { extendProps, props } from './props'
+import { components } from './utils/component'
 
-  import WFormItem from './components/FormItem/index.vue'
+import WFormItem from './components/FormItem/index.vue'
 
-  export default defineComponent({
-    name: 'WForm',
+export default defineComponent({
+  name: 'WForm',
 
-    inheritAttrs: false,
+  components,
 
-    props,
+  inheritAttrs: false,
 
-    components,
+  props,
 
-    emits: ['hook', 'reset', 'query'],
+  emits: ['hook', 'reset', 'query'],
 
-    setup(props: WForm.Props, { attrs, slots, emit, expose }) {
-      const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
+  setup(props: WForm.Props, { attrs, slots, emit, expose }) {
+    const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
 
-      const { t } = useAppI18n()
+    const { t } = useAppI18n()
 
-      const { setProps, getProps } = useProps<WForm.Props>(props)
+    const { setProps, getProps } = useProps<WForm.Props>(props)
 
-      const { formSchemas } = useFormSchemas(getProps)
+    const { formSchemas } = useFormSchemas(getProps)
 
-      // cached for dict form item
-      // @ts-ignore
-      useFormDict(formSchemas)
+    // cached for dict form item
+    // @ts-expect-error
+    useFormDict(formSchemas)
 
-      const { onEvent } = useFormEvents(getProps)
+    const { onEvent } = useFormEvents(getProps)
 
-      // @ts-ignore
-      const baseRules = useFormBaseRules(getProps, formSchemas)
+    // @ts-expect-error
+    const baseRules = useFormBaseRules(getProps, formSchemas)
 
-      // @ts-ignore
-      setFormContext({
-        formRef,
-        formProps: getProps,
-        formSchemas,
-        formEvent: onEvent,
-        setProps,
-      })
+    // @ts-expect-error
+    setFormContext({
+      formRef,
+      formProps: getProps,
+      formSchemas,
+      formEvent: onEvent,
+      setProps,
+    })
 
-      const renderItem = () =>
-        formSchemas.value.map((item, index) => {
-          if (item.type === 'Extend:Query') {
-            return (
+    const renderItem = () =>
+      formSchemas.value.map((item, index) => {
+        if (item.type === 'Extend:Query') {
+          return (
               <n-gi
                 key="query"
                 class="flex items-center justify-end"
@@ -69,14 +69,14 @@
                   {...item.componentProp}
                 ></w-form-item-extend-query>
               </n-gi>
-            )
-          }
+          )
+        }
 
-          if (item.type === 'Extend:Divider') {
-            return (
-              // TODO temporary solution
-              // should use v-show, but get errors
-              item._internalShow && (
+        if (item.type === 'Extend:Divider') {
+          return (
+          // TODO temporary solution
+          // should use v-show, but get errors
+            item._internalShow && (
                 <n-gi
                   key={item.formProp?.path}
                   span={24}
@@ -94,46 +94,46 @@
                     ></w-form-item-extend-divider>
                   </w-transition>
                 </n-gi>
-              )
             )
-          }
+          )
+        }
 
-          return (
-            // TODO temporary solution
-            // should use v-show, but get errors
-            item._internalShow && (
+        return (
+        // TODO temporary solution
+        // should use v-show, but get errors
+          item._internalShow && (
               <n-gi
                 key={item.formProp?.path}
                 {...(item?.gridProp ?? { span: unref(getProps).span })}
               >
                 <w-transition {...item?.transitionProp} appear>
                   <WFormItem item={item}>
-                    {item.type === 'Base:Slot' &&
-                      Object.keys(slots).includes(item.formProp?.path!) &&
-                      renderSlot(slots, item.formProp?.path!)}
+                    {item.type === 'Base:Slot'
+                      && Object.keys(slots).includes(item.formProp?.path!)
+                      && renderSlot(slots, item.formProp?.path!)}
                   </WFormItem>
                 </w-transition>
               </n-gi>
-            )
           )
-        })
+        )
+      })
 
-      const getNFormProps = computed(() =>
-        easyOmit(getProps.value, Object.keys(extendProps))
-      )
+    const getNFormProps = computed(() =>
+      easyOmit(getProps.value, Object.keys(extendProps)),
+    )
 
-      const renderBaseContent = () => {
-        if (unref(getProps).useDescription) {
-          const { descProps } = useFormDesc(getProps, formSchemas, t)
+    const renderBaseContent = () => {
+      if (unref(getProps).useDescription) {
+        const { descProps } = useFormDesc(getProps, formSchemas, t)
 
-          return (
+        return (
             <w-form-extend-descriptions
               {...descProps}
             ></w-form-extend-descriptions>
-          )
-        }
+        )
+      }
 
-        return (
+      return (
           <n-form
             ref={formRef}
             {...getNFormProps.value}
@@ -148,40 +148,40 @@
               {renderItem()}
             </n-grid>
           </n-form>
-        )
-      }
-
-      const { methods } = useFormMethods(formRef)
-
-      const { renderAdvanced, ...advancedMethods } = useFormAdvanced(
-        renderBaseContent,
-        getProps,
-        formRef
       )
+    }
 
-      // expose
-      useExpose({
-        apis: {
-          ...methods,
-          ...advancedMethods,
-        },
-        expose,
-      })
+    const { methods } = useFormMethods(formRef)
 
-      // hook
-      onEvent({
-        name: 'hook',
-        params: {
-          ...methods,
-          ...advancedMethods,
-          setProps,
-        },
-      })
+    const { renderAdvanced, ...advancedMethods } = useFormAdvanced(
+      renderBaseContent,
+      getProps,
+      formRef,
+    )
 
-      return () =>
-        unref(getProps).preset ? renderAdvanced() : renderBaseContent()
-    },
-  })
+    // expose
+    useExpose({
+      apis: {
+        ...methods,
+        ...advancedMethods,
+      },
+      expose,
+    })
+
+    // hook
+    onEvent({
+      name: 'hook',
+      params: {
+        ...methods,
+        ...advancedMethods,
+        setProps,
+      },
+    })
+
+    return () =>
+      unref(getProps).preset ? renderAdvanced() : renderBaseContent()
+  },
+})
 </script>
 
 <style scoped></style>

@@ -5,7 +5,7 @@ import type { WTable } from '@/components/UI/Table'
 export declare namespace WCrud {
   type SetProps<T> = (p: Partial<Props<T>>) => void
 
-  type Props<T = RowData> = {
+  interface Props<T = RowData> {
     baseAPI?: BaseAPIType<T>
     onBeforeRequest?: (data: T) => T
     tableProps?: Omit<WTable.Props<T>, 'apiProps'>
@@ -28,6 +28,6 @@ export declare namespace WCrud {
 
   type useFormReturnType<T = RowData> = [
     (instance: Inst.WCrudInst<T>) => void,
-    Omit<Inst.WCrudInst<T>, 'setProps'>
+    Omit<Inst.WCrudInst<T>, 'setProps'>,
   ]
 }

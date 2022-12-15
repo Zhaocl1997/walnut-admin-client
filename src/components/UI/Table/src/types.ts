@@ -4,11 +4,10 @@ import type {
   TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
 
-import type { useEventParams } from '@/hooks/component/useEvent'
-
 import type { WForm } from '../../Form'
 import type { WButtonProps } from '../../Button'
 import type { WTablePropType } from './props'
+import type { useEventParams } from '@/hooks/component/useEvent'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'
@@ -17,7 +16,7 @@ export declare namespace WTable {
 
   type FinishLoadingCallback = WForm.onFinishFormLoadingCallback
 
-  type Auths = {
+  interface Auths {
     list?: string
     create?: string
     read?: string
@@ -44,7 +43,7 @@ export declare namespace WTable {
   namespace Inst {
     type NDataTableInst = DataTableInst
 
-    type ExtendInst = {
+    interface ExtendInst {
       setProps: SetProps
 
       /**
@@ -77,7 +76,7 @@ export declare namespace WTable {
   namespace Hook {
     type useTableReturnType = [
       (instance: Inst.WTableInst) => void,
-      Inst.WTableInst
+      Inst.WTableInst,
     ]
   }
 

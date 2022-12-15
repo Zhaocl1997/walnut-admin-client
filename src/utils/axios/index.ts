@@ -1,6 +1,5 @@
-import type { AxiosRequestConfigExtend } from './src/types'
-
 import axios from 'axios'
+import type { AxiosRequestConfigExtend } from './src/types'
 
 export * from './src/types'
 

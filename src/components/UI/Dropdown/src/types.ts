@@ -1,7 +1,7 @@
 import type { DropdownProps } from 'naive-ui'
 import type { InternalTreeInst } from 'naive-ui/lib/tree/src/interface'
 
-import { props } from './props'
+import type { props } from './props'
 
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 
@@ -17,7 +17,7 @@ export declare namespace WDropdown {
   namespace Inst {
     type NDropdownInst = InternalTreeInst
 
-    type EmitInst = {
+    interface EmitInst {
       setProps: SetProps
 
       openDropdown: (e: MouseEvent) => void
@@ -34,7 +34,7 @@ export declare namespace WDropdown {
   namespace Hook {
     type useDropdown = [
       (instance: Inst.WDropdownInst) => void,
-      Inst.WDropdownInst
+      Inst.WDropdownInst,
     ]
   }
 
@@ -51,7 +51,7 @@ export declare namespace WDropdown {
   namespace Emit {
     type Hook = Inst.EmitInst
 
-    type Entry = {
+    interface Entry {
       (event: 'hook', params: Hook): void
     }
   }

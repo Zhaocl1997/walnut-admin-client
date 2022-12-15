@@ -11,7 +11,8 @@ export const useAppDarkMode = () => {
       root?.classList.remove(AppConstDarkMode.LIGHT)
 
       appDark.setIsDark(true)
-    } else {
+    }
+    else {
       root?.classList.add(AppConstDarkMode.LIGHT)
       root?.classList.remove(AppConstDarkMode.DARK)
 

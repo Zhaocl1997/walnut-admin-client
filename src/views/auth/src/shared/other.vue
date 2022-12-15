@@ -1,7 +1,121 @@
+<script lang="ts" setup>
+import { useAuthContext } from '../hooks/useAuthContext'
+import { getGiteeUri, getGithubUri, getWeiboUri } from '@/api/auth/third'
+import { setFP } from '@/api/auth/fingerprint'
+
+const { t } = useAppI18n()
+const userAuth = useAppStoreUserAuth()
+const appAuthSettings = useAppStoreSettingBackend()
+const { loading } = useAuthContext()
+const { httpUrl } = useAppEnv('proxy')
+
+const iconArr = computed(() =>
+  [
+    {
+      key: 'wechat',
+      icon: 'ant-design:wechat-outlined',
+      title: t('app.auth.other.wechat'),
+      show: appAuthSettings.getWechatEnabled,
+    },
+    {
+      key: 'alipay',
+      icon: 'ant-design:alipay-circle-outlined',
+      title: t('app.auth.other.alipay'),
+      show: appAuthSettings.getAliPayEnabled,
+    },
+    {
+      key: 'qq',
+      icon: 'ant-design:qq-outlined',
+      title: t('app.auth.other.qq'),
+      show: appAuthSettings.getQQEnabled,
+    },
+    {
+      key: 'weibo',
+      icon: 'ant-design:weibo-outlined',
+      title: t('app.auth.other.weibo'),
+      show: appAuthSettings.getWeiboEnabled,
+    },
+    {
+      key: 'github',
+      icon: 'ant-design:github-outlined',
+      title: t('app.auth.other.github'),
+      show: appAuthSettings.getGitHubEnabled,
+    },
+    {
+      key: 'gitee',
+      icon: 'simple-icons:gitee',
+      title: t('app.auth.other.gitee'),
+      show: appAuthSettings.getGiteeEnabled,
+    },
+  ].filter(i => i.show ?? true),
+)
+
+const onOAuth = async (getUri: Fn, ssePath: string) => {
+  loading.value = true
+
+  const res = await getUri()
+
+  const child = openOAuthWindow(res)
+
+  const eventSource = new EventSource(
+      `${httpUrl}/auth/third/${ssePath}/check/${fpId.value}`,
+  )
+
+  eventSource.onmessage = async ({ data }) => {
+    const res = JSON.parse(data)
+
+    if (res?.accessToken) {
+      useAppMsgSuccess(t('app.oauth.success'))
+      eventSource.close()
+      await userAuth.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
+      await setFP()
+      loading.value = false
+    }
+  }
+
+  const { pause } = useIntervalFn(() => {
+    if (child?.closed) {
+      pause()
+      loading.value = false
+      const id = setTimeout(() => {
+        eventSource.close()
+        clearTimeout(id)
+      }, 1500)
+    }
+  })
+}
+
+const onClick = async (key: string) => {
+  if (['wechat', 'alipay', 'qq'].includes(key)) {
+    useAppMessage().warning(t('app.base.wip'))
+    return
+  }
+
+  if (key === 'github')
+    onOAuth(getGithubUri, 'github')
+
+  if (key === 'gitee')
+    onOAuth(getGiteeUri, 'gitee')
+
+  if (key === 'weibo')
+    onOAuth(getWeiboUri, 'weibo')
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'SharedOtherWayToSignin',
+
+  defaultView: false,
+})
+</script>
+
 <template>
   <div>
     <w-transition appear group>
-      <n-divider class="text-xs">{{ t('app.auth.other') }}</n-divider>
+      <n-divider class="text-xs">
+        {{ t('app.auth.other') }}
+      </n-divider>
 
       <div
         class="w-full hstack justify-evenly children:cursor-pointer hover:children:text-primary"
@@ -13,128 +127,13 @@
           @click="onClick(item.key)"
         >
           <n-button text :disabled="loading">
-            <w-icon :icon="item.icon" width="20" :disabled="loading"></w-icon>
+            <w-icon :icon="item.icon" width="20" :disabled="loading" />
           </n-button>
         </span>
       </div>
     </w-transition>
   </div>
 </template>
-
-<script lang="ts" setup>
-  import { getGithubUri, getGiteeUri, getWeiboUri } from '@/api/auth/third'
-  import { setFP } from '@/api/auth/fingerprint'
-  import { useAuthContext } from '../hooks/useAuthContext'
-
-  const { t } = useAppI18n()
-  const userAuth = useAppStoreUserAuth()
-  const appAuthSettings = useAppStoreSettingBackend()
-  const { loading } = useAuthContext()
-  const { httpUrl } = useAppEnv('proxy')
-
-  const iconArr = computed(() =>
-    [
-      {
-        key: 'wechat',
-        icon: 'ant-design:wechat-outlined',
-        title: t('app.auth.other.wechat'),
-        show: appAuthSettings.getWechatEnabled,
-      },
-      {
-        key: 'alipay',
-        icon: 'ant-design:alipay-circle-outlined',
-        title: t('app.auth.other.alipay'),
-        show: appAuthSettings.getAliPayEnabled,
-      },
-      {
-        key: 'qq',
-        icon: 'ant-design:qq-outlined',
-        title: t('app.auth.other.qq'),
-        show: appAuthSettings.getQQEnabled,
-      },
-      {
-        key: 'weibo',
-        icon: 'ant-design:weibo-outlined',
-        title: t('app.auth.other.weibo'),
-        show: appAuthSettings.getWeiboEnabled,
-      },
-      {
-        key: 'github',
-        icon: 'ant-design:github-outlined',
-        title: t('app.auth.other.github'),
-        show: appAuthSettings.getGitHubEnabled,
-      },
-      {
-        key: 'gitee',
-        icon: 'simple-icons:gitee',
-        title: t('app.auth.other.gitee'),
-        show: appAuthSettings.getGiteeEnabled,
-      },
-    ].filter((i) => i.show ?? true)
-  )
-
-  const onOAuth = async (getUri: Fn, ssePath: string) => {
-    loading.value = true
-
-    const res = await getUri()
-
-    const child = openOAuthWindow(res)
-
-    const eventSource = new EventSource(
-      `${httpUrl}/auth/third/${ssePath}/check/${fpId.value}`
-    )
-
-    eventSource.onmessage = async ({ data }) => {
-      const res = JSON.parse(data)
-
-      if (res?.accessToken) {
-        useAppMsgSuccess(t('app.oauth.success'))
-        eventSource.close()
-        await userAuth.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
-        await setFP()
-        loading.value = false
-      }
-    }
-
-    const { pause } = useIntervalFn(() => {
-      if (child?.closed) {
-        pause()
-        loading.value = false
-        const id = setTimeout(() => {
-          eventSource.close()
-          clearTimeout(id)
-        }, 1500)
-      }
-    })
-  }
-
-  const onClick = async (key: string) => {
-    if (['wechat', 'alipay', 'qq'].includes(key)) {
-      useAppMessage().warning(t('app.base.wip'))
-      return
-    }
-
-    if (key === 'github') {
-      onOAuth(getGithubUri, 'github')
-    }
-
-    if (key === 'gitee') {
-      onOAuth(getGiteeUri, 'gitee')
-    }
-
-    if (key === 'weibo') {
-      onOAuth(getWeiboUri, 'weibo')
-    }
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'SharedOtherWayToSignin',
-
-    defaultView: false,
-  })
-</script>
 
 <style scoped>
   .w-divider {

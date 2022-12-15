@@ -1,3 +1,26 @@
+<script lang="ts" setup>
+const props = withDefaults(
+  defineProps<{ source: any; copiedDuring?: number; icon?: boolean }>(),
+  { copiedDuring: 3000 },
+)
+
+const { t } = useAppI18n()
+
+const { copy, copied } = useClipboard({
+  copiedDuring: props.copiedDuring,
+})
+
+const onClick = async () => {
+  await copy(props.source)
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'WCopy',
+})
+</script>
+
 <template>
   <n-button
     v-if="!icon"
@@ -15,29 +38,6 @@
       :icon="
         copied ? 'ant-design:check-circle-outlined' : 'ant-design:copy-outlined'
       "
-    ></w-icon>
+    />
   </n-button>
 </template>
-
-<script lang="ts" setup>
-  const props = withDefaults(
-    defineProps<{ source: any; copiedDuring?: number; icon?: boolean }>(),
-    { copiedDuring: 3000 }
-  )
-
-  const { t } = useAppI18n()
-
-  const { copy, copied } = useClipboard({
-    copiedDuring: props.copiedDuring,
-  })
-
-  const onClick = async () => {
-    await copy(props.source)
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'WCopy',
-  })
-</script>

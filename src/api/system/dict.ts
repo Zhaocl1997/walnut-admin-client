@@ -15,7 +15,7 @@ export type AppDictTypeCommon = Pick<
   'value' | 'label' | 'description' | 'order' | 'tagType'
 >[]
 
-export type AppDictTypeResponse = {
+export interface AppDictTypeResponse {
   name: string
   type: string
   description: string
@@ -26,11 +26,11 @@ export type AppDictTypeResponse = {
 export const getDictByType = (type: string) => {
   return AppAxios.get<AppDictTypeResponse>(
     {
-      url: '/system/dict/data/s/' + type,
+      url: `/system/dict/data/s/${type}`,
     },
     {
       cache: true,
       cachedSeconds: 600,
-    }
+    },
   )
 }

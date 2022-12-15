@@ -10,6 +10,6 @@ export const IconLog = (title: string, data: string) => {
  * ${data}
  * ==============================================
  */
-`
+`,
   )
 }

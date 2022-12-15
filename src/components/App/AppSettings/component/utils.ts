@@ -6,12 +6,12 @@ import { adjustColor } from 'easy-fns-ts'
  */
 export const getThemeColors = (color: string, step = 5): string[] =>
   Array.from({ length: 4 }, (_, index: number) =>
-    adjustColor(color, +((index + 1) * step))
+    adjustColor(color, +((index + 1) * step)),
   )
     .reverse()
     .concat([color])
     .concat(
       Array.from({ length: 4 }, (_, index: number) =>
-        adjustColor(color, -((index + 1) * step))
-      )
+        adjustColor(color, -((index + 1) * step)),
+      ),
     )

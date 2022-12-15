@@ -70,7 +70,7 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
       // no element item
       // and show item
       const inputPayload = payload.filter(
-        (i) => i.type !== AppConstMenuType.ELEMENT && i.show
+        i => i.type !== AppConstMenuType.ELEMENT && i.show,
       )
 
       // build tree
@@ -102,7 +102,8 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
     createKeepAliveRouteNames(menus: AppSystemMenu[]): string[] {
       return menus
         .map((i) => {
-          if (i.type === AppConstMenuType.MENU && i.cache) return i.name!
+          if (i.type === AppConstMenuType.MENU && i.cache)
+            return i.name!
           return ''
         })
         .filter(Boolean)
@@ -121,6 +122,7 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
 const useAppStoreMenuOutside = () => useAppStoreMenuInside(store)
 
 export const useAppStoreMenu = () => {
-  if (getCurrentInstance()) return useAppStoreMenuInside()
+  if (getCurrentInstance())
+    return useAppStoreMenuInside()
   return useAppStoreMenuOutside()
 }

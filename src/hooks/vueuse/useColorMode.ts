@@ -1,6 +1,6 @@
 export const useSharedColorMode = createSharedComposable(() => {
   const modes = Object.fromEntries(
-    Object.values(AppConstColorMode).map((i) => [i, i])
+    Object.values(AppConstColorMode).map(i => [i, i]),
   )
 
   return useColorMode({

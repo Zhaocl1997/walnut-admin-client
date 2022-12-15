@@ -18,12 +18,13 @@ export const useAppHijackF5 = () => {
             }
           })
         })
-      } else {
+      }
+      else {
         scope?.stop()
       }
     },
     {
       immediate: true,
-    }
+    },
   )
 }

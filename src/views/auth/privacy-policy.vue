@@ -1,15 +1,17 @@
-<template>
-  <div class="abs-center text-3xl">Privacy Policy</div>
-</template>
-
 <script lang="ts" setup>
-  const state = ref()
+const state = ref()
 </script>
 
 <script lang="ts">
-  export default defineComponent({
-    name: 'PrivacyPolicy',
+export default defineComponent({
+  name: 'PrivacyPolicy',
 
-    defaultView: false,
-  })
+  defaultView: false,
+})
 </script>
+
+<template>
+  <div class="abs-center text-3xl">
+    Privacy Policy
+  </div>
+</template>

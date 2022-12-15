@@ -3,9 +3,9 @@ import { resolve } from 'node:path'
 import * as TJS from 'typescript-json-schema'
 
 import {
-  VScodeSettingsFilePath,
-  AppSettingsJSONFilePath,
   AppSettingsInterfaceFilePath,
+  AppSettingsJSONFilePath,
+  VScodeSettingsFilePath,
 } from '../utils/paths'
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../utils'
 
@@ -19,7 +19,7 @@ const compilerOptions: TJS.CompilerOptions = {
 
 const program = TJS.getProgramFromFiles(
   [resolve(AppSettingsInterfaceFilePath)],
-  compilerOptions
+  compilerOptions,
 )
 
 const shapeSchema = TJS.generateSchema(program, 'AppSettings', settings)
@@ -28,7 +28,8 @@ const shapeSchema = TJS.generateSchema(program, 'AppSettings', settings)
   const data = await BuildUtilsReadFile(VScodeSettingsFilePath)
   const obj = JSON.parse(data.toString())
 
-  if (!obj['json.schemas']) obj['json.schemas'] = []
+  if (!obj['json.schemas'])
+    obj['json.schemas'] = []
 
   obj['json.schemas'][0] = {
     fileMatch: [AppSettingsJSONFilePath],

@@ -25,18 +25,21 @@ export const generateDefaultSortParams = (columns: WTable.Column[]) => {
  * @description generate base sort object
  */
 export const generateSortParams = <T>(
-  sort: DataTableSortState | DataTableSortState[]
+  sort: DataTableSortState | DataTableSortState[],
 ): BaseSortParams<T> => {
   if (Array.isArray(sort)) {
-    if (sort.every((i) => i.order === false)) return []
+    if (sort.every(i => i.order === false))
+      return []
 
-    return sort.map((i) => ({
+    return sort.map(i => ({
       field: i.columnKey as keyof T,
       order: i.order,
       priority: (i.sorter as SorterMultiple)?.multiple,
     }))
-  } else {
-    if (sort.order === false) return []
+  }
+  else {
+    if (sort.order === false)
+      return []
 
     return [
       {
@@ -54,12 +57,11 @@ export const generateSortParams = <T>(
 export const generateBaseListParams = (params: BaseListParams) => {
   const ret: BaseListParams = {}
 
-  Object.entries(params).map(([key, value]) => {
-    if (key === 'sort') {
-      ret['sort'] = generateSortParams(value)
-    } else {
+  Object.entries(params).forEach(([key, value]) => {
+    if (key === 'sort')
+      ret.sort = generateSortParams(value)
+    else
       ret[key] = value
-    }
   })
 
   return ret
@@ -71,7 +73,7 @@ export const generateBaseListParams = (params: BaseListParams) => {
 export const getTableTranslated = (
   props: ComputedRef<WTable.Props>,
   item: WTable.Column,
-  helpMsg = false
+  helpMsg = false,
 ) => {
   const { t } = useAppI18n()
 
@@ -84,8 +86,8 @@ export const getTableTranslated = (
   const path = item.key
 
   return isLocale && path
-    ? defaultAppLocaleMessageKeys.includes(path!)
+    ? defaultAppLocaleMessageKeys.includes(path)
       ? t(`app.base.${path}`)
-      : t(isHelpMsg(`table.${key}.${path}`) as string)
+      : t(isHelpMsg(`table.${key}.${path}`))
     : item.title
 }

@@ -4,7 +4,7 @@ import 'animate.css'
 import './assets/styles/main.scss'
 
 import { App, setupApp } from './App'
-;(async () => {
+(async () => {
   const app = createApp(App)
 
   await setupApp(app)

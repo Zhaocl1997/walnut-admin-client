@@ -1,195 +1,195 @@
-<template>
-  <w-form @hook="register" :model="tabRelatives"></w-form>
-</template>
-
 <script lang="ts" setup>
-  import { modalColor, getCanAnimate } from '../shared'
+import { getCanAnimate, modalColor } from '../shared'
 
-  const appDark = useAppStoreDark()
+const appDark = useAppStoreDark()
 
-  const appSetting = useAppStoreSetting()
+const appSetting = useAppStoreSetting()
 
-  const tabRelatives = appSetting.tabs
+const tabRelatives = appSetting.tabs
 
-  const [register] = useForm<typeof tabRelatives>({
-    localeUniqueKey: 'app.settings.tab',
-    showFeedback: false,
-    xGap: 0,
-    formItemClass: 'flex flex-row justify-between mb-2',
-    formItemComponentClass: '!w-32 flex justify-end',
-    size: 'small',
-    disabled: computed(() => !tabRelatives.status),
-    schemas: [
-      {
-        type: 'Extend:Divider',
-        componentProp: {
-          title: 'app.settings.tab',
-          prefix: 'bar',
-          titlePlacement: 'left',
-          foldable: true,
-        },
-        extraProp: {
-          sticky: true,
-          bgColor: modalColor,
-        },
+const [register] = useForm<typeof tabRelatives>({
+  localeUniqueKey: 'app.settings.tab',
+  showFeedback: false,
+  xGap: 0,
+  formItemClass: 'flex flex-row justify-between mb-2',
+  formItemComponentClass: '!w-32 flex justify-end',
+  size: 'small',
+  disabled: computed(() => !tabRelatives.status),
+  schemas: [
+    {
+      type: 'Extend:Divider',
+      componentProp: {
+        title: 'app.settings.tab',
+        prefix: 'bar',
+        titlePlacement: 'left',
+        foldable: true,
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'status',
-        },
-        componentProp: {
-          disabled: false,
-        },
+      extraProp: {
+        sticky: true,
+        bgColor: modalColor,
       },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'id',
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'status',
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'fixed',
-        },
+      componentProp: {
+        disabled: false,
       },
-      {
-        type: 'Extend:TransitionSelect',
-        formProp: {
-          path: 'transition',
-        },
-        componentProp: {
-          disabled: computed(() => !tabRelatives.status || getCanAnimate.value),
-          tooltip: true,
-        },
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'id',
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'inverted',
-        },
-        componentProp: {
-          disabled: computed(() => appDark.isDark),
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'fixed',
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'height',
-        },
-        componentProp: {
-          step: 1,
-          min: 0,
-          suffix: 'px',
-          showButton: false,
-          precision: 0,
-        },
+    },
+    {
+      type: 'Extend:TransitionSelect',
+      formProp: {
+        path: 'transition',
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'itemWidth',
-        },
-        componentProp: {
-          step: 1,
-          min: 0,
-          suffix: 'px',
-          showButton: false,
-          precision: 0,
-        },
+      componentProp: {
+        disabled: computed(() => !tabRelatives.status || getCanAnimate.value),
+        tooltip: true,
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'showIcon',
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'inverted',
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'showUtils',
-        },
+      componentProp: {
+        disabled: computed(() => appDark.isDark),
       },
-      {
-        type: 'Base:Select',
-        formProp: {
-          path: 'utilsMode',
-          labelHelpMessage: true,
-        },
-        componentProp: {
-          options: Object.values(AppConstTabUtilsShowMode).map((i) => ({
-            value: i,
-            label: i,
-          })),
-          disabled: computed(
-            () => !tabRelatives.status || !tabRelatives.showUtils
-          ),
-        },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'height',
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'contextMenu',
-        },
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'sortable',
-        },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'itemWidth',
       },
-      {
-        type: 'Base:Select',
-        formProp: {
-          path: 'styleMode',
-        },
-        componentProp: {
-          options: Object.values(AppConstTabStyleMode).map((i) => ({
-            value: i,
-            label: i,
-          })),
-        },
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
       },
-      {
-        type: 'Base:Select',
-        formProp: {
-          path: 'closeMode',
-        },
-        componentProp: {
-          options: Object.values(AppConstTabCloseMode).map((i) => ({
-            value: i,
-            label: i,
-          })),
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'showIcon',
       },
-      {
-        type: 'Base:Select',
-        formProp: {
-          path: 'affixMode',
-        },
-        componentProp: {
-          options: Object.values(AppConstTabAffixMode).map((i) => ({
-            value: i,
-            label: i,
-          })),
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'showUtils',
       },
-      {
-        type: 'Extend:TransitionSelect',
-        formProp: {
-          path: 'itemTransition',
-        },
-        componentProp: {
-          tooltip: true,
-        },
+    },
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'utilsMode',
+        labelHelpMessage: true,
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'persistent',
-        },
+      componentProp: {
+        options: Object.values(AppConstTabUtilsShowMode).map(i => ({
+          value: i,
+          label: i,
+        })),
+        disabled: computed(
+          () => !tabRelatives.status || !tabRelatives.showUtils,
+        ),
       },
-    ],
-  })
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'contextMenu',
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'sortable',
+      },
+    },
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'styleMode',
+      },
+      componentProp: {
+        options: Object.values(AppConstTabStyleMode).map(i => ({
+          value: i,
+          label: i,
+        })),
+      },
+    },
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'closeMode',
+      },
+      componentProp: {
+        options: Object.values(AppConstTabCloseMode).map(i => ({
+          value: i,
+          label: i,
+        })),
+      },
+    },
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'affixMode',
+      },
+      componentProp: {
+        options: Object.values(AppConstTabAffixMode).map(i => ({
+          value: i,
+          label: i,
+        })),
+      },
+    },
+    {
+      type: 'Extend:TransitionSelect',
+      formProp: {
+        path: 'itemTransition',
+      },
+      componentProp: {
+        tooltip: true,
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'persistent',
+      },
+    },
+  ],
+})
 </script>
+
+<template>
+  <w-form :model="tabRelatives" @hook="register" />
+</template>

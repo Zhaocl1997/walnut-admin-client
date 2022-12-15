@@ -1,8 +1,8 @@
+import { isUndefined } from 'lodash-es'
 import type { WForm } from '../types'
 
-import { isUndefined } from 'lodash-es'
 import { getFormBooleanField } from '../utils'
-import { formIdMap, setFormItemId, getFormItemId } from './useFormItemId'
+import { formIdMap, getFormItemId, setFormItemId } from './useFormItemId'
 
 export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
   const formSchemas = ref<WForm.Schema.Item<any>[]>()
@@ -12,9 +12,8 @@ export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
     ([s]) => {
       formSchemas.value = s
         ?.map((i, idx) => {
-          if (isUndefined(getFormItemId(i, idx))) {
+          if (isUndefined(getFormItemId(i, idx)))
             setFormItemId(i, idx, true)
-          }
 
           return {
             ...i,
@@ -22,15 +21,15 @@ export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
           }
         })
         .filter(
-          (i) =>
-            getFormBooleanField(i, props.value, 'vIf') &&
-            getFormBooleanField(i, props.value, 'vShow')
+          i =>
+            getFormBooleanField(i, props.value, 'vIf')
+            && getFormBooleanField(i, props.value, 'vShow'),
         )
     },
     {
       deep: true,
       immediate: true,
-    }
+    },
   )
 
   return { formSchemas }

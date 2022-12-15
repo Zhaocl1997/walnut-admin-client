@@ -1,5 +1,5 @@
 import UnoCSS from 'unocss/vite'
-import { presetUno, presetAttributify } from 'unocss'
+import { presetAttributify, presetUno } from 'unocss'
 import transformerVariantGroup from '@unocss/transformer-variant-group'
 
 // dynamic usage is still problematic

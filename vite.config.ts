@@ -1,6 +1,6 @@
-import type { UserConfig, ConfigEnv } from 'vite'
-
 import { resolve } from 'node:path'
+import type { ConfigEnv, UserConfig } from 'vite'
+
 import { loadEnv, splitVendorChunkPlugin } from 'vite'
 
 import { createViteProxy } from './build/vite/proxy'
@@ -18,14 +18,14 @@ const __APP_INFO__ = {
 }
 
 // https://vitejs.dev/config/
-export default ({ command, mode }: ConfigEnv): UserConfig => {
+export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd()
 
   const env = loadEnv(mode, pathResolve(envDir)) as ImportMetaEnv
 
   const { obfuscator, dropConsole, outDir, publicPath } = useLoadEnv(
     'build',
-    env
+    env,
   )
 
   return {
@@ -59,9 +59,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
             postcssPlugin: 'internal:charset-removal',
             AtRule: {
               charset: (atRule) => {
-                if (atRule.name === 'charset') {
+                if (atRule.name === 'charset')
                   atRule.remove()
-                }
               },
             },
           },
@@ -120,16 +119,16 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
             'lodash-es': ['lodash-es'],
             'naive-ui': ['naive-ui'],
             'ali-oss': ['ali-oss'],
-            echarts: ['echarts'],
-            tinymce: ['tinymce'],
-            sortablejs: ['sortablejs'],
-            axios: ['axios'],
-            signature_pad: ['signature_pad'],
+            'echarts': ['echarts'],
+            'tinymce': ['tinymce'],
+            'sortablejs': ['sortablejs'],
+            'axios': ['axios'],
+            'signature_pad': ['signature_pad'],
             'vue-i18n': ['vue-i18n'],
             'highlight.js': ['highlight.js'],
             'intro.js': ['intro.js'],
-            codemirror: ['codemirror'],
-            cropperjs: ['cropperjs'],
+            'codemirror': ['codemirror'],
+            'cropperjs': ['cropperjs'],
           },
 
           plugins: [obfuscator ? createRollupObfuscatorPlugin() : {}],

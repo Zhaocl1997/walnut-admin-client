@@ -1,5 +1,5 @@
-import type { WTable } from '../types'
 import type { TableBaseColumn } from 'naive-ui/lib/data-table/src/interface'
+import type { WTable } from '../types'
 
 export const WTablePresetOrderColumn: Pick<TableBaseColumn, 'key' | 'width'> = {
   key: 'order',
@@ -10,7 +10,7 @@ export const WTablePresetStatusColumn: Pick<
   TableBaseColumn,
   'key' | 'width' | 'filter' | 'filterMultiple'
 > &
-  WTable.ExtendType.Dictionary<any> = {
+WTable.ExtendType.Dictionary<any> = {
   key: 'status',
   width: 120,
   extendType: 'dict',

@@ -8,6 +8,6 @@ import { BuildUtilsWriteFile, generatedPathsFilePath } from '../utils'
     view: ${JSON.stringify(__dirname.replace('build\\generate', 'src\\views'))},
     build: ${JSON.stringify(__dirname.replace('\\generate', ''))},
   }
-  `
+  `,
   )
 })()

@@ -1,13 +1,13 @@
-import chalk from 'chalk'
 import fs from 'node:fs'
 import cp from 'node:child_process'
+import chalk from 'chalk'
 
 import { getNow } from 'easy-fns-ts/dist/lib'
 import pkg from '../../package.json'
 
 const title = (stage: string) =>
   chalk.magenta.bgBlack(
-    `[${pkg.name.toUpperCase()}] - [${getNow()}] - [${stage}]`
+    `[${pkg.name.toUpperCase()}] - [${getNow()}] - [${stage}]`,
   )
 
 export const BuildUtilsLog = (msg: string, stage = 'Log') => {
@@ -49,18 +49,19 @@ export const writeIntoLog = (title: string, command: string, path: string) => {
           // cp.execSync('npm run postbuild')
 
           BuildUtilsLog(
-            chalk.red.bgBlack(`${title} Failed, see more in ${path}`)
+            chalk.red.bgBlack(`${title} Failed, see more in ${path}`),
           )
-        }
+        },
       )
-    } else {
+    }
+    else {
       BuildUtilsLog(chalk.green.bgBlack(`${title} Successfully! ✨✨✨✨✨ `))
     }
 
     if (stdout) {
       log_file.write(prefix('Std Out', '✨✨✨✨✨') + stdout, () => {
         BuildUtilsLog(
-          chalk.magenta.bgBlack(`${title} Std out, see more in ${path}`)
+          chalk.magenta.bgBlack(`${title} Std out, see more in ${path}`),
         )
       })
     }
@@ -68,7 +69,7 @@ export const writeIntoLog = (title: string, command: string, path: string) => {
     if (stderr) {
       log_file.write(prefix('Std Err', '💊💊💊💊💊') + stderr, () => {
         BuildUtilsLog(
-          chalk.yellow.bgBlack(`${title} Std Error, see more in ${path}`)
+          chalk.yellow.bgBlack(`${title} Std Error, see more in ${path}`),
         )
       })
     }

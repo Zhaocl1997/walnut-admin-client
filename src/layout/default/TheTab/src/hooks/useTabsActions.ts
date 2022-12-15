@@ -8,7 +8,7 @@ export const useTabsActions = (onUpdateOverflow: Fn) => {
 
   const onTabRemove = async (
     name: string,
-    type: ValueOfAppConstTabDeleteType = AppConstTabDeleteType.TAB_SINGLE
+    type: ValueOfAppConstTabDeleteType = AppConstTabDeleteType.TAB_SINGLE,
   ) => {
     // remove tab
     await appTab.deleteTabs(name, type)

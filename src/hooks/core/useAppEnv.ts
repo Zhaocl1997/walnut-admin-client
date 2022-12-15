@@ -2,7 +2,7 @@ type EnvFetchType = 'title' | 'crypto' | 'proxy' | 'seconds' | 'build'
 
 export const useAppEnv = (
   type?: EnvFetchType,
-  env: ImportMetaEnv = import.meta.env
+  env: ImportMetaEnv = import.meta.env,
 ) => {
   if (type === 'title') {
     return {
@@ -12,15 +12,15 @@ export const useAppEnv = (
 
   if (type === 'crypto') {
     const [cryptoPersistKey, cryptoPersistIV] = JSON.parse(
-      env.VITE_CRYPTO_PERSIST
+      env.VITE_CRYPTO_PERSIST,
     )
 
     const [cryptoRequestKey, cryptoRequestIV] = JSON.parse(
-      env.VITE_CRYPTO_REQUEST
+      env.VITE_CRYPTO_REQUEST,
     )
 
     const [cryptoResponseKey, cryptoResponseIV] = JSON.parse(
-      env.VITE_CRYPTO_RESPONSE
+      env.VITE_CRYPTO_RESPONSE,
     )
 
     return {

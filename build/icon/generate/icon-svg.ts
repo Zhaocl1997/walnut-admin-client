@@ -1,18 +1,18 @@
 import {
-  importDirectory,
   cleanupSVG,
-  runSVGO,
+  importDirectory,
   parseColors,
+  runSVGO,
 } from '@iconify/tools'
 
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
-import { IconLog, iconSVGPath, WSvgPrefix } from '../src'
+import { IconLog, WSvgPrefix, iconSVGPath } from '../src'
 
 export const generateIconSvg = async () => {
   // build the empty json file
   await BuildUtilsWriteFile(
     iconSVGPath,
-    JSON.stringify({ icons: {}, prefix: WSvgPrefix })
+    JSON.stringify({ icons: {}, prefix: WSvgPrefix }),
   )
 
   // Import icons
@@ -22,9 +22,8 @@ export const generateIconSvg = async () => {
 
   // Validate, clean up, fix palette and optimise
   await iconSet.forEach(async (name, type) => {
-    if (type !== 'icon') {
+    if (type !== 'icon')
       return
-    }
 
     const svg = iconSet.toSVG(name)
     if (!svg) {
@@ -44,13 +43,14 @@ export const generateIconSvg = async () => {
         defaultColor: 'currentColor',
         callback: (attr, colorStr, color) => {
           // return !color || isEmptyColor(color) ? colorStr : 'currentColor'
-          return colorStr ? colorStr : 'currentColor'
+          return colorStr || 'currentColor'
         },
       })
 
       // Optimise
-      await runSVGO(svg)
-    } catch (err) {
+      runSVGO(svg)
+    }
+    catch (err) {
       // Invalid icon
       console.error(`Error parsing ${name}:`, err)
       iconSet.remove(name)
@@ -75,7 +75,7 @@ export const generateIconSvg = async () => {
 
   IconLog(
     'Icon SVG',
-    `Detecting ${iconSet.count()} custom svg icon, writing into file: ${iconSVGPath}`
+    `Detecting ${iconSet.count()} custom svg icon, writing into file: ${iconSVGPath}`,
   )
 
   // Generate to icon list

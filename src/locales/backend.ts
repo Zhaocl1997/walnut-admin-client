@@ -9,7 +9,7 @@ export const AppI18nGetLangLists = async () => {
     url: '/system/lang/list/public',
   })
 
-  return lists.map((i) => ({
+  return lists.map(i => ({
     value: i.lang!,
     label: i.description!,
   }))

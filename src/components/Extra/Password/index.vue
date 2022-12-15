@@ -1,3 +1,86 @@
+<script lang="ts" setup>
+import { checkStrStrong, statusTable } from './utils'
+
+// TODO 888
+interface InternalProps {
+  value?: string
+  maxlength?: number
+  minlength?: number
+  progress?: boolean
+  capslock?: boolean
+  onSubmit?: () => Promise<void>
+}
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  maxlength: 24,
+  minlength: 8,
+  progress: false,
+})
+
+const emits = defineEmits(['update:value', 'submit'])
+
+const { t } = useAppI18n()
+
+const percentage = ref(0)
+const status = ref('success')
+
+const tooltipShow = ref(false)
+const isFocus = ref(false)
+const capsLockState = useKeyModifier('CapsLock')
+
+const onShowTooltip = () => {
+  if (!isFocus.value)
+    return
+
+  if (capsLockState.value)
+    tooltipShow.value = true
+  else
+    tooltipShow.value = false
+}
+
+watchEffect(onShowTooltip)
+
+watch(
+  () => props.value,
+  (val) => {
+    if (!props.progress)
+      return
+    const strong = checkStrStrong(val!)
+
+    status.value = statusTable[strong]
+    percentage.value = strong * 20
+  },
+  { immediate: true },
+)
+
+const onUpdateValue = (val: string) => {
+  emits('update:value', val)
+}
+
+const onKeyup = (e: KeyboardEvent) => {
+  if (e.code === 'Enter' || e.code === 'NumpadEnter')
+    emits('submit')
+}
+
+const onFocus = () => {
+  isFocus.value = true
+  onShowTooltip()
+}
+
+const onBlur = () => {
+  isFocus.value = false
+  tooltipShow.value = false
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'Password',
+
+  inheritAttrs: false,
+})
+</script>
+
 <template>
   <div class="w-full">
     <n-tooltip v-model:show="tooltipShow" trigger="manual" placement="right">
@@ -17,11 +100,12 @@
           @keyup="onKeyup"
           @focus="onFocus"
           @blur="onBlur"
-        >
-        </n-input>
+        />
       </template>
 
-      <template #default> {{ t('comp.password.capslock') }} </template>
+      <template #default>
+        {{ t('comp.password.capslock') }}
+      </template>
     </n-tooltip>
 
     <n-progress
@@ -32,89 +116,6 @@
       :percentage="percentage"
       :show-indicator="false"
       :status="status"
-    ></n-progress>
+    />
   </div>
 </template>
-
-<script lang="ts" setup>
-  import { checkStrStrong, statusTable } from './utils'
-
-  // TODO 888
-  interface InternalProps {
-    value?: string
-    maxlength?: number
-    minlength?: number
-    progress?: boolean
-    capslock?: boolean
-    onSubmit?: () => Promise<void>
-  }
-
-  const { t } = useAppI18n()
-
-  const props = withDefaults(defineProps<InternalProps>(), {
-    maxlength: 24,
-    minlength: 8,
-    progress: false,
-  })
-
-  const emits = defineEmits(['update:value', 'submit'])
-
-  const percentage = ref(0)
-  const status = ref('success')
-
-  const tooltipShow = ref(false)
-  const isFocus = ref(false)
-  const capsLockState = useKeyModifier('CapsLock')
-
-  const onShowTooltip = () => {
-    if (!isFocus.value) return
-
-    if (capsLockState.value) {
-      tooltipShow.value = true
-    } else {
-      tooltipShow.value = false
-    }
-  }
-
-  watchEffect(onShowTooltip)
-
-  watch(
-    () => props.value,
-    (val) => {
-      if (!props.progress) return
-      const strong = checkStrStrong(val!)
-
-      status.value = statusTable[strong]
-      percentage.value = strong * 20
-    },
-    { immediate: true }
-  )
-
-  const onUpdateValue = (val: string) => {
-    emits('update:value', val)
-  }
-
-  const onKeyup = (e: KeyboardEvent) => {
-    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      emits('submit')
-    }
-  }
-
-  const onFocus = () => {
-    isFocus.value = true
-    onShowTooltip()
-  }
-
-  const onBlur = () => {
-    isFocus.value = false
-    tooltipShow.value = false
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'Password',
-
-    inheritAttrs: false,
-  })
-</script>

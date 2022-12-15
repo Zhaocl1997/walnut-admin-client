@@ -1,17 +1,17 @@
 <script lang="tsx">
-  import type { WDatePickerProps } from './types'
+import type { WDatePickerProps } from './types'
 
-  import { props } from './props'
+import { props } from './props'
 
-  export default defineComponent({
-    name: 'WDatePicker',
+export default defineComponent({
+  name: 'WDatePicker',
 
-    props,
+  props,
 
-    emits: [],
+  emits: [],
 
-    setup(props: WDatePickerProps, { attrs, slots, emit, expose }) {
-      return () => <n-date-picker></n-date-picker>
-    },
-  })
+  setup(props: WDatePickerProps, { attrs, slots, emit, expose }) {
+    return () => <n-date-picker></n-date-picker>
+  },
+})
 </script>

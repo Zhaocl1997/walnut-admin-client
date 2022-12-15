@@ -1,3 +1,29 @@
+<script lang="ts" setup>
+import type { TagProps } from 'naive-ui'
+
+// TODO 888
+interface InteralProps {
+  title?: string
+  headerExtra?: {
+    text?: string
+    tagProps?: TagProps
+  }
+  loading?: boolean
+
+  option?: EChartsOption
+}
+
+const props = defineProps<InteralProps>()
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'WHomeChartCard',
+
+  defaultView: false,
+})
+</script>
+
 <template>
   <n-card
     hoverable
@@ -6,7 +32,7 @@
     }"
   >
     <template #header>
-      <n-skeleton v-if="loading" text width="20%"></n-skeleton>
+      <n-skeleton v-if="loading" text width="20%" />
 
       <n-h2 v-else prefix="bar" align-text :type="headerExtra?.tagProps.type">
         <n-text>
@@ -16,7 +42,7 @@
     </template>
 
     <template #header-extra>
-      <n-skeleton v-if="loading" round width="80px" height="28px"></n-skeleton>
+      <n-skeleton v-if="loading" round width="80px" height="28px" />
 
       <n-tag v-else v-bind="headerExtra?.tagProps">
         <n-gradient-text :type="headerExtra?.tagProps.type">
@@ -25,41 +51,15 @@
       </n-tag>
     </template>
 
-    <template #>
+    <template #default>
       <n-skeleton
         v-if="loading"
         width="100%"
         height="44vh"
         :sharp="false"
-      ></n-skeleton>
+      />
 
-      <w-echarts v-else :option="option"></w-echarts>
+      <w-echarts v-else :option="option" />
     </template>
   </n-card>
 </template>
-
-<script lang="ts" setup>
-  import type { TagProps } from 'naive-ui'
-
-  // TODO 888
-  interface InteralProps {
-    title?: string
-    headerExtra?: {
-      text?: string
-      tagProps?: TagProps
-    }
-    loading?: boolean
-
-    option?: EChartsOption
-  }
-
-  const props = defineProps<InteralProps>()
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'WHomeChartCard',
-
-    defaultView: false,
-  })
-</script>

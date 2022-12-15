@@ -5,7 +5,7 @@ export const HelloAPI = (cache = false) => {
     },
     {
       needAuth: false,
-      cache: cache,
-    }
+      cache,
+    },
   )
 }

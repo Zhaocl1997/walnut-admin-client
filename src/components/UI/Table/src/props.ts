@@ -1,9 +1,8 @@
 import type { DataTableProps } from 'naive-ui'
+import { NDataTable } from 'naive-ui'
 import type { WForm } from '../../Form'
 import type { WButtonProps } from '../../Button'
 import type { WTable } from './types'
-
-import { NDataTable } from 'naive-ui'
 
 export const extendProps = {
   localeUniqueKey: String as PropType<string>,

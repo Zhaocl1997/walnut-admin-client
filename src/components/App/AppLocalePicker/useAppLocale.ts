@@ -8,11 +8,10 @@ export const useAppLocale = () => {
     // Don't load again if has been loaded
     if (
       Object.keys(
-        (AppI18n.global?.messages as unknown as Ref<string[]>).value
+        (AppI18n.global?.messages as unknown as Ref<string[]>).value,
       ).includes(locale)
-    ) {
+    )
       return
-    }
 
     const backendMsg = await AppI18nGetI18nMsg(locale)
 
@@ -22,11 +21,11 @@ export const useAppLocale = () => {
   }
 
   const setI18nLanguage = (locale: ValueOfAppConstLocale) => {
-    if (AppI18n.mode === 'legacy') {
+    if (AppI18n.mode === 'legacy')
       AppI18n.global.locale = locale
-    } else {
-      ;(AppI18n.global.locale as unknown as Ref<string>).value = locale
-    }
+
+    else
+      (AppI18n.global.locale as Ref<string>).value = locale
 
     /**
      * NOTE:

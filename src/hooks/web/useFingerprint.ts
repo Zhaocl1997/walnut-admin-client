@@ -1,5 +1,6 @@
+import type { UnknownComponents } from '@fingerprintjs/fingerprintjs'
+import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { setFP } from '@/api/auth/fingerprint'
-import FingerprintJS, { UnknownComponents } from '@fingerprintjs/fingerprintjs'
 
 // Initialize an agent at application startup.
 const fpPromise = FingerprintJS.load({ monitoring: false })
@@ -7,7 +8,8 @@ const fpPromise = FingerprintJS.load({ monitoring: false })
 export const fpId = useAppStorage(AppConstPersistKey.FP_ID, '')
 
 export const useFingerprint = async () => {
-  if (fpId.value) return
+  if (fpId.value)
+    return
 
   const userProfile = useAppStoreUserProfile()
 

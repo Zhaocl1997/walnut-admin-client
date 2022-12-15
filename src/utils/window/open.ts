@@ -5,15 +5,16 @@
 export const openExternalLink = (
   url: string,
   safe = false,
-  target: '_blank' | '_self' = '_blank'
+  target: '_blank' | '_self' = '_blank',
 ) => {
   if (safe) {
     window.open(
       `${AppOpenExternalPath}?url=${url}`,
       target,
-      'noopener=yes, noreferrer=yes'
+      'noopener=yes, noreferrer=yes',
     )
-  } else {
+  }
+  else {
     window.open(url, target, 'noopener=yes, noreferrer=yes')
   }
 }
@@ -25,6 +26,6 @@ export const openOAuthWindow = (url: string) => {
   return window.open(
     url,
     '_blank',
-    'height=900, width=600, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no'
+    'height=900, width=600, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no',
   )
 }

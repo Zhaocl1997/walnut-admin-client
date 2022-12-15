@@ -1,13 +1,58 @@
+<script lang="ts">
+export default defineComponent({
+  name: 'WQRCode',
+})
+</script>
+
+<script lang="ts" setup>
+import { useQRCode } from '@vueuse/integrations/useQRCode'
+
+// TODO 888
+interface InternalProps {
+  url: string
+  expireSeconds?: number
+  success?: boolean
+}
+
+const props = defineProps<InternalProps>()
+const emits = defineEmits(['refresh'])
+
+const { t } = useAppI18n()
+
+const count = ref(0)
+const insideUrl = toRef(props, 'url')
+
+const qrcode = useQRCode(insideUrl)
+
+const { pause, isActive, resume } = useIntervalFn(
+  () => {
+    count.value++
+
+    if (count.value > props.expireSeconds!) {
+      count.value = 0
+      pause()
+    }
+  },
+  1000,
+  {
+    immediateCallback: props.expireSeconds !== undefined,
+  },
+)
+
+const onRefresh = () => {
+  emits('refresh', resume)
+}
+</script>
+
 <template>
   <div class="relative w-min">
     <img
       :src="qrcode"
       alt="QR Code"
-      :class="[
-        'transition transition-all',
+      class="transition transition-all" :class="[
         { 'blur-sm brightness-80 contrast-50': !isActive || success },
       ]"
-    />
+    >
 
     <w-transition appear>
       <div class="abs-center">
@@ -27,55 +72,8 @@
           status="success"
           :description="t('app.base.success')"
           class="text-gray-100"
-        >
-        </n-result>
+        />
       </div>
     </w-transition>
   </div>
 </template>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'WQRCode',
-  })
-</script>
-
-<script lang="ts" setup>
-  import { useQRCode } from '@vueuse/integrations/useQRCode'
-
-  // TODO 888
-  interface InternalProps {
-    url: string
-    expireSeconds?: number
-    success?: boolean
-  }
-
-  const props = defineProps<InternalProps>()
-  const emits = defineEmits(['refresh'])
-
-  const { t } = useAppI18n()
-
-  const count = ref(0)
-  const insideUrl = toRef(props, 'url')
-
-  const qrcode = useQRCode(insideUrl)
-
-  const { pause, isActive, resume } = useIntervalFn(
-    () => {
-      count.value++
-
-      if (count.value > props.expireSeconds!) {
-        count.value = 0
-        pause()
-      }
-    },
-    1000,
-    {
-      immediateCallback: props.expireSeconds !== undefined,
-    }
-  )
-
-  const onRefresh = () => {
-    emits('refresh', resume)
-  }
-</script>

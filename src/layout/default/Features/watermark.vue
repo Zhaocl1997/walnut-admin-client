@@ -1,3 +1,13 @@
+<script lang="ts" setup>
+const appSetting = useAppStoreSetting()
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'TheAppWatermark',
+})
+</script>
+
 <template>
   <n-watermark
     v-if="appSetting.getShowGlobalWatermark"
@@ -12,15 +22,5 @@
     :x-offset="12"
     :y-offset="60"
     :z-index="999999"
-  ></n-watermark>
+  />
 </template>
-
-<script lang="ts" setup>
-  const appSetting = useAppStoreSetting()
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'TheAppWatermark',
-  })
-</script>

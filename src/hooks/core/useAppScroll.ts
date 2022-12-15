@@ -9,19 +9,18 @@ export const useAppScroll = () => {
   debouncedWatch(
     () => [x.value, y.value] as const,
     ([x, y]) => {
-      if (currentRoute.value.meta.position) {
+      if (currentRoute.value.meta.position)
         userScroll.setScrollPosition(currentRoute.value.name as string, y, x)
-      }
     },
-    { immediate: true, debounce: 200 }
+    { immediate: true, debounce: 200 },
   )
 
   watch(
     () => currentRoute.value.meta.position,
-    (v) => {
+    async (v) => {
       if (v) {
         const position = userScroll.getScrollPosition(
-          currentRoute.value.name as string
+          currentRoute.value.name as string,
         )
 
         // TODO nextTick just do not work here
@@ -33,13 +32,14 @@ export const useAppScroll = () => {
             behavior: 'smooth',
           })
         }, 500)
-      } else {
-        nextTick(() => {
+      }
+      else {
+        await nextTick(() => {
           scrollWrapper.value?.scrollTo({ top: 0, behavior: 'smooth' })
         })
       }
     },
-    { immediate: true }
+    { immediate: true },
   )
 
   return { scrollWrapper }

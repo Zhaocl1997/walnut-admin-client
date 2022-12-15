@@ -1,23 +1,23 @@
 import { BuildUtilsWriteFile } from '../../utils'
 import {
   IconBundleConfig,
+  WSvgPrefix,
   iconBundlePath,
   iconSVGPath,
-  WSvgPrefix,
 } from '../src'
 
 export const generateIconDevBundle = async () => {
-  const names = IconBundleConfig.list.filter((i) => i !== WSvgPrefix)
+  const names = IconBundleConfig.list.filter(i => i !== WSvgPrefix)
 
   const importJSON = names.map(
-    (i) =>
+    i =>
       `import ${
-        i.replace('-', '') + 'Icons'
-      } from '@iconify/json/json/${i}.json'; \n`
+        `${i.replace('-', '')}Icons`
+      } from '@iconify/json/json/${i}.json'; \n`,
   )
 
   const addCollections = names.map(
-    (i) => `addCollection(${i.replace('-', '') + 'Icons'});`
+    i => `addCollection(${`${i.replace('-', '')}Icons`});`,
   )
 
   const data = `import { addCollection } from '@iconify/vue';

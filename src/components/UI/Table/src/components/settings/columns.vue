@@ -1,3 +1,85 @@
+<script lang="ts" setup>
+import type { WTable } from '../../types'
+
+import { useTableContext } from '../../hooks/useTableContext'
+import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
+
+const { t } = useAppI18n()
+const { tableColumns } = useTableContext()
+
+const popoverShow = ref(false)
+
+const { el: tableColumnSettingRef } = useSortable(popoverShow, {
+  draggable: '.table-column-draggable',
+  onEnd: (evt) => {
+    const { oldIndex, newIndex } = evt
+
+    const current = tableColumns.value![oldIndex!]
+    tableColumns.value?.splice(oldIndex!, 1)
+    tableColumns.value?.splice(newIndex!, 0, current)
+  },
+})
+
+const blackList: StringOrNumber[] = ['selection', 'index', 'action']
+
+const isInBlackList = (key: StringOrNumber) => blackList.includes(key)
+
+const getChecked = computed(() =>
+  tableColumns.value.every(i => i._internalShow),
+)
+
+const getIndeterminate = computed(
+  () =>
+    tableColumns.value.some(i => !i._internalShow)
+      && tableColumns.value.some(i => i._internalShow),
+)
+
+// open column setting popover
+const onOpenPopover = () => {
+  popoverShow.value = true
+}
+
+// check one column
+const onUpdateItemChecked = (item: WTable.Column) => {
+  item._internalShow = !item._internalShow
+}
+
+// check all
+const onUpdateCheckAllChecked = () => {
+  tableColumns.value
+    .filter(i => !isInBlackList(i.key))
+    .map(item => onUpdateItemChecked(item))
+}
+
+// set column fix state
+const onSetFix = (item: WTable.Column, position: 'left' | 'right') => {
+  if (!item.fixed)
+    item.fixed = position
+  else
+    item.fixed = undefined
+}
+
+const getTitle = (item: WTable.Column) => {
+  if (typeof item.title === 'string')
+    return item.title
+
+  // handle dict column title
+  if (item.extendType === 'dict' && item.useDictNameAsTitle)
+    return t(`dict.name.${item.dictType}`)
+
+  if (typeof item._titleText === 'function')
+    return item._titleText()
+
+  return t('app.base.selection')
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'WTableSettingsColumns',
+})
+</script>
+
 <template>
   <n-tooltip trigger="hover">
     {{ t('table.base.settings') }}
@@ -14,7 +96,7 @@
               icon="ant-design:setting-outlined"
               height="20"
               @click="onOpenPopover"
-            ></w-icon>
+            />
           </n-button>
         </template>
 
@@ -29,12 +111,11 @@
         </template>
 
         <template #default>
-          <div ref="tableColumnSettingRef" id="tableSortable">
+          <div id="tableSortable" ref="tableColumnSettingRef">
             <div
-              v-for="(item, index) in tableColumns"
+              v-for="item in tableColumns"
               :key="item.key"
-              :class="[
-                'hstack justify-between my-2 mx-1',
+              class="hstack justify-between my-2 mx-1" :class="[
                 { 'table-column-draggable': !isInBlackList(item.key) },
               ]"
             >
@@ -48,11 +129,10 @@
                       <w-icon
                         icon="ant-design:drag-outlined"
                         height="20"
-                        :class="[
-                          'cursor-move mr-2',
+                        class="cursor-move mr-2" :class="[
                           { 'cursor-not-allowed': isInBlackList(item.key) },
                         ]"
-                      ></w-icon>
+                      />
                     </n-button>
                   </template>
 
@@ -85,7 +165,7 @@
                         @click="
                           !isInBlackList(item.key) && onSetFix(item, 'left')
                         "
-                      ></w-icon>
+                      />
                     </n-button>
                   </template>
 
@@ -96,7 +176,7 @@
                   }}
                 </n-tooltip>
 
-                <n-divider vertical></n-divider>
+                <n-divider vertical />
 
                 <n-tooltip trigger="hover">
                   <template #trigger>
@@ -114,7 +194,7 @@
                         @click="
                           !isInBlackList(item.key) && onSetFix(item, 'right')
                         "
-                      ></w-icon>
+                      />
                     </n-button>
                   </template>
 
@@ -132,89 +212,3 @@
     </template>
   </n-tooltip>
 </template>
-
-<script lang="ts" setup>
-  import type { WTable } from '../../types'
-
-  import { useTableContext } from '../../hooks/useTableContext'
-  import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
-
-  const { t } = useAppI18n()
-  const { tableColumns } = useTableContext()
-
-  const popoverShow = ref(false)
-
-  const { el: tableColumnSettingRef } = useSortable(popoverShow, {
-    draggable: '.table-column-draggable',
-    onEnd: (evt) => {
-      const { oldIndex, newIndex } = evt
-
-      const current = tableColumns.value![oldIndex!]
-      tableColumns.value?.splice(oldIndex!, 1)
-      tableColumns.value?.splice(newIndex!, 0, current)
-    },
-  })
-
-  const blackList: StringOrNumber[] = ['selection', 'index', 'action']
-
-  const isInBlackList = (key: StringOrNumber) => blackList.includes(key)
-
-  const getChecked = computed(() =>
-    tableColumns.value.every((i) => i._internalShow)
-  )
-
-  const getIndeterminate = computed(
-    () =>
-      tableColumns.value.some((i) => !i._internalShow) &&
-      tableColumns.value.some((i) => i._internalShow)
-  )
-
-  // open column setting popover
-  const onOpenPopover = () => {
-    popoverShow.value = true
-  }
-
-  // check one column
-  const onUpdateItemChecked = (item: WTable.Column) => {
-    item._internalShow = !item._internalShow
-  }
-
-  // check all
-  const onUpdateCheckAllChecked = () => {
-    tableColumns.value
-      .filter((i) => !isInBlackList(i.key))
-      .map((item) => onUpdateItemChecked(item))
-  }
-
-  // set column fix state
-  const onSetFix = (item: WTable.Column, position: 'left' | 'right') => {
-    if (!item.fixed) {
-      item.fixed = position
-    } else {
-      item.fixed = undefined
-    }
-  }
-
-  const getTitle = (item: WTable.Column) => {
-    if (typeof item.title === 'string') {
-      return item.title
-    }
-
-    // handle dict column title
-    if (item.extendType === 'dict' && item.useDictNameAsTitle) {
-      return t(`dict.name.${item.dictType}`)
-    }
-
-    if (typeof item._titleText === 'function') {
-      return item._titleText()
-    }
-
-    return t('app.base.selection')
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'WTableSettingsColumns',
-  })
-</script>

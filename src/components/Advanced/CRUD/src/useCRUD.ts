@@ -1,7 +1,7 @@
 import type { WCrud } from './types'
 
 export const useCRUD = <T = RowData>(
-  props: DeepMaybeRefSelf<WCrud.Props<T>> | WCrud.Props<T>
+  props: DeepMaybeRefSelf<WCrud.Props<T>> | WCrud.Props<T>,
 ): WCrud.useFormReturnType<T> => {
   isInSetup()
 
@@ -15,7 +15,7 @@ export const useCRUD = <T = RowData>(
         props && instance.setProps(props)
       },
       // FLUSH need to set sync here, otherwise will cause `Maximum recursive updates exceeded` error
-      { flush: 'sync' }
+      { flush: 'sync' },
     )
   }
 

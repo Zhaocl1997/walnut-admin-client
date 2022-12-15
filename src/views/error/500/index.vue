@@ -1,3 +1,17 @@
+<script lang="ts" setup>
+const { t } = useAppI18n()
+
+const onClick = () => {
+  useAppMessage().warning(t('app.base.wip'))
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'App500',
+})
+</script>
+
 <template>
   <div class="flex h-full items-center justify-center p-5 w-full bg-bodyColor">
     <div class="text-center">
@@ -14,13 +28,13 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-            ></path>
+            />
             <path
               d="M17 16L22 21M22 16L17 21"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-            ></path>
+            />
           </svg>
         </div>
       </div>
@@ -36,19 +50,5 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  const { t } = useAppI18n()
-
-  const onClick = () => {
-    useAppMessage().warning(t('app.base.wip'))
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'App500',
-  })
-</script>
 
 <style lang="scss" scoped></style>

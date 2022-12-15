@@ -1,59 +1,62 @@
+<script lang="ts" setup>
+// TODO 888
+interface InternalProps {
+  total: number
+  current: number
+}
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  total: 9,
+  current: -1,
+})
+
+const before = ref(0)
+const isPlay = ref(false)
+
+onMounted(() => {
+  before.value = props.total === props.current ? -1 : props.total
+})
+
+watch(
+  () => props.current,
+  (cur, prev) => {
+    before.value = prev!
+
+    if (!isPlay.value)
+      isPlay.value = true
+  },
+  {
+    immediate: true,
+  },
+)
+</script>
+
 <template>
   <div :class="{ play: isPlay }">
     <ul class="flip">
       <li
-        class="item"
         v-for="(item, key) in total + 1"
-        :class="{ active: current === key, before: key === before }"
         :key="item"
+        class="item"
+        :class="{ active: current === key, before: key === before }"
       >
         <div class="up">
-          <div class="shadow"></div>
-          <div class="inn">{{ key }}</div>
+          <div class="shadow" />
+          <div class="inn">
+            {{ key }}
+          </div>
         </div>
 
         <div class="down">
-          <div class="shadow"></div>
-          <div class="inn">{{ key }}</div>
+          <div class="shadow" />
+          <div class="inn">
+            {{ key }}
+          </div>
         </div>
       </li>
     </ul>
   </div>
 </template>
-
-<script lang="ts" setup>
-  // TODO 888
-  interface InternalProps {
-    total: number
-    current: number
-  }
-
-  const props = withDefaults(defineProps<InternalProps>(), {
-    total: 9,
-    current: -1,
-  })
-
-  const before = ref(0)
-  const isPlay = ref(false)
-
-  onMounted(() => {
-    before.value = props.total === props.current ? -1 : props.total
-  })
-
-  watch(
-    () => props.current,
-    (cur, prev) => {
-      before.value = prev!
-
-      if (!isPlay.value) {
-        isPlay.value = true
-      }
-    },
-    {
-      immediate: true,
-    }
-  )
-</script>
 
 <style lang="scss" scoped>
   $width: 60px;

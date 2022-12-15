@@ -7,13 +7,12 @@ export const getFormBooleanField = (
   item: WForm.Schema.Item | undefined,
   props: WForm.Props,
   field: WForm.MaybeBooleanField,
-  defaultValue = true
+  defaultValue = true,
 ) => {
   const maybeBool = item?.extraProp?.[field]
 
-  if (typeof maybeBool === 'function') {
+  if (typeof maybeBool === 'function')
     return maybeBool({ formData: props.model! })
-  }
 
   return getBoolean(unref(maybeBool), defaultValue)
 }
@@ -25,9 +24,10 @@ export const getFormTranslated = (
   t: Fn,
   props: ComputedRef<WForm.Props>,
   item: WForm.Schema.Item,
-  type: WForm.LocaleType = 'origin'
+  type: WForm.LocaleType = 'origin',
 ) => {
-  if (item.formProp?.label === true) return
+  if (item.formProp?.label === true)
+    return
 
   const key = props.value.localeUniqueKey
 
@@ -38,28 +38,37 @@ export const getFormTranslated = (
   // no locale nor no path
   // just return target field
   if (!isLocale || !path) {
-    if (type === 'origin') return item.formProp?.label
-    if (type === 'helpMsg') return item.formProp?.labelHelpMessage
-    if (type === 'placeholder') return item.componentProp?.placeholder
+    if (type === 'origin')
+      return item.formProp?.label
+    if (type === 'helpMsg')
+      return item.formProp?.labelHelpMessage
+    if (type === 'placeholder')
+      return item.componentProp?.placeholder
     return
   }
 
   // in default app locale messages keys
-  if (defaultAppLocaleMessageKeys.includes(path)) return t(`app.base.${path}`)
+  if (defaultAppLocaleMessageKeys.includes(path))
+    return t(`app.base.${path}`)
 
-  const isLocaleWithTable =
-    getBoolean(item.formProp?.localeWithTable) &&
-    getBoolean(props.value.localeWithTable)
+  const isLocaleWithTable
+    = getBoolean(item.formProp?.localeWithTable)
+    && getBoolean(props.value.localeWithTable)
 
   const format = (key: string) => {
-    if (type === 'origin') return key
-    if (type === 'helpMsg') return `${key}.helpMsg`
-    if (type === 'placeholder') return `${key}.PH`
-    if (type === 'rule') return `${key}.rule`
+    if (type === 'origin')
+      return key
+    if (type === 'helpMsg')
+      return `${key}.helpMsg`
+    if (type === 'placeholder')
+      return `${key}.PH`
+    if (type === 'rule')
+      return `${key}.rule`
   }
 
   // locale with table, means locale key startsWith `table` insteadof `form`
-  if (isLocaleWithTable) return t(`table.${format(`${key}.${path}`)}`)
+  if (isLocaleWithTable)
+    return t(`table.${format(`${key}.${path}`)}`)
 
   return t(`form.${format(`${key}.${path}`)}`)
 }
@@ -79,7 +88,7 @@ export const inputFormItemTypeList = [
 export const generateRuleMessage = (
   t: Fn,
   p: ComputedRef<WForm.Props>,
-  i: WForm.Schema.Item
+  i: WForm.Schema.Item,
 ) => {
   return t('comp.form.rule', {
     type: inputFormItemTypeList.includes(i.type)
@@ -94,13 +103,13 @@ export const generateRuleMessage = (
  */
 export const generateBaseRules = (
   schemas: WForm.Schema.Item[],
-  props: ComputedRef<WForm.Props>
+  props: ComputedRef<WForm.Props>,
 ) => {
   const { t } = useAppI18n()
 
   const getBaseRuleObj = (
     i: WForm.Schema.Item,
-    extra?: FormItemRule[]
+    extra?: FormItemRule[],
   ): FormItemRule[] => {
     const base: FormItemRule[] = [
       {
@@ -123,32 +132,33 @@ export const generateBaseRules = (
             i.formProp.path,
             i.formProp.rule
               ? getBaseRuleObj(
-                  i,
-                  (Array.isArray(i.formProp.rule)
-                    ? i.formProp.rule
-                    : [i.formProp.rule]) as FormItemRule[]
-                )
+                i,
+                (Array.isArray(i.formProp.rule)
+                  ? i.formProp.rule
+                  : [i.formProp.rule]) as FormItemRule[],
+              )
               : getBaseRuleObj(i),
           ]
         }
         return []
       })
-      .filter((i) => i.length !== 0)
+      .filter(i => i.length !== 0),
   )
 }
 
 export const extractDefaultFormDataFromSchemas = (
-  schemas: WForm.Schema.Item[]
+  schemas: WForm.Schema.Item[],
 ) => {
-  if (!schemas) return {}
+  if (!schemas)
+    return {}
 
   return Object.fromEntries(
     unref(schemas)
-      ?.map<[string, BaseDataType | BaseDataType[] | null]>((i) => [
+      ?.map<[string, BaseDataType | BaseDataType[] | null]>(i => [
         i?.formProp?.path!,
         i?.componentProp?.defaultValue ?? null,
       ])
-      .filter((i) => i[0])!
+      .filter(i => i[0])!,
   )
 }
 

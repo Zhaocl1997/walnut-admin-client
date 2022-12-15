@@ -10,7 +10,7 @@ export const getAreaChildrenByPcode = (pcode?: string) => {
     {
       cache: true,
       cachedSeconds: 600,
-    }
+    },
   )
 }
 

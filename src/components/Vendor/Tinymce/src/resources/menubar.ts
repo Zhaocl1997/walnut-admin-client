@@ -1,1 +1,1 @@
-export const menubar = `file edit view insert format tools table help`
+export const menubar = 'file edit view insert format tools table help'

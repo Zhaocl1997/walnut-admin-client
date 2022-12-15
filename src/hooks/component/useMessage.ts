@@ -28,7 +28,7 @@ export const AppMsg = (msg: string, options: AppMessageOptions) => {
 
 export const useAppMsgSuccess = (
   msg?: string,
-  options?: Omit<AppMessageOptions, 'type'>
+  options?: Omit<AppMessageOptions, 'type'>,
 ) =>
   AppMsg(msg ?? AppI18n.global?.t('app.base.operation.success'), {
     ...options,
@@ -37,15 +37,15 @@ export const useAppMsgSuccess = (
 
 export const useAppMsgInfo = (
   msg: string,
-  options?: Omit<AppMessageOptions, 'type'>
+  options?: Omit<AppMessageOptions, 'type'>,
 ) => AppMsg(msg, { ...options, type: 'info' })
 
 export const useAppMsgWarning = (
   msg: string,
-  options?: Omit<AppMessageOptions, 'type'>
+  options?: Omit<AppMessageOptions, 'type'>,
 ) => AppMsg(msg, { ...options, type: 'warning' })
 
 export const useAppMsgError = (
   msg: string,
-  options?: Omit<AppMessageOptions, 'type'>
+  options?: Omit<AppMessageOptions, 'type'>,
 ) => AppMsg(msg, { ...options, type: 'error' })

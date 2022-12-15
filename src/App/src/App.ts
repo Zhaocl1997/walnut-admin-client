@@ -32,9 +32,8 @@ export const setupApp = async (app: App) => {
 
   useCleanLocalStroage()
 
-  if (isDev()) {
+  if (isDev())
     app.config.performance = true
-  }
 
   AppInfo('App Initializing...')
 }

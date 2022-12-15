@@ -9,6 +9,6 @@ export const useAppColorMode = () => {
     },
     {
       immediate: true,
-    }
+    },
   )
 }

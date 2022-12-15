@@ -29,7 +29,7 @@ export class Cookie {
     const exp = new Date()
     exp.setTime(exp.getTime() + expire)
     document.cookie = `${this.getKey(key)}=${escape(
-      finalValue
+      finalValue,
     )};path=${path};expires=${exp.toUTCString()}`
   }
 
@@ -46,7 +46,8 @@ export class Cookie {
           result = AppPersistEncryption.decrypt(unescape(val))
           try {
             return JSON.parse(result)
-          } catch (e) {
+          }
+          catch (e) {
             return val
           }
         }
@@ -64,9 +65,9 @@ export class Cookie {
     const keys = document.cookie.match(/[^ =;]+(?==)/g)
 
     if (keys) {
-      for (let i = keys.length; i--; ) {
+      for (let i = keys.length; i--;) {
         document.cookie = `${keys[i]}=0;expires=${new Date(
-          0
+          0,
         ).toUTCString()};path=/;`
       }
     }

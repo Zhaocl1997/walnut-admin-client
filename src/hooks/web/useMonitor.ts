@@ -7,7 +7,8 @@ interface sendBeaconData {
 const { httpUrl } = useAppEnv('proxy')
 
 export const sendBeacon = (data: sendBeaconData) => {
-  if (!fpId.value) return
+  if (!fpId.value)
+    return
 
   const userProfile = useAppStoreUserProfile()
   const userAuth = useAppStoreUserAuth()
@@ -23,7 +24,7 @@ export const sendBeacon = (data: sendBeaconData) => {
         userName: userProfile?.profile?.userName,
       }),
     ],
-    { type: 'application/json; charset=UTF-8' }
+    { type: 'application/json; charset=UTF-8' },
   )
 
   navigator.sendBeacon(`${httpUrl}/app/monitor/user`, blob)
@@ -43,7 +44,7 @@ export const useAppMonitor = () => {
     },
     {
       flush: 'post',
-    }
+    },
   )
 
   // leave
@@ -54,7 +55,7 @@ export const useAppMonitor = () => {
 
       sendBeacon({ focus: false, left: true })
     },
-    false
+    false,
   )
 
   // initial

@@ -1,26 +1,36 @@
+<script lang="ts" setup></script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'TestMainout',
+})
+</script>
+
 <template>
   <div class="mx-auto overflow-y-scroll h-screen p-4 lg:p-12">
     Hooks in `layout/default/index.vue` would not excute anymore, but those in
     `App/src/App.vue` still exists.
 
-    <br />
+    <br>
 
     Of course that these kind of pages can also achieved with `header`/`tabs`
     etc hidden.
 
-    <br />
+    <br>
 
     But as I said before the hooks in `layout/default/index.vue` would excute as
     well. You might not want those hooks to excute for this single alone page.
 
-    <br />
+    <br>
 
     So i think this is the use case.
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div class="p-4 lg:p-12 rounded-2xl overflow-hidden bg-blue-50">
         <div class="flex items-center text-blue-500">
-          <p class="text-sm font-bold uppercase">Feature 1 & Feature 2</p>
+          <p class="text-sm font-bold uppercase">
+            Feature 1 & Feature 2
+          </p>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +169,9 @@
 
       <div class="p-4 lg:p-12 rounded-2xl overflow-hidden bg-pink-50">
         <div class="flex items-center text-pink-500">
-          <p class="text-sm font-bold uppercase">Feature 3 & Feature 4</p>
+          <p class="text-sm font-bold uppercase">
+            Feature 3 & Feature 4
+          </p>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -312,7 +324,9 @@
 
       <div class="p-4 lg:p-12 rounded-2xl overflow-hidden bg-green-50">
         <div class="flex items-center text-green-500">
-          <p class="text-sm font-bold uppercase">Feature 5 & Feature 6</p>
+          <p class="text-sm font-bold uppercase">
+            Feature 5 & Feature 6
+          </p>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -429,7 +443,9 @@
 
       <div class="p-4 lg:p-12 rounded-2xl overflow-hidden bg-purple-50">
         <div class="flex items-center text-purple-500">
-          <p class="text-sm font-bold uppercase">Feature 7 & Feature 8</p>
+          <p class="text-sm font-bold uppercase">
+            Feature 7 & Feature 8
+          </p>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -634,11 +650,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup></script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'TestMainout',
-  })
-</script>

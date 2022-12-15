@@ -1,5 +1,5 @@
-import type { WHomeChartCardProps } from './components/types'
 import { getRandomInt } from 'easy-fns-ts'
+import type { WHomeChartCardProps } from './components/types'
 import echarts from '@/components/Vendor/Echarts/src/resources/onDemand'
 
 const onGetOption1 = (): EChartsOption => ({
@@ -255,11 +255,11 @@ export const useChartCard = () => {
   ])
 
   const onCallApi = (): Promise<any> => {
-    return new Promise((res) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
-        res({
+        resolve({
           option1: Array.from({ length: 5 }, () =>
-            Array.from({ length: 7 }, () => getRandomInt(0, 300))
+            Array.from({ length: 7 }, () => getRandomInt(0, 300)),
           ),
           option2: Array.from({ length: 5 }, () => getRandomInt(300, 1000)),
         })
@@ -268,7 +268,7 @@ export const useChartCard = () => {
   }
 
   const { pause, resume, isActive } = useIntervalFn(
-    async () => {
+    async (): Promise<void> => {
       loading.value = true
       const res = await onCallApi()
 
@@ -289,7 +289,7 @@ export const useChartCard = () => {
       loading.value = false
     },
     10000,
-    { immediate: true, immediateCallback: true }
+    { immediate: true, immediateCallback: true },
   )
 
   return { cards, loading }

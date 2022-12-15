@@ -36,7 +36,7 @@ export const AppRootRoute: RouteRecordRaw = {
 
 export const AppRedirectRoute: RouteRecordRaw = {
   name: constant.AppRedirectName,
-  path: constant.AppRedirectPath + '/:path(.*)',
+  path: `${constant.AppRedirectPath}/:path(.*)`,
   component: () => import('../../layout/default/TheRedirect/index.vue'),
 }
 

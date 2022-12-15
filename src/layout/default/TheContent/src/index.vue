@@ -1,3 +1,14 @@
+<script lang="ts" setup>
+const appMenu = useAppStoreMenu()
+const appSetting = useAppStoreSetting()
+
+const getKeepAliveInclude = computed(() => {
+  if (!appSetting.app.keepAlive)
+    return []
+  return appMenu.keepAliveRouteNames
+})
+</script>
+
 <template>
   <router-view v-slot="{ Component, route }">
     <w-transition :name="appSetting.getTransition" mode="out-in" appear>
@@ -5,20 +16,10 @@
         v-if="appSetting.app.keepAlive"
         :include="getKeepAliveInclude"
       >
-        <component :is="Component" :key="route.fullPath"></component>
+        <component :is="Component" :key="route.fullPath" />
       </keep-alive>
 
-      <component v-else :is="Component" :key="route.fullPath"></component>
+      <component :is="Component" v-else :key="route.fullPath" />
     </w-transition>
   </router-view>
 </template>
-
-<script lang="ts" setup>
-  const appMenu = useAppStoreMenu()
-  const appSetting = useAppStoreSetting()
-
-  const getKeepAliveInclude = computed(() => {
-    if (!appSetting.app.keepAlive) return []
-    return appMenu.keepAliveRouteNames
-  })
-</script>

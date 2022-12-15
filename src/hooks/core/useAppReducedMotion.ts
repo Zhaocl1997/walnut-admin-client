@@ -9,7 +9,7 @@ export const useAppReducedMotion = () => {
     },
     {
       immediate: true,
-    }
+    },
   )
 
   watchEffect(() => {

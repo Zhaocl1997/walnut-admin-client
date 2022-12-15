@@ -1,3 +1,20 @@
+<script lang="ts" setup>
+import WHomeNumberCard from './components/NumberCard.vue'
+import WHomeChartCard from './components/ChartCard.vue'
+
+import { useNumberCard } from './useNumberCard'
+import { useChartCard } from './useChartCard'
+
+const { cards: numberCards, loading: numberCardLoading } = useNumberCard()
+const { cards: chartCards, loading: chartCardLoading } = useChartCard()
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'Homepage',
+})
+</script>
+
 <template>
   <div>
     <!-- number -->
@@ -11,7 +28,7 @@
           <WHomeNumberCard
             v-bind="item"
             :loading="numberCardLoading"
-          ></WHomeNumberCard>
+          />
         </div>
       </w-transition>
     </div>
@@ -27,29 +44,12 @@
           <WHomeChartCard
             v-bind="item"
             :loading="chartCardLoading"
-          ></WHomeChartCard>
+          />
         </div>
       </w-transition>
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  import WHomeNumberCard from './components/NumberCard.vue'
-  import WHomeChartCard from './components/ChartCard.vue'
-
-  import { useNumberCard } from './useNumberCard'
-  import { useChartCard } from './useChartCard'
-
-  const { cards: numberCards, loading: numberCardLoading } = useNumberCard()
-  const { cards: chartCards, loading: chartCardLoading } = useChartCard()
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'Homepage',
-  })
-</script>
 
 <style scoped>
   :deep(.w-card > .w-card-header) {

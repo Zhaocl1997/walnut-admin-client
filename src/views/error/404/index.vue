@@ -1,3 +1,17 @@
+<script lang="ts" setup>
+const appMenu = useAppStoreMenu()
+
+const onClick = async () => {
+  await appMenu.goIndex()
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'App404',
+})
+</script>
+
 <template>
   <div
     class="flex h-[calc(100vh-80px)] items-center justify-center p-5 bg-bodyColor w-full"
@@ -16,7 +30,7 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-            ></path>
+            />
           </svg>
         </div>
       </div>
@@ -32,19 +46,5 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  const appMenu = useAppStoreMenu()
-
-  const onClick = async () => {
-    await appMenu.goIndex()
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'App404',
-  })
-</script>
 
 <style lang="scss" scoped></style>

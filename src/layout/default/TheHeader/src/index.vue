@@ -1,8 +1,28 @@
+<script lang="ts" setup>
+import TheMenu from '../../TheAside/src/menu.vue'
+import TheLogo from '../../TheAside/src/logo.vue'
+import HeaderBreadCrumb from './breadcrumb.vue'
+import HeaderCollapse from './collapse.vue'
+import HeaderDropdown from './dropdown.vue'
+
+const appSetting = useAppStoreSetting()
+const appAdapter = useAppStoreAdapter()
+const appMenu = useAppStoreMenu()
+
+const { title: AppTitle } = useAppEnv('title')
+
+const { isFullscreen, toggle } = useFullscreen()
+
+const onShowAside = () => {
+  appMenu.setShowAside(true)
+}
+</script>
+
 <template>
   <w-transition appear :name="appSetting.getHeaderTransition">
     <n-layout-header
-      :id="appSetting.getHeaderId"
       v-if="appSetting.getHeaderShow"
+      :id="appSetting.getHeaderId"
       bordered
       :inverted="appSetting.getHeaderInverted"
       :style="{
@@ -23,12 +43,12 @@
             :alt="`${AppTitle} Logo`"
             class="h-9 w-9 m-1"
             @click="onShowAside"
-          />
+          >
 
           <template v-else>
-            <HeaderCollapse></HeaderCollapse>
+            <HeaderCollapse />
 
-            <HeaderBreadCrumb></HeaderBreadCrumb>
+            <HeaderBreadCrumb />
           </template>
 
           <!-- <w-transition name="slide-up">
@@ -44,53 +64,32 @@
 
         <!-- right -->
         <div
-          :class="[
-            'hstack justify-end space-x-2 h-full',
+          class="hstack justify-end space-x-2 h-full" :class="[
             { 'space-x-1': appAdapter.isMobile },
           ]"
           w:children="cursor-pointer flex items-center px-0.5 h-full"
         >
           <WAppFullScreen
-            id="walnut-fullscreen"
-            :isFullscreen="isFullscreen"
-            :click-event="toggle"
             v-if="!appAdapter.isMobile && appSetting.header.fullscreen"
-          ></WAppFullScreen>
+            id="walnut-fullscreen"
+            :is-fullscreen="isFullscreen"
+            :click-event="toggle"
+          />
 
-          <WAppLock id="walnut-lock" v-if="appSetting.getLockStatus"></WAppLock>
+          <WAppLock v-if="appSetting.getLockStatus" id="walnut-lock" />
 
           <WAppSearch
-            id="walnut-search"
             v-if="appSetting.header.search"
-          ></WAppSearch>
+            id="walnut-search"
+          />
 
-          <WAppLocalePicker id="walnut-locale"></WAppLocalePicker>
+          <WAppLocalePicker id="walnut-locale" />
 
-          <WAppDarkMode id="walnut-dark"></WAppDarkMode>
+          <WAppDarkMode id="walnut-dark" />
 
-          <HeaderDropdown></HeaderDropdown>
+          <HeaderDropdown />
         </div>
       </div>
     </n-layout-header>
   </w-transition>
 </template>
-
-<script lang="ts" setup>
-  import HeaderBreadCrumb from './breadcrumb.vue'
-  import HeaderCollapse from './collapse.vue'
-  import HeaderDropdown from './dropdown.vue'
-  import TheMenu from '../../TheAside/src/menu.vue'
-  import TheLogo from '../../TheAside/src/logo.vue'
-
-  const appSetting = useAppStoreSetting()
-  const appAdapter = useAppStoreAdapter()
-  const appMenu = useAppStoreMenu()
-
-  const { title: AppTitle } = useAppEnv('title')
-
-  const { isFullscreen, toggle } = useFullscreen()
-
-  const onShowAside = () => {
-    appMenu.setShowAside(true)
-  }
-</script>

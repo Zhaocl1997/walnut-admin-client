@@ -1,7 +1,7 @@
 import type { WTree } from '../types'
 
 export const useTree = <T = RowData>(
-  props: WTree.Props<T>
+  props: WTree.Props<T>,
 ): WTree.Hook.useTree<T> => {
   isInSetup()
 
@@ -16,7 +16,7 @@ export const useTree = <T = RowData>(
   }
 
   const methods: WTree.Inst.WTreeInst<T> = {
-    setProps: (props) => wTreeRef.value?.setProps(props),
+    setProps: props => wTreeRef.value?.setProps(props),
   }
 
   return [register, methods]

@@ -1,11 +1,11 @@
-import { IconBundleConfig } from './config'
 import { generateIconUsedBundle } from '../generate/icon-bundle'
 import { generateIconBundleImport } from '../generate/icon-import'
-import { generateIconList, cleanArr } from '../generate/icon-list'
+import { cleanArr, generateIconList } from '../generate/icon-list'
 import { generateIconsUsed } from '../generate/icon-scan'
 import { generateIconSvg } from '../generate/icon-svg'
 import { generateIconDevBundle } from '../generate/icon-bundle-dev'
-;(async () => {
+import { IconBundleConfig } from './config'
+(async () => {
   const arg = process.argv.slice(-1)[0]
 
   // always excute the custom svg bundle logic
@@ -19,7 +19,8 @@ import { generateIconDevBundle } from '../generate/icon-bundle-dev'
   if (arg === 'dev') {
     // when dev, just import json from `node_modules` and call `addCollection` api
     await generateIconDevBundle()
-  } else {
+  }
+  else {
     // below handle prod logic
     // handle on demand usage
     if (IconBundleConfig.treeshake) {
@@ -27,10 +28,10 @@ import { generateIconDevBundle } from '../generate/icon-bundle-dev'
       await generateIconsUsed()
 
       // bundle used, and offline usage, need to call `addCollections` api
-      if (!IconBundleConfig.online) {
+      if (!IconBundleConfig.online)
         await generateIconUsedBundle()
-      }
-    } else {
+    }
+    else {
       // offline usage and not on demand bundle
       // this is the MOST unrecommended way to bundle icon
       // if you choose 4 or 5 collections, the bundle icon file size woulb increase to 10m

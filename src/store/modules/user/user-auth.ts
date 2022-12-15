@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 
-import { refreshToken, authWithPwd, signout } from '@/api/auth'
+import { StoreKeys } from '../../constant'
+import { store } from '../../pinia'
+import { authWithPwd, refreshToken, signout } from '@/api/auth'
 import { authWithEmail } from '@/api/auth/email'
 import { AppCoreFn1 } from '@/core'
 
-import { StoreKeys } from '../../constant'
-import { store } from '../../pinia'
 import { authWithPhoneNumber } from '@/api/auth/phone'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
@@ -77,16 +77,15 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       })
 
       // excute core fn
-      this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
+      await this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
 
       const { userName, password, rememberMe } = payload
 
       // remember me
-      if (rememberMe) {
+      if (rememberMe)
         this.setRemember({ userName, password })
-      } else {
+      else
         this.setRemember(undefined)
-      }
     },
 
     /**
@@ -96,7 +95,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const res = await authWithEmail(payload)
 
       // excute core fn
-      this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
+      await this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
     },
 
     /**
@@ -106,7 +105,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const res = await authWithPhoneNumber(payload)
 
       // excute core fn
-      this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
+      await this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
     },
 
     /**
@@ -139,9 +138,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       // send beacon request
       sendBeacon({ focus: true, left: false })
 
-      useTimeoutFn(() => {
+      useTimeoutFn(async () => {
         // push to signin page
-        useAppRouterPush({ name: AppAuthName })
+        await useAppRouterPush({ name: AppAuthName })
       }, 200)
     },
   },
@@ -150,6 +149,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 const useAppStoreUserAuthOutside = () => useAppStoreUserAuthInside(store)
 
 export const useAppStoreUserAuth = () => {
-  if (getCurrentInstance()) return useAppStoreUserAuthInside()
+  if (getCurrentInstance())
+    return useAppStoreUserAuthInside()
   return useAppStoreUserAuthOutside()
 }

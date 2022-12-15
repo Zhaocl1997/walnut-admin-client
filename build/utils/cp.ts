@@ -9,7 +9,8 @@ export const BuildUtilsExec = async (file: string) => {
 
   BuildUtilsLog(stdout)
 
-  if (stderr) return false
+  if (stderr)
+    return false
 
   return true
 }

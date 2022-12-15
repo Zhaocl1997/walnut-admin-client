@@ -1,4 +1,4 @@
-import { isUndefined, isEmpty } from 'lodash-es'
+import { isEmpty, isUndefined } from 'lodash-es'
 
 import { AppCoreFn1 } from '@/core'
 import { _confirm_leave_map_ } from '@/store/modules/app/app-tab'
@@ -20,7 +20,8 @@ export const createAuthGuard = (router: Router) => {
       _confirm_leave_map_.set(to.name, false)
 
       // if the old event listener not removed, remove it
-      if (removeEvent) removeEvent()
+      if (removeEvent)
+        removeEvent()
 
       removeEvent = useEventListener('beforeunload', (e) => {
         e.preventDefault()
@@ -33,10 +34,10 @@ export const createAuthGuard = (router: Router) => {
     // ask user for confirm
     // also remember to remove the unload event to make sure this only work on the `leaveTip` page
     if (
-      from.meta.leaveTip &&
-      to.name !== from.name &&
-      (_confirm_leave_map_.get(from.name) === undefined ||
-        _confirm_leave_map_.get(from.name) === false)
+      from.meta.leaveTip
+      && to.name !== from.name
+      && (_confirm_leave_map_.get(from.name) === undefined
+        || _confirm_leave_map_.get(from.name) === false)
     ) {
       const res = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,
@@ -89,9 +90,9 @@ export const createAuthGuard = (router: Router) => {
 
     // handle lock logic
     if (
-      AppRouter.hasRoute(AppLockName) &&
-      appLock.isLock &&
-      appLock.lockRoute
+      AppRouter.hasRoute(AppLockName)
+      && appLock.isLock
+      && appLock.lockRoute
     ) {
       if (to.name !== AppLockName) {
         next({
@@ -102,13 +103,11 @@ export const createAuthGuard = (router: Router) => {
     }
 
     // Get user info
-    if (isEmpty(userProfile.profile)) {
+    if (isEmpty(userProfile.profile))
       await userProfile.getProfile()
-    }
 
-    if (isEmpty(appKey.baiduAK)) {
+    if (isEmpty(appKey.baiduAK))
       await appKey.getSecretKeys()
-    }
 
     // Got menus, next and return
     if (appMenu.menus && appMenu.menus.length !== 0) {

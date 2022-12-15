@@ -59,13 +59,14 @@ const useAppStoreSettingBackendInside = defineStore(
         this.auth = res
       },
     },
-  }
+  },
 )
 
 const useAppStoreSettingBackendOutside = () =>
   useAppStoreSettingBackendInside(store)
 
 export const useAppStoreSettingBackend = () => {
-  if (getCurrentInstance()) return useAppStoreSettingBackendInside()
+  if (getCurrentInstance())
+    return useAppStoreSettingBackendInside()
   return useAppStoreSettingBackendOutside()
 }

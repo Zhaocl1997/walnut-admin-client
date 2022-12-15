@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
+import { upperFirst } from 'easy-fns-ts'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 import { getUserInfo } from '@/api/auth'
-import { upperFirst } from 'easy-fns-ts'
 
 const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
   state: (): UserProfileState => ({
@@ -14,7 +14,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
   getters: {
     getDisplayName(): string {
       return upperFirst(
-        (this.profile?.nickName! ?? this.profile?.userName!) || ''
+        (this.profile?.nickName! ?? this.profile?.userName!) || '',
       )
     },
 
@@ -54,6 +54,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
 const useAppStoreUserProfileOutside = () => useAppStoreUserProfileInside(store)
 
 export const useAppStoreUserProfile = () => {
-  if (getCurrentInstance()) return useAppStoreUserProfileInside()
+  if (getCurrentInstance())
+    return useAppStoreUserProfileInside()
   return useAppStoreUserProfileOutside()
 }

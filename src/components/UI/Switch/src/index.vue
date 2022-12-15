@@ -1,24 +1,24 @@
 <script lang="tsx">
-  import type { WSwitchProps } from './types'
+import type { WSwitchProps } from './types'
 
-  import { props } from './props'
+import { props } from './props'
 
-  export default defineComponent({
-    name: 'WSwitch',
+export default defineComponent({
+  name: 'WSwitch',
 
-    props,
+  props,
 
-    emits: [],
+  emits: [],
 
-    setup(props: WSwitchProps, { attrs, slots, emit, expose }) {
-      return () => (
+  setup(props: WSwitchProps, { attrs, slots, emit, expose }) {
+    return () => (
         <n-switch>
           {{
             checked: () => props.checkedText,
             unchecked: () => props.uncheckedText,
           }}
         </n-switch>
-      )
-    },
-  })
+    )
+  },
+})
 </script>

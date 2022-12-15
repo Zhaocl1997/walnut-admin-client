@@ -1,3 +1,32 @@
+<script lang="ts" setup>
+const p1 = 'some:strange:permission:string'
+const p2 = 'some:strange:permission:string2'
+const p3 = 'some:strange:permission:string3'
+
+const p3show = ref(true)
+
+const userPermission = useAppStoreUserPermission()
+
+const onToggle = (s: string) => {
+  userPermission.togglePermission(s)
+}
+
+const onReset = () => {
+  p3show.value = false
+  nextTick(() => {
+    p3show.value = true
+  })
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'AuthorizeDemo',
+
+  defaultView: false,
+})
+</script>
+
 <template>
   <w-demo-card title="Authorize Component">
     <n-list>
@@ -9,25 +38,31 @@
           `null` preset
         </w-title>
 
-        <br />
+        <br>
 
-        <w-JSON height="70px" :value="{ permission1: p1 }"></w-JSON>
+        <w-JSON height="70px" :value="{ permission1: p1 }" />
 
-        <br />
+        <br>
 
         <n-text> Below is something you can see </n-text>
-        <br />
+        <br>
         <w-app-authorize value="system:user:list">
-          <n-text type="primary"> This is something you can see </n-text>
+          <n-text type="primary">
+            This is something you can see
+          </n-text>
         </w-app-authorize>
 
-        <br />
+        <br>
 
         <n-text> Below is something you can't see </n-text>
-        <n-button text type="info" @click="onToggle(p1)"> Toggle </n-button>
-        <br />
+        <n-button text type="info" @click="onToggle(p1)">
+          Toggle
+        </n-button>
+        <br>
         <w-app-authorize :value="p1">
-          <n-text type="primary"> This is something you can't see </n-text>
+          <n-text type="primary">
+            This is something you can't see
+          </n-text>
         </w-app-authorize>
       </n-list-item>
 
@@ -39,15 +74,17 @@
           `tip` preset
         </w-title>
 
-        <br />
+        <br>
 
-        <w-JSON height="70px" :value="{ permission2: p2 }"></w-JSON>
+        <w-JSON height="70px" :value="{ permission2: p2 }" />
 
-        <br />
+        <br>
 
-        <n-button text type="info" @click="onToggle(p2)"> Toggle </n-button>
+        <n-button text type="info" @click="onToggle(p2)">
+          Toggle
+        </n-button>
 
-        <br />
+        <br>
 
         <w-app-authorize
           :value="p2"
@@ -75,13 +112,15 @@
           `input-permission-to-confirm` preset
         </w-title>
 
-        <br />
+        <br>
 
-        <w-JSON height="70px" :value="{ permission3: p3 }"></w-JSON>
+        <w-JSON height="70px" :value="{ permission3: p3 }" />
 
-        <br />
+        <br>
 
-        <n-button text type="info" @click="onReset"> Reset </n-button>
+        <n-button text type="info" @click="onReset">
+          Reset
+        </n-button>
 
         <w-app-authorize
           v-if="p3show"
@@ -105,35 +144,6 @@
     </n-list>
   </w-demo-card>
 </template>
-
-<script lang="ts" setup>
-  const p1 = 'some:strange:permission:string'
-  const p2 = 'some:strange:permission:string2'
-  const p3 = 'some:strange:permission:string3'
-
-  const p3show = ref(true)
-
-  const userPermission = useAppStoreUserPermission()
-
-  const onToggle = (s: string) => {
-    userPermission.togglePermission(s)
-  }
-
-  const onReset = () => {
-    p3show.value = false
-    nextTick(() => {
-      p3show.value = true
-    })
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'AuthorizeDemo',
-
-    defaultView: false,
-  })
-</script>
 
 <style scoped>
   :deep(.w-h) {

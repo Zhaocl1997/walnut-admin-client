@@ -1,23 +1,23 @@
 import type {
-  SorterMultiple,
   SortState,
+  SorterMultiple,
   TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
+import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
+import { cloneDeep } from 'lodash-es'
 import type { WTable } from '../types'
 
-import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
 import {
   generateBaseListParams,
   generateDefaultSortParams,
   generateSortParams,
 } from '../utils'
 import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'
-import { cloneDeep } from 'lodash-es'
 
 export const useTableAPI = (
   inst: Ref<WTable.Inst.NDataTableInst | undefined>,
   props: ComputedRef<WTable.Props>,
-  setProps: WTable.SetProps
+  setProps: WTable.SetProps,
 ) => {
   const { t } = useAppI18n()
   const userPermission = useAppStoreUserPermission()
@@ -55,14 +55,14 @@ export const useTableAPI = (
 
     if (params.sort?.length === 0) {
       params.sort = generateSortParams(
-        generateDefaultSortParams(props.value.columns!)
+        generateDefaultSortParams(props.value.columns!),
       )
     }
 
     // is got `onBeforeRequest`, then excute it and set query value
     if (isFunction(props?.value?.apiProps?.onBeforeRequest!)) {
       params.query = props?.value?.apiProps?.onBeforeRequest!(
-        cloneDeep(params.query)
+        cloneDeep(params.query),
       )
     }
 
@@ -72,9 +72,9 @@ export const useTableAPI = (
       total.value = res.total
 
       setProps({
-        data: res.data!,
+        data: res.data,
         pagination: {
-          itemCount: res.total!,
+          itemCount: res.total,
           page: ApiTableListParams.value.page?.page,
           pageSize: ApiTableListParams.value.page?.pageSize,
           showSizePicker: true,
@@ -93,7 +93,8 @@ export const useTableAPI = (
           prefix: () => t('comp.pagination.total', { total: res.total }),
         },
       })
-    } finally {
+    }
+    finally {
       setProps({ loading: false })
     }
   }
@@ -110,19 +111,18 @@ export const useTableAPI = (
   // api deleteMany (default)
   const onApiTableDeleteMany = async () => {
     const ret = await props.value.apiProps?.deleteManyApi!(
-      checkedRowKeys.value.join(',')
+      checkedRowKeys.value.join(','),
     )
 
     if (ret) {
       useAppMsgSuccess()
 
       if (
-        ApiTableListParams.value.page!.page! *
-          ApiTableListParams.value.page!.pageSize! >
-        total.value - checkedRowKeys.value.length
-      ) {
+        ApiTableListParams.value.page!.page!
+          * ApiTableListParams.value.page!.pageSize!
+        > total.value - checkedRowKeys.value.length
+      )
         ApiTableListParams.value.page!.page = 1
-      }
 
       await onApiTableList()
 
@@ -153,12 +153,12 @@ export const useTableAPI = (
       setProps({ remote: true })
 
       if (
-        !isUndefined(props.value.queryFormProps) &&
-        !isUndefined(props.value.queryFormProps?.schemas!)
+        !isUndefined(props.value.queryFormProps)
+        && !isUndefined(props.value.queryFormProps?.schemas!)
       ) {
         // need to initial query form data based on schemas
         const defaultQueryFormData = extractDefaultFormDataFromSchemas(
-          props.value.queryFormProps?.schemas!
+          props.value.queryFormProps?.schemas!,
         )
 
         // set default value to query
@@ -170,13 +170,13 @@ export const useTableAPI = (
 
       if (
         props.value.columns!.some(
-          (i) => (i as TableBaseColumn).defaultSortOrder
+          i => (i as TableBaseColumn).defaultSortOrder,
         )
       ) {
-        // @ts-ignore
+        // @ts-expect-error
         // TODO sort two types
         ApiTableListParams.value.sort = generateDefaultSortParams(
-          props.value.columns!
+          props.value.columns!,
         )
 
         // commit change, make this version a default version
@@ -189,8 +189,8 @@ export const useTableAPI = (
 
   const handleSelectionColumn = () => {
     if (
-      props.value.columns?.map((i) => i.type).includes('selection') &&
-      isFunction(props?.value?.apiProps?.deleteManyApi!)
+      props.value.columns?.map(i => i.type).includes('selection')
+      && isFunction(props?.value?.apiProps?.deleteManyApi!)
     ) {
       setProps({
         onUpdateCheckedRowKeys: (rowKeys: StringOrNumber[]) => {
@@ -204,17 +204,18 @@ export const useTableAPI = (
     if (
       props.value.columns
         ?.map(
-          (i) =>
-            (i as unknown as SortState).sorter === true ||
-            isNumber(
-              ((i as unknown as SortState).sorter as SorterMultiple)?.multiple
-            )
+          i =>
+            (i as unknown as SortState).sorter === true
+            || isNumber(
+              ((i as unknown as SortState).sorter as SorterMultiple)?.multiple,
+            ),
         )
         .filter(Boolean).length !== 0
     ) {
       setProps({
         onUpdateSorter: async (p) => {
-          if (!p) return
+          if (!p)
+            return
           ApiTableListParams.value.sort = p
           await onApiTableList()
         },
@@ -223,12 +224,12 @@ export const useTableAPI = (
   }
 
   const handleDictFilter = () => {
-    if (props.value.columns?.some((i) => i.filter === true)) {
+    if (props.value.columns?.some(i => i.filter === true)) {
       setProps({
         onUpdateFilters: async (filters) => {
           ApiTableListParams.value.query = Object.assign(
             ApiTableListParams.value.query,
-            filters
+            filters,
           )
 
           await onApiTableList()

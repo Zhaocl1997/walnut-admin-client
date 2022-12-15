@@ -7,7 +7,7 @@ export const useAppStorage = <T>(
   key: string,
   initialValue: MaybeComputedRef<T>,
   expire: number = +persist! * 1000,
-  storage = localStorage
+  storage = localStorage,
 ) => {
   const wholeKey = `${storagePrefix}__${key
     .replaceAll('-', '_')
@@ -17,10 +17,11 @@ export const useAppStorage = <T>(
   return useStorage<T>(wholeKey, initialValue, storage, {
     serializer: {
       read: (val) => {
-        if (!val) return null
+        if (!val)
+          return null
 
         const decryptValue = JSON.parse(
-          encrypt ? AppPersistEncryption.decrypt(val) : val
+          encrypt ? AppPersistEncryption.decrypt(val) : val,
         )
 
         if (!decryptValue) {
@@ -34,7 +35,8 @@ export const useAppStorage = <T>(
         // or exipre is Infinity
         if (new Date().getTime() <= e || !e) {
           return v
-        } else {
+        }
+        else {
           storage.removeItem(wholeKey)
           return null
         }

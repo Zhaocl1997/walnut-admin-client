@@ -1,18 +1,13 @@
 import type {
-  GridItemProps,
-  FormItemProps,
-  FormInst,
-  SliderProps,
   DynamicInputProps,
-  TreeSelectProps,
+  FormInst,
+  FormItemProps,
   FormItemRule,
+  GridItemProps,
+  SliderProps,
+  TreeSelectProps,
 } from 'naive-ui'
 import type { RuleType } from 'node_modules/.pnpm/async-validator@4.0.7/node_modules/async-validator/dist-types/interface'
-
-import type { WTransitionProps } from '@/components/Extra/Transition'
-import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
-import type { WLocaleSelectProps } from '@/components/Advanced/LocaleSelect'
-import type { useEventParams } from '@/hooks/component/useEvent'
 
 import type { WButtonProps } from '../../Button'
 import type { WButtonGroupProps } from '../../ButtonGroup'
@@ -31,14 +26,18 @@ import type { WColorPickerProps } from '../../ColorPicker'
 import type { WDescriptionsItem } from '../../Descriptions'
 
 import type { WFormPropType } from './props'
-import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
-import type { WPasswordProps } from '@/components/Extra/Password'
-import type { WSMSInputProps } from '@/components/Extra/SMSInput'
 import type {
   WFormItemDictProps,
   WFormItemDividerProps,
   WFormItemQueryProps,
 } from './components/Extend/types'
+import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
+import type { WPasswordProps } from '@/components/Extra/Password'
+import type { WSMSInputProps } from '@/components/Extra/SMSInput'
+import type { useEventParams } from '@/hooks/component/useEvent'
+import type { WLocaleSelectProps } from '@/components/Advanced/LocaleSelect'
+import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
+import type { WTransitionProps } from '@/components/Extra/Transition'
 
 export const BUILTIN_FORM_TYPE = [
   'Button',
@@ -65,7 +64,7 @@ export declare namespace WForm {
 
   type DictComponentType = 'select' | 'checkbox' | 'radio'
 
-  type FinishLoading = { done: Fn }
+  interface FinishLoading { done: Fn }
 
   type onFinishFormLoadingCallback = Fn<FinishLoading, void | Promise<void>>
 
@@ -89,7 +88,7 @@ export declare namespace WForm {
   namespace Hook {
     type useFormReturnType = [
       (instance: Inst.WFormInst) => void,
-      Pick<Inst.WFormInst, 'validate' | 'restoreValidation' | 'onOpen'>
+      Pick<Inst.WFormInst, 'validate' | 'restoreValidation' | 'onOpen'>,
     ]
   }
 
@@ -172,9 +171,7 @@ export declare namespace WForm {
     }
 
     interface DynamicSchemaItemProps<
-      T extends keyof ComponentPropPool,
-      D,
-      EP = any
+      T extends keyof ComponentPropPool, D, EP = any,
     > {
       /**
        * @description internal flag to control show
@@ -184,14 +181,14 @@ export declare namespace WForm {
       type: T
 
       componentProp?: ComponentPropPool<D>[T] &
-        DomProps & {
-          /**
+      DomProps & {
+        /**
            * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
            */
-          defaultValue?: BaseDataType | BaseDataType[] | undefined | null
+        defaultValue?: BaseDataType | BaseDataType[] | undefined | null
 
-          placeholder?: string
-        }
+        placeholder?: string
+      }
 
       formProp?: Omit<FormItemProps, 'rule' | 'label'> & {
         /**

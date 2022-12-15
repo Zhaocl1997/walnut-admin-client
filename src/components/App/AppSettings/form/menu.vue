@@ -1,172 +1,172 @@
-<template>
-  <w-form @hook="register" :model="menuRelatives"></w-form>
-</template>
-
 <script lang="ts" setup>
-  import { modalColor, getCanAnimate } from '../shared'
+import { getCanAnimate, modalColor } from '../shared'
 
-  const appMenu = useAppStoreMenu()
-  const appDark = useAppStoreDark()
+const appMenu = useAppStoreMenu()
+const appDark = useAppStoreDark()
 
-  const appSetting = useAppStoreSetting()
+const appSetting = useAppStoreSetting()
 
-  const menuRelatives = appSetting.menu
+const menuRelatives = appSetting.menu
 
-  const [register] = useForm<typeof menuRelatives>({
-    localeUniqueKey: 'app.settings.menu',
-    showFeedback: false,
-    xGap: 0,
-    formItemClass: 'flex flex-row justify-between mb-2',
-    formItemComponentClass: '!w-32 flex justify-end',
-    size: 'small',
-    disabled: computed(() => !menuRelatives.status),
-    schemas: [
-      {
-        type: 'Extend:Divider',
-        componentProp: {
-          title: 'app.settings.menu',
-          prefix: 'bar',
-          titlePlacement: 'left',
-          foldable: true,
-        },
-        extraProp: {
-          sticky: true,
-          bgColor: modalColor,
-        },
+const [register] = useForm<typeof menuRelatives>({
+  localeUniqueKey: 'app.settings.menu',
+  showFeedback: false,
+  xGap: 0,
+  formItemClass: 'flex flex-row justify-between mb-2',
+  formItemComponentClass: '!w-32 flex justify-end',
+  size: 'small',
+  disabled: computed(() => !menuRelatives.status),
+  schemas: [
+    {
+      type: 'Extend:Divider',
+      componentProp: {
+        title: 'app.settings.menu',
+        prefix: 'bar',
+        titlePlacement: 'left',
+        foldable: true,
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'status',
-        },
-        componentProp: {
-          disabled: false,
-        },
+      extraProp: {
+        sticky: true,
+        bgColor: modalColor,
       },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'id',
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'status',
       },
-      {
-        type: 'Extend:TransitionSelect',
-        formProp: {
-          path: 'transition',
-        },
-        componentProp: {
-          disabled: computed(
-            () => !menuRelatives.status || getCanAnimate.value
-          ),
-          tooltip: true,
-        },
+      componentProp: {
+        disabled: false,
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'inverted',
-        },
-        componentProp: {
-          disabled: computed(() => !menuRelatives.status || appDark.isDark),
-        },
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'id',
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'width',
-        },
-        componentProp: {
-          step: 1,
-          min: 0,
-          suffix: 'px',
-          showButton: false,
-          precision: 0,
-          disabled: computed(() => !menuRelatives.status || appMenu.collapse),
-        },
+    },
+    {
+      type: 'Extend:TransitionSelect',
+      formProp: {
+        path: 'transition',
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'accordion',
-        },
+      componentProp: {
+        disabled: computed(
+          () => !menuRelatives.status || getCanAnimate.value,
+        ),
+        tooltip: true,
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'iconSize',
-        },
-        componentProp: {
-          step: 1,
-          min: 0,
-          suffix: 'px',
-          showButton: false,
-          precision: 0,
-          disabled: computed(() => !menuRelatives.status || appMenu.collapse),
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'inverted',
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'indent',
-        },
-        componentProp: {
-          step: 1,
-          min: 0,
-          suffix: 'px',
-          showButton: false,
-          precision: 0,
-          disabled: computed(() => !menuRelatives.status || appMenu.collapse),
-        },
+      componentProp: {
+        disabled: computed(() => !menuRelatives.status || appDark.isDark),
       },
-      {
-        type: 'Base:Switch',
-        formProp: {
-          path: 'collapseStatus',
-        },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'width',
       },
-      {
-        type: 'Base:Select',
-        formProp: {
-          path: 'collapseMode',
-        },
-        componentProp: {
-          options: Object.values(AppConstCollapseMode).map((i) => ({
-            value: i,
-            label: i,
-          })),
-          disabled: computed(
-            () => !menuRelatives.status || !menuRelatives.collapseStatus
-          ),
-        },
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
+        disabled: computed(() => !menuRelatives.status || appMenu.collapse),
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'collapsedIconSize',
-        },
-        componentProp: {
-          step: 1,
-          min: 0,
-          suffix: 'px',
-          showButton: false,
-          precision: 0,
-          disabled: computed(() => !menuRelatives.status || !appMenu.collapse),
-        },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'accordion',
       },
-      {
-        type: 'Base:InputNumber',
-        formProp: {
-          path: 'collapsedWidth',
-        },
-        componentProp: {
-          step: 1,
-          min: 0,
-          suffix: 'px',
-          showButton: false,
-          precision: 0,
-          disabled: computed(() => !menuRelatives.status || !appMenu.collapse),
-        },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'iconSize',
       },
-    ],
-  })
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
+        disabled: computed(() => !menuRelatives.status || appMenu.collapse),
+      },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'indent',
+      },
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
+        disabled: computed(() => !menuRelatives.status || appMenu.collapse),
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'collapseStatus',
+      },
+    },
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'collapseMode',
+      },
+      componentProp: {
+        options: Object.values(AppConstCollapseMode).map(i => ({
+          value: i,
+          label: i,
+        })),
+        disabled: computed(
+          () => !menuRelatives.status || !menuRelatives.collapseStatus,
+        ),
+      },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'collapsedIconSize',
+      },
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
+        disabled: computed(() => !menuRelatives.status || !appMenu.collapse),
+      },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'collapsedWidth',
+      },
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
+        disabled: computed(() => !menuRelatives.status || !appMenu.collapse),
+      },
+    },
+  ],
+})
 </script>
+
+<template>
+  <w-form :model="menuRelatives" @hook="register" />
+</template>

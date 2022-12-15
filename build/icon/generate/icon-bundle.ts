@@ -10,28 +10,28 @@
  * This example uses Iconify Tools to import and clean up icons.
  * For Iconify Tools documentation visit https://docs.iconify.design/tools/tools2/
  */
-import type { IconifyJSON, IconifyMetaData } from '@iconify/types'
 
 import { promises as fs } from 'node:fs'
 import { dirname } from 'node:path'
+import type { IconifyJSON, IconifyMetaData } from '@iconify/types'
 
 // Installation: npm install --save-dev @iconify/tools @iconify/utils @iconify/json @iconify/iconify
 import {
-  importDirectory,
   cleanupSVG,
-  parseColors,
+  importDirectory,
   isEmptyColor,
+  parseColors,
   runSVGO,
 } from '@iconify/tools'
-import { getIcons, stringToIcon, minifyIconSet } from '@iconify/utils'
+import { getIcons, minifyIconSet, stringToIcon } from '@iconify/utils'
 
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
 import {
   IconLog,
   WSvgPrefix,
   iconBundlePath,
-  iconSVGPath,
   iconListPath,
+  iconSVGPath,
 } from '../src'
 
 /**
@@ -86,7 +86,7 @@ export const generateIconUsedBundle = async () => {
   const iconPools = await BuildUtilsReadFile(iconListPath)
 
   const allIconsArr = Array.from<string>(
-    JSON.parse(iconPools.replace('export default ', ''))
+    JSON.parse(iconPools.replace('export default ', '')),
   )
 
   const sources: BundleScriptConfig = {
@@ -125,8 +125,8 @@ export const generateIconUsedBundle = async () => {
   }
 
   let bundle = CommonJS
-    ? "const { addCollection } = require('" + component + "');\n\n"
-    : "import { addCollection } from '" + component + "';\n\n"
+    ? `const { addCollection } = require('${component}');\n\n`
+    : `import { addCollection } from '${component}';\n\n`
 
   // Create directory for output if missing
   const dir = dirname(target)
@@ -134,7 +134,8 @@ export const generateIconUsedBundle = async () => {
     await fs.mkdir(dir, {
       recursive: true,
     })
-  } catch (err) {
+  }
+  catch (err) {
     //
   }
 
@@ -153,7 +154,8 @@ export const generateIconUsedBundle = async () => {
           filename,
           icons: organizedList[prefix],
         })
-      } else {
+      }
+      else {
         sourcesJSON.push({
           filename: iconSVGPath,
           icons: organizedList[prefix],
@@ -172,22 +174,22 @@ export const generateIconUsedBundle = async () => {
       // Load icon set
       const filename = typeof item === 'string' ? item : item.filename
       let content = JSON.parse(
-        await BuildUtilsReadFile(filename)
+        await BuildUtilsReadFile(filename),
       ) as IconifyJSON
 
       // Filter icons
       if (typeof item !== 'string' && item.icons?.length) {
         const filteredContent = getIcons(content, item.icons)
-        if (!filteredContent) {
+        if (!filteredContent)
           throw new Error(`Cannot find required icons in ${filename}`)
-        }
+
         content = filteredContent
       }
 
       // Remove metadata and add to bundle
       removeMetaData(content)
       minifyIconSet(content)
-      bundle += 'addCollection(' + JSON.stringify(content) + ');\n'
+      bundle += `addCollection(${JSON.stringify(content)});\n`
       IconLog('Icon Bundle', `Bundled icons from ${filename}`)
     }
   }
@@ -206,9 +208,8 @@ export const generateIconUsedBundle = async () => {
 
       // Validate, clean up, fix palette and optimise
       await iconSet.forEach(async (name, type) => {
-        if (type !== 'icon') {
+        if (type !== 'icon')
           return
-        }
 
         // Get SVG instance for parsing
         const svg = iconSet.toSVG(name)
@@ -235,8 +236,9 @@ export const generateIconUsedBundle = async () => {
           }
 
           // Optimise
-          await runSVGO(svg)
-        } catch (err) {
+          runSVGO(svg)
+        }
+        catch (err) {
           // Invalid icon
           console.error(`Error parsing ${name} from ${source.dir}:`, err)
           iconSet.remove(name)
@@ -250,7 +252,7 @@ export const generateIconUsedBundle = async () => {
 
       // Export to JSON
       const content = iconSet.export()
-      bundle += 'addCollection(' + JSON.stringify(content) + ');\n'
+      bundle += `addCollection(${JSON.stringify(content)});\n`
     }
   }
 
@@ -260,8 +262,8 @@ export const generateIconUsedBundle = async () => {
   IconLog(
     'Icon Bundle',
     `Saved bundle icons at: ${target} (${Number(bundle.length / 1024).toFixed(
-      2
-    )} KB)`
+      2,
+    )} KB)`,
   )
 }
 
@@ -289,17 +291,15 @@ function organizeIconsList(icons: string[]): Record<string, string[]> {
   const sorted: Record<string, string[]> = Object.create(null)
   icons.forEach((icon) => {
     const item = stringToIcon(icon)
-    if (!item) {
+    if (!item)
       return
-    }
 
     const prefix = item.prefix
     const prefixList = sorted[prefix] ? sorted[prefix] : (sorted[prefix] = [])
 
     const name = item.name
-    if (prefixList.indexOf(name) === -1) {
+    if (!prefixList.includes(name))
       prefixList.push(name)
-    }
   })
 
   return sorted

@@ -1,7 +1,7 @@
 import type { UploadFileInfo } from 'naive-ui'
 import OSS from 'ali-oss'
-import { getAliSTSToken } from '@/api/shared/ali'
 import { omit } from 'lodash-es'
+import { getAliSTSToken } from '@/api/shared/ali'
 
 export class AliOSSClient {
   private static _instance: AliOSSClient
@@ -23,7 +23,8 @@ export class AliOSSClient {
   }
 
   public async getConfig() {
-    if (AliOSSClient.config) return AliOSSClient.config
+    if (AliOSSClient.config)
+      return AliOSSClient.config
     const config = await getAliSTSToken()
     AliOSSClient.config = {
       ...config,
@@ -37,7 +38,8 @@ export class AliOSSClient {
   }
 
   public async getClient() {
-    if (AliOSSClient.client) return AliOSSClient.client
+    if (AliOSSClient.client)
+      return AliOSSClient.client
     const config = await this.getConfig()
     AliOSSClient.client = new OSS(config)
     return AliOSSClient.client
@@ -51,10 +53,11 @@ export class AliOSSClient {
   /* simple upload */
   public async upload(
     data: UploadFileInfo,
-    folder: string
+    folder: string,
   ): Promise<{ id: string; value: string } | undefined> {
     // TODO temporary disabled in prod
-    if (isProd()) return
+    if (isProd())
+      return
 
     const headers = {
       // 指定该Object被下载时网页的缓存行为。
@@ -89,10 +92,10 @@ export class AliOSSClient {
         id: data.id,
         value: result.name,
       }
-    } catch (error: any) {
-      if (error.name === 'FileAlreadyExistsError') {
+    }
+    catch (error: any) {
+      if (error.name === 'FileAlreadyExistsError')
         useAppMessage().error('File Already Exists')
-      }
     }
   }
 
@@ -100,10 +103,11 @@ export class AliOSSClient {
   public async multiUpload(
     data: UploadFileInfo,
     folder: string,
-    onProcessCallback: (e: { percent: number }) => void
+    onProcessCallback: (e: { percent: number }) => void,
   ): Promise<{ id: string; value: string } | undefined> {
     // TODO temporary disabled in prod
-    if (isProd()) return
+    if (isProd())
+      return
 
     const headers = {
       // 指定该Object被下载时网页的缓存行为。
@@ -149,27 +153,25 @@ export class AliOSSClient {
           // 自定义元数据，通过HeadObject接口可以获取Object的元数据。
           // meta: { year: 2020, people: 'test' },
           mime: data.type!,
-        }
+        },
       )
 
       return {
         id: data.id,
         value: result.name,
       }
-    } catch (error: any) {
+    }
+    catch (error: any) {
       console.log(error.name)
 
-      if (error.name === 'FileAlreadyExistsError') {
+      if (error.name === 'FileAlreadyExistsError')
         useAppMessage().error('File Already Exists')
-      }
 
-      if (error.name === 'cancel') {
+      if (error.name === 'cancel')
         useAppMessage().error('Canceled')
-      }
 
-      if (error.name === 'abort') {
+      if (error.name === 'abort')
         useAppMessage().error('Aborted')
-      }
     }
   }
 
@@ -180,16 +182,17 @@ export class AliOSSClient {
     try {
       const res = await client.abortMultipartUpload(
         AliOSSClient.checkPoint!.name,
-        AliOSSClient.checkPoint!.uploadId
+        AliOSSClient.checkPoint!.uploadId,
       )
       AliOSSClient.checkPoint = null
       console.log(res)
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error)
     }
   }
 }
 
-;(async function () {
+(async function () {
   await AliOSSClient.instance.getConfig()
 })()

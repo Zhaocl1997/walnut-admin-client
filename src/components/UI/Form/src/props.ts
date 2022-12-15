@@ -1,11 +1,11 @@
-import type { ModalProps, DrawerProps, DrawerContentProps } from 'naive-ui'
+import type { DrawerContentProps, DrawerProps, ModalProps } from 'naive-ui'
 import type {
+  FormRules,
   LabelAlign,
   LabelPlacement,
-  FormRules,
 } from 'naive-ui/lib/form/src/interface'
 import type { WDescriptionProps } from '../../Descriptions'
-import { WTable } from '../../Table'
+import type { WTable } from '../../Table'
 
 import type { WForm } from './types'
 
@@ -48,11 +48,11 @@ export const extendProps = {
   advancedProps: {
     type: Object as PropType<
       (ModalProps | (DrawerProps & DrawerContentProps)) &
-        Partial<Pick<WForm.Inst.WFormInst, 'onYes' | 'onNo'>> & {
-          actionType?: WTable.HeaderActionType
-          defaultButton?: boolean
-          detailTitle?: boolean
-        }
+      Partial<Pick<WForm.Inst.WFormInst, 'onYes' | 'onNo'>> & {
+        actionType?: WTable.HeaderActionType
+        defaultButton?: boolean
+        detailTitle?: boolean
+      }
     >,
     default: undefined,
   },

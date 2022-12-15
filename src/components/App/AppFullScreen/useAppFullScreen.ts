@@ -4,8 +4,7 @@ export const useAppFullScreen = () => {
   const appSetting = useAppStoreSetting()
 
   watchEffect(() => {
-    if (!isFullscreen.value) {
+    if (!isFullscreen.value)
       appSetting.toggleLeftMenuLayout(true)
-    }
   })
 }

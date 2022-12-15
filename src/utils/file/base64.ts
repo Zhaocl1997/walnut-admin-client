@@ -11,11 +11,12 @@ export const base64ToBlob = (base64String: string) => {
       const bstr = window.atob(arr[1])
       let n = bstr.length
       const u8arr = new Uint8Array(n)
-      while (n--) {
+      while (n--)
         u8arr[n] = bstr.charCodeAt(n)
-      }
+
       resolve(new Blob([u8arr], { type: mime }))
-    } catch (error) {
+    }
+    catch (error) {
       reject(error)
     }
   })
@@ -38,7 +39,7 @@ export const blobToBase64 = (blob: Blob) => {
 /**
  * @description img url to base64
  */
-export const imgUrlToBase64 = (url: string, mineType: string = 'image/png') => {
+export const imgUrlToBase64 = (url: string, mineType = 'image/png') => {
   return new Promise<string>((resolve, reject) => {
     // https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toDataURL
     let canvas = document.createElement('canvas') as Nullable<HTMLCanvasElement>
@@ -47,9 +48,9 @@ export const imgUrlToBase64 = (url: string, mineType: string = 'image/png') => {
     const img = new Image()
     img.crossOrigin = 'Anonymous'
     img.onload = function () {
-      if (!canvas || !ctx) {
-        return reject()
-      }
+      if (!canvas || !ctx)
+        return reject(new Error('Error'))
+
       canvas.height = img.height
       canvas.width = img.width
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)

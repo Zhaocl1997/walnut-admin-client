@@ -1,7 +1,7 @@
 import type { WTable } from '../types'
 
 export const useTable = <T>(
-  props: DeepMaybeRefSelf<WTable.Props<T>>
+  props: DeepMaybeRefSelf<WTable.Props<T>>,
 ): WTable.Hook.useTableReturnType => {
   isInSetup()
 

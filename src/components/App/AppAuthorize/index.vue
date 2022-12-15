@@ -1,41 +1,41 @@
 <script lang="tsx">
-  import { renderSlot } from 'vue'
+import { renderSlot } from 'vue'
 
-  export default defineComponent({
-    name: 'AppAuthorize',
+export default defineComponent({
+  name: 'AppAuthorize',
 
-    components: {
-      AppAuthorizeIPTC: createAsyncComponent(() => import('./IPTC.vue')),
+  components: {
+    AppAuthorizeIPTC: createAsyncComponent(() => import('./IPTC.vue')),
+  },
+
+  props: {
+    value: String as PropType<string>,
+
+    preset: {
+      type: String as PropType<'null' | 'tip' | 'IPTC'>,
+      default: 'null',
     },
 
-    props: {
-      value: String as PropType<string>,
+    presetWidth: String as PropType<string>,
+    presetHeight: String as PropType<string>,
+  },
 
-      preset: {
-        type: String as PropType<'null' | 'tip' | 'IPTC'>,
-        default: 'null',
-      },
+  emits: ['iptcSuccess'],
 
-      presetWidth: String as PropType<string>,
-      presetHeight: String as PropType<string>,
-    },
+  setup(props, { slots, emit }) {
+    const userPermission = useAppStoreUserPermission()
+    const { t } = useAppI18n()
 
-    emits: ['iptc-success'],
+    const onIPTCSuccess = () => {
+      emit('iptcSuccess', props.value)
+    }
 
-    setup(props, { slots, emit }) {
-      const userPermission = useAppStoreUserPermission()
-      const { t } = useAppI18n()
-
-      const onIPTCSuccess = () => {
-        emit('iptc-success', props.value)
-      }
-
-      const render = () => {
-        // this need higher priority
-        // this can be used when current user do not have the permission code
-        // but can input the permission code to show the slot
-        if (props.preset === 'IPTC') {
-          return (
+    const render = () => {
+      // this need higher priority
+      // this can be used when current user do not have the permission code
+      // but can input the permission code to show the slot
+      if (props.preset === 'IPTC') {
+        return (
             <AppAuthorizeIPTC
               permission={props.value}
               presetWidth={props.presetWidth}
@@ -44,19 +44,17 @@
             >
               {renderSlot(slots, 'default')}
             </AppAuthorizeIPTC>
-          )
-        }
+        )
+      }
 
-        if (userPermission.hasPermission(props.value!)) {
-          return renderSlot(slots, 'default')
-        }
+      if (userPermission.hasPermission(props.value!))
+        return renderSlot(slots, 'default')
 
-        if (props.preset === 'null') {
-          return null
-        }
+      if (props.preset === 'null')
+        return null
 
-        if (props.preset === 'tip') {
-          return (
+      if (props.preset === 'tip') {
+        return (
             <div
               class="flex items-center justify-center border border-gray-500/50"
               style={{ width: props.presetWidth, height: props.presetHeight }}
@@ -67,13 +65,13 @@
                 description={t('app.authorize.tip.desc')}
               ></n-result>
             </div>
-          )
-        }
+        )
       }
+    }
 
-      return () => render()
-    },
-  })
+    return () => render()
+  },
+})
 </script>
 
 <style scoped>

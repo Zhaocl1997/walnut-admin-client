@@ -28,6 +28,7 @@ const useAppStoreSecretKeyInside = defineStore(StoreKeys.APP_KEY, {
 const useAppStoreSecretKeyOutside = () => useAppStoreSecretKeyInside(store)
 
 export const useAppStoreSecretKey = () => {
-  if (getCurrentInstance()) return useAppStoreSecretKeyInside()
+  if (getCurrentInstance())
+    return useAppStoreSecretKeyInside()
   return useAppStoreSecretKeyOutside()
 }

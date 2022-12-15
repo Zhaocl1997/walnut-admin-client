@@ -1,11 +1,11 @@
-import type { WHomeNumberCardProps } from './components/types'
 import { getRandomInt } from 'easy-fns-ts'
+import type { WHomeNumberCardProps } from './components/types'
 
 const n = (t: number) => getRandomInt(10 ** t, 10 ** (t + 1))
 
 const onGetCards = (
   ns: number[],
-  loading: Ref<boolean>
+  loading: Ref<boolean>,
 ): WHomeNumberCardProps[] => [
   {
     title: 'Vue3',
@@ -92,9 +92,9 @@ export const useNumberCard = () => {
   const loading = ref(false)
 
   const onCallApi = (): Promise<number[]> => {
-    return new Promise((res) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
-        res([n(6), n(3), n(4), n(5), n(2), n(7)])
+        resolve([n(6), n(3), n(4), n(5), n(2), n(7)])
       }, 500)
     })
   }
@@ -107,7 +107,7 @@ export const useNumberCard = () => {
       loading.value = false
     },
     10000,
-    { immediate: true, immediateCallback: true }
+    { immediate: true, immediateCallback: true },
   )
 
   return { cards, loading }

@@ -7,11 +7,11 @@ export interface useEventParams<N = string, P = any> {
 
 export const useEvents = <T extends useEventParams>(
   props: MaybeRefSelf<any>,
-  pool?: string[]
+  pool?: string[],
 ) => {
   const instance = getCurrentInstance()!
 
-  const emit = instance.emit!
+  const emit = instance.emit
 
   const onEvent = (val: T) => {
     if (Array.isArray(pool) && !pool?.includes(val.name)) {
@@ -23,9 +23,8 @@ export const useEvents = <T extends useEventParams>(
 
     const propEventName = `on${capitalize(val.name)}`
 
-    if (unref(props)[propEventName]) {
+    if (unref(props)[propEventName])
       unref(props)[propEventName](val.params)
-    }
   }
 
   return {

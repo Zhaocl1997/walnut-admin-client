@@ -1,6 +1,6 @@
 import type { CardProps } from 'naive-ui'
 
-import { props } from './props'
+import type { props } from './props'
 
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 

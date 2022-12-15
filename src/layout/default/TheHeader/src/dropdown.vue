@@ -1,9 +1,68 @@
+<script lang="tsx" setup>
+import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface'
+
+// TODO 99
+import WIcon from '@/components/UI/Icon'
+import WAvatar from '@/views/account/settings/components/avatar.vue'
+
+const { t } = useAppI18n()
+const userProfile = useAppStoreUserProfile()
+const userAuth = useAppStoreUserAuth()
+
+const dropdownOptions = computed<DropdownMixedOption[]>(() => [
+  {
+    key: '1',
+    label: t('desc.about.info.doc'),
+    icon: () => <WIcon icon="mdi:file-document"></WIcon>,
+  },
+
+  {
+    key: '2',
+    label: t('desc.about.info.code'),
+    icon: () => <WIcon icon="ant-design:github-outlined"></WIcon>,
+  },
+
+  {
+    type: 'divider',
+  },
+
+  {
+    key: '3',
+    label: t('app.user.center'),
+    icon: () => <WIcon icon="ant-design:profile-outlined"></WIcon>,
+  },
+  {
+    key: '99',
+    label: t('app.user.signout'),
+    icon: () => <WIcon icon="ant-design:logout-outlined"></WIcon>,
+  },
+])
+
+const onSelect = async (val: string) => {
+  if (val === '1')
+    openExternalLink(URLS.docUrl)
+
+  if (val === '2')
+    openExternalLink(URLS.projectGithub)
+
+  if (val === '3')
+    useAppRouterPush({ name: 'AccountSetting' })
+
+  if (val === '99') {
+    const res = await useAppConfirm(t('app.user.signout.warning'))
+
+    if (res)
+      await userAuth.Signout()
+  }
+}
+</script>
+
 <template>
   <n-dropdown
     trigger="hover"
     size="medium"
-    @select="onSelect"
     :options="dropdownOptions"
+    @select="onSelect"
   >
     <div class="hstack items-center justify-center">
       <div style="height: 32px; width: 32px">
@@ -12,7 +71,7 @@
           port="w-avatar"
           style="height: 32px; width: 32px"
         >
-          <WAvatar :size="32"> </WAvatar>
+          <WAvatar :size="32" />
         </Starport>
       </div>
 
@@ -22,66 +81,3 @@
     </div>
   </n-dropdown>
 </template>
-
-<script lang="tsx" setup>
-  import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface'
-
-  // TODO 99
-  import WIcon from '@/components/UI/Icon'
-  import WAvatar from '@/views/account/settings/components/avatar.vue'
-
-  const { t } = useAppI18n()
-  const userProfile = useAppStoreUserProfile()
-  const userAuth = useAppStoreUserAuth()
-
-  const dropdownOptions = computed<DropdownMixedOption[]>(() => [
-    {
-      key: '1',
-      label: t('desc.about.info.doc'),
-      icon: () => <WIcon icon="mdi:file-document"></WIcon>,
-    },
-
-    {
-      key: '2',
-      label: t('desc.about.info.code'),
-      icon: () => <WIcon icon="ant-design:github-outlined"></WIcon>,
-    },
-
-    {
-      type: 'divider',
-    },
-
-    {
-      key: '3',
-      label: t('app.user.center'),
-      icon: () => <WIcon icon="ant-design:profile-outlined"></WIcon>,
-    },
-    {
-      key: '99',
-      label: t('app.user.signout'),
-      icon: () => <WIcon icon="ant-design:logout-outlined"></WIcon>,
-    },
-  ])
-
-  const onSelect = async (val: string) => {
-    if (val === '1') {
-      openExternalLink(URLS.docUrl)
-    }
-
-    if (val === '2') {
-      openExternalLink(URLS.projectGithub)
-    }
-
-    if (val === '3') {
-      useAppRouterPush({ name: 'AccountSetting' })
-    }
-
-    if (val === '99') {
-      const res = await useAppConfirm(t('app.user.signout.warning'))
-
-      if (res) {
-        await userAuth.Signout()
-      }
-    }
-  }
-</script>

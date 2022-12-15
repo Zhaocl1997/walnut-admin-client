@@ -1,8 +1,12 @@
+<script lang="ts" setup>
+const appSetting = useAppStoreSetting()
+</script>
+
 <template>
   <w-transition appear :name="appSetting.getFooterTransition">
     <n-layout-footer
-      :id="appSetting.getFooterId"
       v-if="appSetting.getFooterShow"
+      :id="appSetting.getFooterId"
       bordered
       :inverted="appSetting.getFooterInverted"
       :style="{
@@ -18,7 +22,3 @@
     </n-layout-footer>
   </w-transition>
 </template>
-
-<script lang="ts" setup>
-  const appSetting = useAppStoreSetting()
-</script>

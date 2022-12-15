@@ -1,10 +1,11 @@
 import { javascript, javascriptLanguage } from '@codemirror/lang-javascript'
-import { CompletionContext } from '@codemirror/autocomplete'
+import type { CompletionContext } from '@codemirror/autocomplete'
 
 function myCompletions(context: CompletionContext) {
   const word = context.matchBefore(/\w*/)!
 
-  if (word.from == word.to && !context.explicit) return null
+  if (word.from === word.to && !context.explicit)
+    return null
   return {
     from: word.from,
     options: [

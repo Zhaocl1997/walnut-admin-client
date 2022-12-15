@@ -11,20 +11,20 @@ export default defineComponent({
     const getChilren = (group: string) =>
       Object.entries(AppConstTransitionName)
         .map(([key, value]) => ({
-          value: value,
+          value,
           label: key,
         }))
-        .filter((i) => i.value.startsWith(group))
+        .filter(i => i.value.startsWith(group))
 
     const options = ref<SelectGroupOptionBase[]>(
       ['fade', 'zoom', 'bounce', 'rotate', 'slide', 'back', 'flip'].map(
-        (group) => ({
+        group => ({
           type: 'group',
           label: group,
-          key: 'group-' + group,
+          key: `group-${group}`,
           children: getChilren(group),
-        })
-      )
+        }),
+      ),
     )
 
     return () => (

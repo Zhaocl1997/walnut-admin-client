@@ -1,6 +1,5 @@
-import type { WTable } from '../types'
-
 import { omit, sortBy } from 'lodash-es'
+import type { WTable } from '../types'
 
 import { getTableTranslated } from '../utils'
 
@@ -8,13 +7,14 @@ import { getTableTranslated } from '../utils'
 export const useTableColumns = (
   props: ComputedRef<WTable.Props>,
   ApiTableListParams: Ref<BaseListParams>,
-  setProps: WTable.SetProps
+  setProps: WTable.SetProps,
 ) => {
   const columns = ref<WTable.Column[]>([])
   const { t } = useAppI18n()
 
   const transformColumn = (item: WTable.Column) => {
-    if (item.type === 'expand' || item.type === 'selection') return item
+    if (item.type === 'expand' || item.type === 'selection')
+      return item
 
     return {
       ...item,
@@ -39,13 +39,13 @@ export const useTableColumns = (
     // cached for dict column
     await Promise.all(
       props.value.columns?.map(
-        async (i) => i.extendType === 'dict' && (await useDict(i.dictType))
-      )!
+        async i => i.extendType === 'dict' && (await useDict(i.dictType)),
+      )!,
     )
 
-    // @ts-ignore
+    // @ts-expect-error
     columns.value = props.value.columns
-      ?.map((i) => ({ ...i, _internalShow: i._internalShow ?? true }))
+      ?.map(i => ({ ...i, _internalShow: i._internalShow ?? true }))
       .map((item) => {
         // default value override
         item.align = item.align ?? 'center'
@@ -58,7 +58,7 @@ export const useTableColumns = (
             ...tItem,
 
             render(p) {
-              return tItem.formatter!(p)
+              return tItem.formatter(p)
             },
           }
         }
@@ -72,10 +72,10 @@ export const useTableColumns = (
 
             render(_, index) {
               return (
-                (ApiTableListParams.value.page?.page! - 1) *
-                  ApiTableListParams.value.page?.pageSize! +
-                index +
-                1
+                (ApiTableListParams.value.page?.page! - 1)
+                  * ApiTableListParams.value.page?.pageSize!
+                + index
+                + 1
               )
             },
           }
@@ -99,7 +99,7 @@ export const useTableColumns = (
 
             render(p) {
               return (
-                <n-tag {...tItem.tagProps!(p)}>{tItem.formatter!(p)}</n-tag>
+                <n-tag {...tItem.tagProps!(p)}>{tItem.formatter(p)}</n-tag>
               )
             },
           }
@@ -117,11 +117,11 @@ export const useTableColumns = (
 
             filterOptions: computed(() =>
               tItem.filter
-                ? AppDictMap.get(tItem.dictType)?.dictData.map((i) => ({
-                    value: i.value,
-                    label: t(i.label!),
-                  }))
-                : []
+                ? AppDictMap.get(tItem.dictType)?.dictData.map(i => ({
+                  value: i.value,
+                  label: t(i.label!),
+                }))
+                : [],
             ),
 
             filterOptionValue:
@@ -131,20 +131,19 @@ export const useTableColumns = (
               const res = AppDictMap.get(tItem.dictType)
 
               const target = res?.dictData.find(
-                (i) => i.value === (p[tItem.key] as boolean).toString()
+                i => i.value === (p[tItem.key] as boolean).toString(),
               )
 
-              if (!target?.label) return
+              if (!target?.label)
+                return
 
-              if (tItem.tagProps) {
-                return <n-tag {...tItem.tagProps(p)}>{t(target.label!)}</n-tag>
-              }
+              if (tItem.tagProps)
+                return <n-tag {...tItem.tagProps(p)}>{t(target.label)}</n-tag>
 
-              if (target.tagType) {
-                return <n-tag type={target.tagType}>{t(target.label!)}</n-tag>
-              }
+              if (target.tagType)
+                return <n-tag type={target.tagType}>{t(target.label)}</n-tag>
 
-              return <span>{t(target.label!)}</span>
+              return <span>{t(target.label)}</span>
             },
           }
         }
@@ -242,16 +241,16 @@ export const useTableColumns = (
               ]
 
               const extendActionButtons = tItem.extendActionButtons
-                ?.filter((i) => (i?.show ? i.show(rowData) : true))
-                .map((i) => <w-button {...omit(i, 'show')}></w-button>)
+                ?.filter(i => (i?.show ? i.show(rowData) : true))
+                .map(i => <w-button {...omit(i, 'show')}></w-button>)
 
               return (
                 <div class="flex items-center justify-center space-x-2 whitespace-nowrap">
-                  {sortBy(buttonGroups, (i) =>
-                    tItem.extendActionType?.indexOf(i.key)
+                  {sortBy(buttonGroups, i =>
+                    tItem.extendActionType?.indexOf(i.key),
                   )
-                    .filter((i) => isShow(i.key))
-                    .map((i) => i.content)
+                    .filter(i => isShow(i.key))
+                    .map(i => i.content)
                     .concat(extendActionButtons)}
                 </div>
               )
@@ -299,26 +298,26 @@ export const useTableColumns = (
       ?.map((i) => {
         // expand/selection/index/icon default width is 80
         if (
-          !whiteList[0].includes(i.type!) &&
-          !whiteList[1].includes(i.extendType!)
-        ) {
+          !whiteList[0].includes(i.type!)
+          && !whiteList[1].includes(i.extendType!)
+        )
           return i.width || i.minWidth
-        } else {
+        else
           return 80
-        }
       })
-      .filter((i) => i)
+      .filter(i => i)
 
     if (
-      widths?.length !== 0 &&
-      widths?.length === props.value.columns?.length
+      widths?.length !== 0
+      && widths?.length === props.value.columns?.length
     ) {
       const w = widths?.reduce((p, c) => (p as number) + (c as number), 0)
 
       setProps({ scrollX: w })
-    } else {
+    }
+    else {
       AppWarn(
-        `Table with 'localeUniqueKey' ${props.value.localeUniqueKey} has a column without width. This may cause 'scrollX' calculate error.`
+        `Table with 'localeUniqueKey' ${props.value.localeUniqueKey} has a column without width. This may cause 'scrollX' calculate error.`,
       )
     }
   }

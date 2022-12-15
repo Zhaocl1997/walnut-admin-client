@@ -4,12 +4,13 @@ const getStyle = (dom: Element, attr: string) => {
 
 export const useModalDraggable = (
   dragEl: HTMLElement,
-  dragDom: HTMLElement
+  dragDom: HTMLElement,
 ) => {
   dragEl.style.cursor = 'move'
 
   dragEl.onmousedown = (e: MouseEvent) => {
-    if (!e) return
+    if (!e)
+      return
 
     const disX = e.clientX
     const disY = e.clientY
@@ -35,7 +36,8 @@ export const useModalDraggable = (
     if (domLeft.includes('%')) {
       styL = +document.body.clientWidth * (+domLeft.replace(/%/g, '') / 100)
       styT = +document.body.clientHeight * (+domTop.replace(/%/g, '') / 100)
-    } else {
+    }
+    else {
       styL = +domLeft.replace(/px/g, '')
       styT = +domTop.replace(/px/g, '')
     }
@@ -44,17 +46,15 @@ export const useModalDraggable = (
       let left = e.clientX - disX
       let top = e.clientY - disY
 
-      if (-left > minDragDomLeft) {
+      if (-left > minDragDomLeft)
         left = -minDragDomLeft
-      } else if (left > maxDragDomLeft) {
+      else if (left > maxDragDomLeft)
         left = maxDragDomLeft
-      }
 
-      if (-top > minDragDomTop) {
+      if (-top > minDragDomTop)
         top = -minDragDomTop
-      } else if (top > maxDragDomTop) {
+      else if (top > maxDragDomTop)
         top = maxDragDomTop
-      }
 
       dragDom.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`
     }

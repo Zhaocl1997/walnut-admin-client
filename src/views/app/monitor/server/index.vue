@@ -1,3 +1,31 @@
+<script lang="ts" setup>
+import AppMonitorServerCPU from './src/cpu.vue'
+import AppMonitorServerMem from './src/mem.vue'
+import AppMonitorServerOS from './src/os.vue'
+import AppMonitorServerSystem from './src/system.vue'
+import AppMonitorServerDisk from './src/disk.vue'
+import AppMonitorServerBattery from './src/battery.vue'
+import AppMonitorServerTime from './src/time.vue'
+import AppMonitorServerNetwork from './src/network.vue'
+
+const systemPermission = ref()
+const networkPermission = ref()
+
+const onSystemAuthorizeSuccess = (p: string) => {
+  systemPermission.value = p
+}
+
+const onNetworkAuthorizeSuccess = (p: string) => {
+  networkPermission.value = p
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'AppMonitorServer',
+})
+</script>
+
 <template>
   <n-grid
     cols="1 s:1 m:1 l:2 xl:2 2xl:2"
@@ -9,7 +37,7 @@
       <n-grid cols="1" :x-gap="4" :y-gap="4" responsive="screen">
         <n-grid-item>
           <w-transition name="fade-down" appear>
-            <AppMonitorServerCPU></AppMonitorServerCPU>
+            <AppMonitorServerCPU />
           </w-transition>
         </n-grid-item>
 
@@ -21,14 +49,14 @@
             preset-height="230px"
           >
             <w-transition name="fade-down" appear :duration="400">
-              <AppMonitorServerMem></AppMonitorServerMem>
+              <AppMonitorServerMem />
             </w-transition>
           </w-app-authorize>
         </n-grid-item>
 
         <n-grid-item>
           <w-transition name="fade-down" appear :duration="500">
-            <AppMonitorServerOS></AppMonitorServerOS>
+            <AppMonitorServerOS />
           </w-transition>
         </n-grid-item>
 
@@ -43,7 +71,7 @@
             <w-transition name="fade-down" appear :duration="600">
               <AppMonitorServerSystem
                 :system-permission="systemPermission"
-              ></AppMonitorServerSystem>
+              />
             </w-transition>
           </w-app-authorize>
         </n-grid-item>
@@ -54,19 +82,19 @@
       <n-grid cols="1" :x-gap="4" :y-gap="4" responsive="screen">
         <n-grid-item>
           <w-transition name="fade-down" appear :duration="700">
-            <AppMonitorServerDisk></AppMonitorServerDisk>
+            <AppMonitorServerDisk />
           </w-transition>
         </n-grid-item>
 
         <n-grid-item>
           <w-transition name="fade-down" appear :duration="800">
-            <AppMonitorServerBattery></AppMonitorServerBattery>
+            <AppMonitorServerBattery />
           </w-transition>
         </n-grid-item>
 
         <n-grid-item>
           <w-transition name="fade-down" appear :duration="900">
-            <AppMonitorServerTime></AppMonitorServerTime>
+            <AppMonitorServerTime />
           </w-transition>
         </n-grid-item>
 
@@ -81,7 +109,7 @@
             <w-transition name="fade-down" appear :duration="1000">
               <AppMonitorServerNetwork
                 :network-permission="networkPermission"
-              ></AppMonitorServerNetwork>
+              />
             </w-transition>
           </w-app-authorize>
         </n-grid-item>
@@ -89,31 +117,3 @@
     </n-grid-item>
   </n-grid>
 </template>
-
-<script lang="ts" setup>
-  import AppMonitorServerCPU from './src/cpu.vue'
-  import AppMonitorServerMem from './src/mem.vue'
-  import AppMonitorServerOS from './src/os.vue'
-  import AppMonitorServerSystem from './src/system.vue'
-  import AppMonitorServerDisk from './src/disk.vue'
-  import AppMonitorServerBattery from './src/battery.vue'
-  import AppMonitorServerTime from './src/time.vue'
-  import AppMonitorServerNetwork from './src/network.vue'
-
-  const systemPermission = ref()
-  const networkPermission = ref()
-
-  const onSystemAuthorizeSuccess = (p: string) => {
-    systemPermission.value = p
-  }
-
-  const onNetworkAuthorizeSuccess = (p: string) => {
-    networkPermission.value = p
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'AppMonitorServer',
-  })
-</script>

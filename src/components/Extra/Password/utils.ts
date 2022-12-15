@@ -2,15 +2,21 @@
  * @description check string strength
  */
 export const checkStrStrong = (str: string) => {
-  if (!str) return 0
+  if (!str)
+    return 0
 
-  if (str.length <= 6) return 1
+  if (str.length <= 6)
+    return 1
 
   let modes = 1
-  if (/\d/.test(str)) modes++ // number
-  if (/[a-z]/.test(str)) modes++ // lower
-  if (/[A-Z]/.test(str)) modes++ // upper
-  if (/\W/.test(str)) modes++ // special
+  if (/\d/.test(str))
+    modes++ // number
+  if (/[a-z]/.test(str))
+    modes++ // lower
+  if (/[A-Z]/.test(str))
+    modes++ // upper
+  if (/\W/.test(str))
+    modes++ // special
   switch (modes) {
     case 1:
       return 1

@@ -1,41 +1,41 @@
 import type {
-  DescriptionsProps,
   DescriptionItemProps,
+  DescriptionsProps,
   TagProps,
   TextProps,
 } from 'naive-ui'
 
-import { props } from './props'
+import type { props } from './props'
 
-type WDescTypeTag = {
+interface WDescTypeTag {
   type: 'tag'
   typeProps: TagProps
 }
 
-type WDescTypeLink = {
+interface WDescTypeLink {
   type: 'link'
   typeProps: TextProps & {
     link: string
   }
 }
 
-type WDescTypeJson = {
+interface WDescTypeJson {
   type: 'json'
 }
 
-type WDescTypeDict = {
+interface WDescTypeDict {
   type: 'dict'
   dictType: string
 }
 
-type WDescItemExtend = {
+interface WDescItemExtend {
   value: StringOrNumber
   formatter?: (val: string) => string
 }
 
 export type WDescriptionsItem = DescriptionItemProps &
-  Partial<WDescTypeTag | WDescTypeLink | WDescTypeJson | WDescTypeDict> &
-  WDescItemExtend
+Partial<WDescTypeTag | WDescTypeLink | WDescTypeJson | WDescTypeDict> &
+WDescItemExtend
 
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 

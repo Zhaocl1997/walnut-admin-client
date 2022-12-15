@@ -1,7 +1,28 @@
+<script lang="ts" setup>
+import type { PopoverPlacement } from 'naive-ui'
+
+// TODO 888
+interface InternalProps {
+  type?: NaiveCompType
+  disabled?: boolean
+  text?: boolean
+  helpMessage?: string | (() => string)
+  placement?: PopoverPlacement
+}
+
+const props = withDefaults(defineProps<InternalProps>(), { text: true })
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'WAIcon',
+})
+</script>
+
 <template>
   <template v-if="helpMessage">
     <n-tooltip trigger="hover" :placement="placement">
-      <template #>
+      <template #default>
         <span class="whitespace-nowrap">
           {{ typeof helpMessage === 'string' ? helpMessage : helpMessage() }}
         </span>
@@ -19,7 +40,7 @@
             :height="$attrs.height"
             :width="$attrs.width"
             :disabled="disabled"
-          ></w-icon>
+          />
         </n-button>
       </template>
     </n-tooltip>
@@ -32,28 +53,7 @@
         :height="$attrs.height"
         :width="$attrs.width"
         :disabled="disabled"
-      ></w-icon>
+      />
     </n-button>
   </template>
 </template>
-
-<script lang="ts" setup>
-  import type { PopoverPlacement } from 'naive-ui'
-
-  // TODO 888
-  interface InternalProps {
-    type?: NaiveCompType
-    disabled?: boolean
-    text?: boolean
-    helpMessage?: string | (() => string)
-    placement?: PopoverPlacement
-  }
-
-  const props = withDefaults(defineProps<InternalProps>(), { text: true })
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'WAIcon',
-  })
-</script>

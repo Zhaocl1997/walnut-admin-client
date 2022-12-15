@@ -5,7 +5,7 @@ export const createHTMLPlugin = (title: string): VitePlugin[] => {
     minify: true,
     inject: {
       data: {
-        title: title,
+        title,
       },
     },
   }) as unknown as VitePlugin[]

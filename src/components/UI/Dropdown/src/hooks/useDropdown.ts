@@ -1,7 +1,7 @@
 import type { WDropdown } from '../types'
 
 export const useDropdown = <T>(
-  props: WDropdown.Props
+  props: WDropdown.Props,
 ): WDropdown.Hook.useDropdown => {
   isInSetup()
 
@@ -16,8 +16,8 @@ export const useDropdown = <T>(
   }
 
   const methods: WDropdown.Inst.WDropdownInst = {
-    setProps: (props) => wDropdownRef.value?.setProps(props),
-    openDropdown: (e) => wDropdownRef.value?.openDropdown(e),
+    setProps: props => wDropdownRef.value?.setProps(props),
+    openDropdown: e => wDropdownRef.value?.openDropdown(e),
     closeDropdown: () => wDropdownRef.value?.closeDropdown(),
   }
 

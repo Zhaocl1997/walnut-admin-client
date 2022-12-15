@@ -1,3 +1,67 @@
+<script lang="ts" setup>
+const props = defineProps<{
+  permission: string
+  presetWidth: string
+  presetHeight: string
+}>()
+
+const emits = defineEmits(['success'])
+
+const inputValue = ref<string>()
+const state = ref(false)
+
+const { t } = useAppI18n()
+const userPermission = useAppStoreUserPermission()
+
+const onSuccess = () => {
+  emits('success')
+  state.value = true
+}
+
+watch(
+  () => props.permission,
+  (v) => {
+    if (userPermission.hasPermission(v))
+      onSuccess()
+  },
+  {
+    immediate: true,
+  },
+)
+
+const rule = {
+  trigger: ['blur'],
+
+  validator() {
+    if (!inputValue.value)
+      return true
+
+    if (inputValue.value !== props.permission)
+      return new Error(t('app.authorize.iptc.error'))
+
+    onSuccess()
+    return true
+  },
+}
+
+const onKeyup = (e: KeyboardEvent) => {
+  if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+    if (inputValue.value !== props.permission) {
+      useAppMsgError(t('app.authorize.iptc.error'))
+      return
+    }
+
+    onSuccess()
+  }
+}
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'AppAuthorize',
+})
+</script>
+
 <template>
   <w-transition appear name="fade-down">
     <div
@@ -7,7 +71,7 @@
     >
       <div
         class="h-full w-full bg-gray-500/50 blur-sm brightness-80 contrast-50"
-      ></div>
+      />
 
       <n-form-item
         class="abs-center"
@@ -19,75 +83,10 @@
           v-model:value="inputValue"
           clearable
           @keyup="onKeyup"
-        ></n-input>
+        />
       </n-form-item>
     </div>
 
-    <slot v-else></slot>
+    <slot v-else />
   </w-transition>
 </template>
-
-<script lang="ts" setup>
-  const props = defineProps<{
-    permission: string
-    presetWidth: string
-    presetHeight: string
-  }>()
-
-  const emits = defineEmits(['success'])
-
-  const inputValue = ref<string>()
-  const state = ref(false)
-
-  const { t } = useAppI18n()
-  const userPermission = useAppStoreUserPermission()
-
-  const onSuccess = () => {
-    emits('success')
-    state.value = true
-  }
-
-  watch(
-    () => props.permission,
-    (v) => {
-      if (userPermission.hasPermission(v)) {
-        onSuccess()
-      }
-    },
-    {
-      immediate: true,
-    }
-  )
-
-  const rule = {
-    trigger: ['blur'],
-
-    validator() {
-      if (!inputValue.value) return true
-
-      if (inputValue.value !== props.permission) {
-        return new Error(t('app.authorize.iptc.error'))
-      }
-
-      onSuccess()
-      return true
-    },
-  }
-
-  const onKeyup = (e: KeyboardEvent) => {
-    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      if (inputValue.value !== props.permission) {
-        useAppMsgError(t('app.authorize.iptc.error'))
-        return
-      }
-
-      onSuccess()
-    }
-  }
-</script>
-
-<script lang="ts">
-  export default defineComponent({
-    name: 'AppAuthorize',
-  })
-</script>

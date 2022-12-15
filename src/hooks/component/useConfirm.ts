@@ -10,7 +10,7 @@ export const useAppDialog = () => {
 export const useAppConfirm = (msg: string, options?: DialogOptions) => {
   const dialog = useAppDialog()
 
-  return new Promise<boolean>((res) => {
+  return new Promise<boolean>((resolve) => {
     dialog.warning({
       title: AppI18n.global?.t('app.base.warning'),
       content: msg,
@@ -19,10 +19,10 @@ export const useAppConfirm = (msg: string, options?: DialogOptions) => {
       autoFocus: false,
       ...options,
       onPositiveClick: () => {
-        res(true)
+        resolve(true)
       },
       onNegativeClick: () => {
-        res(false)
+        resolve(false)
       },
     })
   })

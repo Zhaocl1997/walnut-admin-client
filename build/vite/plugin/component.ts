@@ -101,11 +101,10 @@ export const createComponentPlugin = (): VitePlugin => {
           const componentName = name.slice(1)
 
           let path = ''
-          Object.entries(comp).map(([key, value]) => {
+          Object.entries(comp).forEach(([key, value]) => {
             for (let i = 0; i < value.length; i++) {
-              if (componentName === value[i]) {
+              if (componentName === value[i])
                 path = `@/components/${key}/${componentName}`
-              }
             }
           })
 

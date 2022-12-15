@@ -54,9 +54,8 @@ export class Encryption {
   constructor(opt?: EncryptionOptions) {
     const { key, iv, method = 'AES', mode = 'CBC', padding = 'Pkcs7' } = opt!
 
-    if (key.length % 4 !== 0) {
+    if (key.length % 4 !== 0)
       throw new Error('key length must be multiple of 4')
-    }
 
     this.key = CryptoJS.enc.Utf8.parse(key)
     this.iv = CryptoJS.enc.Utf8.parse(iv)
@@ -64,13 +63,11 @@ export class Encryption {
     this.method = CryptoJS[method]
     this.mode = mode
     this.padding = padding
-
-    this.encrypt = this.encrypt
-    this.decrypt = this.decrypt
   }
 
   encrypt(value: any) {
-    if (!value) return
+    if (!value)
+      return
 
     const encrypted = this.method.encrypt(JSON.stringify(value), this.key, {
       iv: this.iv,
@@ -81,7 +78,8 @@ export class Encryption {
   }
 
   decrypt(encrypted: any) {
-    if (!encrypted) return
+    if (!encrypted)
+      return
 
     try {
       const decrypted = this.method.decrypt(encrypted, this.key, {
@@ -91,7 +89,8 @@ export class Encryption {
       })
 
       return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8))
-    } catch (error) {
+    }
+    catch (error) {
       return null
     }
   }

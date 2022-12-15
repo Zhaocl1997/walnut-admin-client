@@ -1,3 +1,12 @@
+<script lang="ts" setup>
+const appMenu = useAppStoreMenu()
+const appSettings = useAppStoreSetting()
+
+const onToogleCollapse = () => {
+  appMenu.setCollapse(!appMenu.collapse)
+}
+</script>
+
 <template>
   <w-button
     type="info"
@@ -15,14 +24,5 @@
         : 'ant-design:double-left-outlined'
     "
     @click="onToogleCollapse"
-  ></w-button>
+  />
 </template>
-
-<script lang="ts" setup>
-  const appMenu = useAppStoreMenu()
-  const appSettings = useAppStoreSetting()
-
-  const onToogleCollapse = () => {
-    appMenu.setCollapse(!appMenu.collapse)
-  }
-</script>
