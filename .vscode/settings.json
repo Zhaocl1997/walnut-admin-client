@@ -682,10 +682,5 @@
         "$schema": "http://json-schema.org/draft-07/schema#"
       }
     }
-  ],
-  "i18n-ally.localesPaths": [
-    "src/locales",
-    "src/views/system/lang",
-    "src/views/system/locale"
   ]
 }
