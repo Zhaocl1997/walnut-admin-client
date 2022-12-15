@@ -20,6 +20,7 @@
     "predev": "esno build/generate/index.ts && npm run icon:dev",
     "dev": "vite",
     "commit": "git-cz",
+    "preinstall": "npx only-allow pnpm",
     "postinstall": "is-ci || husky install config/husky",
     "prebuild": "npm run icon:prod",
     "build": "vite build",
