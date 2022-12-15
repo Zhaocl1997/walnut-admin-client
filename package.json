@@ -31,7 +31,6 @@
     "lint:staged": "lint-staged --config config/lintstaged/.lintstagedrc.js",
     "lint:eslint": "eslint --config config/eslint/.eslintrc.js --ignore-pattern config/eslint/.eslintignore --fix",
     "lint:stylelint": "stylelint --config config/stylelint/.stylelintrc.js --fix",
-    "lint:prettier": "prettier --config config/prettier/.prettierrc.js --write",
     "types:check": "vue-tsc --noEmit",
     "types:check:log": "esno build/types.ts",
     "clean:cache": "rimraf node_modules/.vite",
@@ -78,6 +77,7 @@
     "vue-starport": "0.3.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.34.0",
     "@commitlint/cli": "17.3.0",
     "@commitlint/config-conventional": "17.3.0",
     "@iconify/json": "2.1.151",
@@ -111,7 +111,6 @@
     "cz-custom": "0.0.2",
     "deploy-cli-service": "1.3.0",
     "eslint": "8.29.0",
-    "eslint-config-prettier": "8.5.0",
     "eslint-plugin-vue": "9.8.0",
     "esno": "0.16.3",
     "fast-glob": "3.2.12",
@@ -122,7 +121,6 @@
     "mockjs": "1.1.0",
     "naive-ui": "2.34.2",
     "npm-check-updates": "16.5.6",
-    "prettier": "2.8.1",
     "rimraf": "3.0.2",
     "rollup": "3.7.4",
     "rollup-plugin-obfuscator": "0.2.2",
