@@ -17,7 +17,10 @@
       <TheAside></TheAside>
     </n-drawer>
 
-    <div class="vstack flex-1 h-screen w-full overflow-x-hidden">
+    <div
+      class="vstack flex-1 h-screen"
+      :style="{ width: `calc(100vw - ${appSetting.menu.width}px)` }"
+    >
       <n-layout-content
         bordered
         :native-scrollbar="false"
@@ -30,8 +33,7 @@
           :class="[
             'h-full relative flex flex-col',
             {
-              'overflow-y-auto overflow-x-hidden styled-scrollbars':
-                !$route.meta.url,
+              'overflow-auto styled-scrollbars': !$route.meta.url,
             },
           ]"
         >
@@ -40,8 +42,8 @@
 
           <TheIFrameWrapper></TheIFrameWrapper>
 
-          <!-- TODO min-w-fit a flag to controll? -->
           <TheContent
+            :class="{ 'min-w-fit': $route.meta.position }"
             class="grow"
             :style="{
               padding: $route.meta.url

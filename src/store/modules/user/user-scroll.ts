@@ -14,20 +14,20 @@ const useAppStoreUserScrollInside = defineStore(StoreKeys.USER_SCROLL, {
   },
 
   actions: {
-    setScrollTop(name: string, top: number) {
+    setScrollPosition(name: string, top: number, left: number) {
       const index = this.scrollEntries.findIndex((i) => i[0] === name)
       if (index === -1) {
-        this.scrollEntries.push([name, { top }])
+        this.scrollEntries.push([name, { top, left }])
       } else {
-        this.scrollEntries[index] = [name, { top }]
+        this.scrollEntries[index] = [name, { top, left }]
       }
     },
 
-    getScrollTop(name: string) {
+    getScrollPosition(name: string) {
       if (this.getScrollMap[name]) {
-        return this.getScrollMap[name].top
+        return this.getScrollMap[name]
       }
-      return 0
+      return { top: 0, left: 0 }
     },
   },
 })

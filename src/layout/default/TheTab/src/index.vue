@@ -22,6 +22,7 @@
           ></TabsUtils>
         </w-transition>
 
+        <!-- TODO style -->
         <TabsContentMain
           :style="{
             width: appAdapter.isMobile
