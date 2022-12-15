@@ -14,7 +14,7 @@
     "lockStatus": true,
     "lockMode": "default",
     "lockIdleSeconds": 5,
-    "hijackRefresh": true,
+    "hijackRefresh": false,
     "colorMode": "default",
     "reducedMotion": false
   },

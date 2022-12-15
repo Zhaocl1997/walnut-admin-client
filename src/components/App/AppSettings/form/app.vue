@@ -210,7 +210,8 @@
           precision: 0,
         },
         extraProp: {
-          vShow: ({ formData }) => formData.lockMode === AppConstLockMode.IDLE,
+          vShow: ({ formData }) =>
+            formData.lockStatus && formData.lockMode === AppConstLockMode.IDLE,
           disabled: computed(() => !appRelatives.lockStatus),
         },
       },

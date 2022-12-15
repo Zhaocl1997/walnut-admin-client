@@ -17,6 +17,7 @@
 
   import { useAppDarkMode } from '@/components/App/AppDarkMode/useAppDarkMode'
   import { useAppLocale } from '@/components/App/AppLocalePicker/useAppLocale'
+  import { useAppLock } from '@/components/App/AppLock/useAppLock'
   ;(async function () {
     await useSohuApi()
     await useFingerprint()
@@ -27,4 +28,5 @@
   useAppResize()
   useAppDarkMode()
   useAppLocale()
+  useAppLock()
 </script>

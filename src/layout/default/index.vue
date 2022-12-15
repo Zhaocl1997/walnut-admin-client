@@ -75,7 +75,6 @@
   import TheAppWatermark from './Features/watermark.vue'
   import TheAppBackToTop from './Features/backToTop.vue'
 
-  import { useAppLock } from '@/components/App/AppLock/useAppLock'
   import { useStarOnGithub } from './useStarOnGithub'
 
   const appMenu = useAppStoreMenu()
@@ -101,7 +100,6 @@
 
   useAppIntro()
   useAppContentFull()
-  useAppLock()
   useAppTextSelection()
   useAppColorMode()
   useAppReducedMotion()

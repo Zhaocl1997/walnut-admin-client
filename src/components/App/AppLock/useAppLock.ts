@@ -25,6 +25,13 @@ export const useAppLock = () => {
             () => appSetting.app.lockMode,
             (lockMode) => {
               switch (lockMode) {
+                case AppConstLockMode.DEFAULT:
+                  {
+                    securityLockScope?.stop()
+                    idleLockScope?.stop()
+                  }
+                  break
+
                 // idle lock mode
                 case AppConstLockMode.IDLE:
                   {
@@ -49,11 +56,15 @@ export const useAppLock = () => {
                             )
 
                             // detect user idle state
-                            watch(isIdle, async (v) => {
-                              if (v && appSetting.app.lockIdleSeconds !== 0) {
-                                await appLock.lock(currentRoute)
-                              }
-                            })
+                            watch(
+                              isIdle,
+                              async (v) => {
+                                if (v && appSetting.app.lockIdleSeconds !== 0) {
+                                  await appLock.lock(currentRoute)
+                                }
+                              },
+                              { immediate: true }
+                            )
                           })
                         },
                         { immediate: true }
@@ -74,11 +85,15 @@ export const useAppLock = () => {
                       const isPageLeave = useSharedPageLeave()
 
                       // in security mode, idle for 15s the app will auto lock
-                      watch(isIdle, async (v) => {
-                        if (v) {
-                          await appLock.lock(currentRoute)
-                        }
-                      })
+                      watch(
+                        isIdle,
+                        async (v) => {
+                          if (v) {
+                            await appLock.lock(currentRoute)
+                          }
+                        },
+                        { immediate: true }
+                      )
 
                       // detect mouse leave page or not
                       debouncedWatch(
@@ -88,28 +103,28 @@ export const useAppLock = () => {
                             await appLock.lock(currentRoute)
                           }
                         },
-                        { debounce: 200 }
+                        { debounce: 200, immediate: true }
                       )
 
                       // detect window visibility
-                      watch(isVisible, async (v) => {
-                        if (
-                          appSetting.app.lockMode ===
-                            AppConstLockMode.SECURITY &&
-                          !v
-                        ) {
-                          await appLock.lock(currentRoute)
-                        }
-                      })
+                      watch(
+                        isVisible,
+                        async (v) => {
+                          if (
+                            appSetting.app.lockMode ===
+                              AppConstLockMode.SECURITY &&
+                            !v
+                          ) {
+                            await appLock.lock(currentRoute)
+                          }
+                        },
+                        { immediate: true }
+                      )
                     })
                   }
                   break
 
                 default:
-                  {
-                    idleLockScope?.stop()
-                    securityLockScope?.stop()
-                  }
                   break
               }
             },
