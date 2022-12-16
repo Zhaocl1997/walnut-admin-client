@@ -12,4 +12,5 @@ types/components.d.ts
 build/_generated/*.ts
 build/_generated/*.json
 build/_generated/*.log
+env-local
 *.zip
