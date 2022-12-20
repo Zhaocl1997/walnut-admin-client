@@ -2,9 +2,9 @@ import introJS from 'intro.js'
 import 'intro.js/minified/introjs.min.css'
 
 export const useAppIntro = (delay = 1500) => {
-  // TODO configuable
   const intro = introJS()
   const { t } = useAppI18n()
+  const appSetting = useAppStoreSetting()
 
   intro.setOptions({
     doneLabel: t('app.intro.done'),
@@ -14,13 +14,13 @@ export const useAppIntro = (delay = 1500) => {
 
     steps: [
       {
-        element: '#walnut-sider',
+        element: `#${appSetting.menu.id}`,
         title: t('app.intro.sider'),
         intro: t('app.intro.sider.detail'),
         position: 'right',
       },
       {
-        element: '#walnut-breadcrumb',
+        element: `#${appSetting.breadcrumb.id}`,
         title: t('app.intro.breadcrumb'),
         intro: t('app.intro.breadcrumb.detail'),
       },
@@ -50,7 +50,7 @@ export const useAppIntro = (delay = 1500) => {
         intro: t('app.intro.dark.detail'),
       },
       {
-        element: '#walnut-tab',
+        element: `#${appSetting.tabs.id}`,
         title: t('app.intro.tab'),
         intro: t('app.intro.tab.detail'),
       },
