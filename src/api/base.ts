@@ -1,5 +1,7 @@
 export type BaseAPIType<T> = BaseAPI<T>
 
+const { demo } = useAppEnv('build')
+
 export class BaseAPI<T> {
   private readonly baseAPI: string
 
@@ -20,7 +22,9 @@ export class BaseAPI<T> {
         url: `${this.baseAPI}`,
         data,
       },
-      {},
+      {
+        demonstrate: demo,
+      },
     )
   }
 
@@ -36,7 +40,9 @@ export class BaseAPI<T> {
         url: `${this.baseAPI}`,
         data,
       },
-      {},
+      {
+        demonstrate: demo,
+      },
     )
   }
 
@@ -45,7 +51,9 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/${id}`,
       },
-      {},
+      {
+        demonstrate: demo,
+      },
     )
   }
 
@@ -54,7 +62,9 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/deleteMany/${id}`,
       },
-      {},
+      {
+        demonstrate: demo,
+      },
     )
   }
 
@@ -63,7 +73,9 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/clear`,
       },
-      {},
+      {
+        demonstrate: demo,
+      },
     )
   }
 }

@@ -3,6 +3,8 @@ import OSS from 'ali-oss'
 import { omit } from 'lodash-es'
 import { getAliSTSToken } from '@/api/shared/ali'
 
+const { demo } = useAppEnv('build')
+
 export class AliOSSClient {
   private static _instance: AliOSSClient
 
@@ -55,8 +57,7 @@ export class AliOSSClient {
     data: UploadFileInfo,
     folder: string,
   ): Promise<{ id: string; value: string } | undefined> {
-    // TODO temporary disabled in prod
-    if (isProd())
+    if (demo)
       return
 
     const headers = {
@@ -105,8 +106,7 @@ export class AliOSSClient {
     folder: string,
     onProcessCallback: (e: { percent: number }) => void,
   ): Promise<{ id: string; value: string } | undefined> {
-    // TODO temporary disabled in prod
-    if (isProd())
+    if (demo)
       return
 
     const headers = {

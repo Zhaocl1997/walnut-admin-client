@@ -65,4 +65,11 @@ interface ImportMetaEnv {
    * build output dir, normally `dist`
    */
   VITE_BUILD_OUT_DIR: string
+
+  /**
+   * only used for staging and production build
+   * 0 => not for demo purpose
+   * 1 => for demo purpose, some sensitive api will be disabled
+   */
+  VITE_BUILD_DEMO: string
 }

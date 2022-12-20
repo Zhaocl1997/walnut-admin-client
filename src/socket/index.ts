@@ -11,24 +11,22 @@ const useProxy = +ws[0] === 1
 const url = useProxy ? `/${ws[4]}` : `${ws[2]}/${ws[4]}`
 const path = useProxy ? ws[1] : ws[3]
 
-console.log(url, path)
-
 export const AppSocket = io(url, {
   path,
 })
 
 AppSocket.on('connect', () => {
-  AppLog('Socket connected.')
+  AppInfo('Socket connected.')
 })
 
 AppSocket.on('error', (e) => {
-  console.log(e)
+  AppInfo(e)
 })
 
 AppSocket.on('ping', () => {
-  console.log('socket ping')
+  AppInfo('socket ping')
 })
 
 AppSocket.on('onMessage', (data) => {
-  console.log(data)
+  AppInfo(data)
 })

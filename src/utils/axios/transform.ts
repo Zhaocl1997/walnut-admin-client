@@ -20,6 +20,10 @@ export const transform: AxiosTransform = {
 
     const mergedCustomOptions = config.customConfig!
 
+    // if for demo purpose, just return
+    if (mergedCustomOptions.demonstrate)
+      return Promise.reject(new Error('Demonstrate'))
+
     // custom headers
     config.headers!['x-language'] = appLocale.locale
     config.headers!['x-fingerprint'] = fpId.value
@@ -128,6 +132,11 @@ export const transform: AxiosTransform = {
   responseInterceptorsCatch: async (err) => {
     if (err.message === 'Network Error') {
       await useAppRouterPush({ name: '500' })
+      return
+    }
+
+    if (err.message === 'Demonstrate') {
+      useAppNotiError(AppI18n.global.t('app.base.demonstrate'))
       return
     }
 

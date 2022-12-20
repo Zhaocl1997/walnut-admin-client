@@ -90,6 +90,11 @@ export interface AxiosCustomConfig {
    * @description add extra header here
    */
   extraHeader?: Recordable
+
+  /**
+  * @description for demo purpose
+  */
+  demonstrate?: boolean
 }
 
 /**
