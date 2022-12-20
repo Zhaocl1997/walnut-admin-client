@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { useAuthContext } from '../hooks/useAuthContext'
 import { getGiteeUri, getGithubUri, getWeiboUri } from '@/api/auth/third'
-import { setFP } from '@/api/auth/fingerprint'
 
 const { t } = useAppI18n()
 const userAuth = useAppStoreUserAuth()
 const appAuthSettings = useAppStoreSettingBackend()
 const { loading } = useAuthContext()
-const { httpUrl } = useAppEnv('proxy')
+
+let childWindow: Window
 
 const iconArr = computed(() =>
   [
@@ -50,38 +50,27 @@ const iconArr = computed(() =>
   ].filter(i => i.show ?? true),
 )
 
-const onOAuth = async (getUri: Fn, ssePath: string) => {
+const onOAuth = async (getUri: Fn, path: string) => {
   loading.value = true
 
   const res = await getUri()
 
-  const child = openOAuthWindow(res)
+  childWindow = openOAuthWindow(res)!
 
-  const eventSource = new EventSource(
-      `${httpUrl}/auth/third/${ssePath}/check/${fpId.value}`,
-  )
+  const socketPath = `oauth/${path}/success/${fpId.value}`
 
-  eventSource.onmessage = async ({ data }) => {
-    const res = JSON.parse(data)
+  AppSocket.on(socketPath, async (data) => {
+    // close the opened window
+    childWindow.close()
 
-    if (res?.accessToken) {
-      useAppMsgSuccess(t('app.oauth.success'))
-      eventSource.close()
-      await userAuth.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
-      await setFP()
-      loading.value = false
-    }
-  }
+    useAppMsgSuccess(t('app.oauth.success'))
 
-  const { pause } = useIntervalFn(() => {
-    if (child?.closed) {
-      pause()
-      loading.value = false
-      const id = setTimeout(() => {
-        eventSource.close()
-        clearTimeout(id)
-      }, 1500)
-    }
+    await userAuth.ExcuteCoreFnAfterAuth(data.accessToken, data.refreshToken)
+
+    loading.value = false
+
+    // remove current socket listener
+    AppSocket.removeListener(socketPath)
   })
 }
 
@@ -117,15 +106,8 @@ export default defineComponent({
         {{ t('app.auth.other') }}
       </n-divider>
 
-      <div
-        class="w-full hstack justify-evenly children:cursor-pointer hover:children:text-primary"
-      >
-        <span
-          v-for="item in iconArr"
-          :key="item.key"
-          :title="item.title"
-          @click="onClick(item.key)"
-        >
+      <div class="w-full hstack justify-evenly children:cursor-pointer hover:children:text-primary">
+        <span v-for="item in iconArr" :key="item.key" :title="item.title" @click="onClick(item.key)">
           <n-button text :disabled="loading">
             <w-icon :icon="item.icon" width="20" :disabled="loading" />
           </n-button>
@@ -136,8 +118,8 @@ export default defineComponent({
 </template>
 
 <style scoped>
-  .w-divider {
-    margin-top: 8px !important;
-    margin-bottom: 8px !important;
-  }
+.w-divider {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
 </style>

@@ -1,4 +1,5 @@
 export const useDemonstrate = () => {
+  const naiveStore = useAppStoreNaive()
   const signInRef = ref<{ setFormData: (n: string, p: string) => {} }>()
 
   const onClick = () => {
@@ -21,6 +22,10 @@ export const useDemonstrate = () => {
         </n-space>
       )
     },
+  })
+
+  tryOnUnmounted(() => {
+    naiveStore.destroyCurrentNotiInst()
   })
 
   return { signInRef }

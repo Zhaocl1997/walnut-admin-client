@@ -1,6 +1,5 @@
 import type { UnknownComponents } from '@fingerprintjs/fingerprintjs'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
-import { setFP } from '@/api/auth/fingerprint'
 
 // Initialize an agent at application startup.
 const fpPromise = FingerprintJS.load({ monitoring: false })
@@ -27,6 +26,4 @@ export const useFingerprint = async () => {
   const visiterId = FingerprintJS.hashComponents(components)
 
   fpId.value = visiterId
-
-  await setFP()
 }

@@ -14,3 +14,4 @@ build/_generated/*.json
 build/_generated/*.log
 env-local
 *.zip
+deploy.config.js
