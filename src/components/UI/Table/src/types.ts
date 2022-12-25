@@ -174,7 +174,7 @@ export declare namespace WTable {
       /**
        * @description extend action button
        */
-      extendActionButtons?: (WButtonProps & { show?: RenderFn<T, boolean> })[]
+      extendActionButtons?: (WButtonProps & { _show?: RenderFn<T, boolean>; _type: string })[]
 
       /**
        * @description action column button click event
@@ -184,7 +184,7 @@ export declare namespace WTable {
         rowData,
         rowIndex,
       }: {
-        type: ColumnActionType
+        type: ColumnActionType | string
         rowData: T
         rowIndex?: number
       }) => Promise<void> | void

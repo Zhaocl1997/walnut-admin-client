@@ -241,8 +241,14 @@ export const useTableColumns = (
               ]
 
               const extendActionButtons = tItem.extendActionButtons
-                ?.filter(i => (i?.show ? i.show(rowData) : true))
-                .map(i => <w-button {...omit(i, 'show')}></w-button>)
+                ?.filter(i => (i?._show ? i._show(rowData) : true))
+                .map(i => <w-button {...omit(i, ['_show', '_type'])} onClick={() =>
+                  tItem.onExtendActionType!({
+                    type: i._type,
+                    rowData,
+                    rowIndex,
+                  })
+                }></w-button>)
 
               return (
                 <div class="flex items-center justify-center space-x-2 whitespace-nowrap">
