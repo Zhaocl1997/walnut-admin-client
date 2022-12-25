@@ -138,13 +138,22 @@ declare global {
     visitedTabs: Map<string, string[]>
   }
 
+  interface UserProfileStateInfo {
+    country: string
+    province: string
+    city: string
+    area: string
+    ip: string
+    isp: string
+    net: string
+  }
+
   /**
    * User profile state
    */
   interface UserProfileState {
     profile: Partial<AppSystemUser>
-    ip: string
-    cityName: string
+    info: Partial<UserProfileStateInfo>
   }
 
   /**
@@ -168,4 +177,4 @@ declare global {
   }
 }
 
-export {}
+export { }

@@ -19,8 +19,11 @@ export const useFingerprint = async () => {
   const components: UnknownComponents = {
     ...result.components,
     ua: { value: window.navigator.userAgent, duration: Infinity },
-    ip: { value: userProfile.ip, duration: Infinity },
-    cityName: { value: userProfile.cityName, duration: Infinity },
+    ip: { value: userProfile.info.ip, duration: Infinity },
+    country: { value: userProfile.info.country, duration: Infinity },
+    province: { value: userProfile.info.province, duration: Infinity },
+    city: { value: userProfile.info.city, duration: Infinity },
+    area: { value: userProfile.info.area, duration: Infinity },
   }
 
   const visiterId = FingerprintJS.hashComponents(components)
