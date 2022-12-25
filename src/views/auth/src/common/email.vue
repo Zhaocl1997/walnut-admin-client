@@ -27,6 +27,8 @@ const onSubmit = async () => {
     try {
       await appAuth.AuthWithEmailAddress(emailFormData)
 
+      loading.value = false
+
       // close demonstrate notification
       appNaive.destroyCurrentNotiInst()
     }

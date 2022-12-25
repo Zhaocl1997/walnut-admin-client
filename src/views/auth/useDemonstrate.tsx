@@ -7,7 +7,7 @@ export const useDemonstrate = () => {
   }
 
   useAppNotiInfo('', {
-    duration: 0,
+    duration: 60000,
     title: 'Demonstrate only',
     keepAliveOnHover: true,
     placement: 'top-left',

@@ -247,14 +247,24 @@ declare global {
     currentRouter: string
 
     ip?: string
-    location?: string
+    country?: string
+    province?: string
+    city?: string
+    isp?: string
+    userAgent?: string
+    netType?: string
+    platform?: string
     os?: string
     browser?: string
+    vp?: string
+    sr?: string
+    device?: string
+    engine?: string
+
     userId?: string
     userName?: string
 
     authTime: string
-
     lastActiveAt?: Date
   }
 }

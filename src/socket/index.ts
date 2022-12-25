@@ -13,6 +13,7 @@ const path = useProxy ? ws[1] : ws[3]
 
 export const AppSocket = io(url, {
   path,
+  query: { fingerprint: fpId.value },
 })
 
 AppSocket.on('connect', () => {
@@ -21,12 +22,4 @@ AppSocket.on('connect', () => {
 
 AppSocket.on('error', (e) => {
   AppInfo(e)
-})
-
-AppSocket.on('ping', () => {
-  AppInfo('socket ping')
-})
-
-AppSocket.on('onMessage', (data) => {
-  AppInfo(data)
 })

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useAuthContext } from '../hooks/useAuthContext'
 import { getGiteeUri, getGithubUri, getWeiboUri } from '@/api/auth/third'
+import { AppSocketEvents } from '@/socket/events'
 
 const { t } = useAppI18n()
 const userAuth = useAppStoreUserAuth()
@@ -57,7 +58,14 @@ const onOAuth = async (getUri: Fn, path: string) => {
 
   childWindow = openOAuthWindow(res)!
 
-  const socketPath = `oauth/${path}/success/${fpId.value}`
+  const socketPath = AppSocketEvents.OAUTH(path)
+
+  childWindow.onbeforeunload = () => {
+    loading.value = false
+
+    // remove current socket listener
+    AppSocket.removeListener(socketPath)
+  }
 
   AppSocket.on(socketPath, async (data) => {
     // close the opened window

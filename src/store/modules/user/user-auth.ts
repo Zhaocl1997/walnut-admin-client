@@ -7,6 +7,7 @@ import { authWithEmail } from '@/api/auth/email'
 import { AppCoreFn1 } from '@/core'
 
 import { authWithPhoneNumber } from '@/api/auth/phone'
+import { AppSocketEvents } from '@/socket/events'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): UserAuthState => ({
@@ -51,6 +52,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description core function after signin to excute
      */
     async ExcuteCoreFnAfterAuth(at: string, rt: string) {
+      const userProfile = useAppStoreUserProfile()
+
       // set tokens
       this.setAccessToken(at)
       this.setRefreshToken(rt)
@@ -63,8 +66,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       // push to the index menu
       await appMenu.goIndex()
 
-      // send beacon request
-      sendBeacon({ focus: true, left: false })
+      // send socket state
+      AppSocket.emit(AppSocketEvents.SIGNIN, { visitorId: fpId.value, userId: userProfile.profile._id, userName: userProfile.profile.userName })
     },
 
     /**
@@ -135,8 +138,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       // clear tab
       appTab.clearTabs()
 
-      // send beacon request
-      sendBeacon({ focus: true, left: false })
+      // send socket state
+      AppSocket.emit(AppSocketEvents.SIGNOUT, fpId.value)
 
       useTimeoutFn(async () => {
         // push to signin page

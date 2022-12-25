@@ -23,12 +23,14 @@ const onSubmit = async () => {
 
     try {
       await appAuth.AuthWithBasicPassword(accountFormData)
-    }
-    finally {
+
       loading.value = false
 
       // close demonstrate notification
-      appNaive.destroyCurrentNotiInst()
+      appNaive.destroyAllNotiInst()
+    }
+    finally {
+      loading.value = false
     }
   }
 }
@@ -82,20 +84,20 @@ const [register, { validate }] = useForm<typeof accountFormData>({
       },
       componentProp: {
         render: ({ formData }) => (
-            <div class="hstack justify-between w-full mb-2">
-              <NCheckbox vModel={[formData.rememberMe, 'checked']}>
-                {t('form.app.auth.remember')}
-              </NCheckbox>
+          <div class="hstack justify-between w-full mb-2">
+            <NCheckbox vModel={[formData.rememberMe, 'checked']}>
+              {t('form.app.auth.remember')}
+            </NCheckbox>
 
-              <NButton
-                text
-                size="small"
-                type="tertiary"
-                onClick={onForgetPassword}
-              >
-                {t('form.app.auth.forget')}
-              </NButton>
-            </div>
+            <NButton
+              text
+              size="small"
+              type="tertiary"
+              onClick={onForgetPassword}
+            >
+              {t('form.app.auth.forget')}
+            </NButton>
+          </div>
         ),
       },
       transitionProp: {
@@ -110,14 +112,14 @@ const [register, { validate }] = useForm<typeof accountFormData>({
       },
       componentProp: {
         textProp: () => (
-            <span class="text-light-800 text-lg font-black uppercase">
-              {t('app.base.signin')}
-            </span>
+          <span class="text-light-800 text-lg font-black uppercase">
+            {t('app.base.signin')}
+          </span>
         ),
         loading,
         disabled: loading,
         class:
-            'w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mt-3',
+          'w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mt-3',
         onClick: onSubmit,
       },
       transitionProp: {

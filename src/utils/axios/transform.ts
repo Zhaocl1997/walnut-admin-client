@@ -28,8 +28,9 @@ export const transform: AxiosTransform = {
     config.headers!['x-language'] = appLocale.locale
     config.headers!['x-fingerprint'] = fpId.value
 
-    if (userProfile.cityName)
-      config.headers!['x-location'] = wbtoa(userProfile.cityName)
+    // location transform to base64
+    if (userProfile.info?.city)
+      config.headers!['x-location'] = wbtoa(`${userProfile.info.country}-${userProfile.info.province}-${userProfile.info.city}-${userProfile.info.area}`)
 
     // carry token
     if (mergedCustomOptions.needAuth)

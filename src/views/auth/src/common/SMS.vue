@@ -25,6 +25,8 @@ const onSubmit = async () => {
     try {
       await appAuth.AuthWithPhoneNumber(SMSFormData)
 
+      loading.value = false
+
       // close demonstrate notification
       appNaive.destroyCurrentNotiInst()
     }
