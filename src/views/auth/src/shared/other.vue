@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useAuthContext } from '../hooks/useAuthContext'
 import { getGiteeUri, getGithubUri, getWeiboUri } from '@/api/auth/third'
-import { AppSocketEvents } from '@/socket/events'
 
 const { t } = useAppI18n()
 const userAuth = useAppStoreUserAuth()

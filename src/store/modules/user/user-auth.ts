@@ -7,7 +7,6 @@ import { authWithEmail } from '@/api/auth/email'
 import { AppCoreFn1 } from '@/core'
 
 import { authWithPhoneNumber } from '@/api/auth/phone'
-import { AppSocketEvents } from '@/socket/events'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): UserAuthState => ({
@@ -114,7 +113,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description signout, need to clean lots of state
      */
-    async Signout(callApi = true) {
+    async Signout(callApi = true, fingerprint = fpId.value) {
       const userProfile = useAppStoreUserProfile()
       const userPermission = useAppStoreUserPermission()
       const appMenu = useAppStoreMenu()
@@ -139,7 +138,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       appTab.clearTabs()
 
       // send socket state
-      AppSocket.emit(AppSocketEvents.SIGNOUT, fpId.value)
+      AppSocket.emit(AppSocketEvents.SIGNOUT, fingerprint)
 
       useTimeoutFn(async () => {
         // push to signin page

@@ -23,3 +23,9 @@ AppSocket.on('connect', () => {
 AppSocket.on('error', (e) => {
   AppInfo(e)
 })
+
+AppSocket.on(AppSocketEvents.FORCE_QUIT, async (fingerprint) => {
+  const userAuth = useAppStoreUserAuth()
+
+  await userAuth.Signout(true, fingerprint)
+})

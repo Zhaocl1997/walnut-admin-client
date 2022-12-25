@@ -1,5 +1,3 @@
-import { AppSocketEvents } from '@/socket/events'
-
 export const onSocketStateHandle = (data: Partial<AppMonitorUserModel>) => {
   if (!fpId.value)
     return
@@ -12,6 +10,7 @@ export const onSocketStateHandle = (data: Partial<AppMonitorUserModel>) => {
 const onInitialStateWithSendBeacon = () => {
   const { httpUrl } = useAppEnv('proxy')
   const userProfile = useAppStoreUserProfile()
+  const userAuth = useAppStoreUserAuth()
 
   const blob = new Blob(
     [
@@ -23,7 +22,8 @@ const onInitialStateWithSendBeacon = () => {
         // @ts-expect-error
         platform: navigator.userAgentData.platform,
         vp: `${window.innerWidth} * ${window.innerHeight}`,
-        sr: `${window.screen.height} * ${window.screen.width}`,
+        sr: `${window.screen.width} * ${window.screen.height}`,
+        auth: !!userAuth.accessToken,
       }),
     ],
     { type: 'application/json; charset=UTF-8' },

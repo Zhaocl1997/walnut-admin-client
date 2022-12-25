@@ -5,11 +5,10 @@ export default defineComponent({
 </script>
 
 <script lang="tsx" setup>
-import { monitorUserAPI } from '@/api/app/monitor/user'
+import { forceQuit, monitorUserAPI } from '@/api/app/monitor/user'
 
 // locale unique key
 const localeKey = 'app.monitor.user'
-const authKey = 'cache'
 
 const { t } = useAppI18n()
 
@@ -23,10 +22,6 @@ const [register] = useCRUD<AppMonitorUserModel>({
     striped: true,
     bordered: true,
     singleLine: false,
-
-    auths: {
-      list: `app:monitor:${authKey}:list`,
-    },
 
     // clear default header actions
     headerActions: [],
@@ -233,31 +228,19 @@ const [register] = useCRUD<AppMonitorUserModel>({
         extendActionType: [],
         extendActionButtons: [
           {
+            _type: 'force-quit',
             iconButton: true,
             icon: 'ant-design:logout-outlined',
             type: 'error',
             textProp: () => t('app.monitor.user.forceLogout'),
             confirm: true,
-            show: (row) => {
-              return row.auth === true
-            },
-            onClick: () => {
-              console.log(123)
-            },
+            auth: 'app:monitor:user:forceQuit',
           },
         ],
-        // onExtendActionType: async ({ type, rowData }) => {
-        // switch (type) {
-        //   case 'detail':
-        //     await onApiTableReadAndOpenUpdateForm(rowData.key!)
-        //     break
-        //   case 'delete':
-        //     await onApiTableDelete(rowData.key!)
-        //     break
-        //   default:
-        //     break
-        // }
-        // },
+        onExtendActionType: async ({ type, rowData }) => {
+          if (type === 'force-quit')
+            await forceQuit(rowData._id!)
+        },
       },
     ],
   },
