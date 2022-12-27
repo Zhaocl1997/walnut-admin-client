@@ -29,6 +29,8 @@ export const BussinessCodeConst = {
 
   NOT_FOUND: 4040,
 
+  INTERNAL_SERVER: 5000,
+
   DATABASE_ERROR: 5555,
 
   CUSTOM_ERROR: 9999,

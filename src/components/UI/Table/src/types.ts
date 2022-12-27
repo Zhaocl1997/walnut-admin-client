@@ -64,7 +64,7 @@ export declare namespace WTable {
       /**
        * @description get list params
        */
-      onGetApiTableListParams: () => Ref<BaseListParams>
+      onGetApiTableListParams: () => Ref<WalnutBaseListParams>
     }
 
     interface WTableInst extends NDataTableInst, ExtendInst {}
@@ -245,7 +245,7 @@ export declare namespace WTable {
     onEvent: (params: Emit.Entry) => void
     tableProps: ComputedRef<Props>
     onApiTableList: (extraParams?: Recordable<any> | undefined) => Promise<void>
-    ApiTableListParams: Ref<BaseListParams>
+    ApiTableListParams: Ref<WalnutBaseListParams>
     onApiTableQuery: WForm.onFinishFormLoadingCallback
     onApiTableReset: WForm.onFinishFormLoadingCallback
     checkedRowKeys: Ref<StringOrNumber[]>

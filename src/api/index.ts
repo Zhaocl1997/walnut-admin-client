@@ -1,11 +1,10 @@
-export const HelloAPI = (cache = false) => {
+import type { AxiosRequestConfig } from 'axios'
+
+export const HelloAPI = (config: AxiosRequestConfig) => {
   return AppAxios.get<string>(
     {
       url: '',
-    },
-    {
-      needAuth: false,
-      cache,
+      ...config,
     },
   )
 }

@@ -27,10 +27,8 @@ export const getDictByType = (type: string) => {
   return AppAxios.get<AppDictTypeResponse>(
     {
       url: `/system/dict/data/s/${type}`,
-    },
-    {
-      cache: true,
-      cachedSeconds: 600,
+      _throttle: 500,
+      _cache: true,
     },
   )
 }

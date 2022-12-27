@@ -26,7 +26,7 @@ export const generateDefaultSortParams = (columns: WTable.Column[]) => {
  */
 export const generateSortParams = <T>(
   sort: DataTableSortState | DataTableSortState[],
-): BaseSortParams<T> => {
+): WalnutBaseSortParams<T> => {
   if (Array.isArray(sort)) {
     if (sort.every(i => i.order === false))
       return []
@@ -54,8 +54,8 @@ export const generateSortParams = <T>(
 /**
  * @description generate base list params
  */
-export const generateBaseListParams = (params: BaseListParams) => {
-  const ret: BaseListParams = {}
+export const generateBaseListParams = (params: WalnutBaseListParams) => {
+  const ret: WalnutBaseListParams = {}
 
   Object.entries(params).forEach(([key, value]) => {
     if (key === 'sort')

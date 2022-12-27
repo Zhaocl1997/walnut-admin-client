@@ -3,7 +3,7 @@
  */
 export const mockListApi
   = <T>(arr: T[]) =>
-    (params: BaseListParams) => {
+    (params: WalnutBaseListParams) => {
       const num = params.page?.page || 1
       const size = params.page?.pageSize || 10
       const total = arr.length

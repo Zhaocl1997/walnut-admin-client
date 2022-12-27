@@ -57,11 +57,6 @@ declare global {
   type DeepMaybeRef<T> = import('@vueuse/core').DeepMaybeRef<T>
 
   // App Relatives
-  type BaseListParams<T = any> = import('@/utils/axios').BaseListParams<T>
-  type BaseSortParams<T = any> = import('@/utils/axios').BaseSortParams<T>
-  type BaseListResponse<T = any> = import('@/utils/axios').BaseListResponse<T>
-  type BaseResponseStructure<T = any> =
-    import('@/utils/axios').BaseResponseStructure<T>
   type AppSettings = import('./settings').AppSettings
 
   // echarts option

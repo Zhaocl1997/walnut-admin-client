@@ -18,8 +18,8 @@ export const authWithPwd = (data: AppPayloadAuth.Password) => {
     {
       url: AuthEnum.PWD,
       data,
+      _autoEncryptRequestDataFields: ['password'],
     },
-    { autoEncryptRequestData: true, encryptFields: ['password'] },
   )
 }
 
@@ -69,7 +69,7 @@ export const getSecretKeys = () => {
   return AppAxios.get<AppSecretKeysInterface>(
     {
       url: AuthEnum.KEYS,
+      _autoDecryptResponseData: true,
     },
-    { autoDecryptResponseData: true },
   )
 }

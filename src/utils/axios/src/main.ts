@@ -2,38 +2,18 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 
 import axios from 'axios'
 
-import { easyDeepMerge } from 'easy-fns-ts'
-import type {
-  AxiosCustomConfig,
-  AxiosRequestConfigExtend,
-  AxiosTransform,
-} from './types'
-
 export class Axios {
   private instance: AxiosInstance
-  private readonly options: AxiosRequestConfigExtend
 
-  constructor(options: AxiosRequestConfigExtend) {
-    this.options = options
-
-    this.instance = axios.create(options)
-    this.createInterceptors()
-  }
-
-  /**
-   * @description get `transform` from options
-   */
-  private getTransform() {
-    const { transform } = this.options
-    return transform!
+  constructor(options: WalnutAxiosConfig) {
+    this.instance = axios.create(options.originalConfig)
+    this.createInterceptors(options.extendConfig)
   }
 
   /**
    * @description create request/response interceptors
    */
-  private createInterceptors() {
-    const transform: AxiosTransform = this.getTransform()
-
+  private createInterceptors(transform: WalnutAxiosTransform) {
     const {
       requestInterceptors,
       requestInterceptorsCatch,
@@ -67,16 +47,10 @@ export class Axios {
    */
   request<T>(
     config: AxiosRequestConfig,
-    options?: AxiosCustomConfig,
   ): Promise<T> {
-    // Here merge default customConfig with individual customConfig
-    const mergedConfig = easyDeepMerge<AxiosRequestConfig>(config, {
-      customConfig: options,
-    })
-
     return new Promise((resolve, reject) => {
       this.instance
-        .request<T, T>(mergedConfig!)
+        .request<T, T>(config)
         .then(res => resolve(res))
         .catch(err => reject(err))
     })
@@ -92,28 +66,28 @@ export class Axios {
   /**
    * @description Axios Get
    */
-  get<T>(config: AxiosRequestConfig, options?: AxiosCustomConfig) {
-    return this.request<T>({ ...config, method: 'GET' }, options)
+  get<T>(config: AxiosRequestConfig) {
+    return this.request<T>({ ...config, method: 'GET' })
   }
 
   /**
    * @description Axios Post
    */
-  post<T>(config: AxiosRequestConfig, options?: AxiosCustomConfig) {
-    return this.request<T>({ ...config, method: 'POST' }, options)
+  post<T>(config: AxiosRequestConfig) {
+    return this.request<T>({ ...config, method: 'POST' })
   }
 
   /**
    * @description Axios Put
    */
-  put<T>(config: AxiosRequestConfig, options?: AxiosCustomConfig) {
-    return this.request<T>({ ...config, method: 'PUT' }, options)
+  put<T>(config: AxiosRequestConfig) {
+    return this.request<T>({ ...config, method: 'PUT' })
   }
 
   /**
    * @description Axios Delete
    */
-  delete<T>(config: AxiosRequestConfig, options?: AxiosCustomConfig) {
-    return this.request<T>({ ...config, method: 'DELETE' }, options)
+  delete<T>(config: AxiosRequestConfig) {
+    return this.request<T>({ ...config, method: 'DELETE' })
   }
 }

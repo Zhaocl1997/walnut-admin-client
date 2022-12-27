@@ -26,7 +26,7 @@ export const useTableAPI = (
     stateRef: ApiTableListParams,
     resetState: resetParams,
     commit: commitParams,
-  } = useState<BaseListParams>({
+  } = useState<WalnutBaseListParams>({
     query: {},
     sort: [],
     page: {

@@ -24,8 +24,8 @@ export const extendProps = {
   // TODO prop and generic, need to make a choice
   apiProps: Object as PropType<
     Partial<{
-      onBeforeRequest: (params: Recordable) => BaseListParams & Recordable
-      listApi: (params: BaseListParams) => Promise<BaseListResponse>
+      onBeforeRequest: (params: Recordable) => WalnutBaseListParams & Recordable
+      listApi: (params: WalnutBaseListParams) => Promise<WalnutBaseListResponse>
       deleteApi: (id: StringOrNumber) => Promise<unknown>
       deleteManyApi: Fn
     }>

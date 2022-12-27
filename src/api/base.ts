@@ -9,8 +9,8 @@ export class BaseAPI<T> {
     this.baseAPI = `/${model}/${section}`
   }
 
-  list(data?: BaseListParams<T>) {
-    return AppAxios.post<BaseListResponse<T>>({
+  list(data?: WalnutBaseListParams<T>) {
+    return AppAxios.post<WalnutBaseListResponse<T>>({
       url: `${this.baseAPI}/list`,
       data,
     })
@@ -21,9 +21,7 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}`,
         data,
-      },
-      {
-        demonstrate: demo,
+        _demonstrate: demo,
       },
     )
   }
@@ -39,9 +37,8 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}`,
         data,
-      },
-      {
-        demonstrate: demo,
+        _demonstrate: demo,
+
       },
     )
   }
@@ -50,9 +47,8 @@ export class BaseAPI<T> {
     return AppAxios.delete(
       {
         url: `${this.baseAPI}/${id}`,
-      },
-      {
-        demonstrate: demo,
+        _demonstrate: demo,
+
       },
     )
   }
@@ -61,10 +57,10 @@ export class BaseAPI<T> {
     return AppAxios.delete(
       {
         url: `${this.baseAPI}/deleteMany/${id}`,
+        _demonstrate: demo,
+
       },
-      {
-        demonstrate: demo,
-      },
+
     )
   }
 
@@ -72,10 +68,10 @@ export class BaseAPI<T> {
     return AppAxios.delete(
       {
         url: `${this.baseAPI}/clear`,
+        _demonstrate: demo,
+
       },
-      {
-        demonstrate: demo,
-      },
+
     )
   }
 }

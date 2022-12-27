@@ -78,11 +78,7 @@ export const getSysInfo = (scopePermission?: string) => {
   return AppAxios.get<IServerInfo.System>(
     {
       url: '/app/monitor/server/sys',
-    },
-    {
-      extraHeader: {
-        'scoped-permission': scopePermission,
-      },
+      _scoped_permission: scopePermission,
     },
   )
 }
@@ -109,11 +105,7 @@ export const getNetworkInfo = (scopePermission?: string) => {
   return AppAxios.get<IServerInfo.Network>(
     {
       url: '/app/monitor/server/network',
-    },
-    {
-      extraHeader: {
-        'scoped-permission': scopePermission,
-      },
+      _scoped_permission: scopePermission,
     },
   )
 }

@@ -6,7 +6,7 @@ import { getTableTranslated } from '../utils'
 // Extend Naive UI columns
 export const useTableColumns = (
   props: ComputedRef<WTable.Props>,
-  ApiTableListParams: Ref<BaseListParams>,
+  ApiTableListParams: Ref<WalnutBaseListParams>,
   setProps: WTable.SetProps,
 ) => {
   const columns = ref<WTable.Column[]>([])

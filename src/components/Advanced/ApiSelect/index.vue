@@ -4,7 +4,7 @@ const props = defineProps({
 
   listFn: {
     type: Function as PropType<
-        (data?: BaseListParams<any>) => Promise<BaseListResponse<any>>
+        (data?: WalnutBaseListParams<any>) => Promise<WalnutBaseListResponse<any>>
       >,
     required: true,
   },
@@ -24,7 +24,7 @@ const total = ref(0)
 const options = ref<OptionDataItem[]>([])
 const valueOptions = ref<OptionDataItem[]>([])
 
-const { stateRef: params, resetState } = useState<BaseListParams>({
+const { stateRef: params, resetState } = useState<WalnutBaseListParams>({
   page: { page: 1, pageSize: 10 },
   query: {},
 })

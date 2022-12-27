@@ -1,57 +1,72 @@
 import {
-  easyFilterEmptyValue,
   easyTransformObjectStringBoolean,
 } from 'easy-fns-ts'
 import { merge } from 'lodash-es'
+import axios from 'axios'
 
 import { AppRequestEncryption, AppResponseEncryption } from '../crypto'
 import { checkReponseErrorStatus } from './checkStatus'
-import type { AxiosTransform } from './src/types'
-import { RefreshTokenLogic, setTokenInRequest } from './refreshToken'
+import { RefreshTokenLogic, setTokenHeader } from './refreshToken'
+import { addToCancelPool, removeFromCancelPool } from './cancel'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
 
+const CancelToken = axios.CancelToken
+
 // custom transform for req and res interceptors
-export const transform: AxiosTransform = {
+export const transform: WalnutAxiosTransform = {
   // Here handler request logic
   requestInterceptors: (config) => {
     const userProfile = useAppStoreUserProfile()
 
-    const mergedCustomOptions = config.customConfig!
-
     // if for demo purpose, just return
-    if (mergedCustomOptions.demonstrate)
+    if (config._demonstrate)
       return Promise.reject(new Error('Demonstrate'))
 
     // custom headers
-    config.headers!['x-language'] = appLocale.locale
-    config.headers!['x-fingerprint'] = fpId.value
+    config.headers['x-language'] = appLocale.locale
+    config.headers['x-fingerprint'] = fpId.value
 
     // location transform to base64
     if (userProfile.info?.city)
-      config.headers!['x-location'] = wbtoa(`${userProfile.info.country}-${userProfile.info.province}-${userProfile.info.city}-${userProfile.info.area}`)
+      config.headers['x-location'] = wbtoa(`${userProfile.info.country}-${userProfile.info.province}-${userProfile.info.city}-${userProfile.info.area}`)
+
+    // a request doomed to fail
+    if (config._error)
+      config.headers['x-error'] = 1
+
+    // sleep for a while
+    if (config._sleep)
+      config.headers['x-sleep'] = config._sleep
+
+    // scoped permission in header
+    if (config._scoped_permission)
+      config.headers['x-scoped-permission'] = config._scoped_permission
 
     // carry token
-    if (mergedCustomOptions.needAuth)
-      userAuth.accessToken && setTokenInRequest(config, userAuth.accessToken)
+    if (getBoolean(config._carryToken))
+      userAuth.accessToken && setTokenHeader(config, userAuth.accessToken)
 
     // add timestamp
-    if (mergedCustomOptions.timestamp)
-      config.url += `?_t=${Date.now()}`
+    if (config._timestamp) {
+      config.params = {
+        t: Date.now(),
+      }
+    }
 
     // filter null value in config.data
-    if (mergedCustomOptions.filterNull && config.data)
-      config.data = easyFilterEmptyValue(config.data)
+    // if (mergedCustomOptions.filterNull && config.data)
+    //   config.data = easyFilterEmptyValue(config.data)
 
     // transform "true"/"false" to true/false
-    if (mergedCustomOptions.transformStringBoolean && config.data)
+    if (config._transformStringBoolean && config.data)
       config.data = easyTransformObjectStringBoolean(config.data)
 
     // auto encrypt body data(post)
-    if (mergedCustomOptions.autoEncryptRequestData) {
+    if (config?._autoEncryptRequestDataFields && config._autoEncryptRequestDataFields.length !== 0 && config.data) {
       const cryptedObj = Object.fromEntries(
-        mergedCustomOptions.encryptFields!.map(key => [
+        config._autoEncryptRequestDataFields.map(key => [
           key,
           AppRequestEncryption.encrypt(config.data[key]),
         ]),
@@ -60,11 +75,7 @@ export const transform: AxiosTransform = {
       config.data = merge(config.data, cryptedObj)
     }
 
-    // extra custom header for per request
-    if (mergedCustomOptions.extraHeader) {
-      config.headers!['x-scoped-permission']
-        = mergedCustomOptions.extraHeader['scoped-permission']
-    }
+    config.cancelToken = new CancelToken(c => addToCancelPool(config, c))
 
     return config
   },
@@ -78,10 +89,13 @@ export const transform: AxiosTransform = {
     // code below is custom code in `axios.response.data`
     const { code, data, msg } = res.data
 
+    // remove from the cancel pool
+    removeFromCancelPool(res.config)
+
     // normal success
     if (code === BussinessCodeConst.SUCCESS) {
-      // @ts-expect-error
-      if (res.config.customConfig.autoDecryptResponseData)
+      // auto decrypt response data with `crypto-js`
+      if (res.config._autoDecryptResponseData)
         return Promise.resolve(AppResponseEncryption.decrypt(data))
 
       return Promise.resolve(data)
@@ -115,18 +129,18 @@ export const transform: AxiosTransform = {
       BussinessCodeConst.VERIFY_CODE_ERROR,
       BussinessCodeConst.NOT_FOUND,
       BussinessCodeConst.DATABASE_ERROR,
+      BussinessCodeConst.INTERNAL_SERVER,
       BussinessCodeConst.CUSTOM_ERROR,
       BussinessCodeConst.PERMISSION_DENIED,
     ]
 
-    if (badRequestCodeList.includes(code)) {
+    if (badRequestCodeList.includes(code))
       useAppNotiError(msg)
 
-      // since we have the error message, just resolve so handle logic behind
-      return Promise.reject(new Error('Error'))
-    }
+    // since we have the error message, just resolve so handle logic behind
+    // return Promise.reject(new Error('Error'))
 
-    return Promise.reject(new Error('Error'))
+    // return Promise.reject(new Error('Error'))
   },
 
   // Here handle response error
@@ -140,6 +154,9 @@ export const transform: AxiosTransform = {
       useAppNotiError(AppI18n.global.t('app.base.demonstrate'))
       return
     }
+
+    if (axios.isCancel(err))
+      return
 
     console.log(err)
 

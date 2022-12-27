@@ -6,10 +6,7 @@ export const getAreaChildrenByPcode = (pcode?: string) => {
       params: {
         pcode,
       },
-    },
-    {
-      cache: true,
-      cachedSeconds: 600,
+      _cache: true,
     },
   )
 }

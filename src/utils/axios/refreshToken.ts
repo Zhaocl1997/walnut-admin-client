@@ -1,19 +1,18 @@
 import type { AxiosRequestConfig } from 'axios'
-import type { AxiosRequestConfigExtend } from './src/types'
 
 // flag to judge if calling refreshing token api
 let isRefreshing = false
 // waiting queue
 let requestsQueue: ((token: string) => void)[] = []
 
-export const setTokenInRequest = (
-  config: AxiosRequestConfigExtend,
+const userAuth = useAppStoreUserAuth()
+
+export const setTokenHeader = (
+  config: AxiosRequestConfig,
   token: string,
 ) => {
-  config.headers!.Authorization = `Bearer ${token}`
+  config.headers.Authorization = `Bearer ${token}`
 }
-
-const userAuth = useAppStoreUserAuth()
 
 export const RefreshTokenLogic = (config: AxiosRequestConfig) => {
   // not requesting for new access token
@@ -22,20 +21,21 @@ export const RefreshTokenLogic = (config: AxiosRequestConfig) => {
 
     return userAuth
       .GetNewATWithRT()
-      .then((refresh_token) => {
-        if (!refresh_token)
+      .then((newAccessToken) => {
+        if (!newAccessToken)
           return
 
-        setTokenInRequest(config, refresh_token)
+        setTokenHeader(config, newAccessToken)
 
         // token already refreshed, call the waiting request
-        requestsQueue.forEach(cb => cb(refresh_token))
+        requestsQueue.forEach(cb => cb(newAccessToken))
         // clean queue
         requestsQueue = []
 
-        // add customConfig
-        // @ts-expect-error
-        return AppAxios.request(config, config.customConfig)
+        return AppAxios.request(config)
+      })
+      .catch(() => {
+        userAuth.Signout()
       })
       .finally(() => {
         isRefreshing = false
@@ -46,11 +46,9 @@ export const RefreshTokenLogic = (config: AxiosRequestConfig) => {
     return new Promise((resolve) => {
       // push resolve into queue, using an anonymous function to wrap it. ASAP token refresh is done, excute
       requestsQueue.push((t) => {
-        setTokenInRequest(config, t)
+        setTokenHeader(config, t)
         resolve(AppAxios.request(config))
       })
-    }).finally(() => {
-      isRefreshing = false
     })
   }
 }
