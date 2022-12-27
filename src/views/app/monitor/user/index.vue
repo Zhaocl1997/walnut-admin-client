@@ -57,7 +57,8 @@ const [register] = useCRUD<AppMonitorUserModel>({
         {
           type: 'Base:Input',
           formProp: {
-            path: 'location',
+            path: 'city',
+            label: computed(() => t('app.base.location')),
           },
           componentProp: {
             clearable: true,
@@ -120,7 +121,7 @@ const [register] = useCRUD<AppMonitorUserModel>({
         key: 'location',
         width: 160,
         extendType: 'formatter',
-        formatter: row => row.location || '-',
+        formatter: row => row.city || '-',
         ellipsis: {
           tooltip: true,
         },
@@ -235,6 +236,9 @@ const [register] = useCRUD<AppMonitorUserModel>({
             textProp: () => t('app.monitor.user.forceLogout'),
             confirm: true,
             auth: 'app:monitor:user:forceQuit',
+            _show: (row) => {
+              return !row.left && row.auth
+            },
           },
         ],
         onExtendActionType: async ({ type, rowData }) => {

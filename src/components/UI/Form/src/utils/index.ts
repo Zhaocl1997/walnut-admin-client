@@ -34,12 +34,17 @@ export const getFormTranslated = (
   const isLocale = key && getBoolean(item.formProp?.locale)
 
   const path = item.formProp?.path
+  const label = item.formProp?.label
+
+  // got label, return label
+  if (label)
+    return unref(label)
 
   // no locale nor no path
   // just return target field
   if (!isLocale || !path) {
     if (type === 'origin')
-      return item.formProp?.label
+      return label
     if (type === 'helpMsg')
       return item.formProp?.labelHelpMessage
     if (type === 'placeholder')
