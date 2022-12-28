@@ -2,7 +2,7 @@
   "app": {
     "layout": "left-menu",
     "keepAlive": true,
-    "contentPadding": 2,
+    "contentPadding": 8,
     "routeQueryMode": "normal",
     "routeQueryEnhancedMode": "base64",
     "transitionStatus": true,

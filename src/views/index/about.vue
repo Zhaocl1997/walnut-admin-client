@@ -115,6 +115,7 @@ export default defineComponent({
         bordered
         :column="2"
         :items="DepItems"
+        :label-style="{ width: '400px' }"
       />
     </w-card>
 
@@ -133,6 +134,7 @@ export default defineComponent({
         bordered
         :column="2"
         :items="DevDepItems"
+        :label-style="{ width: '400px' }"
       />
     </w-card>
   </div>

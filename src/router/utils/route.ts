@@ -1,26 +1,22 @@
 import { arrToTree, findPath, formatTree, orderTree } from 'easy-fns-ts'
-import { cloneDeep } from 'lodash-es'
 
 import { App404Route, App500Route } from '../routes/builtin'
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
 import IFrameReal from '@/layout/iframe/index.vue'
 
-// TODO 999
 /**
- * @description temporarily flat tree route into one level route
+ * @description flat tree route into two level route
  * @link https://github.com/vuejs/vue-router-next/issues/626
  */
-const _tempFlatNestedRoutes = (routes: RouteRecordRaw[]) => {
+const transformToTwoLevelRouteTree = (routes: RouteRecordRaw[]) => {
   const ret: RouteRecordRaw[] = []
 
-  const tree = cloneDeep(routes)
-
-  formatTree(tree, {
+  formatTree(routes, {
     format: (node) => {
       // findPath, it's an array
       const paths = findPath(
-        tree,
+        routes,
         n => n.name === node.name,
       ) as RouteRecordRaw[]
 
@@ -113,7 +109,7 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
   // just pick the root children
   const menus = orderTree(menuTree)[0].children
 
-  const routes = formatTree<AppSystemMenu, RouteRecordRaw>(menus!, {
+  const routesTree = formatTree<AppSystemMenu, RouteRecordRaw>(menus!, {
     format: (node) => {
       // handle catelog
       if (node.type === AppConstMenuType.CATALOG) {
@@ -146,13 +142,13 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
     },
   })
 
-  // finally push the 404
-  // routes.push(App404Route)
-  // return routes
+  // I have decided to make this into a final solution, not for temporarily anymore
+  // see https://github.com/vuejs/vue-router-next/issues/626
+  const transformedRouteTree = transformToTwoLevelRouteTree(routesTree)
 
-  // TODO 999
-  const _tempRoutes = _tempFlatNestedRoutes(routes)
-  _tempRoutes.push(App404Route)
-  _tempRoutes.push(App500Route)
-  return _tempRoutes
+  // finally push the 404/500
+  transformedRouteTree.push(App404Route)
+  transformedRouteTree.push(App500Route)
+
+  return transformedRouteTree
 }

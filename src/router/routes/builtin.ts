@@ -69,5 +69,4 @@ export const builtinRoutes: RouteRecordRaw[] = [
   AppAuthServiceAgreementRoute,
   AppRootRoute,
   AppRedirectRoute,
-  App500Route,
 ]

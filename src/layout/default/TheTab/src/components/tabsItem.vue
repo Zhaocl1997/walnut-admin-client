@@ -131,7 +131,7 @@ export default defineComponent({
           { 'pr-4': getHovered },
         ]"
         :title="getTitle"
-        :max-length="item.meta._title_maxLength ?? 12"
+        :max-length="item.meta._title_maxLength ?? 16"
         :speed="item.meta._title_speed"
       >
         {{ getTitle }}
