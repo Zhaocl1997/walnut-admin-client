@@ -97,6 +97,8 @@ export default defineComponent({
         bordered
         :column="2"
         :items="infoItems"
+        :label-style="{ width: '30%' }"
+        :content-style="{ width: '20%' }"
       />
     </w-card>
 
@@ -115,7 +117,8 @@ export default defineComponent({
         bordered
         :column="2"
         :items="DepItems"
-        :label-style="{ width: '400px' }"
+        :label-style="{ width: '30%' }"
+        :content-style="{ width: '20%' }"
       />
     </w-card>
 
@@ -134,7 +137,8 @@ export default defineComponent({
         bordered
         :column="2"
         :items="DevDepItems"
-        :label-style="{ width: '400px' }"
+        :label-style="{ width: '30%' }"
+        :content-style="{ width: '20%' }"
       />
     </w-card>
   </div>
