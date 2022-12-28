@@ -9,19 +9,21 @@ export default defineComponent({
 
   emits: [],
 
-  setup(props, ctx) {},
+  setup(props, ctx) { },
 })
 </script>
 
 <template>
-  <w-card header-preset="collapse">
-    <template #header>
-      <w-title :help-message="description">
-        {{ title }}
-      </w-title>
-    </template>
-    <template #default>
-      <slot />
-    </template>
-  </w-card>
+  <div>
+    <w-card header-preset="collapse">
+      <template #header>
+        <w-title :help-message="description">
+          {{ title }}
+        </w-title>
+      </template>
+      <template #default>
+        <slot />
+      </template>
+    </w-card>
+  </div>
 </template>
