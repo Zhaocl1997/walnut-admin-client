@@ -70,25 +70,22 @@
     ],
     "description": "vue3 tsx template"
   },
-  "vue-setup": {
-    "scope": "vue",
-    "prefix": "vue3-setup",
+  "vue3-setup": {
+    "prefix": "v3setup",
     "body": [
+      "<script lang=\"ts\" setup>",
+      "",
+      "</script>",
+      "",
       "<template>",
-      "  <div>Vue3-View</div>",
+      "  <div></div>",
       "</template>",
       "",
-      "<script lang='ts' setup>",
-      "  const state = ref()",
-      "</script>",
+      "<style lang=\"less\" scoped>",
       "",
-      "<script lang='ts'>",
-      "  export default defineComponent({",
-      "    name: 'Name',",
-      "  })",
-      "</script>",
-    ],
-    "description": "vue3 setup template"
+      "</style>",
+      ""
+    ]
   },
   "walnut-form-basic": {
     "prefix": "w-form-basic",

@@ -19,8 +19,7 @@ const onInitialStateWithSendBeacon = () => {
         ip: userProfile.info.ip,
         // @ts-expect-error
         netType: navigator.connection.effectiveType,
-        // @ts-expect-error
-        platform: navigator.userAgentData.platform,
+        platform: navigator.platform,
         vp: `${window.innerWidth} * ${window.innerHeight}`,
         sr: `${window.screen.width} * ${window.screen.height}`,
         auth: !!userAuth.accessToken,
