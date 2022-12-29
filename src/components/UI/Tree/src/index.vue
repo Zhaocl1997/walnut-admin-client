@@ -1,23 +1,22 @@
 <script lang="tsx" setup>
-import type { DropdownOption, TreeOption, TreeProps } from 'naive-ui'
+import type { DropdownOption, TreeInst, TreeOption, TreeProps } from 'naive-ui'
 import type { TreeRenderProps } from 'naive-ui/lib/tree/src/interface'
 import type { HTMLAttributes } from 'vue'
 
-import { treeToArr } from 'easy-fns-ts'
+import { formatTree, treeToArr } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 import type { WTree } from './types'
 
-// TODO 99
 import WIcon from '@/components/UI/Icon'
 import WButton from '@/components/UI/Button'
 import WTransition from '@/components/Extra/Transition'
 
 import { useDropdown } from '@/components/UI/Dropdown'
 
-// TODO 888
-interface WTreeEmits extends WTree.Emit.Entry {}
+interface WTreeEmits extends WTree.Emit.Entry { }
 
-// TODO 888
+type TreeKey = StringOrNumber
+
 interface InternalProps {
   treeProps?: TreeProps
   value?: string | number | string[] | number[]
@@ -42,30 +41,21 @@ const emit = defineEmits<WTreeEmits>()
 
 const { t } = useAppI18n()
 
+const { setProps, getProps } = usePropsAdvanced<WTree.Props>(props)
+
 const userPermission = useAppStoreUserPermission()
 
-const state = ref<{
-  selectedKeys: StringOrNumber[] | undefined
-  checkedKeys: StringOrNumber[] | undefined
-  indeterminateKeys: StringOrNumber[] | undefined
-  expandedKeys: StringOrNumber[] | undefined
-  pattern: string | undefined
-  expandAll: boolean
-  checkAll: boolean
-  currentTarget: Recordable
-  copyTarget: Recordable
-}>({
-  selectedKeys: [],
-  checkedKeys: [],
-  // TODO indeterminateKeys hard to manage
-  indeterminateKeys: undefined,
-  expandedKeys: undefined,
-  pattern: undefined,
-  expandAll: false,
-  checkAll: false,
-  currentTarget: {},
-  copyTarget: {},
-})
+const nTreeRef = ref<TreeInst>()
+const selectedKeys = ref<TreeKey[]>([])
+const checkedKeys = ref<TreeKey[]>([])
+const indeterminateKeys = ref<TreeKey[]>([])
+const expandedKeys = ref<TreeKey[]>()
+const pattern = ref<string>()
+const expandAll = ref<boolean>(false)
+const checkAll = ref<boolean>(false)
+const cascade = ref(true)
+const copyTarget = ref({})
+const currentTarget = ref({})
 
 const toolbarOptions = computed((): DropdownOption[] => [
   {
@@ -77,18 +67,18 @@ const toolbarOptions = computed((): DropdownOption[] => [
         key: 'expand',
         label: t('app.button.expand'),
         icon: () => (
-            <WIcon height="20" icon="mdi:arrow-expand-vertical"></WIcon>
+          <WIcon height="20" icon="mdi:arrow-expand-vertical"></WIcon>
         ),
-        disabled: state.value.expandAll,
+        disabled: expandAll.value,
       },
 
       {
         key: 'collapse',
         label: t('app.button.collapse'),
         icon: () => (
-            <WIcon height="20" icon="mdi:arrow-collapse-vertical"></WIcon>
+          <WIcon height="20" icon="mdi:arrow-collapse-vertical"></WIcon>
         ),
-        disabled: !state.value.expandAll,
+        disabled: !expandAll.value,
       },
     ],
   },
@@ -102,13 +92,13 @@ const toolbarOptions = computed((): DropdownOption[] => [
         key: 'check',
         label: t('app.button.check'),
         icon: () => <WIcon height="20" icon="mdi:select-all"></WIcon>,
-        disabled: state.value.checkAll || !getProps.value.multiple,
+        disabled: checkAll.value || !getProps.value.multiple,
       },
       {
         key: 'inverse',
         label: t('app.button.inverse'),
         icon: () => <WIcon height="20" icon="mdi:select-inverse"></WIcon>,
-        disabled: !state.value.checkAll || !getProps.value.multiple,
+        disabled: !checkAll.value || !getProps.value.multiple,
       },
     ],
   },
@@ -122,19 +112,19 @@ const toolbarOptions = computed((): DropdownOption[] => [
         key: 'cascade',
         label: t('app.button.cascade'),
         icon: () => (
-            <WIcon height="20" icon="carbon:checkbox-indeterminate"></WIcon>
+          <WIcon height="20" icon="carbon:checkbox-indeterminate"></WIcon>
         ),
         disabled:
-            getProps.value.treeProps!.cascade || !getProps.value.multiple,
+          !getProps.value.multiple || cascade.value,
       },
       {
         key: 'independent',
         label: t('app.button.independent'),
         icon: () => (
-            <WIcon height="20" icon="carbon:checkbox-checked"></WIcon>
+          <WIcon height="20" icon="carbon:checkbox-checked"></WIcon>
         ),
         disabled:
-            !getProps.value.treeProps!.cascade || !getProps.value.multiple,
+          !getProps.value.multiple || !cascade.value,
       },
     ],
   },
@@ -144,38 +134,34 @@ const contextMenuOptions = computed((): DropdownOption[] => [
   {
     key: 'copy',
     label: t('app.button.copy'),
-    disabled: !!state.value.copyTarget[getKeyField.value],
+    disabled: !!copyTarget.value[getKeyField.value],
     icon: () => <WIcon height="20" icon="mdi:content-copy"></WIcon>,
   },
   {
     key: 'paste',
     label: t('app.button.paste'),
-    disabled: !state.value.copyTarget[getKeyField.value],
+    disabled: !copyTarget.value[getKeyField.value],
     icon: () => <WIcon height="20" icon="mdi:content-paste"></WIcon>,
   },
 ])
 
 const getKeyField = computed(() => getProps.value.treeProps!.keyField!)
 
-const getShowCopyMsg = computed(
-  () => !getProps.value.multiple && state.value.copyTarget[getKeyField.value],
-)
-
-const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
+const [registerCtx, { openDropdown, closeDropdown }] = useDropdown({
   dropdownProps: {
     options: contextMenuOptions,
     onSelect: (key) => {
       if (key === 'copy')
-        state.value.copyTarget = cloneDeep(toRaw(state.value.currentTarget))
+        copyTarget.value = cloneDeep(toRaw(currentTarget.value))
 
       if (key === 'paste') {
         getProps.value.onPaste!(
-          toRaw(state.value.copyTarget),
-          toRaw(state.value.currentTarget),
+          toRaw(copyTarget.value),
+          toRaw(currentTarget.value),
         )
 
         nextTick(() => {
-          state.value.copyTarget = {}
+          copyTarget.value = {}
         })
       }
 
@@ -184,59 +170,79 @@ const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
   },
 })
 
-const { setProps, getProps } = usePropsAdvanced<WTree.Props>(props)
+const getCombinedKeys = computed(() => checkedKeys.value.concat(indeterminateKeys.value))
 
-const onSelectedKeys = (keys: StringOrNumber[]) => {
+const onSelectedKeys = (keys: TreeKey[]) => {
+  selectedKeys.value = keys
   if (!getProps.value.multiple)
     emit('update:value', keys[0])
 }
 
-const onCheckedKeys = (keys: StringOrNumber[]) => {
+const onCheckedKeys = (keys: TreeKey[]) => {
+  checkedKeys.value = keys
   if (getProps.value.multiple)
-    emit('update:value', keys)
+    emit('update:value', getCombinedKeys.value)
+}
+
+const onUpdateIndeterminateKeys = (keys: TreeKey[]) => {
+  indeterminateKeys.value = keys
+  if (getProps.value.multiple)
+    emit('update:value', getCombinedKeys.value)
 }
 
 const onToolbarSelect = (key: string) => {
   if (key === 'expand') {
-    state.value.expandedKeys = treeToArr(
+    expandedKeys.value = treeToArr(
       cloneDeep(getProps.value.treeProps!.data!),
     ).map(i => i[getKeyField.value]) as string[]
 
-    state.value.expandAll = true
+    expandAll.value = true
   }
 
   if (key === 'collapse') {
-    state.value.expandedKeys = []
+    expandedKeys.value = []
 
-    state.value.expandAll = false
+    expandAll.value = false
   }
 
   if (key === 'check') {
-    state.value.checkedKeys = treeToArr(
+    checkedKeys.value = treeToArr(
       cloneDeep(getProps.value.treeProps!.data!),
     ).map(i => i[getKeyField.value]) as string[]
 
-    state.value.checkAll = true
+    checkAll.value = true
 
-    onCheckedKeys(state.value.checkedKeys)
+    onCheckedKeys(checkedKeys.value)
   }
 
   if (key === 'inverse') {
-    state.value.checkedKeys = []
+    checkedKeys.value = []
 
-    state.value.checkAll = false
+    checkAll.value = false
 
-    onCheckedKeys(state.value.checkedKeys)
+    onCheckedKeys(checkedKeys.value)
   }
 
   if (key === 'cascade') {
-    // TODO after change, need to emit value as well
-    setProps({ treeProps: { cascade: true } })
+    checkedKeys.value = []
+    indeterminateKeys.value = []
+
+    cascade.value = true
+
+    onFeecback()
+
+    onCheckedKeys(checkedKeys.value)
   }
 
   if (key === 'independent') {
-    // TODO after change, need to emit value as well
-    setProps({ treeProps: { cascade: false } })
+    checkedKeys.value = []
+    indeterminateKeys.value = []
+
+    cascade.value = false
+
+    onFeecback()
+
+    onCheckedKeys(checkedKeys.value)
   }
 }
 
@@ -244,26 +250,31 @@ const nodeProps = ({ option }: { option: TreeOption }) => {
   return {
     onContextmenu: getProps.value.presetContextMenu
       ? (e: MouseEvent) => {
-          emit('update:value', option[getKeyField.value] as string)
-
-          state.value.currentTarget = option
-          openDropdown(e)
           e.preventDefault()
+
+          if (!getProps.value.multiple)
+            emit('update:value', option[getKeyField.value] as string)
+
+          currentTarget.value = option
+          openDropdown(e)
         }
       : undefined,
   } as HTMLAttributes
 }
 
 const onRenderPrefix = ({ option }: TreeRenderProps) => {
-  return (
+  return getProps.value.presetPrefixIcon
+    ? (
       <WIcon icon={option.icon as string} height="18" class="mb-0.5"></WIcon>
-  )
+      )
+    : undefined
 }
 
 const onRenderSuffix = ({ option }: TreeRenderProps) => {
-  return (
+  return (getProps.value.treeProps?.draggable || getProps.value.deletable)
+    ? (
       <WTransition name="fade-right">
-        {getProps.value.value === option[getKeyField.value] && (
+        {selectedKeys.value[0] === option[getKeyField.value] && (
           <div class="flex items-center">
             {getProps.value.treeProps!.draggable
               && userPermission.hasPermission(getProps.value.auths?.update) && (
@@ -291,20 +302,59 @@ const onRenderSuffix = ({ option }: TreeRenderProps) => {
           </div>
         )}
       </WTransition>
-  )
+      )
+    : undefined
 }
+
+const getBottomChildKeys = computed(() => {
+  const res: TreeKey[] = []
+
+  formatTree(getProps.value.treeProps?.data!, {
+    format: (node) => {
+      if (!node[getProps.value.treeProps?.childrenField || 'children'])
+        res.push(node[getKeyField.value] as string)
+    },
+  })
+
+  return res
+})
+
+const onFeecback = () => {
+  if (getProps.value.multiple) {
+    if (cascade.value) {
+      checkedKeys.value = (getProps.value.value as TreeKey[])?.filter(i => getBottomChildKeys.value.includes(i))
+      indeterminateKeys.value = (getProps.value.value as TreeKey[])?.filter(i => !getBottomChildKeys.value.includes(i))
+
+      nextTick(() => {
+        checkedKeys.value = nTreeRef.value?.getCheckedData().keys!
+        indeterminateKeys.value = nTreeRef.value?.getIndeterminateData().keys!
+      })
+    }
+    else {
+      checkedKeys.value = getProps.value.value as TreeKey[]
+    }
+  }
+  else { selectedKeys.value = [getProps.value.value] as TreeKey[] }
+}
+
+watch(
+  () => getProps.value.value,
+  (v) => {
+    if (!v)
+      return
+
+    onFeecback()
+  },
+  {
+    deep: true,
+    immediate: true,
+  },
+)
 
 emit('hook', { setProps })
 
 defineExpose<WTree.Inst.WTreeInst>({
   setProps,
-})
-
-watchEffect(() => {
-  if (getProps.value.multiple)
-    state.value.checkedKeys = getProps.value.value as StringOrNumber[]
-  else
-    state.value.selectedKeys = [getProps.value.value] as StringOrNumber[]
 })
 </script>
 
@@ -317,65 +367,30 @@ export default defineComponent({
 <template>
   <div class="w-full">
     <n-input
-      v-if="getProps.toolbar"
-      v-model:value="state.pattern"
-      style="width: 90% !important"
-      class="ml-4 mb-2"
-      clearable
-      round
-      size="small"
-      :disabled="getProps.treeProps?.disabled"
+      v-if="getProps.toolbar" v-model:value="pattern" style="width: 90% !important" class="ml-4 mb-2" clearable
+      round size="small" :disabled="getProps.treeProps?.disabled"
     >
       <template #suffix>
         <n-dropdown
-          trigger="hover"
-          :options="toolbarOptions"
-          show-arrow
-          size="small"
-          :disabled="getProps.treeProps?.disabled"
-          @select="onToolbarSelect"
+          trigger="hover" :options="toolbarOptions" show-arrow size="small"
+          :disabled="getProps.treeProps?.disabled" @select="onToolbarSelect"
         >
-          <WIcon
-            height="20"
-            icon="ant-design:more-outlined"
-            class="cursor-pointer"
-          />
+          <WIcon height="20" icon="ant-design:more-outlined" class="cursor-pointer" />
         </n-dropdown>
       </template>
     </n-input>
 
-    <WTransition appear>
-      <n-alert
-        v-if="getShowCopyMsg"
-        type="warning"
-        closable
-        class="my-2"
-        @close="state.copyTarget = {}"
-      >
-        {{ t('comp.tree.copy.msg') }}
-      </n-alert>
-    </WTransition>
-
     <w-scrollbar :height="getProps.maxHeight ?? 'auto'">
       <n-tree
-        v-bind="getProps.treeProps"
-        v-model:selected-keys="state.selectedKeys"
-        v-model:checked-keys="state.checkedKeys"
-        v-model:expanded-keys="state.expandedKeys"
-        :checkable="getProps.multiple"
-        :pattern="state.pattern"
-        :node-props="nodeProps"
-        :render-prefix="getProps.presetPrefixIcon ? onRenderPrefix : undefined"
-        :render-suffix="
-          getProps.treeProps?.draggable || getProps.deletable
-            ? onRenderSuffix
-            : undefined
-        "
-        @update:selected-keys="onSelectedKeys"
-        @update:checked-keys="onCheckedKeys"
+        ref="nTreeRef" :style="{ height: getProps.maxHeight }" v-bind="getProps.treeProps" :cascade="cascade"
+        :selected-keys="selectedKeys" :checked-keys="checkedKeys" :expanded-keys="expandedKeys"
+        :indeterminate-keys="indeterminateKeys" :checkable="getProps.multiple" :pattern="pattern"
+        :node-props="nodeProps" :render-prefix="onRenderPrefix" :render-suffix="onRenderSuffix"
+        @update:selected-keys="onSelectedKeys" @update:checked-keys="onCheckedKeys"
+        @update:indeterminate-keys="onUpdateIndeterminateKeys"
       />
     </w-scrollbar>
 
-    <w-dropdown @hook="registerDropdown" />
+    <w-dropdown @hook="registerCtx" />
   </div>
 </template>
