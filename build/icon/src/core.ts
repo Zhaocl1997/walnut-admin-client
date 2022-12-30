@@ -1,48 +1,63 @@
 import { generateIconUsedBundle } from '../generate/icon-bundle'
-import { generateIconBundleImport } from '../generate/icon-import'
-import { cleanArr, generateIconList } from '../generate/icon-list'
-import { generateIconsUsed } from '../generate/icon-scan'
-import { generateIconSvg } from '../generate/icon-svg'
+import { generateIconListAll } from '../generate/icon-list-all'
+import { generateIconListScan } from '../generate/icon-list-scan'
+import { generateSvgJSON } from '../generate/icon-svg-json'
 import { generateIconDevBundle } from '../generate/icon-bundle-dev'
+import { rewriteSvgJSON, writeSvgJSONBundle } from '../generate/icon-svg-bundle'
+import { BuildUtilsWarn } from '../../utils'
 import { IconBundleConfig } from './config'
 (async () => {
   const arg = process.argv.slice(-1)[0]
 
-  // always excute the custom svg bundle logic
-  await generateIconSvg()
-
-  // call this first, we need `icon-list` and `icon-list-pool` file
-  // the `icon-list` file would be modified after if `treeshake` is on
-  await generateIconList()
+  // always excute the logic to transform custom svg icons into iconify json
+  await generateSvgJSON()
 
   // dev env, just bundle all collection icons
   if (arg === 'dev') {
+    // TODO dev
+    // TODO menu icon
     // when dev, just import json from `node_modules` and call `addCollection` api
     await generateIconDevBundle()
   }
   else {
-    // below handle prod logic
-    // handle on demand usage
-    if (IconBundleConfig.treeshake) {
-      // only bundle icons used in project
-      await generateIconsUsed()
+    if (IconBundleConfig.online) {
+      // online but not treeshake
+      if (!IconBundleConfig.treeshake) {
+        // Step 1 - Icon List should be all
+        await generateIconListAll()
+      }
 
-      // bundle used, and offline usage, need to call `addCollections` api
-      if (!IconBundleConfig.online)
-        await generateIconUsedBundle()
+      // online also treeshake
+      if (IconBundleConfig.treeshake) {
+        // Step 1 - Use fast-glob to scan and write the used icon into icon list
+        await generateIconListScan()
+
+        // Step 2 - Used last step generated icon list to rewrite the svg json file
+        await rewriteSvgJSON()
+      }
+
+      // Add svg icons with `addCollection`
+      await writeSvgJSONBundle()
     }
     else {
-      // offline usage and not on demand bundle
-      // this is the MOST unrecommended way to bundle icon
-      // if you choose 4 or 5 collections, the bundle icon file size woulb increase to 10m
-      // which is very awful
-      await generateIconUsedBundle()
+      // not online and not treeshake
+      // WARNING - highly not recommended to do so
+      // cause it will bundle all icons into final output which would increase the bundle size a lot
+      if (!IconBundleConfig.treeshake) {
+        // not recomended to do so
+        BuildUtilsWarn('Not online and Not treeshake \n WARNING - It\'s highly not recommended to do so \n Cause it will bundle all icons into final output which would increase the bundle size a lot \n Normally more than 1MB')
+        process.exitCode = 1
+      }
+
+      // not online but treeshake
+      if (IconBundleConfig.treeshake) {
+        // Step 1 - Use fast-glob to scan and write the used icon into icon list
+        await generateIconListScan()
+
+        // Step 2 - Excute the iconify bundle logic from
+        // https://docs.iconify.design/icon-components/bundles/examples/component-full.html
+        await generateIconUsedBundle()
+      }
     }
   }
-
-  // always need to excute bundle import logic
-  // no matter what kind of usage you are using
-  await generateIconBundleImport(arg)
-
-  cleanArr()
 })()

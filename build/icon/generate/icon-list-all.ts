@@ -9,17 +9,12 @@ import {
   IconLog,
   WSvgPrefix,
   iconListPath,
-  iconListPoolPath,
   iconSVGPath,
 } from '../src'
 
-export let tempIconArr: string[] = []
+export const getIconListAllArray = async () => {
+  let arr: string[] = []
 
-export const cleanArr = () => {
-  tempIconArr = []
-}
-
-export const generateIconList = async () => {
   const allCollectionPaths = await fg(
     'node_modules/@iconify/json/json/*.json',
     {},
@@ -43,19 +38,22 @@ export const generateIconList = async () => {
 
       const iconArr = iconSet.list().map(i => `${fileJSON.prefix}:${i}`)
 
-      tempIconArr = tempIconArr.concat(iconArr)
+      arr = arr.concat(iconArr)
     }),
   )
 
-  const str = JSON.stringify(tempIconArr)
+  return arr
+}
+
+export const generateIconListAll = async () => {
+  const arr = await getIconListAllArray()
+
+  const str = JSON.stringify(arr)
 
   await BuildUtilsWriteFile(iconListPath, `export default ${str}`)
 
-  // this is the pool for the maybe scan usage, would not update anymore in later actions
-  await BuildUtilsWriteFile(iconListPoolPath, `export default ${str}`)
-
   IconLog(
     'Icon List',
-    `Generating icon list... Total number: ${tempIconArr.length}, writing into file: ${iconListPath}`,
+    `Generating icon list... Total number: ${arr.length}, writing into file: ${iconListPath}`,
   )
 }

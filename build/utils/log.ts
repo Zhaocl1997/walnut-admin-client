@@ -14,6 +14,10 @@ export const BuildUtilsLog = (msg: string, stage = 'Log') => {
   console.log(`${title(stage)}: ${msg}`)
 }
 
+export const BuildUtilsWarn = (warns: string) => {
+  console.warn(chalk.yellow(`[${pkg.name.toUpperCase()} Warning] - [${getNow()}] \n ${warns}`))
+}
+
 export const writeIntoLog = (title: string, command: string, path: string) => {
   const prefix = (msg: string, emoji: string) =>
     `
@@ -42,6 +46,7 @@ export const writeIntoLog = (title: string, command: string, path: string) => {
     BuildUtilsLog(chalk.blue(`${title} done in ${cost}s`))
 
     if (error) {
+      process.exitCode = 1
       log_file.write(
         prefix('Error', '😈😈😈😈😈') + JSON.stringify(error),
         () => {

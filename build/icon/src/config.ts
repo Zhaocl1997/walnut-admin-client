@@ -2,9 +2,11 @@ import type { IconConfig } from './types'
 import { WSvgPrefix } from './prefix'
 
 export const IconBundleConfig: IconConfig = {
-  online: false,
+  online: true,
 
-  treeshake: true,
+  treeshake: false,
+
+  cache: false,
 
   list: [
     WSvgPrefix, // this is custom svg icons

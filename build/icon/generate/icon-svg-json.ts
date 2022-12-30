@@ -8,7 +8,7 @@ import {
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
 import { IconLog, WSvgPrefix, iconSVGPath } from '../src'
 
-export const generateIconSvg = async () => {
+export const generateSvgJSON = async (whiteList?: string[]) => {
   // build the empty json file
   await BuildUtilsWriteFile(
     iconSVGPath,
@@ -24,6 +24,10 @@ export const generateIconSvg = async () => {
   await iconSet.forEach(async (name, type) => {
     if (type !== 'icon')
       return
+
+    // white list limit
+    if (whiteList && !whiteList.includes(name))
+      iconSet.remove(name)
 
     const svg = iconSet.toSVG(name)
     if (!svg) {
@@ -61,38 +65,25 @@ export const generateIconSvg = async () => {
     iconSet.fromSVG(name, svg)
   })
 
-  // Export all icons
-  // await iconSet.forEach(async (name) => {
-  //   const svg = iconSet.toString(name)
-  //   if (!svg) {
-  //     return
-  //   }
-
-  //   // Save to file
-  //   await fs.writeFile(`.svg/${name}.svg`, svg, 'utf8')
-  //   console.log(`Saved .svg/${name}.svg (${svg.length} bytes)`)
-  // })
-
-  IconLog(
-    'Icon SVG',
-    `Detecting ${iconSet.count()} custom svg icon, writing into file: ${iconSVGPath}`,
-  )
+  const data = JSON.parse(await BuildUtilsReadFile(iconSVGPath))
 
   // Generate to icon list
-  await iconSet.forEach(async (name) => {
-    const data = await BuildUtilsReadFile(iconSVGPath)
-
-    const svgObj = JSON.parse(data.toString())
-
+  await iconSet.forEach((name) => {
     // auto remove width and height
     const body = String(iconSet.toString(name))
       .replaceAll(/width="(.[0-9]*)"/gi, '')
       .replaceAll(/height="(.[0-9]*)"/gi, '')
 
-    svgObj.icons[name] = {
+    data.icons[name] = {
       body,
     }
-
-    await BuildUtilsWriteFile(iconSVGPath, JSON.stringify(svgObj, null, 2))
   })
+
+  // write into json
+  await BuildUtilsWriteFile(iconSVGPath, JSON.stringify(data, null, 2))
+
+  IconLog(
+    'Icon SVG',
+    `Detecting ${iconSet.count()} custom svg icon, writing into file: ${iconSVGPath}`,
+  )
 }

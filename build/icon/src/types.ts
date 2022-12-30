@@ -3,5 +3,7 @@ export interface IconConfig {
 
   treeshake: boolean
 
+  cache: boolean
+
   list: string[]
 }

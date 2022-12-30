@@ -1,9 +1,12 @@
 import fg from 'fast-glob'
 
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
-import { IconLog, iconListPath, iconListPoolPath } from '../src/index'
+import { IconLog, iconListPath } from '../src/index'
+import { getIconListAllArray } from './icon-list-all'
 
-export const generateIconsUsed = async () => {
+export const generateIconListScan = async () => {
+  const iconPool = await getIconListAllArray()
+
   const files = await fg('src/**/*.{vue,ts,tsx}', { dot: true })
 
   IconLog(
@@ -13,17 +16,11 @@ export const generateIconsUsed = async () => {
 
   const buffers = await Promise.all(files.map(i => BuildUtilsReadFile(i)))
 
-  const iconPools = await BuildUtilsReadFile(iconListPoolPath)
-
-  const allIconsArr = Array.from<string>(
-    JSON.parse(iconPools.replace('export default ', '')),
-  )
-
   const ret = [
     ...new Set(
       buffers
         .map(i =>
-          allIconsArr
+          iconPool
             .map(q => i.toString().match(new RegExp(q, 'gm')))
             .filter(i => i),
         )

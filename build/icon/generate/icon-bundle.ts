@@ -35,8 +35,8 @@ import {
 } from '../src'
 
 /**
- * Script configuration
- */
+* Script configuration
+*/
 interface BundleScriptCustomSVGConfig {
   // Path to SVG files
   dir: string
