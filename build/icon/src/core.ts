@@ -2,7 +2,7 @@ import { generateIconUsedBundle } from '../generate/icon-bundle'
 import { generateIconListAll } from '../generate/icon-list-all'
 import { generateIconListScan } from '../generate/icon-list-scan'
 import { generateSvgJSON } from '../generate/icon-svg-json'
-import { generateIconDevBundle } from '../generate/icon-bundle-dev'
+import { generateIconDev } from '../generate/icon-dev'
 import { rewriteSvgJSON, writeSvgJSONBundle } from '../generate/icon-svg-bundle'
 import { BuildUtilsWarn } from '../../utils'
 import { IconBundleConfig } from './config'
@@ -14,10 +14,9 @@ import { IconBundleConfig } from './config'
 
   // dev env, just bundle all collection icons
   if (arg === 'dev') {
-    // TODO dev
-    // TODO menu icon
     // when dev, just import json from `node_modules` and call `addCollection` api
-    await generateIconDevBundle()
+    // also generate icon list from imported jsons
+    await generateIconDev()
   }
   else {
     if (IconBundleConfig.online) {
