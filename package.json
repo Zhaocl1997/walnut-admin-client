@@ -16,6 +16,10 @@
   "bugs": {
     "url": "https://github.com/Zhaocl1997/walnut-admin-client/issues"
   },
+  "urls": {
+    "doc": "https://walnut-admin-doc.netlify.app",
+    "demo": "https://www.walnut-admin.com"
+  },
   "scripts": {
     "predev": "esno build/generate/index.ts && npm run icon:dev",
     "dev": "vite",
@@ -51,8 +55,8 @@
     "@codemirror/view": "6.7.1",
     "@fingerprintjs/fingerprintjs": "3.3.6",
     "@tinymce/tinymce-vue": "5.0.0",
-    "@vueuse/core": "9.6.0",
-    "@vueuse/integrations": "9.6.0",
+    "@vueuse/core": "9.9.0",
+    "@vueuse/integrations": "9.9.0",
     "ali-oss": "6.17.1",
     "animate.css": "4.1.1",
     "axios": "0.21.1",

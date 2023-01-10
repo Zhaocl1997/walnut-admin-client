@@ -1,18 +1,19 @@
 import { getNow } from 'easy-fns-ts'
-import { appName } from '../constant/prefix'
+
+const { name } = __APP_INFO__
 
 export const AppLog = (msg: string | unknown) => {
-  console.log(`[${appName}] [${getNow()}]`, msg)
+  console.log(`[${name}] [${getNow()}]`, msg)
 }
 
 export const AppInfo = (msg: string | unknown) => {
-  console.info(`[${appName}] [${getNow()}]`, msg)
+  console.info(`[${name}] [${getNow()}]`, msg)
 }
 
 export const AppWarn = (msg: string | unknown) => {
-  console.warn(`[${appName}] [${getNow()}]`, msg)
+  console.warn(`[${name}] [${getNow()}]`, msg)
 }
 
 export const AppError = (msg: string | unknown) => {
-  console.error(`[${appName}] [${getNow()}]`, msg)
+  console.error(`[${name}] [${getNow()}]`, msg)
 }

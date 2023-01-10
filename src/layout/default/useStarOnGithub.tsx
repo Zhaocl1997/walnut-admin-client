@@ -1,6 +1,6 @@
 export const useStarOnGithub = () => {
   const onClick = () => {
-    openExternalLink(URLS.projectGithub)
+    openExternalLink(__APP_INFO__.urls.github)
   }
 
   useAppNotiInfo('', {

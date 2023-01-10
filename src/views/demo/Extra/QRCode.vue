@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const getUrl = () => `https://www.baidu.com/?t=${Date.now()}`
 
-const url = ref(URLS.docUrl)
+const url = ref(__APP_INFO__.urls.doc)
 
 const url2 = ref(getUrl())
 const success = ref(false)

@@ -1,17 +1,16 @@
 <script lang="ts" setup>
 import type { WDescriptionsItem } from '@/components/UI/Descriptions'
-import pkg from '/package.json'
 
 const { t } = useAppI18n()
 
-const { lastBuildTime } = __APP_INFO__
+const { lastBuildTime, version, deps, devDeps, urls } = __APP_INFO__
 
 const infoItems = computed<WDescriptionsItem[]>(
   () =>
     [
       {
         label: t('desc.about.info.version'),
-        value: pkg.version,
+        value: version,
         type: 'tag',
         typeProps: {
           type: 'primary',
@@ -23,7 +22,7 @@ const infoItems = computed<WDescriptionsItem[]>(
         type: 'link',
         typeProps: {
           type: 'primary',
-          link: URLS.docUrl,
+          link: urls.doc,
         },
       },
       {
@@ -32,7 +31,7 @@ const infoItems = computed<WDescriptionsItem[]>(
         type: 'link',
         typeProps: {
           type: 'primary',
-          link: URLS.onlinePreview,
+          link: urls.demo,
         },
       },
       {
@@ -41,7 +40,7 @@ const infoItems = computed<WDescriptionsItem[]>(
         type: 'link',
         typeProps: {
           type: 'primary',
-          link: URLS.myGithub,
+          link: urls.github,
         },
       },
       {
@@ -56,7 +55,7 @@ const infoItems = computed<WDescriptionsItem[]>(
 )
 
 const DepItems = ref<WDescriptionsItem[]>(
-  Object.entries(pkg.dependencies).map(([k, v]) => ({
+  Object.entries(deps).map(([k, v]) => ({
     label: k,
     value: v,
     type: 'link',
@@ -65,7 +64,7 @@ const DepItems = ref<WDescriptionsItem[]>(
 )
 
 const DevDepItems = ref<WDescriptionsItem[]>(
-  Object.entries(pkg.devDependencies).map(([k, v]) => ({
+  Object.entries(devDeps).map(([k, v]) => ({
     label: k,
     value: v,
     type: 'link',

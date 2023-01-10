@@ -3,6 +3,8 @@ import type { ConfigEnv, UserConfig } from 'vite'
 
 import { loadEnv, splitVendorChunkPlugin } from 'vite'
 
+import packageInfo from './package.json'
+
 import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
 import { envDir, publicDir } from './build/constant'
@@ -14,6 +16,14 @@ function pathResolve(dir: string) {
 }
 
 const __APP_INFO__ = {
+  name: packageInfo.name,
+  version: packageInfo.version,
+  deps: packageInfo.dependencies,
+  devDeps: packageInfo.devDependencies,
+  urls: Object.assign(packageInfo.urls, {
+    github: packageInfo.repository.url,
+    author: packageInfo.author.url,
+  }),
   lastBuildTime: new Date().toLocaleDateString(),
 }
 

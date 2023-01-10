@@ -40,10 +40,10 @@ const dropdownOptions = computed<DropdownMixedOption[]>(() => [
 
 const onSelect = async (val: string) => {
   if (val === '1')
-    openExternalLink(URLS.docUrl)
+    openExternalLink(__APP_INFO__.urls.doc)
 
   if (val === '2')
-    openExternalLink(URLS.projectGithub)
+    openExternalLink(__APP_INFO__.urls.github)
 
   if (val === '3')
     useAppRouterPush({ name: 'AccountSetting' })

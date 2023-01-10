@@ -52,5 +52,15 @@ declare type DeepMaybeRefSelf<T> = T extends Ref<infer V>
   : MaybeRefSelf<T>
 
 const __APP_INFO__: {
+  name: string
+  version: string
+  deps: Recordable<string>
+  devDeps: Recordable<string>
+  urls: {
+    doc: string
+    demo: string
+    github: string
+    author: string
+  }
   lastBuildTime: string
 }
