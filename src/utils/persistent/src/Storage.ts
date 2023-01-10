@@ -1,20 +1,29 @@
 const { persist } = useAppEnv('seconds')
 
+interface AppStorageOptions {
+  storage?: typeof localStorage | typeof sessionStorage
+  expire?: number
+  encrypt?: boolean
+  usePresetKey?: boolean
+}
+
 // app storage
 // default cache 7 days
 // defualt only encrypt in prod
 export const useAppStorage = <T>(
   key: string,
   initialValue: MaybeComputedRef<T>,
-  expire: number = +persist! * 1000,
-  storage = localStorage,
+  options: AppStorageOptions = {},
 ) => {
-  const wholeKey = `${storagePrefix}__${key
+  const { storage = localStorage, expire = +persist! * 1000, encrypt = isProd(), usePresetKey = true } = options
+
+  const getKey = usePresetKey
+    ? `${storagePrefix}__${key
     .replaceAll('-', '_')
     .toLocaleUpperCase()}__`
-  const encrypt = isProd()
+    : key
 
-  return useStorage<T>(wholeKey, initialValue, storage, {
+  return useStorage<T>(getKey, initialValue, storage, {
     serializer: {
       read: (val) => {
         if (!val)
@@ -25,7 +34,7 @@ export const useAppStorage = <T>(
         )
 
         if (!decryptValue) {
-          storage.removeItem(wholeKey)
+          storage.removeItem(getKey)
           return null
         }
 
@@ -37,15 +46,15 @@ export const useAppStorage = <T>(
           return v
         }
         else {
-          storage.removeItem(wholeKey)
+          storage.removeItem(getKey)
           return null
         }
       },
 
-      write: (v) => {
+      write: (val) => {
         let ex
 
-        const target = storage.getItem(wholeKey)
+        const target = storage.getItem(getKey)
 
         if (target) {
           const d = encrypt ? AppPersistEncryption.decrypt(target) : target
@@ -53,8 +62,8 @@ export const useAppStorage = <T>(
         }
 
         const str = JSON.stringify({
-          v,
-          e: ex ?? new Date().getTime() + expire,
+          v: val,
+          e: expire === Infinity ? null : ex ?? new Date().getTime() + expire,
         })
 
         return encrypt ? AppPersistEncryption.encrypt(str)! : str

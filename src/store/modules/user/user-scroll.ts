@@ -4,7 +4,7 @@ import { store } from '../../pinia'
 
 const useAppStoreUserScrollInside = defineStore(StoreKeys.USER_SCROLL, {
   state: (): UserScrollState => ({
-    scrollEntries: useAppStorage(AppConstPersistKey.SCROLL, [], Infinity),
+    scrollEntries: useAppStorage(AppConstPersistKey.SCROLL, [], { expire: Infinity }),
   }),
 
   getters: {

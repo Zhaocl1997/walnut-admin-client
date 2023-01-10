@@ -9,12 +9,12 @@ const useAppStoreDarkInside = defineStore(StoreKeys.APP_DARK, {
     darkMode: useAppStorage(
       AppConstPersistKey.DARK_MODE,
       preferredColor.value as ValueOfAppConstDarkMode,
-      Infinity,
+      { expire: Infinity },
     ),
     isDark: useAppStorage(
       AppConstPersistKey.IS_DARK,
       preferredColor.value === AppConstDarkMode.DARK,
-      Infinity,
+      { expire: Infinity },
     ),
   }),
 

@@ -15,8 +15,8 @@ export const useTabsPersistent = () => {
         scope.run(() => {
           const _storaged_tabs = useAppStorage<AppTab[]>(
             AppConstPersistKey.TABS,
-            [],
-            Infinity,
+            appTab.tabs,
+            { expire: Infinity },
           )
 
           watch(
