@@ -2,15 +2,13 @@ import type { UnknownComponents } from '@fingerprintjs/fingerprintjs'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 
 // Initialize an agent at application startup.
-const fpPromise = FingerprintJS.load({ monitoring: false })
-
-export const fpId = useAppStorage(AppConstPersistKey.FP_ID, '')
+export const fpId = useAppStorage(AppConstPersistKey.FP_ID, '', { usePresetKey: false, expire: Infinity })
 
 export const useFingerprint = async () => {
   if (fpId.value)
     return
 
-  const userProfile = useAppStoreUserProfile()
+  const fpPromise = FingerprintJS.load({ monitoring: false })
 
   // Get the visitor identifier when you need it.
   const fp = await fpPromise
@@ -18,12 +16,6 @@ export const useFingerprint = async () => {
 
   const components: UnknownComponents = {
     ...result.components,
-    ua: { value: window.navigator.userAgent, duration: Infinity },
-    ip: { value: userProfile.info.ip, duration: Infinity },
-    country: { value: userProfile.info.country, duration: Infinity },
-    province: { value: userProfile.info.province, duration: Infinity },
-    city: { value: userProfile.info.city, duration: Infinity },
-    area: { value: userProfile.info.area, duration: Infinity },
   }
 
   const visiterId = FingerprintJS.hashComponents(components)
