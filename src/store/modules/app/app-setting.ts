@@ -234,12 +234,6 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
   },
 
   actions: {
-    setSettingsWithKey(options: SetWithKeyOptions) {
-      const { key, value } = options
-      // @ts-expect-error
-      this[key] = Object.assign(this[key], value)
-    },
-
     toggleLeftMenuLayout(val = false) {
       // this.settings.app.showHeader = val
       // this.settings.app.showLogo = val

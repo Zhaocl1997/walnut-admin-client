@@ -34,17 +34,7 @@ const { copy, copied } = useClipboard({
 })
 
 const onReset = () => {
-  keys.forEach((key) => {
-    appSetting.setSettingsWithKey({
-      // @ts-expect-error
-      key,
-      value: settings[key],
-    })
-  })
-
-  // simple and violent
-  // localStorage.clear()
-  window.parent.opener.location.reload()
+  window.location.reload()
 }
 </script>
 
