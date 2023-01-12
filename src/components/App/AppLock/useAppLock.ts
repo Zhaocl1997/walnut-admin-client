@@ -4,7 +4,7 @@ import { AppLockRoute } from '@/router/routes/builtin'
 export const useAppLock = () => {
   let lockScope: EffectScope
 
-  const { currentRoute, addRoute } = useAppRouter()
+  const { currentRoute, addRoute, removeRoute } = useAppRouter()
 
   const appLock = useAppStoreLock()
   const appSetting = useAppStoreSetting()
@@ -110,7 +110,7 @@ export const useAppLock = () => {
                         async (v) => {
                           if (
                             appSetting.app.lockMode
-                              === AppConstLockMode.SECURITY
+                            === AppConstLockMode.SECURITY
                             && !v
                           )
                             await appLock.lock(currentRoute)
@@ -134,6 +134,7 @@ export const useAppLock = () => {
       else {
         appLock.setIsLock(false)
         appLock.setLockRoute({})
+        removeRoute(AppLockName)
         lockScope?.stop()
       }
     },

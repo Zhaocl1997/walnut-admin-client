@@ -1,49 +1,10 @@
-// this is for manual reduce motion
 html[reduced-motion="true"] *,
 ::before,
 ::after {
-  transition-property: none !important;
-  transition-property: none !important;
-  transition-property: none !important;
-  transition-property: none !important;
+  transition-property: none;
+  animation: none;
 
-  // -o-transform: none !important;
-  // -moz-transform: none !important;
-  // -ms-transform: none !important;
-  // -webkit-transform: none !important;
-  // transform: none !important;
-  animation: none !important;
-  animation: none !important;
-  animation: none !important;
-  animation: none !important;
-
-  --animate-duration: 0 !important;
-  --animate-delay: 0 !important;
-  --animate-repeat: 0 !important;
-}
-
-// this is for system reduce motion prefers
-@media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
-    transition-property: none !important;
-    transition-property: none !important;
-    transition-property: none !important;
-    transition-property: none !important;
-
-    // -o-transform: none !important;
-    // -moz-transform: none !important;
-    // -ms-transform: none !important;
-    // -webkit-transform: none !important;
-    // transform: none !important;
-    animation: none !important;
-    animation: none !important;
-    animation: none !important;
-    animation: none !important;
-
-    --animate-duration: 0 !important;
-    --animate-delay: 0 !important;
-    --animate-repeat: 0 !important;
-  }
+  --animate-duration: 0;
+  --animate-delay: 0;
+  --animate-repeat: 0;
 }

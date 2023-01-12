@@ -17,6 +17,7 @@ useAppResize()
 useAppDarkMode()
 useAppLocale()
 useAppLock()
+useAppReducedMotion()
 </script>
 
 <template>

@@ -36,7 +36,6 @@ useAppIntro()
 useAppContentFull()
 useAppTextSelection()
 useAppColorMode()
-useAppReducedMotion()
 useAppHijackF5()
 
 useTimeoutFn(() => {

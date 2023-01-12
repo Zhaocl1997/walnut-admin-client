@@ -139,7 +139,7 @@ watch(
       }
     }
   }
-  html[reduce='false'] .play {
+  html[reduced-motion='false'] .play {
     .item {
       &.before {
         z-index: 3;
@@ -185,7 +185,7 @@ watch(
       z-index: 4;
     }
   }
-  html[reduce='false'] .play {
+  html[reduced-motion='false'] .play {
     .shadow {
       position: absolute;
       width: 100%;

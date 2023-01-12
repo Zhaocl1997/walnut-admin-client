@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { level, charging } = useBattery()
+const { level, charging } = useSharedBattery()
 
 const getPercentLevel = computed(() => level.value * 100)
 
