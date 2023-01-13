@@ -25,6 +25,23 @@ export const createUnoCSSPlugin = (): VitePlugin[] => {
         bodyColor: 'var(--body-color)',
         bodyHover: 'var(--body-color-hover)',
       },
+
+      animation: {
+        keyframes: {
+          'hue-rotate': '{ 100% { filter: contrast(15) hue-rotate(360deg) } }',
+          'wave-circle': '{ 0% { transform: translate(-50%, -50%); } 50% { border-radius: 45% / 42% 38% 58% 49%; } 100% { transform: translate(-50%, -50%) rotate(720deg); } }',
+        },
+
+        durations: {
+          'hue-rotate': '10s',
+          'wave-circle': '10s',
+        },
+
+        counts: {
+          'hue-rotate': 'infinite',
+          'wave-circle': 'infinite',
+        },
+      },
     },
 
     presets: [

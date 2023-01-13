@@ -2,19 +2,10 @@
 import UnlockButton from './components/UnlockButton.vue'
 import Network from './components/Network.vue'
 
-interface InternalProps {
-  size?: number
-}
-
-const props = withDefaults(defineProps<InternalProps>(), { size: 200 })
-
 const { level, charging } = useSharedBattery()
 const now = useNow()
 
 const getPercentLevel = computed(() => level.value * 100)
-
-const getSize = computed(() => `${props.size}px`)
-const getHalf = computed(() => `${props.size / 2}px`)
 </script>
 
 <template>
@@ -36,10 +27,16 @@ const getHalf = computed(() => `${props.size / 2}px`)
       {{ getPercentLevel }}%
     </div>
 
-    <div class="g-contrast">
-      <div class="g-circle " />
-      <ul v-if="charging" class="g-bubbles">
-        <li v-for="i in 15" :key="i" />
+    <div class="animate-hue-rotate contrast-[10] hue-rotate-0 w-full h-full bg-bodyColor overflow-hidden">
+      <div
+        class="w-full h-full relative box-border blur-[8px]"
+        w:after="content-empty absolute top-1/2 left-1/2 w-[200px] h-[200px] rounded-[42%_38%_62%_49%/45%] bg-[#00ff6f] animate-wave-circle"
+        w:before="content-empty absolute top-1/2 left-1/2 -translate-1/2 w-175px h-175px rounded-[50%] bg-black/95 z-10"
+      />
+      <ul class="g-bubbles absolute left-1/2 bottom-0 w-[100px] h-[40px] -translate-x-1/2 rounded-[100px_100px_0_0] bg-[#00ff6f] blur-[5px]">
+        <template v-if="charging">
+          <li v-for="i in 15" :key="i" class="list-none absolute rounded-[50%] bg-[#00ff6f]" />
+        </template>
       </ul>
     </div>
   </div>
@@ -48,104 +45,26 @@ const getHalf = computed(() => `${props.size / 2}px`)
 <style lang="scss" scoped>
 @use "sass:math";
 
-.g-contrast {
-    filter: contrast(10) hue-rotate(0);
-    width: 100%;
-    height: 100%;
-    background-color: var(--body-color);
-    overflow: hidden;
-    animation: hueRotate 10s infinite linear;
-}
-
-.g-circle {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    filter: blur(8px);
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(0);
-        width: v-bind(getSize);
-        height: v-bind(getSize);
-        background-color: #00ff6f;
-        border-radius: 42% 38% 62% 49% / 45%;
-        animation: circle-rotate 10s infinite linear;
-    }
-
-    &::before {
-        content: "";
-        position: absolute;
-        width: calc(v-bind(getSize) - 24px);
-        height: calc(v-bind(getSize) - 24px);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background-color: #000;
-        z-index: 10;
-    }
-}
-
-.g-bubbles {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: 100px;
-    height: 40px;
-    transform: translate(-50%, 0);
-    border-radius: 100px 100px 0 0;
-    background-color: #00ff6f;
-    filter: blur(5px);
-}
-
-li {
-    list-style: none;
-    position: absolute;
-    border-radius: 50%;
-    background: #00ff6f;
-}
-
 @for $i from 0 through 15 {
-    li:nth-child(#{$i}) {
-        $width: 15+random(15)+px;
-        left: 15 + random(70) + px;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: $width;
-        height: $width;
-        animation: moveToTop #{random(6) + 3}s ease-in-out -#{math.div(random(5000), 1000)}s infinite;
-    }
-}
-
-@keyframes circle-rotate {
-    50% {
-        border-radius: 45% / 42% 38% 58% 49%;
-    }
-
-    100% {
-        transform: translate(-50%, -50%) rotate(720deg);
-    }
+  li:nth-child(#{$i}) {
+    $width: 15+random(15)+px;
+    left: 15 + random(70) + px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: $width;
+    height: $width;
+    animation: moveToTop #{random(6) + 3}s ease-in-out -#{math.div(random(5000), 1000)}s infinite;
+  }
 }
 
 @keyframes moveToTop {
-    90% {
-        opacity: 1;
-    }
+  90% {
+    opacity: 1;
+  }
 
-    100% {
-        opacity: .1;
-        transform: translate(-50%, calc(0vh - 50vh + v-bind(getHalf)));
-    }
-}
-
-@keyframes hueRotate {
-    100% {
-        filter: contrast(15) hue-rotate(360deg);
-    }
+  100% {
+    opacity: .1;
+    transform: translate(-50%, calc(0vh - 50vh + 100px));
+  }
 }
 </style>
