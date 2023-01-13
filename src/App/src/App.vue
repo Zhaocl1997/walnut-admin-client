@@ -8,7 +8,6 @@ import { useAppLocale } from '@/components/App/AppLocalePicker/useAppLocale'
 import { useAppLock } from '@/components/App/AppLock/useAppLock'
 ;(async function () {
   await useUseragentInfo()
-  await useFingerprint()
   await useAppMonitor()
 })()
 

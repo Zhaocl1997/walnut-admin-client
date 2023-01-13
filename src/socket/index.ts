@@ -1,31 +1,36 @@
+import type { Socket } from 'socket.io-client'
 import { io } from 'socket.io-client'
 
-// five params in config
-// fourth is custom socket path => https://socket.io/docs/v4/client-options/#path
-// fifth is custom socket namespace => https://socket.io/docs/v4/namespaces/
-const { ws } = useAppEnv('proxy')
+export let AppSocket: Nullable<Socket> = null
 
-const useProxy = +ws[0] === 1
+export const setupSocket = () => {
+  // five params in config
+  // fourth is custom socket path => https://socket.io/docs/v4/client-options/#path
+  // fifth is custom socket namespace => https://socket.io/docs/v4/namespaces/
+  const { ws } = useAppEnv('proxy')
 
-// use proxy,
-const url = useProxy ? `/${ws[4]}` : `${ws[2]}/${ws[4]}`
-const path = useProxy ? ws[1] : ws[3]
+  const useProxy = +ws[0] === 1
 
-export const AppSocket = io(url, {
-  path,
-  query: { fingerprint: fpId.value },
-})
+  // use proxy,
+  const url = useProxy ? `/${ws[4]}` : `${ws[2]}/${ws[4]}`
+  const path = useProxy ? ws[1] : ws[3]
 
-AppSocket.on('connect', () => {
-  AppInfo('Socket connected.')
-})
+  AppSocket = io(url, {
+    path,
+    query: { fingerprint: fpId.value },
+  })
 
-AppSocket.on('error', (e) => {
-  AppInfo(e)
-})
+  AppSocket.on('connect', () => {
+    AppInfo('Socket connected.')
+  })
 
-AppSocket.on(AppSocketEvents.FORCE_QUIT, async (fingerprint) => {
-  const userAuth = useAppStoreUserAuth()
+  AppSocket.on('error', (e) => {
+    AppInfo(e)
+  })
 
-  await userAuth.Signout(true, fingerprint)
-})
+  AppSocket.on(AppSocketEvents.FORCE_QUIT, async (fingerprint) => {
+    const userAuth = useAppStoreUserAuth()
+
+    await userAuth.Signout(true, fingerprint)
+  })
+}
