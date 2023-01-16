@@ -15,7 +15,7 @@ export declare namespace WCrud {
   namespace Inst {
     interface WCrudInst<T = RowData> {
       setProps: SetProps<T>
-      onTableOpenCreateForm: () => void
+      onTableOpenCreateForm: Fn<T>
       onApiTableReadAndOpenUpdateForm: (id: StringOrNumber) => Promise<void>
       onApiTableDelete: (is: StringOrNumber) => Promise<void>
       onApiTableDeleteMany: () => Promise<void>
@@ -23,6 +23,7 @@ export declare namespace WCrud {
       onGetActionType: () => Ref<ActionType>
       onGetApiTableListParams: () => Ref<WalnutBaseListParams<T>>
       onApiTableList: () => Promise<void>
+      onApiTableCloseForm: Fn
     }
   }
 

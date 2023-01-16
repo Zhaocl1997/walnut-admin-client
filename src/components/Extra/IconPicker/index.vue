@@ -212,7 +212,7 @@ onMounted(() => {
   <w-modal
     v-model:show="show"
     preset="card"
-    style="width: 600px"
+    width="600px"
     :title="t('comp.iconPicker.title')"
     display-directive="show"
     :auto-focus="false"

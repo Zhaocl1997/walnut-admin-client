@@ -52,6 +52,10 @@ export const extendProps = {
         actionType?: WTable.HeaderActionType
         defaultButton?: boolean
         detailTitle?: boolean
+        resizable?: boolean
+        defaultWidth?: string
+        defaultHeight?: string
+        width?: string
       }
     >,
     default: undefined,

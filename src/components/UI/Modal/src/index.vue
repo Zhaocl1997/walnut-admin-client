@@ -8,8 +8,8 @@ interface InternalProps {
   loading?: boolean
   title?: string
   helpMessage?: string
-  width?: string | number
-  height?: string | number
+  width?: string
+  height?: string
   draggable?: boolean
   fullscreen?: boolean
   defaultButton?: boolean

@@ -87,3 +87,11 @@ export const AppConstRouteQueryEnhancedMode = {
 
 export type ValueOfAppConstRouteQueryEnhancedMode =
   typeof AppConstRouteQueryEnhancedMode[keyof typeof AppConstRouteQueryEnhancedMode]
+
+export const AppConstRoles = {
+  ADMIN: 'admin',
+  USER: 'user',
+} as const
+
+export type ValueOfAppConstRoles =
+  typeof AppConstRoles[keyof typeof AppConstRoles]

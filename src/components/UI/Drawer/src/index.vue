@@ -15,8 +15,6 @@ const props = withDefaults(defineProps<InternalProps>(), {
 })
 
 const emits = defineEmits(['yes', 'no'])
-
-const { t } = useAppI18n()
 </script>
 
 <script lang="ts">
@@ -47,7 +45,7 @@ export default defineComponent({
             :on-click="() => $emit('no')"
             :disabled="loading"
           >
-            {{ t('app.button.no') }}
+            {{ $t('app.button.no') }}
           </n-button>
 
           <n-button
@@ -57,7 +55,7 @@ export default defineComponent({
             :disabled="loading"
             :loading="loading"
           >
-            {{ t('app.button.yes') }}
+            {{ $t('app.button.yes') }}
           </n-button>
         </n-space>
       </template>

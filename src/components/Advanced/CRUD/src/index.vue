@@ -27,8 +27,10 @@ const { stateRef: formData, resetState: resetFormData } = useState(
   defaultCreateAndUpdateFormData,
 )
 
-const onTableOpenCreateForm = () => {
+const onTableOpenCreateForm = (defaultFormData: any) => {
   actionType.value = 'create'
+
+  defaultFormData && (formData.value = defaultFormData)
 
   onOpen(done => done())
 }
@@ -89,16 +91,17 @@ emit('hook', {
   onGetFormData: () => formData,
   onGetActionType: () => actionType,
   onGetApiTableListParams: () => onGetApiTableListParams(),
+  onApiTableCloseForm: () => onClose(),
 })
 
 // form
 // @ts-expect-error
-const [registerForm, { onOpen }] = useForm({
+const [registerForm, { onOpen, onClose }] = useForm({
   ...getProps.value.formProps,
 
   advancedProps: {
     ...getProps.value.formProps?.advancedProps,
-    width: getProps.value.formProps?.advancedProps?.width ?? 500,
+    width: getProps.value.formProps?.advancedProps?.width ?? '500px',
     actionType,
     onYes: async (apiHandler) => {
       await apiHandler(

@@ -1,4 +1,3 @@
-import type { DrawerProps } from 'naive-ui'
 import type { WForm } from '../types'
 
 export const useFormAdvanced = (
@@ -80,27 +79,34 @@ export const useFormAdvanced = (
     const actionType = unref(props.value?.advancedProps?.actionType)
 
     return uniqueKey && actionType
-      ? `${t(`app.button.${actionType}`)
-          } ${
-          t(`table.${uniqueKey}.advancedTitle`)}`
+      ? `${t(`app.button.${actionType}`)} ${t(`table.${uniqueKey}.advancedTitle`)}`
       : title
   }
 
   const renderAdvanced = () => {
+    const title = onGetTitle(props.value.advancedProps?.title as string)
+    const width = props.value.advancedProps?.width
+    const maskClosable = !loading.value && props.value.advancedProps?.maskClosable
+    const closable = !loading.value && props.value.advancedProps?.closable
+    const defaultButton = getBoolean(props.value.advancedProps?.defaultButton, true)
+    const autoFocus = getBoolean(props.value.advancedProps?.autoFocus, false)
+
     if (props.value.preset === 'modal') {
       return (
         <w-modal
           v-model={[show.value, 'show']}
-          title={onGetTitle(props.value.advancedProps?.title as string)}
-          width={`${(props.value.advancedProps as DrawerProps)?.width}px`}
-          maskClosable={
-            !loading.value && props.value.advancedProps?.maskClosable
-          }
-          closable={!loading.value && props.value.advancedProps?.closable}
+          title={title}
+          width={width}
+          maskClosable={maskClosable}
+          closable={closable}
           onYes={onYes}
           onNo={onNo}
           loading={loading.value}
-          defaultButton={props.value.advancedProps?.defaultButton}
+          defaultButton={defaultButton}
+          autoFocus={autoFocus}
+          // MARK default modal/drawer use show to toggle visiblility
+          // for performance
+          display-directive="show"
         >
           {render()}
         </w-modal>
@@ -111,29 +117,34 @@ export const useFormAdvanced = (
       return (
         <w-drawer
           v-model={[show.value, 'show']}
-          title={onGetTitle(props.value.advancedProps?.title as string)}
-          width={(props.value.advancedProps as DrawerProps)?.width}
-          maskClosable={
-            !loading.value && props.value.advancedProps?.maskClosable
-          }
-          closable={!loading.value && props.value.advancedProps?.closable}
+          title={title}
+          width={width}
+          maskClosable={maskClosable}
+          closable={closable}
           onUpdateShow={(show: boolean) => {
             !show && onNo()
           }}
           onYes={onYes}
           onNo={onNo}
           loading={loading.value}
-          defaultButton={props.value.advancedProps?.defaultButton}
-          autoFocus={props.value.advancedProps?.autoFocus}
+          defaultButton={defaultButton}
+          autoFocus={autoFocus}
           resizable={props.value.advancedProps?.resizable}
           defaultWidth={props.value.advancedProps?.defaultWidth}
           defaultHeight={props.value.advancedProps?.defaultHeight}
+          // MARK default modal/drawer use show to toggle visiblility
+          // for performance
+          display-directive="show"
         >
           {render()}
         </w-drawer>
       )
     }
   }
+
+  onDeactivated(() => {
+    onClose()
+  })
 
   return {
     onOpen,

@@ -376,7 +376,7 @@ defineExpose({ onOpenModal })
     :default-button="false"
     :fullscreen="false"
     :closable="false"
-    :style="{ width: 'auto' }"
+    width="auto"
   >
     <div class="select-none" @mousedown.stop @touchstart.stop>
       <n-spin :show="loading">

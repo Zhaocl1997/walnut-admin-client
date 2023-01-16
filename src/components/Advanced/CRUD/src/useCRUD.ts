@@ -20,7 +20,7 @@ export const useCRUD = <T = RowData>(
   }
 
   const methods = {
-    onTableOpenCreateForm: () => wCrudRef.value?.onTableOpenCreateForm(),
+    onTableOpenCreateForm: (defaultFormData: any) => wCrudRef.value?.onTableOpenCreateForm(defaultFormData),
     onApiTableReadAndOpenUpdateForm: async (id: StringOrNumber) =>
       await wCrudRef.value?.onApiTableReadAndOpenUpdateForm(id),
     onApiTableList: async () => await wCrudRef.value?.onApiTableList(),
@@ -31,6 +31,7 @@ export const useCRUD = <T = RowData>(
     onGetFormData: () => wCrudRef.value?.onGetFormData()!,
     onGetActionType: () => wCrudRef.value?.onGetActionType()!,
     onGetApiTableListParams: () => wCrudRef.value?.onGetApiTableListParams()!,
+    onApiTableCloseForm: () => wCrudRef.value?.onApiTableCloseForm()!,
   }
 
   return [register, methods]

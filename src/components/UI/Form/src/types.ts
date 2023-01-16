@@ -35,7 +35,7 @@ import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
 import type { WPasswordProps } from '@/components/Extra/Password'
 import type { WSMSInputProps } from '@/components/Extra/SMSInput'
 import type { useEventParams } from '@/hooks/component/useEvent'
-import type { WLocaleSelectProps } from '@/components/Advanced/LocaleSelect'
+import type { WLocaleSelectProps } from '@/components/Extra/LocaleSelect'
 import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
 import type { WTransitionProps } from '@/components/Extra/Transition'
 
@@ -165,7 +165,7 @@ export declare namespace WForm {
       'Extend:Password': WPasswordProps
       'Extend:SMSInput': WSMSInputProps
       'Extend:Dict': WFormItemDictProps
-      'Extend:Locale': WLocaleSelectProps
+      'Extend:LocaleSelect': WLocaleSelectProps
 
       'Vendor:Tinymce': TinymceEditorProps
     }
@@ -265,7 +265,7 @@ export declare namespace WForm {
     >
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
     type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
-    type LocaleSchema<D> = DynamicSchemaItemProps<'Extend:Locale', D>
+    type LocaleSchema<D> = DynamicSchemaItemProps<'Extend:LocaleSelect', D>
     type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
     type TransitionSelectSchema<D> = DynamicSchemaItemProps<
       'Extend:TransitionSelect',
