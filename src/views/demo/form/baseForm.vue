@@ -336,7 +336,7 @@ export default defineComponent({
             },
           },
           {
-            type: 'Extend:Locale',
+            type: 'Extend:LocaleSelect',
             formProp: {
               label: 'Locale Select',
               path: 'formLocale',
@@ -363,7 +363,7 @@ export default defineComponent({
     title="Base Form"
     description="Display all support types in schemas."
   >
-    <w-JSON :value="formData" />
+    <w-JSON :value="formData" height="300px" />
 
     <w-form
       ref="formRef"

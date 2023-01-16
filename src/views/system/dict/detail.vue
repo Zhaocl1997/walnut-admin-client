@@ -21,8 +21,10 @@ const onBack = () => {
 const title = computed(
   () =>
     (currentRoute.value.query?.name
-        && t(currentRoute.value.query.name as string)) as string,
+      && t(currentRoute.value.query.name as string)) as string,
 )
+
+const getLocalePrefix = computed(() => `dict.${(currentRoute.value.query?.name as string)?.split('.').slice(-1)}.`)
 
 const [
   register,
@@ -30,6 +32,7 @@ const [
     onTableOpenCreateForm,
     onApiTableReadAndOpenUpdateForm,
     onApiTableDelete,
+    onGetFormData,
   },
 ] = useCRUD<AppSystemDictData>({
   baseAPI: dictDataAPI,
@@ -224,12 +227,25 @@ const [
       },
 
       {
-        type: 'Extend:Locale',
+        type: 'Extend:LocaleSelect',
         formProp: {
           path: 'label',
         },
         componentProp: {
-          prefix: 'dict.',
+          prefix: getLocalePrefix,
+          presetKey: computed(() => {
+            // TODO ts-error
+            const formData = onGetFormData() as Ref<AppSystemDictData>
+
+            const val = formData.value.value
+
+            const key = (currentRoute.value.query.name as string)?.split('.')[2]
+
+            if (val)
+              return `dict.${key}.${val}`
+
+            return `dict.${key}.`
+          }),
         },
       },
 
@@ -327,4 +343,6 @@ const [
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

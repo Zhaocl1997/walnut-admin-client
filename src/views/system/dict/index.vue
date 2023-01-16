@@ -19,7 +19,9 @@ const [
     onTableOpenCreateForm,
     onApiTableReadAndOpenUpdateForm,
     onApiTableDelete,
+    onGetFormData,
   },
+  // @ts-expect-error
 ] = useCRUD<AppSystemDictType>({
   baseAPI: dictTypeAPI,
 
@@ -115,9 +117,8 @@ const [
         key: 'type',
         width: 140,
         extendType: 'link',
-        onClick: (p) => {
-          // TODO simple encode
-          useAppRouterPush({
+        onClick: async (p) => {
+          await useAppRouterPush({
             name: 'DictDetail',
             params: { id: p._id },
             query: { name: p.name },
@@ -195,12 +196,23 @@ const [
     // create/update form schemas
     schemas: [
       {
-        type: 'Extend:Locale',
+        type: 'Extend:LocaleSelect',
         formProp: {
           path: 'name',
         },
         componentProp: {
           prefix: 'dict.name.',
+          presetKey: computed(() => {
+            // TODO ts-error
+            const formData = onGetFormData() as Ref<AppSystemDictType>
+
+            const type = formData.value.type
+
+            if (type)
+              return `dict.name.${type}`
+
+            return 'dict.name.'
+          }),
         },
       },
 
@@ -249,4 +261,6 @@ const [
   <WCRUD @hook="register" />
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

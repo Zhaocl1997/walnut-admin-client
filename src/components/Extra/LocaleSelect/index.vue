@@ -14,6 +14,7 @@ const emits = defineEmits(['update:value'])
 
 const { locale, messages } = useAppI18n()
 const loading = ref(false)
+const show = ref(false)
 
 const options = computed(() =>
   Object.entries<any>(messages.value[`${locale.value}`])
@@ -50,6 +51,10 @@ const onRefresh = async () => {
 
   loading.value = false
 }
+
+onDeactivated(() => {
+  show.value = false
+})
 </script>
 
 <script lang="ts">
@@ -61,9 +66,9 @@ export default defineComponent({
 
 <template>
   <div class="hstack w-full gap-2">
-    <n-select
-      :value="value" :options="options" clearable filterable :render-label="onRenderLabel" tooltip
-      @update:value="onUpdateValue"
+    <w-select
+      v-model:show="show" :value="value" :options="options" clearable filterable :render-label="onRenderLabel"
+      tooltip :virtual-scroll="false" @update:value="onUpdateValue"
     >
       <template #action>
         <n-space>
@@ -79,6 +84,6 @@ export default defineComponent({
           </w-button>
         </n-space>
       </template>
-    </n-select>
+    </w-select>
   </div>
 </template>

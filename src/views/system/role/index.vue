@@ -243,8 +243,15 @@ const [
             keyField: '_id',
             labelField: 'title',
             disabled: computed(
-              (): boolean => onGetFormData().value.roleName === 'admin',
-            ) as unknown as boolean,
+              () => {
+                // TODO ts-error
+                const formData = onGetFormData() as Ref<AppSystemRole>
+
+                const roleName = formData.value.roleName
+
+                return roleName === AppConstRoles.ADMIN
+              },
+            ),
 
             renderLabel: ({ option }) =>
               option.type === AppConstMenuType.ELEMENT

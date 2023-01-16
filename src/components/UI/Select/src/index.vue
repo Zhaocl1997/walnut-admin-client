@@ -21,21 +21,21 @@ export default defineComponent({
       node: VNode
       option: SelectOption
     }) => {
-      return h(NTooltip, null, {
+      return h(NTooltip, { placement: 'right' }, {
         default: () =>
           attrs['render-label']
             ? attrs['render-label'](option)
-            : option.label,
+            : <span>{option.label}</span>,
         trigger: () => node,
       })
     }
 
     return () => (
-        <n-select
-          render-option={props.tooltip ? renderOption : attrs['render-option']}
-        >
-          {{ action: () => slots.action && slots.action() }}
-        </n-select>
+      <n-select
+        render-option={props.tooltip ? renderOption : attrs['render-option']}
+      >
+        {{ action: () => slots.action && slots.action() }}
+      </n-select>
     )
   },
 })

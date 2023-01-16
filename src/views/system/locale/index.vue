@@ -11,6 +11,7 @@ import type { WForm } from '@/components/UI/Form'
 import { localeAPI } from '@/api/system/locale'
 
 const { langList } = useLangList()
+const { currentRoute } = useRouter()
 
 // locale unique key
 const key = 'locale'
@@ -203,6 +204,13 @@ const [
       })),
     ]),
   })),
+})
+
+onActivated(() => {
+  const localeKey = currentRoute.value.query?.localeKey as string
+
+  if (localeKey)
+    onTableOpenCreateForm({ key: localeKey })
 })
 </script>
 

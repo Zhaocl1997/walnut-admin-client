@@ -224,7 +224,7 @@ export const useMenuFormSchema = (
     },
 
     {
-      type: 'Extend:Locale',
+      type: 'Extend:LocaleSelect',
       formProp: {
         path: 'title',
         labelHelpMessage: true,
@@ -232,6 +232,7 @@ export const useMenuFormSchema = (
       componentProp: {
         // key start with `sys.menu.` are all menu title
         prefix: 'sys.menu.',
+        presetKey: 'sys.menu.',
       },
       extraProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
