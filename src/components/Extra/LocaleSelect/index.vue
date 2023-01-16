@@ -5,17 +5,18 @@ import type { SelectOption } from 'naive-ui'
 interface InternalProps {
   value?: string
   prefix?: string
+  presetKey?: string
 }
 
 const props = defineProps<InternalProps>()
 
 const emits = defineEmits(['update:value'])
 
-const { getLocaleMessage, locale } = useAppI18n()
+const { locale, messages } = useAppI18n()
 const loading = ref(false)
 
 const options = computed(() =>
-  Object.entries<string>(getLocaleMessage(locale.value))
+  Object.entries<any>(messages.value[`${locale.value}`])
     .map(([k, v]) => {
       if (!props.prefix || k.startsWith(props.prefix!))
         return { value: k, label: v }
@@ -31,8 +32,9 @@ const onRenderLabel = (option: SelectOption) => {
   return `${option.label} (${option.value})`
 }
 
-const onNewLocale = () => {
-  useAppRouterPush({ name: 'Locale' })
+const onNewLocale = async () => {
+  // The name below need to match locale management name field which is fetch from backend
+  await useAppRouterPush({ name: 'Locale', query: { localeKey: props?.presetKey } })
 }
 
 const onRefresh = async () => {
@@ -59,36 +61,24 @@ export default defineComponent({
 
 <template>
   <div class="hstack w-full gap-2">
-    <w-select
-      :value="value"
-      :options="options"
-      clearable
-      filterable
-      :render-label="onRenderLabel"
-      tooltip
+    <n-select
+      :value="value" :options="options" clearable filterable :render-label="onRenderLabel" tooltip
       @update:value="onUpdateValue"
     >
       <template #action>
         <n-space>
-          <w-button
-            size="small"
-            icon="ant-design:plus-outlined"
-            @click="onNewLocale"
-          >
-            New
+          <w-button size="small" icon="ant-design:plus-outlined" @click="onNewLocale">
+            {{ $t('comp.localeSelect.new') }}
           </w-button>
 
           <w-button
-            size="small"
-            icon="ant-design:sync-outlined"
-            :loading="loading"
-            :disabled="loading"
+            size="small" icon="ant-design:sync-outlined" :loading="loading" :disabled="loading"
             @click="onRefresh"
           >
-            Refresh
+            {{ $t('comp.localeSelect.refresh') }}
           </w-button>
         </n-space>
       </template>
-    </w-select>
+    </n-select>
   </div>
 </template>

@@ -70,10 +70,10 @@ componentMap.set(
   ),
 )
 componentMap.set(
-  'Locale',
+  'LocaleSelect',
   createAsyncComponent(
     // @ts-expect-error
-    () => import('../../../../../Advanced/LocaleSelect/index.ts'),
+    () => import('../../../../../Extra/LocaleSelect/index.ts'),
   ),
 )
 componentMap.set(

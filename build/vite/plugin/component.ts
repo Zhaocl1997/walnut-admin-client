@@ -7,7 +7,6 @@ const comp = {
     'AIcon',
     'ApiSelect',
     'AreaCascader',
-    'LocaleSelect',
     'RoleSelect',
   ],
   App: [
@@ -28,6 +27,7 @@ const comp = {
     'Flipper',
     'IconPicker',
     'JSON',
+    'LocaleSelect',
     'Message',
     'QRCode',
     'Scrollbar',
