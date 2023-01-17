@@ -88,7 +88,7 @@ watch(
 
     setTimeout(() => {
       loading.value = false
-    }, 300)
+    }, 500)
   },
   {
     deep: true,

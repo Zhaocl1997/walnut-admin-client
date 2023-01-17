@@ -66,7 +66,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       await appMenu.goIndex()
 
       // send socket state
-      AppSocket.emit(AppSocketEvents.SIGNIN, { visitorId: fpId.value, userId: userProfile.profile._id, userName: userProfile.profile.userName })
+      AppSocket!.emit(AppSocketEvents.SIGNIN, { visitorId: fpId.value, userId: userProfile.profile._id, userName: userProfile.profile.userName })
     },
 
     /**
@@ -138,11 +138,11 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       appTab.clearTabs()
 
       // send socket state
-      AppSocket.emit(AppSocketEvents.SIGNOUT, fingerprint)
+      AppSocket!.emit(AppSocketEvents.SIGNOUT, fingerprint)
 
-      useTimeoutFn(async () => {
+      setTimeout(async () => {
         // push to signin page
-        await useAppRouterPush({ name: AppAuthName })
+        await useAppRouterPush({ name: AppAuthName, replace: true, force: true })
       }, 200)
     },
   },

@@ -46,12 +46,12 @@ const onSelect = async (val: string) => {
     openExternalLink(__APP_INFO__.urls.github)
 
   if (val === '3')
-    useAppRouterPush({ name: 'AccountSetting' })
+    await useAppRouterPush({ name: 'AccountSetting' })
 
   if (val === '99') {
-    const res = await useAppConfirm(t('app.user.signout.warning'))
+    const confirmed = await useAppConfirm(t('app.user.signout.warning'))
 
-    if (res)
+    if (confirmed)
       await userAuth.Signout()
   }
 }

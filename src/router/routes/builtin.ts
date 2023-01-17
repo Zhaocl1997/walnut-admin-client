@@ -6,6 +6,7 @@ export const AppAuthRoute: RouteRecordRaw = {
   component: () => import('../../views/auth/index.vue'),
   meta: {
     title: 'sys.menu.auth',
+    _auth: false,
   },
 }
 
@@ -15,6 +16,7 @@ export const AppAuthPrivacyPolicyRoute: RouteRecordRaw = {
   component: () => import('../../views/auth/privacy-policy.vue'),
   meta: {
     title: 'form.app.auth.pp',
+    _auth: false,
   },
 }
 
@@ -24,6 +26,7 @@ export const AppAuthServiceAgreementRoute: RouteRecordRaw = {
   component: () => import('../../views/auth/service-agreement.vue'),
   meta: {
     title: 'form.app.auth.sa',
+    _auth: false,
   },
 }
 
@@ -31,6 +34,7 @@ export const AppRootRoute: RouteRecordRaw = {
   name: constant.AppRootName,
   path: constant.AppRootPath,
   component: () => import('../../layout/default'),
+  // the redirect prop would be set in app core function
   children: [],
 }
 
@@ -50,7 +54,7 @@ export const AppLockRoute: RouteRecordRaw = {
   },
 }
 
-// this is added when current user routes loaded finished
+// below 404/500 routes are added after permission routes loaded
 export const App404Route: RouteRecordRaw = {
   name: constant.App404Name,
   path: constant.App404Path,

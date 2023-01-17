@@ -74,7 +74,7 @@
         },
       )
 
-      const onUpdateValue = (key: string, item: { meta: MenuMeta }) => {
+      const onUpdateValue = async (key: string, item: { meta: MenuMeta }) => {
         // If isMobile and showAside true, set showAside to false to close drawer
         if (appAdapter.isMobile && appMenu.showAside)
           appMenu.showAside = false
@@ -89,7 +89,7 @@
           return
         }
 
-        useAppRouterPush({ name: key })
+        await useAppRouterPush({ name: key })
       }
 
       return () => (

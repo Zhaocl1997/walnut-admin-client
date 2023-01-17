@@ -14,6 +14,36 @@ export const createAuthGuard = (router: Router) => {
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
 
+    // Paths in `routeWhiteListPath` will enter directly
+    if (routeWhiteListPath.includes(to.path)) {
+      // Login and push to auth page, will go index menu
+      if (userAuth.accessToken && to.path === AppAuthPath) {
+        next({ name: appMenu.indexMenuName })
+        return
+      }
+
+      next()
+      return
+    }
+
+    // since almost all the routes are fetch from backend
+    // default _auth would be undefined
+    // this flag below should only works for hard-coded routes in frontend codes
+    // no need to excute the logic below, like profile or permisison
+    if (!isUndefined(to.meta?._auth) && !to.meta._auth) {
+      next()
+      return
+    }
+
+    // No token, next to auth page and return
+    if (!userAuth.accessToken) {
+      next({
+        path: AppAuthPath,
+        replace: true,
+      })
+      return
+    }
+
     // enter the `leaveTip` page, hang on the unload event
     if (to.meta.leaveTip) {
       // set the confirm map
@@ -39,13 +69,13 @@ export const createAuthGuard = (router: Router) => {
       && (_confirm_leave_map_.get(from.name) === undefined
         || _confirm_leave_map_.get(from.name) === false)
     ) {
-      const res = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
+      const confirmed = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,
         closeOnEsc: false,
         maskClosable: false,
       })
 
-      if (!res) {
+      if (!confirmed) {
         next({ ...from, replace: true })
         return
       }
@@ -56,35 +86,6 @@ export const createAuthGuard = (router: Router) => {
 
       next()
 
-      return
-    }
-
-    // Paths in `routeWhiteListPath` will enter directly
-    if (routeWhiteListPath.includes(to.path)) {
-      // Login and push to auth page, will go index menu
-      if (to.path === AppAuthPath && userAuth.accessToken) {
-        next({ name: appMenu.indexMenuName })
-        return
-      }
-      next()
-      return
-    }
-
-    // since almost all the routes are fetch from backend
-    // default _auth would be undefined
-    // this flag below should only works for hard-coded routes in frontend codes
-    // no need to excute the logic below, like profile or permisison
-    if (!isUndefined(to.meta?._auth) && !to.meta._auth) {
-      next()
-      return
-    }
-
-    // No token, next to auth page and return
-    if (!userAuth.accessToken) {
-      next({
-        path: AppAuthPath,
-        replace: true,
-      })
       return
     }
 

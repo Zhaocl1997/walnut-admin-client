@@ -119,7 +119,7 @@ export const useTableAPI = (
 
       if (
         ApiTableListParams.value.page!.page!
-          * ApiTableListParams.value.page!.pageSize!
+        * ApiTableListParams.value.page!.pageSize!
         > total.value - checkedRowKeys.value.length
       )
         ApiTableListParams.value.page!.page = 1
@@ -148,43 +148,44 @@ export const useTableAPI = (
   }
 
   const handleListApi = async () => {
-    if (isFunction(props?.value?.apiProps?.listApi)) {
-      // set remote true to fit naive-ui
-      setProps({ remote: true })
+    if (!isFunction(props?.value?.apiProps?.listApi))
+      return
 
-      if (
-        !isUndefined(props.value.queryFormProps)
-        && !isUndefined(props.value.queryFormProps?.schemas!)
-      ) {
-        // need to initial query form data based on schemas
-        const defaultQueryFormData = extractDefaultFormDataFromSchemas(
-          props.value.queryFormProps?.schemas!,
-        )
+    // set remote true to fit naive-ui
+    setProps({ remote: true })
 
-        // set default value to query
-        ApiTableListParams.value.query = cloneDeep(defaultQueryFormData)
+    if (
+      !isUndefined(props.value.queryFormProps)
+      && !isUndefined(props.value.queryFormProps?.schemas!)
+    ) {
+      // need to initial query form data based on schemas
+      const defaultQueryFormData = extractDefaultFormDataFromSchemas(
+        props.value.queryFormProps?.schemas!,
+      )
 
-        // commit change, make this version a default version
-        commitParams()
-      }
+      // set default value to query
+      ApiTableListParams.value.query = cloneDeep(defaultQueryFormData)
 
-      if (
-        props.value.columns!.some(
-          i => (i as TableBaseColumn).defaultSortOrder,
-        )
-      ) {
-        // @ts-expect-error
-        // TODO sort two types
-        ApiTableListParams.value.sort = generateDefaultSortParams(
-          props.value.columns!,
-        )
-
-        // commit change, make this version a default version
-        commitParams()
-      }
-
-      await onApiTableList()
+      // commit change, make this version a default version
+      commitParams()
     }
+
+    if (
+      props.value.columns!.some(
+        i => (i as TableBaseColumn).defaultSortOrder,
+      )
+    ) {
+      // @ts-expect-error
+      // TODO sort two types
+      ApiTableListParams.value.sort = generateDefaultSortParams(
+        props.value.columns!,
+      )
+
+      // commit change, make this version a default version
+      commitParams()
+    }
+
+    await onApiTableList()
   }
 
   const handleSelectionColumn = () => {

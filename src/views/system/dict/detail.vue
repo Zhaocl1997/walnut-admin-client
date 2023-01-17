@@ -14,8 +14,8 @@ const { currentRoute } = useAppRouter()
 const localeKey = 'dictData'
 const authKey = 'dict:data'
 
-const onBack = () => {
-  useAppRouterPush({ name: 'Dict', replace: true })
+const onBack = async () => {
+  await useAppRouterPush({ name: 'Dict', replace: true })
 }
 
 const title = computed(
@@ -34,6 +34,7 @@ const [
     onApiTableDelete,
     onGetFormData,
   },
+  // @ts-expect-error
 ] = useCRUD<AppSystemDictData>({
   baseAPI: dictDataAPI,
 

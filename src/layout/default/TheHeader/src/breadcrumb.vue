@@ -68,8 +68,8 @@ export default defineComponent({
 
     const renderDropdown = (item: TreeNodeItem<AppSystemMenu>) => (
         <n-dropdown
-          onSelect={(key: string) => {
-            useAppRouterPush({ name: key })
+          onSelect={async (key: string) => {
+            await useAppRouterPush({ name: key })
           }}
           show-arrow
           options={genOptions(item.children)}
