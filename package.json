@@ -7,6 +7,10 @@
     "email": "zhaocl97@foxmail.com",
     "url": "https://github.com/Zhaocl1997"
   },
+  "engines": {
+    "node": ">=16.0.0",
+    "pnpm": ">=7.0.0"
+  },
   "license": "MIT",
   "homepage": "https://github.com/Zhaocl1997/walnut-admin-client",
   "repository": {
