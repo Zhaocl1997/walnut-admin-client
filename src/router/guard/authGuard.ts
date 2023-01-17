@@ -5,11 +5,10 @@ import { _confirm_leave_map_ } from '@/store/modules/app/app-tab'
 
 let removeEvent: Fn
 
-const appKey = useAppStoreSecretKey()
 const appLock = useAppStoreLock()
 
 export const createAuthGuard = (router: Router) => {
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach(async (to, from) => {
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
@@ -17,32 +16,20 @@ export const createAuthGuard = (router: Router) => {
     // Paths in `routeWhiteListPath` will enter directly
     if (routeWhiteListPath.includes(to.path)) {
       // Login and push to auth page, will go index menu
-      if (userAuth.accessToken && to.path === AppAuthPath) {
-        next({ name: appMenu.indexMenuName })
-        return
-      }
-
-      next()
-      return
+      if (userAuth.accessToken && to.path === AppAuthPath)
+        return { name: appMenu.indexMenuName }
     }
 
     // since almost all the routes are fetch from backend
     // default _auth would be undefined
     // this flag below should only works for hard-coded routes in frontend codes
     // no need to excute the logic below, like profile or permisison
-    if (!isUndefined(to.meta?._auth) && !to.meta._auth) {
-      next()
-      return
-    }
+    if (!isUndefined(to.meta?._auth) && !to.meta._auth)
+      return true
 
     // No token, next to auth page and return
-    if (!userAuth.accessToken) {
-      next({
-        path: AppAuthPath,
-        replace: true,
-      })
-      return
-    }
+    if (!userAuth.accessToken)
+      return { path: AppAuthPath, replace: true }
 
     // enter the `leaveTip` page, hang on the unload event
     if (to.meta.leaveTip) {
@@ -75,18 +62,11 @@ export const createAuthGuard = (router: Router) => {
         maskClosable: false,
       })
 
-      if (!confirmed) {
-        next({ ...from, replace: true })
-        return
-      }
+      if (!confirmed)
+        return { ...from, replace: true }
 
       _confirm_leave_map_.set(from.name, true)
-
       removeEvent()
-
-      next()
-
-      return
     }
 
     // handle lock logic
@@ -95,38 +75,22 @@ export const createAuthGuard = (router: Router) => {
       && appLock.isLock
       && appLock.lockRoute
     ) {
-      if (to.name !== AppLockName) {
-        next({
-          name: AppLockName,
-        })
-        return
-      }
+      if (to.name !== AppLockName)
+        return { name: AppLockName }
     }
 
-    // Get user info
-    if (isEmpty(userProfile.profile))
-      await userProfile.getProfile()
+    // no menus, means no permission or profile etc
+    if (appMenu.menus.length === 0) {
+      // Get user info
+      if (isEmpty(userProfile.profile))
+        await userProfile.getProfile()
 
-    if (isEmpty(appKey.baiduAK))
-      await appKey.getSecretKeys()
+      // At this step, user has login but didn't got dynamic routes generated
+      // Below we call app core fn1 to handle logic
+      await AppCoreFn1()
 
-    // Got menus, next and return
-    if (appMenu.menus && appMenu.menus.length !== 0) {
-      next()
-      return
+      // LINK https://router.vuejs.org/guide/advanced/dynamic-routing.html#adding-routes-inside-navigation-guards
+      return to.fullPath
     }
-
-    // At this step, user has login but didn't got dynamic routes generated
-    // Below we call app core fn1 to handle logic
-    await AppCoreFn1()
-
-    // Refresh the page, router will not be found, need to redirect
-    // const AppRedirectPath: string = from.query.redirect || to.path
-    // const redirect = decodeURIComponent(AppRedirectPath)
-    // const nextData =
-    //   to.path === redirect ? { ...to, replace: true } : { path: redirect }
-    // next(nextData)
-
-    next(to)
   })
 }
