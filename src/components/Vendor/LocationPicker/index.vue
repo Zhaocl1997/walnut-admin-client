@@ -141,6 +141,10 @@ const onInitMap = async () => {
   //   }
   // })
 }
+
+onMounted(() => {
+  appKey.initBaiduKey()
+})
 </script>
 
 <script lang="ts">

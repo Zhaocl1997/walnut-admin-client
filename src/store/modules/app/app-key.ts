@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
-import { getSecretKeys } from '@/api/auth'
+import { getBaiduKey } from '@/api/auth'
 
 const useAppStoreSecretKeyInside = defineStore(StoreKeys.APP_KEY, {
   state: (): AppKeyState => ({}),
@@ -13,8 +13,8 @@ const useAppStoreSecretKeyInside = defineStore(StoreKeys.APP_KEY, {
       this.baiduAK = payload
     },
 
-    async getSecretKeys() {
-      const res = await getSecretKeys()
+    async initBaiduKey() {
+      const res = await getBaiduKey()
 
       this.setBaiduAK(res?.B!)
     },

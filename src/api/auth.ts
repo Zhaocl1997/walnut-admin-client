@@ -63,13 +63,14 @@ export const getUserInfo = () => {
 }
 
 /**
- * @description get some sensitive keys from backend
+ * @description get baidu ak from backend
  */
-export const getSecretKeys = () => {
+export const getBaiduKey = () => {
   return AppAxios.get<AppSecretKeysInterface>(
     {
       url: AuthEnum.KEYS,
       _autoDecryptResponseData: true,
+      _cache: true,
     },
   )
 }
