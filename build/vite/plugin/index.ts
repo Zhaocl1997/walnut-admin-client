@@ -14,6 +14,7 @@ import { createBuildProgressPlugin } from './progress'
 import { createTerminalPlugin } from './terminal'
 import { createInspectPlugin } from './inspect'
 import { createHttpsPlugin } from './https'
+import { createCdnImportPlugin } from './cdn-import'
 
 export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   const vitePlugins: (VitePlugin | VitePlugin[])[] = [
@@ -25,6 +26,18 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
       },
     }),
     vueJsx(),
+
+    // https://github.com/antfu/unplugin-auto-import
+    creatAutoImportPlugin(),
+
+    // https://github.com/antfu/unplugin-vue-components
+    createComponentPlugin(),
+
+    // https://github.com/unocss/unocss
+    createUnoCSSPlugin(),
+
+    // https://github.com/anncwb/vite-plugin-html
+    createHTMLPlugin(env.VITE_APP_TITLE),
   ]
 
   const dev = mode === 'development'
@@ -48,21 +61,13 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   if (dev)
     vitePlugins.push(createRestartPlugin())
 
-  // https://github.com/antfu/unplugin-auto-import
-  vitePlugins.push(creatAutoImportPlugin())
-
-  // https://github.com/antfu/unplugin-vue-components
-  vitePlugins.push(createComponentPlugin())
-
-  // https://github.com/unocss/unocss
-  vitePlugins.push(createUnoCSSPlugin())
-
-  // https://github.com/anncwb/vite-plugin-html
-  vitePlugins.push(createHTMLPlugin(env.VITE_APP_TITLE))
-
   // https://github.com/jeddygong/vite-plugin-progress
   // this is fun, but using this progress plugin will not output content in `stage.log` file
-  // if (stage || prod) vitePlugins.push(createBuildProgressPlugin())
+  if (stage || prod)
+    vitePlugins.push(createBuildProgressPlugin())
+
+  // https://github.com/MMF-FE/vite-plugin-cdn-import
+  // if (stage || prod) vitePlugins.push(createCdnImportPlugin())
 
   // https://github.com/btd/rollup-plugin-visualizer
   if (stage)

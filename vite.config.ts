@@ -3,7 +3,7 @@ import type { ConfigEnv, UserConfig } from 'vite'
 
 import { loadEnv, splitVendorChunkPlugin } from 'vite'
 
-import packageInfo from './package.json'
+import { author, dependencies, devDependencies, name, repository, urls, version } from './package.json'
 
 import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
@@ -16,13 +16,13 @@ function pathResolve(dir: string) {
 }
 
 const __APP_INFO__ = {
-  name: packageInfo.name,
-  version: packageInfo.version,
-  deps: packageInfo.dependencies,
-  devDeps: packageInfo.devDependencies,
-  urls: Object.assign(packageInfo.urls, {
-    github: packageInfo.repository.url,
-    author: packageInfo.author.url,
+  name,
+  version,
+  deps: dependencies,
+  devDeps: devDependencies,
+  urls: Object.assign(urls, {
+    github: repository.url,
+    author: author.url,
   }),
   lastBuildTime: new Date().toLocaleDateString(),
 }
@@ -128,8 +128,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           manualChunks: {
             'lodash-es': ['lodash-es'],
             'naive-ui': ['naive-ui'],
-            'ali-oss': ['ali-oss'],
-            'echarts': ['echarts'],
+            // 'ali-oss': ['ali-oss'],
+            // 'echarts': ['echarts'],
             'tinymce': ['tinymce'],
             'sortablejs': ['sortablejs'],
             'axios': ['axios'],

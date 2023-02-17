@@ -92,6 +92,7 @@ specifiers:
   vfonts: 0.1.0
   vite: 4.0.1
   vite-plugin-banner: 0.7.0
+  vite-plugin-cdn-import: 0.3.5
   vite-plugin-compression: 0.5.1
   vite-plugin-html: 3.2.0
   vite-plugin-inspect: 0.7.10
@@ -209,6 +210,7 @@ devDependencies:
   vfonts: 0.1.0
   vite: 4.0.1_nkf6vitvxbrj2nkewbtva4gfee
   vite-plugin-banner: 0.7.0
+  vite-plugin-cdn-import: 0.3.5_rollup@3.7.4
   vite-plugin-compression: 0.5.1_vite@4.0.1
   vite-plugin-html: 3.2.0_vite@4.0.1
   vite-plugin-inspect: 0.7.10_rollup@3.7.4+vite@4.0.1
@@ -6469,6 +6471,12 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /is-reference/1.2.1:
+    resolution: {integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==}
+    dependencies:
+      '@types/estree': 1.0.0
+    dev: true
+
   /is-regex/1.1.4:
     resolution: {integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==}
     engines: {node: '>= 0.4'}
@@ -8750,6 +8758,18 @@ packages:
       glob: 7.2.3
     dev: true
 
+  /rollup-plugin-external-globals/0.6.1_rollup@3.7.4:
+    resolution: {integrity: sha512-mlp3KNa5sE4Sp9UUR2rjBrxjG79OyZAh/QC18RHIjM+iYkbBwNXSo8DHRMZWtzJTrH8GxQ+SJvCTN3i14uMXIA==}
+    peerDependencies:
+      rollup: ^2.25.0
+    dependencies:
+      '@rollup/pluginutils': 4.2.1
+      estree-walker: 2.0.2
+      is-reference: 1.2.1
+      magic-string: 0.25.9
+      rollup: 3.7.4
+    dev: true
+
   /rollup-plugin-obfuscator/0.2.2_4v7hh43scriduspdspqngyyita:
     resolution: {integrity: sha512-WwjvzaiVx5nKt7o9eBu0AiRNZnLMEAeaecZD4tYgf/LcQlLKj+xKwTn1gzdDHFk58JJoXVnbeYMvqomQoI31ig==}
     peerDependencies:
@@ -10246,6 +10266,14 @@ packages:
 
   /vite-plugin-banner/0.7.0:
     resolution: {integrity: sha512-g0cm0wbrR6b6wR8FWtfD1RSDPacdumKEOAnneXv+NpJ9ez+j6rklRv6lMOO+aPf+Y6Zb8OzgIk0FXBZ6h+DeZQ==}
+    dev: true
+
+  /vite-plugin-cdn-import/0.3.5_rollup@3.7.4:
+    resolution: {integrity: sha512-e1raoalfBiIhv+hnMeSp1UNjloDDBhHpeFxkwRRdPBmTdDRqdEEn8owUmT5u8UBSVCs4xN3n/od4a91vXEhXPQ==}
+    dependencies:
+      rollup-plugin-external-globals: 0.6.1_rollup@3.7.4
+    transitivePeerDependencies:
+      - rollup
     dev: true
 
   /vite-plugin-compression/0.5.1_vite@4.0.1:
