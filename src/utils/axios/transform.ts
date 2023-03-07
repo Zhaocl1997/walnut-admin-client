@@ -107,12 +107,14 @@ export const transform: WalnutAxiosTransform = {
 
       // TODO bug
       // router push too fast, which means last page going on requesting, then go to another page, will cause fake death of page
-      await RefreshTokenLogic(config)
+      return RefreshTokenLogic(config)
     }
 
     // refresh token is expired, so this user need to signout and re-signin
-    if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED)
+    if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
       await userAuth.Signout(false)
+      return Promise.reject(new Error('Error'))
+    }
 
     const badRequestCodeList: number[] = [
       BussinessCodeConst.SIGNIN_USER_NOT_FOUND,
@@ -132,10 +134,10 @@ export const transform: WalnutAxiosTransform = {
       BussinessCodeConst.PERMISSION_DENIED,
     ]
 
-    if (badRequestCodeList.includes(code))
+    if (badRequestCodeList.includes(code)) {
       useAppNotiError(msg)
-
-    return Promise.reject(new Error('Error'))
+      return Promise.reject(new Error('Error'))
+    }
   },
 
   // Here handle response error

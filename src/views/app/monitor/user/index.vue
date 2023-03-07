@@ -9,10 +9,11 @@ import { forceQuit, monitorUserAPI } from '@/api/app/monitor/user'
 
 // locale unique key
 const localeKey = 'app.monitor.user'
+const authKey = 'user'
 
 const { t } = useAppI18n()
 
-const [register] = useCRUD<AppMonitorUserModel>({
+const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<AppMonitorUserModel>({
   baseAPI: monitorUserAPI,
 
   tableProps: {
@@ -22,6 +23,10 @@ const [register] = useCRUD<AppMonitorUserModel>({
     striped: true,
     bordered: true,
     singleLine: false,
+
+    auths: {
+      read: `app:monitor:${authKey}:read`,
+    },
 
     // clear default header actions
     headerActions: [],
@@ -226,7 +231,7 @@ const [register] = useCRUD<AppMonitorUserModel>({
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        extendActionType: [],
+        extendActionType: ['detail'],
         extendActionButtons: [
           {
             _type: 'force-quit',
@@ -242,10 +247,52 @@ const [register] = useCRUD<AppMonitorUserModel>({
           },
         ],
         onExtendActionType: async ({ type, rowData }) => {
-          if (type === 'force-quit')
+          if (type === 'detail')
+            await onApiTableReadAndOpenUpdateForm(rowData._id!)
+
+          if (type === 'force-quit') {
             await forceQuit(rowData._id!)
+            useAppMsgSuccess()
+            await onApiTableList()
+          }
         },
       },
+    ],
+  },
+
+  formProps: {
+    localeUniqueKey: localeKey,
+    localeWithTable: true,
+    preset: 'drawer',
+    labelWidth: 140,
+    xGap: 0,
+
+    useDescription: true,
+    descriptionProps: {
+      bordered: true,
+      column: 2,
+      colon: true,
+      labelPlacement: 'left',
+    },
+
+    advancedProps: {
+      defaultButton: false,
+      width: '40%',
+      closable: true,
+      autoFocus: false,
+    },
+
+    schemas: [
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'visitorId',
+        },
+        descriptionProp: {
+          span: 1,
+        },
+      },
+
     ],
   },
 })
