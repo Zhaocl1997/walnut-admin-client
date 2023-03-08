@@ -88,7 +88,7 @@ specifiers:
   unocss: 0.47.6
   unplugin-auto-import: 0.12.1
   unplugin-vue-components: 0.22.12
-  untyper: 0.0.3
+  untyper: 0.0.5
   vfonts: 0.1.0
   vite: 4.0.1
   vite-plugin-banner: 0.7.0
@@ -139,7 +139,7 @@ dependencies:
   socket.io-client: 4.5.4
   sortablejs: 1.15.0
   tinymce: 6.3.1
-  untyper: 0.0.3
+  untyper: 0.0.5
   vue: 3.2.45
   vue-codemirror: 6.1.1_vhikcdkubtgbuxk47tdob2ofvi
   vue-i18n: 9.2.2_vue@3.2.45
@@ -10115,8 +10115,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /untyper/0.0.3:
-    resolution: {integrity: sha512-WtN6CLxmVL0BPDWGqaEa/N/wqupSwFghgJUDKdYszy4iR4Nf7VfWGdWvM+DmnVo1Ro9I653VkSkwBtRwiVeLUA==}
+  /untyper/0.0.5:
+    resolution: {integrity: sha512-nQ59P54TrbQO9frRSI9yCHw2C6uWHeFp0bp0HsxffEGH5C+8aSOXfYqAkDsl6Rl7xcMGzyjSIqaxNh5+9eyA0g==}
     dependencies:
       parse5: 7.1.2
     dev: false

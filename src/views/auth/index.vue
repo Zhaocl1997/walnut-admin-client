@@ -14,13 +14,12 @@ const onClickBeian = () => {
 
 watch(locale, () => {
   nextTick(async () => {
-    // const title1 = document.getElementById('untyper1')!
-    // const unTyper1 = new UnTyper(title1, { speed: 250, startDelay: 250 })
-    // await unTyper1.type(t('app.auth.h1'), { delay: 200 }).go()
+    const title1 = document.getElementById('untyper1')!
+    const unTyper1 = new UnTyper(title1, { speed: 200, startDelay: 100 })
+    await unTyper1.type(t('app.auth.h1'), { delay: 200 }).go()
 
     const title2 = document.getElementById('untyper2')!
-    title2.innerText = ''
-    const unTyper2 = new UnTyper(title2, { speed: 200, startDelay: 250 })
+    const unTyper2 = new UnTyper(title2, { speed: 100, startDelay: 100 })
     await unTyper2.type(t('app.auth.h2')).go()
   })
 }, { immediate: true })
@@ -52,9 +51,7 @@ export default defineComponent({
     >
       <div class="absolute bg-black opacity-60 inset-0 z-0" />
       <div class="w-full px-24 z-10">
-        <h1 id="untyper1" class="text-5xl font-bold text-left tracking-wide text-gray-50">
-          {{ t('app.auth.h1') }}
-        </h1>
+        <h1 id="untyper1" class="text-5xl font-bold text-left tracking-wide text-gray-50" />
         <p id="untyper2" class="text-3xl my-4 text-gray-50" />
       </div>
     </div>

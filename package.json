@@ -80,7 +80,7 @@
     "socket.io-client": "4.5.4",
     "sortablejs": "1.15.0",
     "tinymce": "6.3.1",
-    "untyper": "0.0.3",
+    "untyper": "0.0.5",
     "vue": "3.2.45",
     "vue-codemirror": "6.1.1",
     "vue-i18n": "9.2.2",
