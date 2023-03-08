@@ -9,6 +9,7 @@ export const defaultAppLocaleMessageKeys = [
   'description',
   'index',
   'ip',
+  'isp',
   'location',
   'city',
   'os',
@@ -19,4 +20,6 @@ export const defaultAppLocaleMessageKeys = [
   'fixed',
   'transition',
   'inverted',
+  'sr',
+  'vp',
 ]

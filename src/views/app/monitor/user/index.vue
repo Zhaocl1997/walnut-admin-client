@@ -273,8 +273,10 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
     descriptionProps: {
       bordered: true,
       column: 2,
-      colon: true,
       labelPlacement: 'left',
+      labelStyle: {
+        width: '100px',
+      },
     },
 
     advancedProps: {
@@ -291,10 +293,159 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
           path: 'visitorId',
         },
         descriptionProp: {
-          span: 1,
+          span: 2,
         },
       },
-
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'userId',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'userName',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'os',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'browser',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'ip',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'isp',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'currentRouter',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'country',
+        },
+        descriptionProp: {
+          show: false,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'province',
+        },
+        descriptionProp: {
+          show: false,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'city',
+        },
+        descriptionProp: {
+          show: false,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'area',
+        },
+        descriptionProp: {
+          show: false,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'location',
+        },
+        descriptionProp: {
+          span: 2,
+          formatter: (_, row) => {
+            return `${row?.country}/${row?.province}/${row?.city}/${row?.area}`
+          },
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'sr',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'vp',
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          // TODO change filed to firstVisitTime
+          path: 'createdAt',
+          label: computed(() => t('table.app.monitor.user.createdAt')),
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'lastActiveAt',
+          label: computed(() => t('table.app.monitor.user.lastActiveAt')),
+        },
+        descriptionProp: {
+          span: 2,
+        },
+      },
     ],
   },
 })

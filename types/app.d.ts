@@ -250,6 +250,7 @@ declare global {
     country?: string
     province?: string
     city?: string
+    area?: string
     isp?: string
     userAgent?: string
     netType?: string
