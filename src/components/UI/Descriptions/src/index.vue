@@ -14,19 +14,21 @@ export default defineComponent({
   setup(props: WDescriptionProps, { attrs }) {
     const { t } = useAppI18n()
 
+    const recordObject = Object.fromEntries<StringOrNumber>(props.items?.map<[string, StringOrNumber]>(i => [i.key!, i.value])!)
+
     const renderItemsContent = (item: WDescriptionsItem) => {
       if (item.type === 'tag')
         return <n-tag {...item.typeProps}>{item.value}</n-tag>
 
       if (item.type === 'link') {
         return (
-            <n-text
-              {...item.typeProps}
-              onClick={() => openExternalLink(item.typeProps!.link)}
-              class="cursor-pointer"
-            >
-              {item.value}
-            </n-text>
+          <n-text
+            {...item.typeProps}
+            onClick={() => openExternalLink(item.typeProps!.link)}
+            class="cursor-pointer"
+          >
+            {item.value}
+          </n-text>
         )
       }
 
@@ -50,9 +52,9 @@ export default defineComponent({
 
         if (target.tagType) {
           return (
-              <n-tag size="small" type={target.tagType}>
-                {t(target.label!)}
-              </n-tag>
+            <n-tag size="small" type={target.tagType}>
+              {t(target.label!)}
+            </n-tag>
           )
         }
 
@@ -60,26 +62,26 @@ export default defineComponent({
       }
 
       return (
-          <span class="whitespace-pre-wrap break-all">
-            {(typeof item.formatter === 'function'
-              ? item.formatter(item.value as string)
-              : item.value) || t('app.base.none')}
-          </span>
+        <span class="whitespace-pre-wrap break-all">
+          {(typeof item.formatter === 'function'
+            ? item.formatter(item.value as string, recordObject)
+            : item.value) || t('app.base.none')}
+        </span>
       )
     }
 
     const renderItems = () =>
-      props.items?.map(i => (
-          <n-descriptions-item {...omit(i, 'label')}>
-            {{
-              default: () => renderItemsContent(i),
-              label: () => (
-                <span class="whitespace-nowrap">
-                  {props.colon ? `${i.label} :` : i.label}
-                </span>
-              ),
-            }}
-          </n-descriptions-item>
+      props.items?.filter(i => getBoolean(i.show)).map(i => (
+        <n-descriptions-item {...omit(i, 'label')}>
+          {{
+            default: () => renderItemsContent(i),
+            label: () => (
+              <span class="whitespace-nowrap">
+                {props.colon ? `${i.label} :` : i.label}
+              </span>
+            ),
+          }}
+        </n-descriptions-item>
       ))
 
     onMounted(async () => {

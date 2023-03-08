@@ -7,7 +7,7 @@ import type {
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
-import type { RuleType } from 'node_modules/.pnpm/async-validator@4.0.7/node_modules/async-validator/dist-types/interface'
+import type { RuleType } from 'node_modules/.pnpm/async-validator@4.2.5/node_modules/async-validator/dist-types/interface'
 
 import type { WButtonProps } from '../../Button'
 import type { WButtonGroupProps } from '../../ButtonGroup'
@@ -251,7 +251,7 @@ export declare namespace WForm {
         vShow?: boolean | Events.Callback<D, boolean>
       }
 
-      descriptionProp?: Partial<WDescriptionsItem>
+      descriptionProp?: Partial<WDescriptionsItem<D>>
     }
 
     type DividerSchema<D> = DynamicSchemaItemProps<

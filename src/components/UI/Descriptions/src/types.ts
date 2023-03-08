@@ -28,14 +28,16 @@ interface WDescTypeDict {
   dictType: string
 }
 
-interface WDescItemExtend {
+interface WDescItemExtend<T> {
+  key?: string
+  show?: boolean
   value: StringOrNumber
-  formatter?: (val: string) => string
+  formatter?: (val: string, record?: T) => string
 }
 
-export type WDescriptionsItem = DescriptionItemProps &
+export type WDescriptionsItem<D = any> = DescriptionItemProps &
 Partial<WDescTypeTag | WDescTypeLink | WDescTypeJson | WDescTypeDict> &
-WDescItemExtend
+WDescItemExtend<D>
 
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 

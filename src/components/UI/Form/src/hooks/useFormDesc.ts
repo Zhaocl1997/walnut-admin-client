@@ -14,7 +14,9 @@ export const useFormDesc = (
       schemas.value
         .filter(i => i.formProp?.path)
         .map(i => ({
+          key: i.formProp?.path,
           type: i.descriptionProp?.type,
+          show: i.descriptionProp?.show,
           // @ts-expect-error
           dictType: i.descriptionProp?.dictType!,
           label: getFormTranslated(t, props, i),
