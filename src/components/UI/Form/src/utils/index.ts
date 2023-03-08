@@ -26,7 +26,12 @@ export const getFormTranslated = (
   item: WForm.Schema.Item,
   type: WForm.LocaleType = 'origin',
 ) => {
+  // used for dict form item
   if (item.formProp?.label === true)
+    return
+
+  // used for desc form item
+  if (!getBoolean(item?.descriptionProp?.show))
     return
 
   const key = props.value.localeUniqueKey
