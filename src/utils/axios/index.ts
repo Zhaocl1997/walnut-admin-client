@@ -17,6 +17,10 @@ export const AppAxios = new Axios({
 
     adapter: retryAdapterEnhancer(throttleAdapterEnhancer(
       cacheAdapterEnhancer(axios.defaults.adapter!))),
+
+    // default transform "true"/"false" to true/false
+    _transformStringBoolean: true,
   },
+
   extendConfig: transform,
 })
