@@ -1,4 +1,6 @@
 export const useStarOnGithub = () => {
+  const appSetting = useAppStoreSetting()
+
   const onClick = () => {
     openExternalLink(__APP_INFO__.urls.github)
   }
@@ -6,7 +8,10 @@ export const useStarOnGithub = () => {
   useAppNotiInfo('', {
     duration: 30000,
     description:
-      'Please give me a star if you like this project !! Your star means a lot to me !!!!',
+      'Please give me a star if you like this project!! Your star means a lot to me!!!!',
+    containerStyle: {
+      marginTop: `${appSetting.header.height}px`,
+    },
     content: () => {
       return (
         <n-space vertical size="small">
