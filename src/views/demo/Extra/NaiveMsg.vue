@@ -7,8 +7,9 @@ const onOpenNoti = (type: number) => {
   type === 3 && useAppNotiWarning('Notification Warning', { duration: 1000 })
   type === 4
       && useAppNotiError('Notification Error', { placement: 'top-left' })
-  type === 5 && appNaive.destroyCurrentNotiInst()
-  type === 6 && appNaive.destroyAllNotiInst()
+  type === 5 && useAppNotiError('Got a 64px margin top', { containerStyle: { marginTop: '64px' } })
+  type === 6 && appNaive.destroyCurrentNotiInst()
+  type === 7 && appNaive.destroyAllNotiInst()
 }
 
 const onOpenMsg = (type: number) => {
@@ -61,9 +62,12 @@ export default defineComponent({
             Error (position: top-right)
           </n-button>
           <n-button @click="onOpenNoti(5)">
-            Close current noti
+            Error (containerStyle: margin)
           </n-button>
           <n-button @click="onOpenNoti(6)">
+            Close current noti
+          </n-button>
+          <n-button @click="onOpenNoti(7)">
             Close all noti
           </n-button>
         </n-space>

@@ -29,6 +29,7 @@ export default defineComponent({
         <n-notification-provider
           :max="appNaive.notiMax"
           :placement="appNaive.notiPlacement"
+          :container-style="appNaive.notiContainerStyle"
         >
           <n-message-provider
             :max="appNaive.msgMax"

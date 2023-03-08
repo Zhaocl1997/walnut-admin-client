@@ -7,6 +7,7 @@ export const useAppNotification = () => {
 
 interface AppNotiOptions extends NotificationOptions {
   placement?: NotificationPlacement
+  containerStyle?: CSSProperties
 }
 
 /**
@@ -17,6 +18,7 @@ export const AppNoti = (msg: string, options: AppNotiOptions) => {
   const { title } = useAppEnv('title')
 
   appNaive.setNotiPlacement(options?.placement ?? 'top-right')
+  appNaive.setNotiContainerStyle(options?.containerStyle ?? {})
 
   const inst = useAppNotification().create({
     ...options,
@@ -26,6 +28,12 @@ export const AppNoti = (msg: string, options: AppNotiOptions) => {
     closable: options?.closable ?? true,
     meta: options.meta ?? formatTime(new Date()),
   })
+
+  inst.onClose = () => {
+    // recover the default placement and container style when current inst is closed
+    appNaive.setNotiPlacement('top-right')
+    appNaive.setNotiContainerStyle({})
+  }
 
   appNaive.setCurrentNotiInst(inst)
 }

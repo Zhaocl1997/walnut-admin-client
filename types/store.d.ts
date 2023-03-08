@@ -98,6 +98,7 @@ declare global {
     msgMax: number
     notiPlacement: NotificationPlacement
     msgPlacement: MessagePlacement
+    notiContainerStyle: CSSProperties
     currentNotiInst: Nullable<NotificationReactive>
     currentMsgInst: Nullable<MessageReactive>
   }

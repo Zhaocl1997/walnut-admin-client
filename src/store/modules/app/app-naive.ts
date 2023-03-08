@@ -9,6 +9,7 @@ const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
     msgMax: 5,
     notiPlacement: 'top-right',
     msgPlacement: 'top',
+    notiContainerStyle: {},
     currentNotiInst: null,
     currentMsgInst: null,
   }),
@@ -21,6 +22,10 @@ const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
      */
     setNotiPlacement(payload: NotificationPlacement) {
       this.notiPlacement = payload
+    },
+
+    setNotiContainerStyle(payload: CSSProperties) {
+      this.notiContainerStyle = payload
     },
 
     setCurrentNotiInst(payload: NotificationReactive) {
