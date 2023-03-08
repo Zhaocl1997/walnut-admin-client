@@ -81,18 +81,18 @@ const getLists = computed(() => getResponse.value.data)
 const getTotal = computed(() => getResponse.value.total)
 
 // use watch to fake the loading
-watch(
+watchThrottled(
   () => getLists,
   () => {
     loading.value = true
 
     setTimeout(() => {
       loading.value = false
-    }, 500)
+    }, 250)
   },
   {
+    throttle: 250,
     deep: true,
-    immediate: true,
   },
 )
 
