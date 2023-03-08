@@ -15,10 +15,12 @@ const onClickBeian = () => {
 watch(locale, () => {
   nextTick(async () => {
     const title1 = document.getElementById('untyper1')!
+    title1.innerHTML = ''
     const unTyper1 = new UnTyper(title1, { speed: 200, startDelay: 100 })
     await unTyper1.type(t('app.auth.h1'), { delay: 200 }).go()
 
     const title2 = document.getElementById('untyper2')!
+    title2.innerHTML = ''
     const unTyper2 = new UnTyper(title2, { speed: 100, startDelay: 100 })
     await unTyper2.type(t('app.auth.h2')).go()
   })
