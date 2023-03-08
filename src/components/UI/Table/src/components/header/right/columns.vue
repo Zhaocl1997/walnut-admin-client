@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { WTable } from '../../types'
+import type { WTable } from '../../../types'
 
-import { useTableContext } from '../../hooks/useTableContext'
+import { useTableContext } from '../../../hooks/useTableContext'
 import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
 const { t } = useAppI18n()
@@ -31,7 +31,7 @@ const getChecked = computed(() =>
 const getIndeterminate = computed(
   () =>
     tableColumns.value.some(i => !i._internalShow)
-      && tableColumns.value.some(i => i._internalShow),
+    && tableColumns.value.some(i => i._internalShow),
 )
 
 // open column setting popover
@@ -76,7 +76,7 @@ const getTitle = (item: WTable.Column) => {
 
 <script lang="ts">
 export default defineComponent({
-  name: 'WTableSettingsColumns',
+  name: 'WTableHeaderRightColumns',
 })
 </script>
 
@@ -84,28 +84,13 @@ export default defineComponent({
   <n-tooltip trigger="hover">
     {{ t('table.base.settings') }}
     <template #trigger>
-      <n-popover
-        v-model:show="popoverShow"
-        placement="bottom"
-        trigger="manual"
-        @clickoutside="popoverShow = false"
-      >
+      <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
-          <n-button text>
-            <w-icon
-              icon="ant-design:setting-outlined"
-              height="20"
-              @click="onOpenPopover"
-            />
-          </n-button>
+          <w-a-icon text icon="ant-design:setting-outlined" height="20" @click="onOpenPopover" />
         </template>
 
         <template #header>
-          <n-checkbox
-            :checked="getChecked"
-            :indeterminate="getIndeterminate"
-            @update-checked="onUpdateCheckAllChecked"
-          >
+          <n-checkbox :checked="getChecked" :indeterminate="getIndeterminate" @update-checked="onUpdateCheckAllChecked">
             {{ t('app.button.check') }}
           </n-checkbox>
         </template>
@@ -113,23 +98,16 @@ export default defineComponent({
         <template #default>
           <div id="tableSortable" ref="tableColumnSettingRef">
             <div
-              v-for="item in tableColumns"
-              :key="item.key"
-              class="hstack justify-between my-2 mx-1" :class="[
+              v-for="item in tableColumns" :key="item.key" class="hstack justify-between my-2 mx-1" :class="[
                 { 'table-column-draggable': !isInBlackList(item.key) },
               ]"
             >
               <div class="hstack items-center mr-8">
-                <n-tooltip
-                  :trigger="isInBlackList(item.key) ? 'manual' : 'hover'"
-                  placement="left"
-                >
+                <n-tooltip :trigger="isInBlackList(item.key) ? 'manual' : 'hover'" placement="left">
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <w-icon
-                        icon="ant-design:drag-outlined"
-                        height="20"
-                        class="cursor-move mr-2" :class="[
+                        icon="ant-design:drag-outlined" height="20" class="cursor-move mr-2" :class="[
                           { 'cursor-not-allowed': isInBlackList(item.key) },
                         ]"
                       />
@@ -140,8 +118,7 @@ export default defineComponent({
                 </n-tooltip>
 
                 <n-checkbox
-                  :disabled="isInBlackList(item.key)"
-                  :checked="item._internalShow"
+                  :disabled="isInBlackList(item.key)" :checked="item._internalShow"
                   @update-checked="onUpdateItemChecked(item)"
                 >
                   {{ getTitle(item) }}
@@ -153,16 +130,12 @@ export default defineComponent({
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <w-icon
-                        icon="mdi:arrow-collapse-left"
-                        height="20"
-                        class="cursor-pointer text-primary"
-                        :style="{
+                        icon="mdi:arrow-collapse-left" height="20" class="cursor-pointer text-primary" :style="{
                           color:
                             item.fixed === 'left'
                               ? `${getThemeOverridesCommon.infoColor} !important`
                               : 'currentColor',
-                        }"
-                        @click="
+                        }" @click="
                           !isInBlackList(item.key) && onSetFix(item, 'left')
                         "
                       />
@@ -182,16 +155,12 @@ export default defineComponent({
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <w-icon
-                        icon="mdi:arrow-collapse-right"
-                        height="20"
-                        class="cursor-pointer"
-                        :style="{
+                        icon="mdi:arrow-collapse-right" height="20" class="cursor-pointer" :style="{
                           color:
                             item.fixed === 'right'
                               ? `${getThemeOverridesCommon.infoColor} !important`
                               : 'currentColor',
-                        }"
-                        @click="
+                        }" @click="
                           !isInBlackList(item.key) && onSetFix(item, 'right')
                         "
                       />

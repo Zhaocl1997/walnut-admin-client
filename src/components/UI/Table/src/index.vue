@@ -9,9 +9,8 @@ import { useTableAPI } from './hooks/useTableAPI'
 
 import { extendProps, props } from './props'
 
-import HeaderActions from './components/actions.vue'
+import TableHeader from './components/header/index.vue'
 import QueryForm from './components/queryForm.vue'
-import Utils from './components/utils.vue'
 
 export default defineComponent({
   name: 'WTable',
@@ -59,10 +58,7 @@ export default defineComponent({
           )}
 
           <n-card>
-            <div class="mb-2 flex justify-between items-center">
-              <HeaderActions></HeaderActions>
-              <Utils></Utils>
-            </div>
+            <TableHeader></TableHeader>
 
             <n-data-table
               ref={tableRef}

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { sortBy } from 'lodash-es'
-import type { WTable } from '../types'
+import type { WTable } from '../../../types'
 
-import { useTableContext } from '../hooks/useTableContext'
+import { useTableContext } from '../../../hooks/useTableContext'
 
 const { t } = useI18n()
 
@@ -61,6 +61,12 @@ const options: ComputedRef<
       i => tableProps.value.headerActions?.indexOf(i.type),
     ).filter(i => isShow(i.type)),
   )
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'WTableHeaderLeftActions',
+})
 </script>
 
 <template>

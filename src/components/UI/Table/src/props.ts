@@ -34,6 +34,8 @@ export const extendProps = {
   queryFormProps: Object as PropType<WForm.Props>,
 
   auths: Object as PropType<WTable.Auths>,
+
+  polling: Number as PropType<number>,
 } as const
 
 export const props = {

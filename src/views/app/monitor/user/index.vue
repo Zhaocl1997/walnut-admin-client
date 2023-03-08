@@ -24,6 +24,8 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
     bordered: true,
     singleLine: false,
 
+    polling: 5000,
+
     auths: {
       read: `app:monitor:${authKey}:read`,
     },
