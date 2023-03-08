@@ -2,10 +2,12 @@ import type { AxiosAdapter, AxiosPromise } from 'axios'
 import LRUCache from 'lru-cache'
 import { buildSortedURL } from './utils'
 
-const FIVE_MINUTES = 1000 * 60 * 5
+const { axiosCache: cacheMinute = 5 } = useAppEnv('seconds')
+
+const CACHE_MINUTE = 1000 * 60 * cacheMinute
 const CAPACITY = 100
 
-export const cacheAdapterEnhancerCache = new LRUCache<string, AxiosPromise>({ ttl: FIVE_MINUTES, max: CAPACITY })
+export const cacheAdapterEnhancerCache = new LRUCache<string, AxiosPromise>({ ttl: CACHE_MINUTE, max: CAPACITY })
 
 export function cacheAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
   return (config) => {

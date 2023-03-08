@@ -4,7 +4,7 @@ import { Axios } from './src/main'
 import { cacheAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer } from './src/adapters'
 import { transform } from './transform'
 
-const { axiosTimeout, axiosCache } = useAppEnv('seconds')
+const { axiosTimeout } = useAppEnv('seconds')
 
 const { httpUrl } = useAppEnv('proxy')
 
