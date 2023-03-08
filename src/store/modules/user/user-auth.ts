@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
-import { authWithPwd, refreshToken, signout } from '@/api/auth'
+import { authWithPwd, getUserInfo, refreshToken, signout } from '@/api/auth'
 import { authWithEmail } from '@/api/auth/email'
 import { AppCoreFn1 } from '@/core'
 
@@ -52,21 +52,23 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      */
     async ExcuteCoreFnAfterAuth(at: string, rt: string) {
       const userProfile = useAppStoreUserProfile()
+      const appMenu = useAppStoreMenu()
 
       // set tokens
       this.setAccessToken(at)
       this.setRefreshToken(rt)
 
-      const appMenu = useAppStoreMenu()
+      // get user profile
+      await userProfile.getProfile()
 
       // get menus/permissions/keys etc
       await AppCoreFn1()
 
-      // push to the index menu
-      await appMenu.goIndex()
-
       // send socket state
       AppSocket!.emit(AppSocketEvents.SIGNIN, { visitorId: fpId.value, userId: userProfile.profile._id, userName: userProfile.profile.userName })
+
+      // push to the index menu
+      await appMenu.goIndex()
     },
 
     /**
