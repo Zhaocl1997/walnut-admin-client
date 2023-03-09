@@ -71,7 +71,7 @@ export default defineComponent({
         useEventListener(
           wrapperRef,
           'wheel',
-          useThrottleFn((e: WheelEvent) => {
+          (e: WheelEvent) => {
             // prevent default wheel
             e.preventDefault()
 
@@ -92,7 +92,7 @@ export default defineComponent({
             }
 
             onScroll(e)
-          }, 200),
+          },
         )
       }
     })
