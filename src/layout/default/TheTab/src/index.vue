@@ -86,8 +86,8 @@ setTabsContext({
           <TabsUtils v-if="getShowUtils" class="hstack flex-none justify-start" :lists="leftUtils" />
         </w-transition>
 
-        <!-- TODO style -->
         <TabsContentMain
+          class="flex-grow mx-1"
           :style="{
             width: appAdapter.isMobile
               ? '100vw'
