@@ -38,6 +38,19 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
 
     // https://github.com/anncwb/vite-plugin-html
     createHTMLPlugin(env.VITE_APP_TITLE),
+
+    // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
+    {
+      name: 'singleHMR',
+      handleHotUpdate({ modules }) {
+        modules.forEach((m) => {
+          m.importedModules = new Set()
+          m.importers = new Set()
+        })
+
+        return modules
+      },
+    },
   ]
 
   const dev = mode === 'development'
