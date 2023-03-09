@@ -1,6 +1,10 @@
 import type { WForm } from '../types'
 import { generateFormItemId } from '../utils'
 
+// This form id stuff is used to fix when form is update
+// The collpase status of the form item would lost
+// So I used a map-ref to store the collapse state
+// This is totally different from the v-if/v-show control, this is more like the internal collpase state
 export const formIdMap = ref(new Map())
 
 export const setFormItemId = (
