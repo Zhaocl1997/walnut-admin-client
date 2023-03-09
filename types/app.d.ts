@@ -239,7 +239,7 @@ declare global {
   }
 
   // app monitor user model
-  interface AppMonitorUserModel extends AppBaseModel {
+  interface AppMonitorUserModel extends Omit<AppBaseModel, 'createdAt' | 'updatedAt'> {
     visitorId: string
     auth: boolean
     focus: boolean
@@ -247,18 +247,22 @@ declare global {
     currentRouter: string
 
     ip?: string
+    isp?: string
+    netType?: string
+
     country?: string
     province?: string
     city?: string
     area?: string
-    isp?: string
+    
     userAgent?: string
-    netType?: string
     platform?: string
     os?: string
     browser?: string
+
     vp?: string
     sr?: string
+    
     device?: string
     engine?: string
 
@@ -266,6 +270,7 @@ declare global {
     userName?: string
 
     authTime: string
+    firstVisitAt?: Date
     lastActiveAt?: Date
   }
 }

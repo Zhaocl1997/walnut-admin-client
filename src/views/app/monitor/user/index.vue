@@ -428,9 +428,8 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
       {
         type: 'Base:Input',
         formProp: {
-          // TODO change filed to firstVisitTime
-          path: 'createdAt',
-          label: computed(() => t('table.app.monitor.user.createdAt')),
+          path: 'firstVisitAt',
+          label: computed(() => t('table.app.monitor.user.firstVisitAt')),
         },
         descriptionProp: {
           span: 2,

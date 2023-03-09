@@ -2,7 +2,7 @@ export const onSocketStateHandle = (data: Partial<AppMonitorUserModel>) => {
   if (!fpId.value)
     return
 
-  AppSocket.emit(AppSocketEvents.STATE, Object.assign(data, {
+  AppSocket?.emit(AppSocketEvents.STATE, Object.assign(data, {
     visitorId: fpId.value,
   }))
 }
