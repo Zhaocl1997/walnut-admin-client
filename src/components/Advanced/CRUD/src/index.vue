@@ -4,7 +4,7 @@ import type { WCrud } from './types'
 
 import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
 
-interface InternalProps extends WCrud.Props {}
+interface InternalProps extends WCrud.Props { }
 
 const prop = defineProps<InternalProps>()
 
@@ -18,14 +18,20 @@ emit('hook', { setProps })
 // ref
 const actionType = ref<ActionType>('')
 
-// state
-const defaultCreateAndUpdateFormData = extractDefaultFormDataFromSchemas(
-  getProps.value.formProps?.schemas!,
-)
+const { stateRef: formData, resetState: resetFormData, commit } = useState({})
 
-const { stateRef: formData, resetState: resetFormData } = useState(
-  defaultCreateAndUpdateFormData,
-)
+// below watch is used for computed schemas
+// which may cause default form field not generate
+// once the schema change, use `commit` to generate a new default form data
+if (getProps.value.formProps?.needUpdateSchemas) {
+  watch(() => getProps.value.formProps?.schemas!, (v) => {
+    if (v.length !== 0) {
+      formData.value = extractDefaultFormDataFromSchemas(v)
+      // commit a version and make the latest default form data
+      commit()
+    }
+  }, { immediate: true, deep: true })
+}
 
 const onTableOpenCreateForm = (defaultFormData: any) => {
   actionType.value = 'create'
@@ -126,10 +132,6 @@ const [registerForm, { onOpen, onClose }] = useForm({
   <div>
     <w-table @hook="registerTable" />
 
-    <w-form
-      v-if="getProps.formProps"
-      :model="formData"
-      @hook="registerForm"
-    />
+    <w-form v-if="getProps.formProps" :model="formData" @hook="registerForm" />
   </div>
 </template>

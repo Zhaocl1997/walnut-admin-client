@@ -33,12 +33,12 @@ export const useFormAdvanced = (
 
     // if error, we want loading stop, but drawer do not disappear
     // so `loading.value = false` is always excuting
-    // only when have ret, close drawer and show message
+    // only when have result, close drawer and show message
     const apiHandler = async (apiFn: Fn, params: Recordable) => {
       try {
-        const ret = await apiFn(params)
+        const result = await apiFn(params)
 
-        if (ret) {
+        if (result) {
           onClose()
           useAppMsgSuccess()
         }
@@ -90,6 +90,9 @@ export const useFormAdvanced = (
     const closable = !loading.value && props.value.advancedProps?.closable
     const defaultButton = getBoolean(props.value.advancedProps?.defaultButton, true)
     const autoFocus = getBoolean(props.value.advancedProps?.autoFocus, false)
+    // MARK
+    // default modal/drawer use show to toggle visiblility for performance
+    const displayDirective = props.value.advancedProps?.displayDirective ?? 'show'
 
     if (props.value.preset === 'modal') {
       return (
@@ -104,9 +107,7 @@ export const useFormAdvanced = (
           loading={loading.value}
           defaultButton={defaultButton}
           autoFocus={autoFocus}
-          // MARK default modal/drawer use show to toggle visiblility
-          // for performance
-          display-directive="show"
+          display-directive={displayDirective}
         >
           {render()}
         </w-modal>
@@ -132,9 +133,7 @@ export const useFormAdvanced = (
           resizable={props.value.advancedProps?.resizable}
           defaultWidth={props.value.advancedProps?.defaultWidth}
           defaultHeight={props.value.advancedProps?.defaultHeight}
-          // MARK default modal/drawer use show to toggle visiblility
-          // for performance
-          display-directive="show"
+          display-directive={displayDirective}
         >
           {render()}
         </w-drawer>

@@ -94,6 +94,12 @@ export const extendProps = {
    * @description description props
    */
   descriptionProps: Object as PropType<WDescriptionProps>,
+
+  /**
+   * @description dummy way to manullu update default form data in crud component
+   * used for crud component, not used in form component
+   */
+  needUpdateSchemas: Boolean as PropType<boolean>,
 }
 
 export const props = {
@@ -109,7 +115,7 @@ export const props = {
   },
   model: {
     type: Object as PropType<Record<string, any>>,
-    default: () => {},
+    default: () => { },
   },
   rules: Object as PropType<FormRules>,
   disabled: Boolean,
