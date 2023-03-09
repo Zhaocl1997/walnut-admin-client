@@ -30,6 +30,9 @@ const { pause, resume, isActive } = useIntervalFn(() => {
 
 const onOpenPopover = () => {
   popoverShow.value = true
+  nextTick(() => {
+    inputNumberRef.value?.focus()
+  })
 }
 
 const onPollingClick = () => {
@@ -89,7 +92,7 @@ export default defineComponent({
 
             <n-input-number
               ref="inputNumberRef" :min="1" :default-value="getDefaultValue" :parse="parseSeconds"
-              :format="formatSeconds" style="width: 80px;" size="tiny" :show-button="false"
+              :format="formatSeconds" style="width: 40px;" size="tiny" :show-button="false"
               @update:value="onUpdatePolling"
             />
           </div>
