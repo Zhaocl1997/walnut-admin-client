@@ -189,7 +189,7 @@ const [
         width: 80,
         extendType: 'action',
         extendActionType: ['detail'],
-        onExtendActionType: async ({ type, rowData }) => {
+        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
           switch (type) {
             case 'detail':
               await onApiTableReadAndOpenUpdateForm(rowData._id!)

@@ -53,7 +53,7 @@ export default defineComponent({
       :bar-width="28"
       animated
       default-value="account"
-      pane-class="h-58"
+      pane-class="h-60"
       type="line"
       justify-content="space-around"
     >

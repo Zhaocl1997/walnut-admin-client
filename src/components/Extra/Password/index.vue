@@ -12,7 +12,7 @@ interface InternalProps {
 }
 
 const props = withDefaults(defineProps<InternalProps>(), {
-  maxlength: 24,
+  maxlength: 80,
   minlength: 8,
   progress: false,
 })

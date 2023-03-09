@@ -145,7 +145,7 @@ const [
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        onExtendActionType: async ({ type, rowData }) => {
+        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
           switch (type) {
             case 'read':
               {

@@ -33,8 +33,6 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
     // clear default header actions
     headerActions: [],
 
-    extraHeaderActions: [],
-
     queryFormProps: {
       localeUniqueKey: localeKey,
       localeWithTable: true,
@@ -248,7 +246,7 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
             },
           },
         ],
-        onExtendActionType: async ({ type, rowData }) => {
+        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
           if (type === 'detail')
             await onApiTableReadAndOpenUpdateForm(rowData._id!)
 

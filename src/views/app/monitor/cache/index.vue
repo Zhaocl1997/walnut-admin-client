@@ -129,7 +129,7 @@ const [
         extendType: 'action',
         fixed: 'right',
         extendActionType: ['detail', 'delete'],
-        onExtendActionType: async ({ type, rowData }) => {
+        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
           switch (type) {
             case 'detail':
               await onApiTableReadAndOpenUpdateForm(rowData.key!)

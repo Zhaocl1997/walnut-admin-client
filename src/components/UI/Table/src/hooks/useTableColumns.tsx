@@ -170,7 +170,7 @@ export const useTableColumns = (
                       icon="ant-design:plus-outlined"
                       text-prop={t('app.button.create')}
                       onClick={() =>
-                        tItem.onExtendActionType!({
+                        tItem.onExtendActionColumnButtonClick!({
                           type: 'create',
                           rowData,
                           rowIndex,
@@ -189,7 +189,7 @@ export const useTableColumns = (
                       icon="ant-design:edit-outlined"
                       text-prop={t('app.button.read')}
                       onClick={() =>
-                        tItem.onExtendActionType!({
+                        tItem.onExtendActionColumnButtonClick!({
                           type: 'read',
                           rowData,
                           rowIndex,
@@ -209,7 +209,7 @@ export const useTableColumns = (
                       icon="ant-design:delete-outlined"
                       text-prop={t('app.button.delete')}
                       onClick={() =>
-                        tItem.onExtendActionType!({
+                        tItem.onExtendActionColumnButtonClick!({
                           type: 'delete',
                           rowData,
                           rowIndex,
@@ -228,7 +228,7 @@ export const useTableColumns = (
                       icon="ant-design:eye-outlined"
                       text-prop={t('app.button.detail')}
                       onClick={() =>
-                        tItem.onExtendActionType!({
+                        tItem.onExtendActionColumnButtonClick!({
                           type: 'detail',
                           rowData,
                           rowIndex,
@@ -243,7 +243,7 @@ export const useTableColumns = (
               const extendActionButtons = tItem.extendActionButtons
                 ?.filter(i => (i?._show ? i._show(rowData) : true))
                 .map(i => <w-button {...omit(i, ['_show', '_type'])} onClick={() =>
-                  tItem.onExtendActionType!({
+                  tItem.onExtendActionColumnButtonClick!({
                     type: i._type,
                     rowData,
                     rowIndex,

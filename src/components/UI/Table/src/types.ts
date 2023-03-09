@@ -67,7 +67,7 @@ export declare namespace WTable {
       onGetApiTableListParams: () => Ref<WalnutBaseListParams>
     }
 
-    interface WTableInst extends NDataTableInst, ExtendInst {}
+    interface WTableInst extends NDataTableInst, ExtendInst { }
   }
 
   /**
@@ -84,6 +84,18 @@ export declare namespace WTable {
    * @description extend table column types
    */
   namespace ExtendType {
+    type ButtonsType<T> = (WButtonProps & {
+      /**
+       * @description custom show callback for extend action button
+       */
+      _show?: RenderFn<T, boolean>
+
+      /**
+       * @description custom action button type, used for click event flag
+       */
+      _type: string
+    })[]
+
     /**
      * @description base extend table column type
      */
@@ -174,12 +186,17 @@ export declare namespace WTable {
       /**
        * @description extend action button
        */
-      extendActionButtons?: (WButtonProps & { _show?: RenderFn<T, boolean>; _type: string })[]
+      extendActionButtons?: ButtonsType<T>
+
+      /**
+      * @description extend table column dropdown buttons
+      */
+      extraDropdownButtons?: ButtonsType<T>
 
       /**
        * @description action column button click event
        */
-      onExtendActionType?: ({
+      onExtendActionColumnButtonClick?: ({
         type,
         rowData,
         rowIndex,
@@ -188,11 +205,6 @@ export declare namespace WTable {
         rowData: T
         rowIndex?: number
       }) => Promise<void> | void
-
-      /**
-       * @description extend table column dropdown buttons
-       */
-      extraDropdownButtons?: WButtonProps[]
     }
   }
 
