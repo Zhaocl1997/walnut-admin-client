@@ -5,12 +5,51 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { userAPI } from '@/api/system/user'
+import { resetPassowrd, updatePassowrd, userAPI } from '@/api/system/user'
 
 const { t } = useAppI18n()
 
 // locale unique key
 const key = 'user'
+
+const { stateRef: updatePasswordformData } = useState({ userId: '', newPassword: '' })
+
+const [registerUpdate, { onOpen }] = useForm({
+  preset: 'modal',
+  baseRules: true,
+  labelWidth: 140,
+  xGap: 0,
+
+  advancedProps: {
+    width: '40%',
+    onYes: async (_, done) => {
+      try {
+        // TODO
+        // refresh request got problem, need to have a deep look
+        await updatePassowrd({ userId: updatePasswordformData.value.userId!, newPassword: updatePasswordformData.value.newPassword! })
+
+        useAppMsgSuccess()
+      }
+      finally {
+        done()
+      }
+    },
+  },
+
+  schemas: [
+    {
+      type: 'Extend:Password',
+      formProp: {
+        path: 'newPassword',
+        label: 'New Password',
+      },
+      componentProp: {
+        progress: true,
+        capslock: true,
+      },
+    },
+  ],
+})
 
 const [
   register,
@@ -136,6 +175,7 @@ const [
             size: 'tiny',
             icon: 'mdi:update',
             auth: 'system:user:pass:update',
+            _show: row => row.userName !== 'admin',
           },
           {
             _builtInType: 'reset-pass',
@@ -145,6 +185,7 @@ const [
             size: 'tiny',
             icon: 'mdi:lock-reset',
             auth: 'system:user:pass:reset',
+            _show: row => row.userName !== 'admin',
           },
         ],
         onActionButtonsClick: async ({ type, rowData }) => {
@@ -158,11 +199,21 @@ const [
               break
 
             case 'update-pass':
-              console.log(1)
+              updatePasswordformData.value.userId = rowData._id
+              onOpen()
               break
 
             case 'reset-pass':
-              console.log(2)
+              {
+                const confirm = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
+
+                if (confirm) {
+                  const res = await resetPassowrd({ userId: rowData._id! })
+
+                  if (res)
+                    useAppMsgSuccess()
+                }
+              }
               break
 
             default:
@@ -223,5 +274,9 @@ const [
 </script>
 
 <template>
-  <WCRUD @hook="register" />
+  <div>
+    <WCRUD @hook="register" />
+
+    <w-form :model="updatePasswordformData" @hook="registerUpdate" />
+  </div>
 </template>

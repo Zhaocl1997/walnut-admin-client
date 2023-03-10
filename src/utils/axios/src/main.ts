@@ -85,6 +85,13 @@ export class Axios {
   }
 
   /**
+   * @description Axios Patch
+   */
+  patch<T>(config: AxiosRequestConfig) {
+    return this.request<T>({ ...config, method: 'PATCH' })
+  }
+
+  /**
    * @description Axios Delete
    */
   delete<T>(config: AxiosRequestConfig) {
