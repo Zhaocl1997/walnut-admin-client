@@ -84,17 +84,35 @@ export declare namespace WTable {
    * @description extend table column types
    */
   namespace ExtendType {
-    type ButtonsType<T> = (WButtonProps & {
+    /**
+     * @description action button basic extend prop
+     */
+    interface ActionButtonsBasic<T> {
       /**
-       * @description custom show callback for extend action button
+       * @description custom show callback for action button
        */
-      _show?: RenderFn<T, boolean>
+      _disabled?: RenderFn<T, boolean> | boolean
 
       /**
-       * @description custom action button type, used for click event flag
+       * @description custom show callback for action button
        */
-      _type: string
-    })[]
+      _show?: RenderFn<T, boolean> | boolean
+
+      /**
+       * @description button show in dropdown or outside
+       */
+      _dropdown?: boolean
+    }
+
+    /**
+     * @description action column buttons type
+     */
+    interface ActionButtons<T> extends ActionButtonsBasic<T>, WButtonProps {
+      /**
+       * @description builtIn button, support `create` / `read` / `delete` / `detail`
+       */
+      _builtInType: ColumnActionType | string
+    }
 
     /**
      * @description base extend table column type
@@ -177,26 +195,16 @@ export declare namespace WTable {
      * @description preset acion column, default includes three buttons: read / delete
      */
     type Action<T = RowData> = BaseExtend<T, 'action'> & {
-      /**
-       * @description action column button config, order sensitive
-       * @default ['create', 'delete', 'read']
-       */
-      extendActionType?: ColumnActionType[]
 
       /**
-       * @description extend action button
+       * @description action column button config
        */
-      extendActionButtons?: ButtonsType<T>
-
-      /**
-      * @description extend table column dropdown buttons
-      */
-      extraDropdownButtons?: ButtonsType<T>
+      actionButtons: ActionButtons<T>[]
 
       /**
        * @description action column button click event
        */
-      onExtendActionColumnButtonClick?: ({
+      onActionButtonsClick: ({
         type,
         rowData,
         rowIndex,

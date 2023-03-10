@@ -231,22 +231,22 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        extendActionType: ['detail'],
-        extendActionButtons: [
+        actionButtons: [
           {
-            _type: 'force-quit',
-            iconButton: true,
+            _builtInType: 'detail',
+          },
+          {
+            _builtInType: 'force-quit',
             icon: 'ant-design:logout-outlined',
             type: 'error',
+            iconButton: true,
             textProp: () => t('app.monitor.user.forceLogout'),
             confirm: true,
             auth: 'app:monitor:user:forceQuit',
-            _show: (row) => {
-              return !row.left && row.auth
-            },
+            _show: row => !row.left && row.auth,
           },
         ],
-        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
+        onActionButtonsClick: async ({ type, rowData }) => {
           if (type === 'detail')
             await onApiTableReadAndOpenUpdateForm(rowData._id!)
 

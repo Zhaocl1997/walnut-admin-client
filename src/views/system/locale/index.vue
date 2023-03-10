@@ -145,7 +145,15 @@ const [
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
+        actionButtons: [
+          {
+            _builtInType: 'read',
+          },
+          {
+            _builtInType: 'delete',
+          },
+        ],
+        onActionButtonsClick: async ({ type, rowData }) => {
           switch (type) {
             case 'read':
               {

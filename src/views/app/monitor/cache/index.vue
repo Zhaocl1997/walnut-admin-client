@@ -92,7 +92,7 @@ const [
 
       {
         key: 'type',
-        width: 280,
+        width: 250,
         extendType: 'dict',
         dictType: 'app_cache_type',
         filter: true,
@@ -128,8 +128,15 @@ const [
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        extendActionType: ['detail', 'delete'],
-        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
+        actionButtons: [
+          {
+            _builtInType: 'detail',
+          },
+          {
+            _builtInType: 'delete',
+          },
+        ],
+        onActionButtonsClick: async ({ type, rowData }) => {
           switch (type) {
             case 'detail':
               await onApiTableReadAndOpenUpdateForm(rowData.key!)

@@ -27,6 +27,9 @@ export const renderSlots = <T extends Recordable>(slots: Slots) => {
 // handle undefined to defaultValue
 export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
 
+// get boolean or return value is boolean
+export const getFunctionBoolean = <T>(val: any, cbParams: T, defaultVal = true) => (isUndefined(val) ? defaultVal : typeof val === 'boolean' ? val : val(cbParams))
+
 // filter tree deeply
 export const filterTree = <T, R = T>(
   tree: TreeNodeItem<T>[],

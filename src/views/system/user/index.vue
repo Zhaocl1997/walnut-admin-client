@@ -7,6 +7,8 @@ export default defineComponent({
 <script lang="ts" setup>
 import { userAPI } from '@/api/system/user'
 
+const { t } = useAppI18n()
+
 // locale unique key
 const key = 'user'
 
@@ -118,8 +120,34 @@ const [
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        extraDropdownButtons: [],
-        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
+        actionButtons: [
+          {
+            _builtInType: 'read',
+          },
+          {
+            _builtInType: 'delete',
+            _dropdown: true,
+          },
+          {
+            _builtInType: 'update-pass',
+            textProp: () => t('app.base.pass.update'),
+            _dropdown: true,
+            type: 'info',
+            size: 'tiny',
+            icon: 'mdi:update',
+            auth: 'system:user:pass:update',
+          },
+          {
+            _builtInType: 'reset-pass',
+            textProp: () => t('app.base.pass.reset'),
+            _dropdown: true,
+            type: 'warning',
+            size: 'tiny',
+            icon: 'mdi:lock-reset',
+            auth: 'system:user:pass:reset',
+          },
+        ],
+        onActionButtonsClick: async ({ type, rowData }) => {
           switch (type) {
             case 'read':
               await onApiTableReadAndOpenUpdateForm(rowData._id!)
@@ -127,6 +155,14 @@ const [
 
             case 'delete':
               await onApiTableDelete(rowData._id!)
+              break
+
+            case 'update-pass':
+              console.log(1)
+              break
+
+            case 'reset-pass':
+              console.log(2)
               break
 
             default:

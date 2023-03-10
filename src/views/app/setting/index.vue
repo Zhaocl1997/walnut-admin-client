@@ -151,7 +151,12 @@ const [
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        onExtendActionColumnButtonClick: async ({ type, rowData }) => {
+        actionButtons: [
+          {
+            _builtInType: 'read',
+          },
+        ],
+        onActionButtonsClick: async ({ type, rowData }) => {
           switch (type) {
             case 'read':
               await onApiTableReadAndOpenUpdateForm(rowData._id!)

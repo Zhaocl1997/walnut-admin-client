@@ -1,7 +1,9 @@
-import { omit, sortBy } from 'lodash-es'
+import { isUndefined, omit, sortBy } from 'lodash-es'
+import type { DropdownOption } from 'naive-ui'
 import type { WTable } from '../types'
 
 import { getTableTranslated } from '../utils'
+import { WButtonProps } from '@/components/UI/Button'
 
 // Extend Naive UI columns
 export const useTableColumns = (
@@ -11,6 +13,7 @@ export const useTableColumns = (
 ) => {
   const columns = ref<WTable.Column[]>([])
   const { t } = useAppI18n()
+  const userPermission = useAppStoreUserPermission()
 
   const transformColumn = (item: WTable.Column) => {
     if (item.type === 'expand' || item.type === 'selection')
@@ -73,7 +76,7 @@ export const useTableColumns = (
             render(_, index) {
               return (
                 (ApiTableListParams.value.page?.page! - 1)
-                  * ApiTableListParams.value.page?.pageSize!
+                * ApiTableListParams.value.page?.pageSize!
                 + index
                 + 1
               )
@@ -125,7 +128,7 @@ export const useTableColumns = (
             ),
 
             filterOptionValue:
-              ApiTableListParams.value.query[tItem.key] ?? null,
+              ApiTableListParams.value.query![tItem.key] ?? null,
 
             render(p) {
               const res = AppDictMap.get(tItem.dictType)
@@ -150,114 +153,96 @@ export const useTableColumns = (
 
         // action
         if (tItem.extendType === 'action') {
-          const isShow = (t: WTable.ColumnActionType) =>
-            (tItem.extendActionType ?? ['read', 'delete']).includes(t)
+          const defaultBuiltInButtons: WTable.ExtendType.ActionButtons<any>[] = [
+            {
+              _builtInType: 'create',
+              auth: props.value.auths?.create,
+              iconButton: true,
+              icon: 'ant-design:plus-outlined',
+              textProp: () => t('app.button.create'),
+              type: 'success',
+            },
+            {
+              _builtInType: 'read',
+              auth: props.value.auths?.read,
+              iconButton: true,
+              icon: 'ant-design:edit-outlined',
+              textProp: () => t('app.button.read'),
+              type: 'info',
+            },
+            {
+              _builtInType: 'delete',
+              auth: props.value.auths?.delete,
+              iconButton: true,
+              icon: 'ant-design:delete-outlined',
+              textProp: () => t('app.button.delete'),
+              type: 'error',
+            },
+            {
+              _builtInType: 'detail',
+              auth: props.value.auths?.read,
+              iconButton: true,
+              icon: 'ant-design:eye-outlined',
+              textProp: () => t('app.button.detail'),
+              type: 'success',
+            },
+          ]
+
+          const bs = toRaw(tItem.actionButtons)
+            .sort((a, b) => getBoolean(a._dropdown, false) - getBoolean(b._dropdown, false))
+            .map((item) => {
+              const button = defaultBuiltInButtons.find(b => b._builtInType === item._builtInType)
+              return button ? Object.assign(button, item) : item
+            })
 
           return {
             ...tItem,
 
             render(rowData, rowIndex) {
-              const buttonGroups: {
-                key: WTable.ColumnActionType
-                content: any
-              }[] = [
-                {
-                  key: 'create',
-                  content: (
-                    <w-button
-                      auth={props.value.auths?.create}
-                      icon-button
-                      icon="ant-design:plus-outlined"
-                      text-prop={t('app.button.create')}
-                      onClick={() =>
-                        tItem.onExtendActionColumnButtonClick!({
-                          type: 'create',
-                          rowData,
-                          rowIndex,
-                        })
-                      }
-                      type="success"
-                    ></w-button>
-                  ),
-                },
-                {
-                  key: 'read',
-                  content: (
-                    <w-button
-                      auth={props.value.auths?.read}
-                      icon-button
-                      icon="ant-design:edit-outlined"
-                      text-prop={t('app.button.read')}
-                      onClick={() =>
-                        tItem.onExtendActionColumnButtonClick!({
-                          type: 'read',
-                          rowData,
-                          rowIndex,
-                        })
-                      }
-                      type="info"
-                    ></w-button>
-                  ),
-                },
-                {
-                  key: 'delete',
-                  content: (
-                    <w-button
-                      auth={props.value.auths?.delete}
-                      confirm
-                      icon-button
-                      icon="ant-design:delete-outlined"
-                      text-prop={t('app.button.delete')}
-                      onClick={() =>
-                        tItem.onExtendActionColumnButtonClick!({
-                          type: 'delete',
-                          rowData,
-                          rowIndex,
-                        })
-                      }
-                      type="error"
-                    ></w-button>
-                  ),
-                },
-                {
-                  key: 'detail',
-                  content: (
-                    <w-button
-                      auth={props.value.auths?.read}
-                      icon-button
-                      icon="ant-design:eye-outlined"
-                      text-prop={t('app.button.detail')}
-                      onClick={() =>
-                        tItem.onExtendActionColumnButtonClick!({
-                          type: 'detail',
-                          rowData,
-                          rowIndex,
-                        })
-                      }
-                      type="success"
-                    ></w-button>
-                  ),
-                },
-              ]
+              const onDropdownSelect = (key: string) => {
+                tItem.onActionButtonsClick({
+                  type: key,
+                  rowData,
+                  rowIndex,
+                })
+              }
 
-              const extendActionButtons = tItem.extendActionButtons
-                ?.filter(i => (i?._show ? i._show(rowData) : true))
-                .map(i => <w-button {...omit(i, ['_show', '_type'])} onClick={() =>
-                  tItem.onExtendActionColumnButtonClick!({
-                    type: i._type,
+              const isShow = (i: WTable.ExtendType.ActionButtons<RowData>) => getFunctionBoolean(i._show, rowData)
+              const isDisabled = (i: WTable.ExtendType.ActionButtons<RowData>) => getFunctionBoolean(i._disabled, rowData, false)
+
+              const visibleButtons = bs.filter(i => isShow(i)).map(i => omit(i, '_show'))
+              const normalButtons = visibleButtons.filter(i => !i._dropdown).map(i => omit(i, '_dropdown'))
+              const dropdownButtons = visibleButtons.filter(i => i._dropdown).map(i => omit(i, '_dropdown'))
+
+              const renderNormalButtons = normalButtons.map(i =>
+                <w-button {...omit(i, '_builtInType')} disabled={isDisabled(i)} onClick={() =>
+                  tItem.onActionButtonsClick({
+                    type: i._builtInType,
                     rowData,
                     rowIndex,
                   })
                 }></w-button>)
 
+              const dropdownOptions: DropdownOption[] = dropdownButtons.map((i) => {
+                return {
+                  key: i._builtInType,
+                  label: i.textProp,
+                  disabled: isDisabled(i),
+                  // the show below is actually used for permission
+                  // the button that do not shown has been filtered early
+                  show: userPermission.hasPermission(i.auth),
+                  icon: i?.icon ? () => <w-a-icon height="16" {...omit(i, ['_builtInType', '_dropdown'])}></w-a-icon> : undefined,
+                }
+              })
+
               return (
                 <div class="flex items-center justify-center space-x-2 whitespace-nowrap">
-                  {sortBy(buttonGroups, i =>
-                    tItem.extendActionType?.indexOf(i.key),
-                  )
-                    .filter(i => isShow(i.key))
-                    .map(i => i.content)
-                    .concat(extendActionButtons)}
+                  {renderNormalButtons}
+
+                  {dropdownButtons.length !== 0 && (
+                    <n-dropdown size="small" trigger="click" options={dropdownOptions} onSelect={onDropdownSelect}>
+                      <w-a-icon icon="ant-design:more-outlined" height="20" text></w-a-icon>
+                    </n-dropdown>)}
                 </div>
               )
             },
