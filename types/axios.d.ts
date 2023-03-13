@@ -74,20 +74,25 @@ declare module 'axios' {
          * optimised from https://github.com/kuitos/axios-extensions
          */
         _throttle?: number
+
+        /**
+         * flag for the request(s) after excute the refresh token
+         * mostly adapt for transformed request data/params
+         * which should not excute part of the request interceptor again 
+         * cause the data/params has already beed transformed in the first request that return access token expired
+         * see more in axios folder
+         */
+        _request_after_refresh_token?: boolean
     }
 
 
 }
 
 declare global {
-
-
-
     interface WalnutAxiosConfig {
         originalConfig: AxiosRequestConfig
         extendConfig: WalnutAxiosTransform
     }
-
 
     /**
      * @description Custom transform type

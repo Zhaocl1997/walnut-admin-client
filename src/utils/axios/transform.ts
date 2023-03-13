@@ -20,6 +20,8 @@ export const transform: WalnutAxiosTransform = {
   requestInterceptors: (config) => {
     const userProfile = useAppStoreUserProfile()
 
+    const isRequestAfterRefreshedToken = getBoolean(config._request_after_refresh_token, false)
+
     // if for demo purpose, just return
     if (config._demonstrate)
       return Promise.reject(new Error('Demonstrate'))
@@ -49,9 +51,14 @@ export const transform: WalnutAxiosTransform = {
       userAuth.accessToken && setTokenHeader(config, userAuth.accessToken)
 
     // add timestamp
-    if (config._timestamp) {
-      config.params = {
-        t: Date.now(),
+    if (config._timestamp && !isRequestAfterRefreshedToken) {
+      if (config.params) {
+        config.params = Object.assign(config.params, { t: Date.now() })
+      }
+      else {
+        config.params = {
+          t: Date.now(),
+        }
       }
     }
 
@@ -60,11 +67,13 @@ export const transform: WalnutAxiosTransform = {
     //   config.data = easyFilterEmptyValue(config.data)
 
     // transform "true"/"false" to true/false
-    if (config._transformStringBoolean && config.data)
+    // when config.data exists
+    // and this request is not the one after refresh token
+    if (config._transformStringBoolean && config.data && !isRequestAfterRefreshedToken)
       config.data = easyTransformObjectStringBoolean(config.data)
 
     // auto encrypt body data(post)
-    if (config?._autoEncryptRequestDataFields && config._autoEncryptRequestDataFields.length !== 0 && config.data) {
+    if (config?._autoEncryptRequestDataFields && config._autoEncryptRequestDataFields.length !== 0 && config.data && !isRequestAfterRefreshedToken) {
       const cryptedObj = Object.fromEntries(
         config._autoEncryptRequestDataFields.map(key => [
           key,
@@ -144,16 +153,17 @@ export const transform: WalnutAxiosTransform = {
   responseInterceptorsCatch: async (err) => {
     if (err.message === 'Network Error') {
       await useAppRouterPush({ name: '500' })
-      return
+      return Promise.reject(err)
     }
 
-    if (err.message === 'Demonstrate') {
+    // @ts-expect-error
+    if (err === 'Demonstrate') {
       useAppNotiError(AppI18n.global.t('app.base.demonstrate'))
-      return
+      return Promise.reject(err)
     }
 
     if (axios.isCancel(err))
-      return
+      return Promise.reject(err)
 
     console.log(err)
 

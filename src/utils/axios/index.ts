@@ -1,26 +1,10 @@
-import axios from 'axios'
-
 import { Axios } from './src/main'
-import { cacheAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer } from './src/adapters'
 import { transform } from './transform'
+import { originalConfig } from './config'
 
-const { axiosTimeout } = useAppEnv('seconds')
-
-const { httpUrl } = useAppEnv('proxy')
-
+// app axios instance
 export const AppAxios = new Axios({
-  originalConfig: {
-    baseURL: httpUrl,
-
-    // time out, default is 10s
-    timeout: Number(axiosTimeout) * 1000,
-
-    adapter: retryAdapterEnhancer(throttleAdapterEnhancer(
-      cacheAdapterEnhancer(axios.defaults.adapter!))),
-
-    // default transform "true"/"false" to true/false
-    _transformStringBoolean: true,
-  },
+  originalConfig,
 
   extendConfig: transform,
 })

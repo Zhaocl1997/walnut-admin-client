@@ -8,3 +8,12 @@ export const HelloAPI = (config: AxiosRequestConfig) => {
     },
   )
 }
+
+export const HelloAPIWithToken = (config: AxiosRequestConfig) => {
+  return AppAxios.get<string>(
+    {
+      url: '/auth',
+      ...config,
+    },
+  )
+}

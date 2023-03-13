@@ -11,7 +11,8 @@ export const setTokenHeader = (
   config: AxiosRequestConfig,
   token: string,
 ) => {
-  config.headers.Authorization = `Bearer ${token}`
+  if (getBoolean(config._carryToken))
+    config.headers.Authorization = `Bearer ${token}`
 }
 
 export const RefreshTokenLogic = (config: AxiosRequestConfig) => {
@@ -32,7 +33,7 @@ export const RefreshTokenLogic = (config: AxiosRequestConfig) => {
         // clean queue
         requestsQueue = []
 
-        return AppAxios.request(config)
+        return AppAxios.request(Object.assign(config, { _request_after_refresh_token: true }))
       })
       .catch(() => {
         userAuth.Signout(false)

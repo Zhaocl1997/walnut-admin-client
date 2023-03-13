@@ -25,11 +25,13 @@ export const removeFromCancelPool = (config: AxiosRequestConfig, excuteCancel = 
   }
 }
 
+// cancel the latest request that do not receive a response
 export const removeLatestRequest = () => {
   cancelPools.slice(-1)[0].c()
   cancelPools.splice(cancelPools.length - 1, 1)
 }
 
+// cancel all the request that currently do not have a response
 export const removeAllCancel = () => {
   const newArr = cancelPools.filter(() => true)
 

@@ -1,35 +1,49 @@
 <script lang="ts" setup>
-import { HelloAPI } from '@/api'
+import type { AxiosRequestConfig } from 'axios'
+import { HelloAPI, HelloAPIWithToken } from '@/api'
 import { removeAllCancel, removeLatestRequest } from '@/utils/axios/cancel'
+
+const withToken = ref(true)
+
+const _request = async (payload: AxiosRequestConfig) => {
+  if (withToken.value) {
+    const res = await HelloAPIWithToken(payload)
+    useAppMsgSuccess(res)
+  }
+  else {
+    const res = await HelloAPI(payload)
+    useAppMsgSuccess(res)
+  }
+}
 
 const onSend = (type: number) => {
   const pool = {
     1: () => {
-      HelloAPI({})
+      _request({})
     },
     2: () => {
-      HelloAPI({ _cache: true })
+      _request({ _cache: true })
     },
     3: () => {
-      HelloAPI({ _throttle: 1000 })
+      _request({ _throttle: 1000 })
     },
     4: () => {
-      HelloAPI({ _retryTimes: 3, _error: true })
+      _request({ _retryTimes: 3, _error: true })
     },
     5: () => {
-      HelloAPI({ _timestamp: true })
+      _request({ _timestamp: true })
     },
     6: () => {
-      HelloAPI({ _carryToken: false })
+      _request({ _carryToken: false })
     },
     7: () => {
-      HelloAPI({ _demonstrate: true })
+      _request({ _demonstrate: true })
     },
     8: () => {
-      HelloAPI({ _sleep: 5000 })
+      _request({ _sleep: 5000 })
     },
     9: () => {
-      HelloAPI({ _sleep: 5000 })
+      _request({ _sleep: 5000 })
 
       setTimeout(() => {
         removeLatestRequest()
@@ -38,7 +52,7 @@ const onSend = (type: number) => {
     10: () => {
       for (let i = 0; i < 10; i++) {
         setTimeout(async () => {
-          await HelloAPI({ _sleep: 10000, _timestamp: true })
+          await _request({ _sleep: 10000, _timestamp: true })
         }, i * 100)
       }
 
@@ -68,6 +82,15 @@ export default defineComponent({
           Send request with custum config
         </w-title>
 
+        <n-switch v-model:value="withToken">
+          <template #checked>
+            Endpoint need token
+          </template>
+          <template #unchecked>
+            Endpoint public
+          </template>
+        </n-switch>
+
         <n-space size="small" class="mt-2">
           <n-button @click="onSend(1)">
             Send Request normally
@@ -91,7 +114,7 @@ export default defineComponent({
             Send Request for demonstrate purpose
           </n-button>
           <n-button @click="onSend(8)">
-            Send Request with sleep milliseconds
+            Send Request with sleep milliseconds(endpoint support)
           </n-button>
           <n-button @click="onSend(9)">
             Send Request with cancel support
