@@ -65,7 +65,7 @@
     "animate.css": "4.1.1",
     "axios": "0.21.1",
     "codemirror": "6.0.1",
-    "cropperjs": "2.0.0-beta",
+    "cropperjs": "2.0.0-beta.2",
     "crypto-js": "4.1.1",
     "easy-fns-ts": "1.2.3",
     "echarts": "5.4.1",

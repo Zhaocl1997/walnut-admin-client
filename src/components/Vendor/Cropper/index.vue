@@ -1,7 +1,16 @@
 <script lang="ts" setup>
-import { CropperImage, CropperSelection } from 'cropperjs'
+import { CropperCanvas, CropperHandle, CropperImage, CropperSelection, CropperShade } from 'cropperjs'
 import { genString } from 'easy-fns-ts'
 import type { WAbsImageInst } from '@/components/Extra/AbsImage'
+
+const props = withDefaults(defineProps<InternalProps>(), {})
+const emits = defineEmits(['update:value', 'update:src'])
+// need to call $define to work
+CropperCanvas.$define()
+CropperImage.$define()
+CropperSelection.$define()
+CropperShade.$define()
+CropperHandle.$define()
 
 // TODO 888
 interface InternalProps {
@@ -11,9 +20,6 @@ interface InternalProps {
   disabled?: boolean
   center?: boolean
 }
-
-const props = withDefaults(defineProps<InternalProps>(), {})
-const emits = defineEmits(['update:value', 'update:src'])
 
 const { t } = useAppI18n()
 
@@ -190,90 +196,52 @@ export default defineComponent({
   <div>
     <n-grid :x-gap="20" :cols="24">
       <n-gi :span="16">
-        <cropper-canvas
-          v-if="flag"
-          background
-          :disabled="disabled"
-          style="width: 100%; height: 400px"
-        >
+        <CropperCanvas v-if="flag" background :disabled="disabled" style="width: 100%; height: 400px">
           <CropperImage
-            v-if="src"
-            ref="imageRef"
-            :src="src"
-            :alt="alt"
-            :rotatable="src"
-            :scalable="src"
-            :skewable="src"
-            :translatable="src"
-            crossorigin="anonymous"
+            v-if="src" ref="imageRef" :src="src" :alt="alt" :rotatable="src" :scalable="src" :skewable="src"
+            :translatable="src" crossorigin="anonymous"
           />
 
-          <cropper-shade hidden />
+          <CropperShade hidden />
 
-          <cropper-handle action="select" plain />
+          <CropperHandle action="select" plain />
 
           <CropperSelection
-            :id="selectionId"
-            ref="selectionRef"
-            initial-coverage="0.5"
-            :movable="src"
-            :resizable="src"
-            :zoomable="src"
-            :keyboard="src"
-            :outlined="src"
-            @change="onSelectionChange"
+            :id="selectionId" ref="selectionRef" initial-coverage="0.5" :movable="src" :resizable="src"
+            :zoomable="src" :keyboard="src" :outlined="src" @change="onSelectionChange"
           >
             <cropper-grid role="grid" covered bordered />
             <cropper-crosshair centered />
 
-            <cropper-handle
-              action="move"
-              theme-color="rgba(255, 255, 255, 0.35)"
-            />
-            <cropper-handle action="n-resize" />
-            <cropper-handle action="e-resize" />
-            <cropper-handle action="s-resize" />
-            <cropper-handle action="w-resize" />
-            <cropper-handle action="ne-resize" />
-            <cropper-handle action="nw-resize" />
-            <cropper-handle action="se-resize" />
-            <cropper-handle action="sw-resize" />
+            <CropperHandle action="move" theme-color="rgba(255, 255, 255, 0.35)" />
+            <CropperHandle action="n-resize" />
+            <CropperHandle action="e-resize" />
+            <CropperHandle action="s-resize" />
+            <CropperHandle action="w-resize" />
+            <CropperHandle action="ne-resize" />
+            <CropperHandle action="nw-resize" />
+            <CropperHandle action="se-resize" />
+            <CropperHandle action="sw-resize" />
           </CropperSelection>
-        </cropper-canvas>
+        </CropperCanvas>
       </n-gi>
 
       <n-gi :span="8" class="vstack">
         <w-scrollbar v-if="flag" height="330px">
           <n-space vertical size="large">
-            <cropper-viewer
-              class="border-1 border-bodyColor"
-              :selection="`#${selectionId}`"
-              style="height: 200px"
-            />
+            <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 200px" />
 
             <n-grid :x-gap="10" :cols="24">
               <n-gi :span="12">
-                <cropper-viewer
-                  class="border-1 border-bodyColor"
-                  :selection="`#${selectionId}`"
-                  style="height: 80px"
-                />
+                <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 80px" />
               </n-gi>
 
               <n-gi :span="8">
-                <cropper-viewer
-                  class="border-1 border-bodyColor"
-                  :selection="`#${selectionId}`"
-                  style="height: 60px"
-                />
+                <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 60px" />
               </n-gi>
 
               <n-gi :span="4">
-                <cropper-viewer
-                  class="border-1 border-light-50"
-                  :selection="`#${selectionId}`"
-                  style="height: 40px"
-                />
+                <cropper-viewer class="border-1 border-light-50" :selection="`#${selectionId}`" style="height: 40px" />
               </n-gi>
             </n-grid>
           </n-space>
@@ -282,26 +250,14 @@ export default defineComponent({
         <n-space>
           <w-abs-image ref="absImage" @change="onUploadChange">
             <w-a-icon
-              :text="false"
-              size="small"
-              height="16"
-              placement="bottom"
-              icon="ant-design:picture-outlined"
+              :text="false" size="small" height="16" placement="bottom" icon="ant-design:picture-outlined"
               :help-message="t('comp.cropper.choose')"
             />
           </w-abs-image>
 
           <w-a-icon
-            v-for="item in buttons"
-            :key="item.icon"
-            :text="false"
-            size="small"
-            height="16"
-            placement="bottom"
-            :icon="item.icon"
-            :disabled="!src"
-            :help-message="item.helpMessage"
-            @click="item.event"
+            v-for="item in buttons" :key="item.icon" :text="false" size="small" height="16" placement="bottom"
+            :icon="item.icon" :disabled="!src" :help-message="item.helpMessage" @click="item.event"
           />
         </n-space>
       </n-gi>
