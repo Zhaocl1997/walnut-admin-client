@@ -51,6 +51,7 @@
               ternal: node.ternal,
               url: node.url,
             } as MenuMeta,
+            show: node.show,
             extra: () =>
               node.badge && <n-badge size="small" value={node.badge}></n-badge>,
           }),
