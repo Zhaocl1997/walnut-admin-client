@@ -120,14 +120,14 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       rollupOptions: {
         external: ['chalk', /^node:.*/],
         output: {
-          assetFileNames: '[ext]/[name].[hash].[ext]',
-          chunkFileNames: 'js/[name].[hash].js',
-          entryFileNames: 'js/[name].[hash].js',
+          assetFileNames: 'assets/[ext]/[name].[hash].[ext]',
+          chunkFileNames: 'chunks/[name].[hash].js',
+          entryFileNames: 'entries/[name].[hash].js',
 
           // https://rollupjs.org/guide/en/#outputmanualchunks
           manualChunks: {
             'lodash-es': ['lodash-es'],
-            'naive-ui': ['naive-ui'],
+            // 'naive-ui': ['naive-ui'],
             // 'ali-oss': ['ali-oss'],
             // 'echarts': ['echarts'],
             'tinymce': ['tinymce'],
