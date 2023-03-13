@@ -37,12 +37,12 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
   - [x] lock security 有问题
   - [ ] 修改密码功能
   - [ ] 个人信息页面
-  - [x] 强退在线用户
+  - [x] 强退在线用户(修改密码/重置密码都会提出当前在线的用户)
   - [x] vue3-mindmap，能帮忙捋捋思路
 
 - 重要不紧急
 
-  - [ ] 999 查看[issue](https://github.com/vuejs/vue-router-next/issues/626)。嵌套路由的keep-alive有问题，为了暂时让keep-alive好使，就把路由扁平化了。但是左侧menu和头部的breadcrumb需要做相应的变动（路由不再是树状结构，但在左侧菜单和面包屑的位置逻辑还是原来树状的逻辑）
+  - [x] 999 查看[issue](https://github.com/vuejs/vue-router-next/issues/626)。嵌套路由的keep-alive有问题，为了暂时让keep-alive好使，就把路由扁平化了。但是左侧menu和头部的breadcrumb需要做相应的变动（路由不再是树状结构，但在左侧菜单和面包屑的位置逻辑还是原来树状的逻辑）
   - [ ] 888 查看[issue](https://github.com/vuejs/core/issues/4294)。项目中组件的props的类型定义都在vue的文件的外部，引入并使用到defineProps上会导致编译错误，暂时为了解决问题，都在组件内部又重新定义了一遍props的类型，后续支持了就可以从外部文件引入类型了。
   - [ ] 找回密码
   - [x] axios config demo
@@ -50,12 +50,12 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
   - [ ] rrweb
   - [ ] pdf/word/excel/print.js plugin
   - [ ] error monitor (femonitor-web)
-  - [ ] untyper
+  - [x] untyper
   - [ ] closure-compiler (尝试搞过，难搞)
   - [ ] markdown (vditor)
   - [ ] fullcalendar
   - [ ] 拆分面板 splitpanes
-  - [ ] vueuse 的 useHead 或许可以实现第三方插件的cdn使用方式
+  - [ ] ~~vueuse 的 useHead 或许可以实现第三方插件的cdn使用方式~~
 
 - 不重要不紧急
 

@@ -12,15 +12,16 @@ const { t } = useAppI18n()
 // locale unique key
 const key = 'user'
 
-const { stateRef: updatePasswordformData } = useState({ userId: '', newPassword: '' })
+const { stateRef: updatePasswordformData, resetState } = useState({ userId: '', newPassword: '' })
 
 const [registerUpdate, { onOpen }] = useForm({
   preset: 'modal',
   baseRules: true,
-  labelWidth: 140,
+  labelWidth: 100,
   xGap: 0,
 
   advancedProps: {
+    title: computed(() => t('app.base.pass.update')),
     width: '40%',
     onYes: async (_, done) => {
       try {
@@ -34,6 +35,10 @@ const [registerUpdate, { onOpen }] = useForm({
         done()
       }
     },
+    onNo: (done) => {
+      resetState()
+      done()
+    },
   },
 
   schemas: [
@@ -41,7 +46,7 @@ const [registerUpdate, { onOpen }] = useForm({
       type: 'Extend:Password',
       formProp: {
         path: 'newPassword',
-        label: 'New Password',
+        label: computed(() => t('app.base.pass.new')),
       },
       componentProp: {
         progress: true,
