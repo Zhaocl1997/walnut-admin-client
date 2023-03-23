@@ -25,6 +25,9 @@ export const App500Name = 'App500'
 export const AppTestMainoutPath = '/test-mainout'
 export const AppTestMainoutName = 'TestMainout'
 
+export const AppTestFrontAuthPath = '/test-front-auth'
+export const AppTestFrontAuthName = 'TestFrontAuth'
+
 export const AppOpenExternalPath = '/external-link'
 export const AppOpenExternalName = 'ExternalLink'
 

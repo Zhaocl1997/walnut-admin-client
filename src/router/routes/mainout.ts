@@ -18,7 +18,17 @@ export const externalLinkRoute: RouteRecordRaw = {
   },
 }
 
+export const testFrontAuthRoute: RouteRecordRaw = {
+  name: constant.AppTestFrontAuthName,
+  path: constant.AppTestFrontAuthPath,
+  component: () => import('../../views/features/test-frontAuth.vue'),
+  meta: {
+    _auth: true,
+  },
+}
+
 export const mainoutRoutes: RouteRecordRaw[] = [
   testMainoutRoute,
   externalLinkRoute,
+  testFrontAuthRoute,
 ]
