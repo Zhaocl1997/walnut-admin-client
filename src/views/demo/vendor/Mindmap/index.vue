@@ -167,7 +167,7 @@ const data = ref([
                             name: 'unocss/vite',
                           },
                           {
-                            name: 'vite-plugin-html',
+                            name: 'vite-plugin-ejs',
                           },
                         ],
                       },

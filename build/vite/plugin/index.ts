@@ -5,7 +5,7 @@ import legacy from '@vitejs/plugin-legacy'
 import { createComponentPlugin } from './component'
 import { createVisualizerPlugin } from './visualizer'
 import { createCompressionPlugin } from './compression'
-import { createHTMLPlugin } from './html'
+import { createEJSPlugin } from './ejs'
 import { creatAutoImportPlugin } from './auto-import'
 import { createUnoCSSPlugin } from './unocss'
 import { createBannerPlugin } from './banner'
@@ -36,8 +36,8 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
     // https://github.com/unocss/unocss
     createUnoCSSPlugin(),
 
-    // https://github.com/anncwb/vite-plugin-html
-    createHTMLPlugin(env.VITE_APP_TITLE),
+    // https://github.com/trapcodeio/vite-plugin-ejs
+    createEJSPlugin(env.VITE_APP_TITLE),
 
     // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
     {
