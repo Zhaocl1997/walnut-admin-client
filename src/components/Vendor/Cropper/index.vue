@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CropperCanvas, CropperHandle, CropperImage, CropperSelection, CropperShade } from 'cropperjs'
+import { CropperCanvas, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
 import { genString } from 'easy-fns-ts'
 import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 
@@ -11,6 +11,7 @@ CropperImage.$define()
 CropperSelection.$define()
 CropperShade.$define()
 CropperHandle.$define()
+CropperViewer.$define()
 
 // TODO 888
 interface InternalProps {
@@ -229,19 +230,19 @@ export default defineComponent({
       <n-gi :span="8" class="vstack">
         <w-scrollbar v-if="flag" height="330px">
           <n-space vertical size="large">
-            <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 200px" />
+            <CropperViewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 200px" />
 
             <n-grid :x-gap="10" :cols="24">
               <n-gi :span="12">
-                <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 80px" />
+                <CropperViewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 80px" />
               </n-gi>
 
               <n-gi :span="8">
-                <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 60px" />
+                <CropperViewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 60px" />
               </n-gi>
 
               <n-gi :span="4">
-                <cropper-viewer class="border-1 border-light-50" :selection="`#${selectionId}`" style="height: 40px" />
+                <CropperViewer class="border-1 border-light-50" :selection="`#${selectionId}`" style="height: 40px" />
               </n-gi>
             </n-grid>
           </n-space>
