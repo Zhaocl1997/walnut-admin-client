@@ -18,20 +18,7 @@ emit('hook', { setProps })
 // ref
 const actionType = ref<ActionType>('')
 
-const { stateRef: formData, resetState: resetFormData, commit } = useState({})
-
-// below watch is used for computed schemas
-// which may cause default form field not generate
-// once the schema change, use `commit` to generate a new default form data
-if (getProps.value.formProps?.needUpdateSchemas) {
-  watch(() => getProps.value.formProps?.schemas!, (v) => {
-    if (v.length !== 0) {
-      formData.value = extractDefaultFormDataFromSchemas(v)
-      // commit a version and make the latest default form data
-      commit()
-    }
-  }, { immediate: true, deep: true })
-}
+const { stateRef: formData, resetState: resetFormData } = useState({})
 
 const onTableOpenCreateForm = (defaultFormData: any) => {
   actionType.value = 'create'
