@@ -7,8 +7,14 @@ let removeEvent: Fn
 
 const appLock = useAppStoreLock()
 
-export const createAuthGuard = (router: Router) => {
+export const createBeforeEachGuard = (router: Router) => {
   router.beforeEach(async (to, from) => {
+    // start loadingbar
+    window.$loadingBar.start()
+
+    if (to.fullPath)
+      AppLog(`Entering Route : ${to.fullPath}`)
+
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()

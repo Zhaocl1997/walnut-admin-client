@@ -1,7 +1,8 @@
 import { createAuthGuard } from './authGuard'
-import { createProgressGuard } from './progressGuard'
+import { createBeforeEachGuard } from './beforeEach'
+import { createAfterEachGuard } from './afterEach'
 
 export const createRouterGuard = (router: Router) => {
-  createAuthGuard(router)
-  createProgressGuard(router)
+  createBeforeEachGuard(router)
+  createAfterEachGuard(router)
 }
