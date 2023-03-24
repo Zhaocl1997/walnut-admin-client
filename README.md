@@ -39,12 +39,16 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
   - [ ] 个人信息页面
   - [x] 强退在线用户(修改密码/重置密码都会提出当前在线的用户)
   - [x] vue3-mindmap，能帮忙捋捋思路
-
+  - [ ] 菜单内嵌params和query，以及手动跳转的query的留存(param设计的就是刷新就没有，所以这里就不做存留了)
+  - [ ] 用户表加一个字段，角色是分开模式还是合并模式，都可以自定义，同时如果是分开模式，右上角配合选择切换权限
+  - [ ] 用户查看，完善抽屉，同时手机号/邮箱作为敏感信息，都需要单独处理
+  - [x] 路由加密，单独指query，param感觉没有加密的必要?
+  - [ ] 找回密码
+ 
 - 重要不紧急
 
   - [x] 999 查看[issue](https://github.com/vuejs/vue-router-next/issues/626)。嵌套路由的keep-alive有问题，为了暂时让keep-alive好使，就把路由扁平化了。但是左侧menu和头部的breadcrumb需要做相应的变动（路由不再是树状结构，但在左侧菜单和面包屑的位置逻辑还是原来树状的逻辑）
   - [ ] 888 查看[issue](https://github.com/vuejs/core/issues/4294)。项目中组件的props的类型定义都在vue的文件的外部，引入并使用到defineProps上会导致编译错误，暂时为了解决问题，都在组件内部又重新定义了一遍props的类型，后续支持了就可以从外部文件引入类型了。
-  - [ ] 找回密码
   - [x] axios config demo
   - [ ] 页面中的错误模拟 demo
   - [ ] rrweb
@@ -55,7 +59,6 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
   - [ ] markdown (vditor)
   - [ ] fullcalendar
   - [ ] 拆分面板 splitpanes
-  - [ ] ~~vueuse 的 useHead 或许可以实现第三方插件的cdn使用方式~~
 
 - 不重要不紧急
 
