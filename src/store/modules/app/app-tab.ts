@@ -48,10 +48,23 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
   actions: {
     /**
-     * @description set single tab state
+     * @description set single tab state through index in tabs
      */
-    setTab(index: number, payload: Partial<AppTab>) {
-      this.tabs[index] = merge(this.tabs[index], payload)
+    setTabByIndex(index: number, payload: Partial<AppTab>, type: 'merge' | 'splice' = 'merge') {
+      if (type === 'merge')
+        this.tabs[index] = merge(this.tabs[index], payload)
+
+      if (type === 'splice')
+        this.tabs.splice(index, 1, payload as AppTab)
+    },
+
+    /**
+     * @description set single tab state through name in tabs
+     */
+    setTabByName(name: string, payload: Partial<AppTab>, type: 'merge' | 'splice' = 'merge') {
+      const index = this.tabs.findIndex(i => i.name === name)
+      if (index !== -1)
+        this.setTabByIndex(index, payload, type)
     },
 
     /**
@@ -63,7 +76,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
       if (index === -1)
         return
 
-      this.setTab(index, {
+      this.setTabByIndex(index, {
         meta,
       })
     },
@@ -95,7 +108,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
       const { timeout = 5000, maxLength = 10, speed = timeout } = options
 
-      this.setTab(index, {
+      this.setTabByIndex(index, {
         meta: {
           _title: title,
           _title_maxLength: maxLength,
@@ -123,7 +136,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
       if (index === -1)
         return
 
-      this.setTab(index, {
+      this.setTabByIndex(index, {
         meta: {
           _title: this.tabs[index].meta.title,
         },
@@ -175,7 +188,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
       const { timeout = 5000, animate = false, duration = 1000 } = options
 
-      this.setTab(index, {
+      this.setTabByIndex(index, {
         meta: {
           _icon: icon,
           _icon_animate: animate,
@@ -203,7 +216,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
       if (index === -1)
         return
 
-      this.setTab(index, {
+      this.setTabByIndex(index, {
         meta: {
           _icon: this.tabs[index].meta.icon,
           _icon_animate: false,

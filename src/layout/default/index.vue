@@ -77,7 +77,7 @@ useTimeoutFn(() => {
           ref="scrollWrapper"
           class="h-full relative flex flex-col" :class="[
             {
-              'overflow-auto styled-scrollbars': !$route.meta.url,
+              'overflow-x-hidden styled-scrollbars': !$route.meta.url,
             },
           ]"
         >

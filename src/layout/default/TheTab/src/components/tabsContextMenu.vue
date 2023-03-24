@@ -83,7 +83,7 @@ const onSelect = async (
   }
 
   if (key === 'Fix') {
-    appTab.setTab(currentMouseTabIndex.value, {
+    appTab.setTabByIndex(currentMouseTabIndex.value, {
       meta: { affix: !currentMouseTab.value?.meta.affix },
     })
 

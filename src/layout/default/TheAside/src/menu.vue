@@ -1,6 +1,7 @@
 <script lang="tsx">
   import type { MenuOption } from 'naive-ui'
   import { findPath, formatTree } from 'easy-fns-ts'
+  import { omit } from 'lodash-es'
 
   interface MenuMeta {
     type: ValueOfAppConstMenuType
@@ -11,6 +12,7 @@
   export default defineComponent({
     setup() {
       const appMenu = useAppStoreMenu()
+      const appTab = useAppStoreTab()
       const appAdapter = useAppStoreAdapter()
       const appSetting = useAppStoreSetting()
 
@@ -80,15 +82,24 @@
         if (appAdapter.isMobile && appMenu.showAside)
           appMenu.showAside = false
 
+        // normal won't trigger the if below if the routers are configed correctly
+        // only trigger when one catelog menu has no children menus
         if (item.meta.type === AppConstMenuType.CATALOG) {
           useAppMessage().info('Catalog Menu has no page!')
           return
         }
 
+        // open external link, safely
         if (item.meta.ternal === AppConstMenuTernal.EXTERNAL) {
           openExternalLink(item.meta.url!, true)
           return
         }
+
+        // omit the query field when click the side menu
+        // should do so, otherwise once the route has query, user cannot get rid of it
+        const targetTab = appTab.tabs.find(i => i.name === key)
+        if (targetTab)
+          appTab.setTabByName(key, omit(targetTab, 'query'), 'splice')
 
         await useAppRouterPush({ name: key })
       }
