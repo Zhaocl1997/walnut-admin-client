@@ -1,77 +1,33 @@
-import { isArray, isNull, isUndefined } from 'lodash-es'
-import type { LocationQuery, LocationQueryRaw, LocationQueryValue } from 'vue-router'
+import qs from 'qs'
+import type { LocationQueryRaw } from 'vue-router'
 
-// TODO
-// encrypt mode => atob/btoa or crypto-js
-// fullPath encrypt ?
+const appSetting = useAppStoreSetting()
+
 export const stringifyQuery = (obj: LocationQueryRaw) => {
-  if (!obj)
+  if (!obj || Object.keys(obj).length === 0)
     return ''
 
-  const result = Object.keys(obj)
-    .map((key) => {
-      const value = obj[key]
+  const str = qs.stringify(obj)
 
-      if (isUndefined(value))
-        return ''
+  if (appSetting.app.routeQueryMode === 'enhanced') {
+    if (appSetting.app.routeQueryEnhancedMode === 'base64')
+      return wbtoa(str)
 
-      if (isNull(value))
-        return key
+    if (appSetting.app.routeQueryEnhancedMode === 'cryptojs')
+      return AppPersistEncryption.encrypt(str)!
+  }
 
-      if (isArray(value)) {
-        const resArray: string[] = []
-
-        value.forEach((item) => {
-          if (isUndefined(item))
-            return
-
-          if (isNull(item))
-            resArray.push(key)
-          else
-            resArray.push(`${key}=${item}`)
-        })
-        return resArray.join('&')
-      }
-
-      return `${key}=${value}`
-    })
-    .filter(x => x.length > 0)
-    .join('&')
-
-  return result ? `${wbtoa(result)}` : ''
+  return str
 }
 
 export const parseQuery = (query: string) => {
-  try {
-    const res: LocationQuery = {}
+  if (appSetting.app.routeQueryMode === 'enhanced') {
+    if (appSetting.app.routeQueryEnhancedMode === 'base64')
+      return qs.parse(watob(query))
 
-    query = query.trim().replace(/^(\?|#|&)/, '')
-
-    if (!query)
-      return res
-
-    query = watob(query)
-
-    query.split('&').forEach((param) => {
-      const parts = param.replace(/\+/g, ' ').split('=')
-      const key = parts.shift()
-      const val = parts.length > 0 ? parts.join('=') : null
-
-      if (!isUndefined(key)) {
-        if (isUndefined(res[key]))
-          res[key] = val
-
-        else if (isArray(res[key]))
-          (res[key] as LocationQueryValue[]).push(val)
-
-        else
-          res[key] = [res[key] as LocationQueryValue, val]
-      }
-    })
-
-    return res
+    if (appSetting.app.routeQueryEnhancedMode === 'cryptojs')
+      return qs.parse(AppPersistEncryption.decrypt(query))
   }
-  catch (error) {
-    return query as unknown as LocationQuery
-  }
+
+  return qs.parse(query) as any
 }

@@ -17,6 +17,14 @@ export default defineComponent({
       </router-link>
     </n-alert>
 
+    <n-alert title="Notice" type="warning" class="mt-2">
+      Notice `beforeunload` won't trigger if the user has no interact with the page.
+      This is designed so, see at
+      <n-a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#security" target="_blank">
+        here
+      </n-a>
+    </n-alert>
+
     <n-h1>
       This feature supports when user try to leave this page or going to other
       page, system will call a confirm function to ask for leave permission.

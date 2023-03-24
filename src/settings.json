@@ -3,7 +3,7 @@
     "layout": "left-menu",
     "keepAlive": true,
     "contentPadding": 8,
-    "routeQueryMode": "normal",
+    "routeQueryMode": "enhanced",
     "routeQueryEnhancedMode": "base64",
     "transitionStatus": true,
     "transitionMode": "scope",

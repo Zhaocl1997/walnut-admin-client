@@ -4,13 +4,12 @@ import { routes } from './routes'
 import { createRouterGuard } from './guard'
 import { parseQuery, stringifyQuery } from './utils/query'
 
-// TODO enhanced mode
 export const AppRouter = createRouter({
   history: createWebHistory(),
   routes,
   strict: true,
-  // stringifyQuery: stringifyQuery,
-  // parseQuery: parseQuery,
+  stringifyQuery,
+  parseQuery,
 })
 
 export const setupRouter = (app: App) => {
