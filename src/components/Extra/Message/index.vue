@@ -11,7 +11,7 @@ export default defineComponent({
     },
   },
 
-  setup(props, { attrs, slots, emit, expose }) {
+  setup(props, { attrs }) {
     const formatMessage = () =>
       typeof props.msg === 'string'
         ? (
@@ -31,7 +31,7 @@ export default defineComponent({
 
     return () => (
         <div>
-          <n-tooltip>
+          <n-tooltip {...attrs}>
             {{
               default: () => formatMessage(),
               trigger: () => (

@@ -34,11 +34,11 @@ export default defineComponent({
           </WTextScroll>
 
           <WTextScroll class="h-7 w-32 ring-1">
-            use maxLength to controller scrolling
+            use maxLength to controll scrolling
           </WTextScroll>
 
           <WTextScroll class="h-7 w-32 ring-1" :max-length="100">
-            use maxLength to controller scrolling
+            use maxLength to controll scrolling
           </WTextScroll>
         </n-space>
       </n-list-item>
@@ -63,11 +63,11 @@ export default defineComponent({
           </WTextScroll>
 
           <WTextScroll mode="vertical" class="h-7 w-32 ring-1">
-            use maxLength to controller scrolling
+            use maxLength to controll scrolling
           </WTextScroll>
 
           <WTextScroll mode="vertical" class="h-7 w-32 ring-1" :max-length="100">
-            use maxLength to controller scrolling
+            use maxLength to controll scrolling
           </WTextScroll>
         </n-space>
       </n-list-item>
