@@ -1,19 +1,12 @@
 declare global {
   // vue
   type App = import('vue').App
-  type Ref<T> = import('vue').Ref<T>
-  type ComputedRef<T> = import('vue').ComputedRef<T>
-  type PropType<T> = import('vue').PropType<T>
   type ExtractPropTypes<T> = import('vue').ExtractPropTypes<T>
-  type InjectionKey<T> = import('vue').InjectionKey<T>
-  type VNode = import('vue').VNode
-  type ToRefs<T> = import('vue').ToRefs<T>
   type VNodeChild = import('vue').VNodeChild
   type CSSProperties = import('vue').CSSProperties
 
   // vue-router
   type Router = import('vue-router').Router
-  type _RouteRecordBase = import('vue-router')._RouteRecordBase
   type RouteRecordRaw = import('vue-router').RouteRecordRaw
   type RouteLocationRaw = import('vue-router').RouteLocationRaw
   type RouteLocationNormalized = import('vue-router').RouteLocationNormalized
