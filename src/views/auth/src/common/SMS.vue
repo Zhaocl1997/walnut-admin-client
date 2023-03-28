@@ -44,12 +44,11 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
   disabled: loading,
   schemas: [
     {
-      type: 'Base:Input',
+      type: 'Extend:PhoneNumberInput',
       formProp: {
         path: 'phoneNumber',
-        ruleType: 'string',
-        first: true,
         locale: false,
+        first: true,
         label: computed(() => t('app.base.phoneNumber')),
         rule: [
           {
@@ -70,10 +69,8 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         ],
       },
       componentProp: {
-        clearable: true,
-        inputProps: {
-          autocomplete: 'phoneNumber',
-        },
+        preferred: true,
+        example: true,
       },
       transitionProp: {
         name: 'fade-down-big',

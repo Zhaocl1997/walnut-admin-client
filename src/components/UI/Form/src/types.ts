@@ -38,6 +38,7 @@ import type { useEventParams } from '@/hooks/component/useEvent'
 import type { WLocaleSelectProps } from '@/components/Extra/LocaleSelect'
 import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
 import type { WTransitionProps } from '@/components/Extra/Transition'
+import type { WPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
 
 export const BUILTIN_FORM_TYPE = [
   'Button',
@@ -166,6 +167,7 @@ export declare namespace WForm {
       'Extend:SMSInput': WSMSInputProps
       'Extend:Dict': WFormItemDictProps
       'Extend:LocaleSelect': WLocaleSelectProps
+      'Extend:PhoneNumberInput': WPhoneNumberInputProps
 
       'Vendor:Tinymce': TinymceEditorProps
     }
@@ -266,6 +268,7 @@ export declare namespace WForm {
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
     type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
     type LocaleSchema<D> = DynamicSchemaItemProps<'Extend:LocaleSelect', D>
+    type PhoneNumberInputSchema<D> = DynamicSchemaItemProps<'Extend:PhoneNumberInput', D>
     type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
     type TransitionSelectSchema<D> = DynamicSchemaItemProps<
       'Extend:TransitionSelect',
@@ -303,6 +306,7 @@ export declare namespace WForm {
       | QuerySchema<D>
       | DictSchema<D>
       | LocaleSchema<D>
+      | PhoneNumberInputSchema<D>
       | IconPickerSchema<D>
       | TransitionSelectSchema<D>
       | RoleSelectSchema<D>

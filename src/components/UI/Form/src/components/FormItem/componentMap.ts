@@ -30,64 +30,61 @@ componentMap.set('TreeSelect', NTreeSelect)
 componentMap.set(
   'IconPicker',
   createAsyncComponent(
-    // @ts-expect-error
-    () => import('../../../../../Extra/IconPicker/index.ts'),
+    () => import('../../../../../Extra/IconPicker/index'),
   ),
 )
 componentMap.set(
   'TransitionSelect',
   createAsyncComponent(
-    // @ts-expect-error
-    () => import('../../../../../Extra/TransitionSelect/index.tsx'),
+    () => import('../../../../../Extra/TransitionSelect/index'),
   ),
 )
 componentMap.set(
   'RoleSelect',
   createAsyncComponent(
-    // @ts-expect-error
-    () => import('../../../../../Advanced/RoleSelect/index.ts'),
+    () => import('../../../../../Advanced/RoleSelect/index'),
   ),
 )
 componentMap.set(
   'Tinymce',
   createAsyncComponent(
-    // @ts-expect-error
-    () => import('../../../../../Vendor/Tinymce/index.ts'),
+    () => import('../../../../../Vendor/Tinymce/index'),
   ),
 )
 componentMap.set(
   'AreaCascader',
   createAsyncComponent(
-    // @ts-expect-error
-    () => import('../../../../../Advanced/AreaCascader/index.ts'),
+    () => import('../../../../../Advanced/AreaCascader/index'),
   ),
 )
 componentMap.set(
   'Dict',
   createAsyncComponent(
-    // @ts-expect-error
     () => import('../Extend/Dict.vue'),
   ),
 )
 componentMap.set(
   'LocaleSelect',
   createAsyncComponent(
-    // @ts-expect-error
-    () => import('../../../../../Extra/LocaleSelect/index.ts'),
+    () => import('../../../../../Extra/LocaleSelect/index'),
   ),
 )
 componentMap.set(
   'Password',
   createAsyncComponent(
-    // @ts-expect-error
-    () => import('../../../../../Extra/Password/index.ts'),
+    () => import('../../../../../Extra/Password/index'),
   ),
 )
 componentMap.set(
   'SMSInput',
   createAsyncComponent(
-    // @ts-expect-error
-    () => import('../../../../../Extra/SMSInput/index.ts'),
+    () => import('../../../../../Extra/SMSInput/index'),
+  ),
+)
+componentMap.set(
+  'PhoneNumberInput',
+  createAsyncComponent(
+    () => import('../../../../../Extra/PhoneNumberInput/index'),
   ),
 )
 

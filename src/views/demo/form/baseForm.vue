@@ -34,6 +34,7 @@ export default defineComponent({
       formDictCheckbox: null,
       formDictRadio: null,
       formLocale: null,
+      formPhoneNumber: null,
     })
 
     const schemas = computed(
@@ -343,6 +344,18 @@ export default defineComponent({
             },
             componentProp: {
               prefix: 'dict.',
+            },
+          },
+          {
+            type: 'Extend:PhoneNumberInput',
+            formProp: {
+              label: 'Phone Number',
+              path: 'formPhoneNumber',
+            },
+            componentProp: {
+              preferred: true,
+              example: true,
+              autoDefaultCountry: true,
             },
           },
         ]

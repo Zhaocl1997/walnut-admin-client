@@ -74,7 +74,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       componentProp: {
         clearable: true,
         inputProps: {
-          autocomplete: 'emailAddress',
+          autocomplete: 'email',
         },
       },
       transitionProp: {

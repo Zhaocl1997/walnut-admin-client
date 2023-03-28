@@ -55,7 +55,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <n-input v-bind="$attrs">
+  <n-input v-bind="$attrs" :input-props="{ autocomplete: 'one-time-code' }">
     <template #suffix>
       <w-button
         ref="buttonRef"

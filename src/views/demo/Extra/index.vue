@@ -16,6 +16,7 @@ import DemoNaiveMsg from './NaiveMsg.vue'
 import DemoFile from './File.vue'
 import DemoAuthorize from './Authorize.vue'
 import DemoTextScroll from './TextScroll.vue'
+import DemoNumberPhoneInput from './PhoneNumberInput.vue'
 
 const appAdapter = useAppStoreAdapter()
 </script>
@@ -57,6 +58,7 @@ export default defineComponent({
         <n-anchor-link title="Axios" href="#Axios" />
         <n-anchor-link title="File" href="#File" />
         <n-anchor-link title="Authorize" href="#Authorize" />
+        <n-anchor-link title="PhoneNumberInput" href="#PhoneNumberInput" />
       </n-anchor>
     </div>
 
@@ -86,6 +88,7 @@ export default defineComponent({
         <DemoAxios id="Axios" />
         <DemoFile id="File" />
         <DemoAuthorize id="Authorize" />
+        <DemoNumberPhoneInput id="PhoneNumberInput" />
       </div>
     </div>
   </div>
