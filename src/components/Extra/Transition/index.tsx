@@ -62,10 +62,23 @@ export default defineComponent({
     }
 
     return () => {
-      const Tag = !props.group ? Transition : TransitionGroup
-
-      return (
-        <Tag
+      return props.group
+        ? (
+        <TransitionGroup
+          enter-active-class={`animate__animated animate__${getActiveClass(
+            'In',
+          )}`}
+          leave-active-class={`animate__animated animate__${getActiveClass(
+            'Out',
+          )}`}
+          appear={props.appear}
+          onBeforeEnter={onBeforeEnter}
+        >
+          {() => renderSlot(slots, 'default')}
+        </TransitionGroup>
+          )
+        : (
+        <Transition
           enter-active-class={`animate__animated animate__${getActiveClass(
             'In',
           )}`}
@@ -77,8 +90,8 @@ export default defineComponent({
           onBeforeEnter={onBeforeEnter}
         >
           {() => renderSlot(slots, 'default')}
-        </Tag>
-      )
+        </Transition>
+          )
     }
   },
 })
