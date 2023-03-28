@@ -4,8 +4,18 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
-    "volar.codeLens.pugTools": false,
-    "volar.takeOverMode.enabled": "auto",
+    "eslint.enable": true,
+    "eslint.format.enable": true,
+    "eslint.options": {
+        "overrideConfigFile": "config/eslint/.eslintrc.js"
+    },
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "vue"
+    ],
     "json.schemas": [
         {
             "fileMatch": [
@@ -682,5 +692,6 @@
                 "$schema": "http://json-schema.org/draft-07/schema#"
             }
         }
-    ]
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib"
 }
