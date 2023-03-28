@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { isOnline, downlink } = useNetwork()
+const { isOnline, downlink } = useSharedNetwork()
 
 const getIcon = computed(() => {
   if (!isOnline.value)
