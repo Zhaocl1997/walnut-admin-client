@@ -29,6 +29,8 @@ const comp = {
     'JSON',
     'LocaleSelect',
     'Message',
+    'Password',
+    'PhoneNumberInput',
     'QRCode',
     'Scrollbar',
     'SMSInput',

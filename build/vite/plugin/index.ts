@@ -1,11 +1,9 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import legacy from '@vitejs/plugin-legacy'
 
 import { createComponentPlugin } from './component'
 import { createVisualizerPlugin } from './visualizer'
 import { createCompressionPlugin } from './compression'
-import { createEJSPlugin } from './ejs'
 import { creatAutoImportPlugin } from './auto-import'
 import { createUnoCSSPlugin } from './unocss'
 import { createBannerPlugin } from './banner'
@@ -13,6 +11,7 @@ import { createRestartPlugin } from './restart'
 import { createBuildProgressPlugin } from './progress'
 import { createTerminalPlugin } from './terminal'
 import { createInspectPlugin } from './inspect'
+import { createLegacyPlugin } from './legacy'
 import { createHttpsPlugin } from './https'
 import { createCdnImportPlugin } from './cdn-import'
 
@@ -36,21 +35,18 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
     // https://github.com/unocss/unocss
     createUnoCSSPlugin(),
 
-    // https://github.com/trapcodeio/vite-plugin-ejs
-    createEJSPlugin(env.VITE_APP_TITLE),
-
     // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
-    {
-      name: 'singleHMR',
-      handleHotUpdate({ modules }) {
-        modules.forEach((m) => {
-          m.importedModules = new Set()
-          m.importers = new Set()
-        })
+    // {
+    //   name: 'singleHMR',
+    //   handleHotUpdate({ modules }) {
+    //     modules.forEach((m) => {
+    //       m.importedModules = new Set()
+    //       m.importers = new Set()
+    //     })
 
-        return modules
-      },
-    },
+    //     return modules
+    //   },
+    // },
   ]
 
   const dev = mode === 'development'
@@ -88,7 +84,7 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
 
   // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
   if (prod)
-    vitePlugins.push(legacy())
+    vitePlugins.push(createLegacyPlugin())
 
   // https://github.com/anncwb/vite-plugin-compression
   if (prod)
