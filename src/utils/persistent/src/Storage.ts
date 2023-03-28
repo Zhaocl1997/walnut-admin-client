@@ -1,5 +1,3 @@
-const { persist } = useAppEnv('seconds')
-
 interface AppStorageOptions {
   storage?: typeof localStorage | typeof sessionStorage
   expire?: number
@@ -15,7 +13,7 @@ export const useAppStorage = <T>(
   initialValue: MaybeComputedRef<T>,
   options: AppStorageOptions = {},
 ) => {
-  const { storage = localStorage, expire = +persist! * 1000, encrypt = isProd(), usePresetKey = true } = options
+  const { storage = localStorage, expire = +import.meta.env.VITE_SECONDS_PERSIST * 1000, encrypt = isProd(), usePresetKey = true } = options
 
   const getKey = usePresetKey
     ? `${storagePrefix}__${key

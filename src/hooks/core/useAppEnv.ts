@@ -10,29 +10,6 @@ export const useAppEnv = (
     }
   }
 
-  if (type === 'crypto') {
-    const [cryptoPersistKey, cryptoPersistIV] = JSON.parse(
-      env.VITE_CRYPTO_PERSIST,
-    )
-
-    const [cryptoRequestKey, cryptoRequestIV] = JSON.parse(
-      env.VITE_CRYPTO_REQUEST,
-    )
-
-    const [cryptoResponseKey, cryptoResponseIV] = JSON.parse(
-      env.VITE_CRYPTO_RESPONSE,
-    )
-
-    return {
-      cryptoPersistKey,
-      cryptoPersistIV,
-      cryptoRequestKey,
-      cryptoRequestIV,
-      cryptoResponseKey,
-      cryptoResponseIV,
-    }
-  }
-
   if (type === 'proxy') {
     const proxy = JSON.parse(env.VITE_PROXY)
 

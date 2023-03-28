@@ -1,9 +1,9 @@
 import qs from 'qs'
 import type { LocationQueryRaw } from 'vue-router'
 
-const appSetting = useAppStoreSetting()
-
 export const stringifyQuery = (obj: LocationQueryRaw) => {
+  const appSetting = useAppStoreSetting()
+
   if (!obj || Object.keys(obj).length === 0)
     return ''
 
@@ -21,6 +21,8 @@ export const stringifyQuery = (obj: LocationQueryRaw) => {
 }
 
 export const parseQuery = (query: string) => {
+  const appSetting = useAppStoreSetting()
+
   if (appSetting.app.routeQueryMode === 'enhanced') {
     if (appSetting.app.routeQueryEnhancedMode === 'base64')
       return qs.parse(watob(query))

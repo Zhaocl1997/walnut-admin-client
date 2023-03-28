@@ -3,8 +3,6 @@ import { defineStore } from 'pinia'
 import { StoreKeys, tabBlackListName } from '../../constant'
 import { store } from '../../pinia'
 
-const appSetting = useAppStoreSetting()
-
 /**
  * below two only work for `timeout` title and icon
  */
@@ -40,6 +38,8 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
     // get tab name list that should not appear
     getTabBlackListName() {
+      const appSetting = useAppStoreSetting()
+
       return appSetting.getLockStatus
         ? tabBlackListName.concat(AppLockName)
         : AppLockName
