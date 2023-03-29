@@ -1,6 +1,5 @@
 import { getRandomInt } from 'easy-fns-ts'
 import type { WHomeChartCardProps } from './components/types'
-import echarts from '@/components/Vendor/Echarts/src/resources/onDemand'
 
 const onGetOption1 = (): EChartsOption => ({
   color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
@@ -51,7 +50,7 @@ const onGetOption1 = (): EChartsOption => ({
       showSymbol: false,
       areaStyle: {
         opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        color: new window.echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
             color: 'rgb(128, 255, 165)',
@@ -78,7 +77,7 @@ const onGetOption1 = (): EChartsOption => ({
       showSymbol: false,
       areaStyle: {
         opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        color: new window.echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
             color: 'rgb(0, 221, 255)',
@@ -105,7 +104,7 @@ const onGetOption1 = (): EChartsOption => ({
       showSymbol: false,
       areaStyle: {
         opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        color: new window.echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
             color: 'rgb(55, 162, 255)',
@@ -132,7 +131,7 @@ const onGetOption1 = (): EChartsOption => ({
       showSymbol: false,
       areaStyle: {
         opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        color: new window.echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
             color: 'rgb(255, 0, 135)',
@@ -163,7 +162,7 @@ const onGetOption1 = (): EChartsOption => ({
       },
       areaStyle: {
         opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        color: new window.echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
             color: 'rgb(255, 191, 0)',

@@ -25,4 +25,6 @@ echarts.use([
   CanvasRenderer,
 ])
 
+window.echarts = echarts
+
 export default echarts

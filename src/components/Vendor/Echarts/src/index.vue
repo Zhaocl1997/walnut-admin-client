@@ -2,8 +2,6 @@
 import type { EChartsOption } from 'echarts'
 import { genString } from 'easy-fns-ts'
 
-import echarts from './resources/onDemand'
-
 // TODO 888
 interface WEchartsProps {
   option: EChartsOption
