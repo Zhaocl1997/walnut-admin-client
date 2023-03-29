@@ -23,6 +23,7 @@ const comp = {
     'Arrow',
     'Copy',
     'DemoCard',
+    'EmailInput',
     'FlipClock',
     'Flipper',
     'IconPicker',

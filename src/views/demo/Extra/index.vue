@@ -17,6 +17,7 @@ import DemoFile from './File.vue'
 import DemoAuthorize from './Authorize.vue'
 import DemoTextScroll from './TextScroll.vue'
 import DemoNumberPhoneInput from './PhoneNumberInput.vue'
+import DemoEmailInput from './EmailInput.vue'
 
 const appAdapter = useAppStoreAdapter()
 </script>
@@ -49,6 +50,7 @@ export default defineComponent({
         <n-anchor-link title="Modal" href="#Modal" />
         <n-anchor-link title="Drawer" href="#Drawer" />
         <n-anchor-link title="TextScroll" href="#TextScroll" />
+        <n-anchor-link title="PhoneNumberInput" href="#PhoneNumberInput" />
 
         <n-anchor-link title="Message" href="#Message" />
         <n-anchor-link title="Flipper" href="#Flipper" />
@@ -58,7 +60,7 @@ export default defineComponent({
         <n-anchor-link title="Axios" href="#Axios" />
         <n-anchor-link title="File" href="#File" />
         <n-anchor-link title="Authorize" href="#Authorize" />
-        <n-anchor-link title="PhoneNumberInput" href="#PhoneNumberInput" />
+        <n-anchor-link title="EmailInput" href="#EmailInput" />
       </n-anchor>
     </div>
 
@@ -68,7 +70,7 @@ export default defineComponent({
       ]"
     >
       <div class="children:my-2">
-        <DemoNaiveMsg id="NaiveMsg" />
+        <!-- <DemoNaiveMsg id="NaiveMsg" />
         <DemoArrow id="Arrow" />
         <DemoIconPicker id="IconPicker" />
         <DemoJSON id="JSON" />
@@ -77,18 +79,19 @@ export default defineComponent({
         <DemoModal id="Modal" />
         <DemoDrawer id="Drawer" />
         <DemoTextScroll id="TextScroll" />
+        <DemoNumberPhoneInput id="PhoneNumberInput" /> -->
       </div>
 
       <div class="children:my-2">
-        <DemoMessage id="Message" />
+        <!-- <DemoMessage id="Message" />
         <DemoFlipper id="Flipper" />
         <DemoScrollbar id="Scrollbar" />
         <DemoTitle id="Title" />
         <DemoTransition id="Transition" />
         <DemoAxios id="Axios" />
         <DemoFile id="File" />
-        <DemoAuthorize id="Authorize" />
-        <DemoNumberPhoneInput id="PhoneNumberInput" />
+        <DemoAuthorize id="Authorize" /> -->
+        <DemoEmailInput id="EmailInput" />
       </div>
     </div>
   </div>
