@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CropperCanvas, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
+import { CropperCanvas, CropperCrosshair, CropperGrid, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
 import { genString } from 'easy-fns-ts'
 import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 
@@ -12,6 +12,8 @@ CropperSelection.$define()
 CropperShade.$define()
 CropperHandle.$define()
 CropperViewer.$define()
+CropperGrid.$define()
+CropperCrosshair.$define()
 
 // TODO 888
 interface InternalProps {
@@ -194,55 +196,56 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- eslint-disable vue/component-name-in-template-casing -->
   <div>
     <n-grid :x-gap="20" :cols="24">
       <n-gi :span="16">
-        <CropperCanvas v-if="flag" background :disabled="disabled" style="width: 100%; height: 400px">
-          <CropperImage
+        <cropper-canvas v-if="flag" background :disabled="disabled" style="width: 100%; height: 400px">
+          <cropper-image
             v-if="src" ref="imageRef" :src="src" :alt="alt" :rotatable="src" :scalable="src" :skewable="src"
             :translatable="src" crossorigin="anonymous"
           />
 
-          <CropperShade hidden />
+          <cropper-shade hidden />
 
-          <CropperHandle action="select" plain />
+          <cropper-handle action="select" plain />
 
-          <CropperSelection
+          <cropper-selection
             :id="selectionId" ref="selectionRef" initial-coverage="0.5" :movable="src" :resizable="src"
             :zoomable="src" :keyboard="src" :outlined="src" @change="onSelectionChange"
           >
             <cropper-grid role="grid" covered bordered />
             <cropper-crosshair centered />
 
-            <CropperHandle action="move" theme-color="rgba(255, 255, 255, 0.35)" />
-            <CropperHandle action="n-resize" />
-            <CropperHandle action="e-resize" />
-            <CropperHandle action="s-resize" />
-            <CropperHandle action="w-resize" />
-            <CropperHandle action="ne-resize" />
-            <CropperHandle action="nw-resize" />
-            <CropperHandle action="se-resize" />
-            <CropperHandle action="sw-resize" />
-          </CropperSelection>
-        </CropperCanvas>
+            <cropper-handle action="move" theme-color="rgba(255, 255, 255, 0.35)" />
+            <cropper-handle action="n-resize" />
+            <cropper-handle action="e-resize" />
+            <cropper-handle action="s-resize" />
+            <cropper-handle action="w-resize" />
+            <cropper-handle action="ne-resize" />
+            <cropper-handle action="nw-resize" />
+            <cropper-handle action="se-resize" />
+            <cropper-handle action="sw-resize" />
+          </cropper-selection>
+        </cropper-canvas>
       </n-gi>
 
       <n-gi :span="8" class="vstack">
         <w-scrollbar v-if="flag" height="330px">
           <n-space vertical size="large">
-            <CropperViewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 200px" />
+            <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 200px" />
 
             <n-grid :x-gap="10" :cols="24">
               <n-gi :span="12">
-                <CropperViewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 80px" />
+                <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 80px" />
               </n-gi>
 
               <n-gi :span="8">
-                <CropperViewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 60px" />
+                <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 60px" />
               </n-gi>
 
               <n-gi :span="4">
-                <CropperViewer class="border-1 border-light-50" :selection="`#${selectionId}`" style="height: 40px" />
+                <cropper-viewer class="border-1 border-light-50" :selection="`#${selectionId}`" style="height: 40px" />
               </n-gi>
             </n-grid>
           </n-space>
