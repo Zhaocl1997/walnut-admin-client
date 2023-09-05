@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { currentRoute } = useAppRouter()
 
-const onClick = () => {
+function onClick() {
   const url = currentRoute.value.query.url as string
 
   if (!url)

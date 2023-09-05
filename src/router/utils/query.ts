@@ -1,7 +1,7 @@
 import qs from 'qs'
-import type { LocationQueryRaw } from 'vue-router'
+import type { LocationQuery, LocationQueryRaw } from 'vue-router'
 
-export const stringifyQuery = (obj: LocationQueryRaw) => {
+export function stringifyQuery(obj: LocationQueryRaw) {
   const appSetting = useAppStoreSetting()
 
   if (!obj || Object.keys(obj).length === 0)
@@ -20,16 +20,23 @@ export const stringifyQuery = (obj: LocationQueryRaw) => {
   return str
 }
 
-export const parseQuery = (query: string) => {
+const whiteList = [AppOpenExternalPath]
+
+export function parseQuery(query: string) {
   const appSetting = useAppStoreSetting()
+
+  const str = qs.parse(query) as LocationQuery
+
+  if (whiteList.includes(window.location.pathname))
+    return str
 
   if (appSetting.app.routeQueryMode === 'enhanced') {
     if (appSetting.app.routeQueryEnhancedMode === 'base64')
-      return qs.parse(watob(query))
+      return qs.parse(watob(query)) as LocationQuery
 
     if (appSetting.app.routeQueryEnhancedMode === 'cryptojs')
-      return qs.parse(AppPersistEncryption.decrypt(query))
+      return qs.parse(AppPersistEncryption.decrypt(query)) as LocationQuery
   }
 
-  return qs.parse(query) as any
+  return str
 }

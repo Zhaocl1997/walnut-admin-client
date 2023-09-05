@@ -12,23 +12,23 @@ export const AppRouter = createRouter({
   parseQuery,
 })
 
-export const setupRouter = (app: App) => {
+export function setupRouter(app: App) {
   app.use(AppRouter)
   createRouterGuard(AppRouter)
   AppInfo('Router Initializing...')
 }
 
-export const useAppRoute = () => {
+export function useAppRoute() {
   isInSetup()
   return useRoute()
 }
 
-export const useAppRouter = () => {
+export function useAppRouter() {
   isInSetup()
   return useRouter()
 }
 
-export const useAppRouterPush = (info: RouteLocationRaw) => {
+export function useAppRouterPush(info: RouteLocationRaw) {
   try {
     return AppRouter.push(info).catch(() => {
       // maybe error
