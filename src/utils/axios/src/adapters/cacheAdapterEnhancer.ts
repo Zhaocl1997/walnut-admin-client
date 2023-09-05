@@ -1,5 +1,5 @@
 import type { AxiosAdapter, AxiosPromise } from 'axios'
-import LRUCache from 'lru-cache'
+import { LRUCache } from 'lru-cache'
 import { buildSortedURL } from './utils'
 
 const { axiosCache: cacheMinute = 5 } = useAppEnv('seconds')

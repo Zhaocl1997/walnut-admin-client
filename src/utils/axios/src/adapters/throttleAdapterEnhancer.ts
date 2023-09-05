@@ -1,5 +1,5 @@
 import type { AxiosAdapter, AxiosPromise, AxiosRequestConfig } from 'axios'
-import LRUCache from 'lru-cache'
+import { LRUCache } from 'lru-cache'
 import { buildSortedURL } from './utils'
 
 interface RecordedCache {
