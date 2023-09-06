@@ -24,7 +24,7 @@ const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
 
 const options = ref<TreeNodeItem<AppSharedArea>[]>([])
 
-const onLoad = async (option: CascaderOption) => {
+async function onLoad(option: CascaderOption) {
   const res = await getAreaChildrenByPcode(option.code as string)
   option.children = res.map(i => ({
     ...i,
@@ -33,7 +33,7 @@ const onLoad = async (option: CascaderOption) => {
   }))
 }
 
-const onInit = async () => {
+async function onInit() {
   const res = await getAreaChildrenByPcode()
   options.value = res.map(i => ({
     ...i,
@@ -42,12 +42,12 @@ const onInit = async () => {
   }))
 }
 
-const onUpdateValue = (value: string) => {
+function onUpdateValue(value: string) {
   emits('update:value', value)
 }
 
-const onFeedback = async () => {
-  if (!props.value)
+async function onFeedback() {
+  if (!props.value || props.value.length === 0)
     return
 
   // single feedback
@@ -59,7 +59,7 @@ const onFeedback = async () => {
 
     const index = options.value.findIndex(i => i.code === feedback[0].pcode)
 
-    if (options.value[index]?.children)
+    if (!options.value[index]?.children)
       options.value[index].children = feedback
   }
 
@@ -67,7 +67,6 @@ const onFeedback = async () => {
   if (
     props.multiple
       && Array.isArray(props.value)
-      && props.value.length !== 0
   ) {
     if (props.value[0].length === 2)
       return
@@ -77,7 +76,7 @@ const onFeedback = async () => {
     feedbacks.forEach((item) => {
       const index = options.value.findIndex(i => i.code === item[0].pcode)
 
-      if (options.value[index]?.children)
+      if (!options.value[index]?.children)
         options.value[index].children = item as TreeNodeItem<AppSharedArea>[]
     })
   }

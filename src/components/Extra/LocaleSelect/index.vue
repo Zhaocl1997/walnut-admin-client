@@ -29,16 +29,16 @@ const options = computed(() =>
 
 const onUpdateValue = (v: string) => emits('update:value', v)
 
-const onRenderLabel = (option: SelectOption) => {
+function onRenderLabel(option: SelectOption) {
   return `${option.label} (${option.value})`
 }
 
-const onNewLocale = async () => {
+async function onNewLocale() {
   // The name below need to match locale management name field which is fetch from backend
   await useAppRouterPush({ name: 'Locale', query: { localeKey: props?.presetKey } })
 }
 
-const onRefresh = async () => {
+async function onRefresh() {
   loading.value = true
 
   const appLocale = useAppStoreLocale()
@@ -73,14 +73,14 @@ export default defineComponent({
       <template #action>
         <n-space>
           <w-button size="small" icon="ant-design:plus-outlined" @click="onNewLocale">
-            {{ $t('comp.localeSelect.new') }}
+            {{ $t('app.button.create') }}
           </w-button>
 
           <w-button
             size="small" icon="ant-design:sync-outlined" :loading="loading" :disabled="loading"
             @click="onRefresh"
           >
-            {{ $t('comp.localeSelect.refresh') }}
+            {{ $t('app.base.refresh') }}
           </w-button>
         </n-space>
       </template>

@@ -101,11 +101,12 @@ const getPuzzleCanvasStyle = computed(() => ({
 }))
 
 // 绘制拼图块的路径
-const paintBrick = (ctx: CanvasRenderingContext2D) =>
-  paintPuzzle(ctx, props.puzzleScale, pinX.value, pinY.value)
+function paintBrick(ctx: CanvasRenderingContext2D) {
+  return paintPuzzle(ctx, props.puzzleScale, pinX.value, pinY.value)
+}
 
 // 初始化
-const onInit = (withCanvas = false) => {
+function onInit(withCanvas = false) {
   // 防止重复加载导致的渲染错误
   if (loading.value && !withCanvas)
     return
@@ -274,7 +275,7 @@ const onInit = (withCanvas = false) => {
 }
 
 // 鼠标按下准备拖动
-const onRangeMouseDown = (e: MouseEvent | TouchEvent) => {
+function onRangeMouseDown(e: MouseEvent | TouchEvent) {
   if (isCanSlide.value) {
     mouseDown.value = true
     startWidth.value = rangeSlider.value!.clientWidth
@@ -286,7 +287,7 @@ const onRangeMouseDown = (e: MouseEvent | TouchEvent) => {
 }
 
 // 鼠标移动
-const onRangeMouseMove = (e: MouseEvent | TouchEvent) => {
+function onRangeMouseMove(e: MouseEvent | TouchEvent) {
   if (mouseDown.value) {
     e.preventDefault()
     newX.value
@@ -295,7 +296,7 @@ const onRangeMouseMove = (e: MouseEvent | TouchEvent) => {
 }
 
 // 鼠标抬起
-const onRangeMouseUp = (e: MouseEvent | TouchEvent) => {
+function onRangeMouseUp(e: MouseEvent | TouchEvent) {
   if (mouseDown.value) {
     mouseDown.value = false
     onVerify()
@@ -303,7 +304,7 @@ const onRangeMouseUp = (e: MouseEvent | TouchEvent) => {
 }
 
 // 开始判定
-const onVerify = () => {
+function onVerify() {
   // 偏差 x = puzzle的起始X - (用户真滑动的距离) + (puzzle的宽度 - 滑块的宽度) * （用户真滑动的距离/canvas总宽度）
   // 最后+ 的是补上slider和滑块宽度不一致造成的缝隙
   const x = Math.abs(
@@ -340,12 +341,12 @@ const onVerify = () => {
   isCanSlide.value = false
 }
 
-const onReset = () => {
+function onReset() {
   onResetState()
   onInit()
 }
 
-const onResetState = () => {
+function onResetState() {
   infoTextShow.value = false
   isCanSlide.value = false
   isSuccess.value = false
@@ -359,7 +360,7 @@ onMounted(() => {
   useEventListener('mouseup', onRangeMouseUp)
 })
 
-const onOpenModal = () => {
+function onOpenModal() {
   show.value = true
 
   nextTick(onReset)
@@ -377,6 +378,7 @@ defineExpose({ onOpenModal })
     :fullscreen="false"
     :closable="false"
     width="auto"
+    display-directive="show"
   >
     <div class="select-none" @mousedown.stop @touchstart.stop>
       <n-spin :show="loading">

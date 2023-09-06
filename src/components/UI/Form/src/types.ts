@@ -7,7 +7,6 @@ import type {
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
-import type { RuleType } from 'node_modules/.pnpm/async-validator@4.2.5/node_modules/async-validator/dist-types/interface'
 
 import type { WButtonProps } from '../../Button'
 import type { WButtonGroupProps } from '../../ButtonGroup'
@@ -39,6 +38,9 @@ import type { WLocaleSelectProps } from '@/components/Extra/LocaleSelect'
 import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
 import type { WTransitionProps } from '@/components/Extra/Transition'
 import type { WPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
+import type { WEmailInputProps } from '@/components/Extra/EmailInput'
+
+export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 
 export const BUILTIN_FORM_TYPE = [
   'Button',
@@ -132,7 +134,7 @@ export declare namespace WForm {
       'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
       }
-      'Base:Slot': {}
+      'Base:Slot': Record<string, never>
 
       'Base:DynamicInput': DynamicInputProps
       'Base:Slider': SliderProps
@@ -155,8 +157,8 @@ export declare namespace WForm {
       'Extend:Divider': WFormItemDividerProps
       'Extend:Query': WFormItemQueryProps
 
-      'Extend:IconPicker': {}
-      'Extend:TransitionSelect': {}
+      'Extend:IconPicker': Record<string, never>
+      'Extend:TransitionSelect': Record<string, never>
       'Extend:RoleSelect': {
         multiple?: boolean
         valueSeparator?: string
@@ -168,6 +170,7 @@ export declare namespace WForm {
       'Extend:Dict': WFormItemDictProps
       'Extend:LocaleSelect': WLocaleSelectProps
       'Extend:PhoneNumberInput': WPhoneNumberInputProps
+      'Extend:EmailInput': WEmailInputProps
 
       'Vendor:Tinymce': TinymceEditorProps
     }
@@ -269,6 +272,7 @@ export declare namespace WForm {
     type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
     type LocaleSchema<D> = DynamicSchemaItemProps<'Extend:LocaleSelect', D>
     type PhoneNumberInputSchema<D> = DynamicSchemaItemProps<'Extend:PhoneNumberInput', D>
+    type EmailInputSchema<D> = DynamicSchemaItemProps<'Extend:EmailInput', D>
     type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
     type TransitionSelectSchema<D> = DynamicSchemaItemProps<
       'Extend:TransitionSelect',
@@ -307,6 +311,7 @@ export declare namespace WForm {
       | DictSchema<D>
       | LocaleSchema<D>
       | PhoneNumberInputSchema<D>
+      | EmailInputSchema<D>
       | IconPickerSchema<D>
       | TransitionSelectSchema<D>
       | RoleSelectSchema<D>

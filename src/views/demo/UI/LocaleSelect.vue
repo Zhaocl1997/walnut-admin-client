@@ -17,7 +17,7 @@ export default defineComponent({
 
 <template>
   <w-demo-card title="Locale Select">
-    <W-JSON :value="state" height="300px" />
+    <W-JSON :value="state" height="200px" />
 
     <n-list>
       <n-list-item>

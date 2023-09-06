@@ -1,4 +1,4 @@
-process.env.ESLINT_TSCONFIG = 'tsconfig.json'
+require('node:process').env.ESLINT_TSCONFIG = 'tsconfig.json'
 
 module.exports = {
   extends: [
@@ -29,5 +29,6 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/restrict-plus-operands': 'off',
+    '@typescript-eslint/no-namespace': 'off',
   },
 }

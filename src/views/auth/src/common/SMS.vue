@@ -3,6 +3,7 @@
 import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { sendAuthTextMsg } from '@/api/auth/phone'
+import type { PhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 
 const { t } = useAppI18n()
 const appAuth = useAppStoreUserAuth()
@@ -10,13 +11,14 @@ const appNaive = useAppStoreNaive()
 
 const { loading } = useAuthContext()
 
+const countryCallingCode = ref()
 const SMSFormData = reactive<AppPayloadAuth.PhoneNumber & { agree: string }>({
   phoneNumber: '',
   verifyCode: '',
   agree: '',
 })
 
-const onSubmit = async () => {
+async function onSubmit() {
   const valid = await validate()
 
   if (valid) {
@@ -54,13 +56,13 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
           {
             key: 'phoneNumber',
             type: 'string',
-            trigger: ['input', 'change'],
+            trigger: ['change'],
             validator: (rule, value) => {
               // to call base rule
               if (!value)
                 return Promise.resolve()
 
-              if (!isPhoneNumber(value))
+              if (!isPhoneNumber(`+${countryCallingCode.value}${value}`))
                 return Promise.reject(t('app.base.phoneNumber.rule'))
 
               return Promise.resolve()
@@ -71,6 +73,10 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
       componentProp: {
         preferred: true,
         example: true,
+        autoDefaultCountry: true,
+        onUpdate: (val: PhoneNumberInputUpdateParams) => {
+          countryCallingCode.value = val.countryCallingCode
+        },
       },
       transitionProp: {
         name: 'fade-down-big',
@@ -92,7 +98,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
           // valid phoneNumber before count down
           const valid = await validate(['phoneNumber'])
 
-          if (!valid)
+          if (!valid || !SMSFormData.phoneNumber)
             return false
 
           return true
@@ -191,7 +197,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
           fontWeight: '900',
         },
         class:
-            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-2',
+            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 -mt-2',
         onClick: onSubmit,
       },
       transitionProp: {

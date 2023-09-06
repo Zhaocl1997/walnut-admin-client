@@ -70,7 +70,7 @@ export default defineComponent({
       ]"
     >
       <div class="children:my-2">
-        <!-- <DemoNaiveMsg id="NaiveMsg" />
+        <DemoNaiveMsg id="NaiveMsg" />
         <DemoArrow id="Arrow" />
         <DemoIconPicker id="IconPicker" />
         <DemoJSON id="JSON" />
@@ -79,18 +79,18 @@ export default defineComponent({
         <DemoModal id="Modal" />
         <DemoDrawer id="Drawer" />
         <DemoTextScroll id="TextScroll" />
-        <DemoNumberPhoneInput id="PhoneNumberInput" /> -->
+        <DemoNumberPhoneInput id="PhoneNumberInput" />
       </div>
 
       <div class="children:my-2">
-        <!-- <DemoMessage id="Message" />
+        <DemoMessage id="Message" />
         <DemoFlipper id="Flipper" />
         <DemoScrollbar id="Scrollbar" />
         <DemoTitle id="Title" />
         <DemoTransition id="Transition" />
         <DemoAxios id="Axios" />
         <DemoFile id="File" />
-        <DemoAuthorize id="Authorize" /> -->
+        <DemoAuthorize id="Authorize" />
         <DemoEmailInput id="EmailInput" />
       </div>
     </div>

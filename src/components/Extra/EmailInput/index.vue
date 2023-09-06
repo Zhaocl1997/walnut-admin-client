@@ -21,13 +21,15 @@ const { language } = useSharedNavigatorLanguage()
 
 const emailValue = ref<string>()
 
-const transformOptions = (val: string[]) => val.map((suffix) => {
-  const prefix = emailValue.value?.split('@')[0]
-  return {
-    label: prefix + suffix,
-    value: prefix + suffix,
-  }
-})
+function transformOptions(val: string[]) {
+  return val.map((suffix) => {
+    const prefix = emailValue.value?.split('@')[0]
+    return {
+      label: prefix + suffix,
+      value: prefix + suffix,
+    }
+  })
+}
 
 const options = computed(() => {
   const iso2 = new Intl.Locale(language.value!).region
@@ -36,7 +38,7 @@ const options = computed(() => {
   return transformOptions(target ? target.suffix : defaultSuffix)
 })
 
-const onUpdateValue = (v: string) => {
+function onUpdateValue(v: string) {
   emits('update:value', v)
 }
 
@@ -54,9 +56,8 @@ watch(() => props.value, (v) => {
     }"
     blur-after-select
     clearable
-    loading
     :options="options"
-    placeholder="邮箱"
+    :placeholder="$t('comp.emailInput.ph')"
     @update:value="onUpdateValue"
   />
 </template>

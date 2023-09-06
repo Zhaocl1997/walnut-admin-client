@@ -13,7 +13,7 @@ import { setAuthContext } from './hooks/useAuthContext'
 const { t, locale } = useAppI18n()
 
 const tabsInstRef = ref<TabsInst>()
-const account = ref<{ setFormData: (n: string, p: string) => {} }>()
+const account = ref<{ setFormData: (n: string, p: string) => Record<string, never> }>()
 const appAuthSettings = useAppStoreSettingBackend()
 
 const loading = ref(false)
@@ -60,6 +60,7 @@ export default defineComponent({
       <n-tab-pane
         v-if="appAuthSettings.getAccountEnabled"
         name="account"
+        display-directive="show:lazy"
         :tab="t('form.app.auth.tab.account')"
       >
         <SignInWithAccount
@@ -71,6 +72,7 @@ export default defineComponent({
       <n-tab-pane
         v-if="appAuthSettings.getPhoneEnabled"
         name="SMS"
+        display-directive="show:lazy"
         :tab="t('form.app.auth.tab.sms')"
       >
         <SignInWitSMS class="w-72 text-justify mt-2" />
@@ -79,6 +81,7 @@ export default defineComponent({
       <n-tab-pane
         v-if="appAuthSettings.getEmailEnabled"
         name="email"
+        display-directive="show:lazy"
         :tab="t('form.app.auth.tab.email')"
       >
         <SignInWitEmail class="w-72 text-justify mt-2" />
@@ -87,6 +90,7 @@ export default defineComponent({
       <n-tab-pane
         v-if="appAuthSettings.getQrcodeEnabled"
         name="QR"
+        display-directive="show:lazy"
         :tab="t('form.app.auth.tab.qr')"
       >
         <SignInWithQR class="w-72 text-justify mt-2" />

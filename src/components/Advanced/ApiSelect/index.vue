@@ -31,12 +31,14 @@ const { stateRef: params, resetState } = useState<WalnutBaseListParams>({
 
 const getOptions = computed(() => valueOptions.value.concat(options.value))
 
-const onGetOptionItem = (i: any) => ({
-  value: i[props.valueField ?? 'value'],
-  label: i[props.labelField ?? 'label'],
-})
+function onGetOptionItem(i: any) {
+  return {
+    value: i[props.valueField ?? 'value'],
+    label: i[props.labelField ?? 'label'],
+  }
+}
 
-const onUpdateValue = async (val: StringOrNumber | StringOrNumber[]) => {
+async function onUpdateValue(val: StringOrNumber | StringOrNumber[]) {
   emit('update:value', val)
 
   // empty value. reset to initial state and clean options
@@ -48,7 +50,7 @@ const onUpdateValue = async (val: StringOrNumber | StringOrNumber[]) => {
     await onReset(false)
 }
 
-const onScroll = async (e: Event) => {
+async function onScroll(e: Event) {
   // reach bottom
   if (
   // @ts-expect-error
@@ -66,7 +68,7 @@ const onScroll = async (e: Event) => {
   }
 }
 
-const onApiSelectList = async (filter = false) => {
+async function onApiSelectList(filter = false) {
   loading.value = true
 
   try {
@@ -99,7 +101,7 @@ const onApiSelectList = async (filter = false) => {
   }
 }
 
-const onSearch = async (query: string) => {
+async function onSearch(query: string) {
   params.value.page!.page = 1
   options.value.length = 0
   if (!props.multiple)
@@ -111,7 +113,7 @@ const onSearch = async (query: string) => {
 
 const onDebounceSearch = useDebounceFn(onSearch, 500)
 
-const onReset = async (cleanOptions = true) => {
+async function onReset(cleanOptions = true) {
   if (cleanOptions) {
     options.value.length = 0
     valueOptions.value.length = 0
@@ -120,7 +122,7 @@ const onReset = async (cleanOptions = true) => {
   await onApiSelectList()
 }
 
-const onFeedback = async () => {
+async function onFeedback() {
   if (props.multiple) {
     if (props.valueSeparator) {
       for (const item of (props.value as string).split(
@@ -165,7 +167,7 @@ onMounted(async () => {
 </script>
 
 <script lang="ts">
-import { isFunction } from '@vueuse/core'
+import { isFunction } from 'easy-fns-ts'
 import { WithValueProps } from '@/components/HOC/WithValue'
 
 export default defineComponent({

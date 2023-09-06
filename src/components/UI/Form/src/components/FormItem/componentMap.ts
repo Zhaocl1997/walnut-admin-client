@@ -7,7 +7,7 @@ import { BUILTIN_FORM_TYPE } from '../../types'
  *  1. Need to have same structure as examples if want to add new component
  *  2. Need to add corresponding `TYPE` to `BUILTIN_FORM_TYPE`
  */
-const getAllComponents = (type: typeof BUILTIN_FORM_TYPE) => {
+function getAllComponents(type: typeof BUILTIN_FORM_TYPE) {
   const ret: any = {}
 
   type.forEach((key) => {
@@ -85,6 +85,12 @@ componentMap.set(
   'PhoneNumberInput',
   createAsyncComponent(
     () => import('../../../../../Extra/PhoneNumberInput/index'),
+  ),
+)
+componentMap.set(
+  'EmailInput',
+  createAsyncComponent(
+    () => import('../../../../../Extra/EmailInput/index'),
   ),
 )
 

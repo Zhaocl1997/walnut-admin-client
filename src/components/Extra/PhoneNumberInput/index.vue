@@ -1,8 +1,6 @@
 <script lang="tsx">
 export default defineComponent({
   name: 'WPhoneNumberInput',
-
-  inheritAttrs: false,
 })
 </script>
 
@@ -67,6 +65,7 @@ const _phoneNumber = ref()
 const _example = ref()
 const loadExamples = ref(false)
 const inputFocus = ref(false)
+const selectLoading = ref(false)
 
 const filterOptions = computed(() => {
   if (props.whiteList?.length)
@@ -132,7 +131,7 @@ const inputSpan = computed(() => {
   return props.countrySelect ? props.flag ? 14 : 16 : 24
 })
 
-const onRenderLabel = (option: PhoneNumberInputOption): VNodeChild => {
+function onRenderLabel(option: PhoneNumberInputOption): VNodeChild {
   if (option?.type === 'group')
     return <div>{option.name}</div>
 
@@ -161,13 +160,15 @@ const onRenderTag: SelectRenderTag = ({ option }: { option: PhoneNumberInputOpti
 
 // @ts-expect-error
 const onFilter: SelectFilter = (pattern: string, option: PhoneNumberInputOption) => {
-  if (option.name.toLowerCase().includes(pattern.toLowerCase()))
+  const filterableFields = ['name', 'iso2', 'dialCode']
+
+  if (filterableFields.some(i => (option[i] as string).toLowerCase().includes(pattern.toLowerCase())))
     return true
 
   return false
 }
 
-const onUpdateSelectValue = (v: string) => {
+function onUpdateSelectValue(v: string) {
   _countryCode.value = v
   _phoneNumber.value = ''
   emits('update:value', '')
@@ -177,7 +178,7 @@ const onUpdateSelectValue = (v: string) => {
 }
 
 // only number input
-const onAllowInput = (v: string) => {
+function onAllowInput(v: string) {
   const r1 = /[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]+$/gi
   const r2 = /[a-zA-Z]+$/gi
 
@@ -187,25 +188,19 @@ const onAllowInput = (v: string) => {
   return true
 }
 
-const onInputFocus = () => {
+function onInputFocus() {
   inputFocus.value = true
 }
 
-const onInputBlur = () => {
+function onInputBlur() {
   inputFocus.value = false
 }
 
-const onUpdateInputValue = (v: string) => {
+function onUpdateInputValue(v: string) {
   const parsed = parsePhoneNumberFromString(v, _countryCode.value)
   _phoneNumber.value = parsed?.formatNational()
 
-  if (props.countrySelect) {
-    if (parsed?.isValid())
-      emits('update:value', `+${_dialCode.value}${v}`)
-    else
-      emits('update:value', v)
-  }
-  else { emits('update:value', v) }
+  emits('update:value', v)
 
   emits('update', {
     isValid: parsed?.isValid() ?? false,
@@ -242,8 +237,14 @@ watch(() => _countryCode.value, async (v) => {
 watch(() => [props.autoDefaultCountry, isOnline.value, language.value], async () => {
   if (props.autoDefaultCountry || !props.countrySelect) {
     if (isOnline.value) {
-      const res = await getCurrentCountry()
-      _countryCode.value = res.toUpperCase()
+      selectLoading.value = true
+      try {
+        const res = await getCurrentCountry()
+        _countryCode.value = res.toUpperCase()
+      }
+      finally {
+        selectLoading.value = false
+      }
     }
     else {
       const locale = new Intl.Locale(language.value!)
@@ -261,17 +262,19 @@ onMounted(async () => {
 
     _countryCode.value = res?.country
     _phoneNumber.value = res?.nationalNumber
+
+    onUpdateInputValue('')
   }
 })
 </script>
 
 <template>
-  <div class="w-full">
+  <div>
     <n-grid :cols="24">
       <n-gi v-if="countrySelect" :span="selectSpan">
         <n-select
-          :value="_countryCode" :disabled="disabled" :options="sortOptions" value-field="iso2" filterable :filter="onFilter"
-          :placeholder="$t('comp.phoneNumberInput.countryCode')" :render-label="onRenderLabel" :render-tag="onRenderTag"
+          :value="_countryCode" :loading="selectLoading" :disabled="disabled" :options="sortOptions" value-field="iso2" filterable :filter="onFilter"
+          :placeholder="$t('app.base.countryCode')" :render-label="onRenderLabel" :render-tag="onRenderTag"
           :menu-props="{ style: 'width: 250px !important' }" @update:value="onUpdateSelectValue"
         />
       </n-gi>

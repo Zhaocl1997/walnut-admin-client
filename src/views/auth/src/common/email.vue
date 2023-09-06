@@ -18,7 +18,7 @@ const emailFormData = reactive<
     agree: '',
   })
 
-const onSubmit = async () => {
+async function onSubmit() {
   const valid = await validate()
 
   if (valid) {
@@ -46,7 +46,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
   disabled: loading,
   schemas: [
     {
-      type: 'Base:Input',
+      type: 'Extend:EmailInput',
       formProp: {
         path: 'emailAddress',
         ruleType: 'string',
@@ -73,9 +73,6 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       },
       componentProp: {
         clearable: true,
-        inputProps: {
-          autocomplete: 'email',
-        },
       },
       transitionProp: {
         name: 'fade-up-big',
@@ -194,7 +191,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
           fontWeight: '900',
         },
         class:
-            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-2',
+            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 -mt-2',
         onClick: onSubmit,
       },
       transitionProp: {
