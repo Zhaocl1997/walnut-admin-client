@@ -13,7 +13,7 @@ import WTransition from '@/components/Extra/Transition'
 
 import { useDropdown } from '@/components/UI/Dropdown'
 
-interface WTreeEmits extends WTree.Emit.Entry { }
+interface WTreeEmits extends /* @vue-ignore */ WTree.Emit.Entry { }
 
 type TreeKey = StringOrNumber
 
@@ -172,25 +172,25 @@ const [registerCtx, { openDropdown, closeDropdown }] = useDropdown({
 
 const getCombinedKeys = computed(() => checkedKeys.value.concat(indeterminateKeys.value))
 
-const onSelectedKeys = (keys: TreeKey[]) => {
+function onSelectedKeys(keys: TreeKey[]) {
   selectedKeys.value = keys
   if (!getProps.value.multiple)
     emit('update:value', keys[0])
 }
 
-const onCheckedKeys = (keys: TreeKey[]) => {
+function onCheckedKeys(keys: TreeKey[]) {
   checkedKeys.value = keys
   if (getProps.value.multiple)
     emit('update:value', getCombinedKeys.value)
 }
 
-const onUpdateIndeterminateKeys = (keys: TreeKey[]) => {
+function onUpdateIndeterminateKeys(keys: TreeKey[]) {
   indeterminateKeys.value = keys
   if (getProps.value.multiple)
     emit('update:value', getCombinedKeys.value)
 }
 
-const onToolbarSelect = (key: string) => {
+function onToolbarSelect(key: string) {
   if (key === 'expand') {
     expandedKeys.value = treeToArr(
       cloneDeep(getProps.value.treeProps!.data!),
@@ -246,7 +246,7 @@ const onToolbarSelect = (key: string) => {
   }
 }
 
-const nodeProps = ({ option }: { option: TreeOption }) => {
+function nodeProps({ option }: { option: TreeOption }) {
   return {
     onContextmenu: getProps.value.presetContextMenu
       ? (e: MouseEvent) => {
@@ -262,7 +262,7 @@ const nodeProps = ({ option }: { option: TreeOption }) => {
   } as HTMLAttributes
 }
 
-const onRenderPrefix = ({ option }: TreeRenderProps) => {
+function onRenderPrefix({ option }: TreeRenderProps) {
   return getProps.value.presetPrefixIcon
     ? (
       <WIcon icon={option.icon as string} height="18" class="mb-0.5"></WIcon>
@@ -270,7 +270,7 @@ const onRenderPrefix = ({ option }: TreeRenderProps) => {
     : undefined
 }
 
-const onRenderSuffix = ({ option }: TreeRenderProps) => {
+function onRenderSuffix({ option }: TreeRenderProps) {
   return (getProps.value.treeProps?.draggable || getProps.value.deletable)
     ? (
       <WTransition name="fade-right">
@@ -319,7 +319,7 @@ const getBottomChildKeys = computed(() => {
   return res
 })
 
-const onFeecback = () => {
+function onFeecback() {
   if (getProps.value.multiple) {
     if (cascade.value) {
       checkedKeys.value = (getProps.value.value as TreeKey[])?.filter(i => getBottomChildKeys.value.includes(i))

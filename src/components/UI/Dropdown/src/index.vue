@@ -2,8 +2,8 @@
 import type { WDropdown } from './types'
 
 // avoid error
-interface WDropdownProps extends WDropdown.Props {}
-interface WDropdownEmits extends WDropdown.Emit.Entry {}
+interface WDropdownProps extends /* @vue-ignore */ WDropdown.Props {}
+interface WDropdownEmits extends /* @vue-ignore */ WDropdown.Emit.Entry {}
 
 const props = defineProps<WDropdownProps>()
 const emit = defineEmits<WDropdownEmits>()
@@ -14,7 +14,7 @@ const show = ref(false)
 const x = ref(0)
 const y = ref(0)
 
-const openDropdown = (e: MouseEvent) => {
+function openDropdown(e: MouseEvent) {
   x.value = e.clientX
   y.value = e.clientY
   show.value = true
