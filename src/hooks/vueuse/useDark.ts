@@ -2,7 +2,7 @@ const isReducedMotion = useSharedPreferredReducedMotion()
 
 const useSharedDark = createSharedComposable(() => {
   return useDark({
-    attribute: 'color-scheme',
+    attribute: 'class',
     valueDark: 'dark',
     valueLight: 'light',
     storageKey: AppConstPersistKey.DARK_MODE,
