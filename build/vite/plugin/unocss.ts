@@ -3,7 +3,7 @@ import { presetAttributify, presetUno } from 'unocss'
 import transformerVariantGroup from '@unocss/transformer-variant-group'
 
 // dynamic usage is still problematic
-export const createUnoCSSPlugin = (): VitePlugin[] => {
+export function createUnoCSSPlugin(): VitePlugin[] {
   return UnoCSS({
     shortcuts: {
       hstack: 'flex flex-row flex-nowrap',

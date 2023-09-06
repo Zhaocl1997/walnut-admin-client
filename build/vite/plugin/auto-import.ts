@@ -1,6 +1,6 @@
 import AutoImport from 'unplugin-auto-import/vite'
 
-export const creatAutoImportPlugin = (): VitePlugin => {
+export function creatAutoImportPlugin(): VitePlugin {
   return AutoImport({
     include: [
       /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -23,6 +23,8 @@ export const creatAutoImportPlugin = (): VitePlugin => {
       'src/utils/**',
       'src/socket/**',
     ],
+
+    vueTemplate: true,
 
     imports: [
       // presets
