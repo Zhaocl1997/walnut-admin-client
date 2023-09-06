@@ -49,14 +49,6 @@ declare global {
   }
 
   /**
-   * App dark state
-   */
-  interface AppDarkState {
-    darkMode: RemovableRef<ValueOfAppConstDarkMode>
-    isDark: RemovableRef<boolean>
-  }
-
-  /**
    * App secret key state
    */
   interface AppKeyState {

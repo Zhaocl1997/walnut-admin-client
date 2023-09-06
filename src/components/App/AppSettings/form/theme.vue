@@ -7,8 +7,6 @@ import {
   modalColor,
 } from '../shared'
 
-const appDark = useAppStoreDark()
-
 const [register] = useForm<typeof lightThemeRelatives.value>({
   showFeedback: false,
   xGap: 0,
@@ -168,7 +166,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
         render: ({ formData }) => (
             <AppColors
               v-model={[formData.invertedColor]}
-              disabled={appDark.isDark}
+              disabled={isDark.value}
             ></AppColors>
         ),
       },
@@ -179,13 +177,13 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
 
 <template>
   <w-form
-    v-if="appDark.isDark"
+    v-if="isDark"
     :model="darkThemeRelatives"
     @hook="register"
   />
 
   <w-form
-    v-if="!appDark.isDark"
+    v-if="!isDark"
     :model="lightThemeRelatives"
     @hook="register"
   />

@@ -7,7 +7,6 @@ export default defineComponent({
   setup() {
     const appMenu = useAppStoreMenu()
     const appSetting = useAppStoreSetting()
-    const appDark = useAppStoreDark()
 
     const { t } = useAppI18n()
     const { currentRoute } = useAppRouter()
@@ -84,8 +83,8 @@ export default defineComponent({
             <n-config-provider
               id={appSetting.getBreadcrumbId}
               theme={
-                (!appDark.isDark && appSetting.header.inverted)
-                || appDark.isDark
+                (!isDark.value && appSetting.header.inverted)
+                || isDark.value
                   ? darkTheme
                   : null
               }

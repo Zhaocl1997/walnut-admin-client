@@ -1,10 +1,10 @@
 html[reduced-motion="true"] *,
 ::before,
 ::after {
-  transition-property: none;
-  animation: none;
-
-  --animate-duration: 0;
-  --animate-delay: 0;
-  --animate-repeat: 0;
+  transition: none !important;
+  transition: none !important;
+  transition: none !important;
+  transition: none !important;
+  transition: none !important;
+  animation: none !important
 }

@@ -71,12 +71,11 @@ const editorRef = shallowRef<Nullable<TinymceVueInstance>>(null)
 
 const loading = ref(false)
 
-const appDark = useAppStoreDark()
 const appLocale = useAppStoreLocale()
 const { publicPath } = useAppEnv('build')
 
 const getSkinName = computed(() =>
-  appDark.isDark ? 'tinymce-5-dark' : 'tinymce-5',
+  isDark.value ? 'tinymce-5-dark' : 'tinymce-5',
 )
 
 const getLangName = computed(() => appLocale.locale)
@@ -115,7 +114,7 @@ const tinymceOptions = computed((): RawEditorOptions => {
   }
 })
 
-const onChange = () => {
+function onChange() {
   emits('update:value', editorValue.value)
 }
 

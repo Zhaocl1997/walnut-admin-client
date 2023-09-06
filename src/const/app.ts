@@ -8,15 +8,6 @@ export const AppConstDevice = {
 export type ValueOfAppConstDevice =
   typeof AppConstDevice[keyof typeof AppConstDevice]
 
-export const AppConstDarkMode = {
-  LIGHT: 'light',
-  DARK: 'dark',
-  SYSTEM: 'system',
-} as const
-
-export type ValueOfAppConstDarkMode =
-  typeof AppConstDarkMode[keyof typeof AppConstDarkMode]
-
 export const AppConstLocale = {
   EN_US: 'en-US',
   ZH_CN: 'zh-CN',

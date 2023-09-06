@@ -17,11 +17,10 @@ const chartId = ref(`echarts-${genString(8)}`)
 // third party libs should use shallowRef !!!
 const chartInst = shallowRef<Nullable<echarts.ECharts>>(null)
 
-const appDark = useAppStoreDark()
 const appLocale = useAppStoreLocale()
 const appSettings = useAppStoreSetting()
 
-const getSkinName = computed(() => (appDark.isDark ? 'dark' : undefined))
+const getSkinName = computed(() => (isDark.value ? 'dark' : undefined))
 
 const getLangName = computed(() =>
   appLocale.locale.split('_')[0].toUpperCase(),
@@ -31,14 +30,14 @@ useEventListener('resize', () => {
   chartInst.value?.resize()
 })
 
-const onDispose = () => {
+function onDispose() {
   if (chartInst.value) {
     chartInst.value.dispose()
     chartInst.value = null
   }
 }
 
-const onInit = () => {
+function onInit() {
   onDispose()
 
   const target = document.getElementById(chartId.value)!
@@ -54,7 +53,7 @@ const onInit = () => {
   chartInst.value = chart
 
   chartInst.value!.setOption(
-    appDark.isDark
+    isDark.value
       ? Object.assign(props.option, {
         backgroundColor: 'transparent',
         animation: !appSettings.app.reducedMotion,

@@ -17,7 +17,6 @@ declare global {
   type ValueOfAppConstDevice = import('@/const').ValueOfAppConstDevice
   type ValueOfAppConstTabDeleteType =
     import('@/const').ValueOfAppConstTabDeleteType
-  type ValueOfAppConstDarkMode = import('@/const').ValueOfAppConstDarkMode
   type ValueOfAppConstLocale = import('@/const').ValueOfAppConstLocale
   type ValueOfAppConstMenuType = import('@/const').ValueOfAppConstMenuType
   type ValueOfAppConstMenuTernal = import('@/const').ValueOfAppConstMenuTernal

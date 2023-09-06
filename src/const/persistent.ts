@@ -4,7 +4,6 @@ export const AppConstPersistKey = {
   REMEMBER: 'REMEMBER',
 
   DARK_MODE: 'DARK_MODE',
-  IS_DARK: 'IS_DARK',
 
   LOCK_MODE: 'LOCK_MODE',
   IS_LOCK: 'IS_LOCK',

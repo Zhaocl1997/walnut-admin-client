@@ -2,7 +2,6 @@
 import { getCanAnimate, modalColor } from '../shared'
 
 const appMenu = useAppStoreMenu()
-const appDark = useAppStoreDark()
 
 const appSetting = useAppStoreSetting()
 
@@ -63,7 +62,7 @@ const [register] = useForm<typeof menuRelatives>({
         path: 'inverted',
       },
       componentProp: {
-        disabled: computed(() => !menuRelatives.status || appDark.isDark),
+        disabled: computed(() => !menuRelatives.status || isDark.value),
       },
     },
     {

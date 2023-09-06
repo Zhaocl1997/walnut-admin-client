@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { getCanAnimate, modalColor } from '../shared'
 
-const appDark = useAppStoreDark()
-
 const appSetting = useAppStoreSetting()
 
 const tabRelatives = appSetting.tabs
@@ -66,7 +64,7 @@ const [register] = useForm<typeof tabRelatives>({
         path: 'inverted',
       },
       componentProp: {
-        disabled: computed(() => appDark.isDark),
+        disabled: computed(() => isDark.value),
       },
     },
     {

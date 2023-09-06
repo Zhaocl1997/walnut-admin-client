@@ -41,7 +41,6 @@ const infos = ref<{
 const searchPanelOpen = ref(false)
 const phrases = ref()
 
-const appDark = useAppStoreDark()
 const appLocale = useAppStoreLocale()
 
 watch(
@@ -66,29 +65,29 @@ watch(
 )
 
 const extensions = computed(() =>
-  appDark.isDark ? [...languages, oneDark] : languages,
+  isDark.value ? [...languages, oneDark] : languages,
 )
 
 // @codemirror/view
 const view = shallowRef<EditorView>()
 
-const onReady = (payload: any) => {
+function onReady(payload: any) {
   view.value = payload.view
 }
 
-const onChange = (v: string, e: ViewUpdate) => {
+function onChange(v: string, e: ViewUpdate) {
   emits('update:value', v)
 }
 
-const onFocus = (e: ViewUpdate) => {
+function onFocus(e: ViewUpdate) {
   emits('focus', e)
 }
 
-const onBlur = (e: ViewUpdate) => {
+function onBlur(e: ViewUpdate) {
   emits('blur', e)
 }
 
-const onUpdate = (e: ViewUpdate) => {
+function onUpdate(e: ViewUpdate) {
   const ranges = e.state.selection.ranges
 
   infos.value!.selected = ranges.reduce(
@@ -100,21 +99,21 @@ const onUpdate = (e: ViewUpdate) => {
   infos.value!.lines = e.state.doc.lines
 }
 
-const onUndo = () => {
+function onUndo() {
   undo({
     state: view.value!.state,
     dispatch: view.value!.dispatch,
   })
 }
 
-const onRedo = () => {
+function onRedo() {
   redo({
     state: view.value!.state,
     dispatch: view.value!.dispatch,
   })
 }
 
-const onSearch = () => {
+function onSearch() {
   if (!searchPanelOpen.value)
     openSearchPanel(view.value!)
   else

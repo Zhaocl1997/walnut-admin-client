@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const code1Raw = import.meta.glob(
-  '@/components/App/AppDarkMode/useAppDarkMode.ts',
+  '@/hooks/vueuse/useDark.ts',
   {
     as: 'raw',
     eager: true,

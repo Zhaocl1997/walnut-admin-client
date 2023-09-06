@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { getCanAnimate, modalColor } from '../shared'
 
-const appDark = useAppStoreDark()
-
 const appSetting = useAppStoreSetting()
 
 const footerRelatives = appSetting.footer
@@ -68,7 +66,7 @@ const [register] = useForm<typeof footerRelatives>({
         path: 'inverted',
       },
       componentProp: {
-        disabled: computed(() => !footerRelatives.status || appDark.isDark),
+        disabled: computed(() => !footerRelatives.status || isDark.value),
       },
     },
     {

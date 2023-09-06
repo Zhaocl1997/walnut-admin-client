@@ -1,4 +1,4 @@
-export const useAppReducedMotion = () => {
+export function useAppReducedMotion() {
   const appSetting = useAppStoreSetting()
   const isReducedMotion = useSharedPreferredReducedMotion()
 
