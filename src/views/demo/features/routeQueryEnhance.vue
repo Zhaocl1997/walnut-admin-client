@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const onClick = async (type: number) => {
+async function onClick(type: number) {
   if (type === 1)
     await AppRouter.replace({ query: { a: 1 } })
 

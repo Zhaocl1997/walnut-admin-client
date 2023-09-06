@@ -73,7 +73,6 @@ export default defineComponent({
     const renderLabelHelpMessage = () =>
       item?.formProp?.labelHelpMessage && (
           <w-message
-            class="inline"
             msg={getFormTranslated(t, formProps, item!, 'helpMsg')}
           ></w-message>
       )

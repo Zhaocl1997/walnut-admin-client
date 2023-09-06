@@ -30,7 +30,7 @@ export default defineComponent({
           )
 
     return () => (
-        <div>
+        <span>
           <n-tooltip {...attrs}>
             {{
               default: () => formatMessage(),
@@ -43,7 +43,7 @@ export default defineComponent({
               ),
             }}
           </n-tooltip>
-        </div>
+        </span>
     )
   },
 })
