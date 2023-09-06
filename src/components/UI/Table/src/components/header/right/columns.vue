@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useSortable } from '@vueuse/integrations/useSortable'
 import type { WTable } from '../../../types'
 
 import { useTableContext } from '../../../hooks/useTableContext'
@@ -9,7 +10,13 @@ const { tableColumns } = useTableContext()
 
 const popoverShow = ref(false)
 
-const { el: tableColumnSettingRef } = useSortable(popoverShow, {
+const tableColumnSettingRef = ref()
+
+const { start, stop } = useSortable(tableColumnSettingRef, tableColumns, {
+  animation: 150,
+  delay: 50,
+  delayOnTouchOnly: true,
+
   draggable: '.table-column-draggable',
   onEnd: (evt) => {
     const { oldIndex, newIndex } = evt
@@ -18,6 +25,14 @@ const { el: tableColumnSettingRef } = useSortable(popoverShow, {
     tableColumns.value?.splice(oldIndex!, 1)
     tableColumns.value?.splice(newIndex!, 0, current)
   },
+})
+
+watchEffect(() => {
+  if (popoverShow.value)
+    start()
+
+  else
+    stop()
 })
 
 const blackList: StringOrNumber[] = ['selection', 'index', 'action']
@@ -35,31 +50,31 @@ const getIndeterminate = computed(
 )
 
 // open column setting popover
-const onOpenPopover = () => {
+function onOpenPopover() {
   popoverShow.value = true
 }
 
 // check one column
-const onUpdateItemChecked = (item: WTable.Column) => {
+function onUpdateItemChecked(item: WTable.Column) {
   item._internalShow = !item._internalShow
 }
 
 // check all
-const onUpdateCheckAllChecked = () => {
+function onUpdateCheckAllChecked() {
   tableColumns.value
     .filter(i => !isInBlackList(i.key))
     .map(item => onUpdateItemChecked(item))
 }
 
 // set column fix state
-const onSetFix = (item: WTable.Column, position: 'left' | 'right') => {
+function onSetFix(item: WTable.Column, position: 'left' | 'right') {
   if (!item.fixed)
     item.fixed = position
   else
     item.fixed = undefined
 }
 
-const getTitle = (item: WTable.Column) => {
+function getTitle(item: WTable.Column) {
   if (typeof item.title === 'string')
     return item.title
 

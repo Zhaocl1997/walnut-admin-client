@@ -1,14 +1,33 @@
 <script lang="ts" setup>
+import { useSortable } from '@vueuse/integrations/useSortable'
 import { getTabsContext } from '../hooks/useTabsContext'
-import { useTabsSortable } from '../hooks/useTabsSortable'
 import TabsItem from './tabsItem.vue'
 
 const appTab = useAppStoreTab()
 const appSetting = useAppStoreSetting()
 
-const { el: sortableRef } = useTabsSortable(
-  computed(() => appSetting.tabs.sortable),
-)
+const sortableRef = ref()
+
+const { start, stop } = useSortable(sortableRef, appTab.tabs, {
+  animation: 150,
+  delay: 50,
+  delayOnTouchOnly: true,
+
+  draggable: '.tab-draggable',
+  onEnd: (evt) => {
+    const { oldIndex, newIndex } = evt
+
+    appTab.changeTabOrder(oldIndex!, newIndex!)
+  },
+})
+
+watchEffect(() => {
+  if (appSetting.tabs.sortable)
+    start()
+
+  else
+    stop()
+})
 
 const AppConstTabStyleModeInside = AppConstTabStyleMode
 
@@ -33,7 +52,7 @@ const {
   currentMouseTabIndex,
 } = getTabsContext()
 
-const onOpenContextMenu = (e: MouseEvent, item: AppTab, index: number) => {
+function onOpenContextMenu(e: MouseEvent, item: AppTab, index: number) {
   currentMouseTab.value = item
   currentMouseTabIndex.value = index
 
@@ -41,7 +60,7 @@ const onOpenContextMenu = (e: MouseEvent, item: AppTab, index: number) => {
   onOpenCtxMenu(e)
 }
 
-const onMouseUp = (e: MouseEvent, name: string) => {
+function onMouseUp(e: MouseEvent, name: string) {
   // middle button close
   // 1 stands for mouse middle button
   if (e.button === 1) {
