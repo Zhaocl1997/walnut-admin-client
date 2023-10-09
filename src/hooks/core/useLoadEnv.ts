@@ -1,7 +1,20 @@
 type EnvFetchType = 'title' | 'crypto' | 'proxy' | 'seconds' | 'build'
 
+export function useBuildEnv(env: ImportMetaEnv) {
+  return {
+    title: env.VITE_APP_TITLE,
+    obfuscator: +env.VITE_BUILD_OBFUSCATOR === 1,
+    dropConsole: +env.VITE_BUILD_DROP_CONSOLE === 1,
+    compression: +env.VITE_BUILD_COMPRESSION === 1,
+    https: +env.VITE_DEV_HTTPS === 1,
+    cdn: +env.VITE_BUILD_CDN === 1,
+    outDir: env.VITE_BUILD_OUT_DIR,
+    publicPath: env.VITE_PUBLIC_PATH,
+  }
+}
+
 // used for vite.config.ts
-export const useLoadEnv = (type: EnvFetchType, env: ImportMetaEnv) => {
+export function useLoadEnv(type: EnvFetchType, env: ImportMetaEnv) {
   if (type === 'title') {
     return {
       title: env.VITE_APP_TITLE,
@@ -57,6 +70,8 @@ export const useLoadEnv = (type: EnvFetchType, env: ImportMetaEnv) => {
     return {
       obfuscator: +env.VITE_BUILD_OBFUSCATOR === 1,
       dropConsole: +env.VITE_BUILD_DROP_CONSOLE === 1,
+      compression: +env.VITE_BUILD_COMPRESSION === 1,
+      cdn: +env.VITE_BUILD_CDN === 1,
       outDir: env.VITE_BUILD_OUT_DIR,
       publicPath: env.VITE_PUBLIC_PATH,
     }

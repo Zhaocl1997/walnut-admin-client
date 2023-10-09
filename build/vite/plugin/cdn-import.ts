@@ -1,33 +1,7 @@
-import importToCDN from 'vite-plugin-cdn-import'
+import { cdn } from 'vite-plugin-cdn2'
 
-export const createCdnImportPlugin = (): VitePlugin[] => {
-  return importToCDN({
-    modules: [
-      {
-        name: 'ali-oss',
-        var: 'OSS',
-        path: 'dist/aliyun-oss-sdk.min.js',
-      },
-      {
-        name: 'echarts',
-        var: 'echarts',
-        path: 'dist/echarts.min.js',
-      },
-      // {
-      //     name: 'echarts',
-      //     var: 'echarts',
-      //     path: 'charts.js',
-      // },
-      // {
-      //     name: 'echarts',
-      //     var: 'echarts',
-      //     path: 'components.js',
-      // },
-      // {
-      //     name: 'echarts',
-      //     var: 'echarts',
-      //     path: 'renderers.js',
-      // },
-    ],
+export function createCdnImportPlugin(): VitePlugin[] {
+  return cdn({
+    modules: ['vue'],
   })
 }

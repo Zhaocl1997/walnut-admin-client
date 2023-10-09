@@ -3,7 +3,7 @@ import { io } from 'socket.io-client'
 
 export let AppSocket: Nullable<Socket> = null
 
-export const setupSocket = () => {
+export function setupSocket() {
   // five params in config
   // fourth is custom socket path => https://socket.io/docs/v4/client-options/#path
   // fifth is custom socket namespace => https://socket.io/docs/v4/namespaces/

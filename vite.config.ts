@@ -1,7 +1,7 @@
 import { resolve } from 'node:path'
 import type { ConfigEnv, UserConfig } from 'vite'
 
-import { loadEnv, splitVendorChunkPlugin } from 'vite'
+import { loadEnv } from 'vite'
 
 import { author, dependencies, devDependencies, name, repository, urls, version } from './package.json'
 
@@ -9,7 +9,7 @@ import { createViteProxy } from './build/vite/proxy'
 import { createVitePlugins } from './build/vite/plugin'
 import { envDir, publicDir } from './build/constant'
 import { createRollupObfuscatorPlugin } from './build/rollup'
-import { useLoadEnv } from './src/hooks/core/useLoadEnv'
+import { useBuildEnv } from './src/hooks/core/useLoadEnv'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
@@ -31,17 +31,14 @@ const __APP_INFO__ = {
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd()
 
-  const env = loadEnv(mode, pathResolve(envDir)) as ImportMetaEnv
+  const env = loadEnv(mode, pathResolve(envDir)) as unknown as ImportMetaEnv
 
-  const { obfuscator, dropConsole, outDir, publicPath } = useLoadEnv(
-    'build',
-    env,
-  )
+  const processedEnv = useBuildEnv(env)
 
   return {
     root,
 
-    base: publicPath,
+    base: processedEnv.publicPath,
 
     envDir,
 
@@ -54,7 +51,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
 
-    plugins: [...createVitePlugins(mode, env), splitVendorChunkPlugin()],
+    plugins: [...createVitePlugins(mode, processedEnv)],
 
     resolve: {
       alias: {
@@ -79,7 +76,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
 
     esbuild: {
-      pure: dropConsole ? ['console.log', 'debugger'] : [],
+      pure: processedEnv.dropConsole ? ['console.log', 'debugger'] : [],
     },
 
     server: {
@@ -110,7 +107,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     build: {
       target: 'es2015',
       minify: 'esbuild',
-      outDir,
+      outDir: processedEnv.outDir,
       reportCompressedSize: false,
 
       chunkSizeWarningLimit: 600,
@@ -125,23 +122,23 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           entryFileNames: 'entries/[name].[hash].js',
 
           // https://rollupjs.org/guide/en/#outputmanualchunks
-          manualChunks: {
-            'lodash-es': ['lodash-es'],
-            // 'naive-ui': ['naive-ui'],
-            // 'ali-oss': ['ali-oss'],
-            // 'echarts': ['echarts'],
-            'tinymce': ['tinymce'],
-            'sortablejs': ['sortablejs'],
-            'axios': ['axios'],
-            'signature_pad': ['signature_pad'],
-            'vue-i18n': ['vue-i18n'],
-            'highlight.js': ['highlight.js'],
-            'intro.js': ['intro.js'],
-            'codemirror': ['codemirror'],
-            'cropperjs': ['cropperjs'],
-          },
+          // manualChunks: {
+          //   'lodash-es': ['lodash-es'],
+          //   // 'naive-ui': ['naive-ui'],
+          //   // 'ali-oss': ['ali-oss'],
+          //   // 'echarts': ['echarts'],
+          //   'tinymce': ['tinymce'],
+          //   'sortablejs': ['sortablejs'],
+          //   'axios': ['axios'],
+          //   'signature_pad': ['signature_pad'],
+          //   'vue-i18n': ['vue-i18n'],
+          //   'highlight.js': ['highlight.js'],
+          //   'intro.js': ['intro.js'],
+          //   'codemirror': ['codemirror'],
+          //   'cropperjs': ['cropperjs'],
+          // },
 
-          plugins: [obfuscator ? createRollupObfuscatorPlugin() : {}],
+          plugins: [processedEnv.obfuscator ? createRollupObfuscatorPlugin() : {}],
         },
       },
     },

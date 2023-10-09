@@ -47,6 +47,13 @@ interface ImportMetaEnv {
   VITE_SECONDS_PERSIST: number
 
   /**
+   * only used for develop environment
+   * 0 => normal
+   * 1 => enable https locally to test some features
+   */
+  VITE_DEV_HTTPS: number
+
+  /**
    * only used for staging and production build
    * 0 => normal build, no obfuscator
    * 1 => use `rollup-plugin-obfuscator` to obfuscator the code
@@ -71,5 +78,31 @@ interface ImportMetaEnv {
    * 0 => not for demo purpose
    * 1 => for demo purpose, some sensitive api will be disabled
    */
-  VITE_BUILD_DEMO: string
+  VITE_BUILD_DEMO: number
+
+  /**
+   * only used for staging and production build
+   * 0 => no compression
+   * 1 => enabble compression, see more in plugin config
+   */
+  VITE_BUILD_COMPRESSION: number
+
+  /**
+   * only used for staging and production build
+   * 0 => no cdn
+   * 1 => enabble cdn usage, see more in plugin config
+   */
+  VITE_BUILD_CDN: number
+}
+
+
+interface IViteEnv {
+  title: string
+  obfuscator: boolean
+  dropConsole: boolean
+  compression: boolean
+  cdn: boolean
+  outDir: string
+  publicPath: string
+  https: boolean
 }

@@ -13,9 +13,10 @@ import { createTerminalPlugin } from './terminal'
 import { createInspectPlugin } from './inspect'
 import { createLegacyPlugin } from './legacy'
 import { createHttpsPlugin } from './https'
+import { createImageOptimizerPlugin } from './image-optimizer'
 import { createCdnImportPlugin } from './cdn-import'
 
-export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
+export function createVitePlugins(mode: string, env: IViteEnv) {
   const vitePlugins: (VitePlugin | VitePlugin[])[] = [
     vue({
       template: {
@@ -53,46 +54,47 @@ export const createVitePlugins = (mode: string, env: ImportMetaEnv) => {
   const stage = mode === 'staging'
   const prod = mode === 'production'
 
-  // https://github.com/patak-dev/vite-plugin-terminal
-  // I'm pretty sure that this package will be removed when build
+  // I'm pretty sure packages below will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
-  if (dev)
+  if (dev) {
+    // https://github.com/patak-dev/vite-plugin-terminal
     vitePlugins.push(createTerminalPlugin())
 
-  // https://github.com/liuweiGL/vite-plugin-mkcert
-  // if (dev) vitePlugins.push(createHttpsPlugin())
+    // https://github.com/liuweiGL/vite-plugin-mkcert
+    env.https && vitePlugins.push(createHttpsPlugin())
 
-  // https://github.com/antfu/vite-plugin-inspect
-  if (dev)
+    // https://github.com/antfu/vite-plugin-inspect
     vitePlugins.push(createInspectPlugin())
 
-  // https://github.com/antfu/vite-plugin-restart
-  if (dev)
+    // https://github.com/antfu/vite-plugin-restart
     vitePlugins.push(createRestartPlugin())
+  }
 
-  // https://github.com/jeddygong/vite-plugin-progress
-  // this is fun, but using this progress plugin will not output content in `stage.log` file
-  if (stage || prod)
+  if (stage) {
+    // https://github.com/btd/rollup-plugin-visualizer
+    vitePlugins.push(createVisualizerPlugin(env.title))
+  }
+
+  // not develop environment
+  if (!dev) {
+    // https://github.com/jeddygong/vite-plugin-progress
     vitePlugins.push(createBuildProgressPlugin())
 
-  // https://github.com/MMF-FE/vite-plugin-cdn-import
-  // if (stage || prod) vitePlugins.push(createCdnImportPlugin())
+    // https://github.com/FatehAK/vite-plugin-image-optimizer
+    vitePlugins.push(createImageOptimizerPlugin())
 
-  // https://github.com/btd/rollup-plugin-visualizer
-  if (stage)
-    vitePlugins.push(createVisualizerPlugin(env.VITE_APP_TITLE))
-
-  // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
-  if (prod)
+    // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
     vitePlugins.push(createLegacyPlugin())
 
-  // https://github.com/anncwb/vite-plugin-compression
-  if (prod)
-    vitePlugins.push(createCompressionPlugin())
+    // https://github.com/nonzzz/vite-plugin-cdn
+    env.cdn && vitePlugins.push(createCdnImportPlugin())
 
-  // https://github.com/chengpeiquan/vite-plugin-banner
-  if (prod)
-    vitePlugins.push(createBannerPlugin(env.VITE_BUILD_OUT_DIR))
+    // https://github.com/nonzzz/vite-plugin-compression
+    env.compression && vitePlugins.push(createCompressionPlugin())
+
+    // https://github.com/chengpeiquan/vite-plugin-banner
+    vitePlugins.push(createBannerPlugin(env.outDir))
+  }
 
   return vitePlugins
 }

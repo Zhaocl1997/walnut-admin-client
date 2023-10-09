@@ -15,6 +15,7 @@ module.exports = {
     'no-lone-blocks': 'off',
     'unused-imports/no-unused-imports': 'off',
     'import/no-mutable-exports': 'off',
+    'n/prefer-global/process': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',

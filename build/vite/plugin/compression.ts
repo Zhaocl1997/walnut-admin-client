@@ -1,9 +1,7 @@
-import compressPlugin from 'vite-plugin-compression'
+import { compression } from 'vite-plugin-compression2'
 
-export const createCompressionPlugin = (): VitePlugin => {
-  return compressPlugin({
-    ext: '.br',
-    algorithm: 'brotliCompress',
-    // deleteOriginFile: true
+export function createCompressionPlugin(): VitePlugin {
+  return compression({
+    algorithm: 'gzip',
   })
 }

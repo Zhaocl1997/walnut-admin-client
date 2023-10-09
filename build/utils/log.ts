@@ -5,20 +5,21 @@ import chalk from 'chalk'
 import { getNow } from 'easy-fns-ts/dist/lib'
 import pkg from '../../package.json'
 
-const title = (stage: string) =>
-  chalk.magenta.bgBlack(
+function title(stage: string) {
+  return chalk.magenta.bgBlack(
     `[${pkg.name.toUpperCase()}] - [${getNow()}] - [${stage}]`,
   )
+}
 
-export const BuildUtilsLog = (msg: string, stage = 'Log') => {
+export function BuildUtilsLog(msg: string, stage = 'Log') {
   console.log(`${title(stage)}: ${msg}`)
 }
 
-export const BuildUtilsWarn = (warns: string) => {
+export function BuildUtilsWarn(warns: string) {
   console.warn(chalk.yellow(`[${pkg.name.toUpperCase()} Warning] - [${getNow()}] \n ${warns}`))
 }
 
-export const writeIntoLog = (title: string, command: string, path: string) => {
+export function writeIntoLog(title: string, command: string, path: string) {
   const prefix = (msg: string, emoji: string) =>
     `
 /**
