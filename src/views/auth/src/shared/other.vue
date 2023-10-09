@@ -50,7 +50,7 @@ const iconArr = computed(() =>
   ].filter(i => i.show ?? true),
 )
 
-const onOAuth = async (getUri: Fn, path: string) => {
+async function onOAuth(getUri: Fn, path: string) {
   loading.value = true
 
   const res = await getUri()
@@ -59,14 +59,19 @@ const onOAuth = async (getUri: Fn, path: string) => {
 
   const socketPath = AppSocketEvents.OAUTH(path)
 
-  childWindow.onbeforeunload = () => {
-    loading.value = false
+  // use interval to check child window closed or not
+  const intervelID = setInterval(() => {
+    if (childWindow.closed) {
+      loading.value = false
 
-    // remove current socket listener
-    AppSocket.removeListener(socketPath)
-  }
+      // remove current socket listener
+      AppSocket!.removeListener(socketPath)
 
-  AppSocket.on(socketPath, async (data) => {
+      clearInterval(intervelID)
+    }
+  }, 200)
+
+  AppSocket!.on(socketPath, async (data) => {
     // close the opened window
     childWindow.close()
 
@@ -77,11 +82,11 @@ const onOAuth = async (getUri: Fn, path: string) => {
     loading.value = false
 
     // remove current socket listener
-    AppSocket.removeListener(socketPath)
+    AppSocket!.removeListener(socketPath)
   })
 }
 
-const onClick = async (key: string) => {
+async function onClick(key: string) {
   if (['wechat', 'alipay', 'qq'].includes(key)) {
     useAppMessage().warning(t('app.base.wip'))
     return
@@ -96,6 +101,11 @@ const onClick = async (key: string) => {
   if (key === 'weibo')
     onOAuth(getWeiboUri, 'weibo')
 }
+
+// parent window closed, child window close as well
+useEventListener('beforeunload', () => {
+  childWindow?.close()
+})
 </script>
 
 <script lang="ts">
