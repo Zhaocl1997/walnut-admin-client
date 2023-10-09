@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+const { urls } = __APP_INFO__
+
 const data = ref([
   {
     name: 'Walnut Admin',
@@ -7,10 +9,10 @@ const data = ref([
         name: '前端',
         children: [
           {
-            name: '仓库地址：https://github.com/Zhaocl1997/walnut-admin-client',
+            name: `仓库地址：${urls.github}`,
           },
           {
-            name: '预览地址：https://www.walnut-admin.com',
+            name: `预览地址：${urls.demo}`,
             left: false,
           },
           {

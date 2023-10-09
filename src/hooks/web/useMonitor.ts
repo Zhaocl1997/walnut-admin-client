@@ -1,4 +1,4 @@
-export const onSocketStateHandle = (data: Partial<AppMonitorUserModel>) => {
+export function onSocketStateHandle(data: Partial<AppMonitorUserModel>) {
   if (!fpId.value)
     return
 
@@ -7,16 +7,20 @@ export const onSocketStateHandle = (data: Partial<AppMonitorUserModel>) => {
   }))
 }
 
-const onInitialStateWithSendBeacon = () => {
+function onInitialStateWithSendBeacon() {
   const { httpUrl } = useAppEnv('proxy')
-  const userProfile = useAppStoreUserProfile()
   const userAuth = useAppStoreUserAuth()
 
   const blob = new Blob(
     [
       JSON.stringify({
         visitorId: fpId.value,
-        ip: userProfile.info.ip,
+        ip: UAInfo.value.ip,
+        country: UAInfo.value.country,
+        city: UAInfo.value.city,
+        area: UAInfo.value.area,
+        isp: UAInfo.value.isp,
+        province: UAInfo.value.province,
         // @ts-expect-error
         netType: navigator.connection.effectiveType,
         platform: navigator.platform,
@@ -31,7 +35,7 @@ const onInitialStateWithSendBeacon = () => {
   navigator.sendBeacon(`${httpUrl}/app/monitor/user/initial`, blob)
 }
 
-export const useAppMonitor = () => {
+export function useAppMonitor() {
   const isVisible = useSharedDocumentVisibility()
 
   watch(
@@ -56,7 +60,7 @@ export const useAppMonitor = () => {
       })
     },
     {
-      flush: 'post',
+      immediate: true,
     },
   )
 

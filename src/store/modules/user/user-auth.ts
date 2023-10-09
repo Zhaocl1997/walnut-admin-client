@@ -152,7 +152,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
 const useAppStoreUserAuthOutside = () => useAppStoreUserAuthInside(store)
 
-export const useAppStoreUserAuth = () => {
+export function useAppStoreUserAuth() {
   if (getCurrentInstance())
     return useAppStoreUserAuthInside()
   return useAppStoreUserAuthOutside()

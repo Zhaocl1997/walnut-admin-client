@@ -2,9 +2,9 @@ import type { UnknownComponents } from '@fingerprintjs/fingerprintjs'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 
 // Initialize an agent at application startup.
-export const fpId = useAppStorage(AppConstPersistKey.FP_ID, '', { usePresetKey: false, expire: Infinity })
+export const fpId = useAppStorage(AppConstPersistKey.FP_ID, '', { usePresetKey: false, expire: Number.POSITIVE_INFINITY })
 
-export const useFingerprint = async () => {
+export async function useFingerprint() {
   if (fpId.value)
     return
 
@@ -14,6 +14,7 @@ export const useFingerprint = async () => {
   const fp = await fpPromise
   const result = await fp.get()
 
+  // you can add your custom components here
   const components: UnknownComponents = {
     ...result.components,
   }

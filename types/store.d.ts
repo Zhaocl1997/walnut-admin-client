@@ -131,7 +131,7 @@ declare global {
     visitedTabs: Map<string, string[]>
   }
 
-  interface UserProfileStateInfo {
+  interface UserAgentInfo {
     country: string
     province: string
     city: string
@@ -146,7 +146,6 @@ declare global {
    */
   interface UserProfileState {
     profile: Partial<AppSystemUser>
-    info: Partial<UserProfileStateInfo>
   }
 
   /**

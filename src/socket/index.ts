@@ -28,6 +28,7 @@ export function setupSocket() {
     AppInfo(e)
   })
 
+  // listen to force quit event, which could be excuted by admin
   AppSocket.on(AppSocketEvents.FORCE_QUIT, async (fingerprint) => {
     const userAuth = useAppStoreUserAuth()
 

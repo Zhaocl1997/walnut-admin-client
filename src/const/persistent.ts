@@ -16,6 +16,7 @@ export const AppConstPersistKey = {
   SCROLL: 'SCROLL',
 
   FP_ID: 'FPID',
+  UA_INFO: 'UA_INFO',
 } as const
 
 export const AppConstStorageType = {

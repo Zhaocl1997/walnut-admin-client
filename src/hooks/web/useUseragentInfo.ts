@@ -1,10 +1,14 @@
 import axios from 'axios'
+import { isEmpty } from 'lodash-es'
 
-export const useUseragentInfo = async () => {
-  const userProfile = useAppStoreUserProfile()
+export const UAInfo = useAppStorage<UserAgentInfo>(AppConstPersistKey.UA_INFO, {}, { usePresetKey: false, expire: Number.POSITIVE_INFINITY })
 
-  const res = await axios.get<UserProfileStateInfo>('https://ip.useragentinfo.com/json')
+export async function useUseragentInfo() {
+  if (!isEmpty(UAInfo.value))
+    return
+
+  const res = await axios.get<UserAgentInfo>(EXTERNAL_LINKS.UA)
 
   if (res.status === 200)
-    userProfile.setInfo(res.data)
+    UAInfo.value = res.data
 }

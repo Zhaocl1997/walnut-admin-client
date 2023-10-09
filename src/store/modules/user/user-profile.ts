@@ -7,7 +7,6 @@ import { getUserInfo } from '@/api/auth'
 const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
   state: (): UserProfileState => ({
     profile: {},
-    info: {},
   }),
 
   getters: {
@@ -31,10 +30,6 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
       this.profile = payload
     },
 
-    setInfo(payload: Partial<UserProfileStateInfo>) {
-      this.info = payload
-    },
-
     async getProfile() {
       const res = await getUserInfo()
       this.setProfile(res?.user)
@@ -48,7 +43,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
 
 const useAppStoreUserProfileOutside = () => useAppStoreUserProfileInside(store)
 
-export const useAppStoreUserProfile = () => {
+export function useAppStoreUserProfile() {
   if (getCurrentInstance())
     return useAppStoreUserProfileInside()
   return useAppStoreUserProfileOutside()
