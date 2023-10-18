@@ -23,7 +23,7 @@ export default defineComponent({
   <template v-if="helpMessage">
     <n-tooltip trigger="hover" :placement="placement">
       <template #default>
-        <span class="whitespace-nowrap">
+        <span class="whitespace-nowrap" @click.stop>
           {{ typeof helpMessage === 'string' ? helpMessage : helpMessage() }}
         </span>
       </template>
