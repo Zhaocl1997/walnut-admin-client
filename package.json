@@ -7,10 +7,6 @@
     "email": "zhaocl97@foxmail.com",
     "url": "https://github.com/Zhaocl1997"
   },
-  "engines": {
-    "node": ">=16.0.0",
-    "pnpm": ">=7.0.0"
-  },
   "license": "MIT",
   "homepage": "https://github.com/Zhaocl1997/walnut-admin-client",
   "repository": {
@@ -19,6 +15,10 @@
   },
   "bugs": {
     "url": "https://github.com/Zhaocl1997/walnut-admin-client/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "pnpm": ">=7.0.0"
   },
   "urls": {
     "doc": "https://walnut-admin-doc.netlify.app",
@@ -29,7 +29,7 @@
     "dev": "vite",
     "commit": "git-cz",
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "is-ci || husky install config/husky",
+    "postinstall": "npx simple-git-hooks",
     "prebuild": "esno build/generate/index.ts && npm run icon:prod",
     "build": "vite build",
     "build:stage": "esno build/stage.ts",
@@ -129,7 +129,6 @@
     "eslint-plugin-vue": "9.17.0",
     "esno": "0.17.0",
     "fast-glob": "3.3.1",
-    "husky": "8.0.3",
     "is-ci": "3.0.1",
     "javascript-obfuscator": "4.0.2",
     "lint-staged": "14.0.1",
@@ -174,5 +173,11 @@
     "cz-custom": {
       "config": "config/cz-custom/.cz-config.js"
     }
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }
