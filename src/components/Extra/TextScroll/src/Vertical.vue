@@ -26,10 +26,10 @@ const getTexts = computed(() => {
   return data
 })
 
-const tick = () => {
+function tick() {
   if (
     time % Math.round((props.speed / 1000) * 60) === 0
-      && !isHovered.value
+    && !isHovered.value
   ) {
     cancelAnimationFrame(innerTimer)
     innerTimer = requestAnimationFrame(scroll)
@@ -43,7 +43,7 @@ const tick = () => {
   timer = requestAnimationFrame(tick)
 }
 
-const scroll = () => {
+function scroll() {
   if (position % props.lineHeight !== 0) {
     positionRef.value = position + 1
     if (position > (total.value - 1) * props.lineHeight)
@@ -74,14 +74,14 @@ export default defineComponent({ name: 'TextScrollVertical' })
 
 <template>
   <div ref="wrapper" class="flex content-start items-center">
-    <div class="h-full w-full overflow-hidden cursor-default">
-      <div class="w-full relative" :style="{ top: `-${positionRef}px` }">
+    <div class="h-full w-full cursor-default overflow-hidden">
+      <div class="relative w-full" :style="{ top: `-${positionRef}px` }">
         <div
           v-for="(item, index) in getTexts"
           :key="index"
           :title="item"
           :style="{ lineHeight: `${lineHeight}px` }"
-          class="cursor-default overflow-hidden whitespace-nowrap text-ellipsis"
+          class="cursor-default overflow-hidden text-ellipsis whitespace-nowrap"
         >
           {{ item }}
         </div>

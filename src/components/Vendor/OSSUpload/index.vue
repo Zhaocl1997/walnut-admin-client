@@ -46,16 +46,16 @@ const getChooseDisabled = computed(
 const getUploadDisabled = computed(
   () =>
     props.disabled
-      || !listRef.value
-      || listRef.value.length === 0
-      || listRef.value.every(({ status }) => status === 'finished')
-      || getUploadLoading.value,
+    || !listRef.value
+    || listRef.value.length === 0
+    || listRef.value.every(({ status }) => status === 'finished')
+    || getUploadLoading.value,
 )
 
 const getUploadLoading = computed(
   () =>
     listRef.value
-      && listRef.value.some(({ status }) => status === 'uploading'),
+    && listRef.value.some(({ status }) => status === 'uploading'),
 )
 
 watch(
@@ -72,7 +72,7 @@ watch(
   { immediate: true, deep: true },
 )
 
-const onCustomRequest = ({
+function onCustomRequest({
   file,
   data,
   headers,
@@ -81,7 +81,7 @@ const onCustomRequest = ({
   onFinish,
   onError,
   onProgress,
-}: UploadCustomRequestOptions) => {
+}: UploadCustomRequestOptions) {
   const formData = new FormData()
 
   // if (data) {
@@ -113,10 +113,10 @@ const onCustomRequest = ({
     })
 }
 
-const onRemove = async (data: {
+async function onRemove(data: {
   file: UploadFileInfo
   fileList: UploadFileInfo[]
-}) => {
+}) {
   const index = listRef.value!.findIndex(i => i.id === data.file.id)
 
   if (index !== -1) {
@@ -126,25 +126,25 @@ const onRemove = async (data: {
   }
 }
 
-const onFileListChange = (fileList: UploadFileInfo[]) => {
+function onFileListChange(fileList: UploadFileInfo[]) {
   listRef.value = fileList
 }
 
-const onUpload = (e: Event) => {
+function onUpload(e: Event) {
   e.preventDefault()
   e.stopPropagation()
   e.stopImmediatePropagation()
   uploadRef.value?.submit()
 }
 
-const onDownload = (file: UploadFileInfo) => {
+function onDownload(file: UploadFileInfo) {
   downloadByUrl(file.url!, file.name)
 }
 
-const onBeforeUpload = (data: {
+function onBeforeUpload(data: {
   file: UploadFileInfo
   fileList: UploadFileInfo[]
-}) => {
+}) {
   if (data.file.file!.size / 1024 > props.size) {
     useAppMessage().error(
         `File size should not be more than ${props.size / 1024}M`,

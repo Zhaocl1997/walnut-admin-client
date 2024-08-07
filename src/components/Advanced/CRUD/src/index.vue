@@ -2,8 +2,6 @@
 import { isFunction } from 'easy-fns-ts'
 import type { WCrud } from './types'
 
-import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
-
 interface InternalProps extends WCrud.Props { }
 
 const prop = defineProps<InternalProps>()
@@ -20,7 +18,7 @@ const actionType = ref<ActionType>('')
 
 const { stateRef: formData, resetState: resetFormData } = useState({})
 
-const onTableOpenCreateForm = (defaultFormData: any) => {
+function onTableOpenCreateForm(defaultFormData: any) {
   actionType.value = 'create'
 
   defaultFormData && (formData.value = defaultFormData)
@@ -28,7 +26,7 @@ const onTableOpenCreateForm = (defaultFormData: any) => {
   onOpen(done => done())
 }
 
-const onApiTableReadAndOpenUpdateForm = async (id: string) => {
+async function onApiTableReadAndOpenUpdateForm(id: string) {
   actionType.value = 'update'
 
   onOpen(async (done) => {

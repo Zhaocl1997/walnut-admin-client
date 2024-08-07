@@ -14,7 +14,7 @@ const appSetting = useAppStoreSetting()
         height: `${appSetting.footer.height}px`,
       }"
       :class="{ 'bottom-0': appSetting.getFooterFixed }"
-      class="flex-none sticky left-0"
+      class="sticky left-0 flex-none"
     >
       <div class="h-full flex items-center justify-center whitespace-nowrap">
         {{ appSetting.footer.content }}

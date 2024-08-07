@@ -59,16 +59,17 @@ export default defineComponent({
       formSchemas.value.map((item, index) => {
         if (item.type === 'Extend:Query') {
           return (
-              <n-gi
-                key="query"
-                class="flex items-center justify-end"
-                span={unref(getProps).span}
-                suffix={true}
+            <n-gi
+              key="query"
+              class="flex items-center justify-end"
+              span={unref(getProps).span}
+              suffix={true}
+            >
+              <w-form-item-extend-query
+                {...item.componentProp}
               >
-                <w-form-item-extend-query
-                  {...item.componentProp}
-                ></w-form-item-extend-query>
-              </n-gi>
+              </w-form-item-extend-query>
+            </n-gi>
           )
         }
 
@@ -77,23 +78,24 @@ export default defineComponent({
           // TODO temporary solution
           // should use v-show, but get errors
             item._internalShow && (
-                <n-gi
-                  key={item.formProp?.path}
-                  span={24}
-                  class={item.extraProp?.sticky ? 'sticky top-0 z-10' : ''}
-                  style={
-                    item.extraProp?.sticky
-                      ? { backgroundColor: item.extraProp.bgColor }
-                      : {}
-                  }
-                >
-                  <w-transition {...item?.transitionProp} appear>
-                    <w-form-item-extend-divider
-                      index={index}
-                      {...item.componentProp}
-                    ></w-form-item-extend-divider>
-                  </w-transition>
-                </n-gi>
+              <n-gi
+                key={item.formProp?.path}
+                span={24}
+                class={item.extraProp?.sticky ? 'sticky top-0 z-10' : ''}
+                style={
+                  item.extraProp?.sticky
+                    ? { backgroundColor: item.extraProp.bgColor }
+                    : {}
+                }
+              >
+                <w-transition {...item?.transitionProp} appear>
+                  <w-form-item-extend-divider
+                    index={index}
+                    {...item.componentProp}
+                  >
+                  </w-form-item-extend-divider>
+                </w-transition>
+              </n-gi>
             )
           )
         }
@@ -102,18 +104,18 @@ export default defineComponent({
         // TODO temporary solution
         // should use v-show, but get errors
           item._internalShow && (
-              <n-gi
-                key={item.formProp?.path}
-                {...(item?.gridProp ?? { span: unref(getProps).span })}
-              >
-                <w-transition {...item?.transitionProp} appear>
-                  <WFormItem item={item}>
-                    {item.type === 'Base:Slot'
-                      && Object.keys(slots).includes(item.formProp?.path!)
-                      && renderSlot(slots, item.formProp?.path!)}
-                  </WFormItem>
-                </w-transition>
-              </n-gi>
+            <n-gi
+              key={item.formProp?.path}
+              {...(item?.gridProp ?? { span: unref(getProps).span })}
+            >
+              <w-transition {...item?.transitionProp} appear>
+                <WFormItem item={item}>
+                  {item.type === 'Base:Slot'
+                  && Object.keys(slots).includes(item.formProp?.path!)
+                  && renderSlot(slots, item.formProp?.path!)}
+                </WFormItem>
+              </w-transition>
+            </n-gi>
           )
         )
       })
@@ -127,27 +129,28 @@ export default defineComponent({
         const { descProps } = useFormDesc(getProps, formSchemas, t)
 
         return (
-            <w-form-extend-descriptions
-              {...descProps}
-            ></w-form-extend-descriptions>
+          <w-form-extend-descriptions
+            {...descProps}
+          >
+          </w-form-extend-descriptions>
         )
       }
 
       return (
-          <n-form
-            ref={formRef}
-            {...getNFormProps.value}
-            class={attrs.class}
-            rules={baseRules.value}
+        <n-form
+          ref={formRef}
+          {...getNFormProps.value}
+          class={attrs.class}
+          rules={baseRules.value}
+        >
+          <n-grid
+            cols={unref(getProps).cols}
+            xGap={unref(getProps).xGap}
+            yGap={unref(getProps).yGap}
           >
-            <n-grid
-              cols={unref(getProps).cols}
-              xGap={unref(getProps).xGap}
-              yGap={unref(getProps).yGap}
-            >
-              {renderItem()}
-            </n-grid>
-          </n-form>
+            {renderItem()}
+          </n-grid>
+        </n-form>
       )
     }
 

@@ -1,6 +1,6 @@
 import type { EffectScope } from 'vue'
 
-export const useAppHijackF5 = () => {
+export function useAppHijackF5() {
   let scope: EffectScope
 
   const appSetting = useAppStoreSetting()

@@ -49,10 +49,11 @@ const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
   },
 })
 
-const useAppStoreUserPermissionOutside = () =>
-  useAppStoreUserPermissionInside(store)
+function useAppStoreUserPermissionOutside() {
+  return useAppStoreUserPermissionInside(store)
+}
 
-export const useAppStoreUserPermission = () => {
+export function useAppStoreUserPermission() {
   if (getCurrentInstance())
     return useAppStoreUserPermissionInside()
   return useAppStoreUserPermissionOutside()

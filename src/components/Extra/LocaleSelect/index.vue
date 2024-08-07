@@ -65,7 +65,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="hstack w-full gap-2">
+  <div class="w-full hstack gap-2">
     <w-select
       v-model:show="show" :value="value" :options="options" clearable filterable :render-label="onRenderLabel"
       tooltip :virtual-scroll="false" @update:value="onUpdateValue"

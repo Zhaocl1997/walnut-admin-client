@@ -8,7 +8,7 @@ const { title: envTitle } = useAppEnv('title')
 
 const { signInRef } = useDemonstrate()
 
-const onClickBeian = () => {
+function onClickBeian() {
   openExternalLink('http://beian.miit.gov.cn/')
 }
 
@@ -38,7 +38,7 @@ export default defineComponent({
 <template>
   <!-- https://tailwindcomponents.com/component/login-register-form-with-image -->
   <section class="min-h-screen flex items-stretch">
-    <div class="hstack space-x-4 absolute top-8 right-8 z-50 children:cursor-pointer">
+    <div class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4">
       <n-button text>
         <WAppLocalePicker />
       </n-button>
@@ -48,30 +48,30 @@ export default defineComponent({
     </div>
 
     <div
-      class="lg:flex w-1/2 hidden bg-no-repeat bg-cover relative items-center"
+      class="relative hidden w-1/2 items-center bg-cover bg-no-repeat lg:flex"
       style="background-image: url('/assets/auth_bg.jpg')"
     >
-      <div class="absolute bg-black opacity-60 inset-0 z-0" />
-      <div class="w-full px-24 z-10">
-        <h1 id="untyper1" class="text-5xl font-bold text-left tracking-wide text-gray-50" />
-        <p id="untyper2" class="text-3xl my-4 text-gray-50" />
+      <div class="absolute inset-0 z-0 bg-black opacity-60" />
+      <div class="z-10 w-full px-24">
+        <h1 id="untyper1" class="text-left text-5xl text-gray-50 font-bold tracking-wide" />
+        <p id="untyper2" class="my-4 text-3xl text-gray-50" />
       </div>
     </div>
 
-    <div class="lg:w-1/2 w-full flex items-center justify-center text-center bg-bodyColor relative">
+    <div class="relative w-full flex items-center justify-center bg-bodyColor text-center lg:w-1/2">
       <div>
         <div
-          class="absolute lg:hidden z-10 inset-0 bg-no-repeat bg-cover items-center"
+          class="absolute inset-0 z-10 items-center bg-cover bg-no-repeat lg:hidden"
           style="background-image: url('/assets/auth_bg.jpg')"
         >
-          <div class="absolute bg-black opacity-60 inset-0 z-0" />
+          <div class="absolute inset-0 z-0 bg-black opacity-60" />
         </div>
 
-        <n-card style="z-index: 100" hoverable class="rounded-3xl relative light:shadow-2xl">
+        <n-card style="z-index: 100" hoverable class="relative rounded-3xl light:shadow-2xl">
           <div class="vstack items-center justify-center">
-            <h1 class="hstack items-center justify-center mb-4">
-              <img src="/assets/logo.png" :alt="envTitle" class="w-16 sm:w-12 md:w-16 lg:w-16 xl:w-16 2xl:w-16">
-              <span class="md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-3xl ml-4 whitespace-nowrap">
+            <h1 class="mb-4 hstack items-center justify-center">
+              <img src="/assets/logo.png" :alt="envTitle" class="w-16 2xl:w-16 lg:w-16 md:w-16 sm:w-12 xl:w-16">
+              <span class="ml-4 whitespace-nowrap 2xl:text-3xl lg:text-2xl md:text-2xl xl:text-3xl">
                 {{ envTitle }}
               </span>
             </h1>

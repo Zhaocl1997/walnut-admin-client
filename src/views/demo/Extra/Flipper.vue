@@ -13,13 +13,13 @@ export default defineComponent({
     <n-space size="small">
       <w-flipper trigger="hover" width="270px" height="300px">
         <template #front>
-          <div class="w-full h-full">
+          <div class="h-full w-full">
             hover to flip
           </div>
         </template>
 
         <template #back>
-          <div class="w-full h-full">
+          <div class="h-full w-full">
             this is back
           </div>
         </template>
@@ -27,13 +27,13 @@ export default defineComponent({
 
       <w-flipper trigger="click" width="270px" height="300px">
         <template #front>
-          <div class="w-full h-full">
+          <div class="h-full w-full">
             click to flip
           </div>
         </template>
 
         <template #back>
-          <div class="w-full h-full">
+          <div class="h-full w-full">
             this is back
           </div>
         </template>

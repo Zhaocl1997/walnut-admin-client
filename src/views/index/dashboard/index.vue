@@ -31,7 +31,7 @@ export default defineComponent({
 
 <template>
   <div class="h-16" @click="play">
-    <div ref="el" class="text-center uppercase text-transparent text-[128px] font-extrabold bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 dark:(bg-gradient-to-r from-indigo-200 via-red-200 to-yellow-100)">
+    <div ref="el" class="from-pink-500 via-red-500 to-yellow-500 bg-gradient-to-r bg-clip-text text-center text-[128px] text-transparent font-extrabold uppercase dark:(from-indigo-200 via-red-200 to-yellow-100 bg-gradient-to-r)">
       dashboard
     </div>
   </div>

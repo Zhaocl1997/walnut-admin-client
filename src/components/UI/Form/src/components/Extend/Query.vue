@@ -1,12 +1,15 @@
 <script lang="ts">
-export default defineComponent({
-  name: 'WFormItemExtendQuery',
-})
 </script>
 
 <script lang="ts" setup>
 import { useFormContext } from '../../hooks/useFormContext'
 import { toggleFormItemId } from '../../hooks/useFormItemId'
+
+const props = defineProps<InternalProps>()
+
+export default defineComponent({
+  name: 'WFormItemExtendQuery',
+})
 
 // TODO 888
 interface InternalProps {
@@ -14,8 +17,6 @@ interface InternalProps {
   foldable?: boolean
   defaultFold?: boolean
 }
-
-const props = defineProps<InternalProps>()
 
 const { t } = useAppI18n()
 
@@ -27,11 +28,11 @@ const getText = computed(() =>
 
 const { formEvent, formSchemas, setProps, formProps } = useFormContext()
 
-const done = () => {
+function done() {
   setProps({ disabled: false })
 }
 
-const onFormReset = () => {
+function onFormReset() {
   setProps({ disabled: true })
   formEvent({
     name: 'reset',
@@ -41,7 +42,7 @@ const onFormReset = () => {
   })
 }
 
-const onQuery = () => {
+function onQuery() {
   setProps({ disabled: true })
   formEvent({
     name: 'query',
@@ -51,7 +52,7 @@ const onQuery = () => {
   })
 }
 
-const onToggle = () => {
+function onToggle() {
   active.value = !active.value
 
   for (let i = props.countToFold!; i < formSchemas.value.length; i++) {

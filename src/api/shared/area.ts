@@ -1,5 +1,5 @@
 // get area children by pcode, default will return province info
-export const getAreaChildrenByPcode = (pcode?: string) => {
+export function getAreaChildrenByPcode(pcode?: string) {
   return AppAxios.get<AppSharedArea[]>(
     {
       url: '/shared/area/getChildrenByPcodeWithCache',
@@ -12,7 +12,7 @@ export const getAreaChildrenByPcode = (pcode?: string) => {
 }
 
 // area feedback, single
-export const getAreaFeedbackByCode = (code?: string) => {
+export function getAreaFeedbackByCode(code?: string) {
   return AppAxios.get<TreeNodeItem<AppSharedArea>[]>({
     url: '/shared/area/feedback',
     params: {
@@ -22,7 +22,7 @@ export const getAreaFeedbackByCode = (code?: string) => {
 }
 
 // area feedback, multiple
-export const getAreaFeedbackByCodes = (codes?: string) => {
+export function getAreaFeedbackByCodes(codes?: string) {
   return AppAxios.get<TreeNodeItem<AppSharedArea>[]>({
     url: '/shared/area/feedback/multiple',
     params: {

@@ -2,7 +2,7 @@
 const appLock = useAppStoreLock()
 const { currentRoute } = useAppRouter()
 
-const onLock = async () => {
+async function onLock() {
   await appLock.lock(currentRoute)
 }
 </script>

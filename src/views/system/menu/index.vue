@@ -1,8 +1,4 @@
 <script lang="ts">
-export default defineComponent({
-  /* eslint-disable vue/no-reserved-component-names */
-  name: 'Menu',
-})
 </script>
 
 <script lang="ts" setup>
@@ -12,6 +8,11 @@ import { useMenuTree } from '../role/useMenuTree'
 import { useMenuFormSchema } from './useMenuFormSchema'
 import { menuAPI } from '@/api/system/menu'
 import { useTree } from '@/components/UI/Tree'
+
+export default defineComponent({
+  /* eslint-disable vue/no-reserved-component-names */
+  name: 'Menu',
+})
 
 const { t } = useAppI18n()
 
@@ -61,9 +62,10 @@ const [registerTree] = useTree<AppSystemMenu>({
     filter: (pattern, node) => {
       if (
         node.title
-          && (node.title as string).toLowerCase().includes(pattern)
-      )
+        && (node.title as string).toLowerCase().includes(pattern)
+      ) {
         return true
+      }
 
       return false
     },
@@ -175,7 +177,7 @@ watchEffect(async () => {
   await restoreValidation()
 })
 
-const onCreate = () => {
+function onCreate() {
   actionType.value = 'create'
   treeMenuValue.value = ''
   resetFormData()

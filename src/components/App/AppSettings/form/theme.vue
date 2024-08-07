@@ -43,7 +43,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-            <AppColors v-model={[formData.primaryColor]}></AppColors>
+          <AppColors v-model={[formData.primaryColor]}></AppColors>
         ),
       },
     },
@@ -63,7 +63,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-            <AppColors v-model={[formData.infoColor]}></AppColors>
+          <AppColors v-model={[formData.infoColor]}></AppColors>
         ),
       },
     },
@@ -83,7 +83,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-            <AppColors v-model={[formData.successColor]}></AppColors>
+          <AppColors v-model={[formData.successColor]}></AppColors>
         ),
       },
     },
@@ -103,7 +103,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-            <AppColors v-model={[formData.warningColor]}></AppColors>
+          <AppColors v-model={[formData.warningColor]}></AppColors>
         ),
       },
     },
@@ -123,7 +123,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-            <AppColors v-model={[formData.errorColor]}></AppColors>
+          <AppColors v-model={[formData.errorColor]}></AppColors>
         ),
       },
     },
@@ -143,7 +143,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-            <AppColors v-model={[formData.bodyColor]}></AppColors>
+          <AppColors v-model={[formData.bodyColor]}></AppColors>
         ),
       },
     },
@@ -164,10 +164,11 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-            <AppColors
-              v-model={[formData.invertedColor]}
-              disabled={isDark.value}
-            ></AppColors>
+          <AppColors
+            v-model={[formData.invertedColor]}
+            disabled={isDark.value}
+          >
+          </AppColors>
         ),
       },
     },

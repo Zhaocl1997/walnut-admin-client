@@ -27,7 +27,7 @@
     "donjayamanne.githistory",
     /* helper */
     "usernamehw.errorlens",
-    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker"
   ],
   "unwantedRecommendations": [
     "octref.vetur"

@@ -12,7 +12,7 @@ import {
   iconSVGPath,
 } from '../src'
 
-export const getIconListAllArray = async () => {
+export async function getIconListAllArray() {
   let arr: string[] = []
 
   const allCollectionPaths = await fg(
@@ -45,7 +45,7 @@ export const getIconListAllArray = async () => {
   return arr
 }
 
-export const generateIconListAll = async () => {
+export async function generateIconListAll() {
   const arr = await getIconListAllArray()
 
   const str = JSON.stringify(arr)

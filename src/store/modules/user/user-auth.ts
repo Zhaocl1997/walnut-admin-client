@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
-import { authWithPwd, getUserInfo, refreshToken, signout } from '@/api/auth'
+import { authWithPwd, refreshToken, signout } from '@/api/auth'
 import { authWithEmail } from '@/api/auth/email'
 import { AppCoreFn1 } from '@/core'
 

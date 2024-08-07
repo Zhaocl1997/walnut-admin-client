@@ -52,7 +52,7 @@ const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
 
 const useAppStoreNaiveOutside = () => useAppStoreNaiveInside(store)
 
-export const useAppStoreNaive = () => {
+export function useAppStoreNaive() {
   if (getCurrentInstance())
     return useAppStoreNaiveInside()
   return useAppStoreNaiveOutside()

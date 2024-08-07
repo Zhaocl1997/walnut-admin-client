@@ -130,44 +130,46 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
       componentProp: {
         render({ formData }) {
           return (
-              <div
-                onClick={() =>
-                  (SMSFormData.agree = SMSFormData.agree ? '' : 'agree')
-                }
+            <div
+              onClick={() =>
+                (SMSFormData.agree = SMSFormData.agree ? '' : 'agree')}
+            >
+              <NRadio
+                value="agree"
+                checked={formData.agree === 'agree'}
+                size="small"
               >
-                <NRadio
-                  value="agree"
-                  checked={formData.agree === 'agree'}
-                  size="small"
-                ></NRadio>
+              </NRadio>
 
-                <span class="ml-2 text-xs text-gray-500 cursor-pointer break-all">
-                  {t('form.app.auth.continue')}
-                  <NText
-                    type="info"
-                    strong
-                    onClick={(e: Event) => {
-                      e.stopPropagation()
-                      openExternalLink(AppAuthServiceAgreementPath)
-                    }}
-                  >
-                    {' '}
-                    {t('form.app.auth.sa')}{' '}
-                  </NText>
-                  、
-                  <NText
-                    type="info"
-                    strong
-                    onClick={(e: Event) => {
-                      e.stopPropagation()
-                      openExternalLink(AppAuthPrivacyPolicyPath)
-                    }}
-                  >
-                    {' '}
-                    {t('form.app.auth.pp')}{' '}
-                  </NText>
-                </span>
-              </div>
+              <span class="ml-2 cursor-pointer break-all text-xs text-gray-500">
+                {t('form.app.auth.continue')}
+                <NText
+                  type="info"
+                  strong
+                  onClick={(e: Event) => {
+                    e.stopPropagation()
+                    openExternalLink(AppAuthServiceAgreementPath)
+                  }}
+                >
+                  {' '}
+                  {t('form.app.auth.sa')}
+                  {' '}
+                </NText>
+                、
+                <NText
+                  type="info"
+                  strong
+                  onClick={(e: Event) => {
+                    e.stopPropagation()
+                    openExternalLink(AppAuthPrivacyPolicyPath)
+                  }}
+                >
+                  {' '}
+                  {t('form.app.auth.pp')}
+                  {' '}
+                </NText>
+              </span>
+            </div>
           )
         },
       },
@@ -183,9 +185,12 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
       },
       componentProp: {
         textProp: () => (
-            <span class="text-light-800">
-              {t('app.base.signin')} / {t('app.base.signup')}
-            </span>
+          <span class="text-light-800">
+            {t('app.base.signin')}
+            {' '}
+            /
+            {t('app.base.signup')}
+          </span>
         ),
         loading,
         disabled: computed(

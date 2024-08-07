@@ -1,6 +1,6 @@
 import obfuscator from 'rollup-plugin-obfuscator'
 
-export const createRollupObfuscatorPlugin = () => {
+export function createRollupObfuscatorPlugin() {
   return obfuscator({
     fileOptions: {
       optionsPreset: 'high-obfuscation',

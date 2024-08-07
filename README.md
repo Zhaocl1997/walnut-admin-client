@@ -22,7 +22,7 @@
 
 ## Intro
 
-Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项目重心是前台，后台和数据库有点规模，但是不成体系。现仍在开发阶段中。技术栈使用了 `Vue3`, `Vite4`, `NaiveUI`,  `TypeScript`, `VueUse`, `pnpm`, `unocss` 等, 用于学习和交流！
+Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项目重心是前台，后台和数据库有点规模，但是不成体系。现仍在开发阶段中。技术栈使用了 `Vue3`, `Vite4`, `NaiveUI`, `TypeScript`, `VueUse`, `pnpm`, `unocss` 等, 用于学习和交流！
 
 项目跑起来需要[后台][walnut-admin-server]，是 [NestJS][nestjs-url] 的一个单体应用的架子。数据库用的 [MongoDB](https://www.mongodb.com/)。更多信息可查看文档。
 
@@ -30,7 +30,7 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
 
 [点击这里](https://discord.gg/kfVuasVXs2)
 
-## TODOS  
+## TODOS
 
 - 重要紧急
 
@@ -44,7 +44,7 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
   - [ ] 用户查看，完善抽屉，同时手机号/邮箱作为敏感信息，都需要单独处理
   - [x] 路由加密，单独指query，param感觉没有加密的必要?
   - [ ] 找回密码
- 
+
 - 重要不紧急
 
   - [x] 999 查看[issue](https://github.com/vuejs/vue-router-next/issues/626)。嵌套路由的keep-alive有问题，为了暂时让keep-alive好使，就把路由扁平化了。但是左侧menu和头部的breadcrumb需要做相应的变动（路由不再是树状结构，但在左侧菜单和面包屑的位置逻辑还是原来树状的逻辑）
@@ -68,8 +68,8 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
   - [x] 菜单 自定义动画/记住滚动位置/页面离开提示(路由和全局)
   - [x] 动态设置tab的名称，图标，badge, 进入之前的路由钩子处理
   - [x] 输入框的定制插槽 - 复制
-  - [ ] vue-tsc 错误全部消除  
-  - [ ] layout 扩展 
+  - [ ] vue-tsc 错误全部消除
+  - [ ] layout 扩展
   - [ ] 主题扩展
   - [ ] 手机号组件，邮箱填充组件，身份证组件
 
@@ -103,5 +103,4 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
 [walnut-admin-client]: https://github.com/Zhaocl1997/walnut-admin-client
 [walnut-admin-server]: https://github.com/Zhaocl1997/walnut-admin-server
 [license-url]: https://github.com/Zhaocl1997/walnut-admin-client/blob/main/LICENSE
-
 [nestjs-url]: https://docs.nestjs.com/

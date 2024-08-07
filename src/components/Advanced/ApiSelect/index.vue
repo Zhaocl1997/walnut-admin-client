@@ -1,11 +1,17 @@
 <script lang="ts" setup>
+</script>
+
+<script lang="ts">
+import { isFunction } from 'easy-fns-ts'
+import { WithValueProps } from '@/components/HOC/WithValue'
+
 const props = defineProps({
   ...WithValueProps,
 
   listFn: {
     type: Function as PropType<
-        (data?: WalnutBaseListParams<any>) => Promise<WalnutBaseListResponse<any>>
-      >,
+      (data?: WalnutBaseListParams<any>) => Promise<WalnutBaseListResponse<any>>
+    >,
     required: true,
   },
   readFn: {
@@ -55,8 +61,8 @@ async function onScroll(e: Event) {
   if (
   // @ts-expect-error
     e.target.firstElementChild.offsetHeight
-      // @ts-expect-error
-      === e.target.scrollTop + e.target.offsetHeight
+    // @ts-expect-error
+    === e.target.scrollTop + e.target.offsetHeight
   ) {
     if (params.value.page!.page! * 10 >= total.value) {
       useAppMessage().info('The End of the World')
@@ -164,11 +170,6 @@ onMounted(async () => {
   if (props.value)
     await onFeedback()
 })
-</script>
-
-<script lang="ts">
-import { isFunction } from 'easy-fns-ts'
-import { WithValueProps } from '@/components/HOC/WithValue'
 
 export default defineComponent({
   name: 'WApiSelect',

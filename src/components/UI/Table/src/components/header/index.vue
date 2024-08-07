@@ -4,7 +4,7 @@ import TableHeaderRight from './right/index.vue'
 </script>
 
 <template>
-  <div class="mb-2 flex justify-between items-center">
+  <div class="mb-2 flex items-center justify-between">
     <TableHeaderLeft />
     <TableHeaderRight />
   </div>

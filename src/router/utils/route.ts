@@ -9,7 +9,7 @@ import IFrameReal from '@/layout/iframe/index.vue'
  * @description flat tree route into two level route
  * @link https://github.com/vuejs/vue-router-next/issues/626
  */
-const transformToTwoLevelRouteTree = (routes: RouteRecordRaw[]) => {
+function transformToTwoLevelRouteTree(routes: RouteRecordRaw[]) {
   const ret: RouteRecordRaw[] = []
 
   formatTree(routes, {
@@ -51,36 +51,40 @@ const transformToTwoLevelRouteTree = (routes: RouteRecordRaw[]) => {
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
  */
-const resolveParentComponent = (name: string) => () =>
-  new Promise((resolve) => {
-    resolve({
-      ...ParentComponent,
-      name,
+function resolveParentComponent(name: string) {
+  return () =>
+    new Promise((resolve) => {
+      resolve({
+        ...ParentComponent,
+        name,
+      })
     })
-  })
+}
 
 /**
  * @description Util Function 3 - Resolve `menu` type menu which is internal with self name
  */
-const resolveIFrameComponent = (name: string, cache?: boolean) => () =>
-  new Promise((resolve) => {
-    cache
-      ? resolve({
-        ...IFrameFaker,
-        name,
-      })
-      : resolve({
-        ...IFrameReal,
-        name,
-      })
-  })
+function resolveIFrameComponent(name: string, cache?: boolean) {
+  return () =>
+    new Promise((resolve) => {
+      cache
+        ? resolve({
+          ...IFrameFaker,
+          name,
+        })
+        : resolve({
+          ...IFrameReal,
+          name,
+        })
+    })
+}
 
 const allViewModules = import.meta.glob('../../views/**/*.vue')
 
 /**
  * @description Util Function 4 - Resolve `views` dynamically base on `node.component` which equal to `path`
  */
-const resolveViewModules = (component: string) => {
+function resolveViewModules(component: string) {
   if (!component)
     return
 
@@ -97,7 +101,7 @@ const resolveViewModules = (component: string) => {
 /**
  * @description Build Routes Core Function
  */
-export const buildRoutes = (payload: AppSystemMenu[]) => {
+export function buildRoutes(payload: AppSystemMenu[]) {
   const appMenu = useAppStoreMenu()
 
   // filter `catalog` and `menu`

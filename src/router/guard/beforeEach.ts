@@ -7,7 +7,7 @@ let removeEvent: Fn
 
 const appLock = useAppStoreLock()
 
-export const createBeforeEachGuard = (router: Router) => {
+export function createBeforeEachGuard(router: Router) {
   router.beforeEach(async (to, from) => {
     // start loadingbar
     window.$loadingBar.start()
@@ -60,7 +60,7 @@ export const createBeforeEachGuard = (router: Router) => {
       from.meta.leaveTip
       && to.name !== from.name
       && (_confirm_leave_map_.get(from.name) === undefined
-        || _confirm_leave_map_.get(from.name) === false)
+      || _confirm_leave_map_.get(from.name) === false)
     ) {
       const confirmed = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,

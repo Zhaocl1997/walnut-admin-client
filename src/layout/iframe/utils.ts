@@ -1,6 +1,6 @@
 import { isFunction } from 'easy-fns-ts'
 
-export const createIframe = (dom: HTMLElement, src: string, onload?: Fn) => {
+export function createIframe(dom: HTMLElement, src: string, onload?: Fn) {
   const iframe = document.createElement('iframe')
   iframe.className = 'h-full w-full'
 
@@ -13,7 +13,7 @@ export const createIframe = (dom: HTMLElement, src: string, onload?: Fn) => {
   return iframe
 }
 
-export const destroyIframe = (iframe: HTMLIFrameElement) => {
+export function destroyIframe(iframe: HTMLIFrameElement) {
   iframe.src = 'about:blank'
   try {
     iframe.contentWindow!.document.write('')

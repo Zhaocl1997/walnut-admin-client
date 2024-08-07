@@ -95,7 +95,6 @@ interface ImportMetaEnv {
   VITE_BUILD_CDN: number
 }
 
-
 interface IViteEnv {
   title: string
   obfuscator: boolean

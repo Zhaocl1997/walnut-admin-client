@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="m-4 relative">
+  <div class="relative m-4">
     <n-alert title="Remember Scroll Position" type="info">
       Can be enabled in
       <router-link to="/system/menu" #="{ navigate, href }" custom>

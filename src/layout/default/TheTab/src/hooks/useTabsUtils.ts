@@ -1,10 +1,7 @@
 import type { AppTabUtilListItem } from '../types'
 import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
-export const useTabsUtils = (
-  scrollRef: Ref<Nullable<WScrollbarInst>>,
-  scrollToCurrentTab: Fn,
-) => {
+export function useTabsUtils(scrollRef: Ref<Nullable<WScrollbarInst>>, scrollToCurrentTab: Fn) {
   const { t } = useAppI18n()
 
   const appTabs = useAppStoreTab()

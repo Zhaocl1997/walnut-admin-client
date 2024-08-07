@@ -1,7 +1,7 @@
 /**
  * @description reactive document title
  */
-export const useAppTitle = () => {
+export function useAppTitle() {
   const title = useTitle()
 
   const isVisible = useSharedDocumentVisibility()

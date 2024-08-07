@@ -47,7 +47,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="text-center w-full">
+  <div class="w-full text-center">
     <n-tabs
       ref="tabsInstRef"
       :bar-width="28"
@@ -65,7 +65,7 @@ export default defineComponent({
       >
         <SignInWithAccount
           ref="account"
-          class="w-72 text-justify mt-2"
+          class="mt-2 w-72 text-justify"
         />
       </n-tab-pane>
 
@@ -75,7 +75,7 @@ export default defineComponent({
         display-directive="show:lazy"
         :tab="t('form.app.auth.tab.sms')"
       >
-        <SignInWitSMS class="w-72 text-justify mt-2" />
+        <SignInWitSMS class="mt-2 w-72 text-justify" />
       </n-tab-pane>
 
       <n-tab-pane
@@ -84,7 +84,7 @@ export default defineComponent({
         display-directive="show:lazy"
         :tab="t('form.app.auth.tab.email')"
       >
-        <SignInWitEmail class="w-72 text-justify mt-2" />
+        <SignInWitEmail class="mt-2 w-72 text-justify" />
       </n-tab-pane>
 
       <n-tab-pane
@@ -93,7 +93,7 @@ export default defineComponent({
         display-directive="show:lazy"
         :tab="t('form.app.auth.tab.qr')"
       >
-        <SignInWithQR class="w-72 text-justify mt-2" />
+        <SignInWithQR class="mt-2 w-72 text-justify" />
       </n-tab-pane>
     </n-tabs>
 

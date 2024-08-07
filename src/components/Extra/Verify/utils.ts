@@ -3,7 +3,7 @@ import { getRandomInt } from 'easy-fns-ts'
 /**
  * @description use canvas to generate an image
  */
-export const makeImgWithCanvas = (width = 36, height = 36) => {
+export function makeImgWithCanvas(width = 36, height = 36) {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')!
 
@@ -59,7 +59,7 @@ export const makeImgWithCanvas = (width = 36, height = 36) => {
 /**
  * @description get image size based on canvas
  */
-export const makeImgSize = (img: HTMLImageElement, width = 36, height = 36) => {
+export function makeImgSize(img: HTMLImageElement, width = 36, height = 36) {
   const imgScale = img.width / img.height
   const canvasScale = width / height
   let x = 0
@@ -84,12 +84,7 @@ export const makeImgSize = (img: HTMLImageElement, width = 36, height = 36) => {
 /**
  * @description paint puzzle path
  */
-export const paintPuzzle = (
-  ctx: CanvasRenderingContext2D,
-  puzzleScale: number,
-  x: number,
-  y: number,
-) => {
+export function paintPuzzle(ctx: CanvasRenderingContext2D, puzzleScale: number, x: number, y: number) {
   const moveL = Math.ceil(15 * puzzleScale) // 直线移动的基础距离
 
   ctx.beginPath()

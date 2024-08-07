@@ -1,4 +1,4 @@
-export const useAppScroll = () => {
+export function useAppScroll() {
   const userScroll = useAppStoreUserScroll()
 
   const { currentRoute } = useAppRouter()

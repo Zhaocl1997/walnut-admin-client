@@ -3,12 +3,7 @@ import type { WForm } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 
 // get target field boolean value
-export const getFormBooleanField = (
-  item: WForm.Schema.Item | undefined,
-  props: WForm.Props,
-  field: WForm.MaybeBooleanField,
-  defaultValue = true,
-) => {
+export function getFormBooleanField(item: WForm.Schema.Item | undefined, props: WForm.Props, field: WForm.MaybeBooleanField, defaultValue = true) {
   const maybeBool = item?.extraProp?.[field]
 
   if (typeof maybeBool === 'function')
@@ -20,12 +15,7 @@ export const getFormBooleanField = (
 /**
  * @description generate form item label base on different config
  */
-export const getFormTranslated = (
-  t: Fn,
-  props: ComputedRef<WForm.Props>,
-  item: WForm.Schema.Item,
-  type: WForm.LocaleType = 'origin',
-) => {
+export function getFormTranslated(t: Fn, props: ComputedRef<WForm.Props>, item: WForm.Schema.Item, type: WForm.LocaleType = 'origin') {
   // used for dict form item
   if (item.formProp?.label === true)
     return
@@ -95,11 +85,7 @@ export const inputFormItemTypeList = [
 /**
  * generate different default rule message through based on `inputFormItemTypeList`
  */
-export const generateRuleMessage = (
-  t: Fn,
-  p: ComputedRef<WForm.Props>,
-  i: WForm.Schema.Item,
-) => {
+export function generateRuleMessage(t: Fn, p: ComputedRef<WForm.Props>, i: WForm.Schema.Item) {
   return t('comp.form.rule', {
     type: inputFormItemTypeList.includes(i.type)
       ? t('comp.base.input')
@@ -111,10 +97,7 @@ export const generateRuleMessage = (
 /**
  * @description generate base rules based on schemas
  */
-export const generateBaseRules = (
-  schemas: WForm.Schema.Item[],
-  props: ComputedRef<WForm.Props>,
-) => {
+export function generateBaseRules(schemas: WForm.Schema.Item[], props: ComputedRef<WForm.Props>) {
   const { t } = useAppI18n()
 
   const getBaseRuleObj = (
@@ -156,9 +139,7 @@ export const generateBaseRules = (
   )
 }
 
-export const extractDefaultFormDataFromSchemas = (
-  schemas: WForm.Schema.Item[],
-) => {
+export function extractDefaultFormDataFromSchemas(schemas: WForm.Schema.Item[]) {
   if (!schemas)
     return {}
 
@@ -172,5 +153,6 @@ export const extractDefaultFormDataFromSchemas = (
   )
 }
 
-export const generateFormItemId = (item: WForm.Schema.Item, index: number) =>
-  wbtoa(`${item.type}-${index}-${item?.formProp?.path}`)
+export function generateFormItemId(item: WForm.Schema.Item, index: number) {
+  return wbtoa(`${item.type}-${index}-${item?.formProp?.path}`)
+}

@@ -6,7 +6,7 @@ const url = ref(__APP_INFO__.urls.doc)
 const url2 = ref(getUrl())
 const success = ref(false)
 
-const onRefresh = (callback: Fn) => {
+function onRefresh(callback: Fn) {
   url2.value = getUrl()
   callback()
 }

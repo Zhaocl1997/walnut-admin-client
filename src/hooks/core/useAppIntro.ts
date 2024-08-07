@@ -1,7 +1,7 @@
 import introJS from 'intro.js'
 import 'intro.js/minified/introjs.min.css'
 
-export const useAppIntro = (delay = 1500) => {
+export function useAppIntro(delay = 1500) {
   const intro = introJS()
   const { t } = useAppI18n()
   const appSetting = useAppStoreSetting()

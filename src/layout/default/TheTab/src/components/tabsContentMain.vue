@@ -84,7 +84,7 @@ function onMouseUp(e: MouseEvent, name: string) {
   >
     <div
       ref="sortableRef"
-      class="hstack h-full" :class="[
+      class="h-full hstack" :class="[
         {
           'divide-x-1 divide-gray-400': isCardType,
           'gap-x-1': isRoundType,

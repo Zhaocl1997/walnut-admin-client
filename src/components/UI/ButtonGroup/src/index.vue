@@ -12,11 +12,11 @@ export default defineComponent({
 
   setup(props: WButtonGroupProps, { attrs, slots, emit, expose }) {
     return () => (
-        <n-button-group {...attrs}>
-          {props.groups?.map(item => (
-            <w-button {...item}></w-button>
-          ))}
-        </n-button-group>
+      <n-button-group {...attrs}>
+        {props.groups?.map(item => (
+          <w-button {...item}></w-button>
+        ))}
+      </n-button-group>
     )
   },
 })

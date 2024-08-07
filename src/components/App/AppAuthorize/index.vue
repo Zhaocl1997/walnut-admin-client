@@ -36,14 +36,14 @@ export default defineComponent({
       // but can input the permission code to show the slot
       if (props.preset === 'IPTC') {
         return (
-            <AppAuthorizeIPTC
-              permission={props.value}
-              presetWidth={props.presetWidth}
-              presetHeight={props.presetHeight}
-              onSuccess={onIPTCSuccess}
-            >
-              {renderSlot(slots, 'default')}
-            </AppAuthorizeIPTC>
+          <AppAuthorizeIPTC
+            permission={props.value}
+            presetWidth={props.presetWidth}
+            presetHeight={props.presetHeight}
+            onSuccess={onIPTCSuccess}
+          >
+            {renderSlot(slots, 'default')}
+          </AppAuthorizeIPTC>
         )
       }
 
@@ -55,16 +55,17 @@ export default defineComponent({
 
       if (props.preset === 'tip') {
         return (
-            <div
-              class="flex items-center justify-center border border-gray-500/50"
-              style={{ width: props.presetWidth, height: props.presetHeight }}
+          <div
+            class="flex items-center justify-center border border-gray-500/50"
+            style={{ width: props.presetWidth, height: props.presetHeight }}
+          >
+            <n-result
+              status="403"
+              title={t('app.authorize.tip.title')}
+              description={t('app.authorize.tip.desc')}
             >
-              <n-result
-                status="403"
-                title={t('app.authorize.tip.title')}
-                description={t('app.authorize.tip.desc')}
-              ></n-result>
-            </div>
+            </n-result>
+          </div>
         )
       }
     }
@@ -76,6 +77,6 @@ export default defineComponent({
 
 <style scoped>
   :deep(.w-result-header__title) {
-    white-space: nowrap;
-  }
+  white-space: nowrap;
+}
 </style>

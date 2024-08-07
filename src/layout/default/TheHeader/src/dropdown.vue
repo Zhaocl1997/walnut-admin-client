@@ -38,7 +38,7 @@ const dropdownOptions = computed<DropdownMixedOption[]>(() => [
   },
 ])
 
-const onSelect = async (val: string) => {
+async function onSelect(val: string) {
   if (val === '1')
     openExternalLink(__APP_INFO__.urls.doc)
 
@@ -75,7 +75,7 @@ const onSelect = async (val: string) => {
         </Starport>
       </div>
 
-      <div class="text-base font-semibold pl-1 my-auto">
+      <div class="my-auto pl-1 text-base font-semibold">
         {{ userProfile.getDisplayName }}
       </div>
     </div>

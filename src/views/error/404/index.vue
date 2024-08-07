@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const appMenu = useAppStoreMenu()
 
-const onClick = async () => {
+async function onClick() {
   await appMenu.goIndex()
 }
 </script>
@@ -14,13 +14,13 @@ export default defineComponent({
 
 <template>
   <div
-    class="flex h-[calc(100vh-80px)] items-center justify-center p-5 bg-bodyColor w-full"
+    class="h-[calc(100vh-80px)] w-full flex items-center justify-center bg-bodyColor p-5"
   >
     <div class="text-center">
       <div class="inline-flex rounded-full bg-yellow-100 p-4">
-        <div class="rounded-full stroke-yellow-600 bg-yellow-200 p-4">
+        <div class="rounded-full bg-yellow-200 stroke-yellow-600 p-4">
           <svg
-            class="w-16 h-16"
+            class="h-16 w-16"
             viewBox="0 0 28 28"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export default defineComponent({
       <h1 class="mt-5 text-[36px] font-bold lg:text-[50px]">
         404 - {{ $t('app.404.title1') }}
       </h1>
-      <p class="mt-5 lg:text-lg whitespace-pre-wrap">
+      <p class="mt-5 whitespace-pre-wrap lg:text-lg">
         {{ $t('app.404.title2') }}
       </p>
       <n-button class="mt-5" type="primary" @click="onClick">

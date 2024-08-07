@@ -59,7 +59,7 @@ export default defineComponent({
     </div>
 
     <div
-      class="grid 2xl:grid-cols-2 grid-cols-1 2xl:gap-2 gap-0" :class="[
+      class="grid grid-cols-1 gap-0 2xl:grid-cols-2 2xl:gap-2" :class="[
         { 'pr-42': !appAdapter.isMobile },
       ]"
     >

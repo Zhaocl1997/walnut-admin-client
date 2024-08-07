@@ -40,10 +40,10 @@ export default defineComponent({
       props.icon && (def.icon = () => <w-icon icon={props.icon}></w-icon>)
 
       getTextProp.value
-          && (def.default = () => [<span>{getTextProp.value}</span>])
+      && (def.default = () => [<span>{getTextProp.value}</span>])
 
       buttonText.value
-          && (def.default = () => [<span>{buttonText.value}</span>])
+      && (def.default = () => [<span>{buttonText.value}</span>])
 
       return def
     })
@@ -63,7 +63,7 @@ export default defineComponent({
         if (retryDelay.value! < 0) {
           retryDelay.value = props.retry!
           buttonText.value = (getTextProp.value
-              ?? slots.default?.()) as string
+          ?? slots.default?.()) as string
           disabled.value = false
 
           clearInterval(intervalId)
@@ -85,51 +85,52 @@ export default defineComponent({
     const renderButton = () =>
       props.iconButton
         ? (
-          <n-tooltip placement="bottom">
-            {{
-              trigger: () => (
-                <w-a-icon
-                  onClick={
-                    props.confirm
-                      ? (e: MouseEvent) => {
-                          e.stopPropagation()
-                        }
-                      : onClick
-                  }
-                  icon={props.icon}
-                  height={attrs.height ?? '20'}
-                  class="cursor-pointer"
-                  type={attrs.type}
-                ></w-a-icon>
-              ),
-              default: () => getTextProp.value,
-            }}
-          </n-tooltip>
+            <n-tooltip placement="bottom">
+              {{
+                trigger: () => (
+                  <w-a-icon
+                    onClick={
+                      props.confirm
+                        ? (e: MouseEvent) => {
+                            e.stopPropagation()
+                          }
+                        : onClick
+                    }
+                    icon={props.icon}
+                    height={attrs.height ?? '20'}
+                    class="cursor-pointer"
+                    type={attrs.type}
+                  >
+                  </w-a-icon>
+                ),
+                default: () => getTextProp.value,
+              }}
+            </n-tooltip>
           )
         : (
-          <n-button
-            onClick={
-              props.confirm
-                ? undefined
-                : props.debounce
-                  ? useDebounceFn(onClick, props.debounce)
-                  : onClick
-            }
-            disabled={unref(getDisabled)}
-          >
-            {unref(buttonSlots)}
-          </n-button>
+            <n-button
+              onClick={
+                props.confirm
+                  ? undefined
+                  : props.debounce
+                    ? useDebounceFn(onClick, props.debounce)
+                    : onClick
+              }
+              disabled={unref(getDisabled)}
+            >
+              {unref(buttonSlots)}
+            </n-button>
           )
 
     const renderConfirm = () =>
       props.confirm
         ? (
-          <n-popconfirm onPositiveClick={onClick}>
-            {{
-              default: () => t('app.base.confirm'),
-              trigger: () => renderButton(),
-            }}
-          </n-popconfirm>
+            <n-popconfirm onPositiveClick={onClick}>
+              {{
+                default: () => t('app.base.confirm'),
+                trigger: () => renderButton(),
+              }}
+            </n-popconfirm>
           )
         : (
             renderButton()

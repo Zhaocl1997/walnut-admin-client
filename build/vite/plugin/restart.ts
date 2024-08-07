@@ -1,6 +1,6 @@
 import ViteRestart from 'vite-plugin-restart'
 
-export const createRestartPlugin = (): VitePlugin => {
+export function createRestartPlugin(): VitePlugin {
   return ViteRestart({
     reload: ['src/settings.json'],
     restart: ['package.json'],

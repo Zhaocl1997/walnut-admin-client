@@ -1,8 +1,6 @@
 import type { WForm } from '../types'
 
-export const useForm = <T>(
-  props: WForm.Props<T> | DeepMaybeRefSelf<WForm.Props<T>>,
-): WForm.Hook.useFormReturnType => {
+export function useForm<T>(props: WForm.Props<T> | DeepMaybeRefSelf<WForm.Props<T>>): WForm.Hook.useFormReturnType {
   isInSetup()
 
   const wFormRef = ref<Nullable<WForm.Inst.WFormInst>>(null)

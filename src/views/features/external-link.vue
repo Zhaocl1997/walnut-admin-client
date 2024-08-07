@@ -19,14 +19,14 @@ export default defineComponent({
 
 <template>
   <div
-    class="h-screen w-screen relative flex items-center justify-center bg-bodyColor"
+    class="relative h-screen w-screen flex items-center justify-center bg-bodyColor"
   >
-    <div class="w-full md:w-1/3 mx-auto">
-      <div class="flex flex-col p-5 rounded-lg shadow shadow-2xl">
+    <div class="mx-auto w-full md:w-1/3">
+      <div class="flex flex-col rounded-lg p-5 shadow shadow-2xl">
         <div class="flex flex-col items-center text-center">
-          <div class="inline-block p-4 bg-yellow-50 rounded-full">
+          <div class="inline-block rounded-full bg-yellow-50 p-4">
             <svg
-              class="w-12 h-12 fill-current text-yellow-500"
+              class="h-12 w-12 fill-current text-yellow-500"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -49,17 +49,17 @@ export default defineComponent({
             class="mt-2 hstack items-center gap-2 border-1 border-gray-400 rounded-lg p-3"
           >
             <div
-              class="hstack items-center justify-center h-10 w-10 bg-gray-200 rounded-lg"
+              class="h-10 w-10 hstack items-center justify-center rounded-lg bg-gray-200"
             >
               <w-icon icon="ant-design:link-outlined" height="24" />
             </div>
-            <div class="tracking-wide text-info">
+            <div class="text-info tracking-wide">
               {{ $route.query.url }}
             </div>
           </div>
         </div>
 
-        <div class="flex items-center justify-center mt-3">
+        <div class="mt-3 flex items-center justify-center">
           <n-button type="warning" @click="onClick">
             <span class="mx-6 tracking-wider">
               {{ $t('app.route.externalLink.button') }}
@@ -70,7 +70,7 @@ export default defineComponent({
     </div>
 
     <div
-      class="hstack space-x-4 absolute top-8 right-8 z-50 children:cursor-pointer"
+      class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4"
     >
       <n-button text>
         <WAppLocalePicker />

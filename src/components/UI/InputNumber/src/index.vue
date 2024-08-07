@@ -12,7 +12,7 @@ export default defineComponent({
 
   setup(props: WInputNumberProps, { attrs, slots, emit, expose }) {
     return () => (
-        <n-input-number>{{ suffix: () => props.suffix }}</n-input-number>
+      <n-input-number>{{ suffix: () => props.suffix }}</n-input-number>
     )
   },
 })

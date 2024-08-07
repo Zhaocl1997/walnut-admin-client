@@ -4,21 +4,21 @@
  * if change this file, please in terminal run `npm run gen:schema` to generate `settings.json` VS Code support
  * all types below must be explicit import, no auto-import or global usage
  */
-import { ValueOfAppConstTransitionName } from '../src/const/transition'
-import {
-  ValueOfAppConstLayoutMode,
-  ValueOfAppConstCollapseMode,
+import type { ValueOfAppConstTransitionName } from '../src/const/transition'
+import type {
   ValueOfAppConstBasicMode,
+  ValueOfAppConstCollapseMode,
   ValueOfAppConstColorMode,
+  ValueOfAppConstLayoutMode,
   ValueOfAppConstLockMode,
-  ValueOfAppConstRouteQueryMode,
   ValueOfAppConstRouteQueryEnhancedMode,
+  ValueOfAppConstRouteQueryMode,
 } from '../src/const/app'
-import {
-  ValueOfAppConstTabUtilsShowMode,
-  ValueOfAppConstTabCloseMode,
+import type {
   ValueOfAppConstTabAffixMode,
+  ValueOfAppConstTabCloseMode,
   ValueOfAppConstTabStyleMode,
+  ValueOfAppConstTabUtilsShowMode,
 } from '../src/const/tab'
 
 interface AppSettingsForApp {

@@ -7,7 +7,7 @@ enum ThirdEnum {
 /**
  * @description get github oauth uri
  */
-export const getGithubUri = () => {
+export function getGithubUri() {
   return AppAxios.get<{ uri: string }>({
     url: ThirdEnum.GITHUB,
   })
@@ -16,7 +16,7 @@ export const getGithubUri = () => {
 /**
  * @description get gitee oauth uri
  */
-export const getGiteeUri = () => {
+export function getGiteeUri() {
   return AppAxios.get<string>({
     url: ThirdEnum.GITEE,
   })
@@ -25,7 +25,7 @@ export const getGiteeUri = () => {
 /**
  * @description get weibo oauth uri
  */
-export const getWeiboUri = () => {
+export function getWeiboUri() {
   return AppAxios.get<string>({
     url: ThirdEnum.WEIBO,
   })

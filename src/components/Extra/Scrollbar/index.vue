@@ -100,7 +100,7 @@ export default defineComponent({
     const methods: WScrollbarInst = {
       scrollTo: (opt) => {
         scrollRef.value!.scrollTo({
-          ...(opt as Object),
+          ...(opt as object),
           behavior: getBehavior.value,
         })
       },
@@ -135,8 +135,8 @@ export default defineComponent({
         const node
             = scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
               ?.children[index]
-            ?? scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
-              ?.children[0]?.children[index]
+              ?? scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
+                ?.children[0]?.children[index]
 
         scrollRef.value!.scrollTo(
           props.xScrollable
@@ -155,13 +155,13 @@ export default defineComponent({
         if (props.xScrollable) {
           return (
             scrollRef.value!.scrollbarInstRef.containerRef.scrollWidth
-              > scrollRef.value!.scrollbarInstRef.containerRef.clientWidth
+            > scrollRef.value!.scrollbarInstRef.containerRef.clientWidth
           )
         }
         else {
           return (
             scrollRef.value!.scrollbarInstRef.containerRef.scrollHeight
-              > scrollRef.value!.scrollbarInstRef.containerRef.clientHeight
+            > scrollRef.value!.scrollbarInstRef.containerRef.clientHeight
           )
         }
       },
@@ -173,20 +173,20 @@ export default defineComponent({
     })
 
     return () => (
-        <div ref={wrapperRef} class="w-full h-full">
-          <n-scrollbar
-            id={id.value}
-            ref={scrollRef}
-            onScroll={onScroll}
-            containerStyle={{
-              height: props.height,
-              width: props.width,
-            }}
-            x-scrollable={props.xScrollable}
-          >
-            {slots}
-          </n-scrollbar>
-        </div>
+      <div ref={wrapperRef} class="h-full w-full">
+        <n-scrollbar
+          id={id.value}
+          ref={scrollRef}
+          onScroll={onScroll}
+          containerStyle={{
+            height: props.height,
+            width: props.width,
+          }}
+          x-scrollable={props.xScrollable}
+        >
+          {slots}
+        </n-scrollbar>
+      </div>
     )
   },
 })
@@ -194,6 +194,6 @@ export default defineComponent({
 
 <style scoped>
   :deep(.w-scrollbar-content) {
-    height: 100% !important;
-  }
+  height: 100% !important;
+}
 </style>

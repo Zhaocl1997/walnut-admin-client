@@ -12,55 +12,56 @@ const { onEvent, tableProps, checkedRowKeys } = useTableContext()
 
 const getDeleteDisabled = computed(() => checkedRowKeys.value.length === 0)
 
-const isShow = (t: WTable.HeaderActionType) =>
-  tableProps.value.headerActions!.includes(t)
+function isShow(t: WTable.HeaderActionType) {
+  return tableProps.value.headerActions!.includes(t)
+}
 
 const options: ComputedRef<
-    {
-      type: WTable.HeaderActionType
-      text: string
-      icon: string
-      disabled?: boolean
-      auth?: string
-    }[]
-  > = computed(() =>
-    sortBy(
-      [
-        {
-          type: 'create' as WTable.HeaderActionType,
-          icon: 'ant-design:plus-outlined',
-          text: t('app.button.create'),
-          auth: tableProps.value.auths?.create,
-        },
-        {
-          type: 'update' as WTable.HeaderActionType,
-          icon: 'ant-design:edit-outlined',
-          text: t('app.button.read'),
-          auth: tableProps.value.auths?.update,
-        },
-        {
-          type: 'delete' as WTable.HeaderActionType,
-          icon: 'ant-design:delete-outlined',
-          text: t('app.button.delete'),
-          disabled: getDeleteDisabled.value,
-          auth: tableProps.value.auths?.deleteMany,
-        },
-        {
-          type: 'import' as WTable.HeaderActionType,
-          icon: 'ant-design:plus-outlined',
-          text: t('app.button.import'),
-          auth: tableProps.value.auths?.import,
-        },
-        {
-          type: 'export' as WTable.HeaderActionType,
-          icon: 'ant-design:plus-outlined',
-          text: t('app.button.export'),
-          auth: tableProps.value.auths?.export,
-        },
-      ],
-      i => tableProps.value.headerActions?.indexOf(i.type),
-    ).filter(i => isShow(i.type)),
-  )
+  {
+    type: WTable.HeaderActionType
+    text: string
+    icon: string
+    disabled?: boolean
+    auth?: string
+  }[]
+> = computed(() =>
+  sortBy(
+    [
+      {
+        type: 'create' as WTable.HeaderActionType,
+        icon: 'ant-design:plus-outlined',
+        text: t('app.button.create'),
+        auth: tableProps.value.auths?.create,
+      },
+      {
+        type: 'update' as WTable.HeaderActionType,
+        icon: 'ant-design:edit-outlined',
+        text: t('app.button.read'),
+        auth: tableProps.value.auths?.update,
+      },
+      {
+        type: 'delete' as WTable.HeaderActionType,
+        icon: 'ant-design:delete-outlined',
+        text: t('app.button.delete'),
+        disabled: getDeleteDisabled.value,
+        auth: tableProps.value.auths?.deleteMany,
+      },
+      {
+        type: 'import' as WTable.HeaderActionType,
+        icon: 'ant-design:plus-outlined',
+        text: t('app.button.import'),
+        auth: tableProps.value.auths?.import,
+      },
+      {
+        type: 'export' as WTable.HeaderActionType,
+        icon: 'ant-design:plus-outlined',
+        text: t('app.button.export'),
+        auth: tableProps.value.auths?.export,
+      },
+    ],
+    i => tableProps.value.headerActions?.indexOf(i.type),
+  ).filter(i => isShow(i.type)),
+)
 </script>
 
 <script lang="ts">
@@ -70,7 +71,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="hstack space-x-2 items-center">
+  <div class="hstack items-center space-x-2">
     <!-- preset buttons -->
     <w-button
       v-for="item in options"

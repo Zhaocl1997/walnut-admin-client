@@ -37,7 +37,7 @@ export default defineComponent({
         <w-copy
           v-show="isHovered"
           :source="getJSON"
-          class="absolute top-2 right-2"
+          class="absolute right-2 top-2"
         />
       </w-transition>
     </div>

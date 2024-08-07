@@ -1,5 +1,5 @@
 // no use yet
-export const useAppFullScreen = () => {
+export function useAppFullScreen() {
   const { isFullscreen } = useFullscreen()
   const appSetting = useAppStoreSetting()
 

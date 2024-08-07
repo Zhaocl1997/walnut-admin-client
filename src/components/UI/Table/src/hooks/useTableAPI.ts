@@ -14,11 +14,7 @@ import {
 } from '../utils'
 import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'
 
-export const useTableAPI = (
-  inst: Ref<WTable.Inst.NDataTableInst | undefined>,
-  props: ComputedRef<WTable.Props>,
-  setProps: WTable.SetProps,
-) => {
+export function useTableAPI(inst: Ref<WTable.Inst.NDataTableInst | undefined>, props: ComputedRef<WTable.Props>, setProps: WTable.SetProps) {
   const { t } = useAppI18n()
   const userPermission = useAppStoreUserPermission()
 
@@ -121,8 +117,9 @@ export const useTableAPI = (
         ApiTableListParams.value.page!.page!
         * ApiTableListParams.value.page!.pageSize!
         > total.value - checkedRowKeys.value.length
-      )
+      ) {
         ApiTableListParams.value.page!.page = 1
+      }
 
       await onApiTableList()
 

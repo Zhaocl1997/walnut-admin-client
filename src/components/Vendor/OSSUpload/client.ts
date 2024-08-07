@@ -56,7 +56,7 @@ export class AliOSSClient {
   public async upload(
     data: UploadFileInfo,
     folder: string,
-  ): Promise<{ id: string; value: string } | undefined> {
+  ): Promise<{ id: string, value: string } | undefined> {
     if (demo)
       return
 
@@ -105,7 +105,7 @@ export class AliOSSClient {
     data: UploadFileInfo,
     folder: string,
     onProcessCallback: (e: { percent: number }) => void,
-  ): Promise<{ id: string; value: string } | undefined> {
+  ): Promise<{ id: string, value: string } | undefined> {
     if (demo)
       return
 

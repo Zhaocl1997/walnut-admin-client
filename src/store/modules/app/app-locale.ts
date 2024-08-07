@@ -24,7 +24,7 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
 
 const useAppStoreLocaleOutside = () => useAppStoreLocaleInside(store)
 
-export const useAppStoreLocale = () => {
+export function useAppStoreLocale() {
   if (getCurrentInstance())
     return useAppStoreLocaleInside()
   return useAppStoreLocaleOutside()

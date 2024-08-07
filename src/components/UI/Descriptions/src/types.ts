@@ -36,8 +36,8 @@ interface WDescItemExtend<T> {
 }
 
 export type WDescriptionsItem<D = any> = DescriptionItemProps &
-Partial<WDescTypeTag | WDescTypeLink | WDescTypeJson | WDescTypeDict> &
-WDescItemExtend<D>
+  Partial<WDescTypeTag | WDescTypeLink | WDescTypeJson | WDescTypeDict> &
+  WDescItemExtend<D>
 
 type ExtendProps = Partial<ExtractPropTypes<typeof props>>
 

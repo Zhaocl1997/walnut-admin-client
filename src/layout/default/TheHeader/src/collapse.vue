@@ -3,7 +3,7 @@ const appSetting = useAppStoreSetting()
 const appMenu = useAppStoreMenu()
 const appAdapter = useAppStoreAdapter()
 
-const onClick = () => {
+function onClick() {
   if (appAdapter.isMobile) {
     appMenu.setShowAside(!appMenu.showAside)
     appMenu.setCollapse(false)

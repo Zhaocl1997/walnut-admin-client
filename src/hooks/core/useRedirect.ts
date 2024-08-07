@@ -1,7 +1,7 @@
 /**
  * @description use redirect
  */
-export const useRedirect = (): Promise<boolean> => {
+export function useRedirect(): Promise<boolean> {
   const { push, currentRoute } = AppRouter
 
   const { query, params } = currentRoute.value

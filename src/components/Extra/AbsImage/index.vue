@@ -6,7 +6,7 @@ const emits = defineEmits(['change'])
 const { createBlobUrl } = useBlob()
 const currentFile = shallowRef<Blob>()
 
-const onUploadChange = async (options: { file: UploadFileInfo }) => {
+async function onUploadChange(options: { file: UploadFileInfo }) {
   currentFile.value = options.file.file!
 
   emits('change')

@@ -48,7 +48,7 @@ watch(
   },
 )
 
-const onFullScreen = () => {
+function onFullScreen() {
   const dragDom = wModal.value?.containerRef.querySelector('.w-modal')
 
   isFullscreen.value = !isFullscreen.value
@@ -56,15 +56,15 @@ const onFullScreen = () => {
   toggleClass(dragDom, 'modal-fullscreen', isFullscreen.value)
 }
 
-const onNo = () => {
+function onNo() {
   emits('no')
 }
 
-const onYes = () => {
+function onYes() {
   emits('yes')
 }
 
-const onUpdateShow = (v: boolean) => {
+function onUpdateShow(v: boolean) {
   emits('update:show', v)
 
   if (!v)
@@ -103,7 +103,7 @@ export default defineComponent({
 
     <template v-if="fullscreen" #header-extra>
       <WAppFullScreen
-        class="cursor-pointer leading-1 mr-2"
+        class="mr-2 cursor-pointer leading-1"
         size="18"
         :is-fullscreen="isFullscreen"
         :click-event="onFullScreen"
@@ -140,11 +140,11 @@ export default defineComponent({
 
 <style>
   .modal-fullscreen {
-    width: 100vw !important;
-    height: 100vh !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-  }
+  width: 100vw !important;
+  height: 100vh !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
 </style>

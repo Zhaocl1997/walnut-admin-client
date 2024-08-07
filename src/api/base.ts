@@ -5,7 +5,7 @@ const { demo } = useAppEnv('build')
 export class BaseAPI<T> {
   private readonly baseAPI: string
 
-  constructor({ model, section }: { model: string; section: string }) {
+  constructor({ model, section }: { model: string, section: string }) {
     this.baseAPI = `/${model}/${section}`
   }
 

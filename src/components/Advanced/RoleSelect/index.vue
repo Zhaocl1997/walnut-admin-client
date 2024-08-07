@@ -7,7 +7,7 @@ defineProps(WithValueProps)
 
 const emit = defineEmits(['update:value'])
 
-const onUpdateValue = (val: StringOrNumber) => {
+function onUpdateValue(val: StringOrNumber) {
   emit('update:value', val)
 }
 

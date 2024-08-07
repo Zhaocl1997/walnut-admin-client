@@ -1,11 +1,12 @@
 <script lang="tsx">
-export default defineComponent({
-  name: 'AppMonitorCache',
-})
 </script>
 
 <script lang="tsx" setup>
 import { monitorCacheAPI } from '@/api/app/monitor/cache'
+
+export default defineComponent({
+  name: 'AppMonitorCache',
+})
 
 // locale unique key
 const localeKey = 'appCache'

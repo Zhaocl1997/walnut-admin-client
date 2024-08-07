@@ -2,12 +2,12 @@ import { arrToTree, formatTree, orderTree } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 import { menuAPI } from '@/api/system/menu'
 
-export const useMenuTree = () => {
+export function useMenuTree() {
   const { t } = useAppI18n()
 
   const menuDataRef = ref<TreeNodeItem<AppSystemMenu>[]>([])
   const treeSelectDataRef = ref<TreeNodeItem<AppSystemMenu>[]>([])
-  const menuActiveNamesOptions = ref<{ name: string; title: string }[]>([])
+  const menuActiveNamesOptions = ref<{ name: string, title: string }[]>([])
 
   // left menu tree data, do not need root node
   const getLeftMenu = computed(() => {

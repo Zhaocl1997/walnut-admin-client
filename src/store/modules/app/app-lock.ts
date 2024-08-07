@@ -61,7 +61,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
 
 const useAppStoreLockOutside = () => useAppStoreLockInside(store)
 
-export const useAppStoreLock = () => {
+export function useAppStoreLock() {
   if (getCurrentInstance())
     return useAppStoreLockInside()
   return useAppStoreLockOutside()

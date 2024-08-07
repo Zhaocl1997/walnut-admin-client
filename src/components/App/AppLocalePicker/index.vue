@@ -5,7 +5,7 @@ const appLocale = useAppStoreLocale()
 
 const langLists = ref<SelectBaseOption[]>([])
 
-const onGetLangList = async () => {
+async function onGetLangList() {
   const res = await AppI18nGetLangLists()
   langLists.value = res
 }

@@ -6,7 +6,7 @@ enum EmailEnum {
 /**
  * @description auth with email
  */
-export const authWithEmail = (data: AppPayloadAuth.EmailAddress) => {
+export function authWithEmail(data: AppPayloadAuth.EmailAddress) {
   return AppAxios.post<AppPayloadAuth.TokenPayload>({
     url: EmailEnum.AUTH_EMAIL,
     data,
@@ -16,7 +16,7 @@ export const authWithEmail = (data: AppPayloadAuth.EmailAddress) => {
 /**
  * @description send verify code email
  */
-export const sendAuthEmail = (data: AppPayloadAuth.EmailAddress) => {
+export function sendAuthEmail(data: AppPayloadAuth.EmailAddress) {
   return AppAxios.post<boolean>({
     url: EmailEnum.AUTH_EMAIL_SEND,
     data,

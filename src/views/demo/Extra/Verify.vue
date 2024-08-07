@@ -4,11 +4,11 @@ import type { WVerifyInst } from '@/components/Extra/Verify'
 const verify = ref<WVerifyInst>()
 const verify2 = ref<WVerifyInst>()
 
-const onSuccess = () => {
+function onSuccess() {
   useAppMessage().success('Success')
 }
 
-const onFail = () => {
+function onFail() {
   useAppMessage().error('Fail')
 }
 </script>

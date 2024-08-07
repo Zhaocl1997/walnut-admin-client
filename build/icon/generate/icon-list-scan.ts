@@ -4,7 +4,7 @@ import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
 import { IconLog, iconListPath } from '../src/index'
 import { getIconListAllArray } from './icon-list-all'
 
-export const generateIconListScan = async () => {
+export async function generateIconListScan() {
   const iconPool = await getIconListAllArray()
 
   const files = await fg('src/**/*.{vue,ts,tsx}', { dot: true })

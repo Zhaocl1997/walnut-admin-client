@@ -31,6 +31,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
   :deep(.w-spin-content) {
-    height: 100%;
-  }
+  height: 100%;
+}
 </style>

@@ -1,8 +1,6 @@
 import type { WTree } from '../types'
 
-export const useTree = <T = RowData>(
-  props: WTree.Props<T>,
-): WTree.Hook.useTree<T> => {
+export function useTree<T = RowData>(props: WTree.Props<T>): WTree.Hook.useTree<T> {
   isInSetup()
 
   const wTreeRef = ref<Nullable<WTree.Inst.WTreeInst<T>>>(null)

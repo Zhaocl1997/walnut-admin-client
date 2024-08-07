@@ -13,7 +13,7 @@ export default defineComponent({
 <template>
   <div
     id="walnut-settings"
-    class="fixed right-20 bottom-20 hover:text-primaryHover cursor-pointer"
+    class="fixed bottom-20 right-20 cursor-pointer hover:text-primaryHover"
     style="z-index: 1999"
   >
     <w-icon

@@ -1,11 +1,16 @@
 <script lang="ts">
-export default defineComponent({
-  name: 'WQRCode',
-})
 </script>
 
 <script lang="ts" setup>
 import { useQRCode } from '@vueuse/integrations/useQRCode'
+
+const props = defineProps<InternalProps>()
+
+const emits = defineEmits(['refresh'])
+
+export default defineComponent({
+  name: 'WQRCode',
+})
 
 // TODO 888
 interface InternalProps {
@@ -13,9 +18,6 @@ interface InternalProps {
   expireSeconds?: number
   success?: boolean
 }
-
-const props = defineProps<InternalProps>()
-const emits = defineEmits(['refresh'])
 
 const { t } = useAppI18n()
 
@@ -39,7 +41,7 @@ const { pause, isActive, resume } = useIntervalFn(
   },
 )
 
-const onRefresh = () => {
+function onRefresh() {
   emits('refresh', resume)
 }
 </script>
@@ -57,7 +59,7 @@ const onRefresh = () => {
     <w-transition appear>
       <div class="abs-center">
         <template v-if="!isActive">
-          <div class="mb-2 whitespace-nowrap font-bold text-gray-200">
+          <div class="mb-2 whitespace-nowrap text-gray-200 font-bold">
             {{ t('comp.qrcode.expired') }}
           </div>
 

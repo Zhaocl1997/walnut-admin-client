@@ -16,7 +16,7 @@ const items = computed<WDescriptionsItem[]>(() =>
   })),
 )
 
-const onInit = async () => {
+async function onInit() {
   loading.value = true
 
   try {

@@ -47,7 +47,7 @@ watchEffect(() => {
     signPadInst.value?.on()
 })
 
-const onResize = (c: HTMLCanvasElement) => {
+function onResize(c: HTMLCanvasElement) {
   if (!isEmpty())
     url.value = save()
 
@@ -71,7 +71,7 @@ const onResize = (c: HTMLCanvasElement) => {
     fromDataURL(props.defaultUrl || url.value!)
 }
 
-const onInit = () => {
+function onInit() {
   const canvas = document.getElementById(
     signPadId.value,
   )! as HTMLCanvasElement
@@ -86,31 +86,29 @@ const onInit = () => {
   useWindowResize(() => onResize(canvas))
 }
 
-const onChangePencil = (v: number) => {
+function onChangePencil(v: number) {
   pencil.value = v
   signPadInst.value!.dotSize = v
   signPadInst.value!.minWidth = v
   signPadInst.value!.maxWidth = v
 }
 
-const onChangeColor = (item: string) => {
+function onChangeColor(item: string) {
   color.value = item
   signPadInst.value!.penColor = item
 }
 
-const clear = () => {
+function clear() {
   signPadInst.value?.clear()
 }
 
-const save = (format?: string) =>
-  format
+function save(format?: string) {
+  return format
     ? signPadInst.value?.toDataURL(format)
     : signPadInst.value?.toDataURL()
+}
 
-const onFinalAction = async (
-  type: 'png' | 'jpeg' = 'png',
-  way: 'download' | 'get' = 'download',
-) => {
+async function onFinalAction(type: 'png' | 'jpeg' = 'png', way: 'download' | 'get' = 'download') {
   const target = document.getElementById(wrapperId.value)!
 
   // filter left/right custom utils
@@ -142,13 +140,13 @@ const onFinalAction = async (
   }
 }
 
-const fromDataURL = (url: string) => {
+function fromDataURL(url: string) {
   signPadInst.value?.fromDataURL(url)
 }
 
 const isEmpty = () => signPadInst.value?.isEmpty()
 
-const undo = () => {
+function undo() {
   const data = signPadInst.value?.toData()
 
   if (data) {
@@ -199,14 +197,14 @@ export default defineComponent({
     >
       <canvas
         :id="signPadId"
-        class="w-full h-full"
+        class="h-full w-full"
         :data-uid="signPadId"
         :disabled="disabled"
       />
 
       <!-- left utils -->
       <div
-        class="signpad-utils absolute top-1/2 left-4 -translate-y-1/2 z-{9999}"
+        class="signpad-utils z-{9999} absolute left-4 top-1/2 -translate-y-1/2"
       >
         <n-space vertical>
           <n-tooltip :disabled="disabled" trigger="click" placement="right">
@@ -224,8 +222,8 @@ export default defineComponent({
                 <n-slider
                   v-model:value="pencil"
                   :max="20"
-                  show-tooltip
-                  vertical
+
+                  vertical show-tooltip
                   @update:value="onChangePencil"
                 />
               </div>
@@ -269,7 +267,7 @@ export default defineComponent({
 
       <!-- right utils -->
       <div
-        class="signpad-utils absolute top-1/2 right-2 -translate-y-1/2 z-{9999}"
+        class="signpad-utils z-{9999} absolute right-2 top-1/2 -translate-y-1/2"
       >
         <n-space vertical>
           <n-button
@@ -278,7 +276,7 @@ export default defineComponent({
             text
             @click="onFinalAction('png')"
           >
-            <div class="hstack justify-center items-center gap-2">
+            <div class="hstack items-center justify-center gap-2">
               <span> png </span>
               <w-icon icon="ant-design:download-outlined" width="20" />
             </div>
@@ -290,7 +288,7 @@ export default defineComponent({
             text
             @click="onFinalAction('jpeg')"
           >
-            <div class="hstack justify-center items-center gap-2">
+            <div class="hstack items-center justify-center gap-2">
               <span> jpeg </span>
               <w-icon icon="ant-design:download-outlined" width="20" />
             </div>

@@ -23,7 +23,7 @@ export interface AppDictTypeResponse {
 }
 
 // default all dict will cacahed for 10 minutes
-export const getDictByType = (type: string) => {
+export function getDictByType(type: string) {
   return AppAxios.get<AppDictTypeResponse>(
     {
       url: `/system/dict/data/s/${type}`,

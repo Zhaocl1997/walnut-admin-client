@@ -56,25 +56,25 @@ export namespace IServerInfo {
   }
 }
 
-export const getCpuInfo = () => {
+export function getCpuInfo() {
   return AppAxios.get<IServerInfo.CPU>({
     url: '/app/monitor/server/cpu',
   })
 }
 
-export const getMemInfo = () => {
+export function getMemInfo() {
   return AppAxios.get<IServerInfo.Mem>({
     url: '/app/monitor/server/mem',
   })
 }
 
-export const getOSInfo = () => {
+export function getOSInfo() {
   return AppAxios.get<IServerInfo.OS>({
     url: '/app/monitor/server/os',
   })
 }
 
-export const getSysInfo = (scopePermission?: string) => {
+export function getSysInfo(scopePermission?: string) {
   return AppAxios.get<IServerInfo.System>(
     {
       url: '/app/monitor/server/sys',
@@ -83,25 +83,25 @@ export const getSysInfo = (scopePermission?: string) => {
   )
 }
 
-export const getDiskInfo = () => {
+export function getDiskInfo() {
   return AppAxios.get<IServerInfo.Disk[]>({
     url: '/app/monitor/server/disk',
   })
 }
 
-export const getBatteryInfo = () => {
+export function getBatteryInfo() {
   return AppAxios.get<IServerInfo.Battery>({
     url: '/app/monitor/server/battery',
   })
 }
 
-export const getTimeInfo = () => {
+export function getTimeInfo() {
   return AppAxios.get<IServerInfo.Time>({
     url: '/app/monitor/server/time',
   })
 }
 
-export const getNetworkInfo = (scopePermission?: string) => {
+export function getNetworkInfo(scopePermission?: string) {
   return AppAxios.get<IServerInfo.Network>(
     {
       url: '/app/monitor/server/network',

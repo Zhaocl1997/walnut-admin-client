@@ -1,4 +1,4 @@
-export const useDraggableElement = () => {
+export function useDraggableElement() {
   const el = ref<Nullable<HTMLElement>>(null)
   const myX = ref()
   const myY = ref()

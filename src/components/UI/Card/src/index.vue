@@ -17,43 +17,45 @@ export default defineComponent({
     }
 
     return () => (
-        <n-card size="small">
-          {{
-            'default': () =>
-              props.headerPreset === 'collapse'
+      <n-card size="small">
+        {{
+          'default': () =>
+            props.headerPreset === 'collapse'
+              ? (
+                  <n-collapse-transition show={show.value} class="px-2">
+                    {renderSlot(slots, 'default')}
+                  </n-collapse-transition>
+                )
+              : (
+                  renderSlot(slots, 'default')
+                ),
+          'header-extra': () =>
+            props.headerPreset === 'collapse'
+              ? (
+                  <w-arrow
+                    active={show.value}
+                    onClick={() => (show.value = !show.value)}
+                  >
+                  </w-arrow>
+                )
+              : props.headerPreset === 'refresh'
                 ? (
-                <n-collapse-transition show={show.value} class="px-2">
-                  {renderSlot(slots, 'default')}
-                </n-collapse-transition>
+                    <n-button text disabled={props.loading} loading={props.loading}>
+                      <w-icon
+                        icon="ant-design:sync-outlined"
+                        width="20"
+                        class="cursor-pointer"
+                        onClick={onRefresh}
+                      >
+                      </w-icon>
+                    </n-button>
                   )
-                : (
-                    renderSlot(slots, 'default')
-                  ),
-            'header-extra': () =>
-              props.headerPreset === 'collapse'
-                ? (
-                <w-arrow
-                  active={show.value}
-                  onClick={() => (show.value = !show.value)}
-                ></w-arrow>
-                  )
-                : props.headerPreset === 'refresh'
-                  ? (
-                <n-button text disabled={props.loading} loading={props.loading}>
-                  <w-icon
-                    icon="ant-design:sync-outlined"
-                    width="20"
-                    class="cursor-pointer"
-                    onClick={onRefresh}
-                  ></w-icon>
-                </n-button>
-                    )
-                  : null,
-            'header': () => renderSlot(slots, 'header'),
-            'footer': () => renderSlot(slots, 'footer'),
-            'action': () => renderSlot(slots, 'action'),
-          }}
-        </n-card>
+                : null,
+          'header': () => renderSlot(slots, 'header'),
+          'footer': () => renderSlot(slots, 'footer'),
+          'action': () => renderSlot(slots, 'action'),
+        }}
+      </n-card>
     )
   },
 })

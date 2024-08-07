@@ -1,5 +1,5 @@
 import Inspect from 'vite-plugin-inspect'
 
-export const createInspectPlugin = () => {
+export function createInspectPlugin() {
   return Inspect()
 }

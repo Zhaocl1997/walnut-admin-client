@@ -28,7 +28,7 @@ const tooltipShow = ref(false)
 const isFocus = ref(false)
 const capsLockState = useKeyModifier('CapsLock')
 
-const onShowTooltip = () => {
+function onShowTooltip() {
   if (!isFocus.value)
     return
 
@@ -53,21 +53,21 @@ watch(
   { immediate: true },
 )
 
-const onUpdateValue = (val: string) => {
+function onUpdateValue(val: string) {
   emits('update:value', val)
 }
 
-const onKeyup = (e: KeyboardEvent) => {
+function onKeyup(e: KeyboardEvent) {
   if (e.code === 'Enter' || e.code === 'NumpadEnter')
     emits('submit')
 }
 
-const onFocus = () => {
+function onFocus() {
   isFocus.value = true
   onShowTooltip()
 }
 
-const onBlur = () => {
+function onBlur() {
   isFocus.value = false
   tooltipShow.value = false
 }

@@ -6,7 +6,7 @@ const signPadRef = ref<WSignPadInst>()
 
 const imageSrc = ref()
 
-const onGet = async () => {
+async function onGet() {
   imageSrc.value = await signPadRef.value?.getImage()
 }
 </script>

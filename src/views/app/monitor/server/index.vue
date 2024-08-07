@@ -11,11 +11,11 @@ import AppMonitorServerNetwork from './src/network.vue'
 const systemPermission = ref()
 const networkPermission = ref()
 
-const onSystemAuthorizeSuccess = (p: string) => {
+function onSystemAuthorizeSuccess(p: string) {
   systemPermission.value = p
 }
 
-const onNetworkAuthorizeSuccess = (p: string) => {
+function onNetworkAuthorizeSuccess(p: string) {
   networkPermission.value = p
 }
 </script>

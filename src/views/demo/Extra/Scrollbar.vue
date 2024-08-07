@@ -109,7 +109,7 @@ export default defineComponent({
       </n-button>
     </n-space>
 
-    <div class="mt-2 border border-2 border-gray-600 rounded-sm h-12">
+    <div class="mt-2 h-12 border border-2 border-gray-600 rounded-sm">
       <w-scrollbar
         ref="scrollHorizontalRef"
         v-model="positionHorizontal"
@@ -117,7 +117,7 @@ export default defineComponent({
         height="100px"
       >
         <div class="hstack whitespace-nowrap">
-          <div v-for="i in 100" :key="i" class="text-3xl mx-3">
+          <div v-for="i in 100" :key="i" class="mx-3 text-3xl">
             Vertical-{{ i }}
           </div>
         </div>

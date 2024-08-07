@@ -1,7 +1,4 @@
 <script lang="tsx">
-export default defineComponent({
-  name: 'WPhoneNumberInput',
-})
 </script>
 
 <script lang="tsx" setup>
@@ -14,6 +11,22 @@ import type { PhoneNumberInputOption } from './types'
 import options from './data'
 import { getCurrentCountry, getExamplePhoneNumber, loadPhoneNumberExamplesFile } from './utils'
 import './icon.css'
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  countryCode: 'CN',
+  flag: true,
+  countrySelect: true,
+  preferred: false,
+  disabled: false,
+  example: false,
+  autoDefaultCountry: false,
+})
+
+const emits = defineEmits<{ (e: 'update:value', value: string): void, (e: 'update', value: UpdateParams): void }>()
+
+export default defineComponent({
+  name: 'WPhoneNumberInput',
+})
 
 // TODO 888
 interface InternalProps {
@@ -43,17 +56,6 @@ interface UpdateParams {
   e164?: string
   rfc3966?: string
 }
-
-const props = withDefaults(defineProps<InternalProps>(), {
-  countryCode: 'CN',
-  flag: true,
-  countrySelect: true,
-  preferred: false,
-  disabled: false,
-  example: false,
-  autoDefaultCountry: false,
-})
-const emits = defineEmits<{ (e: 'update:value', value: string): void; (e: 'update', value: UpdateParams): void }>()
 
 const { t } = useAppI18n()
 const { isOnline } = useSharedNetwork()
@@ -136,11 +138,16 @@ function onRenderLabel(option: PhoneNumberInputOption): VNodeChild {
     return <div>{option.name}</div>
 
   return (
-    <div class="w-48 grid grid-cols-12 gap-x-1 items-center" title={option.name}>
-      {props.flag && <div class="col-span-2">
-        <div class={['w-flag', `w-flag-${(option.iso2).toLowerCase()}`]}></div>
-      </div>}
-      <div class="col-span-3">+{option.dialCode}</div>
+    <div class="grid grid-cols-12 w-48 items-center gap-x-1" title={option.name}>
+      {props.flag && (
+        <div class="col-span-2">
+          <div class={['w-flag', `w-flag-${(option.iso2).toLowerCase()}`]}></div>
+        </div>
+      )}
+      <div class="col-span-3">
+        +
+        {option.dialCode}
+      </div>
       <div class="col-span-auto">{option.name}</div>
     </div>
   )
@@ -149,11 +156,16 @@ function onRenderLabel(option: PhoneNumberInputOption): VNodeChild {
 // @ts-expect-error
 const onRenderTag: SelectRenderTag = ({ option }: { option: PhoneNumberInputOption }) => {
   return (
-    <div class="grid grid-cols-12 gap-x-1 items-center" title={option.name}>
-      {props.flag && <div class="col-span-5">
-        <div class={['w-flag', `w-flag-${option.iso2.toLowerCase()}`]}></div>
-      </div>}
-      <div class="col-span-7">+{option.dialCode}</div>
+    <div class="grid grid-cols-12 items-center gap-x-1" title={option.name}>
+      {props.flag && (
+        <div class="col-span-5">
+          <div class={['w-flag', `w-flag-${option.iso2.toLowerCase()}`]}></div>
+        </div>
+      )}
+      <div class="col-span-7">
+        +
+        {option.dialCode}
+      </div>
     </div>
   )
 }
@@ -179,8 +191,8 @@ function onUpdateSelectValue(v: string) {
 
 // only number input
 function onAllowInput(v: string) {
-  const r1 = /[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]+$/gi
-  const r2 = /[a-zA-Z]+$/gi
+  const r1 = /[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]+$/g
+  const r2 = /[a-z]+$/gi
 
   if (r1.test(v) || r2.test(v))
     return false

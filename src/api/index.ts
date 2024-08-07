@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
 
-export const HelloAPI = (config: AxiosRequestConfig) => {
+export function HelloAPI(config: AxiosRequestConfig) {
   return AppAxios.get<string>(
     {
       url: '',
@@ -9,7 +9,7 @@ export const HelloAPI = (config: AxiosRequestConfig) => {
   )
 }
 
-export const HelloAPIWithToken = (config: AxiosRequestConfig) => {
+export function HelloAPIWithToken(config: AxiosRequestConfig) {
   return AppAxios.get<string>(
     {
       url: '/auth',

@@ -63,7 +63,7 @@ useTimeoutFn(() => {
     </n-drawer>
 
     <div
-      class="vstack flex-1 h-screen"
+      class="h-screen vstack flex-1"
       :style="{ width: `calc(100vw - ${appSetting.menu.width}px)` }"
     >
       <n-layout-content
@@ -75,7 +75,7 @@ useTimeoutFn(() => {
         <div
           :id="$route.name"
           ref="scrollWrapper"
-          class="h-full relative flex flex-col" :class="[
+          class="relative h-full flex flex-col" :class="[
             {
               'overflow-x-hidden styled-scrollbars': !$route.meta.url,
             },
@@ -111,19 +111,19 @@ useTimeoutFn(() => {
 
 <style>
   .styled-scrollbars {
-    /* Foreground, Background */
-    scrollbar-color: #999 #333;
-  }
-  .styled-scrollbars::-webkit-scrollbar {
-    width: 8px; /* Mostly for vertical scrollbars */
-    height: 10px; /* Mostly for horizontal scrollbars */
-  }
-  .styled-scrollbars::-webkit-scrollbar-thumb {
-    /* Foreground */
-    background: #999;
-  }
-  .styled-scrollbars::-webkit-scrollbar-track {
-    /* Background */
-    background: #333;
-  }
+  /* Foreground, Background */
+  scrollbar-color: #999 #333;
+}
+.styled-scrollbars::-webkit-scrollbar {
+  width: 8px; /* Mostly for vertical scrollbars */
+  height: 10px; /* Mostly for horizontal scrollbars */
+}
+.styled-scrollbars::-webkit-scrollbar-thumb {
+  /* Foreground */
+  background: #999;
+}
+.styled-scrollbars::-webkit-scrollbar-track {
+  /* Background */
+  background: #333;
+}
 </style>

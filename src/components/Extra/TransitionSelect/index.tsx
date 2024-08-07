@@ -33,7 +33,8 @@ export default defineComponent({
         options={options.value}
         filterable
         onUpdateValue={(v: string) => emit('update:value', v)}
-      ></w-select>
+      >
+      </w-select>
     )
   },
 })

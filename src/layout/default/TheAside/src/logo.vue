@@ -4,7 +4,7 @@ const appSetting = useAppStoreSetting()
 
 const { title: AppTitle } = useAppEnv('title')
 
-const onGoIndex = async () => {
+async function onGoIndex() {
   await appMenu.goIndex()
 }
 </script>
@@ -14,7 +14,7 @@ const onGoIndex = async () => {
     <div
       v-if="appSetting.getLogoShow"
       :id="appSetting.getLogoId"
-      class="whitespace-nowrap cursor-pointer px-6 transition-all" :class="[
+      class="cursor-pointer whitespace-nowrap px-6 transition-all" :class="[
         {
           'pl-4 px-0': appMenu.collapse,
           'fixed': appSetting.getLogoFixed,
@@ -30,13 +30,13 @@ const onGoIndex = async () => {
       }"
       @click="onGoIndex"
     >
-      <div class="hstack justify-between items-center h-full w-full">
+      <div class="h-full w-full hstack items-center justify-between">
         <img src="/assets/logo.png" :alt="`${AppTitle} Logo`" class="h-9 w-9">
 
         <w-transition name="zoom-down">
           <div
             v-show="!appMenu.collapse"
-            class="text-xl not-italic font-bold text-center"
+            class="text-center text-xl font-bold not-italic"
           >
             {{ AppTitle }}
           </div>

@@ -1,4 +1,4 @@
-const responseError = (msg: string) => {
+function responseError(msg: string) {
   const { t } = AppI18n.global
 
   // TODO 93
@@ -6,7 +6,7 @@ const responseError = (msg: string) => {
   useAppNotiError(t(msg))
 }
 
-export const checkReponseErrorStatus = async (status?: number, msg?: string) => {
+export async function checkReponseErrorStatus(status?: number, msg?: string) {
   switch (status) {
     case 400:
       responseError(`${msg}`)
