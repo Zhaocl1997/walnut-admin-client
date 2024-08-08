@@ -4,7 +4,7 @@ import type { WForm } from '../types'
 import { getFormBooleanField } from '../utils'
 import { formIdMap, getFormItemId, setFormItemId } from './useFormItemId'
 
-export const useFormSchemas = (props: ComputedRef<WForm.Props>) => {
+export function useFormSchemas(props: ComputedRef<WForm.Props>) {
   const formSchemas = ref<WForm.Schema.Item<any>[]>()
 
   watch(

@@ -13,7 +13,7 @@ function logDelta({ name, delta, value, id, attribution }) {
   // console.log(eventParams);
 }
 
-export const reportWebVitals = () => {
+export function reportWebVitals() {
   // Cumulative Layout Shift 累积布局偏移
   onCLS(logDelta, { reportAllChanges: true })
   // First Input Delay 首次输入延迟

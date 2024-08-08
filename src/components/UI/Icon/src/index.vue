@@ -50,7 +50,7 @@ export default defineComponent({
     })
 
     const getSize = computed(() =>
-      parseInt(props.width! || props.height! || '16'),
+      Number.parseInt(props.width! || props.height! || '16'),
     )
 
     return () => {
@@ -62,13 +62,14 @@ export default defineComponent({
       }
       else {
         return (
-            <NSkeleton
-              animated={false}
-              circle
-              width={getSize.value}
-              height={getSize.value}
-              class="inline-block"
-            ></NSkeleton>
+          <NSkeleton
+            animated={false}
+            circle
+            width={getSize.value}
+            height={getSize.value}
+            class="inline-block"
+          >
+          </NSkeleton>
         )
       }
     }
@@ -78,6 +79,6 @@ export default defineComponent({
 
 <style scoped>
   :focus {
-    outline: none;
-  }
+  outline: none;
+}
 </style>

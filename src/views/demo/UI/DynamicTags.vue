@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { options } from '../data'
-
 const state = reactive({
   dynamicTag1: [],
   dynamicTag2: ['1', '2', '3', '4'],

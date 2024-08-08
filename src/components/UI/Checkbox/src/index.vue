@@ -12,13 +12,13 @@ export default defineComponent({
 
   setup(props: WCheckboxProps, { attrs, slots, emit, expose }) {
     return () => (
-        <n-checkbox-group>
-          <n-space>
-            {props.options!.map(item => (
-              <n-checkbox key={item.value} {...item}></n-checkbox>
-            ))}
-          </n-space>
-        </n-checkbox-group>
+      <n-checkbox-group>
+        <n-space>
+          {props.options!.map(item => (
+            <n-checkbox key={item.value} {...item}></n-checkbox>
+          ))}
+        </n-space>
+      </n-checkbox-group>
     )
   },
 })

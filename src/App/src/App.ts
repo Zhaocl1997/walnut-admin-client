@@ -5,9 +5,9 @@ import { setupI18n } from '@/locales'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store/pinia'
 
-const setupErrorhandler = (app: App) => {
+function setupErrorhandler(app: App) {
   app.config.errorHandler = (error) => {
-    AppError(error)
+    new AppError(error)
   }
 
   app.config.warnHandler = (warn) => {
@@ -18,7 +18,7 @@ const setupErrorhandler = (app: App) => {
 /**
  * @description Entry to set up Vue App
  */
-export const setupApp = async (app: App) => {
+export async function setupApp(app: App) {
   await useFingerprint()
 
   setupSocket()

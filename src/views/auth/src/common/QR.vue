@@ -5,7 +5,7 @@ const getUrl = () => `https://www.baidu.com/?t=${Date.now()}`
 
 const url = ref(getUrl())
 
-const onRefreshQRCode = (cb: Fn) => {
+function onRefreshQRCode(cb: Fn) {
   url.value = getUrl()
 
   cb()
@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="vstack items-center justify-center gap-y-2 mt-4">
+  <div class="mt-4 vstack items-center justify-center gap-y-2">
     <WQRCode
       :url="url"
       :expire-seconds="5"

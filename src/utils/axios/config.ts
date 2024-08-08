@@ -13,7 +13,8 @@ export const originalConfig: AxiosRequestConfig = {
   timeout: Number(axiosTimeout) * 1000,
 
   adapter: retryAdapterEnhancer(throttleAdapterEnhancer(
-    cacheAdapterEnhancer(axios.defaults.adapter!))),
+    cacheAdapterEnhancer(axios.defaults.adapter!),
+  )),
 
   // default transform "true"/"false" to true/false
   _transformStringBoolean: true,

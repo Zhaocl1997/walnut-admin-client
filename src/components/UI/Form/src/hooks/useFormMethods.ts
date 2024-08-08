@@ -1,8 +1,6 @@
 import type { WForm } from '../types'
 
-export const useFormMethods = (
-  formRef: Ref<Nullable<WForm.Inst.NFormInst>>,
-) => {
+export function useFormMethods(formRef: Ref<Nullable<WForm.Inst.NFormInst>>) {
   const methods = {
     validate: (fields?: string[]) => {
       if (!fields || fields.length === 0) {

@@ -24,8 +24,8 @@ const getShowUtils = computed(
     !appAdapter.isMobile
     && appSetting.tabs.showUtils
     && (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.ALWAYS
-      || (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.OVERFLOW
-        && isOverflow.value)),
+    || (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.OVERFLOW
+    && isOverflow.value)),
 )
 
 const {
@@ -78,7 +78,7 @@ setTabsContext({
       :inverted="appSetting.getTabsInverted" :style="{ zIndex: 999, height: `${appSetting.tabs.height}px` }" :class="{
         'top-0': appSetting.getTabsFixed,
         '!top-[48px]': appSetting.getHeaderShow && appSetting.getHeaderFixed,
-      }" class="flex-none sticky left-0"
+      }" class="sticky left-0 flex-none"
     >
       <div class="h-full hstack justify-between">
         <!-- left utils -->
@@ -87,7 +87,7 @@ setTabsContext({
         </w-transition>
 
         <TabsContentMain
-          class="flex-grow mx-1"
+          class="mx-1 flex-grow"
           :style="{
             width: appAdapter.isMobile
               ? '100vw'

@@ -1,4 +1,4 @@
-export const useTabsActions = (onUpdateOverflow: Fn) => {
+export function useTabsActions(onUpdateOverflow: Fn) {
   const appTab = useAppStoreTab()
 
   const onTabClick = async (item: AppTab) => {

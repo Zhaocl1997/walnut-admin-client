@@ -10,11 +10,11 @@ const avatarCropperUrl = ref<string>()
 
 const avatarUpload = ref<WAvatarUploadInst>()
 
-const onAvatarChange = (cropperUrl: string) => {
+function onAvatarChange(cropperUrl: string) {
   avatarCropperUrl.value = cropperUrl
 }
 
-const onUploadAvatar = async () => {
+async function onUploadAvatar() {
   const isAvatarUploadSuccess = await avatarUpload.value?.onOSSUpload()
 
   if (isAvatarUploadSuccess)
@@ -43,7 +43,7 @@ export default defineComponent({
 
         <w-JSON :value="{ srcValue, cropperValue }" />
 
-        <img :src="srcValue" alt="cropper demo" class="h-48 w-auto mr-4">
+        <img :src="srcValue" alt="cropper demo" class="mr-4 h-48 w-auto">
         <img :src="cropperValue" alt="cropper demo" class="h-48 w-auto">
 
         <w-cropper

@@ -9,7 +9,7 @@ const getOtherTabButtonDisabled = computed(
   () => !appTab.tabs.some(i => i.name === otherName),
 )
 
-const onCreate = (type: number) => {
+function onCreate(type: number) {
   const query
       = type === 1 ? { testQuery1: 1, testQuery2: 'abc', testQuery3: false } : {}
 
@@ -30,7 +30,7 @@ const onCreate = (type: number) => {
   index.value++
 }
 
-const onDelete = () => {
+function onDelete() {
   if (!index.value)
     return
 
@@ -39,7 +39,7 @@ const onDelete = () => {
   appTab.deleteTabs(`name-${index.value}`)
 }
 
-const onDynamicTitle = (type: number, self = true) => {
+function onDynamicTitle(type: number, self = true) {
   const pool = {
     1: () => {
       appTab.setCurrentTabTitle('Title ?')
@@ -95,7 +95,7 @@ const onDynamicTitle = (type: number, self = true) => {
     pool2[type]()
 }
 
-const onDynamicIcon = (type: number, self = true) => {
+function onDynamicIcon(type: number, self = true) {
   const pool = {
     1: () => {
       appTab.setCurrentTabIcon('ant-design:android-filled')
@@ -142,7 +142,7 @@ const onDynamicIcon = (type: number, self = true) => {
     pool2[type]()
 }
 
-const onDynamicQueryandParam = (type: number) => {
+function onDynamicQueryandParam(type: number) {
   const pool = {
     1: () => {},
     2: () => {},

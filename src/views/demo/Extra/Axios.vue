@@ -5,7 +5,7 @@ import { removeAllCancel, removeLatestRequest } from '@/utils/axios/cancel'
 
 const withToken = ref(true)
 
-const _request = async (payload: AxiosRequestConfig) => {
+async function _request(payload: AxiosRequestConfig) {
   if (withToken.value) {
     const res = await HelloAPIWithToken(payload)
     useAppMsgSuccess(res)
@@ -16,7 +16,7 @@ const _request = async (payload: AxiosRequestConfig) => {
   }
 }
 
-const onSend = (type: number) => {
+function onSend(type: number) {
   const pool = {
     1: () => {
       _request({})

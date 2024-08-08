@@ -1,17 +1,17 @@
 import { NSpin, NText } from 'naive-ui'
 
 // loading component
-const loadingComponent = () => {
+function loadingComponent() {
   return h(NSpin, { size: 'small' })
 }
 
 // error component
-const ErrorComponent = () => {
+function ErrorComponent() {
   return h(NText, { type: 'error' }, 'Error.')
 }
 
 // Used 1: w-form async component
-export const createAsyncComponent = (loader: any) => {
+export function createAsyncComponent(loader: any) {
   return defineAsyncComponent({
     // The factory function
     loader,

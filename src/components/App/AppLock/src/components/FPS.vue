@@ -3,7 +3,7 @@ const fps = useFps()
 </script>
 
 <template>
-  <div class="text-white absolute top-2 left-2">
+  <div class="absolute left-2 top-2 text-white">
     {{ fps }}
   </div>
 </template>

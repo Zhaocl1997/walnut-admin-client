@@ -9,7 +9,7 @@ export default {
 <script setup lang="ts">
 const value = ref(0)
 
-const onClick = () => {
+function onClick() {
   value.value++
 }
 </script>

@@ -2,9 +2,8 @@ import type { RemovableRef } from '@vueuse/core'
 import type {
   MessageReactive,
   NotificationReactive,
-  NotificationPlacement,
 } from 'naive-ui'
-import {
+import type {
   AppSettingsForApp,
   AppSettingsForBreadcrumb,
   AppSettingsForFooter,
@@ -165,7 +164,7 @@ declare global {
   }
 
   interface UserScrollState {
-    scrollEntries: RemovableRef<[string, { top: number; left?: number }][]>
+    scrollEntries: RemovableRef<[string, { top: number, left?: number }][]>
   }
 }
 

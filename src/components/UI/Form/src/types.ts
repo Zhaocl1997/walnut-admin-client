@@ -176,7 +176,9 @@ export declare namespace WForm {
     }
 
     interface DynamicSchemaItemProps<
-      T extends keyof ComponentPropPool, D, EP = any,
+      T extends keyof ComponentPropPool,
+      D,
+      EP = any,
     > {
       /**
        * @description internal flag to control show
@@ -188,8 +190,8 @@ export declare namespace WForm {
       componentProp?: ComponentPropPool<D>[T] &
       DomProps & {
         /**
-           * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
-           */
+         * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
+         */
         defaultValue?: BaseDataType | BaseDataType[] | undefined | null
 
         placeholder?: string

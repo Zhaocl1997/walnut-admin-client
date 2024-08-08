@@ -264,7 +264,7 @@ export default defineComponent({
             },
             componentProp: {
               render: ({ formData }) => (
-                  <n-input vModel={[formData.formRender, 'value']}></n-input>
+                <n-input vModel={[formData.formRender, 'value']}></n-input>
               ),
             },
           },

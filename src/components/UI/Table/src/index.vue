@@ -50,23 +50,24 @@ export default defineComponent({
     )
 
     const render = () => (
-        <>
-          {getProps.value.queryFormProps && (
-            <n-card class="mb-1">
-              <QueryForm></QueryForm>
-            </n-card>
-          )}
-
-          <n-card>
-            <TableHeader></TableHeader>
-
-            <n-data-table
-              ref={tableRef}
-              {...getNDataTableProps.value}
-              columns={columns.value.filter(i => i._internalShow)}
-            ></n-data-table>
+      <>
+        {getProps.value.queryFormProps && (
+          <n-card class="mb-1">
+            <QueryForm></QueryForm>
           </n-card>
-        </>
+        )}
+
+        <n-card>
+          <TableHeader></TableHeader>
+
+          <n-data-table
+            ref={tableRef}
+            {...getNDataTableProps.value}
+            columns={columns.value.filter(i => i._internalShow)}
+          >
+          </n-data-table>
+        </n-card>
+      </>
     )
 
     onEvent({

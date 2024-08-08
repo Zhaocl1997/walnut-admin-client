@@ -30,12 +30,13 @@ export default defineComponent({
     })
 
     return () => (
-        <w-icon
-          icon={props.icon}
-          width="16"
-          class={unref(getClass)}
-          style="cursor: pointer"
-        ></w-icon>
+      <w-icon
+        icon={props.icon}
+        width="16"
+        class={unref(getClass)}
+        style="cursor: pointer"
+      >
+      </w-icon>
     )
   },
 })
@@ -43,29 +44,29 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .w-arrow {
-    display: inline-block;
-    transform: rotate(0deg);
-    transform-origin: center center;
-    transition: all 0.3s ease 0.1s;
+  display: inline-block;
+  transform: rotate(0deg);
+  transform-origin: center center;
+  transition: all 0.3s ease 0.1s;
 
-    &--active {
-      transform: rotate(180deg);
-    }
-
-    &.right {
-      transform: rotate(-90deg);
-    }
-
-    &.right.w-arrow--active {
-      transform: rotate(90deg);
-    }
-
-    &.left {
-      transform: rotate(90deg);
-    }
-
-    &.left.w-arrow--active {
-      transform: rotate(-90deg);
-    }
+  &--active {
+    transform: rotate(180deg);
   }
+
+  &.right {
+    transform: rotate(-90deg);
+  }
+
+  &.right.w-arrow--active {
+    transform: rotate(90deg);
+  }
+
+  &.left {
+    transform: rotate(90deg);
+  }
+
+  &.left.w-arrow--active {
+    transform: rotate(-90deg);
+  }
+}
 </style>

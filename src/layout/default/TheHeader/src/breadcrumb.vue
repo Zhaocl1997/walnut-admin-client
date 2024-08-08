@@ -17,9 +17,9 @@ export default defineComponent({
         toRaw(appMenu.menus),
         n =>
           n.name
-            === (currentRoute.value.meta.menuActiveName
-              ? currentRoute.value.meta.menuActiveName
-              : currentRoute.value.name),
+          === (currentRoute.value.meta.menuActiveName
+            ? currentRoute.value.meta.menuActiveName
+            : currentRoute.value.name),
       ) as AppSystemMenu[]
 
       // handle menuActiveName
@@ -36,12 +36,12 @@ export default defineComponent({
     })
 
     const renderBase = (item: AppSystemMenu) => (
-        <div class="inline">
-          {appSetting.breadcrumb.showIcon && (
-            <w-icon icon={item.icon} height="20" class="mr-1 -mb-1"></w-icon>
-          )}
-          <span class="">{t(item.title!)}</span>
-        </div>
+      <div class="inline">
+        {appSetting.breadcrumb.showIcon && (
+          <w-icon icon={item.icon} height="20" class="mr-1 -mb-1"></w-icon>
+        )}
+        <span class="">{t(item.title!)}</span>
+      </div>
     )
 
     const genOptions = (
@@ -66,41 +66,41 @@ export default defineComponent({
     }
 
     const renderDropdown = (item: TreeNodeItem<AppSystemMenu>) => (
-        <n-dropdown
-          onSelect={async (key: string) => {
-            await useAppRouterPush({ name: key })
-          }}
-          show-arrow
-          options={genOptions(item.children)}
-        >
-          {renderBase(item)}
-        </n-dropdown>
+      <n-dropdown
+        onSelect={async (key: string) => {
+          await useAppRouterPush({ name: key })
+        }}
+        show-arrow
+        options={genOptions(item.children)}
+      >
+        {renderBase(item)}
+      </n-dropdown>
     )
 
     return () => (
-        <w-transition appear name={appSetting.getBreadcrumbTransition}>
-          {appSetting.getBreadcrumbShow && (
-            <n-config-provider
-              id={appSetting.getBreadcrumbId}
-              theme={
-                (!isDark.value && appSetting.header.inverted)
-                || isDark.value
-                  ? darkTheme
-                  : null
-              }
-            >
-              <n-breadcrumb separator={appSetting.breadcrumb.separator}>
-                {getChildren.value?.map(item => (
-                  <n-breadcrumb-item>
-                    {appSetting.breadcrumb.showDropdown
-                      ? renderDropdown(item)
-                      : renderBase(item)}
-                  </n-breadcrumb-item>
-                ))}
-              </n-breadcrumb>
-            </n-config-provider>
-          )}
-        </w-transition>
+      <w-transition appear name={appSetting.getBreadcrumbTransition}>
+        {appSetting.getBreadcrumbShow && (
+          <n-config-provider
+            id={appSetting.getBreadcrumbId}
+            theme={
+              (!isDark.value && appSetting.header.inverted)
+              || isDark.value
+                ? darkTheme
+                : null
+            }
+          >
+            <n-breadcrumb separator={appSetting.breadcrumb.separator}>
+              {getChildren.value?.map(item => (
+                <n-breadcrumb-item>
+                  {appSetting.breadcrumb.showDropdown
+                    ? renderDropdown(item)
+                    : renderBase(item)}
+                </n-breadcrumb-item>
+              ))}
+            </n-breadcrumb>
+          </n-config-provider>
+        )}
+      </w-transition>
     )
   },
 })

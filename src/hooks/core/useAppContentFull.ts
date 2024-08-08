@@ -1,4 +1,4 @@
-export const useAppContentFull = () => {
+export function useAppContentFull() {
   const { currentRoute } = useAppRouter()
   const appSetting = useAppStoreSetting()
 

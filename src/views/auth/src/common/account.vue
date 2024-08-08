@@ -15,7 +15,7 @@ const accountFormData = reactive<AppPayloadAuth.Password>({
   rememberMe: true,
 })
 
-const onSubmit = async () => {
+async function onSubmit() {
   const valid = await validate()
 
   if (valid) {
@@ -35,7 +35,7 @@ const onSubmit = async () => {
   }
 }
 
-const onForgetPassword = () => {
+function onForgetPassword() {
   useAppMsgSuccess('Forget password')
 }
 
@@ -84,7 +84,7 @@ const [register, { validate }] = useForm<typeof accountFormData>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <div class="hstack justify-between w-full mb-2">
+          <div class="mb-2 w-full hstack justify-between">
             <NCheckbox vModel={[formData.rememberMe, 'checked']}>
               {t('form.app.auth.remember')}
             </NCheckbox>
@@ -112,7 +112,7 @@ const [register, { validate }] = useForm<typeof accountFormData>({
       },
       componentProp: {
         textProp: () => (
-          <span class="text-light-800 text-lg font-black uppercase">
+          <span class="text-lg text-light-800 font-black uppercase">
             {t('app.base.signin')}
           </span>
         ),
@@ -130,7 +130,7 @@ const [register, { validate }] = useForm<typeof accountFormData>({
   ],
 })
 
-const setFormData = (userName: string, password: string) => {
+function setFormData(userName: string, password: string) {
   accountFormData.userName = userName
   accountFormData.password = password
 }

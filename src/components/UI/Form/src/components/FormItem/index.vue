@@ -42,17 +42,18 @@ export default defineComponent({
 
                 return (
                   component && (
-                  <component
-                    is={component}
-                    v-model={[
-                      formProps.value.model![item?.formProp?.path!],
-                      'value',
-                    ]}
-                    {...item?.componentProp}
-                    class={formProps.value.formItemComponentClass}
-                    // TODO
-                    placeholder={generateRuleMessage(t, formProps, item!)}
-                  ></component>
+                    <component
+                      is={component}
+                      v-model={[
+                        formProps.value.model![item?.formProp?.path!],
+                        'value',
+                      ]}
+                      {...item?.componentProp}
+                      class={formProps.value.formItemComponentClass}
+                      // TODO
+                      placeholder={generateRuleMessage(t, formProps, item!)}
+                    >
+                    </component>
                   )
                 )
               }
@@ -72,34 +73,37 @@ export default defineComponent({
 
     const renderLabelHelpMessage = () =>
       item?.formProp?.labelHelpMessage && (
-          <w-message
-            msg={getFormTranslated(t, formProps, item!, 'helpMsg')}
-          ></w-message>
+        <w-message
+          msg={getFormTranslated(t, formProps, item!, 'helpMsg')}
+        >
+        </w-message>
       )
 
     const renderNFormItem = () => (
-        // TODO optimise
-        <n-form-item
-          vShow={getFormBooleanField(item, formProps.value, 'vShow')}
-          {...(isBoolean(item?.formProp?.rule)
-          && isBoolean(item?.formProp?.label)
-            ? omit(clone(item?.formProp), 'rule', 'label')
-            : isBoolean(item?.formProp?.rule)
-              ? omit(item?.formProp, 'rule')
-              : isBoolean(item?.formProp?.label)
-                ? omit(clone(item?.formProp), 'label')
-                : item?.formProp)}
-          class={formProps.value.formItemClass}
-        >
-          {{
-            default: () => renderBase(),
-            label: () => (
-              <>
-                {renderLabel()} {renderLabelHelpMessage()}
-              </>
-            ),
-          }}
-        </n-form-item>
+      // TODO optimise
+      <n-form-item
+        vShow={getFormBooleanField(item, formProps.value, 'vShow')}
+        {...(isBoolean(item?.formProp?.rule)
+        && isBoolean(item?.formProp?.label)
+          ? omit(clone(item?.formProp), 'rule', 'label')
+          : isBoolean(item?.formProp?.rule)
+            ? omit(item?.formProp, 'rule')
+            : isBoolean(item?.formProp?.label)
+              ? omit(clone(item?.formProp), 'label')
+              : item?.formProp)}
+        class={formProps.value.formItemClass}
+      >
+        {{
+          default: () => renderBase(),
+          label: () => (
+            <>
+              {renderLabel()}
+              {' '}
+              {renderLabelHelpMessage()}
+            </>
+          ),
+        }}
+      </n-form-item>
     )
 
     return () =>

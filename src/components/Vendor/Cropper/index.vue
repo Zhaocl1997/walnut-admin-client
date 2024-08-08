@@ -65,14 +65,14 @@ const debounced = useDebounceFn(() => {
   })
 }, 500)
 
-const onSelectionChange = (e: any) => {
+function onSelectionChange(e: any) {
   debounced()
   if (selectionRef.value)
     return
   initSelectionData.value = e.detail
 }
 
-const onReset = async () => {
+async function onReset() {
   imageRef.value!.$resetTransform()
   imageRef.value!.$center('cover')
 
@@ -87,7 +87,7 @@ const onReset = async () => {
   await onGetCropperValue()
 }
 
-const onScale = async (scale: number) => {
+async function onScale(scale: number) {
   if (scale === 1)
     imageRef.value!.$scale(-1, 1)
 
@@ -97,31 +97,31 @@ const onScale = async (scale: number) => {
   await onGetCropperValue()
 }
 
-const onRotate = async (n: string) => {
+async function onRotate(n: string) {
   imageRef.value!.$rotate(n)
 
   await onGetCropperValue()
 }
 
-const onZoom = async (n: number) => {
+async function onZoom(n: number) {
   imageRef.value!.$zoom(n)
 
   await onGetCropperValue()
 }
 
-const onDownload = async () => {
+async function onDownload() {
   await onGetCropperValue()
 
   await downloadByUrl(tempBlobURLCropper.value!)
 }
 
-const onUploadChange = async () => {
+async function onUploadChange() {
   const tempBlobURLSrc = await absImage.value?.onGetBlobURL()
 
   emits('update:src', tempBlobURLSrc)
 }
 
-const onGetCropperValue = async () => {
+async function onGetCropperValue() {
   const canvas = await selectionRef.value?.$toCanvas()
 
   const base64 = canvas?.toDataURL('image/png')!
@@ -214,7 +214,7 @@ export default defineComponent({
             :id="selectionId" ref="selectionRef" initial-coverage="0.5" :movable="src" :resizable="src"
             :zoomable="src" :keyboard="src" :outlined="src" @change="onSelectionChange"
           >
-            <cropper-grid role="grid" covered bordered />
+            <cropper-grid role="grid" bordered covered />
             <cropper-crosshair centered />
 
             <cropper-handle action="move" theme-color="rgba(255, 255, 255, 0.35)" />

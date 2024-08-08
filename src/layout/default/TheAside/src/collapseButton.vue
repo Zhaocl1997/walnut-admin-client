@@ -2,7 +2,7 @@
 const appMenu = useAppStoreMenu()
 const appSettings = useAppStoreSetting()
 
-const onToogleCollapse = () => {
+function onToogleCollapse() {
   appMenu.setCollapse(!appMenu.collapse)
 }
 </script>
@@ -12,7 +12,7 @@ const onToogleCollapse = () => {
     type="info"
     text
     size="large"
-    class="absolute bottom-0 w-full bg-base-color py-1"
+    class="bg-base-color absolute bottom-0 w-full py-1"
     :style="{
       backgroundColor: appSettings.menu.inverted
         ? 'var(--inverted-color)'

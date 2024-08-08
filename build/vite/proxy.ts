@@ -1,7 +1,7 @@
 import type { ProxyOptions } from 'vite'
 import { useLoadEnv } from '../../src/hooks/core/useLoadEnv'
 
-export const createViteProxy = (env: ImportMetaEnv) => {
+export function createViteProxy(env: ImportMetaEnv) {
   const ret: Record<string, ProxyOptions> = {}
 
   const { api, ws } = useLoadEnv('proxy', env)

@@ -1,10 +1,6 @@
 import type { WForm } from '../types'
 
-export const useFormAdvanced = (
-  render: Fn,
-  props: ComputedRef<WForm.Props>,
-  formRef: Ref<Nullable<WForm.Inst.NFormInst>>,
-) => {
+export function useFormAdvanced(render: Fn, props: ComputedRef<WForm.Props>, formRef: Ref<Nullable<WForm.Inst.NFormInst>>) {
   const { t } = useAppI18n()
 
   const show = ref(false)

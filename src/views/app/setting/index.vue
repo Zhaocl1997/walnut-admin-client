@@ -1,11 +1,12 @@
 <script lang="ts">
-export default defineComponent({
-  name: 'AppSetting',
-})
 </script>
 
 <script lang="ts" setup>
 import { appSettingAPI } from '@/api/app/setting'
+
+export default defineComponent({
+  name: 'AppSetting',
+})
 
 const { t } = useAppI18n()
 

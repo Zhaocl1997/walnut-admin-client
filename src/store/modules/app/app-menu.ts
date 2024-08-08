@@ -121,7 +121,7 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
 
 const useAppStoreMenuOutside = () => useAppStoreMenuInside(store)
 
-export const useAppStoreMenu = () => {
+export function useAppStoreMenu() {
   if (getCurrentInstance())
     return useAppStoreMenuInside()
   return useAppStoreMenuOutside()

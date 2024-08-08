@@ -1,9 +1,9 @@
 import type { AxiosRequestConfig, Canceler } from 'axios'
 import { buildSortedURL } from './src/adapters/utils'
 
-export const cancelPools: { k: string; c: Canceler }[] = []
+export const cancelPools: { k: string, c: Canceler }[] = []
 
-export const addToCancelPool = (config: AxiosRequestConfig, cancel: Canceler) => {
+export function addToCancelPool(config: AxiosRequestConfig, cancel: Canceler) {
   const key = buildSortedURL(config.url, config.params, config.paramsSerializer)
 
   const index = cancelPools.findIndex(i => i.k === key)
@@ -14,7 +14,7 @@ export const addToCancelPool = (config: AxiosRequestConfig, cancel: Canceler) =>
     cancelPools[index] = { k: key, c: cancel }
 }
 
-export const removeFromCancelPool = (config: AxiosRequestConfig, excuteCancel = false) => {
+export function removeFromCancelPool(config: AxiosRequestConfig, excuteCancel = false) {
   const key = buildSortedURL(config.url, config.params, config.paramsSerializer)
 
   const index = cancelPools.findIndex(i => i.k === key)
@@ -26,13 +26,13 @@ export const removeFromCancelPool = (config: AxiosRequestConfig, excuteCancel = 
 }
 
 // cancel the latest request that do not receive a response
-export const removeLatestRequest = () => {
+export function removeLatestRequest() {
   cancelPools.slice(-1)[0].c()
   cancelPools.splice(cancelPools.length - 1, 1)
 }
 
 // cancel all the request that currently do not have a response
-export const removeAllCancel = () => {
+export function removeAllCancel() {
   const newArr = cancelPools.filter(() => true)
 
   for (let i = 0; i < newArr.length; i++) {

@@ -3,7 +3,7 @@ import { getDictByType } from '@/api/system/dict'
 
 export const AppDictMap = reactive(new Map<string, AppDictTypeResponse>())
 
-export const useDict = async (type: string) => {
+export async function useDict(type: string) {
   if (!type)
     return
 

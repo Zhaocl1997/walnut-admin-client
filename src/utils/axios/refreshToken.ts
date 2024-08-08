@@ -7,15 +7,12 @@ let requestsQueue: ((token: string) => void)[] = []
 
 const userAuth = useAppStoreUserAuth()
 
-export const setTokenHeader = (
-  config: AxiosRequestConfig,
-  token: string,
-) => {
+export function setTokenHeader(config: AxiosRequestConfig, token: string) {
   if (getBoolean(config._carryToken))
     config.headers.Authorization = `Bearer ${token}`
 }
 
-export const RefreshTokenLogic = (config: AxiosRequestConfig) => {
+export function RefreshTokenLogic(config: AxiosRequestConfig) {
   // not requesting for new access token
   if (!isRefreshing) {
     isRefreshing = true

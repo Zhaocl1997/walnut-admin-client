@@ -13,7 +13,7 @@ const state = ref(false)
 const { t } = useAppI18n()
 const userPermission = useAppStoreUserPermission()
 
-const onSuccess = () => {
+function onSuccess() {
   emits('success')
   state.value = true
 }
@@ -44,7 +44,7 @@ const rule = {
   },
 }
 
-const onKeyup = (e: KeyboardEvent) => {
+function onKeyup(e: KeyboardEvent) {
   if (e.code === 'Enter' || e.code === 'NumpadEnter') {
     if (inputValue.value !== props.permission) {
       useAppMsgError(t('app.authorize.iptc.error'))
@@ -66,7 +66,7 @@ export default defineComponent({
   <w-transition appear name="fade-down">
     <div
       v-if="!state"
-      class="relative flex justify-center items-center"
+      class="relative flex items-center justify-center"
       :style="{ height: presetHeight, width: presetWidth }"
     >
       <div

@@ -9,7 +9,7 @@ import { buildRoutes } from '@/router/utils/route'
  * 1. sign in operation
  * 2. route guard protection
  */
-export const AppCoreFn1 = async () => {
+export async function AppCoreFn1() {
   const appMenu = useAppStoreMenu()
   const appTab = useAppStoreTab()
   const userPermission = useAppStoreUserPermission()

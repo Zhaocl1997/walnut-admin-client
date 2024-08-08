@@ -1,6 +1,6 @@
 import type { MessageType } from 'naive-ui'
 
-export const useAppMessage = () => {
+export function useAppMessage() {
   return window.$message
 }
 
@@ -14,7 +14,7 @@ interface AppMessageOptions {
 /**
  * @description message usage
  */
-export const AppMsg = (msg: string, options: AppMessageOptions) => {
+export function AppMsg(msg: string, options: AppMessageOptions) {
   const appNaive = useAppStoreNaive()
 
   appNaive.setMsgPlacement(options?.placement ?? 'top')
@@ -26,26 +26,21 @@ export const AppMsg = (msg: string, options: AppMessageOptions) => {
   })
 }
 
-export const useAppMsgSuccess = (
-  msg?: string,
-  options?: Omit<AppMessageOptions, 'type'>,
-) =>
-  AppMsg(msg ?? AppI18n.global?.t('app.base.operation.success'), {
+export function useAppMsgSuccess(msg?: string, options?: Omit<AppMessageOptions, 'type'>) {
+  return AppMsg(msg ?? AppI18n.global?.t('app.base.operation.success'), {
     ...options,
     type: 'success',
   })
+}
 
-export const useAppMsgInfo = (
-  msg: string,
-  options?: Omit<AppMessageOptions, 'type'>,
-) => AppMsg(msg, { ...options, type: 'info' })
+export function useAppMsgInfo(msg: string, options?: Omit<AppMessageOptions, 'type'>) {
+  return AppMsg(msg, { ...options, type: 'info' })
+}
 
-export const useAppMsgWarning = (
-  msg: string,
-  options?: Omit<AppMessageOptions, 'type'>,
-) => AppMsg(msg, { ...options, type: 'warning' })
+export function useAppMsgWarning(msg: string, options?: Omit<AppMessageOptions, 'type'>) {
+  return AppMsg(msg, { ...options, type: 'warning' })
+}
 
-export const useAppMsgError = (
-  msg: string,
-  options?: Omit<AppMessageOptions, 'type'>,
-) => AppMsg(msg, { ...options, type: 'error' })
+export function useAppMsgError(msg: string, options?: Omit<AppMessageOptions, 'type'>) {
+  return AppMsg(msg, { ...options, type: 'error' })
+}

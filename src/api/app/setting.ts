@@ -12,7 +12,7 @@ export const appSettingAPI = new BaseAPI<AppSettingsModel>({
 /**
  * @description get auth settings
  */
-export const getAuthSettings = () => {
+export function getAuthSettings() {
   return AppAxios.get<AppPayloadSetting.AuthSetting>({
     url: SettingEnum.AUTH,
   })

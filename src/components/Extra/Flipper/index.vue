@@ -112,28 +112,28 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .Flipper {
-    position: relative;
-    perspective: 1000px;
+  position: relative;
+  perspective: 1000px;
+}
+.Flipper__face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.Flipper__face--back,
+.Flipper--flipped .Flipper__face--front {
+  transform: rotateY(180deg);
+  visibility: hidden;
+}
+.Flipper--flipped {
+  .Flipper__face--back {
+    transform: rotateY(360deg);
+    visibility: visible;
   }
-  .Flipper__face {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: block;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-  }
-  .Flipper__face--back,
-  .Flipper--flipped .Flipper__face--front {
-    transform: rotateY(180deg);
-    visibility: hidden;
-  }
-  .Flipper--flipped {
-    .Flipper__face--back {
-      transform: rotateY(360deg);
-      visibility: visible;
-    }
-  }
+}
 </style>

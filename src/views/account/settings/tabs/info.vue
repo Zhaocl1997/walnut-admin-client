@@ -24,7 +24,7 @@ const formData = ref<AppSystemUser>({
 const loading = ref(false)
 const tempSrcUrl = ref<string>()
 
-const onAvatarChange = (temp: string) => {
+function onAvatarChange(temp: string) {
   tempSrcUrl.value = temp
 }
 
@@ -142,7 +142,7 @@ export default defineComponent({
     </n-gi>
 
     <n-gi>
-      <div class="vstack justify-center items-center">
+      <div class="vstack items-center justify-center">
         <Starport
           v-if="$route.name === 'AccountSetting'"
           port="w-avatar"

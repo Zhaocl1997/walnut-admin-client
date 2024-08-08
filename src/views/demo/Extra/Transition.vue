@@ -4,7 +4,7 @@ const formData = ref({
   name: 'fade' as ValueOfAppConstTransitionName,
 })
 
-const onStart = () => {
+function onStart() {
   show.value = false
   setTimeout(() => {
     show.value = true

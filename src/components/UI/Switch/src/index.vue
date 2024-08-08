@@ -12,12 +12,12 @@ export default defineComponent({
 
   setup(props: WSwitchProps, { attrs, slots, emit, expose }) {
     return () => (
-        <n-switch>
-          {{
-            checked: () => props.checkedText,
-            unchecked: () => props.uncheckedText,
-          }}
-        </n-switch>
+      <n-switch>
+        {{
+          checked: () => props.checkedText,
+          unchecked: () => props.uncheckedText,
+        }}
+      </n-switch>
     )
   },
 })

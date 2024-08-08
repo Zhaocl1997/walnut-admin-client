@@ -33,7 +33,7 @@ const useAppStoreUserScrollInside = defineStore(StoreKeys.USER_SCROLL, {
 
 const useAppStoreUserScrollOutside = () => useAppStoreUserScrollInside(store)
 
-export const useAppStoreUserScroll = () => {
+export function useAppStoreUserScroll() {
   if (getCurrentInstance())
     return useAppStoreUserScrollInside()
   return useAppStoreUserScrollOutside()

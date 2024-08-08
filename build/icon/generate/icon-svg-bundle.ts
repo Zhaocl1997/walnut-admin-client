@@ -2,7 +2,7 @@ import { BuildUtilsReadFile, BuildUtilsWriteFile } from 'build/utils'
 import { IconLog, WSvgPrefix, iconBundlePath, iconListPath, iconSVGPath } from '../src'
 import { generateSvgJSON } from './icon-svg-json'
 
-export const writeSvgJSONBundle = async () => {
+export async function writeSvgJSONBundle() {
   const result = `import { addCollection } from '@iconify/vue';
 import CustomSvgJson from '/${iconSVGPath}';
 addCollection(CustomSvgJson);`
@@ -12,7 +12,7 @@ addCollection(CustomSvgJson);`
   await BuildUtilsWriteFile(iconBundlePath, result)
 }
 
-export const rewriteSvgJSON = async () => {
+export async function rewriteSvgJSON() {
   const usedIconList = await BuildUtilsReadFile(iconListPath)
 
   const arr = Array.from<string>(JSON.parse(usedIconList.replace('export default ', '')))

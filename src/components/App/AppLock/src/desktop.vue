@@ -23,7 +23,7 @@ const now = useNow()
 
   <FPS />
 
-  <div class="text-white h-full w-full flex flex-col items-center justify-center self-center gap-y-4">
+  <div class="h-full w-full flex flex-col items-center self-center justify-center gap-y-4 text-white">
     <WFlipClock />
   </div>
 </template>

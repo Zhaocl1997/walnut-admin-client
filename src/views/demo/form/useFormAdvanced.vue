@@ -84,7 +84,7 @@ const [register2, { onOpen }] = useForm({
   }),
 })
 
-const onOpenAdvacned = () => {
+function onOpenAdvacned() {
   onOpen((done) => {
     setTimeout(() => {
       done()

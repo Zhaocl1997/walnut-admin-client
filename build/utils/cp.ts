@@ -1,10 +1,10 @@
-import { promisify } from 'util'
+import { promisify } from 'node:util'
 import { exec } from 'node:child_process'
 import { BuildUtilsLog } from './log'
 
 const promisifyExec = promisify(exec)
 
-export const BuildUtilsExec = async (file: string) => {
+export async function BuildUtilsExec(file: string) {
   const { stdout, stderr } = await promisifyExec(file)
 
   BuildUtilsLog(stdout)

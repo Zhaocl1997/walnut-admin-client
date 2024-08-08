@@ -1,4 +1,4 @@
-export const useAppTextSelection = () => {
+export function useAppTextSelection() {
   const state = useTextSelection()
 
   watchEffect(() => {

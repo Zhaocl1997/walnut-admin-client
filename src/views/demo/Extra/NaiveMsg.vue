@@ -1,25 +1,25 @@
 <script lang="ts" setup>
 const appNaive = useAppStoreNaive()
 
-const onOpenNoti = (type: number) => {
+function onOpenNoti(type: number) {
   type === 1 && useAppNotiSuccess('Notification Success')
   type === 2 && useAppNotiInfo('Notification Info', { closable: false })
   type === 3 && useAppNotiWarning('Notification Warning', { duration: 1000 })
   type === 4
-      && useAppNotiError('Notification Error', { placement: 'top-left' })
+  && useAppNotiError('Notification Error', { placement: 'top-left' })
   type === 5 && useAppNotiError('Got a 64px margin top', { containerStyle: { marginTop: '64px' } })
   type === 6 && appNaive.destroyCurrentNotiInst()
   type === 7 && appNaive.destroyAllNotiInst()
 }
 
-const onOpenMsg = (type: number) => {
+function onOpenMsg(type: number) {
   type === 1 && useAppMsgSuccess()
   type === 2 && useAppMsgInfo('Message Info', { closable: false })
   type === 3 && useAppMsgWarning('Message Warning', { duration: 1000 })
   type === 4 && useAppMsgError('Message Error', { placement: 'top-left' })
 }
 
-const onOpenComfirm = async () => {
+async function onOpenComfirm() {
   const res = await useAppConfirm('Do you want to continue?')
 
   if (res)

@@ -6,7 +6,7 @@ enum PhoneEnum {
 /**
  * @description auth with text message
  */
-export const authWithPhoneNumber = (data: AppPayloadAuth.PhoneNumber) => {
+export function authWithPhoneNumber(data: AppPayloadAuth.PhoneNumber) {
   return AppAxios.post<AppPayloadAuth.TokenPayload>({
     url: PhoneEnum.AUTH_PHONE,
     data,
@@ -16,7 +16,7 @@ export const authWithPhoneNumber = (data: AppPayloadAuth.PhoneNumber) => {
 /**
  * @description send verify code text message
  */
-export const sendAuthTextMsg = (data: AppPayloadAuth.PhoneNumber) => {
+export function sendAuthTextMsg(data: AppPayloadAuth.PhoneNumber) {
   return AppAxios.post<boolean>({
     url: PhoneEnum.AUTH_EMAIL_TEXT_MESSAGE,
     data,

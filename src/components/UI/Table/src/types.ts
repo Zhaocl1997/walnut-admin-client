@@ -1,4 +1,4 @@
-import type { DataTableColumn, DataTableInst, TagProps } from 'naive-ui'
+import type { DataTableInst, TagProps } from 'naive-ui'
 import type {
   CreateRowKey,
   TableBaseColumn,

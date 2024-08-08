@@ -1,7 +1,7 @@
 import type { NotificationOptions } from 'naive-ui'
 import { formatTime } from 'easy-fns-ts'
 
-export const useAppNotification = () => {
+export function useAppNotification() {
   return window.$notification
 }
 
@@ -13,7 +13,7 @@ interface AppNotiOptions extends NotificationOptions {
 /**
  * @description notification usage
  */
-export const AppNoti = (msg: string, options: AppNotiOptions) => {
+export function AppNoti(msg: string, options: AppNotiOptions) {
   const appNaive = useAppStoreNaive()
   const { title } = useAppEnv('title')
 
@@ -38,22 +38,18 @@ export const AppNoti = (msg: string, options: AppNotiOptions) => {
   appNaive.setCurrentNotiInst(inst)
 }
 
-export const useAppNotiSuccess = (
-  msg: string,
-  options?: Omit<AppNotiOptions, 'type'>,
-) => AppNoti(msg, { ...options, type: 'success' })
+export function useAppNotiSuccess(msg: string, options?: Omit<AppNotiOptions, 'type'>) {
+  return AppNoti(msg, { ...options, type: 'success' })
+}
 
-export const useAppNotiInfo = (
-  msg: string,
-  options?: Omit<AppNotiOptions, 'type'>,
-) => AppNoti(msg, { ...options, type: 'info' })
+export function useAppNotiInfo(msg: string, options?: Omit<AppNotiOptions, 'type'>) {
+  return AppNoti(msg, { ...options, type: 'info' })
+}
 
-export const useAppNotiWarning = (
-  msg: string,
-  options?: Omit<AppNotiOptions, 'type'>,
-) => AppNoti(msg, { ...options, type: 'warning' })
+export function useAppNotiWarning(msg: string, options?: Omit<AppNotiOptions, 'type'>) {
+  return AppNoti(msg, { ...options, type: 'warning' })
+}
 
-export const useAppNotiError = (
-  msg: string,
-  options?: Omit<AppNotiOptions, 'type'>,
-) => AppNoti(msg, { ...options, type: 'error' })
+export function useAppNotiError(msg: string, options?: Omit<AppNotiOptions, 'type'>) {
+  return AppNoti(msg, { ...options, type: 'error' })
+}

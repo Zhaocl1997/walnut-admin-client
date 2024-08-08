@@ -1,8 +1,6 @@
 import type { WDropdown } from '../types'
 
-export const useDropdown = <T>(
-  props: WDropdown.Props,
-): WDropdown.Hook.useDropdown => {
+export function useDropdown<T>(props: WDropdown.Props): WDropdown.Hook.useDropdown {
   isInSetup()
 
   const wDropdownRef = ref<Nullable<WDropdown.Inst.WDropdownInst>>(null)

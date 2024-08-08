@@ -5,7 +5,7 @@ import { createI18n } from 'vue-i18n'
 /**
  * @description Get locale messages from back end
  */
-const createI18nOptions = async (): Promise<I18nOptions> => {
+async function createI18nOptions(): Promise<I18nOptions> {
   const appLocale = useAppStoreLocale()
 
   const locale = appLocale.locale
@@ -32,7 +32,7 @@ const createI18nOptions = async (): Promise<I18nOptions> => {
 
 export let AppI18n: ReturnType<typeof createI18n>
 
-export const setupI18n = async (app: App) => {
+export async function setupI18n(app: App) {
   const options = await createI18nOptions()
   AppI18n = createI18n(options)
   app.use(AppI18n)

@@ -19,7 +19,7 @@ const { t } = useAppI18n()
 const buttonRef = ref<WButtonInst>()
 const verifyRef = ref<WVerifyInst>()
 
-const onClick = async () => {
+async function onClick() {
   if (!props.onBeforeCountdown)
     return
 
@@ -34,13 +34,13 @@ const onClick = async () => {
     onSuccess()
 }
 
-const onVerifySuccess = () => {
+function onVerifySuccess() {
   nextTick(() => {
     onSuccess()
   })
 }
 
-const onSuccess = () => {
+function onSuccess() {
   if (!props.onSuccess)
     return
 

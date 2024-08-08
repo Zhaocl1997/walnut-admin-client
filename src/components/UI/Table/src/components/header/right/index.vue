@@ -14,7 +14,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="hstack space-x-2 children:cursor-pointer">
+  <div class="hstack children:cursor-pointer space-x-2">
     <w-a-icon
       v-if="!tableProps.polling" icon="ant-design:reload-outlined" height="20" :disabled="tableProps.loading"
       :help-message="t('app.base.refresh')" @click="onApiTableList"

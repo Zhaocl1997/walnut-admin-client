@@ -1,7 +1,7 @@
 import type { EffectScope } from 'vue'
 import { AppLockRoute } from '@/router/routes/builtin'
 
-export const useAppLock = () => {
+export function useAppLock() {
   let lockScope: EffectScope
 
   const { currentRoute, addRoute, removeRoute } = useAppRouter()
@@ -112,8 +112,9 @@ export const useAppLock = () => {
                             appSetting.app.lockMode
                             === AppConstLockMode.SECURITY
                             && !v
-                          )
+                          ) {
                             await appLock.lock(currentRoute)
+                          }
                         },
                         { immediate: true },
                       )

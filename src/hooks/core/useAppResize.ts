@@ -1,4 +1,4 @@
-export const useAppResize = () => {
+export function useAppResize() {
   const appAdapter = useAppStoreAdapter()
   const appMenu = useAppStoreMenu()
 

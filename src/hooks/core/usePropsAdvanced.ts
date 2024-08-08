@@ -1,6 +1,6 @@
 import { cloneDeep, merge } from 'lodash-es'
 
-export const usePropsAdvanced = <T>(props: T) => {
+export function usePropsAdvanced<T>(props: T) {
   const propsRef = ref<Partial<T>>()
 
   /**

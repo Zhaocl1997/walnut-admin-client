@@ -1,12 +1,17 @@
 <script lang="ts">
-export default defineComponent({
-  name: 'WFormItemExtendDivider',
-})
 </script>
 
 <script lang="ts" setup>
 import { isUndefined } from 'easy-fns-ts'
 import { useFormContext } from '../../hooks/useFormContext'
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  startIndex: 0,
+})
+
+export default defineComponent({
+  name: 'WFormItemExtendDivider',
+})
 
 // TODO 888
 interface InternalProps {
@@ -23,17 +28,13 @@ interface InternalProps {
   titleClass?: string
 }
 
-const props = withDefaults(defineProps<InternalProps>(), {
-  startIndex: 0,
-})
-
 const active = ref(false)
 
 const { formSchemas } = useFormContext()
 
 const { t } = useAppI18n()
 
-const onToggle = () => {
+function onToggle() {
   active.value = !active.value
 
   for (
@@ -85,7 +86,7 @@ const getHelpMsg = computed(() => {
 
 <style scoped>
   .w-divider {
-    margin-top: 4px !important;
-    margin-bottom: 4px !important;
-  }
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
 </style>

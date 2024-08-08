@@ -1,5 +1,7 @@
 import { BuildUtilsWriteFile, generatedPathsFilePath } from '../utils'
-;(async function () {
+;
+
+(async function () {
   await BuildUtilsWriteFile(
     generatedPathsFilePath,
     `// This file is generated, please do not change.

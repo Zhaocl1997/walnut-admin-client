@@ -3,7 +3,7 @@ import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 /**
  * @description App Tab Core Function
  */
-export const useTabs = () => {
+export function useTabs() {
   const appTab = useAppStoreTab()
   const appAdapter = useAppStoreAdapter()
 

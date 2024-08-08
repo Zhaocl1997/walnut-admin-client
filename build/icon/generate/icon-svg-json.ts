@@ -8,7 +8,7 @@ import {
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
 import { IconLog, WSvgPrefix, iconSVGPath } from '../src'
 
-export const generateSvgJSON = async (whiteList?: string[]) => {
+export async function generateSvgJSON(whiteList?: string[]) {
   // build the empty json file
   await BuildUtilsWriteFile(
     iconSVGPath,
@@ -71,8 +71,8 @@ export const generateSvgJSON = async (whiteList?: string[]) => {
   await iconSet.forEach((name) => {
     // auto remove width and height
     const body = String(iconSet.toString(name))
-      .replaceAll(/width="(.[0-9]*)"/gi, '')
-      .replaceAll(/height="(.[0-9]*)"/gi, '')
+      .replaceAll(/width="(.\d*)"/gi, '')
+      .replaceAll(/height="(.\d*)"/gi, '')
 
     data.icons[name] = {
       body,

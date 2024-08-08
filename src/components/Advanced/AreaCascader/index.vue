@@ -66,7 +66,7 @@ async function onFeedback() {
   // multiple feedback
   if (
     props.multiple
-      && Array.isArray(props.value)
+    && Array.isArray(props.value)
   ) {
     if (props.value[0].length === 2)
       return

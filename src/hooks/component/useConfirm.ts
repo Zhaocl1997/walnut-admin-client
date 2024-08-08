@@ -1,13 +1,13 @@
 import type { DialogOptions } from 'naive-ui'
 
-export const useAppDialog = () => {
+export function useAppDialog() {
   return window.$dialog
 }
 
 /**
  * @description some cases need to ask for user confirm to continue next action
  */
-export const useAppConfirm = (msg: string, options?: DialogOptions) => {
+export function useAppConfirm(msg: string, options?: DialogOptions) {
   const dialog = useAppDialog()
 
   return new Promise<boolean>((resolve) => {

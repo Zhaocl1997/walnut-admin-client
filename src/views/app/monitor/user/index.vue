@@ -1,11 +1,12 @@
 <script lang="tsx">
-export default defineComponent({
-  name: 'AppMonitorUser',
-})
 </script>
 
 <script lang="tsx" setup>
 import { forceQuit, monitorUserAPI } from '@/api/app/monitor/user'
+
+export default defineComponent({
+  name: 'AppMonitorUser',
+})
 
 // locale unique key
 const localeKey = 'app.monitor.user'

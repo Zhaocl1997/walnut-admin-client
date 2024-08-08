@@ -59,12 +59,12 @@ export default defineComponent({ name: 'TextScrollHorizontal' })
   <div>
     <div
       ref="container"
-      class="overflow-hidden break-all whitespace-nowrap flex items-center"
+      class="flex items-center overflow-hidden whitespace-nowrap break-all"
     >
       <div
         ref="wrapper"
         :style="getWrapperStyle"
-        class="hover:(!animate-paused !cursor-default)"
+        class="!hover:animate-paused !hover:cursor-default"
       >
         <span
           v-for="(item, index) in texts"
@@ -81,11 +81,11 @@ export default defineComponent({ name: 'TextScrollHorizontal' })
 
 <style>
   @keyframes text_scroll_horizontal {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: v-bind(getTranslateX);
-    }
+  0% {
+    transform: translateX(0);
   }
+  100% {
+    transform: v-bind(getTranslateX);
+  }
+}
 </style>

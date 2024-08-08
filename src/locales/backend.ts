@@ -2,7 +2,7 @@
  * @description get language lists from back end, used for language change
  * This should only called once in AppLocalePicker component
  */
-export const AppI18nGetLangLists = async () => {
+export async function AppI18nGetLangLists() {
   const lists = await AppAxios.get<
     Pick<AppSystemLang, 'lang' | 'description' | 'order'>[]
   >({
@@ -20,7 +20,7 @@ export const AppI18nGetLangLists = async () => {
  * Called 1: app i18n init
  * Called 2: change language, need to request for new messages by new language
  */
-export const AppI18nGetI18nMsg = async (lang: string, cache = 1) => {
+export async function AppI18nGetI18nMsg(lang: string, cache = 1) {
   const messages = await AppAxios.get<Recordable>({
     url: `/system/locale/message/${lang}`,
     params: {

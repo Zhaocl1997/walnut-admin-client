@@ -1,11 +1,12 @@
 <script lang="ts">
-export default defineComponent({
-  name: 'User',
-})
 </script>
 
 <script lang="ts" setup>
 import { resetPassowrd, updatePassowrd, userAPI } from '@/api/system/user'
+
+export default defineComponent({
+  name: 'User',
+})
 
 const { t } = useAppI18n()
 

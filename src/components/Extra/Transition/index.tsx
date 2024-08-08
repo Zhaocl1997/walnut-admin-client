@@ -64,33 +64,33 @@ export default defineComponent({
     return () => {
       return props.group
         ? (
-        <TransitionGroup
-          enter-active-class={`animate__animated animate__${getActiveClass(
+            <TransitionGroup
+              enter-active-class={`animate__animated animate__${getActiveClass(
             'In',
           )}`}
-          leave-active-class={`animate__animated animate__${getActiveClass(
+              leave-active-class={`animate__animated animate__${getActiveClass(
             'Out',
           )}`}
-          appear={props.appear}
-          onBeforeEnter={onBeforeEnter}
-        >
-          {() => renderSlot(slots, 'default')}
-        </TransitionGroup>
+              appear={props.appear}
+              onBeforeEnter={onBeforeEnter}
+            >
+              {() => renderSlot(slots, 'default')}
+            </TransitionGroup>
           )
         : (
-        <Transition
-          enter-active-class={`animate__animated animate__${getActiveClass(
+            <Transition
+              enter-active-class={`animate__animated animate__${getActiveClass(
             'In',
           )}`}
-          leave-active-class={`animate__animated animate__${getActiveClass(
+              leave-active-class={`animate__animated animate__${getActiveClass(
             'Out',
           )}`}
-          mode={props.mode}
-          appear={props.appear}
-          onBeforeEnter={onBeforeEnter}
-        >
-          {() => renderSlot(slots, 'default')}
-        </Transition>
+              mode={props.mode}
+              appear={props.appear}
+              onBeforeEnter={onBeforeEnter}
+            >
+              {() => renderSlot(slots, 'default')}
+            </Transition>
           )
     }
   },

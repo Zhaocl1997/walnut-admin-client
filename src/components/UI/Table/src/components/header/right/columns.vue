@@ -113,16 +113,16 @@ export default defineComponent({
         <template #default>
           <div id="tableSortable" ref="tableColumnSettingRef">
             <div
-              v-for="item in tableColumns" :key="item.key" class="hstack justify-between my-2 mx-1" :class="[
+              v-for="item in tableColumns" :key="item.key" class="mx-1 my-2 hstack justify-between" :class="[
                 { 'table-column-draggable': !isInBlackList(item.key) },
               ]"
             >
-              <div class="hstack items-center mr-8">
+              <div class="mr-8 hstack items-center">
                 <n-tooltip :trigger="isInBlackList(item.key) ? 'manual' : 'hover'" placement="left">
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <w-icon
-                        icon="ant-design:drag-outlined" height="20" class="cursor-move mr-2" :class="[
+                        icon="ant-design:drag-outlined" height="20" class="mr-2 cursor-move" :class="[
                           { 'cursor-not-allowed': isInBlackList(item.key) },
                         ]"
                       />

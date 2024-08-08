@@ -1,6 +1,6 @@
 import { langAPI } from '@/api/system/lang'
 
-export const useLangList = () => {
+export function useLangList() {
   const langList = ref<OptionDataItem[]>([])
 
   const onGetLangList = async () => {

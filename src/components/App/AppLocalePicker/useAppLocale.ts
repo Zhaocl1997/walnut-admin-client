@@ -1,7 +1,7 @@
 /**
  * @link https://vue-i18n-next.intlify.dev/guide/advanced/lazy.html
  */
-export const useAppLocale = () => {
+export function useAppLocale() {
   const appLocale = useAppStoreLocale()
 
   const loadLocaleMessages = async (locale: ValueOfAppConstLocale) => {
@@ -10,8 +10,9 @@ export const useAppLocale = () => {
       Object.keys(
         (AppI18n.global?.messages as unknown as Ref<string[]>).value,
       ).includes(locale)
-    )
+    ) {
       return
+    }
 
     const backendMsg = await AppI18nGetI18nMsg(locale)
 

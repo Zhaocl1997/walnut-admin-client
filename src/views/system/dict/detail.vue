@@ -1,11 +1,12 @@
 <script lang="ts">
-export default defineComponent({
-  name: 'DictDetail',
-})
 </script>
 
 <script lang="ts" setup>
 import { dictDataAPI } from '@/api/system/dict'
+
+export default defineComponent({
+  name: 'DictDetail',
+})
 
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
@@ -14,14 +15,14 @@ const { currentRoute } = useAppRouter()
 const localeKey = 'dictData'
 const authKey = 'dict:data'
 
-const onBack = async () => {
+async function onBack() {
   await useAppRouterPush({ name: 'Dict', replace: true })
 }
 
 const title = computed(
   () =>
     (currentRoute.value.query?.name
-      && t(currentRoute.value.query.name as string)) as string,
+    && t(currentRoute.value.query.name as string)) as string,
 )
 
 const getLocalePrefix = computed(() => `dict.${(currentRoute.value.query?.name as string)?.split('.').slice(-1)}.`)

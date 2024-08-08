@@ -19,7 +19,7 @@ export interface useExposeOptions<T> {
 /**
  * @description Integrate entry expose
  */
-export const useExpose = <T>(options: useExposeOptions<T>) => {
+export function useExpose<T>(options: useExposeOptions<T>) {
   const { apis, expose, originalProxy = false } = options
 
   const instance = getCurrentInstance()

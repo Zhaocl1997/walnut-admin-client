@@ -1,11 +1,12 @@
 <script lang="ts">
-export default defineComponent({
-  name: 'LogAuth',
-})
 </script>
 
 <script lang="ts" setup>
 import { logAuthAPI } from '@/api/system/log'
+
+export default defineComponent({
+  name: 'LogAuth',
+})
 
 // locale unique key
 const localeKey = 'log.auth'

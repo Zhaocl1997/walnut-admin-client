@@ -1,4 +1,4 @@
-html[reduced-motion="true"] *,
+html[reduced-motion='true'] *,
 ::before,
 ::after {
   transition: none !important;
@@ -6,5 +6,5 @@ html[reduced-motion="true"] *,
   transition: none !important;
   transition: none !important;
   transition: none !important;
-  animation: none !important
+  animation: none !important;
 }

@@ -3,7 +3,7 @@ const appLock = useAppStoreLock()
 
 const loading = ref(false)
 
-const onUnlock = () => {
+function onUnlock() {
   loading.value = true
 
   setTimeout(async () => {
@@ -14,7 +14,7 @@ const onUnlock = () => {
 </script>
 
 <template>
-  <n-button text :disabled="loading" class="absolute top-8 left-1/2 -translate-x-1/2" @click="onUnlock">
+  <n-button text :disabled="loading" class="absolute left-1/2 top-8 -translate-x-1/2" @click="onUnlock">
     <w-icon icon="ant-design:unlock-outlined" height="24" />
   </n-button>
 </template>
