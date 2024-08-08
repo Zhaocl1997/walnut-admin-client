@@ -1,12 +1,7 @@
 <script lang="ts" setup>
-// TODO 888
-interface InternalProps {
-  closable?: boolean
-  title?: string
-  loading?: boolean
-  helpMessage?: string
-  defaultButton?: boolean
-}
+defineOptions({
+  name: 'WDrawer',
+})
 
 const props = withDefaults(defineProps<InternalProps>(), {
   closable: false,
@@ -15,12 +10,15 @@ const props = withDefaults(defineProps<InternalProps>(), {
 })
 
 const emits = defineEmits(['yes', 'no'])
-</script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'WDrawer',
-})
+// TODO 888
+interface InternalProps {
+  closable?: boolean
+  title?: string
+  loading?: boolean
+  helpMessage?: string
+  defaultButton?: boolean
+}
 </script>
 
 <template>

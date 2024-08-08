@@ -4,13 +4,13 @@
 <script lang="ts" setup>
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 
+defineOptions({
+  name: 'WQRCode',
+})
+
 const props = defineProps<InternalProps>()
 
 const emits = defineEmits(['refresh'])
-
-export default defineComponent({
-  name: 'WQRCode',
-})
 
 // TODO 888
 interface InternalProps {

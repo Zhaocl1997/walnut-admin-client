@@ -3,6 +3,10 @@ import { CropperCanvas, CropperCrosshair, CropperGrid, CropperHandle, CropperIma
 import { genString } from 'easy-fns-ts'
 import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 
+defineOptions({
+  name: 'WVendorCropper',
+})
+
 const props = withDefaults(defineProps<InternalProps>(), {})
 const emits = defineEmits(['update:value', 'update:src'])
 // need to call $define to work
@@ -186,12 +190,6 @@ onMounted(() => {
       onReset()
     }, 200)
   }
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorCropper',
 })
 </script>
 

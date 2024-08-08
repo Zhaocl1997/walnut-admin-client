@@ -1,14 +1,11 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'EmailDemo',
+  defaultView: false,
+})
+
 const state = ref<any>({
   email2: '674351624@qq.com',
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'EmailDemo',
-
-  defaultView: false,
 })
 </script>
 

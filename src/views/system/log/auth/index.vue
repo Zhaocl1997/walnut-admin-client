@@ -1,10 +1,7 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { logAuthAPI } from '@/api/system/log'
 
-export default defineComponent({
+defineOptions({
   name: 'LogAuth',
 })
 

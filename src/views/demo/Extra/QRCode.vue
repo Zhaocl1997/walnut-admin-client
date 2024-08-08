@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'QRCodeDemo',
+  defaultView: false,
+})
+
 const getUrl = () => `https://www.baidu.com/?t=${Date.now()}`
 
 const url = ref(__APP_INFO__.urls.doc)
@@ -10,14 +15,6 @@ function onRefresh(callback: Fn) {
   url2.value = getUrl()
   callback()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'QRCodeDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

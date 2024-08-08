@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'AppAuthorize',
+})
+
 const props = defineProps<{
   permission: string
   presetWidth: string
@@ -54,12 +58,6 @@ function onKeyup(e: KeyboardEvent) {
     onSuccess()
   }
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppAuthorize',
-})
 </script>
 
 <template>

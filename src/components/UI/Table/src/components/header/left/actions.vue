@@ -4,6 +4,10 @@ import type { WTable } from '../../../types'
 
 import { useTableContext } from '../../../hooks/useTableContext'
 
+defineOptions({
+  name: 'WTableHeaderLeftActions',
+})
+
 const { t } = useI18n()
 
 const userPermission = useAppStoreUserPermission()
@@ -62,12 +66,6 @@ const options: ComputedRef<
     i => tableProps.value.headerActions?.indexOf(i.type),
   ).filter(i => isShow(i.type)),
 )
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WTableHeaderLeftActions',
-})
 </script>
 
 <template>

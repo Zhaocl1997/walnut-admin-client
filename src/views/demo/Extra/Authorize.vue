@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'AuthorizeDemo',
+  defaultView: false,
+})
+
 const p1 = 'some:strange:permission:string'
 const p2 = 'some:strange:permission:string2'
 const p3 = 'some:strange:permission:string3'
@@ -17,14 +22,6 @@ function onReset() {
     p3show.value = true
   })
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AuthorizeDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

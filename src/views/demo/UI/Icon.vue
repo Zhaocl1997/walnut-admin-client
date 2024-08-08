@@ -1,17 +1,12 @@
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'IconDemo',
-
   defaultView: false,
-
-  setup() {
-    return {
-      onClick() {
-        console.log('icon clicked')
-      },
-    }
-  },
 })
+
+function onClick() {
+  console.log('icon clicked')
+}
 </script>
 
 <template>

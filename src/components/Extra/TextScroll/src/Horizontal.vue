@@ -1,10 +1,14 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'TextScrollHorizontal',
+})
+
+const props = defineProps<HorizontalProps>()
+
 interface HorizontalProps {
   texts: string[]
   speed: number
 }
-
-const props = defineProps<HorizontalProps>()
 
 const container = ref<HTMLDivElement>()
 const wrapper = ref<HTMLDivElement>()
@@ -49,10 +53,6 @@ onMounted(() => {
   wrapperWidthRef.value = containerWidth
   contentWidthRef.value = contentWidth
 })
-</script>
-
-<script lang="ts">
-export default defineComponent({ name: 'TextScrollHorizontal' })
 </script>
 
 <template>

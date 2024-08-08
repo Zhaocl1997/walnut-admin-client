@@ -2,6 +2,22 @@
 import { toggleClass } from 'easy-fns-ts'
 import { useModalDraggable } from './hook/useModalDraggable'
 
+defineOptions({
+  name: 'WModal',
+})
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  show: false,
+  width: '25%',
+  height: 'auto',
+  draggable: true,
+  fullscreen: true,
+  defaultButton: true,
+  segmented: true,
+})
+
+const emits = defineEmits(['yes', 'no', 'update:show'])
+
 // TODO 888
 interface InternalProps {
   show?: boolean
@@ -15,18 +31,6 @@ interface InternalProps {
   defaultButton?: boolean
   segmented?: boolean
 }
-
-const props = withDefaults(defineProps<InternalProps>(), {
-  show: false,
-  width: '25%',
-  height: 'auto',
-  draggable: true,
-  fullscreen: true,
-  defaultButton: true,
-  segmented: true,
-})
-
-const emits = defineEmits(['yes', 'no', 'update:show'])
 
 const { t } = useAppI18n()
 
@@ -70,12 +74,6 @@ function onUpdateShow(v: boolean) {
   if (!v)
     onNo()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WModal',
-})
 </script>
 
 <template>

@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'DividerForm',
+})
+
 const configData = ref({
   title: '',
   titlePlacement: 'center',
@@ -208,12 +212,6 @@ const [register2] = useForm<typeof formData.value>({
       },
     },
   ],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'DividerForm',
 })
 </script>
 

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { option1, option2, option3 } from './option'
-</script>
 
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'EchartsDemo',
 })
 </script>

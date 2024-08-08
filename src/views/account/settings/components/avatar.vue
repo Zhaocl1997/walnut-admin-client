@@ -1,17 +1,14 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'WAvatar',
+  defaultView: false,
+})
+
 const props = withDefaults(defineProps<{ value?: string, size?: number }>(), {
   size: 24,
 })
 
 const userProfile = useAppStoreUserProfile()
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WAvatar',
-
-  defaultView: false,
-})
 </script>
 
 <template>

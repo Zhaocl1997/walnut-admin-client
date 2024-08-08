@@ -10,6 +10,11 @@ import SharedOther from './shared/other.vue'
 
 import { setAuthContext } from './hooks/useAuthContext'
 
+defineOptions({
+  name: 'AuthSignin',
+  defaultView: false,
+})
+
 const { t, locale } = useAppI18n()
 
 const tabsInstRef = ref<TabsInst>()
@@ -35,14 +40,6 @@ setAuthContext({ loading })
 
 onMounted(async () => {
   await appAuthSettings.getAppAuthSettings()
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AuthSignin',
-
-  defaultView: false,
 })
 </script>
 

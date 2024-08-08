@@ -1,15 +1,13 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'App404',
+})
+
 const appMenu = useAppStoreMenu()
 
 async function onClick() {
   await appMenu.goIndex()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'App404',
-})
 </script>
 
 <template>

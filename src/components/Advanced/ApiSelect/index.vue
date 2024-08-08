@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-</script>
-
-<script lang="ts">
 import { isFunction } from 'easy-fns-ts'
 import { WithValueProps } from '@/components/HOC/WithValue'
+
+defineOptions({
+  name: 'WApiSelect',
+  inheritAttrs: false,
+})
 
 const props = defineProps({
   ...WithValueProps,
@@ -169,11 +171,6 @@ onMounted(async () => {
 
   if (props.value)
     await onFeedback()
-})
-
-export default defineComponent({
-  name: 'WApiSelect',
-  inheritAttrs: false,
 })
 </script>
 

@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 import AppSettingsForm from './form/index.vue'
 
-const show = ref(false)
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'AppSettings',
 })
+
+const show = ref(false)
 </script>
 
 <template>

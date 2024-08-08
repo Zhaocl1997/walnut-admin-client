@@ -1,10 +1,7 @@
-<script lang="tsx">
-</script>
-
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { forceQuit, monitorUserAPI } from '@/api/app/monitor/user'
 
-export default defineComponent({
+defineOptions({
   name: 'AppMonitorUser',
 })
 

@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'CodeMirrorDemo',
+})
+
 const code1Raw = import.meta.glob(
   '@/hooks/vueuse/useDark.ts',
   {
@@ -17,12 +21,6 @@ const code2Raw = import.meta.glob(
 
 const code1 = ref(Object.values(code1Raw)[0])
 const code2 = ref(Object.values(code2Raw)[0])
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'CodeMirrorDemo',
-})
 </script>
 
 <template>

@@ -1,20 +1,17 @@
 <script lang="ts" setup>
 import { options } from '../data'
 
+defineOptions({
+  name: 'RadioDemo',
+  defaultView: false,
+})
+
 const state = reactive({
   radio1: '',
   radio2: '1',
   radio3: '4',
   radio4: 4,
   radio5: null,
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'RadioDemo',
-
-  defaultView: false,
 })
 </script>
 

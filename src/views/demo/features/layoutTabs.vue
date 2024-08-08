@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'FeatureLayoutTabs',
+})
+
 const appTab = useAppStoreTab()
 
 const index = ref(0)
@@ -150,12 +154,6 @@ function onDynamicQueryandParam(type: number) {
 
   pool[type]()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'FeatureLayoutTabs',
-})
 </script>
 
 <template>

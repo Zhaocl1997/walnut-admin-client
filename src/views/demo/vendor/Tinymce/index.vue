@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'TinymceDemo',
+})
+
 const value = ref(
   '<p style="text-align: center;"><span style="color: rgb(224, 62, 45); font-size: 36pt;"><em><strong>This is default content</strong></em></span></p>',
 )
@@ -29,12 +33,6 @@ const [register] = useForm<typeof formData.value>({
       },
     },
   ],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'TinymceDemo',
 })
 </script>
 

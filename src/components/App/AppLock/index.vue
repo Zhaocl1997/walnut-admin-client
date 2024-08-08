@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'AppLock',
+})
+
 const appLock = useAppStoreLock()
 const { currentRoute } = useAppRouter()
 
@@ -7,18 +11,8 @@ async function onLock() {
 }
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'AppLock',
-})
-</script>
-
 <template>
   <div>
-    <w-icon
-      icon="ant-design:lock-outlined"
-      height="24"
-      @click="onLock"
-    />
+    <w-icon icon="ant-design:lock-outlined" height="24" @click="onLock" />
   </div>
 </template>

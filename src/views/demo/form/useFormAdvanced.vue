@@ -1,10 +1,8 @@
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'UseFormAdvanced',
 })
-</script>
 
-<script lang="ts" setup>
 const configData = ref({
   preset: 'modal',
   maskClosable: true,

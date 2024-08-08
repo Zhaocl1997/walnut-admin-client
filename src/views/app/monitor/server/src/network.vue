@@ -4,6 +4,11 @@ import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 import type { IServerInfo } from '@/api/app/monitor/server'
 import { getNetworkInfo } from '@/api/app/monitor/server'
 
+defineOptions({
+  name: 'AppMonitorServerNetwork',
+  defaultView: false,
+})
+
 const props = defineProps<{ networkPermission: string }>()
 
 const { t } = useAppI18n()
@@ -32,14 +37,6 @@ async function onInit() {
 }
 
 onMounted(onInit)
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppMonitorServerNetwork',
-
-  defaultView: false,
-})
 </script>
 
 <template>

@@ -2,6 +2,11 @@
 import { useAuthContext } from '../hooks/useAuthContext'
 import { getGiteeUri, getGithubUri, getWeiboUri } from '@/api/auth/third'
 
+defineOptions({
+  name: 'SharedOtherWayToSignin',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 const userAuth = useAppStoreUserAuth()
 const appAuthSettings = useAppStoreSettingBackend()
@@ -105,14 +110,6 @@ async function onClick(key: string) {
 // parent window closed, child window close as well
 useEventListener('beforeunload', () => {
   childWindow?.close()
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'SharedOtherWayToSignin',
-
-  defaultView: false,
 })
 </script>
 

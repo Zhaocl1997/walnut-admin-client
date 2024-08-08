@@ -1,27 +1,20 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { getTreeData } from '../data'
 
-export default defineComponent({
+defineOptions({
   name: 'SelectTreeDemo',
-
   defaultView: false,
+})
 
-  setup() {
-    const state = reactive({
-      selectTree1: '9',
-      selectTree2: [10, 17],
+const state = ref({
+  selectTree1: '9',
+  selectTree2: [10, 17],
 
-      data: getTreeData(),
+  data: getTreeData(),
 
-      props: {
-        id: '_id',
-        label: '_label',
-      },
-    })
-
-    return {
-      ...toRefs(state),
-    }
+  props: {
+    id: '_id',
+    label: '_label',
   },
 })
 </script>

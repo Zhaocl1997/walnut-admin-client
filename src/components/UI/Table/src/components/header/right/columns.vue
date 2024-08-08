@@ -5,7 +5,10 @@ import type { WTable } from '../../../types'
 import { useTableContext } from '../../../hooks/useTableContext'
 import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
-const { t } = useAppI18n()
+defineOptions({
+  name: 'WTableHeaderRightColumns',
+})
+
 const { tableColumns } = useTableContext()
 
 const popoverShow = ref(false)
@@ -80,24 +83,18 @@ function getTitle(item: WTable.Column) {
 
   // handle dict column title
   if (item.extendType === 'dict' && item.useDictNameAsTitle)
-    return t(`dict.name.${item.dictType}`)
+    return (`dict.name.${item.dictType}`)
 
   if (typeof item._titleText === 'function')
     return item._titleText()
 
-  return t('app.base.selection')
+  return ('app.base.selection')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WTableHeaderRightColumns',
-})
 </script>
 
 <template>
   <n-tooltip trigger="hover">
-    {{ t('table.base.settings') }}
+    {{ $t('table.base.settings') }}
     <template #trigger>
       <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
@@ -106,7 +103,7 @@ export default defineComponent({
 
         <template #header>
           <n-checkbox :checked="getChecked" :indeterminate="getIndeterminate" @update-checked="onUpdateCheckAllChecked">
-            {{ t('app.button.check') }}
+            {{ $t('app.button.check') }}
           </n-checkbox>
         </template>
 
@@ -129,14 +126,14 @@ export default defineComponent({
                     </n-button>
                   </template>
 
-                  {{ t('table.base.settings.column.drag') }}
+                  {{ $t('table.base.settings.column.drag') }}
                 </n-tooltip>
 
                 <n-checkbox
                   :disabled="isInBlackList(item.key)" :checked="item._internalShow"
                   @update-checked="onUpdateItemChecked(item)"
                 >
-                  {{ getTitle(item) }}
+                  {{ $t(getTitle(item)) }}
                 </n-checkbox>
               </div>
 
@@ -159,8 +156,8 @@ export default defineComponent({
 
                   {{
                     item.fixed === 'left'
-                      ? t('table.base.settings.column.unfix')
-                      : t('table.base.settings.column.fixLeft')
+                      ? $t('table.base.settings.column.unfix')
+                      : $t('table.base.settings.column.fixLeft')
                   }}
                 </n-tooltip>
 
@@ -184,8 +181,8 @@ export default defineComponent({
 
                   {{
                     item.fixed === 'right'
-                      ? t('table.base.settings.column.unfix')
-                      : t('table.base.settings.column.fixRight')
+                      ? $t('table.base.settings.column.unfix')
+                      : $t('table.base.settings.column.fixRight')
                   }}
                 </n-tooltip>
               </div>

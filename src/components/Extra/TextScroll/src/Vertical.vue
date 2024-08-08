@@ -1,11 +1,15 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'TextScrollVertical',
+})
+
+const props = withDefaults(defineProps<VerticalProps>(), { lineHeight: 28 })
+
 interface VerticalProps {
   texts: string[]
   speed: number
   lineHeight?: number
 }
-
-const props = withDefaults(defineProps<VerticalProps>(), { lineHeight: 28 })
 
 let timer = 0
 let innerTimer = 0
@@ -66,10 +70,6 @@ onMounted(() => {
 onUnmounted(() => {
   cancelAnimationFrame(timer)
 })
-</script>
-
-<script lang="ts">
-export default defineComponent({ name: 'TextScrollVertical' })
 </script>
 
 <template>

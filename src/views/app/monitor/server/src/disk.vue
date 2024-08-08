@@ -4,6 +4,11 @@ import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 import type { IServerInfo } from '@/api/app/monitor/server'
 import { getDiskInfo } from '@/api/app/monitor/server'
 
+defineOptions({
+  name: 'AppMonitorServerDisk',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 
 const info = ref<IServerInfo.Disk>()
@@ -30,14 +35,6 @@ async function onInit() {
 }
 
 onMounted(onInit)
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppMonitorServerDisk',
-
-  defaultView: false,
-})
 </script>
 
 <template>

@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import type { MaybeElement } from '@vueuse/core'
 
+defineOptions({
+  name: 'Dashboard',
+})
+
 const el = shallowRef<MaybeElement>()
 
 const {
@@ -21,12 +25,6 @@ const {
 )
 
 play()
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'Dashboard',
-})
 </script>
 
 <template>

@@ -1,17 +1,13 @@
-<script lang="tsx">
+<script lang="ts" setup>
 import type { WTimePickerProps } from './types'
 
 import { props } from './props'
 
-export default defineComponent({
+defineOptions({
   name: 'WTimePicker',
-
-  props,
-
-  emits: [],
-
-  setup(props: WTimePickerProps, { attrs, slots, emit, expose }) {
-    return () => <n-time-picker></n-time-picker>
-  },
 })
 </script>
+
+<template>
+  <n-time-picker />
+</template>

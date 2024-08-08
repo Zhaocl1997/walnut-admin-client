@@ -8,6 +8,18 @@ import { closeSearchPanel, openSearchPanel } from '@codemirror/search'
 
 import { languages } from './language'
 
+defineOptions({
+  name: 'WVendorCodeMirror',
+})
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  placeholder: 'Code goes here...',
+  height: '300px',
+  autofocus: false,
+})
+
+const emits = defineEmits(['update:value', 'blur', 'focus'])
+
 // TODO 888
 interface InternalProps {
   value: string
@@ -16,13 +28,6 @@ interface InternalProps {
   height?: string
   autofocus?: boolean
 }
-
-const props = withDefaults(defineProps<InternalProps>(), {
-  placeholder: 'Code goes here...',
-  height: '300px',
-  autofocus: false,
-})
-const emits = defineEmits(['update:value', 'blur', 'focus'])
 
 const { t } = useAppI18n()
 
@@ -121,12 +126,6 @@ function onSearch() {
 
   searchPanelOpen.value = !searchPanelOpen.value
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorCodeMirror',
-})
 </script>
 
 <template>

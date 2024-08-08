@@ -3,6 +3,11 @@ import type { AxiosRequestConfig } from 'axios'
 import { HelloAPI, HelloAPIWithToken } from '@/api'
 import { removeAllCancel, removeLatestRequest } from '@/utils/axios/cancel'
 
+defineOptions({
+  name: 'AxiosDemo',
+  defaultView: false,
+})
+
 const withToken = ref(true)
 
 async function _request(payload: AxiosRequestConfig) {
@@ -64,14 +69,6 @@ function onSend(type: number) {
 
   pool[type]()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AxiosDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

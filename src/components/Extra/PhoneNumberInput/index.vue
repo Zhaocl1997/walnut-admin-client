@@ -1,6 +1,3 @@
-<script lang="tsx">
-</script>
-
 <script lang="tsx" setup>
 import type { InputInst, SelectFilter, SelectRenderTag } from 'naive-ui'
 import type { CountryCallingCode, CountryCode, NationalNumber, NumberType } from 'libphonenumber-js'
@@ -11,6 +8,10 @@ import type { PhoneNumberInputOption } from './types'
 import options from './data'
 import { getCurrentCountry, getExamplePhoneNumber, loadPhoneNumberExamplesFile } from './utils'
 import './icon.css'
+
+defineOptions({
+  name: 'WPhoneNumberInput',
+})
 
 const props = withDefaults(defineProps<InternalProps>(), {
   countryCode: 'CN',
@@ -23,10 +24,6 @@ const props = withDefaults(defineProps<InternalProps>(), {
 })
 
 const emits = defineEmits<{ (e: 'update:value', value: string): void, (e: 'update', value: UpdateParams): void }>()
-
-export default defineComponent({
-  name: 'WPhoneNumberInput',
-})
 
 // TODO 888
 interface InternalProps {
@@ -236,8 +233,8 @@ watch(() => _countryCode.value, async (v) => {
       await loadPhoneNumberExamplesFile()
       loadExamples.value = true
     }
-    const res = getExamplePhoneNumber(v)
-    const formatted = parsePhoneNumberFromString(res?.nationalNumber!, v)
+    const res = getExamplePhoneNumber(v)!
+    const formatted = parsePhoneNumberFromString(res.nationalNumber, v)
     _example.value = formatted?.formatNational()
   }
 }, { immediate: true })

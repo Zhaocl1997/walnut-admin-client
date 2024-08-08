@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'DrawerDemo',
+  defaultView: false,
+})
+
 const drawerShow = ref(false)
 
 const configFormData = ref({
@@ -111,14 +116,6 @@ const [register] = useForm<typeof configFormData.value>({
       },
     },
   ],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'DrawerDemo',
-
-  defaultView: false,
 })
 </script>
 

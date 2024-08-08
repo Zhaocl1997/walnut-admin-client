@@ -1,6 +1,13 @@
 <script lang="ts" setup>
 import type { TagProps } from 'naive-ui'
 
+defineOptions({
+  name: 'WHomeChartCard',
+  defaultView: false,
+})
+
+const props = defineProps<InteralProps>()
+
 // TODO 888
 interface InteralProps {
   title?: string
@@ -12,16 +19,6 @@ interface InteralProps {
 
   option?: EChartsOption
 }
-
-const props = defineProps<InteralProps>()
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WHomeChartCard',
-
-  defaultView: false,
-})
 </script>
 
 <template>

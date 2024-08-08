@@ -15,7 +15,7 @@ import type { WInputNumberProps } from '../../InputNumber'
 import type { WSelectProps } from '../../Select'
 import type { WRadioProps } from '../../Radio'
 import type { WCheckboxProps } from '../../Checkbox'
-import type { WSwitchProps } from '../../Switch'
+import type { ICompUISwitchPropsPartial } from '../../Switch'
 import type { WTimePickerProps } from '../../TimePicker'
 import type { WDatePickerProps } from '../../DatePicker'
 import type { WDynamicTagsProps } from '../../DynamicTags'
@@ -148,7 +148,7 @@ export declare namespace WForm {
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
       'Base:ColorPicker': WColorPickerProps
-      'Base:Switch': WSwitchProps
+      'Base:Switch': ICompUISwitchPropsPartial
       'Base:TimePicker': WTimePickerProps
       'Base:DatePicker': WDatePickerProps
       'Base:DynamicTags': WDynamicTagsProps

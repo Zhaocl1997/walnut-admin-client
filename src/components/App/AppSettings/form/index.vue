@@ -9,9 +9,11 @@ import SettingsFormBreadcrumb from './breadcrumb.vue'
 import SettingsFormMenu from './menu.vue'
 import SettingsFormFooter from './footer.vue'
 
-const appSetting = useAppStoreSetting()
+defineOptions({
+  name: 'AppSettingsForm',
+})
 
-const keys = ['app', 'logo', 'header', 'tabs', 'breadcrumb', 'menu', 'footer']
+const appSetting = useAppStoreSetting()
 
 const { copy, copied } = useClipboard({
   source: computed(() =>
@@ -35,12 +37,6 @@ const { copy, copied } = useClipboard({
 function onReset() {
   window.location.reload()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppSettingsForm',
-})
 </script>
 
 <template>

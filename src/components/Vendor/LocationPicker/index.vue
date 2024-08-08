@@ -1,12 +1,9 @@
 <script lang="ts" setup>
 import { genString } from 'easy-fns-ts'
 
-// TODO 888
-interface InternalProps {
-  value?: number[]
-  height?: string
-  width?: string
-}
+defineOptions({
+  name: 'WVendorLocationPicker',
+})
 
 const props = withDefaults(defineProps<InternalProps>(), {
   height: '50vh',
@@ -14,6 +11,13 @@ const props = withDefaults(defineProps<InternalProps>(), {
 })
 
 const emits = defineEmits(['update:value'])
+
+// TODO 888
+interface InternalProps {
+  value?: number[]
+  height?: string
+  width?: string
+}
 
 const appKey = useAppStoreSecretKey()
 
@@ -144,12 +148,6 @@ async function onInitMap() {
 
 onMounted(() => {
   appKey.initBaiduKey()
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorLocationPicker',
 })
 </script>
 

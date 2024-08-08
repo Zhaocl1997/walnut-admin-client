@@ -1,16 +1,11 @@
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+import type { ICompExtraDemoCardPropsPartial } from '.'
+
+defineOptions({
   name: 'WDemoCard',
-
-  props: {
-    title: String as PropType<string>,
-    description: [String, Array] as PropType<string | string[]>,
-  },
-
-  emits: [],
-
-  setup(props, ctx) { },
 })
+
+defineProps<ICompExtraDemoCardPropsPartial>()
 </script>
 
 <template>

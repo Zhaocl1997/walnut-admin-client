@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'SelectDemo',
+  defaultView: false,
+})
+
 const state = reactive<any>({
   select1: '1',
   select2: 1,
@@ -24,14 +29,6 @@ options.push({
   value: '999',
   label:
       'label-999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999',
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'SelectDemo',
-
-  defaultView: false,
 })
 </script>
 

@@ -1,15 +1,12 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'DynamicTagsDemo',
+  defaultView: false,
+})
+
 const state = reactive({
   dynamicTag1: [],
   dynamicTag2: ['1', '2', '3', '4'],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'DynamicTagsDemo',
-
-  defaultView: false,
 })
 </script>
 

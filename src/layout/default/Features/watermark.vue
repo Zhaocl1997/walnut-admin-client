@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-const appSetting = useAppStoreSetting()
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'TheAppWatermark',
 })
+
+const appSetting = useAppStoreSetting()
 </script>
 
 <template>

@@ -19,13 +19,11 @@ import DemoTextScroll from './TextScroll.vue'
 import DemoNumberPhoneInput from './PhoneNumberInput.vue'
 import DemoEmailInput from './EmailInput.vue'
 
-const appAdapter = useAppStoreAdapter()
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'DemoExtra',
 })
+
+const appAdapter = useAppStoreAdapter()
 </script>
 
 <template>

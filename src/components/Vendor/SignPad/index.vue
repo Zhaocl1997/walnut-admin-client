@@ -4,6 +4,17 @@ import SignaturePad from 'signature_pad'
 import { toJpeg, toPng } from 'html-to-image'
 import { genString } from 'easy-fns-ts'
 
+defineOptions({
+  name: 'WVendorSignaturePad',
+})
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  width: '100%',
+  height: '100%',
+  // @ts-expect-error
+  options: {},
+})
+
 // TODO 888
 interface InternalProps {
   options?: Options
@@ -13,13 +24,6 @@ interface InternalProps {
   defaultUrl?: string
   content?: string
 }
-
-const props = withDefaults(defineProps<InternalProps>(), {
-  width: '100%',
-  height: '100%',
-  // @ts-expect-error
-  options: {},
-})
 
 const signPadId = ref(`signpad-${genString(8)}`)
 const wrapperId = ref(`wrapper-${genString(8)}`)
@@ -168,12 +172,6 @@ defineExpose({
   undo,
   fromDataURL,
   getImage,
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorSignaturePad',
 })
 </script>
 

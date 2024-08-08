@@ -5,11 +5,11 @@
 import { useFormContext } from '../../hooks/useFormContext'
 import { toggleFormItemId } from '../../hooks/useFormItemId'
 
-const props = defineProps<InternalProps>()
-
-export default defineComponent({
+defineOptions({
   name: 'WFormItemExtendQuery',
 })
+
+const props = defineProps<InternalProps>()
 
 // TODO 888
 interface InternalProps {

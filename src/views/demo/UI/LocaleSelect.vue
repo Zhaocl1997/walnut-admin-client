@@ -1,17 +1,14 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'LocaleSelectDemo',
+  defaultView: false,
+})
+
 const state = reactive({
   locale1: '',
   locale2: 'app.button.yes',
   locale3: '',
   locale4: 'sys.menu.homepage',
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'LocaleSelectDemo',
-
-  defaultView: false,
 })
 </script>
 

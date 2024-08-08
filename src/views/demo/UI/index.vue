@@ -13,13 +13,11 @@ import DemoLocation from './LocationPicker.vue'
 import DemoDict from './Dict.vue'
 import DemoColorPicker from './ColorPicker.vue'
 
-const appAdapter = useAppStoreAdapter()
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'DemoUI',
 })
+
+const appAdapter = useAppStoreAdapter()
 </script>
 
 <template>

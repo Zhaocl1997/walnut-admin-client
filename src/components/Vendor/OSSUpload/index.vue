@@ -8,6 +8,22 @@ import type {
 import { genString } from 'easy-fns-ts'
 import { AliOSSClient } from './client'
 
+defineOptions({
+  name: 'WVendorOSSUpload',
+  inheritAttrs: false,
+})
+
+const props = withDefaults(defineProps<InternerProps>(), {
+  region: 'oss-cn-beijing',
+  bucket: 'walnut-demo',
+  folder: 'example',
+  max: 10,
+  size: 1024 * 10,
+  crossoverSize: 1024 * 30,
+})
+
+const emits = defineEmits(['update:value'])
+
 // TODO 888
 interface InternerProps {
   value?: string[]
@@ -23,16 +39,6 @@ interface InternerProps {
   // KB, file size to decide whether to use multipart upload
   crossoverSize?: number
 }
-
-const props = withDefaults(defineProps<InternerProps>(), {
-  region: 'oss-cn-beijing',
-  bucket: 'walnut-demo',
-  folder: 'example',
-  max: 10,
-  size: 1024 * 10,
-  crossoverSize: 1024 * 30,
-})
-const emits = defineEmits(['update:value'])
 
 const { t } = useAppI18n()
 
@@ -164,14 +170,6 @@ onMounted(() => {
       url: AliOSSClient.instance.getFullUrl(`${props.folder}/${i}`),
     }))
   }, 500)
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorOSSUpload',
-
-  inheritAttrs: false,
 })
 </script>
 

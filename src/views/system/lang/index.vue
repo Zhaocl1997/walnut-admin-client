@@ -1,10 +1,7 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { langAPI } from '@/api/system/lang'
 
-export default defineComponent({
+defineOptions({
   name: 'Lang',
 })
 

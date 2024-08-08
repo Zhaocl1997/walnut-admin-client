@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import type { UploadFileInfo } from 'naive-ui'
 
+defineOptions({
+  name: 'AbsImage',
+})
+
 const emits = defineEmits(['change'])
 
 const { createBlobUrl } = useBlob()
@@ -16,12 +20,6 @@ defineExpose({
   onGetBlobURL: () => createBlobUrl(currentFile.value!),
   onGetBase64: () => blobToBase64(currentFile.value!),
   onGetBlob: () => currentFile.value,
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AbsImage',
 })
 </script>
 

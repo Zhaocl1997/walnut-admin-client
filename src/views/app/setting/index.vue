@@ -1,14 +1,9 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { appSettingAPI } from '@/api/app/setting'
 
-export default defineComponent({
+defineOptions({
   name: 'AppSetting',
 })
-
-const { t } = useAppI18n()
 
 // locale unique key
 const localeKey = 'appSetting'

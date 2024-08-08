@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { omit } from 'lodash-es'
 
@@ -9,8 +6,8 @@ import { useMenuFormSchema } from './useMenuFormSchema'
 import { menuAPI } from '@/api/system/menu'
 import { useTree } from '@/components/UI/Tree'
 
-export default defineComponent({
-  /* eslint-disable vue/no-reserved-component-names */
+defineOptions({
+  // eslint-disable-next-line vue/no-reserved-component-names
   name: 'Menu',
 })
 

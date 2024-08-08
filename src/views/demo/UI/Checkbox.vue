@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import { options } from '../data'
 
+defineOptions({
+  name: 'CheckboxDemo',
+  defaultView: false,
+})
+
 const state = reactive({
   checkbox1: [],
   checkbox2: [1, 4],
@@ -8,14 +13,6 @@ const state = reactive({
   checkbox4: '',
   checkbox5: '1,4',
   checkbox6: '1,3,4,5',
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'CheckboxDemo',
-
-  defaultView: false,
 })
 </script>
 

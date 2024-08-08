@@ -5,14 +5,12 @@ import WHomeChartCard from './components/ChartCard.vue'
 import { useNumberCard } from './useNumberCard'
 import { useChartCard } from './useChartCard'
 
-const { cards: numberCards, loading: numberCardLoading } = useNumberCard()
-const { cards: chartCards, loading: chartCardLoading } = useChartCard()
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'Homepage',
 })
+
+const { cards: numberCards, loading: numberCardLoading } = useNumberCard()
+const { cards: chartCards, loading: chartCardLoading } = useChartCard()
 </script>
 
 <template>

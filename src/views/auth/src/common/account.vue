@@ -3,6 +3,11 @@
 import { NButton, NCheckbox } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 
+defineOptions({
+  name: 'SignInWithAccount',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 const appAuth = useAppStoreUserAuth()
 const appNaive = useAppStoreNaive()
@@ -141,14 +146,6 @@ onMounted(() => {
 
 defineExpose({
   setFormData,
-})
-</script>
-
-<script lang="tsx">
-export default defineComponent({
-  name: 'SignInWithAccount',
-
-  defaultView: false,
 })
 </script>
 

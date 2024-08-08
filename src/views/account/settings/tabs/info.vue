@@ -4,6 +4,11 @@ import WAvatar from '../components/avatar.vue'
 import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
 import { userAPI } from '@/api/system/user'
 
+defineOptions({
+  name: 'WAccountSettingsTabInfo',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 const userProfile = useAppStoreUserProfile()
 
@@ -124,14 +129,6 @@ const [register] = useForm<typeof formData.value>({
       },
     },
   ],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WAccountSettingsTabInfo',
-
-  defaultView: false,
 })
 </script>
 

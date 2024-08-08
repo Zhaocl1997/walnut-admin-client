@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 
+defineOptions({
+  name: 'About',
+})
+
 const { t } = useAppI18n()
 
 const { lastBuildTime, version, deps, devDeps, urls } = __APP_INFO__
@@ -71,12 +75,6 @@ const DevDepItems = ref<WDescriptionsItem[]>(
     typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
   })) as WDescriptionsItem[],
 )
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'About',
-})
 </script>
 
 <template>

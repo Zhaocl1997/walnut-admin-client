@@ -1,15 +1,13 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'App500',
+})
+
 const { t } = useAppI18n()
 
 function onClick() {
   useAppMessage().warning(t('app.base.wip'))
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'App500',
-})
 </script>
 
 <template>

@@ -5,13 +5,11 @@ import { hljs } from './src/hljs'
 import { getDateLocale, getLocale } from './src/locale'
 import { getTheme, getThemeOverrides } from './src/theme'
 
-const appNaive = useAppStoreNaive()
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'UIProvider',
 })
+
+const appNaive = useAppStoreNaive()
 </script>
 
 <template>

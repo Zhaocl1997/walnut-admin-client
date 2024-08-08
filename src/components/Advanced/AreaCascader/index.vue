@@ -6,13 +6,10 @@ import {
   getAreaFeedbackByCodes,
 } from '@/api/shared/area'
 
-// TODO 888
-interface InternalProps {
-  value?: string | null | string[]
-  depth?: number
-  showPath?: boolean
-  multiple?: boolean
-}
+defineOptions({
+  name: 'WAreaCascader',
+  inheritAttrs: false,
+})
 
 const props = withDefaults(defineProps<InternalProps>(), {
   value: null,
@@ -20,7 +17,16 @@ const props = withDefaults(defineProps<InternalProps>(), {
   showPath: true,
   multiple: false,
 })
+
 const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
+
+// TODO 888
+interface InternalProps {
+  value?: string | null | string[]
+  depth?: number
+  showPath?: boolean
+  multiple?: boolean
+}
 
 const options = ref<TreeNodeItem<AppSharedArea>[]>([])
 
@@ -85,14 +91,6 @@ async function onFeedback() {
 onMounted(async () => {
   await onInit()
   await onFeedback()
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WAreaCascader',
-
-  inheritAttrs: false,
 })
 </script>
 

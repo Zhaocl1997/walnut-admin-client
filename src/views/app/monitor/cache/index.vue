@@ -1,10 +1,7 @@
-<script lang="tsx">
-</script>
-
 <script lang="tsx" setup>
 import { monitorCacheAPI } from '@/api/app/monitor/cache'
 
-export default defineComponent({
+defineOptions({
   name: 'AppMonitorCache',
 })
 

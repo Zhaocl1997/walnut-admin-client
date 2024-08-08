@@ -1,10 +1,7 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { dictDataAPI } from '@/api/system/dict'
 
-export default defineComponent({
+defineOptions({
   name: 'DictDetail',
 })
 

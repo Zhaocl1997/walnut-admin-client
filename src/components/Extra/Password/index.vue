@@ -1,15 +1,10 @@
 <script lang="ts" setup>
 import { checkStrStrong, statusTable } from './utils'
 
-// TODO 888
-interface InternalProps {
-  value?: string
-  maxlength?: number
-  minlength?: number
-  progress?: boolean
-  capslock?: boolean
-  onSubmit?: () => Promise<void>
-}
+defineOptions({
+  name: 'PasswordInput',
+  inheritAttrs: false,
+})
 
 const props = withDefaults(defineProps<InternalProps>(), {
   maxlength: 80,
@@ -19,7 +14,15 @@ const props = withDefaults(defineProps<InternalProps>(), {
 
 const emits = defineEmits(['update:value', 'submit'])
 
-const { t } = useAppI18n()
+// TODO 888
+interface InternalProps {
+  value?: string
+  maxlength?: number
+  minlength?: number
+  progress?: boolean
+  capslock?: boolean
+  onSubmit?: () => Promise<void>
+}
 
 const percentage = ref(0)
 const status = ref('success')
@@ -73,14 +76,6 @@ function onBlur() {
 }
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'Password',
-
-  inheritAttrs: false,
-})
-</script>
-
 <template>
   <div class="w-full">
     <n-tooltip v-model:show="tooltipShow" trigger="manual" placement="right">
@@ -104,7 +99,7 @@ export default defineComponent({
       </template>
 
       <template #default>
-        {{ t('comp.password.capslock') }}
+        {{ $t('comp.password.capslock') }}
       </template>
     </n-tooltip>
 

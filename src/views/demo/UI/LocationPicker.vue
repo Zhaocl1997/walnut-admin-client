@@ -1,15 +1,12 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'LocationPickerDemo',
+  defaultView: false,
+})
+
 const state = ref({
   location1: [],
   location2: [126.544844, 45.726521],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'LocationPickerDemo',
-
-  defaultView: false,
 })
 </script>
 

@@ -1,16 +1,13 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { isUndefined } from 'easy-fns-ts'
 import { useFormContext } from '../../hooks/useFormContext'
 
-const props = withDefaults(defineProps<InternalProps>(), {
-  startIndex: 0,
+defineOptions({
+  name: 'WFormItemExtendDivider',
 })
 
-export default defineComponent({
-  name: 'WFormItemExtendDivider',
+const props = withDefaults(defineProps<InternalProps>(), {
+  startIndex: 0,
 })
 
 // TODO 888

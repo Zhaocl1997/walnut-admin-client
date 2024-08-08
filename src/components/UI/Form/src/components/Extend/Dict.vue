@@ -8,18 +8,17 @@ import type { WCheckboxProps } from '@/components/UI/Checkbox'
 import type { WRadioProps } from '@/components/UI/Radio'
 import type { WSelectProps } from '@/components/UI/Select'
 
+defineOptions({
+  name: 'WFormItemExtendDict',
+  inheritAttrs: false,
+})
+
 // TODO 888
 const props = withDefaults(defineProps<InternalProps>(), {
   dictRenderType: 'select',
 })
 
 const emits = defineEmits(['update:value'])
-
-export default defineComponent({
-  name: 'WFormItemExtendDict',
-
-  inheritAttrs: false,
-})
 
 interface InternalProps {
   value?: any

@@ -4,7 +4,7 @@
 <script lang="ts" setup>
 import { logOperateAPI } from '@/api/system/log'
 
-export default defineComponent({
+defineOptions({
   name: 'LogOperate',
 })
 

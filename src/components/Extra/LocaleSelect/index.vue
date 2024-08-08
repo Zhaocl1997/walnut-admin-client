@@ -1,16 +1,21 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 
+defineOptions({
+  name: 'WLocaleSelect',
+  inheritAttrs: false,
+})
+
+const props = defineProps<InternalProps>()
+
+const emits = defineEmits(['update:value'])
+
 // TODO 888
 interface InternalProps {
   value?: string
   prefix?: string
   presetKey?: string
 }
-
-const props = defineProps<InternalProps>()
-
-const emits = defineEmits(['update:value'])
 
 const { locale, messages } = useAppI18n()
 const loading = ref(false)
@@ -54,13 +59,6 @@ async function onRefresh() {
 
 onDeactivated(() => {
   show.value = false
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WLocaleSelect',
-  inheritAttrs: false,
 })
 </script>
 

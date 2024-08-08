@@ -1,10 +1,12 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import type { InputInst } from 'naive-ui'
 import allIcons from '/build/_generated/icon-list.ts'
 import { IconBundleConfig } from '/build/icon/src/config.ts'
+
+defineOptions({
+  name: 'WIconPicker',
+  inheritAttrs: false,
+})
 
 const props = withDefaults(defineProps<IconPickerProps>(), {
   defaultIcon: 'ant-design:home-outlined',
@@ -12,12 +14,6 @@ const props = withDefaults(defineProps<IconPickerProps>(), {
 })
 
 const emit = defineEmits(['update:value'])
-
-export default defineComponent({
-  name: 'WIconPicker',
-
-  inheritAttrs: false,
-})
 
 const ALL = 'All'
 
@@ -27,7 +23,6 @@ interface IconPickerProps {
   preset?: 'input' | 'icon'
 }
 
-const { t } = useAppI18n()
 const {
   page,
   pageSize,
@@ -187,7 +182,7 @@ onMounted(() => {
     ref="rootInputRef"
     :value="value"
 
-    :placeholder="t('comp.iconPicker.title')"
+    :placeholder="$t('comp.iconPicker.title')"
     clearable readonly copiable
     @click="onOpenPopover"
     @clear="onClear"
@@ -213,7 +208,7 @@ onMounted(() => {
     v-model:show="show"
     preset="card"
     width="600px"
-    :title="t('comp.iconPicker.title')"
+    :title="$t('comp.iconPicker.title')"
     display-directive="show"
     :auto-focus="false"
     :default-button="false"
@@ -225,7 +220,7 @@ onMounted(() => {
           v-model:value="filters"
           size="small"
           clearable
-          :placeholder="t('comp.iconPicker.ph')"
+          :placeholder="$t('comp.iconPicker.ph')"
           class="mb-3 mt-1 w-full border-b-cool-gray-50"
           @change="onPageInit"
         />
@@ -284,7 +279,7 @@ onMounted(() => {
         >
           <template #suffix>
             <span class="whitespace-nowrap">
-              {{ t('comp.pagination.total', { total: getTotal }) }}
+              {{ $t('comp.pagination.total', { total: getTotal }) }}
             </span>
           </template>
         </n-pagination>

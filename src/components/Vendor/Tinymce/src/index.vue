@@ -44,6 +44,18 @@ import { toolbar } from './resources/toolbar'
 import { menubar } from './resources/menubar'
 import { templates } from './resources/template'
 
+defineOptions({
+  name: 'WVendorTinymceEditor',
+})
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  value: '',
+  disabled: false,
+  width: '100%',
+})
+
+const emits = defineEmits(['update:value'])
+
 // TODO 888
 interface InternalProps {
   value?: string
@@ -55,14 +67,6 @@ interface InternalProps {
 interface TinymceVueInstance {
   rerender: (p: RawEditorOptions) => void
 }
-
-const props = withDefaults(defineProps<InternalProps>(), {
-  value: '',
-  disabled: false,
-  width: '100%',
-})
-
-const emits = defineEmits(['update:value'])
 
 const editorId = ref(`tinymce-${genString(8)}`)
 const editorValue = ref('')
@@ -144,12 +148,6 @@ watch(
     immediate: true,
   },
 )
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorTinymceEditor',
-})
 </script>
 
 <template>

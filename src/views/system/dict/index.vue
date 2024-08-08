@@ -1,10 +1,7 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { dictTypeAPI } from '@/api/system/dict'
 
-export default defineComponent({
+defineOptions({
   name: 'Dict',
 })
 

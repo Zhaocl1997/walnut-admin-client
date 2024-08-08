@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'ExternalLink',
+})
+
 const { currentRoute } = useAppRouter()
 
 function onClick() {
@@ -9,12 +13,6 @@ function onClick() {
 
   openExternalLink(url, false, '_self')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'ExternalLink',
-})
 </script>
 
 <template>

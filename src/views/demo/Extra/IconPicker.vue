@@ -1,15 +1,11 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'IconPickerDemo',
+  defaultView: false,
+})
 const icon = ref()
 const icon2 = ref('carbon:collapse-all')
 const icon3 = ref('emojione-v1:flag-for-china')
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'IconPickerDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

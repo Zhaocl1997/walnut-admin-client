@@ -3,6 +3,10 @@
 // this page open cache, go to other page and back will cause errors
 import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
 
+defineOptions({
+  name: 'CropperDemo',
+})
+
 const srcValue = ref<string>('/assets/auth_bg.jpg')
 const cropperValue = ref<string>()
 
@@ -22,12 +26,6 @@ async function onUploadAvatar() {
   else
     useAppMsgInfo('Upload avatar fail')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'CropperDemo',
-})
 </script>
 
 <template>

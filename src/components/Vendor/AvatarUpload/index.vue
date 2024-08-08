@@ -2,6 +2,10 @@
 import { AliOSSClient } from '../../Vendor/OSSUpload/client'
 import type { WCropperInst } from '@/components/Vendor/Cropper'
 
+defineOptions({
+  name: 'WAvatarUpload',
+})
+
 const emits = defineEmits(['change'])
 
 const { t } = useAppI18n()
@@ -71,12 +75,6 @@ async function onOSSUpload() {
 
 defineExpose({
   onOSSUpload,
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WAvatarUpload',
 })
 </script>
 

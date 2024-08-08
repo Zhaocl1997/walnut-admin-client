@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'TransitionDemo',
+  defaultView: false,
+})
+
 const show = ref(true)
 const formData = ref({
   name: 'fade' as ValueOfAppConstTransitionName,
@@ -28,14 +33,6 @@ const [register] = useForm({
       },
     },
   ],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'TransitionDemo',
-
-  defaultView: false,
 })
 </script>
 

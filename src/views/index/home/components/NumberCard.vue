@@ -1,6 +1,13 @@
 <script lang="ts" setup>
 import type { TagProps } from 'naive-ui'
 
+defineOptions({
+  name: 'WHomeNumberCard',
+  defaultView: false,
+})
+
+const props = defineProps<InternalProps>()
+
 // TODO 888
 interface InternalProps {
   title?: string
@@ -13,8 +20,6 @@ interface InternalProps {
   number?: number
   icon?: string
 }
-
-const props = defineProps<InternalProps>()
 
 const appSettings = useAppStoreSetting()
 
@@ -39,14 +44,6 @@ watch(
     immediate: true,
   },
 )
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WHomeNumberCard',
-
-  defaultView: false,
-})
 </script>
 
 <template>

@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
 
+defineOptions({
+  name: 'ScrollbarDemo',
+  defaultView: false,
+})
+
 const position = ref(0)
 const positionHorizontal = ref(0)
 
@@ -25,14 +30,6 @@ watch(
   },
   { immediate: true },
 )
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'ScrollbarDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

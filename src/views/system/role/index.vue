@@ -1,11 +1,8 @@
-<script lang="tsx">
-</script>
-
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { useMenuTree } from './useMenuTree'
 import { roleAPI } from '@/api/system/role'
 
-export default defineComponent({
+defineOptions({
   name: 'Role',
 })
 

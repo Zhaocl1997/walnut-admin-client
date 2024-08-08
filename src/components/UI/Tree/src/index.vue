@@ -13,7 +13,15 @@ import WTransition from '@/components/Extra/Transition'
 
 import { useDropdown } from '@/components/UI/Dropdown'
 
-interface WTreeEmits extends /* @vue-ignore */ WTree.Emit.Entry { }
+defineOptions({
+  name: 'WTree',
+})
+
+const props = defineProps<InternalProps>()
+
+const emit = defineEmits<WTreeEmits>()
+
+interface WTreeEmits extends WTree.Emit.Entry { }
 
 type TreeKey = StringOrNumber
 
@@ -34,10 +42,6 @@ interface InternalProps {
   onTreeNodeItemDelete?: (deletedItem: any) => void
   onPaste?: (copyTarget: any, currentTarget: any) => void
 }
-
-const props = defineProps<InternalProps>()
-
-const emit = defineEmits<WTreeEmits>()
 
 const { t } = useAppI18n()
 
@@ -357,12 +361,6 @@ emit('hook', { setProps })
 
 defineExpose<WTree.Inst.WTreeInst>({
   setProps,
-})
-</script>
-
-<script lang="tsx">
-export default defineComponent({
-  name: 'WTree',
 })
 </script>
 

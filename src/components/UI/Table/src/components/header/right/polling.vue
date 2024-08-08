@@ -2,6 +2,10 @@
 import type { InputNumberInst } from 'naive-ui'
 import { useTableContext } from '../../../hooks/useTableContext'
 
+defineOptions({
+  name: 'WTableHeaderRightPolling',
+})
+
 const { tableProps, onApiTableList } = useTableContext()
 
 const popoverShow = ref(false)
@@ -15,15 +19,6 @@ const getDefaultValue = computed(() => getPollingInterval.value / 1000)
 const { current } = useMagicKeys()
 const keys = computed(() => Array.from(current))
 
-watch(keys, (v) => {
-  if (v.includes('f8')) {
-    if (isActive.value)
-      pause()
-    else
-      resume()
-  }
-})
-
 const { pause, resume, isActive } = useIntervalFn(() => {
   onApiTableList()
 }, getPollingInterval, { immediate: true })
@@ -34,6 +29,15 @@ function onOpenPopover() {
     inputNumberRef.value?.focus()
   })
 }
+
+watch(keys, (v) => {
+  if (v.includes('f8')) {
+    if (isActive.value)
+      pause()
+    else
+      resume()
+  }
+})
 
 function onPollingClick() {
   if (isActive.value) {
@@ -63,12 +67,6 @@ function formatSeconds(value: number | null) {
     return ''
   return `${value} s`
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WTableHeaderRightPolling',
-})
 </script>
 
 <template>

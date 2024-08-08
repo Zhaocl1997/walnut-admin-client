@@ -4,6 +4,11 @@ import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 import type { IServerInfo } from '@/api/app/monitor/server'
 import { getOSInfo } from '@/api/app/monitor/server'
 
+defineOptions({
+  name: 'AppMonitorServerOS',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 
 const info = ref<IServerInfo.OS>()
@@ -30,14 +35,6 @@ async function onInit() {
 }
 
 onMounted(onInit)
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppMonitorServerOS',
-
-  defaultView: false,
-})
 </script>
 
 <template>

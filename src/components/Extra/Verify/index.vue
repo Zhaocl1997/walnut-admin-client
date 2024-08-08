@@ -1,9 +1,10 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { getRandomInt } from 'easy-fns-ts'
 import { makeImgSize, makeImgWithCanvas, paintPuzzle } from './utils'
+
+defineOptions({
+  name: 'WVerify',
+})
 
 const props = withDefaults(defineProps<InteralProps>(), {
   canvasWidth: 310,
@@ -14,10 +15,6 @@ const props = withDefaults(defineProps<InteralProps>(), {
 })
 
 const emits = defineEmits(['success', 'fail'])
-
-export default defineComponent({
-  name: 'WVerify',
-})
 
 // TODO 888
 interface InteralProps {

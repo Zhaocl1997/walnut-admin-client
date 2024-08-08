@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import type { WVerifyInst } from '@/components/Extra/Verify'
 
+defineOptions({
+  name: 'VerifyDemo',
+  defaultView: false,
+})
+
 const verify = ref<WVerifyInst>()
 const verify2 = ref<WVerifyInst>()
 
@@ -11,14 +16,6 @@ function onSuccess() {
 function onFail() {
   useAppMessage().error('Fail')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'VerifyDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

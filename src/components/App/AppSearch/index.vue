@@ -1,9 +1,5 @@
 <script lang="ts" setup>
-const state = ref()
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'AppSearch',
 })
 </script>

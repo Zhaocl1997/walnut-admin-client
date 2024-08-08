@@ -2,6 +2,11 @@
 import { getTreeData } from '../data'
 import { useTree } from '@/components/UI/Tree'
 
+defineOptions({
+  name: 'DemoTree',
+  defaultView: false,
+})
+
 const state = ref({
   tree1: 1,
   tree2: [1, 4, 9, 11, 12],
@@ -45,14 +50,6 @@ const [register2] = useTree({
       console.log('dragged', node, dragNode, dropPosition)
     },
   },
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'DemoTree',
-
-  defaultView: false,
 })
 </script>
 

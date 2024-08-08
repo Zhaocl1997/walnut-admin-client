@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'NaiveMsgDemo',
+  defaultView: false,
+})
+
 const appNaive = useAppStoreNaive()
 
 function onOpenNoti(type: number) {
@@ -27,14 +32,6 @@ async function onOpenComfirm() {
   else
     useAppMsgInfo('Canceled')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'NaiveMsgDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

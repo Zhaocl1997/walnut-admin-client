@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'InputDemo',
+  defaultView: false,
+})
+
 const state = reactive<Recordable>({
   input10: 'walnut-copiable-input',
 })
@@ -22,14 +27,6 @@ function onFocus() {
 function onClear() {
   console.log('[w-input clear]')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'InputDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

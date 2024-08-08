@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 
+defineOptions({
+  name: 'FileDemo',
+  defaultView: false,
+})
+
 const blobURL = ref<string>()
 const base64 = ref<string>()
 const hasFile = ref(false)
@@ -30,14 +35,6 @@ async function onDownloadByBlob() {
   const blob = absImageRef.value.onGetBlob()
   await downloadByBlob(blob, fileName.value)
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'FileDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

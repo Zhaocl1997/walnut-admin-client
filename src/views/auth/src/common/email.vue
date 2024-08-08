@@ -4,6 +4,11 @@ import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { sendAuthEmail } from '@/api/auth/email'
 
+defineOptions({
+  name: 'SignInWithEmail',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 const appAuth = useAppStoreUserAuth()
 const appNaive = useAppStoreNaive()
@@ -206,14 +211,6 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       },
     },
   ],
-})
-</script>
-
-<script lang="tsx">
-export default defineComponent({
-  name: 'SignInWithEmail',
-
-  defaultView: false,
 })
 </script>
 

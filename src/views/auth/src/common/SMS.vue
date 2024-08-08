@@ -5,6 +5,11 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { sendAuthTextMsg } from '@/api/auth/phone'
 import type { PhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 
+defineOptions({
+  name: 'SignInWithSMS',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 const appAuth = useAppStoreUserAuth()
 const appNaive = useAppStoreNaive()
@@ -211,14 +216,6 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
       },
     },
   ],
-})
-</script>
-
-<script lang="tsx">
-export default defineComponent({
-  name: 'SignInWithSMS',
-
-  defaultView: false,
 })
 </script>
 

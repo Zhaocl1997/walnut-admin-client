@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'TheAppBackToTop',
+})
+
 const { currentRoute } = useAppRouter()
 
 const showBackToTop = ref(true)
@@ -15,12 +19,6 @@ watch(
     immediate: true,
   },
 )
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'TheAppBackToTop',
-})
 </script>
 
 <template>

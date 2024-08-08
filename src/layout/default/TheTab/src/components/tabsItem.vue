@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { getTabsContext } from '../hooks/useTabsContext'
 
+defineOptions({
+  name: 'TabsItem',
+})
+
 const props = defineProps<{ item: AppTab, index: number }>()
 
 const { t } = useAppI18n()
@@ -77,12 +81,6 @@ const getShowTite = computed(
 const getTitle = computed(() =>
   t(props.item.meta._title! ?? props.item.meta.title!),
 )
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'TabsItem',
-})
 </script>
 
 <template>
