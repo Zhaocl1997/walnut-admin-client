@@ -48,7 +48,7 @@ export function refreshToken(data: { refreshToken: string }) {
  * @description Signin user permissions api
  */
 export function getPermissions() {
-  return AppAxios.get<AppSystemMenu[]>({
+  return AppAxios.get<{ permissionMenuTree: TreeNodeItem<Pick<AppSystemMenu, '_id' | 'pid' | 'show' | 'type' | 'title' | 'order' | 'path' | 'ternal' | 'name' | 'icon' | 'url' | 'menuActiveName' | 'badge' | 'activeIcon' >>[], permissionStrings: string[], permissionRoutes: TreeNodeItem<RouteRecordRaw>[] }>({
     url: AuthEnum.PERMISSION,
   })
 }
