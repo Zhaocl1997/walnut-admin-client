@@ -98,7 +98,7 @@ declare global {
    * App setting retrieved from backend state
    */
   interface AppSettingBackendState {
-    auth: Partial<AppPayloadSetting.AuthSetting>
+    auth: Partial<AppPublicSettings.AuthSettings>
   }
 
   /**

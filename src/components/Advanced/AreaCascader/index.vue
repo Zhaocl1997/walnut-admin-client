@@ -3,7 +3,6 @@ import type { CascaderOption } from 'naive-ui'
 import {
   getAreaChildrenByPcode,
   getAreaFeedbackByCode,
-  getAreaFeedbackByCodes,
 } from '@/api/shared/area'
 
 defineOptions({
@@ -58,15 +57,9 @@ async function onFeedback() {
 
   // single feedback
   if (!props.multiple && typeof props.value === 'string') {
-    if (props.value.length === 2)
-      return
-
     const feedback = await getAreaFeedbackByCode(props.value)
 
-    const index = options.value.findIndex(i => i.code === feedback[0].pcode)
-
-    if (!options.value[index]?.children)
-      options.value[index].children = feedback
+    options.value = feedback
   }
 
   // multiple feedback
@@ -74,22 +67,14 @@ async function onFeedback() {
     props.multiple
     && Array.isArray(props.value)
   ) {
-    if (props.value[0].length === 2)
-      return
+    const feedbacks = await getAreaFeedbackByCode(props.value.join(','))
 
-    const feedbacks = await getAreaFeedbackByCodes(props.value.join(','))
-
-    feedbacks.forEach((item) => {
-      const index = options.value.findIndex(i => i.code === item[0].pcode)
-
-      if (!options.value[index]?.children)
-        options.value[index].children = item as TreeNodeItem<AppSharedArea>[]
-    })
+    options.value = feedbacks
   }
 }
 
-onMounted(async () => {
-  await onInit()
+onBeforeMount(async () => {
+  // await onInit()
   await onFeedback()
 })
 </script>

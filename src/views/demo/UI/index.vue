@@ -1,17 +1,5 @@
 <script lang="ts" setup>
-import DemoIcon from './Icon.vue'
-import DemoButton from './Button.vue'
-import DemoInput from './Input.vue'
-import DemoSelect from './Select.vue'
-import DemoRadio from './Radio.vue'
-import DemoCheckbox from './Checkbox.vue'
-import DemoDynamicTags from './DynamicTags.vue'
-import DemoTree from './Tree.vue'
 import DemoAreaCascader from './AreaCascader.vue'
-import DemoLocaleSelect from './LocaleSelect.vue'
-import DemoLocation from './LocationPicker.vue'
-import DemoDict from './Dict.vue'
-import DemoColorPicker from './ColorPicker.vue'
 
 defineOptions({
   name: 'DemoUI',
@@ -62,22 +50,23 @@ const appAdapter = useAppStoreAdapter()
       ]"
     >
       <div class="children:my-2">
-        <DemoIcon id="Icon" />
+        <!-- <DemoIcon id="Icon" />
         <DemoButton id="Button" />
         <DemoInput id="Input" />
         <DemoSelect id="Select" />
         <DemoCheckbox id="Checkbox" />
-        <DemoDict id="Dict" />
+        <DemoDict id="Dict" /> -->
       </div>
 
       <div class="children:my-2">
-        <DemoTree id="Tree" />
+        <DemoAreaCascader id="AreaCascader" />
+        <!-- <DemoTree id="Tree" />
         <DemoAreaCascader id="AreaCascader" />
         <DemoLocation id="Location" />
         <DemoRadio id="Radio" />
         <DemoDynamicTags id="DynamicTags" />
         <DemoLocaleSelect id="LocaleSelect" />
-        <DemoColorPicker id="ColorPicker" />
+        <DemoColorPicker id="ColorPicker" /> -->
       </div>
     </div>
   </div>

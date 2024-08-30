@@ -1,7 +1,7 @@
 import { BaseAPI } from '../base'
 
 enum SettingEnum {
-  AUTH = 'app/setting/auth',
+  PUBLIC = 'app/setting/public',
 }
 
 export const appSettingAPI = new BaseAPI<AppSettingsModel>({
@@ -10,10 +10,10 @@ export const appSettingAPI = new BaseAPI<AppSettingsModel>({
 })
 
 /**
- * @description get auth settings
+ * @description get public settings
  */
-export function getAuthSettings() {
-  return AppAxios.get<AppPayloadSetting.AuthSetting>({
-    url: SettingEnum.AUTH,
+export function getPublicSettings() {
+  return AppAxios.get<AppSettingBackendState>({
+    url: SettingEnum.PUBLIC,
   })
 }

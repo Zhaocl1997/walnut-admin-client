@@ -2,7 +2,7 @@
 export function getAreaChildrenByPcode(pcode?: string) {
   return AppAxios.get<AppSharedArea[]>(
     {
-      url: '/shared/area/getChildrenByPcodeWithCache',
+      url: '/shared/area/children',
       params: {
         pcode,
       },
@@ -12,21 +12,21 @@ export function getAreaChildrenByPcode(pcode?: string) {
 }
 
 // area feedback, single
-export function getAreaFeedbackByCode(code?: string) {
+export function getAreaFeedbackByCode(codes?: string | string[]) {
   return AppAxios.get<TreeNodeItem<AppSharedArea>[]>({
     url: '/shared/area/feedback',
-    params: {
-      code,
-    },
-  })
-}
-
-// area feedback, multiple
-export function getAreaFeedbackByCodes(codes?: string) {
-  return AppAxios.get<TreeNodeItem<AppSharedArea>[]>({
-    url: '/shared/area/feedback/multiple',
     params: {
       codes,
     },
   })
 }
+
+// // area feedback, multiple
+// export function getAreaFeedbackByCodes(codes?: string) {
+//   return AppAxios.get<TreeNodeItem<AppSharedArea>[]>({
+//     url: '/shared/area/feedback/multiple',
+//     params: {
+//       codes,
+//     },
+//   })
+// }
