@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'AuthorizeDemo',
+  defaultView: false,
+})
+
 const p1 = 'some:strange:permission:string'
 const p2 = 'some:strange:permission:string2'
 const p3 = 'some:strange:permission:string3'
@@ -7,24 +12,16 @@ const p3show = ref(true)
 
 const userPermission = useAppStoreUserPermission()
 
-const onToggle = (s: string) => {
+function onToggle(s: string) {
   userPermission.togglePermission(s)
 }
 
-const onReset = () => {
+function onReset() {
   p3show.value = false
   nextTick(() => {
     p3show.value = true
   })
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AuthorizeDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>
@@ -97,7 +94,7 @@ export default defineComponent({
               height: '200px',
               width: '200px',
             }"
-            class="bg-yellow-100 text-blue-900 flex justify-center items-center text-center"
+            class="flex items-center justify-center bg-yellow-100 text-center text-blue-900"
           >
             this is the content that you can't see
           </div>
@@ -134,7 +131,7 @@ export default defineComponent({
               height: '400px',
               width: '400px',
             }"
-            class="bg-yellow-100 text-blue-900 flex justify-center items-center text-center"
+            class="flex items-center justify-center bg-yellow-100 text-center text-blue-900"
           >
             this is the content that you won't see if you do not enter the right
             permission code
@@ -147,6 +144,6 @@ export default defineComponent({
 
 <style scoped>
   :deep(.w-h) {
-    margin-bottom: 8px;
-  }
+  margin-bottom: 8px;
+}
 </style>

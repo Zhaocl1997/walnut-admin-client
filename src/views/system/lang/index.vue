@@ -1,11 +1,9 @@
-<script lang="ts">
-export default defineComponent({
-  name: 'Lang',
-})
-</script>
-
 <script lang="ts" setup>
 import { langAPI } from '@/api/system/lang'
+
+defineOptions({
+  name: 'Lang',
+})
 
 // locale unique key
 const key = 'lang'

@@ -1,14 +1,12 @@
-<script lang="ts">
-export default defineComponent({
-  name: 'Locale',
-})
-</script>
-
 <script lang="ts" setup>
 import { useLangList } from './useLangList'
 import type { WForm } from '@/components/UI/Form'
 
 import { localeAPI } from '@/api/system/locale'
+
+defineOptions({
+  name: 'Locale',
+})
 
 const { langList } = useLangList()
 const { currentRoute } = useRouter()

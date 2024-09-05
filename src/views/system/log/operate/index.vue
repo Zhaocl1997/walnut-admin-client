@@ -1,11 +1,12 @@
 <script lang="ts">
-export default defineComponent({
-  name: 'LogOperate',
-})
 </script>
 
 <script lang="ts" setup>
 import { logOperateAPI } from '@/api/system/log'
+
+defineOptions({
+  name: 'LogOperate',
+})
 
 const localeKey = 'log.operate'
 const authKey = 'log:operate'

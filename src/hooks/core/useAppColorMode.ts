@@ -1,4 +1,4 @@
-export const useAppColorMode = () => {
+export function useAppColorMode() {
   const appSetting = useAppStoreSetting()
   const appColorMode = useSharedColorMode()
 

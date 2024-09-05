@@ -4,6 +4,11 @@ import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { sendAuthEmail } from '@/api/auth/email'
 
+defineOptions({
+  name: 'SignInWithEmail',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 const appAuth = useAppStoreUserAuth()
 const appNaive = useAppStoreNaive()
@@ -12,11 +17,11 @@ const { loading } = useAuthContext()
 
 const emailFormData = reactive<
     AppPayloadAuth.EmailAddress & { agree: string }
-  >({
-    emailAddress: '',
-    verifyCode: '',
-    agree: '',
-  })
+>({
+  emailAddress: '',
+  verifyCode: '',
+  agree: '',
+})
 
 async function onSubmit() {
   const valid = await validate()
@@ -126,42 +131,45 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       componentProp: {
         render({ formData }) {
           return (
-              <div
-                onClick={() => (formData.agree = formData.agree ? '' : 'agree')}
+            <div
+              onClick={() => (formData.agree = formData.agree ? '' : 'agree')}
+            >
+              <NRadio
+                value="agree"
+                checked={formData.agree === 'agree'}
+                size="small"
               >
-                <NRadio
-                  value="agree"
-                  checked={formData.agree === 'agree'}
-                  size="small"
-                ></NRadio>
+              </NRadio>
 
-                <span class="ml-2 text-xs text-gray-500 cursor-pointer break-all">
-                  {t('form.app.auth.continue')}
-                  <NText
-                    type="info"
-                    strong
-                    onClick={(e: Event) => {
-                      e.stopPropagation()
-                      openExternalLink(AppAuthServiceAgreementPath)
-                    }}
-                  >
-                    {' '}
-                    {t('form.app.auth.sa')}{' '}
-                  </NText>
-                  、
-                  <NText
-                    type="info"
-                    strong
-                    onClick={(e: Event) => {
-                      e.stopPropagation()
-                      openExternalLink(AppAuthPrivacyPolicyPath)
-                    }}
-                  >
-                    {' '}
-                    {t('form.app.auth.pp')}{' '}
-                  </NText>
-                </span>
-              </div>
+              <span class="ml-2 cursor-pointer break-all text-xs text-gray-500">
+                {t('form.app.auth.continue')}
+                <NText
+                  type="info"
+                  strong
+                  onClick={(e: Event) => {
+                    e.stopPropagation()
+                    openExternalLink(AppAuthServiceAgreementPath)
+                  }}
+                >
+                  {' '}
+                  {t('form.app.auth.sa')}
+                  {' '}
+                </NText>
+                、
+                <NText
+                  type="info"
+                  strong
+                  onClick={(e: Event) => {
+                    e.stopPropagation()
+                    openExternalLink(AppAuthPrivacyPolicyPath)
+                  }}
+                >
+                  {' '}
+                  {t('form.app.auth.pp')}
+                  {' '}
+                </NText>
+              </span>
+            </div>
           )
         },
       },
@@ -177,9 +185,12 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       },
       componentProp: {
         textProp: () => (
-            <span class="text-light-800">
-              {t('app.base.signin')} / {t('app.base.signup')}
-            </span>
+          <span class="text-light-800">
+            {t('app.base.signin')}
+            {' '}
+            /
+            {t('app.base.signup')}
+          </span>
         ),
         loading,
         disabled: computed(
@@ -200,14 +211,6 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       },
     },
   ],
-})
-</script>
-
-<script lang="tsx">
-export default defineComponent({
-  name: 'SignInWithEmail',
-
-  defaultView: false,
 })
 </script>
 

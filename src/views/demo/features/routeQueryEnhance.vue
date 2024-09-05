@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'FeatureRouteQueryEnhance',
+})
+
 async function onClick(type: number) {
   if (type === 1)
     await AppRouter.replace({ query: { a: 1 } })
@@ -20,12 +24,6 @@ async function onClick(type: number) {
     })
   }
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'FeatureRouteQueryEnhance',
-})
 </script>
 
 <template>

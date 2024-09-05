@@ -7,7 +7,7 @@ import type { DataTableSortState } from 'naive-ui'
 import type { WTable } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 
-export const generateDefaultSortParams = (columns: WTable.Column[]) => {
+export function generateDefaultSortParams(columns: WTable.Column[]) {
   return columns
     ?.map((i) => {
       if ((i as TableBaseColumn).defaultSortOrder) {
@@ -24,9 +24,7 @@ export const generateDefaultSortParams = (columns: WTable.Column[]) => {
 /**
  * @description generate base sort object
  */
-export const generateSortParams = <T>(
-  sort: DataTableSortState | DataTableSortState[],
-): WalnutBaseSortParams<T> => {
+export function generateSortParams<T>(sort: DataTableSortState | DataTableSortState[]): WalnutBaseSortParams<T> {
   if (Array.isArray(sort)) {
     if (sort.every(i => i.order === false))
       return []
@@ -54,7 +52,7 @@ export const generateSortParams = <T>(
 /**
  * @description generate base list params
  */
-export const generateBaseListParams = (params: WalnutBaseListParams) => {
+export function generateBaseListParams(params: WalnutBaseListParams) {
   const ret: WalnutBaseListParams = {}
 
   Object.entries(params).forEach(([key, value]) => {
@@ -70,11 +68,7 @@ export const generateBaseListParams = (params: WalnutBaseListParams) => {
 /**
  * @description generate table item title base on different config
  */
-export const getTableTranslated = (
-  props: ComputedRef<WTable.Props>,
-  item: WTable.Column,
-  helpMsg = false,
-) => {
+export function getTableTranslated(props: ComputedRef<WTable.Props>, item: WTable.Column, helpMsg = false) {
   const { t } = useAppI18n()
 
   const key = props.value.localeUniqueKey

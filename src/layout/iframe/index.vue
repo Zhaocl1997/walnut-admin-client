@@ -1,10 +1,8 @@
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'WIFrame',
 })
-</script>
 
-<script lang="ts" setup>
 const props = defineProps<{ frameSrc?: string }>()
 
 const show = ref(false)
@@ -31,6 +29,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
   :deep(.w-spin-content) {
-    height: 100%;
-  }
+  height: 100%;
+}
 </style>

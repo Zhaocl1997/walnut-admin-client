@@ -25,8 +25,8 @@ declare global {
     }
   }
 
-  namespace AppPayloadSetting {
-    interface AuthSetting {
+  namespace AppPublicSettings {
+    interface AuthSettings {
       account: number
       email: number
       phone: number

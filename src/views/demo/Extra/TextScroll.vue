@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'TextScrollDemo',
+  defaultView: false,
+})
+
 const texts = [
   'aaaaaaaaaaaaa',
   'bbbbbbbbbbbbb',
@@ -6,14 +11,6 @@ const texts = [
   'ddddddddddddd',
   'eeeeeeeeeeeee',
 ]
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'TextScrollDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

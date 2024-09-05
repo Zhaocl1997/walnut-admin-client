@@ -1,6 +1,6 @@
 import { BuildUtilsLog } from '../../utils'
 
-export const IconLog = (title: string, data: string) => {
+export function IconLog(title: string, data: string) {
   BuildUtilsLog(
     `
 /**

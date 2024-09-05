@@ -22,7 +22,7 @@ export default defineComponent({
                     .map(i => <div class="whitespace-pre-line">{i}</div>)
                 )
               : (
-            <div class="whitespace-pre-line">{props.msg}</div>
+                  <div class="whitespace-pre-line">{props.msg}</div>
                 )
           )
         : (
@@ -30,20 +30,21 @@ export default defineComponent({
           )
 
     return () => (
-        <span>
-          <n-tooltip {...attrs}>
-            {{
-              default: () => formatMessage(),
-              trigger: () => (
-                <w-icon
-                  icon={props.icon}
-                  width="16"
-                  class="align-middle inline mb-0.5"
-                ></w-icon>
-              ),
-            }}
-          </n-tooltip>
-        </span>
+      <span>
+        <n-tooltip {...attrs}>
+          {{
+            default: () => formatMessage(),
+            trigger: () => (
+              <w-icon
+                icon={props.icon}
+                width="16"
+                class="mb-0.5 inline align-middle"
+              >
+              </w-icon>
+            ),
+          }}
+        </n-tooltip>
+      </span>
     )
   },
 })

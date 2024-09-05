@@ -1,4 +1,6 @@
 // https://jkchao.github.io/typescript-book-chinese/
+/// <reference types="vite-plugin-terminal/client" />
+/// <reference types="vite/client" />
 
 declare interface Fn<T = any, R = T> {
   (...arg: T[]): R
@@ -24,7 +26,7 @@ declare type NaiveCompType =
   | 'warning'
   | 'error'
 
-declare type RowData = {
+declare interface RowData {
   [key: string]: unknown
 }
 
@@ -39,18 +41,18 @@ declare type MaybeRefSelf<T> = T | Ref<T> | ComputedRef<T>
 // not extend string => other string not working
 declare type DeepMaybeRefSelf<T> =
   T extends string
-  ? MaybeRefSelf<string>
-  : T extends boolean
-  ? MaybeRefSelf<boolean>
-  : T extends number
-  ? MaybeRefSelf<number>
-  // : T extends Array<any>
-  // ? DeepMaybeRefSelf<T[number]>
-  // : T extends Record<string, any>
-  // ? {
-  //   [K in keyof T]: DeepMaybeRefSelf<T[K]>
-  // }
-  : MaybeRefSelf<T>
+    ? MaybeRefSelf<string>
+    : T extends boolean
+      ? MaybeRefSelf<boolean>
+      : T extends number
+        ? MaybeRefSelf<number>
+      // : T extends Array<any>
+      // ? DeepMaybeRefSelf<T[number]>
+      // : T extends Record<string, any>
+      // ? {
+      //   [K in keyof T]: DeepMaybeRefSelf<T[K]>
+      // }
+        : MaybeRefSelf<T>
 
 const __APP_INFO__: {
   name: string

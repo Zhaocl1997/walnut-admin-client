@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 import type { UploadFileInfo } from 'naive-ui'
 
+defineOptions({
+  name: 'AbsImage',
+})
+
 const emits = defineEmits(['change'])
 
 const { createBlobUrl } = useBlob()
 const currentFile = shallowRef<Blob>()
 
-const onUploadChange = async (options: { file: UploadFileInfo }) => {
+async function onUploadChange(options: { file: UploadFileInfo }) {
   currentFile.value = options.file.file!
 
   emits('change')
@@ -16,12 +20,6 @@ defineExpose({
   onGetBlobURL: () => createBlobUrl(currentFile.value!),
   onGetBase64: () => blobToBase64(currentFile.value!),
   onGetBlob: () => currentFile.value,
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AbsImage',
 })
 </script>
 

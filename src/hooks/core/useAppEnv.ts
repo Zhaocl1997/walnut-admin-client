@@ -1,7 +1,6 @@
 type EnvFetchType = 'title' | 'crypto' | 'proxy' | 'seconds' | 'build'
 
-export function useAppEnv(type?: EnvFetchType,
-  env: ImportMetaEnv = import.meta.env) {
+export function useAppEnv(type?: EnvFetchType, env: ImportMetaEnv = import.meta.env) {
   if (type === 'title') {
     return {
       title: env.VITE_APP_TITLE,

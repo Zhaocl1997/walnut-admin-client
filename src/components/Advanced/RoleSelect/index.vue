@@ -3,22 +3,20 @@ import ApiSelect from '../ApiSelect'
 import { roleAPI } from '@/api/system/role'
 import { WithValueProps } from '@/components/HOC/WithValue'
 
+defineOptions({
+  name: 'WRoleSelect',
+})
+
 defineProps(WithValueProps)
 
 const emit = defineEmits(['update:value'])
 
-const onUpdateValue = (val: StringOrNumber) => {
+function onUpdateValue(val: StringOrNumber) {
   emit('update:value', val)
 }
 
 const listFn = roleAPI.list.bind(roleAPI)
 const readFn = roleAPI.read.bind(roleAPI)
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WRoleSelect',
-})
 </script>
 
 <template>

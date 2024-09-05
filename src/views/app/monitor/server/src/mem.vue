@@ -4,6 +4,11 @@ import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 import type { IServerInfo } from '@/api/app/monitor/server'
 import { getMemInfo } from '@/api/app/monitor/server'
 
+defineOptions({
+  name: 'AppMonitorServerMem',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 
 const info = ref<IServerInfo.Mem>()
@@ -16,7 +21,7 @@ const items = computed<WDescriptionsItem[]>(() =>
   })),
 )
 
-const onInit = async () => {
+async function onInit() {
   loading.value = true
 
   try {
@@ -30,14 +35,6 @@ const onInit = async () => {
 }
 
 onMounted(onInit)
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppMonitorServerMem',
-
-  defaultView: false,
-})
 </script>
 
 <template>

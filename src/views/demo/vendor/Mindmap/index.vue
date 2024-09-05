@@ -1,4 +1,11 @@
 <script lang="ts" setup>
+import Mindmap from 'vue3-mindmap'
+import 'vue3-mindmap/dist/style.css'
+
+defineOptions({
+  name: 'MindmapDemo',
+})
+
 const { urls } = __APP_INFO__
 
 const data = ref([
@@ -211,20 +218,6 @@ const data = ref([
     ],
   },
 ])
-
-watchEffect(() => {
-  console.log(data.value)
-})
-</script>
-
-<script lang="ts">
-import mindmap from 'vue3-mindmap'
-import 'vue3-mindmap/dist/style.css'
-
-export default defineComponent({
-  name: 'MindmapDemo',
-  components: { Mindmap: mindmap },
-})
 </script>
 
 <template>

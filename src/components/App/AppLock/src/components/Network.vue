@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'Network',
+})
+
 const { isOnline, downlink } = useSharedNetwork()
 
 const getIcon = computed(() => {
@@ -6,12 +10,6 @@ const getIcon = computed(() => {
     return 'carbon:wifi-off'
 
   return 'carbon:wifi'
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'Network',
 })
 </script>
 

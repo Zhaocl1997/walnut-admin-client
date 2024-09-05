@@ -1,23 +1,21 @@
 <script lang="ts" setup>
 import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
 
+defineOptions({
+  name: 'AppLocalePicker',
+})
+
 const appLocale = useAppStoreLocale()
 
 const langLists = ref<SelectBaseOption[]>([])
 
-const onGetLangList = async () => {
+async function onGetLangList() {
   const res = await AppI18nGetLangLists()
   langLists.value = res
 }
 
 onMounted(() => {
   onGetLangList()
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppLocalePicker',
 })
 </script>
 

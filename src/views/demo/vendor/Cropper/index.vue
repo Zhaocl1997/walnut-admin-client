@@ -3,6 +3,10 @@
 // this page open cache, go to other page and back will cause errors
 import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
 
+defineOptions({
+  name: 'CropperDemo',
+})
+
 const srcValue = ref<string>('/assets/auth_bg.jpg')
 const cropperValue = ref<string>()
 
@@ -10,11 +14,11 @@ const avatarCropperUrl = ref<string>()
 
 const avatarUpload = ref<WAvatarUploadInst>()
 
-const onAvatarChange = (cropperUrl: string) => {
+function onAvatarChange(cropperUrl: string) {
   avatarCropperUrl.value = cropperUrl
 }
 
-const onUploadAvatar = async () => {
+async function onUploadAvatar() {
   const isAvatarUploadSuccess = await avatarUpload.value?.onOSSUpload()
 
   if (isAvatarUploadSuccess)
@@ -22,12 +26,6 @@ const onUploadAvatar = async () => {
   else
     useAppMsgInfo('Upload avatar fail')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'CropperDemo',
-})
 </script>
 
 <template>
@@ -43,7 +41,7 @@ export default defineComponent({
 
         <w-JSON :value="{ srcValue, cropperValue }" />
 
-        <img :src="srcValue" alt="cropper demo" class="h-48 w-auto mr-4">
+        <img :src="srcValue" alt="cropper demo" class="mr-4 h-48 w-auto">
         <img :src="cropperValue" alt="cropper demo" class="h-48 w-auto">
 
         <w-cropper

@@ -64,25 +64,6 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
     },
 
     /**
-     * @description create menus main function, filter and build/order tree
-     */
-    createMenus(payload: AppSystemMenu[]) {
-      // item that is not type ELEMENT
-      // the show logic is handled inside aside menu component
-      const inputPayload = payload.filter(
-        i => i.type !== AppConstMenuType.ELEMENT,
-      )
-
-      // build tree
-      const treeMenu = arrToTree(inputPayload, { id: '_id' })
-
-      // just pick the root children
-      const treeOrdered = orderTree(treeMenu)
-
-      return treeOrdered[0].children
-    },
-
-    /**
      * @description clean all menu state
      */
     clearMenus() {
@@ -121,7 +102,7 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
 
 const useAppStoreMenuOutside = () => useAppStoreMenuInside(store)
 
-export const useAppStoreMenu = () => {
+export function useAppStoreMenu() {
   if (getCurrentInstance())
     return useAppStoreMenuInside()
   return useAppStoreMenuOutside()

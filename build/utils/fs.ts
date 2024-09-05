@@ -3,12 +3,12 @@ import { BuildUtilsLog } from './log'
 
 const stage = 'File'
 
-export const BuildUtilsReadFile = async (path: string) => {
+export async function BuildUtilsReadFile(path: string) {
   BuildUtilsLog(`Reading File: ${path}`, stage)
   return await fs.readFile(path, 'utf8')
 }
 
-export const BuildUtilsWriteFile = async (path: string, data: any) => {
+export async function BuildUtilsWriteFile(path: string, data: any) {
   BuildUtilsLog(`Writing data into File: ${path}`, stage)
   return await fs.writeFile(path, data, 'utf8')
 }

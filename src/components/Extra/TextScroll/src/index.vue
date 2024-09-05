@@ -29,17 +29,19 @@ export default defineComponent({
       else {
         return props.mode === 'horizontal'
           ? (
-            <TextScrollHorizontal
-              {...props}
-              texts={getTexts}
-            ></TextScrollHorizontal>
+              <TextScrollHorizontal
+                {...props}
+                texts={getTexts}
+              >
+              </TextScrollHorizontal>
             )
           : (
             // TODO vertical need optimise
-            <TextScrollVertical
-              {...props}
-              texts={getTexts}
-            ></TextScrollVertical>
+              <TextScrollVertical
+                {...props}
+                texts={getTexts}
+              >
+              </TextScrollVertical>
             )
       }
     }

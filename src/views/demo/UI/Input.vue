@@ -1,35 +1,32 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'InputDemo',
+  defaultView: false,
+})
+
 const state = reactive<Recordable>({
   input10: 'walnut-copiable-input',
 })
 
-const onChange = (value: string) => {
+function onChange(value: string) {
   console.log('[w-input change]', value)
 }
 
-const onInput = (value: string) => {
+function onInput(value: string) {
   console.log('[w-input input]', value)
 }
 
-const onBlur = () => {
+function onBlur() {
   console.log('[w-input blur]')
 }
 
-const onFocus = () => {
+function onFocus() {
   console.log('[w-input focus]')
 }
 
-const onClear = () => {
+function onClear() {
   console.log('[w-input clear]')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'InputDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

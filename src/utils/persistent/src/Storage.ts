@@ -8,11 +8,7 @@ interface AppStorageOptions {
 // app storage
 // default cache 7 days
 // defualt only encrypt in prod
-export const useAppStorage = <T>(
-  key: string,
-  initialValue: MaybeComputedRef<T>,
-  options: AppStorageOptions = {},
-) => {
+export function useAppStorage<T>(key: string, initialValue: MaybeComputedRef<T>, options: AppStorageOptions = {}) {
   const { storage = localStorage, expire = +import.meta.env.VITE_SECONDS_PERSIST * 1000, encrypt = isProd(), usePresetKey = true } = options
 
   const getKey = usePresetKey

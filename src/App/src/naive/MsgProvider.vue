@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" setup>
 import {
   useDialog,
   useLoadingBar,
@@ -6,16 +6,16 @@ import {
   useNotification,
 } from 'naive-ui'
 
-export default defineComponent({
+defineOptions({
   name: 'MsgProvider',
-
-  setup(_, { slots }) {
-    window.$loadingBar = useLoadingBar()
-    window.$message = useMessage()
-    window.$notification = useNotification()
-    window.$dialog = useDialog()
-
-    return () => slots.default?.()
-  },
 })
+
+window.$loadingBar = useLoadingBar()
+window.$message = useMessage()
+window.$notification = useNotification()
+window.$dialog = useDialog()
 </script>
+
+<template>
+  <slot />
+</template>

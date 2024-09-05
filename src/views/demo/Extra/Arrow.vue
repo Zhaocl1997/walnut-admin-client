@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-const arrow = ref({ active: false, left: false, right: false })
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'ArrowDemo',
-
   defaultView: false,
 })
+
+const arrow = ref({ active: false, left: false, right: false })
 </script>
 
 <template>

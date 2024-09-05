@@ -56,6 +56,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     resolve: {
       alias: {
         '@': pathResolve('src'),
+        // https://github.com/axios/axios/issues/5000#issuecomment-1362395864
+        'axios/lib': resolve(__dirname, './node_modules/axios/lib'),
       },
     },
 
@@ -138,7 +140,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           //   'cropperjs': ['cropperjs'],
           // },
 
-          plugins: [processedEnv.obfuscator ? createRollupObfuscatorPlugin() : {}],
+          plugins: [processedEnv.obfuscator ? createRollupObfuscatorPlugin() : undefined],
         },
       },
     },

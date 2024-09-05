@@ -1,12 +1,9 @@
 <script lang="ts" setup>
 import { genString } from 'easy-fns-ts'
 
-// TODO 888
-interface InternalProps {
-  value?: number[]
-  height?: string
-  width?: string
-}
+defineOptions({
+  name: 'WVendorLocationPicker',
+})
 
 const props = withDefaults(defineProps<InternalProps>(), {
   height: '50vh',
@@ -14,6 +11,13 @@ const props = withDefaults(defineProps<InternalProps>(), {
 })
 
 const emits = defineEmits(['update:value'])
+
+// TODO 888
+interface InternalProps {
+  value?: number[]
+  height?: string
+  width?: string
+}
 
 const appKey = useAppStoreSecretKey()
 
@@ -27,7 +31,7 @@ const acId = ref(`ac${genString(8)}`)
 const filter = ref<string>()
 const show = ref(false)
 
-const onOpenPopover = () => {
+function onOpenPopover() {
   show.value = true
 
   if (window.BMap) {
@@ -40,17 +44,17 @@ const onOpenPopover = () => {
   useScriptTag(url, onInitMap)
 }
 
-const onFilter = () => {
+function onFilter() {
   baiduMapAutoComplete.value.search(filter.value)
 }
 
 const onDebounedFilter = useDebounceFn(onFilter, 500)
 
-const onClearFilter = () => {
+function onClearFilter() {
   emits('update:value', [])
 }
 
-const onFeedback = () => {
+function onFeedback() {
   if (!props.value || props.value.length === 0)
     return
 
@@ -68,7 +72,7 @@ const onFeedback = () => {
   )
 }
 
-const onInitMap = async () => {
+async function onInitMap() {
   console.log('Init Baidu Map')
 
   await nextTick()
@@ -147,12 +151,6 @@ onMounted(() => {
 })
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorLocationPicker',
-})
-</script>
-
 <template>
   <n-popover v-model:show="show" trigger="click" display-directive="show">
     <template #trigger>
@@ -182,6 +180,6 @@ export default defineComponent({
 
 <style>
   .tangram-suggestion-main {
-    z-index: 9999999999;
-  }
+  z-index: 9999999999;
+}
 </style>

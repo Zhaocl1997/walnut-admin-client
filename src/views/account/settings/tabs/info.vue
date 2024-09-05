@@ -4,6 +4,11 @@ import WAvatar from '../components/avatar.vue'
 import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
 import { userAPI } from '@/api/system/user'
 
+defineOptions({
+  name: 'WAccountSettingsTabInfo',
+  defaultView: false,
+})
+
 const { t } = useAppI18n()
 const userProfile = useAppStoreUserProfile()
 
@@ -24,7 +29,7 @@ const formData = ref<AppSystemUser>({
 const loading = ref(false)
 const tempSrcUrl = ref<string>()
 
-const onAvatarChange = (temp: string) => {
+function onAvatarChange(temp: string) {
   tempSrcUrl.value = temp
 }
 
@@ -127,14 +132,6 @@ const [register] = useForm<typeof formData.value>({
 })
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'WAccountSettingsTabInfo',
-
-  defaultView: false,
-})
-</script>
-
 <template>
   <n-grid x-gap="12" :cols="2">
     <n-gi>
@@ -142,7 +139,7 @@ export default defineComponent({
     </n-gi>
 
     <n-gi>
-      <div class="vstack justify-center items-center">
+      <div class="vstack items-center justify-center">
         <Starport
           v-if="$route.name === 'AccountSetting'"
           port="w-avatar"

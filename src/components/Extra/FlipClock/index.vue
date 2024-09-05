@@ -9,12 +9,12 @@ const getTimeArr = computed(() => {
   const splitTime = time.split('-')
 
   return [
-    parseInt(splitTime[0].split('')[0]),
-    parseInt(splitTime[0].split('')[1]),
-    parseInt(splitTime[1].split('')[0]),
-    parseInt(splitTime[1].split('')[1]),
-    parseInt(splitTime[2].split('')[0]),
-    parseInt(splitTime[2].split('')[1]),
+    Number.parseInt(splitTime[0].split('')[0]),
+    Number.parseInt(splitTime[0].split('')[1]),
+    Number.parseInt(splitTime[1].split('')[0]),
+    Number.parseInt(splitTime[1].split('')[1]),
+    Number.parseInt(splitTime[2].split('')[0]),
+    Number.parseInt(splitTime[2].split('')[1]),
   ]
 })
 </script>
@@ -25,7 +25,7 @@ const getTimeArr = computed(() => {
     <FlipItem :total="9" :current="getTimeArr[1]" />
 
     <div
-      class="h-[50px] px-[10px] flex justify-around flex-col"
+      class="h-[50px] flex flex-col justify-around px-[10px]"
       w:after="content-empty block w-[10px] h-[10px] bg-gray-400 rounded-full"
       w:before="content-empty block w-[10px] h-[10px] bg-gray-400 rounded-full"
     />
@@ -34,7 +34,7 @@ const getTimeArr = computed(() => {
     <FlipItem :total="9" :current="getTimeArr[3]" />
 
     <div
-      class="h-[50px] px-[10px] flex justify-around flex-col"
+      class="h-[50px] flex flex-col justify-around px-[10px]"
       w:after="content-empty block w-[10px] h-[10px] bg-gray-400 rounded-full"
       w:before="content-empty block w-[10px] h-[10px] bg-gray-400 rounded-full"
     />

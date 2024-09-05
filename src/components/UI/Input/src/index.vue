@@ -27,35 +27,36 @@ export default defineComponent({
 
       // prop icon for suffix/prefix
       props.suffixIcon
-          && (def.suffix = () => <w-icon icon={props.suffixIcon}></w-icon>)
+      && (def.suffix = () => <w-icon icon={props.suffixIcon}></w-icon>)
       props.prefixIcon
-          && (def.prefix = () => <w-icon icon={props.prefixIcon}></w-icon>)
+      && (def.prefix = () => <w-icon icon={props.prefixIcon}></w-icon>)
 
       // copy component for input
       props.copiable
-          && props.value
-          && (def.suffix = () => (
-            <w-copy
-              icon
-              source={props.value}
-              onClick={(e: MouseEvent) => {
-                e.stopPropagation()
-              }}
-            ></w-copy>
-          ))
+      && props.value
+      && (def.suffix = () => (
+        <w-copy
+          icon
+          source={props.value}
+          onClick={(e: MouseEvent) => {
+            e.stopPropagation()
+          }}
+        >
+        </w-copy>
+      ))
 
       // help message
       props.helpMessage
-          && (def.suffix = () => (
-            <n-tooltip>
-              {{
-                default: () => props.helpMessage,
-                trigger: () => (
-                  <w-icon icon="ant-design:question-circle-outlined"></w-icon>
-                ),
-              }}
-            </n-tooltip>
-          ))
+      && (def.suffix = () => (
+        <n-tooltip>
+          {{
+            default: () => props.helpMessage,
+            trigger: () => (
+              <w-icon icon="ant-design:question-circle-outlined"></w-icon>
+            ),
+          }}
+        </n-tooltip>
+      ))
 
       // slot has highest priority
       slots.suffix && (def.suffix = () => slots.suffix?.())
@@ -77,12 +78,12 @@ export default defineComponent({
     }
 
     return () => (
-        <n-input
-          {...omit(props, Object.keys(extendedProps))}
-          onInput={onUpdateValue}
-        >
-          {unref(inputSlots)}
-        </n-input>
+      <n-input
+        {...omit(props, Object.keys(extendedProps))}
+        onInput={onUpdateValue}
+      >
+        {unref(inputSlots)}
+      </n-input>
     )
   },
 })

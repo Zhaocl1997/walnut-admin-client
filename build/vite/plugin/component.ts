@@ -76,7 +76,7 @@ const comp = {
   ],
 }
 
-export const createComponentPlugin = (): VitePlugin => {
+export function createComponentPlugin(): VitePlugin {
   return Components({
     dirs: ['@/components'],
 

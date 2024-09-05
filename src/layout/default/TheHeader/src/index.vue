@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import TheMenu from '../../TheAside/src/menu.vue'
-import TheLogo from '../../TheAside/src/logo.vue'
 import HeaderBreadCrumb from './breadcrumb.vue'
 import HeaderCollapse from './collapse.vue'
 import HeaderDropdown from './dropdown.vue'
@@ -13,7 +11,7 @@ const { title: AppTitle } = useAppEnv('title')
 
 const { isFullscreen, toggle } = useFullscreen()
 
-const onShowAside = () => {
+function onShowAside() {
   appMenu.setShowAside(true)
 }
 </script>
@@ -30,10 +28,10 @@ const onShowAside = () => {
         height: `${appSetting.header.height}px`,
       }"
       :class="{ 'top-0': appSetting.getHeaderFixed }"
-      class="flex-none sticky left-0"
+      class="sticky left-0 flex-none"
     >
       <div
-        class="h-full select-none px-2 hstack justify-between h-full items-center"
+        class="h-full h-full hstack select-none items-center justify-between px-2"
       >
         <!-- left -->
         <div class="hstack items-center justify-between space-x-2">
@@ -41,7 +39,7 @@ const onShowAside = () => {
             v-if="appAdapter.isMobile"
             src="/assets/logo.png"
             :alt="`${AppTitle} Logo`"
-            class="h-9 w-9 m-1"
+            class="m-1 h-9 w-9"
             @click="onShowAside"
           >
 
@@ -64,7 +62,7 @@ const onShowAside = () => {
 
         <!-- right -->
         <div
-          class="hstack justify-end space-x-2 h-full" :class="[
+          class="h-full hstack justify-end space-x-2" :class="[
             { 'space-x-1': appAdapter.isMobile },
           ]"
           w:children="cursor-pointer flex items-center px-0.5 h-full"

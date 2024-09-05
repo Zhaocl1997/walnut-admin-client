@@ -1,25 +1,11 @@
 <script lang="ts" setup>
-import DemoIcon from './Icon.vue'
-import DemoButton from './Button.vue'
-import DemoInput from './Input.vue'
-import DemoSelect from './Select.vue'
-import DemoRadio from './Radio.vue'
-import DemoCheckbox from './Checkbox.vue'
-import DemoDynamicTags from './DynamicTags.vue'
-import DemoTree from './Tree.vue'
 import DemoAreaCascader from './AreaCascader.vue'
-import DemoLocaleSelect from './LocaleSelect.vue'
-import DemoLocation from './LocationPicker.vue'
-import DemoDict from './Dict.vue'
-import DemoColorPicker from './ColorPicker.vue'
 
-const appAdapter = useAppStoreAdapter()
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'DemoUI',
 })
+
+const appAdapter = useAppStoreAdapter()
 </script>
 
 <template>
@@ -59,27 +45,28 @@ export default defineComponent({
     </div>
 
     <div
-      class="grid 2xl:grid-cols-2 grid-cols-1 2xl:gap-2 gap-0" :class="[
+      class="grid grid-cols-1 gap-0 2xl:grid-cols-2 2xl:gap-2" :class="[
         { 'pr-42': !appAdapter.isMobile },
       ]"
     >
       <div class="children:my-2">
-        <DemoIcon id="Icon" />
+        <!-- <DemoIcon id="Icon" />
         <DemoButton id="Button" />
         <DemoInput id="Input" />
         <DemoSelect id="Select" />
         <DemoCheckbox id="Checkbox" />
-        <DemoDict id="Dict" />
+        <DemoDict id="Dict" /> -->
       </div>
 
       <div class="children:my-2">
-        <DemoTree id="Tree" />
+        <DemoAreaCascader id="AreaCascader" />
+        <!-- <DemoTree id="Tree" />
         <DemoAreaCascader id="AreaCascader" />
         <DemoLocation id="Location" />
         <DemoRadio id="Radio" />
         <DemoDynamicTags id="DynamicTags" />
         <DemoLocaleSelect id="LocaleSelect" />
-        <DemoColorPicker id="ColorPicker" />
+        <DemoColorPicker id="ColorPicker" /> -->
       </div>
     </div>
   </div>

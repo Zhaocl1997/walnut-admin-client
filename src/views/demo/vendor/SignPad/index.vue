@@ -2,19 +2,17 @@
 import { url } from './url'
 import type { WSignPadInst } from '@/components/Vendor/SignPad'
 
+defineOptions({
+  name: 'SignPadDemo',
+})
+
 const signPadRef = ref<WSignPadInst>()
 
 const imageSrc = ref()
 
-const onGet = async () => {
+async function onGet() {
   imageSrc.value = await signPadRef.value?.getImage()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'SignPadDemo',
-})
 </script>
 
 <template>

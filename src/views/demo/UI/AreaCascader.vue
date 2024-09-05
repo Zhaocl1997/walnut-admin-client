@@ -1,12 +1,10 @@
-<script lang="ts">
-export default {
+<script setup lang="ts">
+defineOptions({
   name: 'AreaCascaderDemo',
 
   defaultView: false,
-}
-</script>
+})
 
-<script setup lang="ts">
 const values = ref({
   areaValue1: null,
   areaValue2: null,

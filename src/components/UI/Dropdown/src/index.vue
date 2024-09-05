@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 import type { WDropdown } from './types'
 
-// avoid error
-interface WDropdownProps extends /* @vue-ignore */ WDropdown.Props {}
-interface WDropdownEmits extends /* @vue-ignore */ WDropdown.Emit.Entry {}
+defineOptions({
+  name: 'WDropdown',
+  inheritAttrs: false,
+})
 
 const props = defineProps<WDropdownProps>()
 const emit = defineEmits<WDropdownEmits>()
+// avoid error
+interface WDropdownProps extends /* @vue-ignore */ WDropdown.Props {}
+interface WDropdownEmits extends /* @vue-ignore */ WDropdown.Emit.Entry {}
 
 const { setProps, getProps } = useProps<WDropdown.Props>(props)
 
@@ -28,14 +32,6 @@ defineExpose<WDropdown.Inst.WDropdownInst>({
   setProps,
   openDropdown,
   closeDropdown,
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WDropdown',
-
-  inheritAttrs: false,
 })
 </script>
 

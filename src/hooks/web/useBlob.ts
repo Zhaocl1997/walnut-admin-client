@@ -1,4 +1,4 @@
-export const useBlob = () => {
+export function useBlob() {
   const URL = window.URL || window.webkitURL
 
   const tempBlobURL = ref<string>()

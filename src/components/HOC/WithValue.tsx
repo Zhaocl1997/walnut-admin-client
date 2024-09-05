@@ -15,9 +15,7 @@ export const WithValueProps = {
 
 export type WithValueProp = Partial<ExtractPropTypes<typeof WithValueProps>>
 
-export const WithValue = (
-  WrappedComponent: ReturnType<typeof defineComponent>,
-) => {
+export function WithValue(WrappedComponent: ReturnType<typeof defineComponent>) {
   return defineComponent({
     name: 'WithValue',
 
@@ -50,7 +48,7 @@ export const WithValue = (
       }
 
       watchEffect(() => {
-        if ([null, undefined, '', NaN].includes(props.value as any)) {
+        if ([null, undefined, '', Number.NaN].includes(props.value as any)) {
           v.value = null
           return
         }

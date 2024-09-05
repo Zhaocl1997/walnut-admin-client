@@ -1,9 +1,6 @@
-<script lang="ts" setup></script>
-
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'MessageDemo',
-
   defaultView: false,
 })
 </script>

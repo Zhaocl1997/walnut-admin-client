@@ -8,22 +8,20 @@ import AppMonitorServerBattery from './src/battery.vue'
 import AppMonitorServerTime from './src/time.vue'
 import AppMonitorServerNetwork from './src/network.vue'
 
+defineOptions({
+  name: 'AppMonitorServer',
+})
+
 const systemPermission = ref()
 const networkPermission = ref()
 
-const onSystemAuthorizeSuccess = (p: string) => {
+function onSystemAuthorizeSuccess(p: string) {
   systemPermission.value = p
 }
 
-const onNetworkAuthorizeSuccess = (p: string) => {
+function onNetworkAuthorizeSuccess(p: string) {
   networkPermission.value = p
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppMonitorServer',
-})
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 /**
  * @description check string strength
  */
-export const checkStrStrong = (str: string) => {
+export function checkStrStrong(str: string) {
   if (!str)
     return 0
 

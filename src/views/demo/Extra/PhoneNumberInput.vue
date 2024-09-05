@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import type { PhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 
+defineOptions({
+  name: 'PhoneInputDemo',
+  defaultView: false,
+})
+
 const state = ref<any>({
   phoneNumber1: '13866665555',
 })
@@ -9,14 +14,6 @@ const updateParams1 = ref<PhoneNumberInputUpdateParams>()
 function onUpdate(val: PhoneNumberInputUpdateParams) {
   updateParams1.value = val
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'PhoneInputDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

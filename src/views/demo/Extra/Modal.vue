@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'ModalDemo',
+  defaultView: false,
+})
+
 const modalShow = ref(false)
 
 const configFormData = ref({
@@ -103,14 +108,6 @@ const [register] = useForm<typeof configFormData.value>({
       },
     },
   ],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'ModalDemo',
-
-  defaultView: false,
 })
 </script>
 

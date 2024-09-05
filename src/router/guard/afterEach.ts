@@ -1,6 +1,6 @@
 const appTab = useAppStoreTab()
 
-export const createAfterEachGuard = (router: Router) => {
+export function createAfterEachGuard(router: Router) {
   router.afterEach((to, from) => {
     // finish loadingbar
     window.$loadingBar.finish()

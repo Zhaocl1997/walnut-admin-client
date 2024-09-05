@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import TableHeaderLeftActions from './actions.vue'
-</script>
 
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'WTableHeaderLeft',
 })
 </script>
@@ -13,7 +11,3 @@ export default defineComponent({
     <TableHeaderLeftActions />
   </div>
 </template>
-
-<style lang="scss" scoped>
-
-</style>

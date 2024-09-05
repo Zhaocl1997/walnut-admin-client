@@ -2,6 +2,10 @@
 import type { InputNumberInst } from 'naive-ui'
 import { useTableContext } from '../../../hooks/useTableContext'
 
+defineOptions({
+  name: 'WTableHeaderRightPolling',
+})
+
 const { tableProps, onApiTableList } = useTableContext()
 
 const popoverShow = ref(false)
@@ -15,6 +19,17 @@ const getDefaultValue = computed(() => getPollingInterval.value / 1000)
 const { current } = useMagicKeys()
 const keys = computed(() => Array.from(current))
 
+const { pause, resume, isActive } = useIntervalFn(() => {
+  onApiTableList()
+}, getPollingInterval, { immediate: true })
+
+function onOpenPopover() {
+  popoverShow.value = true
+  nextTick(() => {
+    inputNumberRef.value?.focus()
+  })
+}
+
 watch(keys, (v) => {
   if (v.includes('f8')) {
     if (isActive.value)
@@ -24,18 +39,7 @@ watch(keys, (v) => {
   }
 })
 
-const { pause, resume, isActive } = useIntervalFn(() => {
-  onApiTableList()
-}, getPollingInterval, { immediate: true })
-
-const onOpenPopover = () => {
-  popoverShow.value = true
-  nextTick(() => {
-    inputNumberRef.value?.focus()
-  })
-}
-
-const onPollingClick = () => {
+function onPollingClick() {
   if (isActive.value) {
     pause()
     nextTick(() => {
@@ -47,28 +51,22 @@ const onPollingClick = () => {
   }
 }
 
-const onUpdatePolling = (v: number) => {
+function onUpdatePolling(v: number) {
   insidePollingTime.value = v * 1000
 }
 
-const parseSeconds = (input: string) => {
-  const nums = input.replace(/(,|s|\s)/g, '').trim()
+function parseSeconds(input: string) {
+  const nums = input.replace(/([,s\s])/g, '').trim()
   if (/^\d+(\.(\d+)?)?$/.test(nums))
     return Number(nums)
   return nums === '' ? null : Number.NaN
 }
 
-const formatSeconds = (value: number | null) => {
+function formatSeconds(value: number | null) {
   if (value === null)
     return ''
   return `${value} s`
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WTableHeaderRightPolling',
-})
 </script>
 
 <template>
@@ -84,7 +82,7 @@ export default defineComponent({
         </template>
 
         <template #default>
-          <div class="flex flex-row flex-nowrap gap-2 items-center">
+          <div class="flex flex-row flex-nowrap items-center gap-2">
             <w-a-icon
               text :icon="isActive ? 'ant-design:pause-circle-outlined' : 'ant-design:play-circle-outlined'"
               height="19" :help-message="$t('app.base.play_pause')" @click="onPollingClick"

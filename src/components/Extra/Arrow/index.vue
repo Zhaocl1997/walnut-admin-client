@@ -1,71 +1,58 @@
-<script lang="tsx">
-export default defineComponent({
-  name: 'WArrow',
+<script lang="ts" setup>
+import type { ICompExtraArrowProps } from '.'
 
-  props: {
-    icon: {
-      type: String as PropType<string>,
-      default: 'ant-design:down-outlined',
-    },
-    active: Boolean as PropType<boolean>,
-    right: Boolean as PropType<boolean>,
-    left: Boolean as PropType<boolean>,
-  },
+const props = withDefaults(defineProps<ICompExtraArrowProps>(), { icon: 'ant-design:down-outlined' })
 
-  setup(props) {
-    const getClass = computed(() => {
-      const { active, right, left } = props
-      if (typeof active === 'boolean') {
-        return [
-          'w-arrow',
-          {
-            'w-arrow--active': active,
-            right,
-            left,
-          },
-        ]
-      }
+const getClass = computed(() => {
+  if (typeof props.active === 'boolean') {
+    return [
+      'w-arrow',
+      {
+        'w-arrow--active': props.active,
+        'right': props.right,
+        'left': props.left,
+      },
+    ]
+  }
 
-      return 'u-none'
-    })
-
-    return () => (
-        <w-icon
-          icon={props.icon}
-          width="16"
-          class={unref(getClass)}
-          style="cursor: pointer"
-        ></w-icon>
-    )
-  },
+  return 'u-none'
 })
 </script>
 
+<template>
+  <WIcon
+    :icon="icon"
+    width="16"
+    :class="getClass"
+  />
+</template>
+
 <style lang="scss" scoped>
-  .w-arrow {
-    display: inline-block;
-    transform: rotate(0deg);
-    transform-origin: center center;
-    transition: all 0.3s ease 0.1s;
+.w-arrow {
+  display: inline-block;
+  transform: rotate(0deg);
+  transform-origin: center center;
+  transition: all 0.3s ease 0.1s;
+  cursor: pointer;
 
-    &--active {
-      transform: rotate(180deg);
-    }
-
-    &.right {
-      transform: rotate(-90deg);
-    }
-
-    &.right.w-arrow--active {
-      transform: rotate(90deg);
-    }
-
-    &.left {
-      transform: rotate(90deg);
-    }
-
-    &.left.w-arrow--active {
-      transform: rotate(-90deg);
-    }
+  &--active {
+    transform: rotate(180deg);
   }
+
+  &.right {
+    transform: rotate(-90deg);
+  }
+
+  &.right.w-arrow--active {
+    transform: rotate(90deg);
+  }
+
+  &.left {
+    transform: rotate(90deg);
+  }
+
+  &.left.w-arrow--active {
+    transform: rotate(-90deg);
+  }
+}
 </style>

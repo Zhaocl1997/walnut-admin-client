@@ -1,16 +1,21 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 
+defineOptions({
+  name: 'WLocaleSelect',
+  inheritAttrs: false,
+})
+
+const props = defineProps<InternalProps>()
+
+const emits = defineEmits(['update:value'])
+
 // TODO 888
 interface InternalProps {
   value?: string
   prefix?: string
   presetKey?: string
 }
-
-const props = defineProps<InternalProps>()
-
-const emits = defineEmits(['update:value'])
 
 const { locale, messages } = useAppI18n()
 const loading = ref(false)
@@ -57,15 +62,8 @@ onDeactivated(() => {
 })
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'WLocaleSelect',
-  inheritAttrs: false,
-})
-</script>
-
 <template>
-  <div class="hstack w-full gap-2">
+  <div class="w-full hstack gap-2">
     <w-select
       v-model:show="show" :value="value" :options="options" clearable filterable :render-label="onRenderLabel"
       tooltip :virtual-scroll="false" @update:value="onUpdateValue"

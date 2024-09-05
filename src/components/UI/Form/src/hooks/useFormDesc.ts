@@ -4,11 +4,7 @@ import type { WForm } from '../types'
 import { getFormTranslated } from '../utils'
 import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 
-export const useFormDesc = (
-  props: ComputedRef<WForm.Props<any>>,
-  schemas: Ref<WForm.Schema.Item<any>[]>,
-  t: Fn,
-) => {
+export function useFormDesc(props: ComputedRef<WForm.Props<any>>, schemas: Ref<WForm.Schema.Item<any>[]>, t: Fn) {
   const getDefaultDescItemsBySchemas = computed(
     () =>
       schemas.value

@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import { getTreeData } from '../data'
-</script>
 
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'JSONDemo',
-
   defaultView: false,
 })
 </script>

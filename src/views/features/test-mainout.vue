@@ -1,13 +1,11 @@
-<script lang="ts" setup></script>
-
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'TestMainout',
 })
 </script>
 
 <template>
-  <div class="mx-auto overflow-y-scroll h-screen p-4 lg:p-12">
+  <div class="mx-auto h-screen overflow-y-scroll p-4 lg:p-12">
     Hooks in `layout/default/index.vue` would not excute anymore, but those in
     `App/src/App.vue` still exists.
 
@@ -25,8 +23,8 @@ export default defineComponent({
 
     So i think this is the use case.
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <div class="p-4 lg:p-12 rounded-2xl overflow-hidden bg-blue-50">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div class="overflow-hidden rounded-2xl bg-blue-50 p-4 lg:p-12">
         <div class="flex items-center text-blue-500">
           <p class="text-sm font-bold uppercase">
             Feature 1 & Feature 2
@@ -34,7 +32,7 @@ export default defineComponent({
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 ml-2"
+            class="ml-2 h-4 w-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -48,7 +46,7 @@ export default defineComponent({
           </svg>
         </div>
 
-        <h2 class="mt-4 text-3xl font-semibold text-slate-800">
+        <h2 class="mt-4 text-3xl text-slate-800 font-semibold">
           This is an Amazing Feature
         </h2>
 
@@ -57,11 +55,11 @@ export default defineComponent({
         </p>
 
         <div
-          class="mt-12 flex justify-center items-center hover:scale-125 transform ease-in-out duration-150 transition-transform"
+          class="mt-12 flex transform items-center justify-center transition-transform duration-150 ease-in-out hover:scale-125"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-[300px] h-auto"
+            class="h-auto w-[300px]"
             viewBox="0 0 511.56264 532.44842"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
@@ -167,7 +165,7 @@ export default defineComponent({
         </div>
       </div>
 
-      <div class="p-4 lg:p-12 rounded-2xl overflow-hidden bg-pink-50">
+      <div class="overflow-hidden rounded-2xl bg-pink-50 p-4 lg:p-12">
         <div class="flex items-center text-pink-500">
           <p class="text-sm font-bold uppercase">
             Feature 3 & Feature 4
@@ -175,7 +173,7 @@ export default defineComponent({
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 ml-2"
+            class="ml-2 h-4 w-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -189,7 +187,7 @@ export default defineComponent({
           </svg>
         </div>
 
-        <h2 class="mt-4 text-3xl font-semibold text-slate-800">
+        <h2 class="mt-4 text-3xl text-slate-800 font-semibold">
           This is an Amazing Feature
         </h2>
 
@@ -198,11 +196,11 @@ export default defineComponent({
         </p>
 
         <div
-          class="mt-12 flex justify-center items-center hover:scale-125 transform ease-in-out duration-150 transition-transform"
+          class="mt-12 flex transform items-center justify-center transition-transform duration-150 ease-in-out hover:scale-125"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-[300px] h-auto"
+            class="h-auto w-[300px]"
             viewBox="0 0 642.99652 699.63871"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
@@ -322,7 +320,7 @@ export default defineComponent({
         </div>
       </div>
 
-      <div class="p-4 lg:p-12 rounded-2xl overflow-hidden bg-green-50">
+      <div class="overflow-hidden rounded-2xl bg-green-50 p-4 lg:p-12">
         <div class="flex items-center text-green-500">
           <p class="text-sm font-bold uppercase">
             Feature 5 & Feature 6
@@ -330,7 +328,7 @@ export default defineComponent({
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 ml-2"
+            class="ml-2 h-4 w-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -344,7 +342,7 @@ export default defineComponent({
           </svg>
         </div>
 
-        <h2 class="mt-4 text-3xl font-semibold text-slate-800">
+        <h2 class="mt-4 text-3xl text-slate-800 font-semibold">
           This is an Amazing Feature
         </h2>
 
@@ -353,11 +351,11 @@ export default defineComponent({
         </p>
 
         <div
-          class="mt-12 flex justify-center items-center hover:scale-125 transform ease-in-out duration-150 transition-transform"
+          class="mt-12 flex transform items-center justify-center transition-transform duration-150 ease-in-out hover:scale-125"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-[400px] h-auto"
+            class="h-auto w-[400px]"
             viewBox="0 0 656 447.5061"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
@@ -441,7 +439,7 @@ export default defineComponent({
         </div>
       </div>
 
-      <div class="p-4 lg:p-12 rounded-2xl overflow-hidden bg-purple-50">
+      <div class="overflow-hidden rounded-2xl bg-purple-50 p-4 lg:p-12">
         <div class="flex items-center text-purple-500">
           <p class="text-sm font-bold uppercase">
             Feature 7 & Feature 8
@@ -449,7 +447,7 @@ export default defineComponent({
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 ml-2"
+            class="ml-2 h-4 w-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -463,7 +461,7 @@ export default defineComponent({
           </svg>
         </div>
 
-        <h2 class="mt-4 text-3xl font-semibold text-slate-800">
+        <h2 class="mt-4 text-3xl text-slate-800 font-semibold">
           This is an Amazing Feature
         </h2>
 
@@ -472,11 +470,11 @@ export default defineComponent({
         </p>
 
         <div
-          class="mt-12 flex justify-center items-center hover:scale-125 transform ease-in-out duration-150 transition-transform"
+          class="mt-12 flex transform items-center justify-center transition-transform duration-150 ease-in-out hover:scale-125"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-[400px] h-auto"
+            class="h-auto w-[400px]"
             viewBox="0 0 685.67004 428.52452"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >

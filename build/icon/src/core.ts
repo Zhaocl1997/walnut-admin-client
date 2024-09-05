@@ -6,6 +6,7 @@ import { generateIconDev } from '../generate/icon-dev'
 import { rewriteSvgJSON, writeSvgJSONBundle } from '../generate/icon-svg-bundle'
 import { BuildUtilsWarn } from '../../utils'
 import { IconBundleConfig } from './config'
+
 (async () => {
   const arg = process.argv.slice(-1)[0]
 

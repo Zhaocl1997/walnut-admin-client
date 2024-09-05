@@ -1,49 +1,40 @@
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'DynamicInputForm',
+})
 
-  setup() {
-    const configData = ref({})
+const configData = ref({})
 
-    const [register1] = useForm<typeof configData.value>({
-      span: 12,
-      labelWidth: 100,
-      schemas: [],
-    })
+const [register1] = useForm<typeof configData.value>({
+  span: 12,
+  labelWidth: 100,
+  schemas: [],
+})
 
-    const formData = ref({})
+const formData = ref({})
 
-    const [register2] = useForm({
-      span: 24,
-      schemas: [
-        {
-          type: 'Base:DynamicInput',
-          formProp: {
-            path: 'dynamic1',
-            label: 'Base Dynamic',
-          },
-          componentProp: {},
-        },
-        {
-          type: 'Base:DynamicInput',
-          formProp: {
-            path: 'dynamic2',
-            label: 'Pair Key/Value',
-          },
-          componentProp: {
-            preset: 'pair',
-          },
-        },
-      ],
-    })
-
-    return {
-      configData,
-      register1,
-      formData,
-      register2,
-    }
-  },
+const [register2] = useForm({
+  span: 24,
+  schemas: [
+    {
+      type: 'Base:DynamicInput',
+      formProp: {
+        path: 'dynamic1',
+        label: 'Base Dynamic',
+      },
+      componentProp: {},
+    },
+    {
+      type: 'Base:DynamicInput',
+      formProp: {
+        path: 'dynamic2',
+        label: 'Pair Key/Value',
+      },
+      componentProp: {
+        preset: 'pair',
+      },
+    },
+  ],
 })
 </script>
 

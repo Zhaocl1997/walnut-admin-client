@@ -15,7 +15,7 @@ import type { WInputNumberProps } from '../../InputNumber'
 import type { WSelectProps } from '../../Select'
 import type { WRadioProps } from '../../Radio'
 import type { WCheckboxProps } from '../../Checkbox'
-import type { WSwitchProps } from '../../Switch'
+import type { ICompUISwitchPropsPartial } from '../../Switch'
 import type { WTimePickerProps } from '../../TimePicker'
 import type { WDatePickerProps } from '../../DatePicker'
 import type { WDynamicTagsProps } from '../../DynamicTags'
@@ -148,7 +148,7 @@ export declare namespace WForm {
       'Base:Radio': WRadioProps
       'Base:Checkbox': WCheckboxProps
       'Base:ColorPicker': WColorPickerProps
-      'Base:Switch': WSwitchProps
+      'Base:Switch': ICompUISwitchPropsPartial
       'Base:TimePicker': WTimePickerProps
       'Base:DatePicker': WDatePickerProps
       'Base:DynamicTags': WDynamicTagsProps
@@ -176,7 +176,9 @@ export declare namespace WForm {
     }
 
     interface DynamicSchemaItemProps<
-      T extends keyof ComponentPropPool, D, EP = any,
+      T extends keyof ComponentPropPool,
+      D,
+      EP = any,
     > {
       /**
        * @description internal flag to control show
@@ -188,8 +190,8 @@ export declare namespace WForm {
       componentProp?: ComponentPropPool<D>[T] &
       DomProps & {
         /**
-           * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
-           */
+         * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
+         */
         defaultValue?: BaseDataType | BaseDataType[] | undefined | null
 
         placeholder?: string

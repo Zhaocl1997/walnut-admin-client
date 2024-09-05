@@ -4,6 +4,11 @@ import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 import type { IServerInfo } from '@/api/app/monitor/server'
 import { getSysInfo } from '@/api/app/monitor/server'
 
+defineOptions({
+  name: 'AppMonitorServerSystem',
+  defaultView: false,
+})
+
 const props = defineProps<{ systemPermission: string }>()
 
 const { t } = useAppI18n()
@@ -18,7 +23,7 @@ const items = computed<WDescriptionsItem[]>(() =>
   })),
 )
 
-const onInit = async () => {
+async function onInit() {
   loading.value = true
 
   try {
@@ -32,14 +37,6 @@ const onInit = async () => {
 }
 
 onMounted(onInit)
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppMonitorServerSystem',
-
-  defaultView: false,
-})
 </script>
 
 <template>

@@ -3,13 +3,9 @@ const { createBlobUrl } = useBlob()
 /**
  * @description Download url resources
  */
-export const downloadByUrl = (
-  url: string,
-  fileName?: string,
-  target: TargetContext = '_blank',
-) => {
+export function downloadByUrl(url: string, fileName?: string, target: TargetContext = '_blank') {
   return new Promise<boolean>((resolve, reject) => {
-    if (/(iP)/g.test(window.navigator.userAgent))
+    if (/(iP)/.test(window.navigator.userAgent))
       reject(new Error('Your browser does not support download!'))
 
     try {
@@ -36,7 +32,7 @@ export const downloadByUrl = (
 /**
  * @description Download blob resources
  */
-export const downloadByBlob = async (data: Blob, fileName?: string) => {
+export async function downloadByBlob(data: Blob, fileName?: string) {
   const tempBlobURL = await createBlobUrl(data)
 
   await downloadByUrl(tempBlobURL, fileName)
@@ -45,7 +41,7 @@ export const downloadByBlob = async (data: Blob, fileName?: string) => {
 /**
  * @description Download base64 resources
  */
-export const downloadByBase64 = async (base64: string, fileName?: string) => {
+export async function downloadByBase64(base64: string, fileName?: string) {
   const blob = await base64ToBlob(base64)
 
   await downloadByBlob(blob, fileName)
@@ -54,7 +50,7 @@ export const downloadByBase64 = async (base64: string, fileName?: string) => {
 /**
  * @description Download online url resources
  */
-export const downloadByOnlineUrl = async (url: string, fileName?: string) => {
+export async function downloadByOnlineUrl(url: string, fileName?: string) {
   const base64 = await imgUrlToBase64(url)
 
   await downloadByBase64(base64, fileName)

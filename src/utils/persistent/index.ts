@@ -8,18 +8,18 @@ const AppCookie = new Cookie({
 })
 
 /* cookie */
-export const setCookie = (key: string, value: any, expire?: number) => {
+export function setCookie(key: string, value: any, expire?: number) {
   AppCookie.set(key, value, expire)
 }
 
-export const getCookie = (key: string): Nullable<any> => {
+export function getCookie(key: string): Nullable<any> {
   return AppCookie.get(key)
 }
 
-export const clearCookie = () => {
+export function clearCookie() {
   AppCookie.clear()
 }
 
-export const removeCookie = (key: string) => {
+export function removeCookie(key: string) {
   AppCookie.remove(key)
 }

@@ -1,16 +1,11 @@
-import { isUndefined, omit, sortBy } from 'lodash-es'
+import { omit } from 'lodash-es'
 import type { DropdownOption } from 'naive-ui'
 import type { WTable } from '../types'
 
 import { getTableTranslated } from '../utils'
-import { WButtonProps } from '@/components/UI/Button'
 
 // Extend Naive UI columns
-export const useTableColumns = (
-  props: ComputedRef<WTable.Props>,
-  ApiTableListParams: Ref<WalnutBaseListParams>,
-  setProps: WTable.SetProps,
-) => {
+export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListParams: Ref<WalnutBaseListParams>, setProps: WTable.SetProps) {
   const columns = ref<WTable.Column[]>([])
   const { t } = useAppI18n()
   const userPermission = useAppStoreUserPermission()
@@ -28,7 +23,8 @@ export const useTableColumns = (
             <w-message
               msg={getTableTranslated(props, item, true)}
               class="inline"
-            ></w-message>
+            >
+            </w-message>
           )}
         </>
       ),
@@ -214,14 +210,19 @@ export const useTableColumns = (
               const normalButtons = visibleButtons.filter(i => !i._dropdown).map(i => omit(i, '_dropdown'))
               const dropdownButtons = visibleButtons.filter(i => i._dropdown).map(i => omit(i, '_dropdown'))
 
-              const renderNormalButtons = normalButtons.map(i =>
-                <w-button {...omit(i, '_builtInType')} disabled={isDisabled(i)} onClick={() =>
-                  tItem.onActionButtonsClick({
-                    type: i._builtInType,
-                    rowData,
-                    rowIndex,
-                  })
-                }></w-button>)
+              const renderNormalButtons = normalButtons.map(i => (
+                <w-button
+                  {...omit(i, '_builtInType')}
+                  disabled={isDisabled(i)}
+                  onClick={() =>
+                    tItem.onActionButtonsClick({
+                      type: i._builtInType,
+                      rowData,
+                      rowIndex,
+                    })}
+                >
+                </w-button>
+              ))
 
               const dropdownOptions: DropdownOption[] = dropdownButtons.map((i) => {
                 return {
@@ -236,13 +237,14 @@ export const useTableColumns = (
               })
 
               return (
-                <div class="flex items-center justify-center space-x-2 whitespace-nowrap">
+                <div class="flex items-center justify-center whitespace-nowrap space-x-2">
                   {renderNormalButtons}
 
                   {dropdownButtons.length !== 0 && (
                     <n-dropdown size="small" trigger="click" options={dropdownOptions} onSelect={onDropdownSelect}>
                       <w-a-icon icon="ant-design:more-outlined" height="20" text></w-a-icon>
-                    </n-dropdown>)}
+                    </n-dropdown>
+                  )}
                 </div>
               )
             },
@@ -266,7 +268,8 @@ export const useTableColumns = (
                       ? tItem.extendIconName
                       : tItem.extendIconName(p)
                   }
-                ></w-icon>
+                >
+                </w-icon>
               )
             },
           }
@@ -291,10 +294,12 @@ export const useTableColumns = (
         if (
           !whiteList[0].includes(i.type!)
           && !whiteList[1].includes(i.extendType!)
-        )
+        ) {
           return i.width || i.minWidth
-        else
+        }
+        else {
           return 80
+        }
       })
       .filter(i => i)
 

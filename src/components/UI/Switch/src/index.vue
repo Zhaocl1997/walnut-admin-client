@@ -1,24 +1,20 @@
-<script lang="tsx">
-import type { WSwitchProps } from './types'
+<script lang="ts" setup>
+import type { ICompUISwitchPropsPartial } from './types'
 
-import { props } from './props'
-
-export default defineComponent({
+defineOptions({
   name: 'WSwitch',
-
-  props,
-
-  emits: [],
-
-  setup(props: WSwitchProps, { attrs, slots, emit, expose }) {
-    return () => (
-        <n-switch>
-          {{
-            checked: () => props.checkedText,
-            unchecked: () => props.uncheckedText,
-          }}
-        </n-switch>
-    )
-  },
 })
+
+defineProps<ICompUISwitchPropsPartial>()
 </script>
+
+<template>
+  <n-switch>
+    <template #checked>
+      {{ checkedText }}
+    </template>
+    <template #unchecked>
+      {{ uncheckedText }}
+    </template>
+  </n-switch>
+</template>

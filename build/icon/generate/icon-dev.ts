@@ -7,7 +7,7 @@ import {
   iconSVGPath,
 } from '../src'
 
-export const generateIconDev = async () => {
+export async function generateIconDev() {
   const names = IconBundleConfig.list.filter(i => i !== WSvgPrefix)
 
   const JSONName = (i: string) => `${i.replace('-', '')}Icons`

@@ -8,7 +8,7 @@ export const userAPI = new BaseAPI<AppSystemUser>({
 /**
  * @description reset password
  */
-export const resetPassowrd = (data: { userId: string }) => {
+export function resetPassowrd(data: { userId: string }) {
   return AppAxios.patch<boolean>({
     url: '/system/user/password/reset',
     data,
@@ -18,7 +18,7 @@ export const resetPassowrd = (data: { userId: string }) => {
 /**
  * @description update password
  */
-export const updatePassowrd = (data: { userId: string; newPassword: string }) => {
+export function updatePassowrd(data: { userId: string, newPassword: string }) {
   return AppAxios.patch<boolean>({
     url: '/system/user/password/update',
     data,

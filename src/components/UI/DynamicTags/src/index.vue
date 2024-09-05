@@ -1,17 +1,13 @@
-<script lang="tsx">
+<script lang="ts" setup>
 import type { WDynamicTagsProps } from './types'
 
 import { props } from './props'
 
-export default defineComponent({
+defineOptions({
   name: 'WDynamicTags',
-
-  props,
-
-  emits: [],
-
-  setup(props: WDynamicTagsProps, { attrs, slots, emit, expose }) {
-    return () => <n-dynamic-tags></n-dynamic-tags>
-  },
 })
 </script>
+
+<template>
+  <n-dynamic-tags />
+</template>

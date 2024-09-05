@@ -10,13 +10,11 @@ interface InternalProps {
   placement?: PopoverPlacement
 }
 
-const props = withDefaults(defineProps<InternalProps>(), { text: true })
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'WAIcon',
 })
+
+const props = withDefaults(defineProps<InternalProps>(), { text: true })
 </script>
 
 <template>

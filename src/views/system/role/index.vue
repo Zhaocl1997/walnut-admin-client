@@ -1,12 +1,10 @@
-<script lang="tsx">
-export default defineComponent({
-  name: 'Role',
-})
-</script>
-
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { useMenuTree } from './useMenuTree'
 import { roleAPI } from '@/api/system/role'
+
+defineOptions({
+  name: 'Role',
+})
 
 // locale unique key
 const key = 'role'

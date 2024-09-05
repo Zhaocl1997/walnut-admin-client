@@ -8,11 +8,12 @@ import SettingsFormTab from './tab.vue'
 import SettingsFormBreadcrumb from './breadcrumb.vue'
 import SettingsFormMenu from './menu.vue'
 import SettingsFormFooter from './footer.vue'
-import settings from '@/settings.json'
+
+defineOptions({
+  name: 'AppSettingsForm',
+})
 
 const appSetting = useAppStoreSetting()
-
-const keys = ['app', 'logo', 'header', 'tabs', 'breadcrumb', 'menu', 'footer']
 
 const { copy, copied } = useClipboard({
   source: computed(() =>
@@ -33,15 +34,9 @@ const { copy, copied } = useClipboard({
   copiedDuring: 8000,
 })
 
-const onReset = () => {
+function onReset() {
   window.location.reload()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AppSettingsForm',
-})
 </script>
 
 <template>
@@ -69,7 +64,7 @@ export default defineComponent({
         }}
       </n-button>
 
-      <n-button type="error" class="w-full mt-2" @click="onReset">
+      <n-button type="error" class="mt-2 w-full" @click="onReset">
         {{ $t('form.app.settings.app.reset') }}
       </n-button>
     </div>

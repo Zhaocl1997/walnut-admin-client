@@ -1,6 +1,6 @@
 import type { EffectScope } from 'vue'
 
-export const useTabsPersistent = () => {
+export function useTabsPersistent() {
   let scope: EffectScope
 
   const appTab = useAppStoreTab()

@@ -130,8 +130,8 @@ const [register] = useForm<typeof appRelatives>({
         disabled: computed(
           () =>
             getCanAnimate.value
-              || appRelatives.transitionMode === AppConstBasicMode.SCOPE
-              || !appRelatives.transitionStatus,
+            || appRelatives.transitionMode === AppConstBasicMode.SCOPE
+            || !appRelatives.transitionStatus,
         ),
         tooltip: true,
       },
@@ -168,7 +168,7 @@ const [register] = useForm<typeof appRelatives>({
         disabled: computed(
           () =>
             !appRelatives.watermarkStatus
-              || appRelatives.watermarkMode === AppConstBasicMode.SCOPE,
+            || appRelatives.watermarkMode === AppConstBasicMode.SCOPE,
         ),
       },
     },

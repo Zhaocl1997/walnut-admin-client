@@ -2,6 +2,14 @@
 import type { WButtonInst } from '@/components/UI/Button'
 import type { WVerifyInst } from '@/components/Extra/Verify'
 
+defineOptions({
+  name: 'SMSInput',
+})
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  retrySeconds: 60,
+})
+
 // TODO 888
 interface InternalProps {
   retrySeconds?: number
@@ -10,16 +18,10 @@ interface InternalProps {
   onSuccess?: (startCountdown: () => void) => Promise<void>
 }
 
-const props = withDefaults(defineProps<InternalProps>(), {
-  retrySeconds: 60,
-})
-
-const { t } = useAppI18n()
-
 const buttonRef = ref<WButtonInst>()
 const verifyRef = ref<WVerifyInst>()
 
-const onClick = async () => {
+async function onClick() {
   if (!props.onBeforeCountdown)
     return
 
@@ -34,24 +36,18 @@ const onClick = async () => {
     onSuccess()
 }
 
-const onVerifySuccess = () => {
+function onVerifySuccess() {
   nextTick(() => {
     onSuccess()
   })
 }
 
-const onSuccess = () => {
+function onSuccess() {
   if (!props.onSuccess)
     return
 
   props.onSuccess(() => buttonRef.value!.onStartCountdown())
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'SMSInput',
-})
 </script>
 
 <template>
@@ -65,7 +61,7 @@ export default defineComponent({
         manual-retry
         @click="onClick"
       >
-        {{ t('comp.verifyInput.send') }}
+        {{ $t('comp.verifyInput.send') }}
       </w-button>
     </template>
   </n-input>

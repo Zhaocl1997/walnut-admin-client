@@ -13,7 +13,15 @@ import WTransition from '@/components/Extra/Transition'
 
 import { useDropdown } from '@/components/UI/Dropdown'
 
-interface WTreeEmits extends /* @vue-ignore */ WTree.Emit.Entry { }
+defineOptions({
+  name: 'WTree',
+})
+
+const props = defineProps<InternalProps>()
+
+const emit = defineEmits<WTreeEmits>()
+
+interface WTreeEmits extends WTree.Emit.Entry { }
 
 type TreeKey = StringOrNumber
 
@@ -34,10 +42,6 @@ interface InternalProps {
   onTreeNodeItemDelete?: (deletedItem: any) => void
   onPaste?: (copyTarget: any, currentTarget: any) => void
 }
-
-const props = defineProps<InternalProps>()
-
-const emit = defineEmits<WTreeEmits>()
 
 const { t } = useAppI18n()
 
@@ -265,7 +269,7 @@ function nodeProps({ option }: { option: TreeOption }) {
 function onRenderPrefix({ option }: TreeRenderProps) {
   return getProps.value.presetPrefixIcon
     ? (
-      <WIcon icon={option.icon as string} height="18" class="mb-0.5"></WIcon>
+        <WIcon icon={option.icon as string} height="18" class="mb-0.5"></WIcon>
       )
     : undefined
 }
@@ -273,19 +277,20 @@ function onRenderPrefix({ option }: TreeRenderProps) {
 function onRenderSuffix({ option }: TreeRenderProps) {
   return (getProps.value.treeProps?.draggable || getProps.value.deletable)
     ? (
-      <WTransition name="fade-right">
-        {selectedKeys.value[0] === option[getKeyField.value] && (
-          <div class="flex items-center">
-            {getProps.value.treeProps!.draggable
+        <WTransition name="fade-right">
+          {selectedKeys.value[0] === option[getKeyField.value] && (
+            <div class="flex items-center">
+              {getProps.value.treeProps!.draggable
               && userPermission.hasPermission(getProps.value.auths?.update) && (
                 <WIcon
                   height="18"
                   class="cursor-move"
                   icon="ant-design:drag-outlined"
-                ></WIcon>
-            )}
+                >
+                </WIcon>
+              )}
 
-            {getProps.value.deletable
+              {getProps.value.deletable
               && userPermission.hasPermission(getProps.value.auths?.delete) && (
                 <WButton
                   confirm
@@ -297,11 +302,12 @@ function onRenderSuffix({ option }: TreeRenderProps) {
                   }}
                   type="error"
                   height="18"
-                ></WButton>
-            )}
-          </div>
-        )}
-      </WTransition>
+                >
+                </WButton>
+              )}
+            </div>
+          )}
+        </WTransition>
       )
     : undefined
 }
@@ -358,16 +364,10 @@ defineExpose<WTree.Inst.WTreeInst>({
 })
 </script>
 
-<script lang="tsx">
-export default defineComponent({
-  name: 'WTree',
-})
-</script>
-
 <template>
   <div class="w-full">
     <n-input
-      v-if="getProps.toolbar" v-model:value="pattern" style="width: 90% !important" class="ml-4 mb-2" clearable
+      v-if="getProps.toolbar" v-model:value="pattern" style="width: 90% !important" class="mb-2 ml-4" clearable
       round size="small" :disabled="getProps.treeProps?.disabled"
     >
       <template #suffix>

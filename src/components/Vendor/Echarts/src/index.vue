@@ -2,6 +2,15 @@
 import type { EChartsOption } from 'echarts'
 import { genString } from 'easy-fns-ts'
 
+defineOptions({
+  name: 'WVendorECharts',
+})
+
+const props = withDefaults(defineProps<WEchartsProps>(), {
+  height: '400px',
+  width: '100%',
+})
+
 // TODO 888
 interface WEchartsProps {
   option: EChartsOption
@@ -9,10 +18,6 @@ interface WEchartsProps {
   width?: string
 }
 
-const props = withDefaults(defineProps<WEchartsProps>(), {
-  height: '400px',
-  width: '100%',
-})
 const chartId = ref(`echarts-${genString(8)}`)
 // third party libs should use shallowRef !!!
 const chartInst = shallowRef<Nullable<echarts.ECharts>>(null)
@@ -76,12 +81,6 @@ tryOnUnmounted(onDispose)
 onActivated(onInit)
 
 onDeactivated(onDispose)
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorECharts',
-})
 </script>
 
 <template>

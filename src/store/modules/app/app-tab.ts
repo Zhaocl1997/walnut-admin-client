@@ -542,7 +542,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
 const useAppStoreTabOutside = () => useAppStoreTabInside(store)
 
-export const useAppStoreTab = () => {
+export function useAppStoreTab() {
   if (getCurrentInstance())
     return useAppStoreTabInside()
   return useAppStoreTabOutside()

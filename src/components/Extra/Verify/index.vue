@@ -1,12 +1,20 @@
-<script lang="ts">
-export default defineComponent({
-  name: 'WVerify',
-})
-</script>
-
 <script lang="ts" setup>
 import { getRandomInt } from 'easy-fns-ts'
 import { makeImgSize, makeImgWithCanvas, paintPuzzle } from './utils'
+
+defineOptions({
+  name: 'WVerify',
+})
+
+const props = withDefaults(defineProps<InteralProps>(), {
+  canvasWidth: 310,
+  canvasHeight: 160,
+  puzzleScale: 1,
+  sliderSize: 36,
+  range: 5,
+})
+
+const emits = defineEmits(['success', 'fail'])
 
 // TODO 888
 interface InteralProps {
@@ -20,16 +28,6 @@ interface InteralProps {
   range?: number
   imgs?: string[]
 }
-
-const props = withDefaults(defineProps<InteralProps>(), {
-  canvasWidth: 310,
-  canvasHeight: 160,
-  puzzleScale: 1,
-  sliderSize: 36,
-  range: 5,
-})
-
-const emits = defineEmits(['success', 'fail'])
 
 const { t } = useAppI18n()
 
@@ -95,8 +93,8 @@ const getPuzzleCanvasStyle = computed(() => ({
       getStyleWidth.value
       - getSliderBaseSize.value
       - (getPuzzleBaseSize.value - getSliderBaseSize.value)
-        * ((getStyleWidth.value - getSliderBaseSize.value)
-          / (props.canvasWidth - getSliderBaseSize.value))
+      * ((getStyleWidth.value - getSliderBaseSize.value)
+      / (props.canvasWidth - getSliderBaseSize.value))
     }px)`,
 }))
 
@@ -309,11 +307,11 @@ function onVerify() {
   // 最后+ 的是补上slider和滑块宽度不一致造成的缝隙
   const x = Math.abs(
     pinX.value
-        - (getStyleWidth.value - getSliderBaseSize.value)
-        + (getPuzzleBaseSize.value - getSliderBaseSize.value)
-          * ((getStyleWidth.value - getSliderBaseSize.value)
-            / (props.canvasWidth - getSliderBaseSize.value))
-        - 3,
+    - (getStyleWidth.value - getSliderBaseSize.value)
+    + (getPuzzleBaseSize.value - getSliderBaseSize.value)
+    * ((getStyleWidth.value - getSliderBaseSize.value)
+    / (props.canvasWidth - getSliderBaseSize.value))
+    - 3,
   )
 
   if (x < props.range) {
@@ -397,7 +395,7 @@ defineExpose({ onOpenModal })
             :width="getPuzzleBaseSize"
             :height="canvasHeight"
             :style="getPuzzleCanvasStyle"
-            class="absolute top-0 left-0 z-20"
+            class="absolute left-0 top-0 z-20"
           />
 
           <!-- 成功后显示的完整图 -->
@@ -406,14 +404,14 @@ defineExpose({ onOpenModal })
             :width="canvasWidth"
             :height="canvasHeight"
             :style="getCanvasBaseStyle"
-            class="absolute top-0 left-0 opacity-0 transition-opacity duration-700 z-30" :class="[
+            class="absolute left-0 top-0 z-30 opacity-0 transition-opacity duration-700" :class="[
               { 'opacity-100': isSuccess },
             ]"
           />
 
           <!-- 提示消息 -->
           <div
-            class="absolute bottom-0 left-0 w-full h-6 text-center opacity-0 transition-all z-50 bg-green-600" :class="[
+            class="absolute bottom-0 left-0 z-50 h-6 w-full bg-green-600 text-center opacity-0 transition-all" :class="[
               { 'opacity-100': infoTextShow },
               { 'bg-orange-600': !isSuccess },
             ]"
@@ -425,7 +423,7 @@ defineExpose({ onOpenModal })
           <n-button
             text
             type="error"
-            class="absolute top-2 right-2 z-40 cursor-pointer transform transition-transform hover:-rotate-90"
+            class="absolute right-2 top-2 z-40 transform cursor-pointer transition-transform hover:-rotate-90"
             @click="onReset"
           >
             <w-icon icon="carbon:reset" height="36" />
@@ -435,13 +433,13 @@ defineExpose({ onOpenModal })
 
       <!-- 滑块 -->
       <div
-        class="relative w-full mt-4 shadow-xl rounded-md bg-gray-400/50 transition-all"
+        class="relative mt-4 w-full rounded-md bg-gray-400/50 shadow-xl transition-all"
         :style="`height: ${getSliderBaseSize}px`"
       >
         <!-- 滑块文字 -->
         <div
           v-show="!mouseDown"
-          class="abs-center truncate text-center text-sm w-full"
+          class="abs-center w-full truncate text-center text-sm"
         >
           {{ t('comp.verify.slider') }}
         </div>
@@ -449,11 +447,11 @@ defineExpose({ onOpenModal })
         <!-- 滑块本体 -->
         <div
           ref="rangeSlider"
-          class="absolute h-full w-12 rounded bg-gradient-to-r from-indigo-200 via-red-200 to-yellow-100"
+          class="absolute h-full w-12 rounded from-indigo-200 via-red-200 to-yellow-100 bg-gradient-to-r"
           :style="`width: ${getStyleWidth}px`"
         >
           <div
-            class="absolute transition-all right-0 h-full w-12 rounded shadow-xl bg-gray-700 hover:bg-gray-700/60 border border-{3px}"
+            class="border-{3px} absolute right-0 h-full w-12 border rounded bg-gray-700 shadow-xl transition-all hover:bg-gray-700/60"
             :style="`width: ${getSliderBaseSize}px`"
             @mousedown="onRangeMouseDown($event)"
             @touchstart="onRangeMouseDown($event)"

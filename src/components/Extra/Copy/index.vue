@@ -1,6 +1,10 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'WCopy',
+})
+
 const props = withDefaults(
-  defineProps<{ source: any; copiedDuring?: number; icon?: boolean }>(),
+  defineProps<{ source: any, copiedDuring?: number, icon?: boolean }>(),
   { copiedDuring: 3000 },
 )
 
@@ -10,15 +14,9 @@ const { copy, copied } = useClipboard({
   copiedDuring: props.copiedDuring,
 })
 
-const onClick = async () => {
+async function onClick() {
   await copy(props.source)
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WCopy',
-})
 </script>
 
 <template>

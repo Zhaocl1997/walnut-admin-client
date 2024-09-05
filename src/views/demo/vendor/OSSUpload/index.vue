@@ -1,15 +1,13 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'OSSUploadDemo',
+})
+
 const state = ref<any>({
   fileList2: ['test-png.png', 'test-docx.docx', 'test-pdf.pdf'],
   fileList3: ['test-png.png', 'test-docx.docx', 'test-pdf.pdf'],
   fileList6: ['person.jpg', 'furniture.jpg'],
   fileList7: ['city.jpg', 'football.jpg'],
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'OSSUploadDemo',
 })
 </script>
 

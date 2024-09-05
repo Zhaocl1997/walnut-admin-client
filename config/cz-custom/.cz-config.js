@@ -43,7 +43,7 @@ module.exports = {
   /*
     scopeOverrides: {
       fix: [
-  
+
         {name: 'merge'},
         {name: 'style'},
         {name: 'e2eTest'},
@@ -53,7 +53,7 @@ module.exports = {
     */
   // override the messages, defaults are as follows
   messages: {
-    type: "Select the type of change that you're committing:",
+    type: 'Select the type of change that you\'re committing:',
     scope: '\nDenote the SCOPE of this change (optional):',
     // used if allowCustomScopes is true
     customScope: 'Denote the SCOPE of this change:',

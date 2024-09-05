@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-const state = reactive<Recordable>({})
-</script>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   name: 'ColorPickerDemo',
-
   defaultView: false,
 })
+
+const state = reactive<Recordable>({})
 </script>
 
 <template>

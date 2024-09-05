@@ -1,14 +1,8 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { props } from './props'
 
-export default defineComponent({
+defineOptions({
   name: 'WColorPicker',
-
-  props,
-
-  setup(props) {
-    return {}
-  },
 })
 </script>
 

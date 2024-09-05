@@ -22,7 +22,7 @@ const useAppStoreAdapterInside = defineStore(StoreKeys.APP_ADAPTER, {
 
 const useAppStoreAdapterOutside = () => useAppStoreAdapterInside(store)
 
-export const useAppStoreAdapter = () => {
+export function useAppStoreAdapter() {
   if (getCurrentInstance())
     return useAppStoreAdapterInside()
   return useAppStoreAdapterOutside()

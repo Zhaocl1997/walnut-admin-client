@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'Battery',
+})
+
 const { level, charging } = useSharedBattery()
 
 const getPercentLevel = computed(() => level.value * 100)
@@ -19,14 +23,7 @@ const getIcon = computed(() => {
   if (getPercentLevel.value > 65 && getPercentLevel.value < 95)
     return 'carbon:battery-half'
 
-  if (getPercentLevel.value >= 95)
-    return 'carbon:battery-full'
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'Battery',
+  return 'carbon:battery-full'
 })
 </script>
 

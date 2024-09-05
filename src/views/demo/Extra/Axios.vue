@@ -3,9 +3,14 @@ import type { AxiosRequestConfig } from 'axios'
 import { HelloAPI, HelloAPIWithToken } from '@/api'
 import { removeAllCancel, removeLatestRequest } from '@/utils/axios/cancel'
 
+defineOptions({
+  name: 'AxiosDemo',
+  defaultView: false,
+})
+
 const withToken = ref(true)
 
-const _request = async (payload: AxiosRequestConfig) => {
+async function _request(payload: AxiosRequestConfig) {
   if (withToken.value) {
     const res = await HelloAPIWithToken(payload)
     useAppMsgSuccess(res)
@@ -16,7 +21,7 @@ const _request = async (payload: AxiosRequestConfig) => {
   }
 }
 
-const onSend = (type: number) => {
+function onSend(type: number) {
   const pool = {
     1: () => {
       _request({})
@@ -64,14 +69,6 @@ const onSend = (type: number) => {
 
   pool[type]()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'AxiosDemo',
-
-  defaultView: false,
-})
 </script>
 
 <template>

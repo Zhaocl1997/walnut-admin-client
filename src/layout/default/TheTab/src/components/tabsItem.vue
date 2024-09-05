@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import { getTabsContext } from '../hooks/useTabsContext'
 
-const props = defineProps<{ item: AppTab; index: number }>()
+defineOptions({
+  name: 'TabsItem',
+})
+
+const props = defineProps<{ item: AppTab, index: number }>()
 
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
@@ -23,8 +27,8 @@ const { onTabRemove } = getTabsContext()
 const getShowAffixedPinIcon = computed(
   () =>
     !appAdapter.isMobile
-      && props.item.meta.affix
-      && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN,
+    && props.item.meta.affix
+    && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN,
 )
 
 // only show when tab not affixed and showIcon is true
@@ -33,8 +37,8 @@ const getShowAffixedPinIcon = computed(
 const getShowIcon = computed(
   () =>
     (!props.item.meta.affix && appSetting.tabs.showIcon)
-      || (props.item.meta.affix
-        && appSetting.tabs.affixMode === AppConstTabAffixMode.ICON),
+    || (props.item.meta.affix
+    && appSetting.tabs.affixMode === AppConstTabAffixMode.ICON),
 )
 
 // only show when not mobile
@@ -47,9 +51,9 @@ const getShowIcon = computed(
 const getShowDot = computed(
   () =>
     !appAdapter.isMobile
-      && !props.item.meta.affix
-      && !appSetting.tabs.showIcon
-      && currentRoute.value.name === props.item.name,
+    && !props.item.meta.affix
+    && !appSetting.tabs.showIcon
+    && currentRoute.value.name === props.item.name,
 )
 
 // only show when tab is not affixed
@@ -58,9 +62,9 @@ const getShowDot = computed(
 const getShowCloseIcon = computed(
   () =>
     !props.item.meta.affix
-      && (appSetting.tabs.closeMode === AppConstTabCloseMode.ALWAYS
-        || (appSetting.tabs.closeMode === AppConstTabCloseMode.HOVER
-          && getHovered.value)),
+    && (appSetting.tabs.closeMode === AppConstTabCloseMode.ALWAYS
+    || (appSetting.tabs.closeMode === AppConstTabCloseMode.HOVER
+    && getHovered.value)),
 )
 
 // only show when tab is not affixed
@@ -69,8 +73,8 @@ const getShowCloseIcon = computed(
 const getShowTite = computed(
   () =>
     !props.item.meta.affix
-      || (props.item.meta.affix
-        && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN),
+    || (props.item.meta.affix
+    && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN),
 )
 
 // scroll title and real title
@@ -79,19 +83,13 @@ const getTitle = computed(() =>
 )
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'TabsItem',
-})
-</script>
-
 <template>
   <div
     ref="tabsItem"
     :style="{
       width: getShowTite ? `${appSetting.tabs.itemWidth}px` : 'max-content',
     }"
-    class="relative h-full grid grid-cols-12 gap-1 items-center cursor-pointer select-none px-2 py-1" :class="[
+    class="relative grid grid-cols-12 h-full cursor-pointer select-none items-center gap-1 px-2 py-1" :class="[
       {
         'grid-cols-2': !getShowTite,
       },
@@ -106,7 +104,7 @@ export default defineComponent({
 
     <div
       v-else-if="getShowDot"
-      class="bg-info text-xl font-bold border-8 border-info shadow-xl rounded-full h-4 w-4 hover:border-infoHover col-span-2 flex items-center" :class="[
+      class="col-span-2 h-4 w-4 flex items-center border-8 border-info rounded-full bg-info text-xl font-bold shadow-xl hover:border-infoHover" :class="[
         { 'animate-bounce': getHovered },
       ]"
     />
@@ -127,7 +125,7 @@ export default defineComponent({
     <w-transition appear name="fade-left" :duration="100">
       <w-text-scroll
         v-if="getShowTite"
-        class="col-span-10 text-sm whitespace-nowrap truncate" :class="[
+        class="col-span-10 truncate whitespace-nowrap text-sm" :class="[
           { 'pr-4': getHovered },
         ]"
         :title="getTitle"
@@ -143,7 +141,7 @@ export default defineComponent({
         v-if="getShowCloseIcon"
         icon="ant-design:close-outlined"
         height="16"
-        class="absolute right-1 hover:(text-error transform scale-125 rounded-full)"
+        class="absolute right-1 hover:(scale-125 transform rounded-full text-error)"
         @click.prevent.stop="onTabRemove(item.name)"
       />
     </w-transition>

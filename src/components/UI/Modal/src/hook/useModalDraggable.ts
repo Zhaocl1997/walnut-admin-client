@@ -1,11 +1,8 @@
-const getStyle = (dom: Element, attr: string) => {
+function getStyle(dom: Element, attr: string) {
   return getComputedStyle(dom)[attr]
 }
 
-export const useModalDraggable = (
-  dragEl: HTMLElement,
-  dragDom: HTMLElement,
-) => {
+export function useModalDraggable(dragEl: HTMLElement, dragDom: HTMLElement) {
   dragEl.style.cursor = 'move'
 
   dragEl.onmousedown = (e: MouseEvent) => {

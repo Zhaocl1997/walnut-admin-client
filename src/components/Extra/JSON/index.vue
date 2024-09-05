@@ -1,16 +1,20 @@
 <script lang="ts" setup>
-// TODO 888
-interface InternalProps {
-  value?: any
-  height?: string
-  width?: string
-}
+defineOptions({
+  name: 'WJSON',
+})
 
 const props = withDefaults(defineProps<InternalProps>(), {
   value: {},
   height: '100px',
   width: '100%',
 })
+
+// TODO 888
+interface InternalProps {
+  value?: any
+  height?: string
+  width?: string
+}
 
 const jsonRef = ref()
 const getJSON = computed(() =>
@@ -22,12 +26,6 @@ const getJSON = computed(() =>
 const isHovered = useElementHover(jsonRef)
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'WJSON',
-})
-</script>
-
 <template>
   <w-scrollbar :height="height">
     <div ref="jsonRef" class="relative">
@@ -37,7 +35,7 @@ export default defineComponent({
         <w-copy
           v-show="isHovered"
           :source="getJSON"
-          class="absolute top-2 right-2"
+          class="absolute right-2 top-2"
         />
       </w-transition>
     </div>

@@ -15,13 +15,13 @@ import type {
 import settings from '@/settings.json'
 
 type SetWithKeyOptions =
-  | { key: 'app'; value: AppSettingsForApp }
-  | { key: 'logo'; value: AppSettingsForLogo }
-  | { key: 'header'; value: AppSettingsForHeader }
-  | { key: 'tabs'; value: AppSettingsForTabs }
-  | { key: 'breadcrumb'; value: AppSettingsForBreadcrumb }
-  | { key: 'menu'; value: AppSettingsForMenu }
-  | { key: 'footer'; value: AppSettingsForFooter }
+  | { key: 'app', value: AppSettingsForApp }
+  | { key: 'logo', value: AppSettingsForLogo }
+  | { key: 'header', value: AppSettingsForHeader }
+  | { key: 'tabs', value: AppSettingsForTabs }
+  | { key: 'breadcrumb', value: AppSettingsForBreadcrumb }
+  | { key: 'menu', value: AppSettingsForMenu }
+  | { key: 'footer', value: AppSettingsForFooter }
 
 const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
   state: (): AppSettingState => ({
@@ -216,8 +216,9 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
         this.getMenuCollapseStatus
         && this.getMenuCollapseMode !== AppConstCollapseMode.ICON
         && this.getMenuCollapseMode !== AppConstCollapseMode.BUTTON
-      )
+      ) {
         return this.getMenuCollapseMode
+      }
 
       return false
     },
@@ -246,7 +247,7 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
 const useAppStoreSettingOutside = () => useAppStoreSettingInside(store)
 
-export const useAppStoreSetting = () => {
+export function useAppStoreSetting() {
   if (getCurrentInstance())
     return useAppStoreSettingInside()
   return useAppStoreSettingOutside()

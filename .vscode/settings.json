@@ -1,698 +1,763 @@
 {
-    "prettier.enable": false,
-    "editor.formatOnSave": false,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.rules.customizations": [
+    {
+      "rule": "style/*",
+      "severity": "off",
+      "fixable": true
     },
-    "eslint.enable": true,
-    "eslint.format.enable": true,
-    "eslint.options": {
-        "overrideConfigFile": "config/eslint/.eslintrc.js"
+    {
+      "rule": "format/*",
+      "severity": "off",
+      "fixable": true
     },
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-        "vue"
-    ],
-    "json.schemas": [
-        {
-            "fileMatch": [
-                "src/settings.json"
+    {
+      "rule": "*-indent",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-spacing",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-spaces",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-order",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-dangle",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-newline",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*quotes",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*semi",
+      "severity": "off",
+      "fixable": true
+    }
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "xml",
+    "gql",
+    "graphql",
+    "astro",
+    "svelte",
+    "css",
+    "less",
+    "scss",
+    "pcss",
+    "postcss"
+  ],
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "src/settings.json"
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "app": {
+            "$ref": "#/definitions/AppSettingsForApp"
+          },
+          "themes": {
+            "$ref": "#/definitions/AppSettingsForTheme"
+          },
+          "logo": {
+            "$ref": "#/definitions/AppSettingsForLogo"
+          },
+          "header": {
+            "$ref": "#/definitions/AppSettingsForHeader"
+          },
+          "tabs": {
+            "$ref": "#/definitions/AppSettingsForTabs"
+          },
+          "breadcrumb": {
+            "$ref": "#/definitions/AppSettingsForBreadcrumb"
+          },
+          "menu": {
+            "$ref": "#/definitions/AppSettingsForMenu"
+          },
+          "footer": {
+            "$ref": "#/definitions/AppSettingsForFooter"
+          }
+        },
+        "required": [
+          "app",
+          "breadcrumb",
+          "footer",
+          "header",
+          "logo",
+          "menu",
+          "tabs",
+          "themes"
+        ],
+        "definitions": {
+          "AppSettingsForApp": {
+            "type": "object",
+            "properties": {
+              "layout": {
+                "$ref": "#/definitions/ValueOfAppConstLayoutMode",
+                "description": "DX config\nApp Layout",
+                "default": "left-menu"
+              },
+              "keepAlive": {
+                "description": "DX config\nKeep Alive component, vue features",
+                "default": true,
+                "type": "boolean"
+              },
+              "contentPadding": {
+                "description": "DX config\nContent padding px",
+                "default": 2,
+                "type": "number"
+              },
+              "routeQueryMode": {
+                "$ref": "#/definitions/ValueOfAppConstRouteQueryMode",
+                "description": "DX config\nRotue Query Features\n'normal' => no change to route query\n'enhanced' => make route query unreadable",
+                "default": "normal"
+              },
+              "routeQueryEnhancedMode": {
+                "$ref": "#/definitions/ValueOfAppConstRouteQueryEnhancedMode",
+                "description": "DX config\nRoute Query Enhanced Mode\nOnly works when `routeQueryMode` => 'enhanced'\n'base64' => stringify and transform to base64\n'cryptojs' => use `crypto-js` to encrypt/decrypt route query",
+                "default": "base64"
+              },
+              "transitionStatus": {
+                "description": "DX config\nTransition Component, vue features",
+                "default": true,
+                "type": "boolean"
+              },
+              "transitionMode": {
+                "$ref": "#/definitions/ValueOfAppConstBasicMode",
+                "description": "DX config\nTransition Mode\n'global' => use `transitionName` for transition name\n'scope' => use the transition info in route `meta` object",
+                "default": "scope"
+              },
+              "transitionName": {
+                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                "description": "DX config\nGlobal Transition Name\nOnly works when `transitionMode` => 'global'",
+                "default": "fade"
+              },
+              "watermarkStatus": {
+                "description": "DX config\nWatermark features on use or not",
+                "default": true,
+                "type": "boolean"
+              },
+              "watermarkMode": {
+                "$ref": "#/definitions/ValueOfAppConstBasicMode",
+                "description": "DX config\nWatermark Mode\n'global' => use `watermarkContent` for watermark content\n'scope' => use the watermark info in route `meta` object",
+                "default": "scope"
+              },
+              "watermarkContent": {
+                "description": "DX config\nGlobal Watermark Content\nOnly works when `watermarkMode` => 'global'",
+                "default": "walnut-admin",
+                "type": "string"
+              },
+              "lockStatus": {
+                "description": "DX config\nLock Features on use or not",
+                "default": true,
+                "type": "boolean"
+              },
+              "lockMode": {
+                "$ref": "#/definitions/ValueOfAppConstLockMode",
+                "description": "DX config\nLock Mode\n'default' => user can manually to lock tha application\n'security' => more secure usage, app would lock when user's mouse leave the app or change the browser/system tabs\n'idle' => app would auto lock when user is idle for some time",
+                "default": "default"
+              },
+              "lockIdleSeconds": {
+                "description": "DX config\nUser inactive seconds to lock app",
+                "default": 5,
+                "type": "number"
+              },
+              "hijackRefresh": {
+                "description": "DX config\nuse event listener to hijack the refresh action and use redirect to refresh the current route",
+                "default": true,
+                "type": "boolean"
+              },
+              "colorMode": {
+                "$ref": "#/definitions/ValueOfAppConstColorMode",
+                "description": "UX config\njust different css tricks to fitler the app in view",
+                "default": "default"
+              },
+              "reducedMotion": {
+                "description": "UX config\nfor those who cannot see animation viewing the internet",
+                "default": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "colorMode",
+              "contentPadding",
+              "hijackRefresh",
+              "keepAlive",
+              "layout",
+              "lockIdleSeconds",
+              "lockMode",
+              "lockStatus",
+              "reducedMotion",
+              "routeQueryEnhancedMode",
+              "routeQueryMode",
+              "transitionMode",
+              "transitionName",
+              "transitionStatus",
+              "watermarkContent",
+              "watermarkMode",
+              "watermarkStatus"
+            ]
+          },
+          "ValueOfAppConstLayoutMode": {
+            "enum": [
+              "left-menu",
+              "top-menu"
             ],
-            "schema": {
+            "type": "string"
+          },
+          "ValueOfAppConstRouteQueryMode": {
+            "enum": [
+              "enhanced",
+              "normal"
+            ],
+            "type": "string"
+          },
+          "ValueOfAppConstRouteQueryEnhancedMode": {
+            "enum": [
+              "base64",
+              "cryptojs"
+            ],
+            "type": "string"
+          },
+          "ValueOfAppConstBasicMode": {
+            "enum": [
+              "global",
+              "scope"
+            ],
+            "type": "string"
+          },
+          "ValueOfAppConstTransitionName": {
+            "enum": [
+              "back-down",
+              "back-left",
+              "back-right",
+              "back-up",
+              "bounce",
+              "bounce-down",
+              "bounce-left",
+              "bounce-right",
+              "bounce-up",
+              "fade",
+              "fade-bottomLeft",
+              "fade-bottomRight",
+              "fade-down",
+              "fade-down-big",
+              "fade-left",
+              "fade-left-big",
+              "fade-right",
+              "fade-right-big",
+              "fade-topLeft",
+              "fade-topRight",
+              "fade-up",
+              "fade-up-big",
+              "flip-x",
+              "flip-y",
+              "rotate",
+              "rotate-downLeft",
+              "rotate-downRight",
+              "rotate-upLeft",
+              "rotate-upRight",
+              "slide-down",
+              "slide-left",
+              "slide-right",
+              "slide-up",
+              "zoom",
+              "zoom-down",
+              "zoom-left",
+              "zoom-right",
+              "zoom-up"
+            ],
+            "type": "string"
+          },
+          "ValueOfAppConstLockMode": {
+            "enum": [
+              "default",
+              "idle",
+              "security"
+            ],
+            "type": "string"
+          },
+          "ValueOfAppConstColorMode": {
+            "enum": [
+              "cafe",
+              "contrast",
+              "default",
+              "grayscale",
+              "grayscale-inverted",
+              "inverted"
+            ],
+            "type": "string"
+          },
+          "AppSettingsForTheme": {
+            "type": "object",
+            "properties": {
+              "light": {
                 "type": "object",
                 "properties": {
-                    "app": {
-                        "$ref": "#/definitions/AppSettingsForApp"
-                    },
-                    "themes": {
-                        "$ref": "#/definitions/AppSettingsForTheme"
-                    },
-                    "logo": {
-                        "$ref": "#/definitions/AppSettingsForLogo"
-                    },
-                    "header": {
-                        "$ref": "#/definitions/AppSettingsForHeader"
-                    },
-                    "tabs": {
-                        "$ref": "#/definitions/AppSettingsForTabs"
-                    },
-                    "breadcrumb": {
-                        "$ref": "#/definitions/AppSettingsForBreadcrumb"
-                    },
-                    "menu": {
-                        "$ref": "#/definitions/AppSettingsForMenu"
-                    },
-                    "footer": {
-                        "$ref": "#/definitions/AppSettingsForFooter"
-                    }
+                  "primaryColor": {
+                    "type": "string"
+                  },
+                  "infoColor": {
+                    "type": "string"
+                  },
+                  "successColor": {
+                    "type": "string"
+                  },
+                  "warningColor": {
+                    "type": "string"
+                  },
+                  "errorColor": {
+                    "type": "string"
+                  },
+                  "bodyColor": {
+                    "type": "string"
+                  },
+                  "invertedColor": {
+                    "type": "string"
+                  }
                 },
                 "required": [
-                    "app",
-                    "breadcrumb",
-                    "footer",
-                    "header",
-                    "logo",
-                    "menu",
-                    "tabs",
-                    "themes"
-                ],
-                "definitions": {
-                    "AppSettingsForApp": {
-                        "type": "object",
-                        "properties": {
-                            "layout": {
-                                "$ref": "#/definitions/ValueOfAppConstLayoutMode",
-                                "description": "DX config\nApp Layout",
-                                "default": "left-menu"
-                            },
-                            "keepAlive": {
-                                "description": "DX config\nKeep Alive component, vue features",
-                                "default": true,
-                                "type": "boolean"
-                            },
-                            "contentPadding": {
-                                "description": "DX config\nContent padding px",
-                                "default": 2,
-                                "type": "number"
-                            },
-                            "routeQueryMode": {
-                                "$ref": "#/definitions/ValueOfAppConstRouteQueryMode",
-                                "description": "DX config\nRotue Query Features\n'normal' => no change to route query\n'enhanced' => make route query unreadable",
-                                "default": "normal"
-                            },
-                            "routeQueryEnhancedMode": {
-                                "$ref": "#/definitions/ValueOfAppConstRouteQueryEnhancedMode",
-                                "description": "DX config\nRoute Query Enhanced Mode\nOnly works when `routeQueryMode` => 'enhanced'\n'base64' => stringify and transform to base64\n'cryptojs' => use `crypto-js` to encrypt/decrypt route query",
-                                "default": "base64"
-                            },
-                            "transitionStatus": {
-                                "description": "DX config\nTransition Component, vue features",
-                                "default": true,
-                                "type": "boolean"
-                            },
-                            "transitionMode": {
-                                "$ref": "#/definitions/ValueOfAppConstBasicMode",
-                                "description": "DX config\nTransition Mode\n'global' => use `transitionName` for transition name\n'scope' => use the transition info in route `meta` object",
-                                "default": "scope"
-                            },
-                            "transitionName": {
-                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "DX config\nGlobal Transition Name\nOnly works when `transitionMode` => 'global'",
-                                "default": "fade"
-                            },
-                            "watermarkStatus": {
-                                "description": "DX config\nWatermark features on use or not",
-                                "default": true,
-                                "type": "boolean"
-                            },
-                            "watermarkMode": {
-                                "$ref": "#/definitions/ValueOfAppConstBasicMode",
-                                "description": "DX config\nWatermark Mode\n'global' => use `watermarkContent` for watermark content\n'scope' => use the watermark info in route `meta` object",
-                                "default": "scope"
-                            },
-                            "watermarkContent": {
-                                "description": "DX config\nGlobal Watermark Content\nOnly works when `watermarkMode` => 'global'",
-                                "default": "walnut-admin",
-                                "type": "string"
-                            },
-                            "lockStatus": {
-                                "description": "DX config\nLock Features on use or not",
-                                "default": true,
-                                "type": "boolean"
-                            },
-                            "lockMode": {
-                                "$ref": "#/definitions/ValueOfAppConstLockMode",
-                                "description": "DX config\nLock Mode\n'default' => user can manually to lock tha application\n'security' => more secure usage, app would lock when user's mouse leave the app or change the browser/system tabs\n'idle' => app would auto lock when user is idle for some time",
-                                "default": "default"
-                            },
-                            "lockIdleSeconds": {
-                                "description": "DX config\nUser inactive seconds to lock app",
-                                "default": 5,
-                                "type": "number"
-                            },
-                            "hijackRefresh": {
-                                "description": "DX config\nuse event listener to hijack the refresh action and use redirect to refresh the current route",
-                                "default": true,
-                                "type": "boolean"
-                            },
-                            "colorMode": {
-                                "$ref": "#/definitions/ValueOfAppConstColorMode",
-                                "description": "UX config\njust different css tricks to fitler the app in view",
-                                "default": "default"
-                            },
-                            "reducedMotion": {
-                                "description": "UX config\nfor those who cannot see animation viewing the internet",
-                                "default": false,
-                                "type": "boolean"
-                            }
-                        },
-                        "required": [
-                            "colorMode",
-                            "contentPadding",
-                            "hijackRefresh",
-                            "keepAlive",
-                            "layout",
-                            "lockIdleSeconds",
-                            "lockMode",
-                            "lockStatus",
-                            "reducedMotion",
-                            "routeQueryEnhancedMode",
-                            "routeQueryMode",
-                            "transitionMode",
-                            "transitionName",
-                            "transitionStatus",
-                            "watermarkContent",
-                            "watermarkMode",
-                            "watermarkStatus"
-                        ]
-                    },
-                    "ValueOfAppConstLayoutMode": {
-                        "enum": [
-                            "left-menu",
-                            "top-menu"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstRouteQueryMode": {
-                        "enum": [
-                            "enhanced",
-                            "normal"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstRouteQueryEnhancedMode": {
-                        "enum": [
-                            "base64",
-                            "cryptojs"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstBasicMode": {
-                        "enum": [
-                            "global",
-                            "scope"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstTransitionName": {
-                        "enum": [
-                            "back-down",
-                            "back-left",
-                            "back-right",
-                            "back-up",
-                            "bounce",
-                            "bounce-down",
-                            "bounce-left",
-                            "bounce-right",
-                            "bounce-up",
-                            "fade",
-                            "fade-bottomLeft",
-                            "fade-bottomRight",
-                            "fade-down",
-                            "fade-down-big",
-                            "fade-left",
-                            "fade-left-big",
-                            "fade-right",
-                            "fade-right-big",
-                            "fade-topLeft",
-                            "fade-topRight",
-                            "fade-up",
-                            "fade-up-big",
-                            "flip-x",
-                            "flip-y",
-                            "rotate",
-                            "rotate-downLeft",
-                            "rotate-downRight",
-                            "rotate-upLeft",
-                            "rotate-upRight",
-                            "slide-down",
-                            "slide-left",
-                            "slide-right",
-                            "slide-up",
-                            "zoom",
-                            "zoom-down",
-                            "zoom-left",
-                            "zoom-right",
-                            "zoom-up"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstLockMode": {
-                        "enum": [
-                            "default",
-                            "idle",
-                            "security"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstColorMode": {
-                        "enum": [
-                            "cafe",
-                            "contrast",
-                            "default",
-                            "grayscale",
-                            "grayscale-inverted",
-                            "inverted"
-                        ],
-                        "type": "string"
-                    },
-                    "AppSettingsForTheme": {
-                        "type": "object",
-                        "properties": {
-                            "light": {
-                                "type": "object",
-                                "properties": {
-                                    "primaryColor": {
-                                        "type": "string"
-                                    },
-                                    "infoColor": {
-                                        "type": "string"
-                                    },
-                                    "successColor": {
-                                        "type": "string"
-                                    },
-                                    "warningColor": {
-                                        "type": "string"
-                                    },
-                                    "errorColor": {
-                                        "type": "string"
-                                    },
-                                    "bodyColor": {
-                                        "type": "string"
-                                    },
-                                    "invertedColor": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "bodyColor",
-                                    "errorColor",
-                                    "infoColor",
-                                    "invertedColor",
-                                    "primaryColor",
-                                    "successColor",
-                                    "warningColor"
-                                ]
-                            },
-                            "dark": {
-                                "type": "object",
-                                "properties": {
-                                    "primaryColor": {
-                                        "type": "string"
-                                    },
-                                    "infoColor": {
-                                        "type": "string"
-                                    },
-                                    "successColor": {
-                                        "type": "string"
-                                    },
-                                    "warningColor": {
-                                        "type": "string"
-                                    },
-                                    "errorColor": {
-                                        "type": "string"
-                                    },
-                                    "bodyColor": {
-                                        "type": "string"
-                                    },
-                                    "invertedColor": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "bodyColor",
-                                    "errorColor",
-                                    "infoColor",
-                                    "invertedColor",
-                                    "primaryColor",
-                                    "successColor",
-                                    "warningColor"
-                                ]
-                            }
-                        },
-                        "required": [
-                            "dark",
-                            "light"
-                        ]
-                    },
-                    "AppSettingsForLogo": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "description": "Dom id",
-                                "type": "string"
-                            },
-                            "fixed": {
-                                "description": "True => fixed, false => normal",
-                                "type": "boolean"
-                            },
-                            "status": {
-                                "description": "True => using, false => hidden",
-                                "type": "boolean"
-                            },
-                            "transition": {
-                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "Logo transition name"
-                            }
-                        },
-                        "required": [
-                            "fixed",
-                            "id",
-                            "status",
-                            "transition"
-                        ]
-                    },
-                    "AppSettingsForHeader": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "description": "Dom id",
-                                "type": "string"
-                            },
-                            "fixed": {
-                                "description": "True => fixed, false => normal",
-                                "type": "boolean"
-                            },
-                            "status": {
-                                "description": "True => using, false => hidden",
-                                "type": "boolean"
-                            },
-                            "transition": {
-                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "Header transition name"
-                            },
-                            "inverted": {
-                                "description": "Header inverted",
-                                "type": "boolean"
-                            },
-                            "height": {
-                                "description": "Header height",
-                                "type": "number"
-                            },
-                            "fullscreen": {
-                                "description": "Header utils - full screen visibility",
-                                "type": "boolean"
-                            },
-                            "search": {
-                                "description": "Header utils - search visibility",
-                                "type": "boolean"
-                            }
-                        },
-                        "required": [
-                            "fixed",
-                            "fullscreen",
-                            "height",
-                            "id",
-                            "inverted",
-                            "search",
-                            "status",
-                            "transition"
-                        ]
-                    },
-                    "AppSettingsForTabs": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "description": "Dom id",
-                                "type": "string"
-                            },
-                            "fixed": {
-                                "description": "True => fixed, false => normal",
-                                "type": "boolean"
-                            },
-                            "status": {
-                                "description": "True => using, false => hidden",
-                                "type": "boolean"
-                            },
-                            "inverted": {
-                                "description": "Tabs inverted",
-                                "type": "boolean"
-                            },
-                            "transition": {
-                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "Tabs transition name"
-                            },
-                            "height": {
-                                "description": "Tab height",
-                                "type": "number"
-                            },
-                            "itemWidth": {
-                                "description": "Tab item width",
-                                "type": "number"
-                            },
-                            "showIcon": {
-                                "description": "Tab icon visibility",
-                                "type": "boolean"
-                            },
-                            "showUtils": {
-                                "description": "Tab aside utils visibility",
-                                "type": "boolean"
-                            },
-                            "utilsMode": {
-                                "$ref": "#/definitions/ValueOfAppConstTabUtilsShowMode",
-                                "description": "Tab aside utils display mode"
-                            },
-                            "contextMenu": {
-                                "description": "Tab context menu visibility",
-                                "type": "boolean"
-                            },
-                            "sortable": {
-                                "description": "Tab sortable",
-                                "type": "boolean"
-                            },
-                            "styleMode": {
-                                "$ref": "#/definitions/ValueOfAppConstTabStyleMode",
-                                "description": "Tab style mode"
-                            },
-                            "persistent": {
-                                "description": "With persistent support",
-                                "type": "boolean"
-                            },
-                            "itemTransition": {
-                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "Tab item animation name"
-                            },
-                            "closeMode": {
-                                "$ref": "#/definitions/ValueOfAppConstTabCloseMode",
-                                "description": "Tab close mode"
-                            },
-                            "affixMode": {
-                                "$ref": "#/definitions/ValueOfAppConstTabAffixMode",
-                                "description": "Tab affix mode"
-                            }
-                        },
-                        "required": [
-                            "affixMode",
-                            "closeMode",
-                            "contextMenu",
-                            "fixed",
-                            "height",
-                            "id",
-                            "inverted",
-                            "itemTransition",
-                            "itemWidth",
-                            "persistent",
-                            "showIcon",
-                            "showUtils",
-                            "sortable",
-                            "status",
-                            "styleMode",
-                            "transition",
-                            "utilsMode"
-                        ]
-                    },
-                    "ValueOfAppConstTabUtilsShowMode": {
-                        "enum": [
-                            "always",
-                            "overflow"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstTabStyleMode": {
-                        "enum": [
-                            "card",
-                            "flex",
-                            "round"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstTabCloseMode": {
-                        "enum": [
-                            "always",
-                            "hover"
-                        ],
-                        "type": "string"
-                    },
-                    "ValueOfAppConstTabAffixMode": {
-                        "enum": [
-                            "icon",
-                            "pin"
-                        ],
-                        "type": "string"
-                    },
-                    "AppSettingsForBreadcrumb": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "description": "Dom id",
-                                "type": "string"
-                            },
-                            "status": {
-                                "description": "True => using, false => hidden",
-                                "type": "boolean"
-                            },
-                            "transition": {
-                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "Breadcrumb transition name"
-                            },
-                            "showIcon": {
-                                "description": "Breadcrumb icon visibility",
-                                "type": "boolean"
-                            },
-                            "showDropdown": {
-                                "description": "Breadcrumb dropdown visibility",
-                                "type": "boolean"
-                            },
-                            "separator": {
-                                "description": "Breadcrumb custom separator",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "separator",
-                            "showDropdown",
-                            "showIcon",
-                            "status",
-                            "transition"
-                        ]
-                    },
-                    "AppSettingsForMenu": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "description": "Dom id",
-                                "type": "string"
-                            },
-                            "status": {
-                                "description": "True => using, false => hidden",
-                                "type": "boolean"
-                            },
-                            "transition": {
-                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "Menu transition name"
-                            },
-                            "inverted": {
-                                "description": "Menu inverted color",
-                                "type": "boolean"
-                            },
-                            "width": {
-                                "description": "When app layout is `left-menu`, menu width",
-                                "type": "number"
-                            },
-                            "accordion": {
-                                "description": "Menu accordion",
-                                "type": "boolean"
-                            },
-                            "iconSize": {
-                                "description": "Menu icon size",
-                                "type": "number"
-                            },
-                            "indent": {
-                                "description": "Menu indent",
-                                "type": "number"
-                            },
-                            "collapseStatus": {
-                                "description": "Show collapse button",
-                                "type": "boolean"
-                            },
-                            "collapsedIconSize": {
-                                "description": "Menu collapsed icon size",
-                                "type": "number"
-                            },
-                            "collapseMode": {
-                                "$ref": "#/definitions/ValueOfAppConstCollapseMode",
-                                "description": "Menu Collapse Mode"
-                            },
-                            "collapsedWidth": {
-                                "description": "When app layout is `left-menu`, menu collapsed width",
-                                "type": "number"
-                            }
-                        },
-                        "required": [
-                            "accordion",
-                            "collapseMode",
-                            "collapseStatus",
-                            "collapsedIconSize",
-                            "collapsedWidth",
-                            "iconSize",
-                            "id",
-                            "indent",
-                            "inverted",
-                            "status",
-                            "transition",
-                            "width"
-                        ]
-                    },
-                    "ValueOfAppConstCollapseMode": {
-                        "enum": [
-                            "arrow-circle",
-                            "bar",
-                            "button",
-                            "icon"
-                        ],
-                        "type": "string"
-                    },
-                    "AppSettingsForFooter": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "description": "Dom id",
-                                "type": "string"
-                            },
-                            "fixed": {
-                                "description": "True => fixed, false => normal",
-                                "type": "boolean"
-                            },
-                            "status": {
-                                "description": "True => using, false => hidden",
-                                "type": "boolean"
-                            },
-                            "inverted": {
-                                "description": "Footer inverted",
-                                "type": "boolean"
-                            },
-                            "transition": {
-                                "$ref": "#/definitions/ValueOfAppConstTransitionName",
-                                "description": "Footer transition name"
-                            },
-                            "height": {
-                                "description": "Footer height",
-                                "type": "number"
-                            },
-                            "content": {
-                                "description": "Footer content",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "content",
-                            "fixed",
-                            "height",
-                            "id",
-                            "inverted",
-                            "status",
-                            "transition"
-                        ]
-                    }
+                  "bodyColor",
+                  "errorColor",
+                  "infoColor",
+                  "invertedColor",
+                  "primaryColor",
+                  "successColor",
+                  "warningColor"
+                ]
+              },
+              "dark": {
+                "type": "object",
+                "properties": {
+                  "primaryColor": {
+                    "type": "string"
+                  },
+                  "infoColor": {
+                    "type": "string"
+                  },
+                  "successColor": {
+                    "type": "string"
+                  },
+                  "warningColor": {
+                    "type": "string"
+                  },
+                  "errorColor": {
+                    "type": "string"
+                  },
+                  "bodyColor": {
+                    "type": "string"
+                  },
+                  "invertedColor": {
+                    "type": "string"
+                  }
                 },
-                "$schema": "http://json-schema.org/draft-07/schema#"
-            }
-        }
-    ],
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "todo-tree.tree.scanMode": "workspace only"
+                "required": [
+                  "bodyColor",
+                  "errorColor",
+                  "infoColor",
+                  "invertedColor",
+                  "primaryColor",
+                  "successColor",
+                  "warningColor"
+                ]
+              }
+            },
+            "required": [
+              "dark",
+              "light"
+            ]
+          },
+          "AppSettingsForLogo": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Dom id",
+                "type": "string"
+              },
+              "fixed": {
+                "description": "True => fixed, false => normal",
+                "type": "boolean"
+              },
+              "status": {
+                "description": "True => using, false => hidden",
+                "type": "boolean"
+              },
+              "transition": {
+                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                "description": "Logo transition name"
+              }
+            },
+            "required": [
+              "fixed",
+              "id",
+              "status",
+              "transition"
+            ]
+          },
+          "AppSettingsForHeader": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Dom id",
+                "type": "string"
+              },
+              "fixed": {
+                "description": "True => fixed, false => normal",
+                "type": "boolean"
+              },
+              "status": {
+                "description": "True => using, false => hidden",
+                "type": "boolean"
+              },
+              "transition": {
+                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                "description": "Header transition name"
+              },
+              "inverted": {
+                "description": "Header inverted",
+                "type": "boolean"
+              },
+              "height": {
+                "description": "Header height",
+                "type": "number"
+              },
+              "fullscreen": {
+                "description": "Header utils - full screen visibility",
+                "type": "boolean"
+              },
+              "search": {
+                "description": "Header utils - search visibility",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "fixed",
+              "fullscreen",
+              "height",
+              "id",
+              "inverted",
+              "search",
+              "status",
+              "transition"
+            ]
+          },
+          "AppSettingsForTabs": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Dom id",
+                "type": "string"
+              },
+              "fixed": {
+                "description": "True => fixed, false => normal",
+                "type": "boolean"
+              },
+              "status": {
+                "description": "True => using, false => hidden",
+                "type": "boolean"
+              },
+              "inverted": {
+                "description": "Tabs inverted",
+                "type": "boolean"
+              },
+              "transition": {
+                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                "description": "Tabs transition name"
+              },
+              "height": {
+                "description": "Tab height",
+                "type": "number"
+              },
+              "itemWidth": {
+                "description": "Tab item width",
+                "type": "number"
+              },
+              "showIcon": {
+                "description": "Tab icon visibility",
+                "type": "boolean"
+              },
+              "showUtils": {
+                "description": "Tab aside utils visibility",
+                "type": "boolean"
+              },
+              "utilsMode": {
+                "$ref": "#/definitions/ValueOfAppConstTabUtilsShowMode",
+                "description": "Tab aside utils display mode"
+              },
+              "contextMenu": {
+                "description": "Tab context menu visibility",
+                "type": "boolean"
+              },
+              "sortable": {
+                "description": "Tab sortable",
+                "type": "boolean"
+              },
+              "styleMode": {
+                "$ref": "#/definitions/ValueOfAppConstTabStyleMode",
+                "description": "Tab style mode"
+              },
+              "persistent": {
+                "description": "With persistent support",
+                "type": "boolean"
+              },
+              "itemTransition": {
+                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                "description": "Tab item animation name"
+              },
+              "closeMode": {
+                "$ref": "#/definitions/ValueOfAppConstTabCloseMode",
+                "description": "Tab close mode"
+              },
+              "affixMode": {
+                "$ref": "#/definitions/ValueOfAppConstTabAffixMode",
+                "description": "Tab affix mode"
+              }
+            },
+            "required": [
+              "affixMode",
+              "closeMode",
+              "contextMenu",
+              "fixed",
+              "height",
+              "id",
+              "inverted",
+              "itemTransition",
+              "itemWidth",
+              "persistent",
+              "showIcon",
+              "showUtils",
+              "sortable",
+              "status",
+              "styleMode",
+              "transition",
+              "utilsMode"
+            ]
+          },
+          "ValueOfAppConstTabUtilsShowMode": {
+            "enum": [
+              "always",
+              "overflow"
+            ],
+            "type": "string"
+          },
+          "ValueOfAppConstTabStyleMode": {
+            "enum": [
+              "card",
+              "flex",
+              "round"
+            ],
+            "type": "string"
+          },
+          "ValueOfAppConstTabCloseMode": {
+            "enum": [
+              "always",
+              "hover"
+            ],
+            "type": "string"
+          },
+          "ValueOfAppConstTabAffixMode": {
+            "enum": [
+              "icon",
+              "pin"
+            ],
+            "type": "string"
+          },
+          "AppSettingsForBreadcrumb": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Dom id",
+                "type": "string"
+              },
+              "status": {
+                "description": "True => using, false => hidden",
+                "type": "boolean"
+              },
+              "transition": {
+                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                "description": "Breadcrumb transition name"
+              },
+              "showIcon": {
+                "description": "Breadcrumb icon visibility",
+                "type": "boolean"
+              },
+              "showDropdown": {
+                "description": "Breadcrumb dropdown visibility",
+                "type": "boolean"
+              },
+              "separator": {
+                "description": "Breadcrumb custom separator",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "separator",
+              "showDropdown",
+              "showIcon",
+              "status",
+              "transition"
+            ]
+          },
+          "AppSettingsForMenu": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Dom id",
+                "type": "string"
+              },
+              "status": {
+                "description": "True => using, false => hidden",
+                "type": "boolean"
+              },
+              "transition": {
+                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                "description": "Menu transition name"
+              },
+              "inverted": {
+                "description": "Menu inverted color",
+                "type": "boolean"
+              },
+              "width": {
+                "description": "When app layout is `left-menu`, menu width",
+                "type": "number"
+              },
+              "accordion": {
+                "description": "Menu accordion",
+                "type": "boolean"
+              },
+              "iconSize": {
+                "description": "Menu icon size",
+                "type": "number"
+              },
+              "indent": {
+                "description": "Menu indent",
+                "type": "number"
+              },
+              "collapseStatus": {
+                "description": "Show collapse button",
+                "type": "boolean"
+              },
+              "collapsedIconSize": {
+                "description": "Menu collapsed icon size",
+                "type": "number"
+              },
+              "collapseMode": {
+                "$ref": "#/definitions/ValueOfAppConstCollapseMode",
+                "description": "Menu Collapse Mode"
+              },
+              "collapsedWidth": {
+                "description": "When app layout is `left-menu`, menu collapsed width",
+                "type": "number"
+              }
+            },
+            "required": [
+              "accordion",
+              "collapseMode",
+              "collapseStatus",
+              "collapsedIconSize",
+              "collapsedWidth",
+              "iconSize",
+              "id",
+              "indent",
+              "inverted",
+              "status",
+              "transition",
+              "width"
+            ]
+          },
+          "ValueOfAppConstCollapseMode": {
+            "enum": [
+              "arrow-circle",
+              "bar",
+              "button",
+              "icon"
+            ],
+            "type": "string"
+          },
+          "AppSettingsForFooter": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Dom id",
+                "type": "string"
+              },
+              "fixed": {
+                "description": "True => fixed, false => normal",
+                "type": "boolean"
+              },
+              "status": {
+                "description": "True => using, false => hidden",
+                "type": "boolean"
+              },
+              "inverted": {
+                "description": "Footer inverted",
+                "type": "boolean"
+              },
+              "transition": {
+                "$ref": "#/definitions/ValueOfAppConstTransitionName",
+                "description": "Footer transition name"
+              },
+              "height": {
+                "description": "Footer height",
+                "type": "number"
+              },
+              "content": {
+                "description": "Footer content",
+                "type": "string"
+              }
+            },
+            "required": [
+              "content",
+              "fixed",
+              "height",
+              "id",
+              "inverted",
+              "status",
+              "transition"
+            ]
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ],
+  "[dockercompose]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  }
 }

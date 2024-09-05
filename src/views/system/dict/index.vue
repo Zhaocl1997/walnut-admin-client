@@ -1,11 +1,9 @@
-<script lang="ts">
-export default defineComponent({
-  name: 'Dict',
-})
-</script>
-
 <script lang="ts" setup>
 import { dictTypeAPI } from '@/api/system/dict'
+
+defineOptions({
+  name: 'Dict',
+})
 
 const { t } = useAppI18n()
 

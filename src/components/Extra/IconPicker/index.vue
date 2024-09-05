@@ -1,15 +1,12 @@
-<script lang="ts">
-export default defineComponent({
-  name: 'WIconPicker',
-
-  inheritAttrs: false,
-})
-</script>
-
 <script lang="ts" setup>
 import type { InputInst } from 'naive-ui'
 import allIcons from '/build/_generated/icon-list.ts'
 import { IconBundleConfig } from '/build/icon/src/config.ts'
+
+defineOptions({
+  name: 'WIconPicker',
+  inheritAttrs: false,
+})
 
 const props = withDefaults(defineProps<IconPickerProps>(), {
   defaultIcon: 'ant-design:home-outlined',
@@ -26,7 +23,6 @@ interface IconPickerProps {
   preset?: 'input' | 'icon'
 }
 
-const { t } = useAppI18n()
 const {
   page,
   pageSize,
@@ -120,13 +116,13 @@ watch(
   },
 )
 
-const onOpenPopover = () => {
+function onOpenPopover() {
   onFeedback()
 
   show.value = true
 }
 
-const onChooseIcon = (icon: string) => {
+function onChooseIcon(icon: string) {
   show.value = false
 
   emit('update:value', icon)
@@ -138,25 +134,25 @@ const onChooseIcon = (icon: string) => {
   // })
 }
 
-const onClear = (e: MouseEvent) => {
+function onClear(e: MouseEvent) {
   e.stopPropagation()
   onPageInit()
   emit('update:value', null)
 }
 
-const onMouseEnter = (icon: string) => {
+function onMouseEnter(icon: string) {
   currentIcon.value = icon
 }
 
-const onMouseLeave = () => {
+function onMouseLeave() {
   currentIcon.value = props?.value ?? ''
 }
 
-const onPageInit = () => {
+function onPageInit() {
   page.value = 1
 }
 
-const onFeedback = () => {
+function onFeedback() {
   if (!props.value)
     return
 
@@ -185,16 +181,15 @@ onMounted(() => {
     v-if="preset === 'input'"
     ref="rootInputRef"
     :value="value"
-    readonly
-    clearable
-    :placeholder="t('comp.iconPicker.title')"
-    copiable
+
+    :placeholder="$t('comp.iconPicker.title')"
+    clearable readonly copiable
     @click="onOpenPopover"
     @clear="onClear"
   >
     <template #prefix>
       <w-icon
-        class="cursor-pointer h-auto mr-2"
+        class="mr-2 h-auto cursor-pointer"
         :icon="value || defaultIcon"
         width="24"
       />
@@ -203,7 +198,7 @@ onMounted(() => {
 
   <w-icon
     v-if="preset === 'icon'"
-    class="cursor-pointer h-auto mr-2"
+    class="mr-2 h-auto cursor-pointer"
     :icon="value || defaultIcon"
     width="24"
     @click="onOpenPopover"
@@ -213,20 +208,20 @@ onMounted(() => {
     v-model:show="show"
     preset="card"
     width="600px"
-    :title="t('comp.iconPicker.title')"
+    :title="$t('comp.iconPicker.title')"
     display-directive="show"
     :auto-focus="false"
     :default-button="false"
     :segmented="false"
   >
     <n-spin :show="loading">
-      <div class="relative vstack justify-center items-center">
+      <div class="relative vstack items-center justify-center">
         <n-input
           v-model:value="filters"
           size="small"
           clearable
-          :placeholder="t('comp.iconPicker.ph')"
-          class="w-full mt-1 mb-3 border-b-cool-gray-50"
+          :placeholder="$t('comp.iconPicker.ph')"
+          class="mb-3 mt-1 w-full border-b-cool-gray-50"
           @change="onPageInit"
         />
 
@@ -241,7 +236,7 @@ onMounted(() => {
         </n-tabs>
 
         <div
-          class="h-full w-full grid grid-cols-12 gap-2"
+          class="grid grid-cols-12 h-full w-full gap-2"
           @mouseleave="onMouseLeave"
         >
           <div class="col-span-3 flex items-center justify-center">
@@ -257,7 +252,7 @@ onMounted(() => {
               <w-icon
                 :icon="icon"
                 width="36"
-                class="inline m-0.5 rounded border-2 border-solid border-gray-700 hover:cursor-pointer" :class="[
+                class="m-0.5 inline border-2 border-gray-700 rounded border-solid hover:cursor-pointer" :class="[
                   {
                     'bg-light-blue-300': icon === value,
                     'hover:bg-warm-gray-300': icon !== value,
@@ -268,7 +263,7 @@ onMounted(() => {
               />
             </span>
 
-            <div class="h-full flex justify-center items-center">
+            <div class="h-full flex items-center justify-center">
               <n-empty v-show="getLists.length === 0" />
             </div>
           </div>
@@ -284,7 +279,7 @@ onMounted(() => {
         >
           <template #suffix>
             <span class="whitespace-nowrap">
-              {{ t('comp.pagination.total', { total: getTotal }) }}
+              {{ $t('comp.pagination.total', { total: getTotal }) }}
             </span>
           </template>
         </n-pagination>

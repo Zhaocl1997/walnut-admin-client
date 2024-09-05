@@ -2,6 +2,22 @@
 import { toggleClass } from 'easy-fns-ts'
 import { useModalDraggable } from './hook/useModalDraggable'
 
+defineOptions({
+  name: 'WModal',
+})
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  show: false,
+  width: '25%',
+  height: 'auto',
+  draggable: true,
+  fullscreen: true,
+  defaultButton: true,
+  segmented: true,
+})
+
+const emits = defineEmits(['yes', 'no', 'update:show'])
+
 // TODO 888
 interface InternalProps {
   show?: boolean
@@ -15,18 +31,6 @@ interface InternalProps {
   defaultButton?: boolean
   segmented?: boolean
 }
-
-const props = withDefaults(defineProps<InternalProps>(), {
-  show: false,
-  width: '25%',
-  height: 'auto',
-  draggable: true,
-  fullscreen: true,
-  defaultButton: true,
-  segmented: true,
-})
-
-const emits = defineEmits(['yes', 'no', 'update:show'])
 
 const { t } = useAppI18n()
 
@@ -48,7 +52,7 @@ watch(
   },
 )
 
-const onFullScreen = () => {
+function onFullScreen() {
   const dragDom = wModal.value?.containerRef.querySelector('.w-modal')
 
   isFullscreen.value = !isFullscreen.value
@@ -56,26 +60,20 @@ const onFullScreen = () => {
   toggleClass(dragDom, 'modal-fullscreen', isFullscreen.value)
 }
 
-const onNo = () => {
+function onNo() {
   emits('no')
 }
 
-const onYes = () => {
+function onYes() {
   emits('yes')
 }
 
-const onUpdateShow = (v: boolean) => {
+function onUpdateShow(v: boolean) {
   emits('update:show', v)
 
   if (!v)
     onNo()
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WModal',
-})
 </script>
 
 <template>
@@ -103,7 +101,7 @@ export default defineComponent({
 
     <template v-if="fullscreen" #header-extra>
       <WAppFullScreen
-        class="cursor-pointer leading-1 mr-2"
+        class="mr-2 cursor-pointer leading-1"
         size="18"
         :is-fullscreen="isFullscreen"
         :click-event="onFullScreen"
@@ -140,11 +138,11 @@ export default defineComponent({
 
 <style>
   .modal-fullscreen {
-    width: 100vw !important;
-    height: 100vh !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-  }
+  width: 100vw !important;
+  height: 100vh !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
 </style>

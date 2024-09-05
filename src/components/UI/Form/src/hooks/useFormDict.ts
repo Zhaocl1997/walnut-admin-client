@@ -1,6 +1,6 @@
 import type { WForm } from '../types'
 
-export const useFormDict = (schemas: Ref<WForm.Schema.Item<any>[]>) => {
+export function useFormDict(schemas: Ref<WForm.Schema.Item<any>[]>) {
   (async () => {
     // cached for dict form item
     await Promise.all(

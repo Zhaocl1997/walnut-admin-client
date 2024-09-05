@@ -1,5 +1,6 @@
 import { arrToTree, findPath, formatTree, orderTree } from 'easy-fns-ts'
 
+import type { RouteRecordNameGeneric } from 'vue-router'
 import { App404Route, App500Route } from '../routes/builtin'
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
@@ -9,7 +10,7 @@ import IFrameReal from '@/layout/iframe/index.vue'
  * @description flat tree route into two level route
  * @link https://github.com/vuejs/vue-router-next/issues/626
  */
-const transformToTwoLevelRouteTree = (routes: RouteRecordRaw[]) => {
+function transformToTwoLevelRouteTree(routes: RouteRecordRaw[]) {
   const ret: RouteRecordRaw[] = []
 
   formatTree(routes, {
@@ -51,36 +52,40 @@ const transformToTwoLevelRouteTree = (routes: RouteRecordRaw[]) => {
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
  */
-const resolveParentComponent = (name: string) => () =>
-  new Promise((resolve) => {
-    resolve({
-      ...ParentComponent,
-      name,
+function resolveParentComponent(name: RouteRecordNameGeneric) {
+  return () =>
+    new Promise((resolve) => {
+      resolve({
+        ...ParentComponent,
+        name,
+      })
     })
-  })
+}
 
 /**
  * @description Util Function 3 - Resolve `menu` type menu which is internal with self name
  */
-const resolveIFrameComponent = (name: string, cache?: boolean) => () =>
-  new Promise((resolve) => {
-    cache
-      ? resolve({
-        ...IFrameFaker,
-        name,
-      })
-      : resolve({
-        ...IFrameReal,
-        name,
-      })
-  })
+function resolveIFrameComponent(name: RouteRecordNameGeneric, cache?: boolean) {
+  return () =>
+    new Promise((resolve) => {
+      cache
+        ? resolve({
+          ...IFrameFaker,
+          name,
+        })
+        : resolve({
+          ...IFrameReal,
+          name,
+        })
+    })
+}
 
 const allViewModules = import.meta.glob('../../views/**/*.vue')
 
 /**
  * @description Util Function 4 - Resolve `views` dynamically base on `node.component` which equal to `path`
  */
-const resolveViewModules = (component: string) => {
+function resolveViewModules(component: string) {
   if (!component)
     return
 
@@ -97,35 +102,24 @@ const resolveViewModules = (component: string) => {
 /**
  * @description Build Routes Core Function
  */
-export const buildRoutes = (payload: AppSystemMenu[]) => {
-  const appMenu = useAppStoreMenu()
-
-  // filter `catalog` and `menu`
-  const filtered = payload.filter(i => i.type !== AppConstMenuType.ELEMENT)
-
-  // build tree
-  const menuTree = arrToTree(filtered, { id: '_id' })
-
-  // just pick the root children
-  const menus = orderTree(menuTree)[0].children
-
-  const routesTree = formatTree<AppSystemMenu, RouteRecordRaw>(menus!, {
+export function buildRoutes(payload: TreeNodeItem<RouteRecordRaw>[]) {
+  const routesTree = formatTree<RouteRecordRaw, RouteRecordRaw>(payload, {
     format: (node) => {
       // handle catelog
-      if (node.type === AppConstMenuType.CATALOG) {
+      if (node.meta!.type === AppConstMenuType.CATALOG) {
         return {
-          ...appMenu.createRouteByMenu(node),
-          component: resolveParentComponent(node.name!),
+          ...node,
+          component: resolveParentComponent(node.name),
         }
       }
 
       // handle menu
-      if (node.type === AppConstMenuType.MENU) {
+      if (node.meta!.type === AppConstMenuType.MENU) {
         // handle internal menu
-        if (node.ternal === AppConstMenuTernal.INTERNAL) {
+        if (node.meta!.ternal === AppConstMenuTernal.INTERNAL) {
           return {
-            ...appMenu.createRouteByMenu(node),
-            component: resolveIFrameComponent(node.name!, node.cache),
+            ...node,
+            component: resolveIFrameComponent(node.name, node.meta!.cache),
           }
         }
 
@@ -135,8 +129,8 @@ export const buildRoutes = (payload: AppSystemMenu[]) => {
 
         // common view route
         return {
-          ...appMenu.createRouteByMenu(node),
-          component: resolveViewModules(node.component),
+          ...node,
+          component: resolveViewModules(node.component as unknown as string),
         }
       }
     },

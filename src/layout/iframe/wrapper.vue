@@ -3,6 +3,10 @@ import { treeToArr } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 import WIFrame from './index.vue'
 
+defineOptions({
+  name: 'TheIFrameWrapper',
+})
+
 const appSetting = useAppStoreSetting()
 const appMenu = useAppStoreMenu()
 const appTab = useAppStoreTab()
@@ -19,12 +23,6 @@ const getAllIFramePages = computed(() =>
     }))
     .filter(e => appTab.tabs.map(i => i.name).includes(e.name!)),
 )
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'TheIFrameWrapper',
-})
 </script>
 
 <template>

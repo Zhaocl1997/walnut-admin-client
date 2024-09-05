@@ -35,8 +35,8 @@ import {
 } from '../src'
 
 /**
-* Script configuration
-*/
+ * Script configuration
+ */
 interface BundleScriptCustomSVGConfig {
   // Path to SVG files
   dir: string
@@ -82,7 +82,7 @@ const target = iconBundlePath
 /**
  * Do stuff!
  */
-export const generateIconUsedBundle = async () => {
+export async function generateIconUsedBundle() {
   const iconPools = await BuildUtilsReadFile(iconListPath)
 
   const allIconsArr = Array.from<string>(

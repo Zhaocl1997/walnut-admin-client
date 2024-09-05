@@ -14,10 +14,6 @@ const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
       this.permissions = payload
     },
 
-    createPermissions(payload: AppSystemMenu[]): string[] {
-      return payload.map(i => i.permission!).filter(i => i)
-    },
-
     clearPermissions() {
       this.setPermissions([])
     },
@@ -49,10 +45,11 @@ const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
   },
 })
 
-const useAppStoreUserPermissionOutside = () =>
-  useAppStoreUserPermissionInside(store)
+function useAppStoreUserPermissionOutside() {
+  return useAppStoreUserPermissionInside(store)
+}
 
-export const useAppStoreUserPermission = () => {
+export function useAppStoreUserPermission() {
   if (getCurrentInstance())
     return useAppStoreUserPermissionInside()
   return useAppStoreUserPermissionOutside()

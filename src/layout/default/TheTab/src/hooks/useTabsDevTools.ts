@@ -1,6 +1,6 @@
 import { paths } from '/build/_generated/paths'
 
-export const useTabsDevTools = () => {
+export function useTabsDevTools() {
   const devToolShow = ref(false)
   const currentMouseTab = ref<AppTab>()
   const currentMouseTabIndex = ref<number>(0)

@@ -1,7 +1,7 @@
 /**
  * @description base64 to blob
  */
-export const base64ToBlob = (base64String: string) => {
+export function base64ToBlob(base64String: string) {
   return new Promise<Blob>((resolve, reject) => {
     try {
       const arr = base64String.split(',')
@@ -25,7 +25,7 @@ export const base64ToBlob = (base64String: string) => {
 /**
  * @description blob to base64
  */
-export const blobToBase64 = (blob: Blob) => {
+export function blobToBase64(blob: Blob) {
   return new Promise<string>((resolve, reject) => {
     const fr = new FileReader()
     fr.onload = (e) => {
@@ -39,7 +39,7 @@ export const blobToBase64 = (blob: Blob) => {
 /**
  * @description img url to base64
  */
-export const imgUrlToBase64 = (url: string, mineType = 'image/png') => {
+export function imgUrlToBase64(url: string, mineType = 'image/png') {
   return new Promise<string>((resolve, reject) => {
     // https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toDataURL
     let canvas = document.createElement('canvas') as Nullable<HTMLCanvasElement>

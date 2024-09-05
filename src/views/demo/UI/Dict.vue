@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import WDict from '@/components/UI/Form/src/components/Extend/Dict.vue'
 
+defineOptions({
+  name: 'DictDemo',
+  defaultView: false,
+})
+
 const state = reactive({
   dict1: null,
   dict2: null,
@@ -11,14 +16,6 @@ const state = reactive({
   dict7: null,
   dict8: true,
   dict9: false,
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'DictDemo',
-
-  defaultView: false,
 })
 </script>
 

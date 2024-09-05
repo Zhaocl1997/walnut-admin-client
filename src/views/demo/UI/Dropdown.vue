@@ -1,58 +1,50 @@
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'DropdownDemo',
-
   defaultView: false,
+})
 
-  setup() {
-    const state = reactive({
-      dropdown1: '',
-      dropdown2: '',
-      dropdown3: '',
-      dropdown4: '',
+const state = reactive({
+  dropdown1: '',
+  dropdown2: '',
+  dropdown3: '',
+  dropdown4: '',
 
-      disabled: false,
-      divided: false,
-      icon: false,
-    })
+  disabled: false,
+  divided: false,
+  icon: false,
+})
 
-    const options = computed(() => {
-      return [
-        {
-          value: '1',
-          label: 'New York City',
-          disabled: state.disabled,
-        },
-        {
-          value: '2',
-          label: 'Pairs',
-        },
-        {
-          value: '3',
-          label: 'London',
-          icon: state.icon ? 'el-icon-question' : '',
-        },
-        {
-          value: '4',
-          label: 'Tokyo',
-        },
-        {
-          value: '5',
-          label: 'Beijing',
-          divided: state.divided,
-        },
-        {
-          value: '6',
-          label: 'Shanghai',
-        },
-      ]
-    })
-
-    return {
-      options,
-      ...toRefs(state),
-    }
-  },
+const options = computed(() => {
+  return [
+    {
+      value: '1',
+      label: 'New York City',
+      disabled: state.disabled,
+    },
+    {
+      value: '2',
+      label: 'Pairs',
+    },
+    {
+      value: '3',
+      label: 'London',
+      icon: state.icon ? 'el-icon-question' : '',
+    },
+    {
+      value: '4',
+      label: 'Tokyo',
+    },
+    {
+      value: '5',
+      label: 'Beijing',
+      divided: state.divided,
+    },
+    {
+      value: '6',
+      label: 'Shanghai',
+    },
+  ]
 })
 </script>
 

@@ -1,5 +1,5 @@
 // TODO rewrite
-export const useProps = <T>(props: T) => {
+export function useProps<T>(props: T) {
   const propsRef = ref<Partial<T>>()
 
   /**

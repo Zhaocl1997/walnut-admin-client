@@ -1,4 +1,4 @@
-export const useDemonstrate = () => {
+export function useDemonstrate() {
   const naiveStore = useAppStoreNaive()
   const signInRef = ref<{ setFormData: (n: string, p: string) => {} }>()
 

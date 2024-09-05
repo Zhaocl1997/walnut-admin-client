@@ -1,24 +1,22 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'App500',
+})
+
 const { t } = useAppI18n()
 
-const onClick = () => {
+function onClick() {
   useAppMessage().warning(t('app.base.wip'))
 }
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'App500',
-})
-</script>
-
 <template>
-  <div class="flex h-full items-center justify-center p-5 w-full bg-bodyColor">
+  <div class="h-full w-full flex items-center justify-center bg-bodyColor p-5">
     <div class="text-center">
       <div class="inline-flex rounded-full bg-red-100 p-4">
-        <div class="rounded-full stroke-red-600 bg-red-200 p-4">
+        <div class="rounded-full bg-red-200 stroke-red-600 p-4">
           <svg
-            class="w-16 h-16"
+            class="h-16 w-16"
             viewBox="0 0 28 28"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +39,7 @@ export default defineComponent({
       <h1 class="mt-5 text-[36px] font-bold lg:text-[50px]">
         500 - {{ $t('app.500.title1') }}
       </h1>
-      <p class="mt-5 lg:text-lg whitespace-pre-wrap">
+      <p class="mt-5 whitespace-pre-wrap lg:text-lg">
         {{ $t('app.500.title2') }}
       </p>
       <n-button class="mt-5" type="warning" @click="onClick">

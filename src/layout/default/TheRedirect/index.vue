@@ -1,22 +1,18 @@
-<script lang="ts">
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'Redirect',
+})
 
-  setup() {
-    const { currentRoute, replace } = useAppRouter()
+const { currentRoute, replace } = useAppRouter()
 
-    const { params, query } = currentRoute.value
-    const { path } = params
+const { params, query } = currentRoute.value
+const { path } = params
 
-    const _path = Array.isArray(path) ? path.join('/') : path
+const _path = Array.isArray(path) ? path.join('/') : path
 
-    replace({
-      path: `/${_path}`,
-      query,
-    })
-
-    return {}
-  },
+replace({
+  path: `/${_path}`,
+  query,
 })
 </script>
 

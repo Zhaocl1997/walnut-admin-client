@@ -263,8 +263,7 @@ export function useChartCard() {
       setTimeout(() => {
         resolve({
           option1: Array.from({ length: 5 }, () =>
-            Array.from({ length: 7 }, () => getRandomInt(0, 300)),
-          ),
+            Array.from({ length: 7 }, () => getRandomInt(0, 300))),
           option2: Array.from({ length: 5 }, () => getRandomInt(300, 1000)),
         })
       }, 500)

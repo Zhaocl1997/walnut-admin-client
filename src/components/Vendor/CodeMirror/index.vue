@@ -8,6 +8,18 @@ import { closeSearchPanel, openSearchPanel } from '@codemirror/search'
 
 import { languages } from './language'
 
+defineOptions({
+  name: 'WVendorCodeMirror',
+})
+
+const props = withDefaults(defineProps<InternalProps>(), {
+  placeholder: 'Code goes here...',
+  height: '300px',
+  autofocus: false,
+})
+
+const emits = defineEmits(['update:value', 'blur', 'focus'])
+
 // TODO 888
 interface InternalProps {
   value: string
@@ -16,13 +28,6 @@ interface InternalProps {
   height?: string
   autofocus?: boolean
 }
-
-const props = withDefaults(defineProps<InternalProps>(), {
-  placeholder: 'Code goes here...',
-  height: '300px',
-  autofocus: false,
-})
-const emits = defineEmits(['update:value', 'blur', 'focus'])
 
 const { t } = useAppI18n()
 
@@ -123,12 +128,6 @@ function onSearch() {
 }
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'WVendorCodeMirror',
-})
-</script>
-
 <template>
   <div class="relative">
     <Codemirror
@@ -148,8 +147,8 @@ export default defineComponent({
       @update="onUpdate"
     />
 
-    <div class="w-full h-8 bg-bodyColor hstack justify-between px-2 text-xs">
-      <div class="hstack justify-end items-center gap-4">
+    <div class="h-8 w-full hstack justify-between bg-bodyColor px-2 text-xs">
+      <div class="hstack items-center justify-end gap-4">
         <n-button text size="small" class="text-xs" @click="onUndo">
           {{ t('app.button.undo') }}
         </n-button>
@@ -161,7 +160,7 @@ export default defineComponent({
         </n-button>
       </div>
 
-      <div class="hstack justify-end items-center gap-4">
+      <div class="hstack items-center justify-end gap-4">
         <div>{{ t('app.base.length') }}: {{ infos.length }}</div>
         <div>{{ t('app.base.lines') }}: {{ infos.lines }}</div>
         <div>{{ t('app.base.cursor') }}: {{ infos.cursor }}</div>

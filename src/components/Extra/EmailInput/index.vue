@@ -1,21 +1,18 @@
-<script lang="ts">
-export default defineComponent({
-  name: 'WEmailInput',
-
-  inheritAttrs: false,
-})
-</script>
-
 <script lang="ts" setup>
 import data, { defaultSuffix } from './data'
 
+defineOptions({
+  name: 'WEmailInput',
+  inheritAttrs: false,
+})
+
+const props = defineProps<InternalProps>()
+
+const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
 interface InternalProps {
   value?: string
   disabled?: boolean
 }
-
-const props = defineProps<InternalProps>()
-const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
 
 const { language } = useSharedNavigatorLanguage()
 
@@ -54,8 +51,8 @@ watch(() => props.value, (v) => {
     :input-props="{
       autocomplete: 'disabled',
     }"
-    blur-after-select
-    clearable
+
+    clearable blur-after-select
     :options="options"
     :placeholder="$t('comp.emailInput.ph')"
     @update:value="onUpdateValue"

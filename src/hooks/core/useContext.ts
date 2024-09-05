@@ -1,7 +1,7 @@
 /**
  * @description Integrate entry context, expose `setContext` and `getContext` two functions
  */
-export const useContext = <T>(key: InjectionKey<string | symbol>) => {
+export function useContext<T>(key: InjectionKey<string | symbol>) {
   const setContext = (ctx: T): void => {
     provide<T>(key, ctx)
   }

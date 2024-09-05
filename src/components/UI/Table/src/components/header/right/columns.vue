@@ -5,7 +5,10 @@ import type { WTable } from '../../../types'
 import { useTableContext } from '../../../hooks/useTableContext'
 import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
-const { t } = useAppI18n()
+defineOptions({
+  name: 'WTableHeaderRightColumns',
+})
+
 const { tableColumns } = useTableContext()
 
 const popoverShow = ref(false)
@@ -80,24 +83,18 @@ function getTitle(item: WTable.Column) {
 
   // handle dict column title
   if (item.extendType === 'dict' && item.useDictNameAsTitle)
-    return t(`dict.name.${item.dictType}`)
+    return (`dict.name.${item.dictType}`)
 
   if (typeof item._titleText === 'function')
     return item._titleText()
 
-  return t('app.base.selection')
+  return ('app.base.selection')
 }
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'WTableHeaderRightColumns',
-})
 </script>
 
 <template>
   <n-tooltip trigger="hover">
-    {{ t('table.base.settings') }}
+    {{ $t('table.base.settings') }}
     <template #trigger>
       <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
@@ -106,37 +103,37 @@ export default defineComponent({
 
         <template #header>
           <n-checkbox :checked="getChecked" :indeterminate="getIndeterminate" @update-checked="onUpdateCheckAllChecked">
-            {{ t('app.button.check') }}
+            {{ $t('app.button.check') }}
           </n-checkbox>
         </template>
 
         <template #default>
           <div id="tableSortable" ref="tableColumnSettingRef">
             <div
-              v-for="item in tableColumns" :key="item.key" class="hstack justify-between my-2 mx-1" :class="[
+              v-for="item in tableColumns" :key="item.key" class="mx-1 my-2 hstack justify-between" :class="[
                 { 'table-column-draggable': !isInBlackList(item.key) },
               ]"
             >
-              <div class="hstack items-center mr-8">
+              <div class="mr-8 hstack items-center">
                 <n-tooltip :trigger="isInBlackList(item.key) ? 'manual' : 'hover'" placement="left">
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <w-icon
-                        icon="ant-design:drag-outlined" height="20" class="cursor-move mr-2" :class="[
+                        icon="ant-design:drag-outlined" height="20" class="mr-2 cursor-move" :class="[
                           { 'cursor-not-allowed': isInBlackList(item.key) },
                         ]"
                       />
                     </n-button>
                   </template>
 
-                  {{ t('table.base.settings.column.drag') }}
+                  {{ $t('table.base.settings.column.drag') }}
                 </n-tooltip>
 
                 <n-checkbox
                   :disabled="isInBlackList(item.key)" :checked="item._internalShow"
                   @update-checked="onUpdateItemChecked(item)"
                 >
-                  {{ getTitle(item) }}
+                  {{ $t(getTitle(item)) }}
                 </n-checkbox>
               </div>
 
@@ -159,8 +156,8 @@ export default defineComponent({
 
                   {{
                     item.fixed === 'left'
-                      ? t('table.base.settings.column.unfix')
-                      : t('table.base.settings.column.fixLeft')
+                      ? $t('table.base.settings.column.unfix')
+                      : $t('table.base.settings.column.fixLeft')
                   }}
                 </n-tooltip>
 
@@ -184,8 +181,8 @@ export default defineComponent({
 
                   {{
                     item.fixed === 'right'
-                      ? t('table.base.settings.column.unfix')
-                      : t('table.base.settings.column.fixRight')
+                      ? $t('table.base.settings.column.unfix')
+                      : $t('table.base.settings.column.fixRight')
                   }}
                 </n-tooltip>
               </div>
