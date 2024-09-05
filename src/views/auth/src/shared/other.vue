@@ -50,14 +50,20 @@ const iconArr = computed(() =>
   ].filter(i => i.show ?? true),
 )
 
-async function onOAuth(getUri: Fn, path: string) {
+async function onOAuth(type: string) {
   loading.value = true
 
-  const res = await getUri()
+  const api = {
+    gitee: getGiteeUri,
+    github: getGithubUri,
+    weibo: getWeiboUri,
+  }
+
+  const res = await api[type]()
 
   childWindow = openOAuthWindow(res)!
 
-  const socketPath = AppSocketEvents.OAUTH(path)
+  const socketPath = AppSocketEvents.OAUTH()
 
   // use interval to check child window closed or not
   const intervelID = setInterval(() => {
@@ -75,9 +81,12 @@ async function onOAuth(getUri: Fn, path: string) {
     // close the opened window
     childWindow.close()
 
-    useAppMsgSuccess(t('app.oauth.success'))
+    // oauth success
+    if (data.success) {
+      useAppMsgSuccess(t('app.oauth.success'))
 
-    await userAuth.ExcuteCoreFnAfterAuth(data.accessToken, data.refreshToken)
+      await userAuth.ExcuteCoreFnAfterAuth(data.tokens.accessToken, data.tokens.refreshToken)
+    }
 
     loading.value = false
 
@@ -92,14 +101,7 @@ async function onClick(key: string) {
     return
   }
 
-  if (key === 'github')
-    onOAuth(getGithubUri, 'github')
-
-  if (key === 'gitee')
-    onOAuth(getGiteeUri, 'gitee')
-
-  if (key === 'weibo')
-    onOAuth(getWeiboUri, 'weibo')
+  onOAuth(key)
 }
 
 // parent window closed, child window close as well

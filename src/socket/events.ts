@@ -6,5 +6,5 @@ export const AppSocketEvents = {
 
   FORCE_QUIT: `force/quit/${fpId.value}`,
 
-  OAUTH: (path: string) => `oauth/${path}/success/${fpId.value}`,
+  OAUTH: () => `${fpId.value}/oauth`,
 }
