@@ -9,7 +9,7 @@ const userAuth = useAppStoreUserAuth()
 
 export function setTokenHeader(config: AxiosRequestConfig, token: string) {
   if (getBoolean(config._carryToken))
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers!.Authorization = `Bearer ${token}`
 }
 
 export function RefreshTokenLogic(config: AxiosRequestConfig) {

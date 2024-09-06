@@ -1,26 +1,27 @@
-import type { AxiosAdapter, AxiosPromise, AxiosRequestConfig } from 'axios'
+import type { AxiosAdapter, AxiosPromise, InternalAxiosRequestConfig } from 'axios'
 import { LRUCache } from 'lru-cache'
-import { buildSortedURL } from './utils'
 
 interface RecordedCache {
   timestamp: number
   value?: AxiosPromise
 }
 
-const CAPACITY = 10
+const { axiosCache: cacheMinute = 5 } = useAppEnv('seconds')
 
-export const throttleAdapterEnhancerCache = new LRUCache<string, RecordedCache>({ max: CAPACITY })
+const CACHE_MINUTE = 1000 * 60 * cacheMinute
+const CAPACITY = 100
+const throttleAdapterEnhancerCache = new LRUCache<string, RecordedCache>({ ttl: CACHE_MINUTE, max: CAPACITY })
 
 export function throttleAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
   return async (config) => {
     const { url, method, params, paramsSerializer, _throttle } = config
 
     if (_throttle) {
-      const recordCacheWithRequest = (index: string, config: AxiosRequestConfig) => {
+      const recordCacheWithRequest = (index: string, config: InternalAxiosRequestConfig) => {
         const responsePromise = (async () => {
           try {
             const response = await adapter(config)
-            if (JSON.parse(response.data).code !== 2000) {
+            if (JSON.parse(response.data).code !== BussinessCodeConst.SUCCESS) {
               throttleAdapterEnhancerCache.delete(index)
             }
             else {
@@ -53,9 +54,7 @@ export function throttleAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
       if (method === 'get') {
         if (now - cachedRecord.timestamp <= _throttle) {
           const responsePromise = cachedRecord.value
-
           if (responsePromise)
-
             return responsePromise
         }
 

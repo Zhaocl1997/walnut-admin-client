@@ -7,12 +7,9 @@ import axios from 'axios'
 import { AppRequestEncryption, AppResponseEncryption } from '../crypto'
 import { checkReponseErrorStatus } from './checkStatus'
 import { RefreshTokenLogic, setTokenHeader } from './refreshToken'
-import { addToCancelPool, removeFromCancelPool } from './cancel'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
-
-const CancelToken = axios.CancelToken
 
 // custom transform for req and res interceptors
 export const transform: WalnutAxiosTransform = {
@@ -21,6 +18,11 @@ export const transform: WalnutAxiosTransform = {
     const userProfile = useAppStoreUserProfile()
 
     const isRequestAfterRefreshedToken = getBoolean(config._request_after_refresh_token, false)
+
+    // avoid use ! below for ts
+    if (!config.headers) {
+      config.headers = {}
+    }
 
     // if for demo purpose, just return
     if (config._demonstrate)
@@ -62,10 +64,6 @@ export const transform: WalnutAxiosTransform = {
       }
     }
 
-    // filter null value in config.data
-    // if (mergedCustomOptions.filterNull && config.data)
-    //   config.data = easyFilterEmptyValue(config.data)
-
     // transform "true"/"false" to true/false
     // when config.data exists
     // and this request is not the one after refresh token
@@ -84,8 +82,6 @@ export const transform: WalnutAxiosTransform = {
       config.data = merge(config.data, cryptedObj)
     }
 
-    config.cancelToken = new CancelToken(c => addToCancelPool(config, c))
-
     return config
   },
 
@@ -97,9 +93,6 @@ export const transform: WalnutAxiosTransform = {
   responseInterceptors: async (res) => {
     // code below is custom code in `axios.response.data`
     const { code, data, msg } = res.data
-
-    // remove from the cancel pool
-    removeFromCancelPool(res.config)
 
     // normal success
     if (code === BussinessCodeConst.SUCCESS) {
@@ -156,16 +149,13 @@ export const transform: WalnutAxiosTransform = {
       return Promise.reject(err)
     }
 
-    // @ts-expect-error
-    if (err === 'Demonstrate') {
+    if (err.message === 'Demonstrate') {
       useAppNotiError(AppI18n.global.t('app.base.demonstrate'))
       return Promise.reject(err)
     }
 
     if (axios.isCancel(err))
       return Promise.reject(err)
-
-    console.log(err)
 
     const statusCode: number = (err.response?.data as any).statusCode
     const msg: string = (err.response?.data as any).detail?.message

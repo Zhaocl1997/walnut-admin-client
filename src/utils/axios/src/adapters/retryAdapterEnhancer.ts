@@ -12,7 +12,7 @@ export function retryAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
         try {
           const response = await adapter(config)
 
-          if (JSON.parse(response.data).code !== 2000) {
+          if (JSON.parse(response.data).code !== BussinessCodeConst.SUCCESS) {
             timeUp = _retryTimes === count
             if (timeUp)
               return response

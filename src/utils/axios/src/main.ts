@@ -3,7 +3,7 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 
 export class Axios {
-  private instance: AxiosInstance
+  private readonly instance: AxiosInstance
 
   constructor(options: WalnutAxiosConfig) {
     this.instance = axios.create(options.originalConfig)

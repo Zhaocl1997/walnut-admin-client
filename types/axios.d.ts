@@ -70,7 +70,7 @@ declare module 'axios' {
     _retryTimes?: number
 
     /**
-     * throttle miiliseconds
+     * throttle miliseconds
      * optimised from https://github.com/kuitos/axios-extensions
      */
     _throttle?: number
@@ -83,6 +83,16 @@ declare module 'axios' {
      * see more in axios folder
      */
     _request_after_refresh_token?: boolean
+
+    /**
+     * request from which page, used for cancel requests in one page
+     */
+    _request_from_route_path?: string
+
+    /**
+     * request id, nanoid
+     */
+    _request_id?: string
   }
 
 }
@@ -157,42 +167,42 @@ declare global {
     total: number
   }
 
+  /**
+   * @description base sort params
+   */
+  type WalnutBaseSortParams<T = RowData> = {
+    field: keyof T
+    order: SortOrder
+    priority: number
+  }[]
+
+  /**
+   * @description base page params
+   */
+  interface WalnutBasePageParams {
+    page?: number
+    pageSize?: number
+  }
+
+  /**
+   * @description Back list api params structure
+   */
+  interface WalnutBaseListParams<T = RowData> {
     /**
-     * @description base sort params
+     * @description query object
      */
-    type WalnutBaseSortParams<T = RowData> = {
-      field: keyof T
-      order: SortOrder
-      priority: number
-    }[]
+    query?: T | null
 
     /**
-     * @description base page params
+     * @description sort object
      */
-    interface WalnutBasePageParams {
-      page?: number
-      pageSize?: number
-    }
+    sort?: WalnutBaseSortParams<T> | null
 
     /**
-     * @description Back list api params structure
+     * @description pagination object
      */
-    interface WalnutBaseListParams<T = RowData> {
-      /**
-       * @description query object
-       */
-      query?: T | null
-
-      /**
-       * @description sort object
-       */
-      sort?: WalnutBaseSortParams<T> | null
-
-      /**
-       * @description pagination object
-       */
-      page?: WalnutBasePageParams | null
-    }
+    page?: WalnutBasePageParams | null
+  }
 }
 
 export { }

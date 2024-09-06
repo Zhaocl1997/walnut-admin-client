@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
-import { cacheAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer } from './src/adapters'
+import { cacheAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer, cancelAdapterEnhancer } from './src/adapters'
 
 const { axiosTimeout } = useAppEnv('seconds')
 
@@ -14,7 +14,8 @@ export const originalConfig: AxiosRequestConfig = {
   // time out, default is 10s
   timeout: Number(axiosTimeout) * 1000,
 
-  adapter: [retryAdapterEnhancer(adapter), throttleAdapterEnhancer(adapter), cacheAdapterEnhancer(adapter)],
+  // TODO so fucking ugly
+  adapter: [retryAdapterEnhancer(throttleAdapterEnhancer(cacheAdapterEnhancer(cancelAdapterEnhancer(adapter))))],
 
   // default transform "true"/"false" to true/false
   _transformStringBoolean: true,

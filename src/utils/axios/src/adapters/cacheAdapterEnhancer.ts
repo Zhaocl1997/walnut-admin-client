@@ -1,50 +1,48 @@
 import type { AxiosAdapter, AxiosPromise } from 'axios'
 import { LRUCache } from 'lru-cache'
-import { buildSortedURL } from './utils'
 
 const { axiosCache: cacheMinute = 5 } = useAppEnv('seconds')
 
 const CACHE_MINUTE = 1000 * 60 * cacheMinute
 const CAPACITY = 100
-
-export const cacheAdapterEnhancerCache = new LRUCache<string, AxiosPromise>({ ttl: CACHE_MINUTE, max: CAPACITY })
+const cacheAdapterEnhancerCache = new LRUCache<string, AxiosPromise>({ ttl: CACHE_MINUTE, max: CAPACITY })
 
 export function cacheAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
-  return (config) => {
+  return async (config) => {
     const { url, method, params, paramsSerializer, _cache, _cache_force_update } = config
 
     if (method === 'get' && _cache) {
-      const cache = cacheAdapterEnhancerCache
-
       // build the index according to the url and params
       const index = buildSortedURL(url, params, paramsSerializer)
 
-      let responsePromise = cache.get(index)
+      let responsePromise = cacheAdapterEnhancerCache.get(index)
 
       if (!responsePromise || _cache_force_update) {
         responsePromise = (async () => {
           try {
             const response = await adapter(config)
-            if (JSON.parse(response.data).code !== 2000)
-              cache.delete(index)
+            if (JSON.parse(response.data).code !== BussinessCodeConst.SUCCESS)
+              cacheAdapterEnhancerCache.delete(index)
 
             return response
           }
           catch (reason) {
-            cache.delete(index)
+            cacheAdapterEnhancerCache.delete(index)
             throw reason
           }
         })()
 
         // put the promise for the non-transformed response into cache as a placeholder
-        cache.set(index, responsePromise)
+        cacheAdapterEnhancerCache.set(index, responsePromise)
 
         return responsePromise
       }
 
+      AppInfo(`Axios HIT CACHE: key => ${index}`)
+
       return responsePromise
     }
 
-    return adapter(config)
+    return await adapter(config)
   }
 }
