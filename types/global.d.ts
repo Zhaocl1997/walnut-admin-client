@@ -18,6 +18,8 @@ declare type TargetContext = '_self' | '_blank'
 
 declare type ValueOf<T> = T[keyof T]
 
+declare type MaybeNullOrUndefined<T> = T | null | undefined
+
 declare type NaiveCompType =
   | 'default'
   | 'primary'
