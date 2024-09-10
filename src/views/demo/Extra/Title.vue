@@ -6,26 +6,26 @@ defineOptions({
 </script>
 
 <template>
-  <w-demo-card title="Basic Title">
+  <WDemoCard title="Basic Title">
     <n-space size="small" vertical>
-      <w-title>This is a normal title.</w-title>
+      <WTitle>This is a normal title.</WTitle>
 
-      <w-title help-message="This is a help message.">
+      <WTitle help-message="This is a help message.">
         This is a title with a help message.
-      </w-title>
+      </WTitle>
 
-      <w-title prefix="bar">
+      <WTitle prefix="bar">
         This is a title with state.
-      </w-title>
-      <w-title prefix="bar" type="info">
+      </WTitle>
+      <WTitle prefix="bar" type="info">
         This is a title with state.
-      </w-title>
-      <w-title prefix="bar" type="error">
+      </WTitle>
+      <WTitle prefix="bar" type="error">
         This is a title with state.
-      </w-title>
-      <w-title prefix="bar" type="warning">
+      </WTitle>
+      <WTitle prefix="bar" type="warning">
         This is a title with state.
-      </w-title>
+      </WTitle>
     </n-space>
-  </w-demo-card>
+  </WDemoCard>
 </template>

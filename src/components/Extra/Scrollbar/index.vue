@@ -1,199 +1,175 @@
-<script lang="tsx">
-import type { ScrollbarInst } from 'naive-ui/lib/_internal'
-import { genString } from 'easy-fns-ts'
-import type { WScrollbarInst } from './index'
+<script lang="ts" setup>
+import type { ScrollbarInst } from 'naive-ui'
+import { nanoid } from 'nanoid'
+import type { ICompExtraScrollbarInst, ICompExtraScrollbarProps } from '.'
 
-export default defineComponent({
+defineOptions({
   name: 'WScrollbar',
+  inheritAttrs: false,
+})
 
-  props: {
-    modelValue: Number as PropType<number>,
-    xScrollable: Boolean as PropType<boolean>,
-    height: {
-      type: String as PropType<string>,
-      default: '0',
-    },
-    width: {
-      type: String as PropType<string>,
-      default: '100%',
-    },
-    behavior: {
-      type: String as PropType<ScrollBehavior>,
-      default: 'smooth',
-    },
-    elSize: Number as PropType<number>,
-    hideScrollbar: Boolean as PropType<boolean>,
-  },
+const props = withDefaults(defineProps<ICompExtraScrollbarProps>(), {
+  height: '0',
+  width: '100%',
+  behavior: 'smooth',
+  scrollbar: true,
+  xScrollable: false,
+  xStep: 250,
+})
 
-  emits: ['update:modelValue', 'scroll'],
+const emits = defineEmits<{ scroll: [] }>()
+const value = defineModel<number>('value', { default: 0 })
 
-  setup(props, { attrs, slots, emit, expose }) {
-    const appSettings = useAppStoreSetting()
+const id = nanoid(16)
 
-    const id = ref(genString(8))
+const appSettings = useAppStoreSetting()
 
-    const getBehavior = computed(() =>
-      appSettings.app.reducedMotion ? 'auto' : 'smooth',
+const getBehavior = computed(() =>
+  appSettings.app.reducedMotion ? 'auto' : 'smooth',
+)
+
+const wrapperRef = shallowRef()
+const scrollRef
+        = shallowRef<ScrollbarInst & { scrollbarInstRef: Recordable }>()
+const isHovered = useElementHover(wrapperRef)
+
+function onScroll(e: Event) {
+  value.value = Number((e.target as HTMLElement)[props.xScrollable ? 'scrollLeft' : 'scrollTop'].toFixed(2))
+
+  emits('scroll')
+}
+
+function onInitXScrollHijack() {
+  if (props.xScrollable) {
+    useEventListener(wrapperRef, 'wheel', (e: WheelEvent) => {
+      if (!isHovered.value)
+        return
+
+      e.preventDefault()
+
+      const node = scrollRef.value?.scrollbarInstRef?.containerRef
+
+      if (e.deltaY > 0) {
+        scrollRef.value!.scrollTo({
+          left: node.scrollLeft + props.xStep,
+          behavior: 'instant',
+        })
+      }
+      else {
+        scrollRef.value!.scrollTo({
+          left: node.scrollLeft - props.xStep,
+          behavior: 'instant',
+        })
+      }
+
+      onScroll(e)
+    })
+  }
+}
+
+function onInitScrollbar() {
+  if (!props.scrollbar) {
+    const target = wrapperRef.value.querySelector(
+      `.w-scrollbar-rail--${
+        props.xScrollable ? 'horizontal' : 'vertical'
+      }`,
     )
 
-    const wrapperRef = ref()
-    const scrollRef
-        = ref<Nullable<ScrollbarInst & { scrollbarInstRef: Recordable }>>(null)
-    const isHovered = useElementHover(wrapperRef)
+    if (target)
+      target.style.display = 'none'
+  }
+}
 
-    onMounted(() => {
-      // handle hide scrollbar
-      if (props.hideScrollbar) {
-        const target = wrapperRef.value.querySelector(
-            `.w-scrollbar-rail--${
-              props.xScrollable ? 'horizontal' : 'vertical'
-            }`,
-        )
-
-        if (target)
-          target.style.display = 'none'
-      }
+defineExpose<ICompExtraScrollbarInst>({
+  scrollTo: (opt) => {
+    scrollRef.value!.scrollTo({
+      ...(opt as object),
+      behavior: getBehavior.value,
     })
+  },
 
-    const onScroll = (e: Event) => {
-      emit(
-        'update:modelValue',
-        props.xScrollable
-          ? Number((e.target as HTMLElement).scrollLeft.toFixed(2))
-          : Number((e.target as HTMLElement).scrollTop.toFixed(2)),
-      )
+  scrollToStart: () => {
+    scrollRef.value!.scrollTo({
+      top: 0,
+      behavior: getBehavior.value,
+    })
+  },
 
-      emit('scroll')
-    }
+  scrollToEnd: () => {
+    const target = scrollRef.value!.scrollbarInstRef.containerRef
 
-    watchEffect(() => {
-      if (props.xScrollable && isHovered.value) {
-        useEventListener(
-          wrapperRef,
-          'wheel',
-          (e: WheelEvent) => {
-            // prevent default wheel
-            e.preventDefault()
-
-            const node = scrollRef.value?.scrollbarInstRef?.containerRef
-
-            // @ts-expect-error
-            if (e.wheelDelta < 0) {
-              scrollRef.value!.scrollTo({
-                left: node.scrollLeft + 200,
-                behavior: getBehavior.value,
-              })
-            }
-            else {
-              scrollRef.value!.scrollTo({
-                left: node.scrollLeft - 200,
-                behavior: getBehavior.value,
-              })
-            }
-
-            onScroll(e)
+    scrollRef.value!.scrollTo(
+      props.xScrollable
+        ? {
+            left: target?.scrollWidth,
+            behavior: getBehavior.value,
+          }
+        : {
+            top: target?.scrollHeight,
+            behavior: getBehavior.value,
           },
-        )
-      }
-    })
+    )
+  },
 
-    const methods: WScrollbarInst = {
-      scrollTo: (opt) => {
-        scrollRef.value!.scrollTo({
-          ...(opt as object),
-          behavior: getBehavior.value,
-        })
-      },
+  scrollToIndex: (index) => {
+    if (index < 0)
+      return
 
-      scrollToStart: () => {
-        scrollRef.value!.scrollTo({
-          position: 'top',
-          behavior: getBehavior.value,
-        })
-      },
-
-      scrollToEnd: () => {
-        const target = scrollRef.value!.scrollbarInstRef.containerRef
-
-        scrollRef.value!.scrollTo(
-          props.xScrollable
-            ? {
-                left: target?.scrollWidth,
-                behavior: getBehavior.value,
-              }
-            : {
-                top: target?.scrollHeight,
-                behavior: getBehavior.value,
-              },
-        )
-      },
-
-      scrollToIndex: (index) => {
-        if (index < 0)
-          return
-
-        const node
+    // TODO optimise below
+    const node
             = scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
               ?.children[index]
               ?? scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
                 ?.children[0]?.children[index]
 
-        scrollRef.value!.scrollTo(
-          props.xScrollable
-            ? {
-                left: node.offsetLeft,
-                behavior: getBehavior.value,
-              }
-            : {
-                top: node.offsetTop,
-                behavior: getBehavior.value,
-              },
-        )
-      },
-
-      getIsOverflow: () => {
-        if (props.xScrollable) {
-          return (
-            scrollRef.value!.scrollbarInstRef.containerRef.scrollWidth
-            > scrollRef.value!.scrollbarInstRef.containerRef.clientWidth
-          )
-        }
-        else {
-          return (
-            scrollRef.value!.scrollbarInstRef.containerRef.scrollHeight
-            > scrollRef.value!.scrollbarInstRef.containerRef.clientHeight
-          )
-        }
-      },
-    }
-
-    useExpose({
-      apis: methods,
-      expose,
-    })
-
-    return () => (
-      <div ref={wrapperRef} class="h-full w-full">
-        <n-scrollbar
-          id={id.value}
-          ref={scrollRef}
-          onScroll={onScroll}
-          containerStyle={{
-            height: props.height,
-            width: props.width,
-          }}
-          x-scrollable={props.xScrollable}
-        >
-          {slots}
-        </n-scrollbar>
-      </div>
+    scrollRef.value!.scrollTo(
+      props.xScrollable
+        ? {
+            left: node.offsetLeft,
+            behavior: getBehavior.value,
+          }
+        : {
+            top: node.offsetTop,
+            behavior: getBehavior.value,
+          },
     )
   },
+
+  getIsOverflow: () => {
+    if (props.xScrollable) {
+      return (
+        scrollRef.value!.scrollbarInstRef.containerRef.scrollWidth
+        > scrollRef.value!.scrollbarInstRef.containerRef.clientWidth
+      )
+    }
+    else {
+      return (
+        scrollRef.value!.scrollbarInstRef.containerRef.scrollHeight
+        > scrollRef.value!.scrollbarInstRef.containerRef.clientHeight
+      )
+    }
+  },
+})
+
+onMounted(() => {
+  onInitXScrollHijack()
+  onInitScrollbar()
 })
 </script>
 
-<style scoped>
-  :deep(.w-scrollbar-content) {
-  height: 100% !important;
-}
-</style>
+<template>
+  <div ref="wrapperRef" class="h-full w-full">
+    <n-scrollbar
+      :id="id"
+      ref="scrollRef"
+      :container-style="{
+        height,
+        width,
+      }"
+      :x-scrollable="xScrollable"
+      @scroll="onScroll"
+    >
+      <slot />
+    </n-scrollbar>
+  </div>
+</template>

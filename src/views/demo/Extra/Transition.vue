@@ -37,11 +37,13 @@ const [register] = useForm({
 </script>
 
 <template>
-  <w-demo-card title="Transition & Transition Select" class="h-72">
-    <w-form :model="formData" @hook="register" />
+  <WDemoCard title="Transition & Transition Select" class="h-72">
+    <WForm :model="formData" @hook="register" />
 
-    <w-transition :name="formData.name">
-      <div v-show="show" class="h-36 w-36 bg-red-400" />
-    </w-transition>
-  </w-demo-card>
+    <div class="h-36">
+      <WTransition :name="formData.name">
+        <div v-show="show" class="h-36 w-36 bg-red-400" />
+      </WTransition>
+    </div>
+  </WDemoCard>
 </template>

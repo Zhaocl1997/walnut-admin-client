@@ -10,35 +10,35 @@ const state = ref<any>({
 </script>
 
 <template>
-  <w-demo-card title="Email Input">
+  <WDemoCard title="Email Input">
     <n-list>
       <w-JSON :value="{ state }" height="200px" />
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Normal usage
-        </w-title>
+        </WTitle>
 
-        <w-email-input v-model:value="state.email1" />
+        <WEmailInput v-model:value="state.email1" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Feedback
-        </w-title>
+        </WTitle>
 
-        <w-email-input v-model:value="state.email2" />
+        <WEmailInput v-model:value="state.email2" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Disabled
-        </w-title>
+        </WTitle>
 
-        <w-email-input v-model:value="state.email3" disabled />
+        <WEmailInput v-model:value="state.email3" disabled />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>
 
 <style lang="scss" scoped>

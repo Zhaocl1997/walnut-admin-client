@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
+import type { ICompExtraScrollbarInst } from '@/components/Extra/Scrollbar'
 
 defineOptions({
   name: 'ScrollbarDemo',
@@ -12,13 +12,13 @@ const positionHorizontal = ref(0)
 const overflow = ref(false)
 const overflowHorizontal = ref(false)
 
-const scrollRef = ref<Nullable<WScrollbarInst>>(null)
-const scrollHorizontalRef = ref<Nullable<WScrollbarInst>>(null)
+const scrollRef = ref<ICompExtraScrollbarInst>()
+const scrollHorizontalRef = ref<ICompExtraScrollbarInst>()
 
 watch(
   () => position.value,
   () => {
-    overflow.value = scrollRef.value?.getIsOverflow()!
+    overflow.value = scrollRef.value?.getIsOverflow() ?? false
   },
   { immediate: true },
 )
@@ -26,17 +26,17 @@ watch(
 watch(
   () => positionHorizontal.value,
   () => {
-    overflowHorizontal.value = scrollHorizontalRef.value?.getIsOverflow()!
+    overflowHorizontal.value = scrollHorizontalRef.value?.getIsOverflow() ?? false
   },
   { immediate: true },
 )
 </script>
 
 <template>
-  <w-demo-card title="Scrollbar">
-    <w-title prefix="bar">
+  <WDemoCard title="Scrollbar">
+    <WTitle prefix="bar">
       Vertical Position: {{ position }} || Overflow: {{ overflow }}
-    </w-title>
+    </WTitle>
 
     <n-space size="small">
       <n-button @click="scrollRef?.scrollTo({ top: 800 })">
@@ -63,24 +63,24 @@ watch(
     </n-space>
 
     <div class="mt-2 border border-2 border-gray-600 rounded-sm">
-      <w-scrollbar
+      <WScrollbar
         ref="scrollRef"
-        v-model="position"
+        v-model:value="position"
         height="500px"
-        :el-size="36"
+        width="400px"
       >
         <div v-for="i in 100" :key="i" class="text-3xl">
           Horizontal-{{ i }}
         </div>
-      </w-scrollbar>
+      </WScrollbar>
     </div>
 
     <n-divider />
 
-    <w-title prefix="bar">
+    <WTitle prefix="bar">
       Horizontal Position: {{ positionHorizontal }} || Overflow:
       {{ overflowHorizontal }}
-    </w-title>
+    </WTitle>
 
     <n-space size="small">
       <n-button @click="scrollHorizontalRef?.scrollTo({ left: 800 })">
@@ -107,18 +107,20 @@ watch(
     </n-space>
 
     <div class="mt-2 h-12 border border-2 border-gray-600 rounded-sm">
-      <w-scrollbar
+      <WScrollbar
         ref="scrollHorizontalRef"
-        v-model="positionHorizontal"
+        v-model:value="positionHorizontal"
         x-scrollable
         height="100px"
+        :x-step="100"
+        :scrollbar="false"
       >
         <div class="hstack whitespace-nowrap">
           <div v-for="i in 100" :key="i" class="mx-3 text-3xl">
             Vertical-{{ i }}
           </div>
         </div>
-      </w-scrollbar>
+      </WScrollbar>
     </div>
-  </w-demo-card>
+  </WDemoCard>
 </template>

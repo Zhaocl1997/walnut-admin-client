@@ -11,45 +11,45 @@ const base64 = ref<string>()
 const hasFile = ref(false)
 const fileName = ref<string>()
 
-const absImageRef = ref<WAbsImageInst>()
+const absImageRef = shallowRef<WAbsImageInst>()
 
 async function onRenderBlobURL() {
-  const res = await absImageRef.value.onGetBlobURL()
+  const res = await absImageRef.value?.onGetBlobURL()
   blobURL.value = res
 }
 
 async function onRenderBase64() {
-  const res = await absImageRef.value.onGetBase64()
+  const res = await absImageRef.value?.onGetBase64()
   base64.value = res
 }
 
 async function onDownloadByUrl() {
-  await downloadByUrl(blobURL.value, fileName.value)
+  await downloadByUrl(blobURL.value!, fileName.value)
 }
 
 async function onDownloadBybase64() {
-  await downloadByBase64(base64.value, fileName.value)
+  await downloadByBase64(base64.value!, fileName.value)
 }
 
 async function onDownloadByBlob() {
-  const blob = absImageRef.value.onGetBlob()
-  await downloadByBlob(blob, fileName.value)
+  const blob = absImageRef.value?.onGetBlob()
+  await downloadByBlob(blob!, fileName.value)
 }
 </script>
 
 <template>
-  <w-demo-card title="Common file operations, download/transform">
+  <WDemoCard title="Common file operations, download/transform">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Abstract image
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
-          <w-abs-image ref="absImageRef" @change="hasFile = true">
+          <WAbsImage ref="absImageRef" @change="hasFile = true">
             <n-button>Choose Image</n-button>
             {{ hasFile ? 'Got image' : 'No image yet' }}
-          </w-abs-image>
+          </WAbsImage>
 
           <n-input
             v-model:value="fileName"
@@ -98,5 +98,5 @@ async function onDownloadByBlob() {
         </n-space>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

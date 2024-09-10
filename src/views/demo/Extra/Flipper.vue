@@ -6,9 +6,9 @@ defineOptions({
 </script>
 
 <template>
-  <w-demo-card title="Flipper">
+  <WDemoCard title="Flipper">
     <n-space size="small">
-      <w-flipper trigger="hover" width="270px" height="300px">
+      <WFlipper trigger="hover" width="270px" height="300px">
         <template #front>
           <div class="h-full w-full">
             hover to flip
@@ -20,9 +20,9 @@ defineOptions({
             this is back
           </div>
         </template>
-      </w-flipper>
+      </WFlipper>
 
-      <w-flipper trigger="click" width="270px" height="300px">
+      <WFlipper trigger="click" width="270px" height="300px">
         <template #front>
           <div class="h-full w-full">
             click to flip
@@ -34,7 +34,7 @@ defineOptions({
             this is back
           </div>
         </template>
-      </w-flipper>
+      </WFlipper>
     </n-space>
-  </w-demo-card>
+  </WDemoCard>
 </template>

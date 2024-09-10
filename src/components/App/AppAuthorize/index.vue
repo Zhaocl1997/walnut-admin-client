@@ -1,82 +1,51 @@
-<script lang="tsx">
-import { renderSlot } from 'vue'
+<script lang="ts" setup>
+import type { IAppAuthorizeProps } from '.'
 
-export default defineComponent({
+defineOptions({
   name: 'AppAuthorize',
-
-  components: {
-    AppAuthorizeIPTC: createAsyncComponent(() => import('./IPTC.vue')),
-  },
-
-  props: {
-    value: String as PropType<string>,
-
-    preset: {
-      type: String as PropType<'null' | 'tip' | 'IPTC'>,
-      default: 'null',
-    },
-
-    presetWidth: String as PropType<string>,
-    presetHeight: String as PropType<string>,
-  },
-
-  emits: ['iptcSuccess'],
-
-  setup(props, { slots, emit }) {
-    const userPermission = useAppStoreUserPermission()
-    const { t } = useAppI18n()
-
-    const onIPTCSuccess = () => {
-      emit('iptcSuccess', props.value)
-    }
-
-    const render = () => {
-      // this need higher priority
-      // this can be used when current user do not have the permission code
-      // but can input the permission code to show the slot
-      if (props.preset === 'IPTC') {
-        return (
-          <AppAuthorizeIPTC
-            permission={props.value}
-            presetWidth={props.presetWidth}
-            presetHeight={props.presetHeight}
-            onSuccess={onIPTCSuccess}
-          >
-            {renderSlot(slots, 'default')}
-          </AppAuthorizeIPTC>
-        )
-      }
-
-      if (userPermission.hasPermission(props.value!))
-        return renderSlot(slots, 'default')
-
-      if (props.preset === 'null')
-        return null
-
-      if (props.preset === 'tip') {
-        return (
-          <div
-            class="flex items-center justify-center border border-gray-500/50"
-            style={{ width: props.presetWidth, height: props.presetHeight }}
-          >
-            <n-result
-              status="403"
-              title={t('app.authorize.tip.title')}
-              description={t('app.authorize.tip.desc')}
-            >
-            </n-result>
-          </div>
-        )
-      }
-    }
-
-    return () => render()
-  },
+  inheritAttrs: false,
 })
+
+withDefaults(defineProps<IAppAuthorizeProps>(), {
+  preset: 'null',
+})
+
+const emits = defineEmits<{ success: [] }>()
+
+const AppAuthorizeIPTC = createAsyncComponent(() => import('./IPTC.vue'))
+
+const userPermission = useAppStoreUserPermission()
+
+function onSuccess() {
+  emits('success')
+}
 </script>
 
-<style scoped>
-  :deep(.w-result-header__title) {
-  white-space: nowrap;
-}
+<template>
+  <AppAuthorizeIPTC
+    v-if="preset === 'IPTC'"
+    :value="value"
+    :preset-height="presetHeight"
+    :preset-width="presetWidth"
+    @success="onSuccess"
+  >
+    <slot />
+  </AppAuthorizeIPTC>
+  <slot v-else-if="userPermission.hasPermission(value)" />
+  <div v-else-if="preset === 'null'" />
+  <div
+    v-else-if="preset === 'tip'"
+    class="flex items-center justify-center border border-gray-500/50"
+    :style="{ height: presetHeight, width: presetWidth }"
+  >
+    <n-result
+      status="403"
+      :title="$t('app.authorize.tip.title')"
+      :description="$t('app.authorize.tip.desc')"
+    />
+  </div>
+</template>
+
+<style lang="scss" scoped>
+
 </style>

@@ -5,7 +5,7 @@ defineOptions({
   name: 'AbsImage',
 })
 
-const emits = defineEmits(['change'])
+const emits = defineEmits<{ change: [] }>()
 
 const { createBlobUrl } = useBlob()
 const currentFile = shallowRef<Blob>()

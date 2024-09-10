@@ -1,29 +1,31 @@
 <script lang="ts" setup>
+import type { FormItemRule } from 'naive-ui'
+import type { IAppAuthorizeIPTCProps } from '.'
+
 defineOptions({
-  name: 'AppAuthorize',
+  name: 'AppAuthorizeInputPermissionToConfirm',
+  inheritAttrs: false,
 })
 
-const props = defineProps<{
-  permission: string
-  presetWidth: string
-  presetHeight: string
-}>()
+const props = defineProps<IAppAuthorizeIPTCProps>()
 
-const emits = defineEmits(['success'])
+const emits = defineEmits<{ success: [] }>()
 
 const inputValue = ref<string>()
-const state = ref(false)
+const rightPermission = ref(false)
+const inputValid = ref(true)
 
 const { t } = useAppI18n()
 const userPermission = useAppStoreUserPermission()
 
 function onSuccess() {
   emits('success')
-  state.value = true
+  inputValid.value = true
+  rightPermission.value = true
 }
 
 watch(
-  () => props.permission,
+  () => props.value,
   (v) => {
     if (userPermission.hasPermission(v))
       onSuccess()
@@ -33,37 +35,43 @@ watch(
   },
 )
 
-const rule = {
-  trigger: ['blur'],
+const rule: FormItemRule = {
+  trigger: ['blur', 'change'],
 
   validator() {
-    if (!inputValue.value)
+    if (!inputValue.value) {
+      inputValid.value = true
       return true
+    }
 
-    if (inputValue.value !== props.permission)
+    if (inputValue.value !== props.value) {
+      inputValid.value = false
       return new Error(t('app.authorize.iptc.error'))
+    }
 
     onSuccess()
+
     return true
   },
 }
 
 function onKeyup(e: KeyboardEvent) {
   if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-    if (inputValue.value !== props.permission) {
+    if (inputValue.value !== props.value) {
+      inputValid.value = false
       useAppMsgError(t('app.authorize.iptc.error'))
-      return
     }
-
-    onSuccess()
+    else {
+      onSuccess()
+    }
   }
 }
 </script>
 
 <template>
-  <w-transition appear name="fade-down">
+  <WTransition appear name="fade-down">
     <div
-      v-if="!state"
+      v-if="!rightPermission"
       class="relative flex items-center justify-center"
       :style="{ height: presetHeight, width: presetWidth }"
     >
@@ -80,11 +88,14 @@ function onKeyup(e: KeyboardEvent) {
         <n-input
           v-model:value="inputValue"
           clearable
+          type="password"
+          :status="inputValid ? 'success' : 'warning'"
           @keyup="onKeyup"
+          @clear="inputValid = true"
         />
       </n-form-item>
     </div>
 
     <slot v-else />
-  </w-transition>
+  </WTransition>
 </template>

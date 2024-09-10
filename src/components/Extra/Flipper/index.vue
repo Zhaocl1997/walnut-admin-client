@@ -1,12 +1,18 @@
 <script lang="ts" setup>
-import type { ICompExtraFlipperPropsPartial } from '.'
+import type { ICompExtraFlipperProps } from '.'
 
 defineOptions({
   name: 'WFlipper',
   inheritAttrs: false,
 })
 
-const props = defineProps<ICompExtraFlipperPropsPartial>()
+const props = withDefaults(defineProps<ICompExtraFlipperProps>(), {
+  transitionTimingFunction: 'cubic-bezier(0.4, 0, 1, 1)',
+  trigger: 'click',
+  duration: '500ms',
+  height: '100%',
+  width: '100%',
+})
 
 const emits = defineEmits<{
   click: [e: MouseEvent]
@@ -14,36 +20,26 @@ const emits = defineEmits<{
 
 const flipped = ref(false)
 
-const getStyle = computed(() => {
-  const { width, height, duration, transitionTimingFunction } = props
-  return {
-    wrapper: { width, height } as CSSProperties,
-    face: Object.assign(
+const getStyle = computed(() => ({
+  wrapper: { width: props.width, height: props.height } as CSSProperties,
+  face:
       {
-        transitionDuration: duration,
-        transitionTimingFunction,
-      },
-      props.defaultFace
-        ? {
-            borderRadius: '20px',
-            boxShadow: '0 3px 15px rgba(64, 64, 64, 0.45)',
-          }
-        : {},
-    ) as CSSProperties,
-  }
-})
+        transitionDuration: props.duration,
+        transitionTimingFunction: props.transitionTimingFunction,
+        borderRadius: '20px',
+        boxShadow: '0 3px 15px rgba(64, 64, 64, 0.45)',
+      } as CSSProperties,
+}))
 
 function onClick(e: MouseEvent) {
-  const { trigger } = props
-  if (trigger === 'click')
+  if (props.trigger === 'click')
     flipped.value = !flipped.value
 
   emits('click', e)
 }
 
 function onMouseEnterAndLeave() {
-  const { trigger } = props
-  if (trigger === 'hover')
+  if (props.trigger === 'hover')
     flipped.value = !flipped.value
 }
 
@@ -54,8 +50,8 @@ defineExpose({
 
 <template>
   <div
-    v-bind="$attrs"
-    class="Flipper" :class="[{ 'Flipper--flipped': flipped }]"
+    class="Flipper"
+    :class="[{ 'Flipper--flipped': flipped }]"
     :style="getStyle.wrapper"
     @click="onClick"
     @mouseenter="onMouseEnterAndLeave"
@@ -72,7 +68,7 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-  .Flipper {
+.Flipper {
   position: relative;
   perspective: 1000px;
 }

@@ -25,29 +25,30 @@ function onReset() {
 </script>
 
 <template>
-  <w-demo-card title="Authorize Component">
+  <WDemoCard title="Authorize Component">
     <n-list>
       <n-list-item>
-        <w-title
+        <WTitle
+          class="mb-2"
           prefix="bar"
           help-message="Use permission string to controll element visibility, quite simple"
         >
           `null` preset
-        </w-title>
+        </WTitle>
 
         <br>
 
-        <w-JSON height="70px" :value="{ permission1: p1 }" />
+        <WJSON height="70px" :value="{ permission1: p1 }" />
 
         <br>
 
         <n-text> Below is something you can see </n-text>
         <br>
-        <w-app-authorize value="system:user:list">
+        <WAppAuthorize value="system:user:list">
           <n-text type="primary">
             This is something you can see
           </n-text>
-        </w-app-authorize>
+        </WAppAuthorize>
 
         <br>
 
@@ -56,24 +57,25 @@ function onReset() {
           Toggle
         </n-button>
         <br>
-        <w-app-authorize :value="p1">
+        <WAppAuthorize :value="p1">
           <n-text type="primary">
             This is something you can't see
           </n-text>
-        </w-app-authorize>
+        </WAppAuthorize>
       </n-list-item>
 
       <n-list-item>
-        <w-title
+        <WTitle
+          class="mb-2"
           prefix="bar"
           help-message="Show a tip to tell user that you do not have permission on this module \n Need to provide a `preset-width` and `preset-height` to hold the container"
         >
           `tip` preset
-        </w-title>
+        </WTitle>
 
         <br>
 
-        <w-JSON height="70px" :value="{ permission2: p2 }" />
+        <WJSON height="70px" :value="{ permission2: p2 }" />
 
         <br>
 
@@ -83,7 +85,7 @@ function onReset() {
 
         <br>
 
-        <w-app-authorize
+        <WAppAuthorize
           :value="p2"
           preset="tip"
           preset-width="200px"
@@ -98,20 +100,21 @@ function onReset() {
           >
             this is the content that you can't see
           </div>
-        </w-app-authorize>
+        </WAppAuthorize>
       </n-list-item>
 
       <n-list-item>
-        <w-title
+        <WTitle
+          class="mb-2"
           prefix="bar"
           help-message="Show a input for user to confirm the permission string \n Need to provide a `preset-width` and `preset-height` to hold the container"
         >
           `input-permission-to-confirm` preset
-        </w-title>
+        </WTitle>
 
         <br>
 
-        <w-JSON height="70px" :value="{ permission3: p3 }" />
+        <WJSON height="70px" :value="{ permission3: p3 }" />
 
         <br>
 
@@ -119,7 +122,7 @@ function onReset() {
           Reset
         </n-button>
 
-        <w-app-authorize
+        <WAppAuthorize
           v-if="p3show"
           :value="p3"
           preset="IPTC"
@@ -136,14 +139,8 @@ function onReset() {
             this is the content that you won't see if you do not enter the right
             permission code
           </div>
-        </w-app-authorize>
+        </WAppAuthorize>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>
-
-<style scoped>
-  :deep(.w-h) {
-  margin-bottom: 8px;
-}
-</style>

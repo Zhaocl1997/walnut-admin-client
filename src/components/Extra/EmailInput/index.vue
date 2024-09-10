@@ -1,26 +1,20 @@
 <script lang="ts" setup>
 import data, { defaultSuffix } from './data'
+import type { ICompExtraEmailInputProps } from '.'
 
 defineOptions({
   name: 'WEmailInput',
   inheritAttrs: false,
 })
 
-const props = defineProps<InternalProps>()
-
-const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
-interface InternalProps {
-  value?: string
-  disabled?: boolean
-}
+defineProps<ICompExtraEmailInputProps>()
+const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: true })
 
 const { language } = useSharedNavigatorLanguage()
 
-const emailValue = ref<string>()
-
 function transformOptions(val: string[]) {
   return val.map((suffix) => {
-    const prefix = emailValue.value?.split('@')[0]
+    const prefix = value.value?.split('@')[0]
     return {
       label: prefix + suffix,
       value: prefix + suffix,
@@ -28,37 +22,23 @@ function transformOptions(val: string[]) {
   })
 }
 
-const options = computed(() => {
+const getOptions = computed(() => {
   const iso2 = new Intl.Locale(language.value!).region
   const target = data.find(i => i.iso2 === iso2)
 
   return transformOptions(target ? target.suffix : defaultSuffix)
 })
-
-function onUpdateValue(v: string) {
-  emits('update:value', v)
-}
-
-watch(() => props.value, (v) => {
-  emailValue.value = v
-}, { immediate: true })
 </script>
 
 <template>
   <n-auto-complete
-    :value="emailValue"
+    v-model:value="value!"
     :disabled="disabled"
     :input-props="{
       autocomplete: 'disabled',
     }"
-
     clearable blur-after-select
-    :options="options"
+    :options="getOptions"
     :placeholder="$t('comp.emailInput.ph')"
-    @update:value="onUpdateValue"
   />
 </template>
-
-<style lang="scss" scoped>
-
-</style>

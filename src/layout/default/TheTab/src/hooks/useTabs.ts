@@ -1,4 +1,4 @@
-import type { WScrollbarInst } from '@/components/Extra/Scrollbar'
+import type { ICompExtraScrollbarInst } from '@/components/Extra/Scrollbar'
 
 /**
  * @description App Tab Core Function
@@ -10,7 +10,7 @@ export function useTabs() {
   const route = useAppRoute()
   const { currentRoute } = useAppRouter()
 
-  const scrollRef = ref<Nullable<WScrollbarInst>>(null)
+  const scrollRef = ref<Nullable<ICompExtraScrollbarInst>>(null)
   const isOverflow = ref(false)
 
   const getCurrentRouteTabIndex = computed(() =>
