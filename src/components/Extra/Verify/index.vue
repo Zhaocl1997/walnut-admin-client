@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { getRandomInt } from 'easy-fns-ts'
 import { makeImgSize, makeImgWithCanvas, paintPuzzle } from './utils'
+import type { ICompExtraVerifyProps } from '.'
 
 defineOptions({
   name: 'WVerify',
 })
 
-const props = withDefaults(defineProps<InteralProps>(), {
+const props = withDefaults(defineProps<ICompExtraVerifyProps>(), {
   canvasWidth: 310,
   canvasHeight: 160,
   puzzleScale: 1,
@@ -14,28 +15,15 @@ const props = withDefaults(defineProps<InteralProps>(), {
   range: 5,
 })
 
-const emits = defineEmits(['success', 'fail'])
-
-// TODO 888
-interface InteralProps {
-  canvasWidth?: number
-  canvasHeight?: number
-  // 拼图块的大小缩放比例
-  puzzleScale?: number
-  // 滑块的大小
-  sliderSize?: number
-  // 允许的偏差值
-  range?: number
-  imgs?: string[]
-}
+const emits = defineEmits<{ success: [x: number], fail: [x: number] }>()
 
 const { t } = useAppI18n()
 
 const show = ref(false)
-const rangeSlider = ref<Nullable<HTMLDivElement>>(null)
-const canvas1 = ref<Nullable<HTMLCanvasElement>>(null)
-const canvas2 = ref<Nullable<HTMLCanvasElement>>(null)
-const canvas3 = ref<Nullable<HTMLCanvasElement>>(null)
+const rangeSlider = shallowRef<HTMLDivElement>()
+const canvas1 = shallowRef<HTMLCanvasElement>()
+const canvas2 = shallowRef<HTMLCanvasElement>()
+const canvas3 = shallowRef<HTMLCanvasElement>()
 
 const startWidth = ref(50) // 鼠标点下去时父级的width
 const startX = ref(0) // 鼠标按下时的X
@@ -90,12 +78,12 @@ const getPuzzleCanvasStyle = computed(() => ({
   width: `${getPuzzleBaseSize.value}px`,
   height: `${props.canvasHeight}px`,
   transform: `translateX(${
-      getStyleWidth.value
-      - getSliderBaseSize.value
-      - (getPuzzleBaseSize.value - getSliderBaseSize.value)
-      * ((getStyleWidth.value - getSliderBaseSize.value)
-      / (props.canvasWidth - getSliderBaseSize.value))
-    }px)`,
+    getStyleWidth.value
+    - getSliderBaseSize.value
+    - (getPuzzleBaseSize.value - getSliderBaseSize.value)
+    * ((getStyleWidth.value - getSliderBaseSize.value)
+    / (props.canvasWidth - getSliderBaseSize.value))
+  }px)`,
 }))
 
 // 绘制拼图块的路径
@@ -294,7 +282,7 @@ function onRangeMouseMove(e: MouseEvent | TouchEvent) {
 }
 
 // 鼠标抬起
-function onRangeMouseUp(e: MouseEvent | TouchEvent) {
+function onRangeMouseUp() {
   if (mouseDown.value) {
     mouseDown.value = false
     onVerify()
@@ -368,7 +356,7 @@ defineExpose({ onOpenModal })
 </script>
 
 <template>
-  <w-modal
+  <WModal
     v-model:show="show"
     :title="t('comp.verify.title')"
     :close-on-esc="false"
@@ -457,7 +445,7 @@ defineExpose({ onOpenModal })
             @touchstart="onRangeMouseDown($event)"
           >
             <n-button text type="success" :disabled="loading">
-              <w-icon
+              <WIcon
                 :icon="
                   mouseDown ? 'mdi:drag' : 'ant-design:double-right-outlined'
                 "
@@ -468,5 +456,5 @@ defineExpose({ onOpenModal })
         </div>
       </div>
     </div>
-  </w-modal>
+  </WModal>
 </template>

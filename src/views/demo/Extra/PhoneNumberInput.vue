@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { PhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
+import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 
 defineOptions({
   name: 'PhoneInputDemo',
@@ -9,89 +9,89 @@ defineOptions({
 const state = ref<any>({
   phoneNumber1: '13866665555',
 })
-const updateParams1 = ref<PhoneNumberInputUpdateParams>()
+const updateParams1 = ref<ICompExtraPhoneNumberInputUpdateParams>()
 
-function onUpdate(val: PhoneNumberInputUpdateParams) {
+function onUpdate(val: ICompExtraPhoneNumberInputUpdateParams) {
   updateParams1.value = val
 }
 </script>
 
 <template>
-  <w-demo-card title="Phone Number Input">
+  <WDemoCard title="Phone Number Input">
     <n-list>
-      <w-JSON :value="{ state, updateParams1 }" height="200px" />
+      <WJSON :value="{ state, updateParams1 }" height="200px" />
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Normal usage, see console output
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber1" class="w-80" @update="onUpdate" />
+        <WPhoneNumberInput v-model:value="state.phoneNumber1" class="w-80" @change="onUpdate" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Auto get current user country code (if online get result from https://ip2c.org/s, otherwise use `new Intl.Locale(navigator.language).region` to get country cdoe)
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber2" class="w-80" auto-default-country />
+        <WPhoneNumberInput v-model:value="state.phoneNumber2" class="w-80" auto-default-country />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Display an example phone number in placeholder, changes when country select changed
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber3" class="w-80" example />
+        <WPhoneNumberInput v-model:value="state.phoneNumber3" class="w-80" example />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           No nation flag
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber4" class="w-80" :flag="false" />
+        <WPhoneNumberInput v-model:value="state.phoneNumber4" class="w-80" :flag="false" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           No country select, just a normal phone number input
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber5" class="w-80" :country-select="false" />
+        <WPhoneNumberInput v-model:value="state.phoneNumber5" class="w-80" :country-select="false" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Preferred List, get from `navagator.languages`
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber6" class="w-80" preferred />
+        <WPhoneNumberInput v-model:value="state.phoneNumber6" class="w-80" preferred />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           White List, only show passed countries
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber7" class="w-80" :white-list="['CN', 'US', 'JP']" />
+        <WPhoneNumberInput v-model:value="state.phoneNumber7" class="w-80" :white-list="['CN', 'US', 'JP']" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Black List, no US anymore (HE)
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber8" class="w-80" :black-list="['US']" country-code="CN" />
+        <WPhoneNumberInput v-model:value="state.phoneNumber8" class="w-80" :black-list="['US']" country-code="CN" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Disabled
-        </w-title>
+        </WTitle>
 
-        <w-phone-number-input v-model:value="state.phoneNumber9" class="w-80" disabled />
+        <WPhoneNumberInput v-model:value="state.phoneNumber9" class="w-80" disabled />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

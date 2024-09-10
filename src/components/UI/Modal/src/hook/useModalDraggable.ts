@@ -1,5 +1,5 @@
 function getStyle(dom: Element, attr: string) {
-  return getComputedStyle(dom)[attr]
+  return getComputedStyle(dom)[attr as unknown as number]
 }
 
 export function useModalDraggable(dragEl: HTMLElement, dragDom: HTMLElement) {

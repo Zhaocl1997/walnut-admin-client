@@ -1,50 +1,26 @@
-<script lang="tsx">
-import { props } from './props'
+<script lang="ts" setup>
+import type { ICompExtraTextScrollProps } from '..'
+import TextScrollHorizontal from './Horizontal.vue'
+import TextScrollVertical from './Vertical.vue'
 
-export default defineComponent({
-  name: 'TextScroll',
-
-  components: {
-    TextScrollHorizontal: createAsyncComponent(
-      () => import('./Horizontal.vue'),
-    ),
-    TextScrollVertical: createAsyncComponent(() => import('./Vertical.vue')),
-  },
-
-  props,
-
-  setup(props, { slots }) {
-    return () => {
-      const slotsText = getDefaultSlotText(slots)
-
-      const getTexts = slotsText
-        ? slotsText.length > props.maxLength
-          ? Array.from({ length: 4 }, () => slotsText)
-          : [slotsText]
-        : props.texts
-
-      if (slotsText && slotsText.length < props.maxLength) {
-        return <span>{slotsText}</span>
-      }
-      else {
-        return props.mode === 'horizontal'
-          ? (
-              <TextScrollHorizontal
-                {...props}
-                texts={getTexts}
-              >
-              </TextScrollHorizontal>
-            )
-          : (
-            // TODO vertical need optimise
-              <TextScrollVertical
-                {...props}
-                texts={getTexts}
-              >
-              </TextScrollVertical>
-            )
-      }
-    }
-  },
+defineOptions({
+  name: 'WTextScroll',
 })
+
+const props = withDefaults(defineProps<ICompExtraTextScrollProps>(), {
+  maxLength: 8,
+  mode: 'horizontal',
+})
+const slots = useSlots()
+
+const slotsText = getDefaultSlotText(slots)
+
+const getTexts = computed(() => slotsText
+  ? Array.from({ length: 4 }, () => slotsText)
+  : props.texts)
 </script>
+
+<template>
+  <TextScrollHorizontal v-if="mode === 'horizontal'" v-bind="$props" :texts="getTexts" />
+  <TextScrollVertical v-else v-bind="$props" :texts="getTexts" />
+</template>

@@ -16,6 +16,7 @@ const configFormData = ref({
   count: 20,
   loading: false,
   draggable: true,
+  scope: false,
   fullscreen: true,
 })
 
@@ -97,7 +98,14 @@ const [register] = useForm<typeof configFormData.value>({
         path: 'fullscreen',
       },
     },
-
+    {
+      // TODO scope not working
+      type: 'Base:Switch',
+      formProp: {
+        label: 'Scoped',
+        path: 'scope',
+      },
+    },
     {
       type: 'Base:Button',
       componentProp: {
@@ -112,12 +120,12 @@ const [register] = useForm<typeof configFormData.value>({
 </script>
 
 <template>
-  <w-demo-card title="Modal">
+  <WDemoCard title="Modal">
     <n-space vertical>
-      <w-form :model="configFormData" @hook="register" />
+      <WForm :model="configFormData" @hook="register" />
     </n-space>
 
-    <w-modal
+    <WModal
       v-model:show="modalShow"
       :title="configFormData.title"
       :help-message="configFormData.helpMessage"
@@ -128,12 +136,13 @@ const [register] = useForm<typeof configFormData.value>({
       :loading="configFormData.loading"
       :draggable="configFormData.draggable"
       :fullscreen="configFormData.fullscreen"
+      :to="configFormData.scope ? '#Modal' : undefined"
       @yes="modalShow = false"
       @no="modalShow = false"
     >
       <div v-for="item in configFormData.count" :key="item">
         this is modal content {{ item }}
       </div>
-    </w-modal>
-  </w-demo-card>
+    </WModal>
+  </WDemoCard>
 </template>

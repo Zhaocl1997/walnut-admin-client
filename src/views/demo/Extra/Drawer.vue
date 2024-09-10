@@ -6,7 +6,7 @@ defineOptions({
 
 const drawerShow = ref(false)
 
-const configFormData = ref({
+const configFormData = ref<any>({
   title: 'Drawer Title',
   helpMessage: 'Drawer Help Message',
   closable: true,
@@ -93,6 +93,7 @@ const [register] = useForm<typeof configFormData.value>({
       },
     },
     {
+      // TODO scope not working
       type: 'Base:Switch',
       formProp: {
         label: 'Scoped',
@@ -120,12 +121,12 @@ const [register] = useForm<typeof configFormData.value>({
 </script>
 
 <template>
-  <w-demo-card title="Drawer">
+  <WDemoCard title="Drawer">
     <n-space vertical>
-      <w-form :model="configFormData" @hook="register" />
+      <WForm :model="configFormData" @hook="register" />
     </n-space>
 
-    <w-drawer
+    <WDrawer
       v-model:show="drawerShow"
       :title="configFormData.title"
       :help-message="configFormData.helpMessage"
@@ -145,6 +146,6 @@ const [register] = useForm<typeof configFormData.value>({
       <div v-for="item in configFormData.count" :key="item">
         this is drawer content {{ item }}
       </div>
-    </w-drawer>
-  </w-demo-card>
+    </WDrawer>
+  </WDemoCard>
 </template>

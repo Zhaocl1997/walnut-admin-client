@@ -7,5 +7,4 @@ if (!IconBundleConfig.cache)
 else
   enableCache('local')
 
-export * from './src/types'
-export { default } from './src/index.vue'
+export { default } from './index.vue'

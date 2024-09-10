@@ -1,3 +1,10 @@
-export * from './src/types'
+import type { SwitchProps } from 'naive-ui'
 
-export { default } from './src/index.vue'
+export interface ICompUISwitchPropsExtend {
+  checkedText?: string
+  uncheckedText?: string
+}
+
+export interface ICompUISwitchProps extends /* @vue-ignore */ SwitchProps, ICompUISwitchPropsExtend { }
+
+export { default } from './index.vue'

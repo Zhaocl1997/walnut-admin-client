@@ -6,22 +6,29 @@ defineOptions({
 
 const appNaive = useAppStoreNaive()
 
+const notiPool: Record<number, Fn> = {
+  1: () => useAppNotiSuccess('Notification Success'),
+  2: () => useAppNotiInfo('Notification Info', { closable: false }),
+  3: () => useAppNotiWarning('Notification Warning', { duration: 1000 }),
+  4: () => useAppNotiError('Notification Error', { placement: 'top-left' }),
+  5: () => useAppNotiError('Got a 64px margin top', { containerStyle: { marginTop: '64px' } }),
+  6: () => appNaive.destroyCurrentNotiInst(),
+  7: () => appNaive.destroyAllNotiInst(),
+}
+
 function onOpenNoti(type: number) {
-  type === 1 && useAppNotiSuccess('Notification Success')
-  type === 2 && useAppNotiInfo('Notification Info', { closable: false })
-  type === 3 && useAppNotiWarning('Notification Warning', { duration: 1000 })
-  type === 4
-  && useAppNotiError('Notification Error', { placement: 'top-left' })
-  type === 5 && useAppNotiError('Got a 64px margin top', { containerStyle: { marginTop: '64px' } })
-  type === 6 && appNaive.destroyCurrentNotiInst()
-  type === 7 && appNaive.destroyAllNotiInst()
+  notiPool[type]()
+}
+
+const msgPool: Record<number, Fn> = {
+  1: () => useAppMsgSuccess(),
+  2: () => useAppMsgInfo('Message Info', { closable: false }),
+  3: () => useAppMsgWarning('Message Warning', { duration: 1000 }),
+  4: () => useAppMsgError('Message Error', { placement: 'top-left' }),
 }
 
 function onOpenMsg(type: number) {
-  type === 1 && useAppMsgSuccess()
-  type === 2 && useAppMsgInfo('Message Info', { closable: false })
-  type === 3 && useAppMsgWarning('Message Warning', { duration: 1000 })
-  type === 4 && useAppMsgError('Message Error', { placement: 'top-left' })
+  msgPool[type]()
 }
 
 async function onOpenComfirm() {
@@ -35,15 +42,16 @@ async function onOpenComfirm() {
 </script>
 
 <template>
-  <w-demo-card title="Naive UI message/notification/confirm usage">
+  <WDemoCard title="Naive UI message/notification/confirm usage">
     <n-list>
       <n-list-item>
-        <w-title
+        <WTitle
+          class="mb-2"
           prefix="bar"
           help-message="`placement` works for all current notification instances, so be careful when use `placement` prop."
         >
           Notification
-        </w-title>
+        </WTitle>
 
         <n-space size="small">
           <n-button @click="onOpenNoti(1)">
@@ -71,12 +79,13 @@ async function onOpenComfirm() {
       </n-list-item>
 
       <n-list-item>
-        <w-title
+        <WTitle
+          class="mb-2"
           prefix="bar"
           help-message="`placement` works for all current message instances, so be careful when use `placement` prop."
         >
           Message
-        </w-title>
+        </WTitle>
 
         <n-space size="small">
           <n-button @click="onOpenMsg(1)">
@@ -95,9 +104,9 @@ async function onOpenComfirm() {
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle class="mb-2" prefix="bar">
           Confirm
-        </w-title>
+        </WTitle>
 
         <n-space size="small">
           <n-button @click="onOpenComfirm">
@@ -106,5 +115,5 @@ async function onOpenComfirm() {
         </n-space>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

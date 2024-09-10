@@ -8,7 +8,7 @@ const arrow = ref({ active: false, left: false, right: false })
 </script>
 
 <template>
-  <w-demo-card title="Arrow">
+  <WDemoCard title="Arrow">
     <n-form :model="arrow" inline label-placement="left" :label-width="60">
       <n-form-item label="Active" path="active">
         <n-switch v-model:value="arrow.active" />
@@ -23,11 +23,11 @@ const arrow = ref({ active: false, left: false, right: false })
       </n-form-item>
     </n-form>
 
-    <w-arrow
+    <WArrow
       :active="arrow.active"
       :left="arrow.left"
       :right="arrow.right"
       @click="arrow.active = !arrow.active"
     />
-  </w-demo-card>
+  </WDemoCard>
 </template>

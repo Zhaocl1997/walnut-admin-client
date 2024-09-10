@@ -6,8 +6,8 @@ defineOptions({
   defaultView: false,
 })
 
-const verify = ref<WVerifyInst>()
-const verify2 = ref<WVerifyInst>()
+const verify = shallowRef<WVerifyInst>()
+const verify2 = shallowRef<WVerifyInst>()
 
 function onSuccess() {
   useAppMessage().success('Success')
@@ -19,28 +19,28 @@ function onFail() {
 </script>
 
 <template>
-  <w-demo-card title="Simple Verify with no endpoint support">
+  <WDemoCard title="Simple Verify with no endpoint support">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Basic usage
-        </w-title>
+        </WTitle>
 
-        <w-button @click="verify.onOpenModal()">
+        <n-button @click="verify!.onOpenModal()">
           Verify
-        </w-button>
+        </n-button>
 
         <WVerify ref="verify" @success="onSuccess" @fail="onFail" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Custom images
-        </w-title>
+        </WTitle>
 
-        <w-button @click="verify2.onOpenModal()">
+        <n-button @click="verify2!.onOpenModal()">
           Verify
-        </w-button>
+        </n-button>
 
         <WVerify
           ref="verify2"
@@ -53,5 +53,5 @@ function onFail() {
         />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

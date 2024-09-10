@@ -81,7 +81,7 @@ const appAdapter = useAppStoreAdapter()
       </div>
 
       <div class="children:my-2">
-        <DemoMessage id="Message" />
+        <!-- <DemoMessage id="Message" />
         <DemoFlipper id="Flipper" />
         <DemoScrollbar id="Scrollbar" />
         <DemoTitle id="Title" />
@@ -89,7 +89,7 @@ const appAdapter = useAppStoreAdapter()
         <DemoAxios id="Axios" />
         <DemoFile id="File" />
         <DemoAuthorize id="Authorize" />
-        <DemoEmailInput id="EmailInput" />
+        <DemoEmailInput id="EmailInput" /> -->
       </div>
     </div>
   </div>

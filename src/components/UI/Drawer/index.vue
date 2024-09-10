@@ -1,33 +1,26 @@
 <script lang="ts" setup>
+import type { ICompUIDrawerProps } from '.'
+
 defineOptions({
   name: 'WDrawer',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+withDefaults(defineProps<ICompUIDrawerProps>(), {
   closable: false,
   loading: false,
   defaultButton: true,
 })
 
-const emits = defineEmits(['yes', 'no'])
-
-// TODO 888
-interface InternalProps {
-  closable?: boolean
-  title?: string
-  loading?: boolean
-  helpMessage?: string
-  defaultButton?: boolean
-}
+defineEmits<{ yes: [], no: [] }>()
 </script>
 
 <template>
-  <n-drawer native-scrollbar>
+  <n-drawer native-scrollbar :auto-focus="false">
     <n-drawer-content :native-scrollbar="false" :closable="closable">
       <template #header>
-        <w-title prefix="bar" :help-message="helpMessage">
+        <WTitle prefix="bar" :help-message="helpMessage">
           {{ title }}
-        </w-title>
+        </WTitle>
       </template>
 
       <template #default>

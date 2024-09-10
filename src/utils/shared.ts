@@ -17,7 +17,7 @@ export function isInSetup() {
 }
 
 export function renderSlots<T extends Recordable>(slots: Slots) {
-  const ret = {}
+  const ret: Record<string, Fn> = {}
   Object.keys(slots).forEach((slotName) => {
     ret[slotName] = (scope: T) => renderSlot(slots, slotName, scope)
   })
@@ -35,15 +35,27 @@ export function filterTree<T, R = T>(tree: TreeNodeItem<T>[], cb: (node: T) => b
   return filter(tree, (item) => {
     if (cb(item)) {
       if (item.children) {
-        // @ts-expect-error
         item.children = filterTree(item.children, cb)
       }
       return true
     }
     else if (item.children) {
-      // @ts-expect-error
       item.children = filterTree(item.children, cb)
       return !isEmpty(item.children)
     }
   })
+}
+
+// get country code from online free api
+export function getCountryCodeOnline() {
+  return fetch('https://ip2c.org/s')
+    .then(response => response.text())
+    .then((response) => {
+      const result = (response || '').toString()
+
+      if (!result || result[0] !== '1')
+        throw new Error('unable to fetch the country')
+
+      return result.substr(2, 2)
+    })
 }

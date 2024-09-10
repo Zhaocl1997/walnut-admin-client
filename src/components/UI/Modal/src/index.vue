@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { toggleClass } from 'easy-fns-ts'
+import type { ICompUIModalProps } from '..'
 import { useModalDraggable } from './hook/useModalDraggable'
 
 defineOptions({
   name: 'WModal',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
-  show: false,
+const props = withDefaults(defineProps<ICompUIModalProps>(), {
   width: '25%',
   height: 'auto',
   draggable: true,
@@ -16,35 +16,21 @@ const props = withDefaults(defineProps<InternalProps>(), {
   segmented: true,
 })
 
-const emits = defineEmits(['yes', 'no', 'update:show'])
+const emits = defineEmits<{ yes: [], no: [] }>()
 
-// TODO 888
-interface InternalProps {
-  show?: boolean
-  loading?: boolean
-  title?: string
-  helpMessage?: string
-  width?: string
-  height?: string
-  draggable?: boolean
-  fullscreen?: boolean
-  defaultButton?: boolean
-  segmented?: boolean
-}
+const show = defineModel<boolean>('show', { required: true, default: false })
 
-const { t } = useAppI18n()
-
-const wModal = ref<Nullable<any>>(null)
+const modelRef = shallowRef()
 const isFullscreen = ref(false)
 
 watch(
-  () => props.show,
+  () => show.value,
   () => {
     if (props.draggable) {
       nextTick(() => {
         const dragEl
-            = wModal.value?.containerRef.querySelector('.w-card-header')
-        const dragDom = wModal.value?.containerRef.querySelector('.w-modal')
+            = modelRef.value?.containerRef.querySelector('.w-card-header')
+        const dragDom = modelRef.value?.containerRef.querySelector('.w-modal')
 
         useModalDraggable(dragEl, dragDom)
       })
@@ -53,7 +39,7 @@ watch(
 )
 
 function onFullScreen() {
-  const dragDom = wModal.value?.containerRef.querySelector('.w-modal')
+  const dragDom = modelRef.value?.containerRef.querySelector('.w-modal')
 
   isFullscreen.value = !isFullscreen.value
 
@@ -69,7 +55,7 @@ function onYes() {
 }
 
 function onUpdateShow(v: boolean) {
-  emits('update:show', v)
+  show.value = v
 
   if (!v)
     onNo()
@@ -78,10 +64,11 @@ function onUpdateShow(v: boolean) {
 
 <template>
   <n-modal
-    ref="wModal"
+    ref="modelRef"
     preset="card"
     :show="show"
     :show-icon="false"
+    :auto-focus="false"
     :style="{ width }"
     :segmented="
       segmented
@@ -94,9 +81,9 @@ function onUpdateShow(v: boolean) {
     @update:show="onUpdateShow"
   >
     <template #header>
-      <w-title prefix="bar" :help-message="helpMessage">
+      <WTitle prefix="bar" :help-message="helpMessage">
         {{ title }}
-      </w-title>
+      </WTitle>
     </template>
 
     <template v-if="fullscreen" #header-extra>
@@ -109,17 +96,17 @@ function onUpdateShow(v: boolean) {
     </template>
 
     <template #default>
-      <w-scrollbar :height="height">
+      <WScrollbar :height="height">
         <n-spin :show="loading">
           <slot />
         </n-spin>
-      </w-scrollbar>
+      </WScrollbar>
     </template>
 
     <template #action>
       <n-space v-if="defaultButton" size="small" class="float-right">
         <n-button size="small" :on-click="onNo" :disabled="loading">
-          {{ t('app.button.no') }}
+          {{ $t('app.button.no') }}
         </n-button>
 
         <n-button
@@ -129,15 +116,17 @@ function onUpdateShow(v: boolean) {
           :disabled="loading"
           :loading="loading"
         >
-          {{ t('app.button.yes') }}
+          {{ $t('app.button.yes') }}
         </n-button>
       </n-space>
+
+      <slot name="action" />
     </template>
   </n-modal>
 </template>
 
 <style>
-  .modal-fullscreen {
+.modal-fullscreen {
   width: 100vw !important;
   height: 100vh !important;
   top: 0 !important;

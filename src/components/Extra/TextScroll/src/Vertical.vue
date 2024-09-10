@@ -3,11 +3,12 @@ defineOptions({
   name: 'TextScrollVertical',
 })
 
-const props = withDefaults(defineProps<VerticalProps>(), { lineHeight: 28 })
+const props = withDefaults(defineProps<VerticalProps>(), { lineHeight: 24, speed: 6000, maxLength: 8 })
 
 interface VerticalProps {
-  texts: string[]
-  speed: number
+  texts?: string[]
+  speed?: number
+  maxLength?: number
   lineHeight?: number
 }
 
@@ -17,22 +18,16 @@ let time = 1
 let position = 0
 
 const positionRef = ref(0)
+const wrapperRef = shallowRef()
+const isHovered = useElementHover(wrapperRef)
 
-const wrapper = ref()
-const isHovered = useElementHover(wrapper)
+const total = computed(() => props.texts!.length)
 
-const total = computed(() => props.texts.length)
-
-// TODO first item has bug
-const getTexts = computed(() => {
-  const data = props.texts!
-  data.push(data[0])
-  return data
-})
+// TODO first item missing
 
 function tick() {
   if (
-    time % Math.round((props.speed / 1000) * 60) === 0
+    (time % (Math.round((props.speed / 1000) * 60))) === 0
     && !isHovered.value
   ) {
     cancelAnimationFrame(innerTimer)
@@ -40,6 +35,7 @@ function tick() {
     time = 0
   }
   time++
+
   if (isHovered.value)
     time = 0
 
@@ -62,22 +58,25 @@ function scroll() {
   position++
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   cancelAnimationFrame(innerTimer)
   timer = requestAnimationFrame(tick)
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   cancelAnimationFrame(timer)
 })
 </script>
 
 <template>
-  <div ref="wrapper" class="flex content-start items-center">
+  <div v-if="texts?.some(i => i.length < maxLength)" class="truncate whitespace-nowrap">
+    {{ texts[0] }}
+  </div>
+  <div v-else ref="wrapperRef" class="flex content-start items-center">
     <div class="h-full w-full cursor-default overflow-hidden">
       <div class="relative w-full" :style="{ top: `-${positionRef}px` }">
         <div
-          v-for="(item, index) in getTexts"
+          v-for="(item, index) in texts"
           :key="index"
           :title="item"
           :style="{ lineHeight: `${lineHeight}px` }"

@@ -8,7 +8,7 @@ defineOptions({
 </script>
 
 <template>
-  <w-demo-card title="JSON data display">
-    <w-JSON :value="getTreeData()" height="400px" />
-  </w-demo-card>
+  <WDemoCard title="JSON data display">
+    <WJSON :value="getTreeData()" height="400px" />
+  </WDemoCard>
 </template>

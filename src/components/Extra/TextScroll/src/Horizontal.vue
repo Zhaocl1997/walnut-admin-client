@@ -3,15 +3,16 @@ defineOptions({
   name: 'TextScrollHorizontal',
 })
 
-const props = defineProps<HorizontalProps>()
+const props = withDefaults(defineProps<HorizontalProps>(), { speed: 10000, maxLength: 8 })
 
 interface HorizontalProps {
-  texts: string[]
-  speed: number
+  texts?: string[]
+  speed?: number
+  maxLength?: number
 }
 
-const container = ref<HTMLDivElement>()
-const wrapper = ref<HTMLDivElement>()
+const containerRef = shallowRef<HTMLDivElement>()
+const wrapperRef = shallowRef<HTMLDivElement>()
 
 const durationRef = ref(5000)
 const wrapperWidthRef = ref(500)
@@ -30,16 +31,19 @@ const getTranslateX = computed(
 )
 
 onMounted(() => {
-  let contentWidth = 0
-  const containerWidth = container.value?.clientWidth!
+  if (!containerRef.value || !wrapperRef.value)
+    return
 
-  const children = wrapper.value?.children!
+  let contentWidth = 0
+  const containerWidth = containerRef.value.clientWidth
+
+  const children = wrapperRef.value.children
 
   if (children.length === 1) {
-    contentWidth = children[0].scrollWidth * 4 + containerWidth
+    contentWidth = children[0].scrollWidth + containerWidth
   }
   else {
-    for (let i = 0; i < children?.length!; i++) {
+    for (let i = 0; i < children.length!; i++) {
       contentWidth += children[i].scrollWidth
       contentWidth += containerWidth
     }
@@ -47,7 +51,7 @@ onMounted(() => {
 
   contentWidth = contentWidth === 0 ? 500 : contentWidth
 
-  const duration = (props.speed! * props.texts.length) / 1000
+  const duration = (props.speed! * props.texts!.length) / 1000
 
   durationRef.value = duration
   wrapperWidthRef.value = containerWidth
@@ -56,31 +60,33 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div v-if="texts?.some(i => i.length < maxLength)" class="truncate whitespace-nowrap">
+    {{ texts[0] }}
+  </div>
+  <div
+    v-else
+    ref="containerRef"
+    class="flex items-center overflow-hidden whitespace-nowrap break-all"
+  >
     <div
-      ref="container"
-      class="flex items-center overflow-hidden whitespace-nowrap break-all"
+      ref="wrapperRef"
+      :style="getWrapperStyle"
+      class="!hover:animate-paused !hover:cursor-default"
     >
-      <div
-        ref="wrapper"
-        :style="getWrapperStyle"
-        class="!hover:animate-paused !hover:cursor-default"
+      <span
+        v-for="(item, index) in texts"
+        :key="index"
+        class="inline-block"
+        :style="{ marginRight: `${wrapperWidthRef}px` }"
       >
-        <span
-          v-for="(item, index) in texts"
-          :key="index"
-          class="inline-block"
-          :style="{ marginRight: `${wrapperWidthRef}px` }"
-        >
-          {{ item }}
-        </span>
-      </div>
+        {{ item }}
+      </span>
     </div>
   </div>
 </template>
 
 <style>
-  @keyframes text_scroll_horizontal {
+@keyframes text_scroll_horizontal {
   0% {
     transform: translateX(0);
   }

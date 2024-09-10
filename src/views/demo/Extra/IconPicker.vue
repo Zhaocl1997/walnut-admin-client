@@ -9,31 +9,31 @@ const icon3 = ref('emojione-v1:flag-for-china')
 </script>
 
 <template>
-  <w-demo-card title="Icon Picker">
+  <WDemoCard title="Icon Picker">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           【{{ icon }}】
-        </w-title>
+        </WTitle>
 
-        <w-icon-picker v-model:value="icon" />
+        <WIconPicker v-model:value="icon" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           【{{ icon2 }}】
-        </w-title>
+        </WTitle>
 
-        <w-icon-picker v-model:value="icon2" />
+        <WIconPicker v-model:value="icon2" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           【{{ icon3 }}】
-        </w-title>
+        </WTitle>
 
-        <w-icon-picker v-model:value="icon3" preset="icon" />
+        <WIconPicker v-model:value="icon3" preset="icon" />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

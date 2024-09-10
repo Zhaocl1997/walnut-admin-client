@@ -18,37 +18,35 @@ function onRefresh(callback: Fn) {
 </script>
 
 <template>
-  <w-demo-card title="QR code component, using `useQRCode`">
+  <WDemoCard title="QR code component, using `useQRCode`">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Basic usage
-        </w-title>
+        </WTitle>
 
         <WQRCode :url="url" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           With specific expired seconds
-        </w-title>
+        </WTitle>
 
         <WQRCode :url="url2" :expire-seconds="3" @refresh="onRefresh" />
       </n-list-item>
 
       <n-list-item>
         <n-space vertical size="small">
-          <w-title prefix="bar">
+          <WTitle prefix="bar" class="mb-2">
             Success
-          </w-title>
+          </WTitle>
 
-          <n-button @click="success = !success">
-            make it success
-          </n-button>
+          <n-switch v-model:value="success" class="mb-2" />
 
           <WQRCode :url="url" :success="success" />
         </n-space>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

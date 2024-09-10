@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import type { ICompUISwitchPropsPartial } from './types'
+import type { ICompUISwitchProps } from '.'
 
 defineOptions({
   name: 'WSwitch',
 })
 
-defineProps<ICompUISwitchPropsPartial>()
+defineProps<ICompUISwitchProps>()
 </script>
 
 <template>

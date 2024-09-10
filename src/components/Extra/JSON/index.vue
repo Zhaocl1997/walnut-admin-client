@@ -1,22 +1,18 @@
 <script lang="ts" setup>
+import type { ICompExtraJSONProps } from '.'
+
 defineOptions({
   name: 'WJSON',
+  inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<ICompExtraJSONProps>(), {
   value: {},
   height: '100px',
   width: '100%',
 })
 
-// TODO 888
-interface InternalProps {
-  value?: any
-  height?: string
-  width?: string
-}
-
-const jsonRef = ref()
+const jsonRef = shallowRef()
 const getJSON = computed(() =>
   typeof props.value === 'string'
     ? JSON.stringify(JSON.parse(props.value), null, 2)
@@ -27,17 +23,17 @@ const isHovered = useElementHover(jsonRef)
 </script>
 
 <template>
-  <w-scrollbar :height="height">
-    <div ref="jsonRef" class="relative">
+  <WScrollbar :height="height" class="relative">
+    <div ref="jsonRef">
       <n-code :code="getJSON" language="json" word-wrap :trim="false" />
 
-      <w-transition appear name="fade-right">
-        <w-copy
+      <WTransition appear name="fade-right">
+        <WCopy
           v-show="isHovered"
           :source="getJSON"
           class="absolute right-2 top-2"
         />
-      </w-transition>
+      </WTransition>
     </div>
-  </w-scrollbar>
+  </WScrollbar>
 </template>

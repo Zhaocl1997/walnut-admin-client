@@ -1,25 +1,17 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { useQRCode } from '@vueuse/integrations/useQRCode'
+import type { ICompExtraQRCodeProps } from '.'
 
 defineOptions({
   name: 'WQRCode',
+  inheritAttrs: false,
 })
 
-const props = defineProps<InternalProps>()
+const props = defineProps<ICompExtraQRCodeProps>()
 
-const emits = defineEmits(['refresh'])
-
-// TODO 888
-interface InternalProps {
-  url: string
-  expireSeconds?: number
-  success?: boolean
-}
-
-const { t } = useAppI18n()
+const emits = defineEmits<{
+  refresh: [callback: Fn]
+}>()
 
 const count = ref(0)
 const insideUrl = toRef(props, 'url')
@@ -56,15 +48,15 @@ function onRefresh() {
       ]"
     >
 
-    <w-transition appear>
+    <WTransition appear>
       <div class="abs-center">
         <template v-if="!isActive">
           <div class="mb-2 whitespace-nowrap text-gray-200 font-bold">
-            {{ t('comp.qrcode.expired') }}
+            {{ $t('comp.qrcode.expired') }}
           </div>
 
           <n-button size="tiny" type="info" round @click="onRefresh">
-            {{ t('comp.qrcode.refresh') }}
+            {{ $t('comp.qrcode.refresh') }}
           </n-button>
         </template>
 
@@ -72,10 +64,10 @@ function onRefresh() {
           v-if="success"
           size="small"
           status="success"
-          :description="t('app.base.success')"
+          :description="$t('app.base.success')"
           class="text-gray-100"
         />
       </div>
-    </w-transition>
+    </WTransition>
   </div>
 </template>

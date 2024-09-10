@@ -2,50 +2,29 @@
 import type { InputInst } from 'naive-ui'
 import allIcons from '/build/_generated/icon-list.ts'
 import { IconBundleConfig } from '/build/icon/src/config.ts'
+import type { ICompExtraIconPickerProps } from '.'
 
 defineOptions({
   name: 'WIconPicker',
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<IconPickerProps>(), {
-  defaultIcon: 'ant-design:home-outlined',
+withDefaults(defineProps<ICompExtraIconPickerProps>(), {
   preset: 'input',
 })
 
-const emit = defineEmits(['update:value'])
+const value = defineModel<string>('value', { required: true, default: '' })
 
 const ALL = 'All'
 
-interface IconPickerProps {
-  value?: string
-  defaultIcon?: string
-  preset?: 'input' | 'icon'
-}
-
-const {
-  page,
-  pageSize,
-  show,
-  filters,
-  rootInputRef,
-
-  loading,
-  currentTab,
-  currentIcon,
-} = toRefs(
-  reactive({
-    page: 1,
-    pageSize: 50,
-    show: false,
-    filters: '',
-    rootInputRef: null as Nullable<InputInst>,
-
-    loading: false,
-    currentTab: ALL,
-    currentIcon: '',
-  }),
-)
+const page = ref(1)
+const pageSize = ref(50)
+const show = ref(false)
+const filters = ref('')
+const rootInputRef = shallowRef<InputInst>()
+const loading = ref(false)
+const currentTab = ref(ALL)
+const currentIcon = ref('')
 
 const getTabLists = computed(() => [ALL, ...IconBundleConfig.list])
 
@@ -125,7 +104,7 @@ function onOpenPopover() {
 function onChooseIcon(icon: string) {
   show.value = false
 
-  emit('update:value', icon)
+  value.value = icon
 
   // fix not trigger rule in form
   // rootInputRef.value?.focus()
@@ -137,7 +116,7 @@ function onChooseIcon(icon: string) {
 function onClear(e: MouseEvent) {
   e.stopPropagation()
   onPageInit()
-  emit('update:value', null)
+  value.value = ''
 }
 
 function onMouseEnter(icon: string) {
@@ -145,7 +124,7 @@ function onMouseEnter(icon: string) {
 }
 
 function onMouseLeave() {
-  currentIcon.value = props?.value ?? ''
+  currentIcon.value = value.value!
 }
 
 function onPageInit() {
@@ -153,58 +132,60 @@ function onPageInit() {
 }
 
 function onFeedback() {
-  if (!props.value)
+  if (!value.value)
     return
 
   // set currentIcon
-  currentIcon.value = props.value
+  currentIcon.value = value.value
 
   // set currentTab
   currentTab.value = IconBundleConfig.list.find((i: string) =>
-    props.value?.startsWith(i),
+    value.value?.startsWith(i),
   )
 
   // set current page
   const iconIndex = getIconListsWithTab.value.findIndex(
-    item => item === props.value,
+    item => item === value.value,
   )
   page.value = Math.floor(iconIndex / pageSize.value) + 1
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   onFeedback()
 })
 </script>
 
 <template>
-  <w-input
+  <WInput
     v-if="preset === 'input'"
     ref="rootInputRef"
     :value="value"
-
     :placeholder="$t('comp.iconPicker.title')"
-    clearable readonly copiable
+    clearable
+    readonly
+    copiable
     @click="onOpenPopover"
     @clear="onClear"
   >
     <template #prefix>
-      <w-icon
+      <WIcon
+        v-if="value"
         class="mr-2 h-auto cursor-pointer"
-        :icon="value || defaultIcon"
+        :icon="value"
         width="24"
       />
     </template>
-  </w-input>
+  </WInput>
 
-  <w-icon
+  <WIcon
     v-if="preset === 'icon'"
     class="mr-2 h-auto cursor-pointer"
-    :icon="value || defaultIcon"
+    :icon="value"
     width="24"
     @click="onOpenPopover"
   />
 
-  <w-modal
+  <WModal
     v-model:show="show"
     preset="card"
     width="600px"
@@ -240,8 +221,8 @@ onMounted(() => {
           @mouseleave="onMouseLeave"
         >
           <div class="col-span-3 flex items-center justify-center">
-            <w-icon
-              :icon="currentIcon || defaultIcon"
+            <WIcon
+              :icon="currentIcon"
               height="96"
               class="drop-shadow-2xl"
             />
@@ -249,7 +230,7 @@ onMounted(() => {
 
           <div class="col-span-9 h-60">
             <span v-for="icon in getLists" :key="icon" :title="icon">
-              <w-icon
+              <WIcon
                 :icon="icon"
                 width="36"
                 class="m-0.5 inline border-2 border-gray-700 rounded border-solid hover:cursor-pointer" :class="[
@@ -285,5 +266,5 @@ onMounted(() => {
         </n-pagination>
       </div>
     </n-spin>
-  </w-modal>
+  </WModal>
 </template>
