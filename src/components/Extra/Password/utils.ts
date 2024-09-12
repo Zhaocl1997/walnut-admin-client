@@ -1,3 +1,5 @@
+import type { Status } from 'naive-ui/es/progress/src/interface'
+
 /**
  * @description check string strength
  */
@@ -33,10 +35,10 @@ export function checkStrStrong(str: string) {
   }
 }
 
-export const statusTable = {
+export const statusTable: Record<number, Status> = {
   0: 'error',
   1: 'error',
   2: 'warning',
   3: 'info',
   4: 'success',
-}
+} as const

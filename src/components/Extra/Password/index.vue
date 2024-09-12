@@ -1,54 +1,38 @@
 <script lang="ts" setup>
+import type { Status } from 'naive-ui/es/progress/src/interface'
+import { WithCapLockToolTip } from '../../HOC/WithCapLockTooltip'
 import { checkStrStrong, statusTable } from './utils'
+import type { ICompExtraPasswordProps } from '.'
 
 defineOptions({
-  name: 'PasswordInput',
+  name: 'WPasswordInput',
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<ICompExtraPasswordProps>(), {
   maxlength: 80,
   minlength: 8,
   progress: false,
+  capslock: false,
 })
 
-const emits = defineEmits(['update:value', 'submit'])
+const emits = defineEmits<{ submit: [] }>()
 
-// TODO 888
-interface InternalProps {
-  value?: string
-  maxlength?: number
-  minlength?: number
-  progress?: boolean
-  capslock?: boolean
-  onSubmit?: () => Promise<void>
-}
+const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: true })
 
 const percentage = ref(0)
-const status = ref('success')
+const status = ref<Status>('success')
 
-const tooltipShow = ref(false)
-const isFocus = ref(false)
-const capsLockState = useKeyModifier('CapsLock')
+const [DefineTemplate, ReuseTemplate] = createReusableTemplate()
 
-function onShowTooltip() {
-  if (!isFocus.value)
-    return
-
-  if (capsLockState.value)
-    tooltipShow.value = true
-  else
-    tooltipShow.value = false
-}
-
-watchEffect(onShowTooltip)
+const { onTargetBlur, onTargetFocus, WithCapLockWrapper } = WithCapLockToolTip()
 
 watch(
-  () => props.value,
+  () => value.value,
   (val) => {
     if (!props.progress)
       return
-    const strong = checkStrStrong(val!)
+    const strong: number = checkStrStrong(val!)
 
     status.value = statusTable[strong]
     percentage.value = strong * 20
@@ -56,52 +40,36 @@ watch(
   { immediate: true },
 )
 
-function onUpdateValue(val: string) {
-  emits('update:value', val)
-}
-
 function onKeyup(e: KeyboardEvent) {
   if (e.code === 'Enter' || e.code === 'NumpadEnter')
     emits('submit')
-}
-
-function onFocus() {
-  isFocus.value = true
-  onShowTooltip()
-}
-
-function onBlur() {
-  isFocus.value = false
-  tooltipShow.value = false
 }
 </script>
 
 <template>
   <div class="w-full">
-    <n-tooltip v-model:show="tooltipShow" trigger="manual" placement="right">
-      <template #trigger>
-        <n-input
-          :value="value"
-          type="password"
-          show-password-on="click"
-          :placeholder="$attrs.placeholder"
-          :maxlength="maxlength"
-          :minlength="minlength"
-          clearable
-          :input-props="{
-            autocomplete: 'current-password',
-          }"
-          @update:value="onUpdateValue"
-          @keyup="onKeyup"
-          @focus="onFocus"
-          @blur="onBlur"
-        />
-      </template>
+    <DefineTemplate>
+      <n-input
+        v-model:value="value"
+        type="password"
+        show-password-on="click"
+        :placeholder="placeholder"
+        :maxlength="maxlength"
+        :minlength="minlength"
+        clearable
+        :input-props="{
+          autocomplete: 'current-password',
+        }"
+        @keyup="onKeyup"
+        @focus="onTargetFocus"
+        @blur="onTargetBlur"
+      />
+    </DefineTemplate>
 
-      <template #default>
-        {{ $t('comp.password.capslock') }}
-      </template>
-    </n-tooltip>
+    <WithCapLockWrapper v-if="capslock">
+      <ReuseTemplate />
+    </WithCapLockWrapper>
+    <ReuseTemplate v-else />
 
     <n-progress
       v-if="progress"

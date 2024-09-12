@@ -1,10 +1,9 @@
 export { default } from './index.vue'
 
-// TODO 888
-export interface WPasswordProps {
-  value?: string
+export interface ICompExtraPasswordProps {
   maxlength?: number
   minlength?: number
+  placeholder?: string
   progress?: boolean
   capslock?: boolean
   onSubmit?: () => Promise<void>
