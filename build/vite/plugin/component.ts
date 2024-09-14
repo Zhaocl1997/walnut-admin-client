@@ -22,7 +22,9 @@ const comp = {
     'AbsImage',
     'Arrow',
     'Copy',
+    'CountryCallingSelect',
     'DemoCard',
+    'Dict',
     'EmailInput',
     'FlipClock',
     'Flipper',
@@ -43,6 +45,8 @@ const comp = {
   ],
   UI: [
     'Button',
+    'ButtonConfirm',
+    'ButtonRetry',
     'ButtonGroup',
     'Card',
     'Checkbox',

@@ -1,13 +1,14 @@
-<script lang="ts">
-export default {
-  name: 'ButtonDemo',
-
-  defaultView: false,
-}
-</script>
-
 <script setup lang="ts">
+defineOptions({
+  name: 'ButtonDemo',
+  defaultView: false,
+})
+
 const value = ref(0)
+
+const buttonRetryRef1 = shallowRef()
+const buttonRetryRef2 = shallowRef()
+const buttonRetryRef3 = shallowRef()
 
 function onClick() {
   value.value++
@@ -15,61 +16,121 @@ function onClick() {
 </script>
 
 <template>
-  <w-demo-card :title="`Button: ${value}`">
+  <WDemoCard :title="`Button: ${value}`">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Text in slot/prop
-        </w-title>
+        </WTitle>
 
         <n-space>
-          <w-button @click="onClick">
+          <WButton @click="onClick">
             Click(slot)
-          </w-button>
-          <w-button text-prop="Click(prop)" @click="onClick" />
+          </WButton>
+          <WButton text-prop="Click(prop)" @click="onClick" />
+          <WButton text-prop="loading" loading @click="onClick" />
+          <WButton text-prop="disabled" disabled @click="onClick" />
         </n-space>
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Icon(prop)
-        </w-title>
+        </WTitle>
 
-        <w-button
-          type="primary"
-          icon="ant-design:home-outlined"
-          @click="onClick"
-        >
-          Icon through prop
-        </w-button>
+        <n-space>
+          <WButton
+            type="primary"
+            icon="ant-design:home-outlined"
+            @click="onClick"
+          >
+            Icon prop
+          </WButton>
+          <WButton
+            type="primary"
+            loading
+            icon="ant-design:home-outlined"
+            @click="onClick"
+          >
+            loading
+          </WButton>
+          <WButton
+            type="primary"
+            disabled
+            icon="ant-design:home-outlined"
+            @click="onClick"
+          >
+            disabled
+          </WButton>
+        </n-space>
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
-          Retry Button
-        </w-title>
-
-        <w-button type="success" :retry="10" @click="onClick">
-          Send email
-        </w-button>
-      </n-list-item>
-
-      <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Debounece Button
-        </w-title>
+        </WTitle>
 
-        <w-button type="warning" :debounce="500" @click="onClick">
-          Debouned 500ms
-        </w-button>
+        <n-space>
+          <WButton type="warning" :debounce="500" @click="onClick">
+            Debouned 500ms
+          </WButton>
+
+          <WButton type="warning" :debounce="500" loading @click="onClick">
+            loading
+          </WButton>
+
+          <WButton type="warning" :debounce="500" disabled @click="onClick">
+            disabled
+          </WButton>
+        </n-space>
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
-          Button Groups
-        </w-title>
+        <WTitle prefix="bar" class="mb-2">
+          Confirm Button
+        </WTitle>
 
-        <w-button-group
+        <n-space>
+          <WButtonConfirm @confirm="onClick">
+            Confirm Button
+          </WButtonConfirm>
+
+          <WButtonConfirm loading @confirm="onClick">
+            loading
+          </WButtonConfirm>
+
+          <WButtonConfirm disabled @confirm="onClick">
+            disabled
+          </WButtonConfirm>
+        </n-space>
+      </n-list-item>
+
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Retry Button
+        </WTitle>
+
+        <n-space>
+          <WButtonRetry ref="buttonRetryRef1" @click="buttonRetryRef1.onStartCountdown()">
+            Retry 60s
+          </WButtonRetry>
+
+          <WButtonRetry ref="buttonRetryRef2" :retry-seconds="30" @click="buttonRetryRef2.onStartCountdown()">
+            Retry 30s
+          </WButtonRetry>
+
+          <WButtonRetry ref="buttonRetryRef3" retry-key="demo-button-retry" :retry-seconds="10" @click="buttonRetryRef3.onStartCountdown()">
+            Retry with storage persistent
+          </WButtonRetry>
+        </n-space>
+      </n-list-item>
+
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Button Groups
+        </WTitle>
+
+        <WButtonGroup
           :groups="[
             { textProp: 'Button 1', onClick },
             { textProp: 'Button 2', onClick },
@@ -78,56 +139,34 @@ function onClick() {
         />
       </n-list-item>
 
-      <n-list-item>
-        <w-title prefix="bar">
+      <!-- TODO button auth => disabled & tooltip handler? -->
+      <!-- TODO icon button => remove w-a-icon -->
+      <!--  <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
           Button with basic auth
-        </w-title>
+        </WTitle>
 
-        <w-button auth="system:user:list" @click="onClick">
+        <WButton auth="system:user:list" @click="onClick">
           Auth Button
-        </w-button>
+        </WButton>
 
-        <w-button auth="auth:donot:exist" @click="onClick">
+        <WButton auth="auth:donot:exist" @click="onClick">
           Auth Button
-        </w-button>
+        </WButton>
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
-          Confirm Button
-        </w-title>
-
-        <w-button confirm @click="onClick">
-          Confirm Button
-        </w-button>
-      </n-list-item>
-
-      <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Icon Button (need to provide `icon` and `text-prop`` props)
-        </w-title>
+        </WTitle>
 
-        <w-button
+        <WButton
           icon="ant-design:plus-outlined"
           text-prop="Edit"
           icon-button
           @click="onClick"
         />
-      </n-list-item>
-
-      <n-list-item>
-        <w-title prefix="bar">
-          Icon Button also confirm
-        </w-title>
-
-        <w-button
-          icon="ant-design:plus-outlined"
-          text-prop="Edit"
-          icon-button
-          confirm
-          @click="onClick"
-        />
-      </n-list-item>
+      </n-list-item> -->
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

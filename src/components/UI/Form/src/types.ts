@@ -31,8 +31,8 @@ import type {
   WFormItemQueryProps,
 } from './components/Extend/types'
 import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
-import type { WPasswordProps } from '@/components/Extra/Password'
-import type { WSMSInputProps } from '@/components/Extra/SMSInput'
+import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
+import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
 import type { useEventParams } from '@/hooks/component/useEvent'
 import type { WLocaleSelectProps } from '@/components/Extra/LocaleSelect'
 import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
@@ -165,8 +165,8 @@ export declare namespace WForm {
         valueType?: 'string' | 'number'
       }
       'Extend:AreaCascader': WAreaCascaderProps
-      'Extend:Password': WPasswordProps
-      'Extend:SMSInput': WSMSInputProps
+      'Extend:Password': ICompExtraPasswordProps
+      'Extend:SMSInput': ICompExtraSMSInputProps
       'Extend:Dict': WFormItemDictProps
       'Extend:LocaleSelect': WLocaleSelectProps
       'Extend:PhoneNumberInput': WPhoneNumberInputProps
