@@ -21,6 +21,7 @@ const comp = {
   Extra: [
     'AbsImage',
     'Arrow',
+    'CapsLockTooltip',
     'Copy',
     'CountryCallingSelect',
     'DemoCard',

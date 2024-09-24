@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import type { ICompExtraArrowProps } from '.'
 
+defineOptions({
+  name: 'Arrow',
+})
+
 const props = withDefaults(defineProps<ICompExtraArrowProps>(), { icon: 'ant-design:down-outlined' })
 
 const getClass = computed(() => {

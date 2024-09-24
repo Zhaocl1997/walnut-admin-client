@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { Status } from 'naive-ui/es/progress/src/interface'
-import { WithCapLockToolTip } from '../../HOC/WithCapLockTooltip'
 import { checkStrStrong, statusTable } from './utils'
 import type { ICompExtraPasswordProps } from '.'
 
@@ -22,8 +21,6 @@ const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: tru
 
 const percentage = ref(0)
 const status = ref<Status>('success')
-
-const { onTargetBlur, onTargetFocus, WithCapLockWrapper } = WithCapLockToolTip(toRef(props, 'capslock'))
 
 watch(
   () => value.value,
@@ -47,23 +44,25 @@ function onKeyup(e: KeyboardEvent) {
 
 <template>
   <div class="w-full">
-    <WithCapLockWrapper>
-      <n-input
-        v-model:value="value"
-        type="password"
-        show-password-on="click"
-        :placeholder="placeholder"
-        :maxlength="maxlength"
-        :minlength="minlength"
-        clearable
-        :input-props="{
-          autocomplete: 'current-password',
-        }"
-        @keyup="onKeyup"
-        @focus="onTargetFocus"
-        @blur="onTargetBlur"
-      />
-    </WithCapLockWrapper>
+    <WCapsLockTooltip :lock="capslock">
+      <template #default="{ onTargetBlur, onTargetFocus }">
+        <n-input
+          v-model:value="value"
+          type="password"
+          show-password-on="click"
+          :placeholder="placeholder"
+          :maxlength="maxlength"
+          :minlength="minlength"
+          clearable
+          :input-props="{
+            autocomplete: 'current-password',
+          }"
+          @keyup="onKeyup"
+          @focus="onTargetFocus"
+          @blur="onTargetBlur"
+        />
+      </template>
+    </WCapsLockTooltip>
 
     <n-progress
       v-if="progress"
