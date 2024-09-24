@@ -1,7 +1,6 @@
 <script lang="tsx" setup>
-import type { DropdownOption, TreeInst, TreeOption, TreeProps } from 'naive-ui'
+import type { DropdownOption, TreeInst, TreeOption } from 'naive-ui'
 import type { TreeRenderProps } from 'naive-ui/lib/tree/src/interface'
-import type { HTMLAttributes } from 'vue'
 
 import { formatTree, treeToArr } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
@@ -30,7 +29,7 @@ const { setProps, getProps } = usePropsAdvanced<ICompUITreeProps>(props)
 
 const userPermission = useAppStoreUserPermission()
 
-const nTreeRef = ref<TreeInst>()
+const nTreeRef = shallowRef<TreeInst>()
 const selectedKeys = ref<TreeKey[]>([])
 const checkedKeys = ref<TreeKey[]>([])
 const indeterminateKeys = ref<TreeKey[]>([])
@@ -38,9 +37,9 @@ const expandedKeys = ref<TreeKey[]>()
 const pattern = ref<string>()
 const expandAll = ref<boolean>(false)
 const checkAll = ref<boolean>(false)
-const cascade = ref(true)
-const copyTarget = ref({})
-const currentTarget = ref({})
+const cascade = ref<boolean>(true)
+const copyTarget = ref<RowData>({})
+const currentTarget = ref<RowData>({})
 
 const getToolBarOptions = computed((): DropdownOption[] => [
   {
@@ -115,7 +114,9 @@ const getToolBarOptions = computed((): DropdownOption[] => [
   },
 ])
 
-const contextMenuOptions = computed((): DropdownMixedOption[] => [
+const getKeyField = computed(() => getProps.value.treeProps!.keyField!)
+
+const contextMenuOptions = computed<DropdownMixedOption[]>(() => [
   {
     key: 'copy',
     label: t('app.button.copy'),
@@ -130,9 +131,7 @@ const contextMenuOptions = computed((): DropdownMixedOption[] => [
   },
 ])
 
-const getKeyField = computed(() => getProps.value.treeProps!.keyField!)
-
-const [registerCtx, { openDropdown, closeDropdown }] = useDropdown({
+const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
   dropdownProps: {
     options: contextMenuOptions,
     onSelect: (key) => {
@@ -214,7 +213,7 @@ function onToolbarSelect(key: string) {
 
     cascade.value = true
 
-    // onFeecback()
+    onFeedback()
 
     onCheckedKeys(checkedKeys.value)
   }
@@ -225,7 +224,7 @@ function onToolbarSelect(key: string) {
 
     cascade.value = false
 
-    // onFeecback()
+    onFeedback()
 
     onCheckedKeys(checkedKeys.value)
   }
@@ -233,11 +232,6 @@ function onToolbarSelect(key: string) {
 
 function nodeProps({ option }: { option: TreeOption }): ReturnType<TreeNodeProps> {
   return {
-    onClick: (e: MouseEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-      e.stopImmediatePropagation()
-    },
     onContextmenu: getProps.value.presetContextMenu
       ? (e: MouseEvent) => {
           e.preventDefault()
@@ -306,50 +300,40 @@ function onRenderSuffix({ option }: TreeRenderProps) {
     : undefined
 }
 
-// const getBottomChildKeys = computed(() => {
-//   const res: TreeKey[] = []
+const getBottomChildKeys = computed(() => {
+  const res: TreeKey[] = []
 
-//   formatTree(getProps.value.treeProps?.data!, {
-//     format: (node) => {
-//       if (!node[getProps.value.treeProps?.childrenField || 'children'])
-//         res.push(node[getKeyField.value] as string)
-//     },
-//   })
+  formatTree(getProps.value.treeProps!.data!, {
+    format: (node) => {
+      if (!node[getProps.value.treeProps?.childrenField || 'children'])
+        res.push(node[getKeyField.value] as string)
+    },
+  })
 
-//   return res
-// })
+  return res
+})
 
-// function onFeecback() {
-//   if (getProps.value.multiple) {
-//     if (cascade.value) {
-//       checkedKeys.value = (getProps.value.value as TreeKey[])?.filter(i => getBottomChildKeys.value.includes(i))
-//       indeterminateKeys.value = (getProps.value.value as TreeKey[])?.filter(i => !getBottomChildKeys.value.includes(i))
+function onFeedback() {
+  if (getProps.value.multiple) {
+    if (cascade.value) {
+      checkedKeys.value = (value.value as TreeKey[])?.filter(i => getBottomChildKeys.value.includes(i))
+      indeterminateKeys.value = (value.value as TreeKey[])?.filter(i => !getBottomChildKeys.value.includes(i))
 
-//       nextTick(() => {
-//         checkedKeys.value = nTreeRef.value?.getCheckedData().keys!
-//         indeterminateKeys.value = nTreeRef.value?.getIndeterminateData().keys!
-//       })
-//     }
-//     else {
-//       checkedKeys.value = getProps.value.value as TreeKey[]
-//     }
-//   }
-//   else { selectedKeys.value = [getProps.value.value] as TreeKey[] }
-// }
+      nextTick(() => {
+        if (nTreeRef.value) {
+          checkedKeys.value = nTreeRef.value.getCheckedData().keys!
+          indeterminateKeys.value = nTreeRef.value.getIndeterminateData().keys!
+        }
+      })
+    }
+    else {
+      checkedKeys.value = value.value as TreeKey[]
+    }
+  }
+  else { selectedKeys.value = [value.value] as TreeKey[] }
+}
 
-// watch(
-//   () => getProps.value.value,
-//   (v) => {
-//     if (!v)
-//       return
-
-//     onFeecback()
-//   },
-//   {
-//     deep: true,
-//     immediate: true,
-//   },
-// )
+onMounted(onFeedback)
 
 emits('hook', { setProps })
 
@@ -404,6 +388,6 @@ defineExpose({
       />
     </WScrollbar>
 
-    <WDropdown @hook="registerCtx" />
+    <WDropdown @hook="registerDropdown" />
   </div>
 </template>

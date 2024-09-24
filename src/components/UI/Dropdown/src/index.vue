@@ -1,18 +1,16 @@
 <script lang="ts" setup>
-import type { WDropdown } from './types'
+import type { ICompUIDropdownInst, ICompUIDropdownProps } from './types'
 
 defineOptions({
   name: 'WDropdown',
   inheritAttrs: false,
 })
 
-const props = defineProps<WDropdownProps>()
-const emit = defineEmits<WDropdownEmits>()
-// avoid error
-interface WDropdownProps extends /* @vue-ignore */ WDropdown.Props {}
-interface WDropdownEmits extends /* @vue-ignore */ WDropdown.Emit.Entry {}
+const props = defineProps<ICompUIDropdownProps>()
 
-const { setProps, getProps } = useProps<WDropdown.Props>(props)
+const emit = defineEmits<{ hook: [inst: ICompUIDropdownInst] }>()
+
+const { setProps, getProps } = usePropsAdvanced<ICompUIDropdownProps>(props)
 
 const show = ref(false)
 const x = ref(0)
@@ -28,7 +26,7 @@ const closeDropdown = () => (show.value = false)
 
 emit('hook', { setProps, openDropdown, closeDropdown })
 
-defineExpose<WDropdown.Inst.WDropdownInst>({
+defineExpose({
   setProps,
   openDropdown,
   closeDropdown,

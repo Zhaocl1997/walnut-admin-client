@@ -1,22 +1,22 @@
-import type { WDropdown } from '../types'
+import type { ICompUIDropdownInst, ICompUIDropdownProps } from '../types'
 
-export function useDropdown<T>(props: WDropdown.Props): WDropdown.Hook.useDropdown {
+export function useDropdown(props: ICompUIDropdownProps): [(inst: ICompUIDropdownInst) => void, ICompUIDropdownInst] {
   isInSetup()
 
-  const wDropdownRef = ref<Nullable<WDropdown.Inst.WDropdownInst>>(null)
+  const wDropdownRef = shallowRef<ICompUIDropdownInst>()
 
-  const register = (instance: WDropdown.Inst.WDropdownInst) => {
-    wDropdownRef.value = instance
+  const register = (inst: ICompUIDropdownInst) => {
+    wDropdownRef.value = inst
 
     watchEffect(() => {
-      props && instance.setProps(props)
+      inst.setProps!(props)
     })
   }
 
-  const methods: WDropdown.Inst.WDropdownInst = {
-    setProps: props => wDropdownRef.value?.setProps(props),
-    openDropdown: e => wDropdownRef.value?.openDropdown(e),
-    closeDropdown: () => wDropdownRef.value?.closeDropdown(),
+  const methods: ICompUIDropdownInst = {
+    setProps: props => wDropdownRef.value?.setProps!(props),
+    openDropdown: e => wDropdownRef.value?.openDropdown!(e),
+    closeDropdown: () => wDropdownRef.value?.closeDropdown!(),
   }
 
   return [register, methods]

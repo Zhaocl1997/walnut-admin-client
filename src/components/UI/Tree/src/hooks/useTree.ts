@@ -1,20 +1,20 @@
 import type { ICompUITreeInst, ICompUITreeProps } from '../types'
 
-export function useTree<T = RowData>(props: ICompUITreeProps<T>) {
+export function useTree<T = RowData>(props: ICompUITreeProps<T>): [(inst: ICompUITreeInst<T>) => void, ICompUITreeInst<T>] {
   isInSetup()
 
   const wTreeRef = shallowRef<ICompUITreeInst<T>>()
 
-  const register = (instance: ICompUITreeInst<T>) => {
-    wTreeRef.value = instance
+  const register = (inst: ICompUITreeInst<T>): void => {
+    wTreeRef.value = inst
 
     watchEffect(() => {
-      instance.setProps(props)
+      inst.setProps!(props)
     })
   }
 
-  const methods: Partial<ICompUITreeInst<T>> = {
-    setProps: props => wTreeRef.value?.setProps(props),
+  const methods: ICompUITreeInst<T> = {
+    setProps: props => wTreeRef.value?.setProps!(props),
   }
 
   return [register, methods]

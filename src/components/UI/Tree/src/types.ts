@@ -56,6 +56,6 @@ export interface ICompUITreeProps<T = RowData> {
   }
 }
 
-export interface ICompUITreeInst<T = RowData> extends TreeInst {
+export type ICompUITreeInst<T = RowData> = Partial<TreeInst & {
   setProps: (p: ICompUITreeProps<T>) => void
-}
+}>
