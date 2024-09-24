@@ -80,6 +80,10 @@
     "pcss",
     "postcss"
   ],
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "eslint.quiet": true,
   "json.schemas": [
     {
       "fileMatch": [

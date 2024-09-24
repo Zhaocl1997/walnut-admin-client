@@ -414,7 +414,7 @@ defineExpose({ onOpenModal })
             class="absolute right-2 top-2 z-40 transform cursor-pointer transition-transform hover:-rotate-90"
             @click="onReset"
           >
-            <w-icon icon="carbon:reset" height="36" />
+            <WIcon icon="carbon:reset" height="36" />
           </n-button>
         </div>
       </n-spin>

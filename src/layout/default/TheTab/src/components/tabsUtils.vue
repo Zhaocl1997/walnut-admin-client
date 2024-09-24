@@ -15,7 +15,7 @@ defineProps({
         </template>
 
         <template #trigger>
-          <w-icon
+          <WIcon
             height="20"
             class="m-1 my-auto cursor-pointer ring-2"
             :icon="item.icon"

@@ -1,24 +1,24 @@
 <script lang="ts" setup>
-import type { ICompExtraDemoCardPropsPartial } from '.'
+import type { ICompExtraDemoCardProps } from '.'
 
 defineOptions({
   name: 'WDemoCard',
 })
 
-defineProps<ICompExtraDemoCardPropsPartial>()
+defineProps<ICompExtraDemoCardProps>()
 </script>
 
 <template>
   <div>
-    <w-card header-preset="collapse">
+    <WCard header-preset="collapse">
       <template #header>
-        <w-title :help-message="description">
+        <WTitle :help-message="description">
           {{ title }}
-        </w-title>
+        </WTitle>
       </template>
       <template #default>
         <slot />
       </template>
-    </w-card>
+    </WCard>
   </div>
 </template>

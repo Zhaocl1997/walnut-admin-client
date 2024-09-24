@@ -22,7 +22,7 @@ onMounted(() => {
 <template>
   <div>
     <n-popselect v-model:value="appLocale.locale" :options="langLists">
-      <w-icon icon="carbon:language" width="24" />
+      <WIcon icon="carbon:language" width="24" />
     </n-popselect>
   </div>
 </template>

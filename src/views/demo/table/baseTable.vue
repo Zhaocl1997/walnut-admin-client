@@ -5,7 +5,7 @@ defineOptions({
 </script>
 
 <template>
-  <w-demo-card title="Base Table" description="Simple usage of w-table.">
+  <WDemoCard title="Base Table" description="Simple usage of w-table.">
     <!-- <w-table :columns="columns" :data="data" :pagination="pagination" /> -->
-  </w-demo-card>
+  </WDemoCard>
 </template>

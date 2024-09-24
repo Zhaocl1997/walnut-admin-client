@@ -82,7 +82,7 @@ onMounted(() => {
           {{ t('app.button.search') }}
         </template>
         <template #icon>
-          <w-icon icon="ant-design:search-outlined" />
+          <WIcon icon="ant-design:search-outlined" />
         </template>
       </n-button>
 
@@ -96,7 +96,7 @@ onMounted(() => {
           {{ t('app.button.reset') }}
         </template>
         <template #icon>
-          <w-icon icon="carbon:reset" />
+          <WIcon icon="carbon:reset" />
         </template>
       </n-button>
 

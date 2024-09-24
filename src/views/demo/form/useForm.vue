@@ -98,8 +98,8 @@ const [register, { validate, restoreValidation }] = useForm({
 </script>
 
 <template>
-  <w-demo-card title="useForm">
-    <w-JSON :value="formData" />
+  <WDemoCard title="useForm">
+    <WJSON :value="formData" />
 
     <n-switch v-model:value="desc">
       <template #checked>
@@ -114,7 +114,7 @@ const [register, { validate, restoreValidation }] = useForm({
     <br>
 
     <w-form :model="formData" @hook="register" />
-  </w-demo-card>
+  </WDemoCard>
 </template>
 
 <style lang="scss" scoped></style>

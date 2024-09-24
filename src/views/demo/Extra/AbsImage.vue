@@ -2,7 +2,7 @@
 import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 
 defineOptions({
-  name: 'FileDemo',
+  name: 'AbsImageDemo',
   defaultView: false,
 })
 
@@ -38,7 +38,7 @@ async function onDownloadByBlob() {
 </script>
 
 <template>
-  <WDemoCard title="Common file operations, download/transform">
+  <WDemoCard title="Abstract Image operations, download/transform">
     <n-list>
       <n-list-item>
         <WTitle prefix="bar" class="mb-2">

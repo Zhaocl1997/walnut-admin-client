@@ -364,11 +364,11 @@ const schemas = computed(
 </script>
 
 <template>
-  <w-demo-card
+  <WDemoCard
     title="Base Form"
     description="Display all support types in schemas."
   >
-    <w-JSON :value="formData" height="300px" />
+    <WJSON :value="formData" height="300px" />
 
     <w-form
       ref="formRef"
@@ -381,7 +381,7 @@ const schemas = computed(
         <n-input v-model:value="formData.formSlot" />
       </template>
     </w-form>
-  </w-demo-card>
+  </WDemoCard>
 </template>
 
 <style lang="scss" scoped></style>

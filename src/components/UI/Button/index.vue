@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { ICompUIButtonProps } from '.'
 
 defineOptions({
@@ -18,12 +18,14 @@ function onClick(e: MouseEvent) {
 const debounceClick = useDebounceFn(onClick, props.debounce)
 
 const onFinalClick = (e: MouseEvent) => props.debounce ? debounceClick(e) : onClick(e)
+
+const ButtonText = () => props.textProp && (typeof props.textProp === 'string' ? props.textProp : props.textProp())
 </script>
 
 <template>
   <n-button @click="onFinalClick">
     <template #default>
-      <span v-if="textProp">{{ textProp }}</span>
+      <ButtonText v-if="textProp" />
       <slot v-else name="default" />
     </template>
 

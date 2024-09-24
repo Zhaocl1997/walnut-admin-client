@@ -77,12 +77,12 @@ function onSend(type: number) {
 </script>
 
 <template>
-  <w-demo-card title="Axios (See network tab)">
+  <WDemoCard title="Axios (See network tab)">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Send request with custum config
-        </w-title>
+        </WTitle>
 
         <n-switch v-model:value="withToken">
           <template #checked>
@@ -127,5 +127,5 @@ function onSend(type: number) {
         </n-space>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

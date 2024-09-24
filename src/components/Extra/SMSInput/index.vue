@@ -1,71 +1,64 @@
 <script lang="ts" setup>
-import type { WButtonInst } from '@/components/UI/Button'
+import type { ICompExtraSMSInputProps } from '.'
 import type { WVerifyInst } from '@/components/Extra/Verify'
 
 defineOptions({
-  name: 'SMSInput',
+  name: 'WSMSInput',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<ICompExtraSMSInputProps>(), {
   retrySeconds: 60,
 })
 
-// TODO 888
-interface InternalProps {
-  retrySeconds?: number
-  simpleVerify?: boolean
-  onBeforeCountdown?: () => Promise<boolean>
-  onSuccess?: (startCountdown: () => void) => Promise<void>
-}
+const emits = defineEmits<{ verifySuccess: [startCountdown: Fn] }>()
 
-const buttonRef = ref<WButtonInst>()
-const verifyRef = ref<WVerifyInst>()
+const buttonRef = shallowRef()
+const verifyRef = shallowRef<WVerifyInst>()
 
-async function onClick() {
-  if (!props.onBeforeCountdown)
-    return
-
-  const canVerify = await props.onBeforeCountdown()
-
-  if (!canVerify)
-    return
-
+function onVerify() {
   if (props.simpleVerify)
     verifyRef.value?.onOpenModal()
   else
-    onSuccess()
+    buttonRef.value!.onStartCountdown()
+}
+
+async function onClick() {
+  if (!props.onBeforeCountdown) {
+    onVerify()
+  }
+  else {
+    const canVerify = await props.onBeforeCountdown()
+
+    if (canVerify) {
+      onVerify()
+    }
+    else {
+      AppWarn('SMSInput cannot start verify')
+    }
+  }
 }
 
 function onVerifySuccess() {
-  nextTick(() => {
-    onSuccess()
-  })
-}
-
-function onSuccess() {
-  if (!props.onSuccess)
-    return
-
-  props.onSuccess(() => buttonRef.value!.onStartCountdown())
+  emits('verifySuccess', () => buttonRef.value!.onStartCountdown())
 }
 </script>
 
 <template>
   <n-input v-bind="$attrs" :input-props="{ autocomplete: 'one-time-code' }">
     <template #suffix>
-      <w-button
+      <WButtonRetry
         ref="buttonRef"
         type="info"
         text
-        :retry="retrySeconds"
-        manual-retry
+        :retry-seconds="retrySeconds"
         @click="onClick"
       >
         {{ $t('comp.verifyInput.send') }}
-      </w-button>
+      </WButtonRetry>
     </template>
   </n-input>
 
+  <!-- TODO this may not be a good design, need to pass `simple-verify` prop and `@verify-success` to start count down -->
   <WVerify
     v-if="simpleVerify"
     ref="verifyRef"

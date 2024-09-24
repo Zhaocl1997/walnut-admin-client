@@ -1,73 +1,27 @@
 <script lang="ts" setup>
-import DemoAreaCascader from './AreaCascader.vue'
+import type { SelectOption } from 'naive-ui'
 
 defineOptions({
   name: 'DemoUI',
 })
 
-const appAdapter = useAppStoreAdapter()
+const currentComponentDemo = ref()
+
+const demoOptions: SelectOption[]
+= Object.entries(import.meta.glob('./*.vue', { import: 'default', eager: true }))
+  .map(([key, value]) => {
+    return { value: key, label: key.replace('./', '').replace('.vue', ''), component: value }
+  })
+
+const getCurrentComponent = computed(() => demoOptions.find(i => i.value === currentComponentDemo.value)?.component)
 </script>
 
 <template>
-  <div id="demo-ui">
-    <div v-if="!appAdapter.isMobile" class="float-right w-36">
-      <n-anchor
-        show-rail
-        show-background
-        affix
-        listen-to="#demo-ui"
-        :trigger-top="120"
-        :top="120"
-        style="z-index: 50"
-        type="block"
-      >
-        <n-anchor-link title="Icon" href="#Icon" />
-        <n-anchor-link title="Button" href="#Button" />
-        <n-anchor-link title="Input" href="#Input" />
-        <n-anchor-link title="Select" href="#Select" />
-        <n-anchor-link title="Checkbox" href="#Checkbox" />
-        <n-anchor-link title="Dict" href="#Dict" />
+  <div>
+    <n-select v-model:value="currentComponentDemo" :options="demoOptions" class="w-96" filterable />
 
-        <n-anchor-link title="Tree" href="#Tree" />
-        <n-anchor-link
-          title="AreaCascader"
-          href="#AreaCascader"
-        />
-        <n-anchor-link title="Location" href="#Location" />
-        <n-anchor-link title="Radio" href="#Radio" />
-        <n-anchor-link title="DynamicTags" href="#DynamicTags" />
-        <n-anchor-link
-          title="LocaleSelect"
-          href="#LocaleSelect"
-        />
-        <n-anchor-link title="ColorPicker" href="#ColorPicker" />
-      </n-anchor>
-    </div>
-
-    <div
-      class="grid grid-cols-1 gap-0 2xl:grid-cols-2 2xl:gap-2" :class="[
-        { 'pr-42': !appAdapter.isMobile },
-      ]"
-    >
-      <div class="children:my-2">
-        <!-- <DemoIcon id="Icon" />
-        <DemoButton id="Button" />
-        <DemoInput id="Input" />
-        <DemoSelect id="Select" />
-        <DemoCheckbox id="Checkbox" />
-        <DemoDict id="Dict" /> -->
-      </div>
-
-      <div class="children:my-2">
-        <DemoAreaCascader id="AreaCascader" />
-        <!-- <DemoTree id="Tree" />
-        <DemoAreaCascader id="AreaCascader" />
-        <DemoLocation id="Location" />
-        <DemoRadio id="Radio" />
-        <DemoDynamicTags id="DynamicTags" />
-        <DemoLocaleSelect id="LocaleSelect" />
-        <DemoColorPicker id="ColorPicker" /> -->
-      </div>
+    <div class="mt-4">
+      <component :is="getCurrentComponent" />
     </div>
   </div>
 </template>

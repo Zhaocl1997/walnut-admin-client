@@ -102,7 +102,7 @@ watch(
                   <span>{{ trend }} %</span>
                 </span>
 
-                <w-icon
+                <WIcon
                   :icon="
                     isPositive
                       ? 'ant-design:arrow-up-outlined'
@@ -115,7 +115,7 @@ watch(
         </div>
 
         <w-transition appear name="slide-right">
-          <w-icon
+          <WIcon
             height="48"
             :icon="icon"
             class="absolute right-0 cursor-pointer transition-all -top-1.5 hover:scale-110"

@@ -16,7 +16,7 @@ export function useStarOnGithub() {
       return (
         <n-space vertical size="small">
           <n-button text size="small" type="info" onClick={onClick}>
-            <w-icon icon="ant-design:star-outlined" width="18"></w-icon>
+            <WIcon icon="ant-design:star-outlined" width="18"></WIcon>
             <span class="ml-1 font-semibold">Star Right Now</span>
           </n-button>
         </n-space>

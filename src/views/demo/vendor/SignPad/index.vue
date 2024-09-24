@@ -17,12 +17,12 @@ async function onGet() {
 
 <template>
   <div>
-    <w-demo-card title="Signature Pad Demo">
+    <WDemoCard title="Signature Pad Demo">
       <n-list>
         <n-list-item>
-          <w-title prefix="bar">
+          <WTitle prefix="bar">
             Basic
-          </w-title>
+          </WTitle>
 
           <w-sign-pad height="300px" width="800px" />
         </n-list-item>
@@ -30,9 +30,9 @@ async function onGet() {
 
       <n-list>
         <n-list-item>
-          <w-title prefix="bar">
+          <WTitle prefix="bar">
             Disabled
-          </w-title>
+          </WTitle>
 
           <w-sign-pad
             height="300px"
@@ -46,9 +46,9 @@ async function onGet() {
       <n-list>
         <n-list-item>
           <n-space vertical size="small">
-            <w-title prefix="bar">
+            <WTitle prefix="bar">
               Watermark
-            </w-title>
+            </WTitle>
 
             <n-button @click="onGet">
               Get Picture
@@ -65,6 +65,6 @@ async function onGet() {
           </n-space>
         </n-list-item>
       </n-list>
-    </w-demo-card>
+    </WDemoCard>
   </div>
 </template>

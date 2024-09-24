@@ -44,7 +44,7 @@ export default defineConfig({
   },
 
   presets: [
-    presetUno(),
+    presetUno({ dark: 'class' }),
     presetAttributify({ prefix: 'w:' }),
     presetTypography(),
     presetWebFonts({

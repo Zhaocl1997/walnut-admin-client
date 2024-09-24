@@ -41,13 +41,13 @@ export default defineComponent({
               : props.headerPreset === 'refresh'
                 ? (
                     <n-button text disabled={props.loading} loading={props.loading}>
-                      <w-icon
+                      <WIcon
                         icon="ant-design:sync-outlined"
                         width="20"
                         class="cursor-pointer"
                         onClick={onRefresh}
                       >
-                      </w-icon>
+                      </WIcon>
                     </n-button>
                   )
                 : null,

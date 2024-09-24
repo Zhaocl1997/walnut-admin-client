@@ -6,7 +6,7 @@ defineOptions({
   name: 'WIcon',
 })
 
-const props = defineProps<IconProps>()
+const props = withDefaults(defineProps<IconProps>(), { inline: true })
 
 // Variable to store function to cancel loading
 const loader = ref<IconifyIconLoaderAbort>()

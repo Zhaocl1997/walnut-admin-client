@@ -10,240 +10,294 @@ function onClick() {
 </script>
 
 <template>
-  <w-demo-card title="Icon(iconify)">
+  <WDemoCard title="Icon(iconify)">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Base
-        </w-title>
-        <w-icon icon="ant-design:home-outlined" />
+        </WTitle>
+        <WIcon icon="ant-design:home-outlined" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Custom SVG
-        </w-title>
-        <w-icon icon="w-svg:svg-sample-1" height="24" />
-        <w-icon icon="w-svg:svg-sample-2" height="24" />
-        <w-icon icon="w-svg:svg-sample-3" height="24" />
+        </WTitle>
+        <WIcon icon="w-svg:svg-sample-1" height="24" />
+        <WIcon icon="w-svg:svg-sample-2" height="24" />
+        <WIcon icon="w-svg:svg-sample-3" height="24" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Color
-        </w-title>
-        <w-icon icon="ant-design:home-outlined" color="red" />
-        <w-icon icon="ant-design:home-outlined" color="green" />
-        <w-icon icon="ant-design:home-outlined" color="blue" />
-        <w-icon icon="ant-design:home-outlined" color="yellow" />
-        <w-icon icon="ant-design:home-outlined" color="orange" />
-        <w-icon icon="ant-design:home-outlined" color="indigo" />
-        <w-icon icon="ant-design:home-outlined" color="violet" />
-        <w-icon icon="ant-design:home-outlined" color="#409EFF" />
+        </WTitle>
+        <WIcon icon="ant-design:home-outlined" color="red" />
+        <WIcon icon="ant-design:home-outlined" color="green" />
+        <WIcon icon="ant-design:home-outlined" color="blue" />
+        <WIcon icon="ant-design:home-outlined" color="yellow" />
+        <WIcon icon="ant-design:home-outlined" color="orange" />
+        <WIcon icon="ant-design:home-outlined" color="indigo" />
+        <WIcon icon="ant-design:home-outlined" color="violet" />
+        <WIcon icon="ant-design:home-outlined" color="#409EFF" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Width / Height
-        </w-title>
-        <w-icon icon="ant-design:home-outlined" width="40" />
-        <w-icon icon="ant-design:home-outlined" height="80" />
+        </WTitle>
+        <WIcon icon="ant-design:home-outlined" width="40" />
+        <WIcon icon="ant-design:home-outlined" height="80" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Flip
-        </w-title>
-        <w-icon icon="ant-design:home-outlined" horizontal-flip />
-        <w-icon icon="ant-design:home-outlined" vertical-flip />
+        </WTitle>
+        <WIcon icon="ant-design:home-outlined" flip="horizontal" />
+        <WIcon icon="ant-design:home-outlined" flip="vertical" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Rotate
-        </w-title>
-        <w-icon icon="ant-design:home-outlined" rotate="1" />
-        <w-icon icon="ant-design:home-outlined" rotate="2" />
-        <w-icon icon="ant-design:home-outlined" rotate="3" />
+        </WTitle>
+        <WIcon icon="ant-design:home-outlined" :rotate="1" />
+        <WIcon icon="ant-design:home-outlined" :rotate="2" />
+        <WIcon icon="ant-design:home-outlined" :rotate="3" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Horizontal shift
-        </w-title>
-        <w-icon
+        </WTitle>
+
+        <WIcon
           icon="ant-design:home-outlined"
           width="40"
           height="24"
-          horizontal-align="left"
-          class="border border-red-900"
+          preserveAspectRatio="xMinYMid meet"
+          class="border border-red-900 border-solid border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="40"
           height="24"
-          horizontal-align="center"
-          class="border border-red-900"
+          preserveAspectRatio="xMidYMid meet"
+          class="border border-red-900 border-solid border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="40"
           height="24"
-          horizontal-align="right"
-          class="border border-red-900"
+          preserveAspectRatio="xMaxYMid meet"
+          class="border border-red-900 border-solid border-solid"
         />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Vertical shift
-        </w-title>
-        <w-icon
+        </WTitle>
+        <WIcon
           icon="ant-design:home-outlined"
           width="24"
           height="40"
-          vertical-align="top"
-          class="border border-red-900"
+          preserveAspectRatio="xMidYMin meet"
+          class="border border-red-900 border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="24"
           height="40"
-          vertical-align="middle"
-          class="border border-red-900"
+          preserveAspectRatio="xMidYMid meet"
+          class="border border-red-900 border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="24"
           height="40"
-          vertical-align="bottom"
-          class="border border-red-900"
+          preserveAspectRatio="xMidYMax meet"
+          class="border border-red-900 border-solid"
         />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Horizontal sliced icon
-        </w-title>
-        <w-icon
+        </WTitle>
+        <WIcon
           icon="ant-design:home-outlined"
           width="24"
           height="40"
-          align="left,slice"
-          class="border border-red-900"
+          preserveAspectRatio="xMinYMid slice"
+          class="border border-red-900 border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="24"
           height="40"
-          align="center,slice"
-          class="border border-red-900"
+          preserveAspectRatio="xMidYMid slice"
+          class="border border-red-900 border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="24"
           height="40"
-          align="right,slice"
-          class="border border-red-900"
+          preserveAspectRatio="xMaxYMid slice"
+          class="border border-red-900 border-solid"
         />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Vertical sliced icon
-        </w-title>
-        <w-icon
+        </WTitle>
+        <WIcon
           icon="ant-design:home-outlined"
           width="40"
           height="24"
-          align="top,slice"
-          class="border border-red-900"
+          preserveAspectRatio="xMidYMin slice"
+          class="border border-red-900 border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="40"
           height="24"
-          align="middle,slice"
-          class="border border-red-900"
+          preserveAspectRatio="xMidYMid slice"
+          class="border border-red-900 border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="40"
           height="24"
-          align="bottom,slice"
-          class="border border-red-900"
+          preserveAspectRatio="xMidYMax slice"
+          class="border border-red-900 border-solid"
         />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Different way to achieve above effect
-        </w-title>
-        <w-icon
+        </WTitle>
+        <WIcon
           icon="ant-design:home-outlined"
           width="40"
           height="24"
-          align="left,top"
-          class="border border-red-900"
+          preserveAspectRatio="xMinYMin meet"
+          class="border border-red-900 border-solid"
         />
-        <w-icon
+        <WIcon
           icon="ant-design:home-outlined"
           width="40"
           height="24"
-          align="left,top,slice"
-          class="border border-red-900"
+          preserveAspectRatio="xMinYMin slice"
+          class="border border-red-900 border-solid"
         />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Advanced Icon (Button)
-        </w-title>
+        </WTitle>
 
-        <w-a-icon
-          icon="ant-design:home-outlined"
-          width="24"
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '24',
+          }"
           @click="onClick"
         />
-        <w-a-icon
-          icon="ant-design:home-outlined"
-          width="24"
-          type="success"
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '24',
+          }"
+          :button-props="{
+            type: 'success',
+          }"
           @click="onClick"
         />
-        <w-a-icon
-          icon="ant-design:home-outlined"
-          width="24"
-          type="info"
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '24',
+          }"
+          :button-props="{
+            type: 'info',
+          }"
           @click="onClick"
         />
-        <w-a-icon
-          icon="ant-design:home-outlined"
-          width="24"
-          type="warning"
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '24',
+          }"
+          :button-props="{
+            type: 'warning',
+          }"
           @click="onClick"
         />
-        <w-a-icon
-          icon="ant-design:home-outlined"
-          width="24"
-          type="error"
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '24',
+          }"
+          :button-props="{
+            type: 'error',
+          }"
           @click="onClick"
         />
-        <w-a-icon
-          icon="ant-design:home-outlined"
-          width="24"
-          type="error"
-          disabled
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '32',
+          }"
+          :button-props="{
+            disabled: true,
+            type: 'error',
+          }"
           @click="onClick"
         />
-        <w-a-icon
-          icon="ant-design:home-outlined"
-          width="24"
-          type="error"
-          help-message="this is a help message"
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '32',
+          }"
+          :button-props="{
+            loading: true,
+            type: 'error',
+          }"
           @click="onClick"
+        />
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '32',
+          }"
+          tooltip
+          tooltip-msg="width/height will not work properly, cause the icon is put inside icon slot in n-button"
+          @click="onClick"
+        />
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '32',
+          }"
+          confirm
+          @confirm="onClick"
+        />
+        <WIconButton
+          :icon-props="{
+            icon: 'ant-design:home-outlined',
+            width: '32',
+          }"
+          tooltip
+          tooltip-msg="tooltip & confirm icon button"
+          confirm
+          @confirm="onClick"
         />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

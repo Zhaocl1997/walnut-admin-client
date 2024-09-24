@@ -49,9 +49,9 @@ const options = computed(() => {
 </script>
 
 <template>
-  <w-demo-card title="Dropdown">
+  <WDemoCard title="Dropdown">
     <!--
-    <w-title show-left>Base usage 【{{ dropdown1 }}】</w-title>
+    <WTitle show-left>Base usage 【{{ dropdown1 }}】</WTitle>
     <el-form inline>
       <el-space>
         <el-form-item label="Disabled">
@@ -73,13 +73,13 @@ const options = computed(() => {
     <w-dropdown v-model="dropdown1" :options="options" trigger="click">
       <template #default>
         <div>
-          <w-icon
+          <WIcon
             icon="ant-design:info-circle-outlined"
             class="cursor-pointer"
             width="24"
-          ></w-icon>
+          ></WIcon>
         </div>
       </template>
     </w-dropdown> -->
-  </w-demo-card>
+  </WDemoCard>
 </template>

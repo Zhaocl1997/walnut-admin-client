@@ -61,14 +61,14 @@ const getHelpMsg = computed(() => {
     :title-placement="titlePlacement"
     :dashed="dashed"
   >
-    <w-title
+    <WTitle
       :class="titleClass"
       :help-message="getHelpMsg"
       :prefix="prefix"
       :type="type"
     >
       {{ t(title!) }}
-    </w-title>
+    </WTitle>
 
     <w-arrow
       v-if="foldable"

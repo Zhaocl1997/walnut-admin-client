@@ -19,7 +19,7 @@ import type { ICompUISwitchPropsPartial } from '../../Switch'
 import type { WTimePickerProps } from '../../TimePicker'
 import type { WDatePickerProps } from '../../DatePicker'
 import type { WDynamicTagsProps } from '../../DynamicTags'
-import type { WTree } from '../../Tree'
+import type { ICompUITreeProps } from '../../Tree'
 import type { WColorPickerProps } from '../../ColorPicker'
 
 import type { WDescriptionsItem } from '../../Descriptions'
@@ -152,7 +152,7 @@ export declare namespace WForm {
       'Base:TimePicker': WTimePickerProps
       'Base:DatePicker': WDatePickerProps
       'Base:DynamicTags': WDynamicTagsProps
-      'Base:Tree': WTree.Props
+      'Base:Tree': ICompUITreeProps
 
       'Extend:Divider': WFormItemDividerProps
       'Extend:Query': WFormItemQueryProps

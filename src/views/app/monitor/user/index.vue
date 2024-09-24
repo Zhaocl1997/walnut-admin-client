@@ -239,6 +239,7 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
             type: 'error',
             iconButton: true,
             textProp: () => t('app.monitor.user.forceLogout'),
+            // TODO table action inside => `ButtonConfirm`
             confirm: true,
             auth: 'app:monitor:user:forceQuit',
             _show: row => !row.left && row.auth,

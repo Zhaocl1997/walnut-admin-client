@@ -71,9 +71,9 @@ const [register] = useTable({
 </script>
 
 <template>
-  <w-demo-card title="useTable" description="Better typescript support.">
+  <WDemoCard title="useTable" description="Better typescript support.">
     <w-table @hook="register" />
-  </w-demo-card>
+  </WDemoCard>
 </template>
 
 <style lang="scss" scoped></style>

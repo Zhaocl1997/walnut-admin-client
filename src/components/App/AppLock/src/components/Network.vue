@@ -16,7 +16,7 @@ const getIcon = computed(() => {
 <template>
   <n-tooltip trigger="hover">
     <template #trigger>
-      <w-icon :icon="getIcon" height="24" color="white" />
+      <WIcon :icon="getIcon" height="24" color="white" />
     </template>
 
     <template #default>

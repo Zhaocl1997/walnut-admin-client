@@ -203,7 +203,7 @@ onMounted(() => {
       @before-upload="onBeforeUpload"
     >
       <template v-if="image">
-        <w-icon icon="ant-design:plus-outlined" />
+        <WIcon icon="ant-design:plus-outlined" />
       </template>
 
       <template v-else>

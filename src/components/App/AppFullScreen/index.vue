@@ -23,7 +23,7 @@ interface InternalProps {
       </template>
 
       <template #trigger>
-        <w-icon
+        <WIcon
           :icon="
             isFullscreen
               ? 'ant-design:fullscreen-exit-outlined'

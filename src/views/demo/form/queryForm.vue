@@ -116,13 +116,13 @@ function onQuery({ done }: WForm.FinishLoading) {
 </script>
 
 <template>
-  <w-demo-card
+  <WDemoCard
     title="Query Form"
     description="Normally used in table search area."
   >
     <w-form :model="configData" @hook="register1" />
 
-    <w-JSON :value="formData" />
+    <WJSON :value="formData" />
 
     <w-form
       :model="formData"
@@ -130,7 +130,7 @@ function onQuery({ done }: WForm.FinishLoading) {
       @reset="onReset"
       @query="onQuery"
     />
-  </w-demo-card>
+  </WDemoCard>
 </template>
 
 <style lang="scss" scoped></style>

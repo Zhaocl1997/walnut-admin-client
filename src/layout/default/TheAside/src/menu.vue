@@ -40,14 +40,14 @@ export default defineComponent({
               || node.name === getMenuValue.value
             ) {
               return (
-                <w-icon
+                <WIcon
                   icon={node.activeIcon ? node.activeIcon : node.icon}
                 >
-                </w-icon>
+                </WIcon>
               )
             }
 
-            return <w-icon icon={node.icon}></w-icon>
+            return <WIcon icon={node.icon}></WIcon>
           },
           meta: {
             type: node.type,

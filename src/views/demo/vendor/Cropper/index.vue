@@ -29,17 +29,17 @@ async function onUploadAvatar() {
 </script>
 
 <template>
-  <w-demo-card title="Cropper Demo">
+  <WDemoCard title="Cropper Demo">
     <n-list>
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="w-cropper has two v-model. \n One is `v-model:value` meaning the cropper base64 data. \n The other is `v-model:src` meaning the full image url."
         >
           Basic
-        </w-title>
+        </WTitle>
 
-        <w-JSON :value="{ srcValue, cropperValue }" />
+        <WJSON :value="{ srcValue, cropperValue }" />
 
         <img :src="srcValue" alt="cropper demo" class="mr-4 h-48 w-auto">
         <img :src="cropperValue" alt="cropper demo" class="h-48 w-auto">
@@ -52,11 +52,11 @@ async function onUploadAvatar() {
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Avatar Upload (OSS)
-        </w-title>
+        </WTitle>
 
-        <w-JSON :value="{ avatarCropperUrl }" />
+        <WJSON :value="{ avatarCropperUrl }" />
 
         <w-avatar-upload
           ref="avatarUpload"
@@ -68,5 +68,5 @@ async function onUploadAvatar() {
         </n-button>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

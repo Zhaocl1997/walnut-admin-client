@@ -176,7 +176,7 @@ const [
         },
         componentProp: {
           render({ formData }) {
-            return <w-JSON height="100%" value={formData.value}></w-JSON>
+            return <WJSON height="100%" value={formData.value}></WJSON>
           },
         },
       },

@@ -12,34 +12,34 @@ const state = ref<any>({
 </script>
 
 <template>
-  <w-demo-card title="Highly packaged ali oss use demo">
+  <WDemoCard title="Highly packaged ali oss use demo">
     <n-list>
       <n-list-item>
-        <w-demo-card title="Basic Usage">
-          <w-JSON :value="state.fileList1" />
+        <WDemoCard title="Basic Usage">
+          <WJSON :value="state.fileList1" />
 
           <w-OSS-upload v-model:value="state.fileList1" />
-        </w-demo-card>
+        </WDemoCard>
       </n-list-item>
 
       <n-list-item>
-        <w-demo-card title="Feedback">
-          <w-JSON :value="state.fileList2" />
+        <WDemoCard title="Feedback">
+          <WJSON :value="state.fileList2" />
 
           <w-OSS-upload v-model:value="state.fileList2" />
-        </w-demo-card>
+        </WDemoCard>
       </n-list-item>
 
       <n-list-item>
-        <w-demo-card title="Disabled">
-          <w-JSON :value="state.fileList3" />
+        <WDemoCard title="Disabled">
+          <WJSON :value="state.fileList3" />
 
           <w-OSS-upload v-model:value="state.fileList3" disabled />
-        </w-demo-card>
+        </WDemoCard>
       </n-list-item>
 
       <n-list-item>
-        <w-demo-card
+        <WDemoCard
           title="Limitations"
           :description="[
             'Default `max` is 10. (demo is set to 2)',
@@ -47,46 +47,46 @@ const state = ref<any>({
             'Use `accept` to controll file type to upload.',
           ]"
         >
-          <w-JSON :value="state.fileList4" />
+          <WJSON :value="state.fileList4" />
 
           <w-OSS-upload
             v-model:value="state.fileList4"
             :max="2"
             accept=".doc,.docx"
           />
-        </w-demo-card>
+        </WDemoCard>
       </n-list-item>
 
       <n-list-item>
-        <w-demo-card
+        <WDemoCard
           title="Image Upload"
           :description="['Set `image` true will use upload image card style']"
         >
-          <w-JSON :value="state.fileList5" />
+          <WJSON :value="state.fileList5" />
 
           <w-OSS-upload
             v-model:value="state.fileList5"
             image
             :size="1024"
           />
-        </w-demo-card>
+        </WDemoCard>
       </n-list-item>
 
       <n-list-item>
-        <w-demo-card title="Image Upload Feedback">
-          <w-JSON :value="state.fileList6" />
+        <WDemoCard title="Image Upload Feedback">
+          <WJSON :value="state.fileList6" />
 
           <w-OSS-upload
             v-model:value="state.fileList6"
             image
             :size="1024"
           />
-        </w-demo-card>
+        </WDemoCard>
       </n-list-item>
 
       <n-list-item>
-        <w-demo-card title="Image Upload Disabled">
-          <w-JSON :value="state.fileList7" />
+        <WDemoCard title="Image Upload Disabled">
+          <WJSON :value="state.fileList7" />
 
           <w-OSS-upload
             v-model:value="state.fileList7"
@@ -94,11 +94,11 @@ const state = ref<any>({
             :size="1024"
             disabled
           />
-        </w-demo-card>
+        </WDemoCard>
       </n-list-item>
 
       <n-list-item>
-        <w-demo-card
+        <WDemoCard
           title="Large file multipart upload"
           :description="[
             'Default `size` is 10M, default `crossover-size` is 10M.',
@@ -106,15 +106,15 @@ const state = ref<any>({
             'Use `crossover-size` to decide whether to use ali-oss multipart upload. (demo is set for 5M)',
           ]"
         >
-          <w-JSON :value="state.fileList8" />
+          <WJSON :value="state.fileList8" />
 
           <w-OSS-upload
             v-model:value="state.fileList8"
             :size="1024 * 100"
             :crossover-size="1024 * 5"
           />
-        </w-demo-card>
+        </WDemoCard>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

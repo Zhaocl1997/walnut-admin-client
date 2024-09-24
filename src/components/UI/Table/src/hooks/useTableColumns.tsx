@@ -260,7 +260,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
 
             render(p) {
               return (
-                <w-icon
+                <WIcon
                   width="24"
                   class="-mb-2"
                   icon={
@@ -269,7 +269,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
                       : tItem.extendIconName(p)
                   }
                 >
-                </w-icon>
+                </WIcon>
               )
             },
           }

@@ -95,7 +95,7 @@ const getTitle = computed(() =>
       },
     ]"
   >
-    <w-icon
+    <WIcon
       v-if="getShowAffixedPinIcon"
       height="16"
       icon="ant-design:pushpin-filled"
@@ -109,7 +109,7 @@ const getTitle = computed(() =>
       ]"
     />
 
-    <w-icon
+    <WIcon
       v-if="getShowIcon"
       :icon="item.meta._icon ?? item.meta.icon"
       height="16"
@@ -137,7 +137,7 @@ const getTitle = computed(() =>
     </w-transition>
 
     <w-transition appear name="fade-right">
-      <w-icon
+      <WIcon
         v-if="getShowCloseIcon"
         icon="ant-design:close-outlined"
         height="16"

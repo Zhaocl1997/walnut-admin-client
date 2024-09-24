@@ -8,17 +8,17 @@ const state = reactive<Recordable>({})
 </script>
 
 <template>
-  <w-demo-card title="Color Picker">
-    <w-JSON :value="state" height="80px" />
+  <WDemoCard title="Color Picker">
+    <WJSON :value="state" height="80px" />
 
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Basic Usage
-        </w-title>
+        </WTitle>
 
         <w-color-picker v-model:value="state.color1" />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<InternalProps>(), { text: true })
           :disabled="disabled"
           v-bind="$attrs"
         >
-          <w-icon
+          <WIcon
             :icon="$attrs.icon"
             :height="$attrs.height"
             :width="$attrs.width"
@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<InternalProps>(), { text: true })
 
   <template v-else>
     <n-button :text="text" :type="type" :disabled="disabled">
-      <w-icon
+      <WIcon
         :icon="$attrs.icon"
         :height="$attrs.height"
         :width="$attrs.width"

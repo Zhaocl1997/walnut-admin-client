@@ -208,7 +208,7 @@ defineExpose({
           <n-tooltip :disabled="disabled" trigger="click" placement="right">
             <template #trigger>
               <n-button :disabled="disabled" type="primary" text>
-                <w-icon
+                <WIcon
                   icon="ant-design:font-colors-outlined"
                   width="20"
                 />
@@ -231,7 +231,7 @@ defineExpose({
           <n-tooltip :disabled="disabled" trigger="click" placement="right">
             <template #trigger>
               <n-button :disabled="disabled" type="info" text>
-                <w-icon
+                <WIcon
                   icon="ant-design:bg-colors-outlined"
                   width="20"
                 />
@@ -254,11 +254,11 @@ defineExpose({
           </n-tooltip>
 
           <n-button :disabled="disabled" type="warning" text @click="undo">
-            <w-icon icon="ant-design:undo-outlined" width="20" />
+            <WIcon icon="ant-design:undo-outlined" width="20" />
           </n-button>
 
           <n-button :disabled="disabled" type="error" text @click="clear">
-            <w-icon icon="ant-design:clear-outlined" width="20" />
+            <WIcon icon="ant-design:clear-outlined" width="20" />
           </n-button>
         </n-space>
       </div>
@@ -276,7 +276,7 @@ defineExpose({
           >
             <div class="hstack items-center justify-center gap-2">
               <span> png </span>
-              <w-icon icon="ant-design:download-outlined" width="20" />
+              <WIcon icon="ant-design:download-outlined" width="20" />
             </div>
           </n-button>
 
@@ -288,7 +288,7 @@ defineExpose({
           >
             <div class="hstack items-center justify-center gap-2">
               <span> jpeg </span>
-              <w-icon icon="ant-design:download-outlined" width="20" />
+              <WIcon icon="ant-design:download-outlined" width="20" />
             </div>
           </n-button>
         </n-space>

@@ -1,36 +1,34 @@
 <script lang="ts" setup>
-import WDict from '@/components/UI/Form/src/components/Extend/Dict.vue'
-
 defineOptions({
   name: 'DictDemo',
   defaultView: false,
 })
 
 const state = reactive({
-  dict1: null,
-  dict2: null,
-  dict3: null,
+  dict1: undefined,
+  dict2: undefined,
+  dict3: undefined,
   dict4: '0',
   dict5: [1, 2],
   dict6: 9,
-  dict7: null,
+  dict7: undefined,
   dict8: true,
   dict9: false,
 })
 </script>
 
 <template>
-  <w-demo-card title="Dictionary">
+  <WDemoCard title="Dictionary">
     <W-JSON :value="state" height="300px" />
 
     <n-list>
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="Highly packaged dict component, support render different component type"
         >
           Basic Usage
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <WDict v-model:value="state.dict1" dict-type="gbt_sex" />
@@ -50,9 +48,9 @@ const state = reactive({
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Feedback
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <WDict v-model:value="state.dict4" dict-type="gbt_sex" />
@@ -72,9 +70,9 @@ const state = reactive({
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Also support original component props
-        </w-title>
+        </WTitle>
 
         <WDict
           v-model:value="state.dict7"
@@ -88,9 +86,9 @@ const state = reactive({
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Handle boolean value
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <WDict
@@ -109,5 +107,5 @@ const state = reactive({
         </n-space>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

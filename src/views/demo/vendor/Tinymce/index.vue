@@ -37,12 +37,12 @@ const [register] = useForm<typeof formData.value>({
 </script>
 
 <template>
-  <w-demo-card title="Tinymce Demo">
+  <WDemoCard title="Tinymce Demo">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Basic usage
-        </w-title>
+        </WTitle>
 
         <pre class="whitespace-pre-wrap">Value: {{ value }}</pre>
         <w-tinymce
@@ -52,16 +52,16 @@ const [register] = useForm<typeof formData.value>({
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Form usage
-        </w-title>
+        </WTitle>
 
         <pre class="whitespace-pre-wrap">{{ formData }}</pre>
 
         <w-form :model="formData" @hook="register" />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>
 
 <style lang="scss" scoped></style>

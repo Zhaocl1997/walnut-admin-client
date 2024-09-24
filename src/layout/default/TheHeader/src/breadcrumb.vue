@@ -38,7 +38,7 @@ export default defineComponent({
     const renderBase = (item: AppSystemMenu) => (
       <div class="inline">
         {appSetting.breadcrumb.showIcon && (
-          <w-icon icon={item.icon} height="20" class="mr-1 -mb-1"></w-icon>
+          <WIcon icon={item.icon} height="20" class="mr-1 -mb-1"></WIcon>
         )}
         <span class="">{t(item.title!)}</span>
       </div>
@@ -57,7 +57,7 @@ export default defineComponent({
               key: i.name,
               label: t(i?.title!),
               icon: appSetting.breadcrumb.showIcon
-                ? () => <w-icon icon={i?.icon} height="20"></w-icon>
+                ? () => <WIcon icon={i?.icon} height="20"></WIcon>
                 : null,
               children: genOptions(i.children),
             } as DropdownOption),

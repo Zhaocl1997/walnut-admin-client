@@ -118,7 +118,7 @@ function getTitle(item: WTable.Column) {
                 <n-tooltip :trigger="isInBlackList(item.key) ? 'manual' : 'hover'" placement="left">
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
-                      <w-icon
+                      <WIcon
                         icon="ant-design:drag-outlined" height="20" class="mr-2 cursor-move" :class="[
                           { 'cursor-not-allowed': isInBlackList(item.key) },
                         ]"
@@ -141,7 +141,7 @@ function getTitle(item: WTable.Column) {
                 <n-tooltip trigger="hover">
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
-                      <w-icon
+                      <WIcon
                         icon="mdi:arrow-collapse-left" height="20" class="cursor-pointer text-primary" :style="{
                           color:
                             item.fixed === 'left'
@@ -166,7 +166,7 @@ function getTitle(item: WTable.Column) {
                 <n-tooltip trigger="hover">
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
-                      <w-icon
+                      <WIcon
                         icon="mdi:arrow-collapse-right" height="20" class="cursor-pointer" :style="{
                           color:
                             item.fixed === 'right'

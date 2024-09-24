@@ -33,7 +33,7 @@ export default defineComponent({
       }
 
       if (item.type === 'json')
-        return <w-JSON value={item.value}></w-JSON>
+        return <WJSON value={item.value}></WJSON>
 
       if (item.type === 'dict') {
         const res = AppDictMap.get(item.dictType!)

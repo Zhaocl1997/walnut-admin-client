@@ -12,7 +12,7 @@ const state = ref<any>({
 <template>
   <WDemoCard title="Email Input">
     <n-list>
-      <w-JSON :value="{ state }" height="200px" />
+      <WJSON :value="{ state }" height="200px" />
 
       <n-list-item>
         <WTitle prefix="bar" class="mb-2">

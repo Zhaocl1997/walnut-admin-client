@@ -2,7 +2,7 @@
 
 - This folder holds the svg icons which are added by developers.
 
-- Svg icon usage: `<w-icon icon="w-svg:your-svg-file-name" />`.
+- Svg icon usage: `<WIcon icon="w-svg:your-svg-file-name" />`.
 
 - This folder will not be bundle into final output, so add whatever svg icons you like here.
 

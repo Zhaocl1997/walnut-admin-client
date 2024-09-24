@@ -20,8 +20,8 @@ const state = ref({
 </script>
 
 <template>
-  <w-demo-card title="Select Tree">
-    <!-- <w-title show-left>Single 【{{ selectTree1 }}】 </w-title>
+  <WDemoCard title="Select Tree">
+    <!-- <WTitle show-left>Single 【{{ selectTree1 }}】 </WTitle>
     <w-select-tree
       v-model="selectTree1"
       :data="data"
@@ -32,7 +32,7 @@ const state = ref({
     <br />
     <br />
 
-    <w-title show-left>Multiple 【{{ selectTree2 }}】 </w-title>
+    <WTitle show-left>Multiple 【{{ selectTree2 }}】 </WTitle>
     <w-select-tree
       v-model="selectTree2"
       multiple
@@ -44,5 +44,5 @@ const state = ref({
 
     <br />
     <br /> -->
-  </w-demo-card>
+  </WDemoCard>
 </template>

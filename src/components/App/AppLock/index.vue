@@ -13,6 +13,6 @@ async function onLock() {
 
 <template>
   <div>
-    <w-icon icon="ant-design:lock-outlined" height="24" @click="onLock" />
+    <WIcon icon="ant-design:lock-outlined" height="24" @click="onLock" />
   </div>
 </template>

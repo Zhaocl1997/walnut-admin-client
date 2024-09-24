@@ -196,7 +196,7 @@ function onCreate() {
               {{ t('app.button.create') }}
 
               <template #icon>
-                <w-icon icon="ant-design:plus-outlined" />
+                <WIcon icon="ant-design:plus-outlined" />
               </template>
             </n-button>
           </WAppAuthorize>
@@ -216,7 +216,7 @@ function onCreate() {
       >
         <template #header>
           <div class="flex items-center">
-            <w-icon
+            <WIcon
               :icon="
                 actionType === 'create'
                   ? 'ant-design:plus-outlined'

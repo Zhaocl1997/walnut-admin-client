@@ -30,14 +30,14 @@ function onClear() {
 </script>
 
 <template>
-  <w-demo-card title="Input">
-    <w-JSON :value="state" />
+  <WDemoCard title="Input">
+    <WJSON :value="state" />
 
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Black List
-        </w-title>
+        </WTitle>
 
         <w-input
           v-model:value="state.input1"
@@ -53,9 +53,9 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Password
-        </w-title>
+        </WTitle>
 
         <w-input
           v-model:value="state.input2"
@@ -67,9 +67,9 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Suffix(prop)
-        </w-title>
+        </WTitle>
 
         <w-input
           v-model:value="state.input3"
@@ -81,9 +81,9 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Suffix Icon(prop)
-        </w-title>
+        </WTitle>
 
         <w-input
           v-model:value="state.input4"
@@ -95,9 +95,9 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Help Message
-        </w-title>
+        </WTitle>
 
         <w-input
           v-model:value="state.input5"
@@ -108,9 +108,9 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Builtin Modifier
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-input
@@ -134,9 +134,9 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Copiable
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-input
@@ -155,5 +155,5 @@ function onClear() {
         </n-space>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

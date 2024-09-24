@@ -1,2 +1,6 @@
 export { default } from './index.vue'
-export * from './props'
+
+export interface ICompExtraLocaleSelectProps {
+  prefix?: string
+  presetKey?: string
+}

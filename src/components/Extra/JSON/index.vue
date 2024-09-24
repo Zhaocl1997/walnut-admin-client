@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<ICompExtraJSONProps>(), {
   value: {},
   height: '100px',
   width: '100%',
+  copy: true,
 })
 
 const jsonRef = shallowRef()
@@ -27,7 +28,7 @@ const isHovered = useElementHover(jsonRef)
     <div ref="jsonRef">
       <n-code :code="getJSON" language="json" word-wrap :trim="false" />
 
-      <WTransition appear name="fade-right">
+      <WTransition v-if="copy" appear name="fade-right">
         <WCopy
           v-show="isHovered"
           :source="getJSON"

@@ -16,17 +16,17 @@ const state = reactive({
 </script>
 
 <template>
-  <w-demo-card title="Radio">
+  <WDemoCard title="Radio">
     <W-JSON :value="state" height="200px" />
 
     <n-list>
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="string/number will all feedback correctly"
         >
           Basic usage
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-radio
@@ -56,9 +56,9 @@ const state = reactive({
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Button Radio
-        </w-title>
+        </WTitle>
 
         <w-radio
           v-model:value="state.radio5"
@@ -68,5 +68,5 @@ const state = reactive({
         />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

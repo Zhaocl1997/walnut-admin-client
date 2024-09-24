@@ -33,17 +33,17 @@ options.push({
 </script>
 
 <template>
-  <w-demo-card title="Select">
+  <WDemoCard title="Select">
     <W-JSON :value="state" height="300px" />
 
     <n-list>
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="string/number will all feedback correctly"
         >
           Basic usage
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-select
@@ -61,12 +61,12 @@ options.push({
       </n-list-item>
 
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="same for multiple, string/number will all feedback correctly"
         >
           Multiple
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-select
@@ -86,12 +86,12 @@ options.push({
       </n-list-item>
 
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="provide a `value-separator` prop to use select with a string value"
         >
           Multiple but value is string
-        </w-title>
+        </WTitle>
 
         <w-select
           v-model:value="state.select5"
@@ -103,12 +103,12 @@ options.push({
       </n-list-item>
 
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="The example is role select, later will got MORE components like this"
         >
           Highly packaged for a remote list select
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-role-select v-model:value="state.select6" />
@@ -124,9 +124,9 @@ options.push({
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           If label too long, you can add a tooltip prop
-        </w-title>
+        </WTitle>
 
         <w-select
           v-model:value="state.select9"
@@ -137,5 +137,5 @@ options.push({
         />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

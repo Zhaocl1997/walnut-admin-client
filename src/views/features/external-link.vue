@@ -49,7 +49,7 @@ function onClick() {
             <div
               class="h-10 w-10 hstack items-center justify-center rounded-lg bg-gray-200"
             >
-              <w-icon icon="ant-design:link-outlined" height="24" />
+              <WIcon icon="ant-design:link-outlined" height="24" />
             </div>
             <div class="text-info tracking-wide">
               {{ $route.query.url }}

@@ -16,7 +16,7 @@ function onClick() {
 
 <template>
   <w-transition appear name="slide-up">
-    <w-icon
+    <WIcon
       v-if="appSetting.getMenuCollapseIconStatus"
       :icon="
         appMenu.collapse

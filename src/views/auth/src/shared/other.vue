@@ -125,7 +125,7 @@ useEventListener('beforeunload', () => {
       <div class="w-full hstack justify-evenly children:cursor-pointer hover:children:text-primary">
         <span v-for="item in iconArr" :key="item.key" :title="item.title" @click="onClick(item.key)">
           <n-button text :disabled="loading">
-            <w-icon :icon="item.icon" width="20" :disabled="loading" />
+            <WIcon :icon="item.icon" width="20" :disabled="loading" />
           </n-button>
         </span>
       </div>

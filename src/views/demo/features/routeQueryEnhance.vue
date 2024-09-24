@@ -50,7 +50,7 @@ async function onClick(type: number) {
     </n-space>
 
     <div>
-      <w-JSON
+      <WJSON
         :value="{
           query: $route.query,
         }" height="auto"

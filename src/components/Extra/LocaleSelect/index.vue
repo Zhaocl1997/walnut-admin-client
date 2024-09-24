@@ -1,21 +1,14 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
+import type { ICompExtraLocaleSelectProps } from '.'
 
 defineOptions({
   name: 'WLocaleSelect',
   inheritAttrs: false,
 })
 
-const props = defineProps<InternalProps>()
-
-const emits = defineEmits(['update:value'])
-
-// TODO 888
-interface InternalProps {
-  value?: string
-  prefix?: string
-  presetKey?: string
-}
+const props = defineProps<ICompExtraLocaleSelectProps>()
+const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: true })
 
 const { locale, messages } = useAppI18n()
 const loading = ref(false)
@@ -31,8 +24,6 @@ const options = computed(() =>
     })
     .filter(i => i.value),
 )
-
-const onUpdateValue = (v: string) => emits('update:value', v)
 
 function onRenderLabel(option: SelectOption) {
   return `${option.label} (${option.value})`
@@ -64,24 +55,29 @@ onDeactivated(() => {
 
 <template>
   <div class="w-full hstack gap-2">
-    <w-select
-      v-model:show="show" :value="value" :options="options" clearable filterable :render-label="onRenderLabel"
-      tooltip :virtual-scroll="false" @update:value="onUpdateValue"
+    <WSelect
+      v-model:show="show"
+      v-model:value="value!"
+      :options="options"
+      clearable
+      filterable
+      :render-label="onRenderLabel"
+      tooltip
     >
       <template #action>
         <n-space>
-          <w-button size="small" icon="ant-design:plus-outlined" @click="onNewLocale">
+          <WButton size="small" icon="ant-design:plus-outlined" @click="onNewLocale">
             {{ $t('app.button.create') }}
-          </w-button>
+          </WButton>
 
-          <w-button
+          <WButton
             size="small" icon="ant-design:sync-outlined" :loading="loading" :disabled="loading"
             @click="onRefresh"
           >
             {{ $t('app.base.refresh') }}
-          </w-button>
+          </WButton>
         </n-space>
       </template>
-    </w-select>
+    </WSelect>
   </div>
 </template>

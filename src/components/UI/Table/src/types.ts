@@ -158,7 +158,7 @@ export declare namespace WTable {
     }
 
     /**
-     * @description preset icon column, use `w-icon`by default
+     * @description preset icon column, use `WIcon`by default
      */
     type Icon<T = RowData> = BaseExtend<T, 'icon'> & {
       extendIconName: string | RenderFn<T, string>

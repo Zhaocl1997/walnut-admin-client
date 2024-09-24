@@ -11,7 +11,7 @@ const { currentMouseTab, devToolShow, onOpenFile } = getTabsContext()
 <template>
   <n-modal v-if="getShowDevTools" v-model:show="devToolShow">
     <n-card style="width: 600px" role="dialog" aria-modal="true">
-      <w-JSON :value="currentMouseTab" height="auto" />
+      <WJSON :value="currentMouseTab" height="auto" />
 
       <n-button v-show="!currentMouseTab?.meta.url" @click="onOpenFile">
         Open vue file related to this tab in

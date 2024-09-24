@@ -92,15 +92,15 @@ function onOpenAdvacned() {
 </script>
 
 <template>
-  <w-demo-card title="useForm(advanced)" description="Advanced Form usage.">
+  <WDemoCard title="useForm(advanced)" description="Advanced Form usage.">
     <w-form :model="configData" @hook="register1" />
 
-    <w-JSON :value="formData" />
+    <WJSON :value="formData" />
 
     <n-button @click="onOpenAdvacned">
       Open An Advanced Form
     </n-button>
 
     <w-form :model="formData" @hook="register2" />
-  </w-demo-card>
+  </WDemoCard>
 </template>

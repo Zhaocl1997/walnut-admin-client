@@ -1,11 +1,8 @@
 <script lang="ts" setup>
-// TODO 888
-interface InternalProps {
+const props = withDefaults(defineProps<{
   total: number
   current: number
-}
-
-const props = withDefaults(defineProps<InternalProps>(), {
+}>(), {
   total: 9,
   current: -1,
 })
@@ -13,7 +10,7 @@ const props = withDefaults(defineProps<InternalProps>(), {
 const before = ref(0)
 const isPlay = ref(false)
 
-onMounted(() => {
+onBeforeMount(() => {
   before.value = props.total === props.current ? -1 : props.total
 })
 
@@ -59,7 +56,7 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-  $width: 60px;
+$width: 60px;
 $height: 90px;
 $fontSize: 80px;
 $lineWidth: 3px;

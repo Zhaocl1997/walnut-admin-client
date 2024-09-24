@@ -17,17 +17,17 @@ const state = reactive({
 </script>
 
 <template>
-  <w-demo-card title="Checkbox">
+  <WDemoCard title="Checkbox">
     <W-JSON :value="state" height="300px" />
 
     <n-list>
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="string/number will all feedback correctly"
         >
           Basic usage
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-checkbox
@@ -54,12 +54,12 @@ const state = reactive({
       </n-list-item>
 
       <n-list-item>
-        <w-title
+        <WTitle
           prefix="bar"
           help-message="provide a `value-separator` prop to use checkbox with a string value"
         >
           String v-model:value
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-checkbox
@@ -88,5 +88,5 @@ const state = reactive({
         </n-space>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

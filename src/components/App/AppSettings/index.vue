@@ -14,7 +14,7 @@ const show = ref(false)
     class="fixed bottom-20 right-20 cursor-pointer hover:text-primaryHover"
     style="z-index: 1999"
   >
-    <w-icon
+    <WIcon
       height="36"
       icon="ant-design:setting-outlined"
       @click="() => (show = true)"

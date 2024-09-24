@@ -11,14 +11,14 @@ const state = reactive({
 </script>
 
 <template>
-  <w-demo-card title="Dynamic Tags">
+  <WDemoCard title="Dynamic Tags">
     <W-JSON :value="state" height="200px" />
 
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Basic usage
-        </w-title>
+        </WTitle>
 
         <n-space vertical>
           <w-dynamic-tags v-model:value="state.dynamicTag1" />
@@ -27,5 +27,5 @@ const state = reactive({
         </n-space>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

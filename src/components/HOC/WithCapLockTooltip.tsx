@@ -32,6 +32,8 @@ export function WithCapLockToolTip() {
     inheritAttrs: false,
 
     setup(props, ctx) {
+      console.log(123)
+
       return () => (
         <n-tooltip v-model={[tooltipShow.value, 'show']} trigger="manual" placement="right">
           {{

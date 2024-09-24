@@ -35,13 +35,13 @@ const values = ref({
 </script>
 
 <template>
-  <w-demo-card title="Area Cascader with endpoint support">
-    <w-JSON :value="values" />
+  <WDemoCard title="Area Cascader with endpoint support">
+    <WJSON :value="values" />
 
     <n-divider />
-    <w-title prefix="bar">
+    <WTitle prefix="bar">
       Base single cascader
-    </w-title>
+    </WTitle>
 
     <n-space vertical>
       <w-area-cascader
@@ -71,9 +71,9 @@ const values = ref({
     </n-space>
 
     <n-divider />
-    <w-title prefix="bar">
+    <WTitle prefix="bar">
       Base Single feedback
-    </w-title>
+    </WTitle>
 
     <n-space vertical>
       <w-area-cascader
@@ -103,9 +103,9 @@ const values = ref({
     </n-space>
 
     <n-divider />
-    <w-title prefix="bar">
+    <WTitle prefix="bar">
       Base multiple cascader
-    </w-title>
+    </WTitle>
 
     <n-space vertical>
       <w-area-cascader
@@ -140,9 +140,9 @@ const values = ref({
     </n-space>
 
     <n-divider />
-    <w-title prefix="bar">
+    <WTitle prefix="bar">
       Base multiple feedback
-    </w-title>
+    </WTitle>
 
     <n-space vertical>
       <w-area-cascader
@@ -175,5 +175,5 @@ const values = ref({
         :depth="4"
       />
     </n-space>
-  </w-demo-card>
+  </WDemoCard>
 </template>

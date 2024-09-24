@@ -27,9 +27,9 @@ export default defineComponent({
 
       // prop icon for suffix/prefix
       props.suffixIcon
-      && (def.suffix = () => <w-icon icon={props.suffixIcon}></w-icon>)
+      && (def.suffix = () => <WIcon icon={props.suffixIcon}></WIcon>)
       props.prefixIcon
-      && (def.prefix = () => <w-icon icon={props.prefixIcon}></w-icon>)
+      && (def.prefix = () => <WIcon icon={props.prefixIcon}></WIcon>)
 
       // copy component for input
       props.copiable
@@ -52,7 +52,7 @@ export default defineComponent({
           {{
             default: () => props.helpMessage,
             trigger: () => (
-              <w-icon icon="ant-design:question-circle-outlined"></w-icon>
+              <WIcon icon="ant-design:question-circle-outlined"></WIcon>
             ),
           }}
         </n-tooltip>

@@ -7,31 +7,31 @@ defineOptions({
 </script>
 
 <template>
-  <w-demo-card title="ECharts Demo">
+  <WDemoCard title="ECharts Demo">
     <n-list>
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Line
-        </w-title>
+        </WTitle>
 
         <w-echarts :option="option1" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Bar
-        </w-title>
+        </WTitle>
 
         <w-echarts :option="option2" />
       </n-list-item>
 
       <n-list-item>
-        <w-title prefix="bar">
+        <WTitle prefix="bar">
           Pie
-        </w-title>
+        </WTitle>
 
         <w-echarts :option="option3" />
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

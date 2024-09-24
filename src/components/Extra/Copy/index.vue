@@ -1,17 +1,18 @@
 <script lang="ts" setup>
+import type { ICompExtraCopyProps } from '.'
+
 defineOptions({
   name: 'WCopy',
 })
 
 const props = withDefaults(
-  defineProps<{ source: any, copiedDuring?: number, icon?: boolean }>(),
-  { copiedDuring: 3000 },
+  defineProps<ICompExtraCopyProps>(),
+  { copiedDuring: 3000, icon: false },
 )
-
-const { t } = useAppI18n()
 
 const { copy, copied } = useClipboard({
   copiedDuring: props.copiedDuring,
+  legacy: true,
 })
 
 async function onClick() {
@@ -27,15 +28,18 @@ async function onClick() {
     :type="copied ? 'success' : 'info'"
     @click="onClick"
   >
-    {{ copied ? t('app.base.success') : t('app.button.copy') }}
+    {{ copied ? $t('app.base.success') : $t('app.button.copy') }}
   </n-button>
 
+  <!-- TODO button icon replace -->
   <n-button v-else :type="copied ? 'success' : 'info'" text @click="onClick">
-    <w-icon
-      height="24"
-      :icon="
-        copied ? 'ant-design:check-circle-outlined' : 'ant-design:copy-outlined'
-      "
-    />
+    <template #icon>
+      <WIcon
+        height="24"
+        :icon="
+          copied ? 'ant-design:check-circle-outlined' : 'ant-design:copy-outlined'
+        "
+      />
+    </template>
   </n-button>
 </template>

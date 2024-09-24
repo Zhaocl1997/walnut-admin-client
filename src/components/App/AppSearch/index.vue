@@ -5,5 +5,5 @@ defineOptions({
 </script>
 
 <template>
-  <div><w-icon icon="ant-design:search-outlined" height="24" /></div>
+  <div><WIcon icon="ant-design:search-outlined" height="24" /></div>
 </template>

@@ -39,13 +39,13 @@ const [register2] = useForm({
 </script>
 
 <template>
-  <w-demo-card title="Dynamic Input Form" description="Dynamic Input Form.">
+  <WDemoCard title="Dynamic Input Form" description="Dynamic Input Form.">
     <w-form :model="configData" @hook="register1" />
 
-    <w-JSON :value="formData" />
+    <WJSON :value="formData" />
 
     <w-form :model="formData" @hook="register2" />
-  </w-demo-card>
+  </WDemoCard>
 </template>
 
 <style lang="scss" scoped></style>

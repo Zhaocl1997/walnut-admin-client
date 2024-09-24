@@ -54,28 +54,28 @@ const [register2] = useTree({
 </script>
 
 <template>
-  <w-demo-card title="Tree">
-    <w-JSON :value="state" height="300px" />
+  <WDemoCard title="Tree">
+    <WJSON :value="state" height="300px" />
 
     <n-list>
       <n-list-item>
         <n-grid :cols="2">
           <n-gi>
-            <w-title prefix="bar">
+            <WTitle prefix="bar">
               Single Choose Tree
-            </w-title>
+            </WTitle>
 
-            <w-tree v-model:value="state.tree1" @hook="register1" />
+            <WTree v-model:value="state.tree1" @hook="register1" />
           </n-gi>
           <n-gi>
-            <w-title prefix="bar">
+            <WTitle prefix="bar">
               Multiple Choose Tree
-            </w-title>
+            </WTitle>
 
-            <w-tree v-model:value="state.tree2" @hook="register2" />
+            <WTree v-model:value="state.tree2" @hook="register2" />
           </n-gi>
         </n-grid>
       </n-list-item>
     </n-list>
-  </w-demo-card>
+  </WDemoCard>
 </template>

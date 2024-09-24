@@ -158,12 +158,12 @@ function onDynamicQueryandParam(type: number) {
 
 <template>
   <div class="m-4">
-    <w-demo-card title="Demo for layout tab">
+    <WDemoCard title="Demo for layout tab">
       <n-list>
         <n-list-item>
-          <w-title prefix="bar">
+          <WTitle prefix="bar">
             Basic create: {{ index }}
-          </w-title>
+          </WTitle>
 
           <n-button @click="onCreate(0)">
             Create
@@ -180,9 +180,9 @@ function onDynamicQueryandParam(type: number) {
         </n-list-item>
 
         <n-list-item>
-          <w-title prefix="bar">
+          <WTitle prefix="bar">
             Dynamic Title
-          </w-title>
+          </WTitle>
 
           <n-button @click="onDynamicTitle(1)">
             Set title(default 5s)
@@ -199,9 +199,9 @@ function onDynamicQueryandParam(type: number) {
         </n-list-item>
 
         <n-list-item>
-          <w-title prefix="bar">
+          <WTitle prefix="bar">
             Other tab Title (Open the custom animation name page and then come back)
-          </w-title>
+          </WTitle>
 
           <n-button
             :disabled="getOtherTabButtonDisabled"
@@ -230,9 +230,9 @@ function onDynamicQueryandParam(type: number) {
         </n-list-item>
 
         <n-list-item>
-          <w-title prefix="bar">
+          <WTitle prefix="bar">
             Dynamic Icon
-          </w-title>
+          </WTitle>
 
           <n-button @click="onDynamicIcon(1)">
             Set Icon(default 5s)
@@ -249,9 +249,9 @@ function onDynamicQueryandParam(type: number) {
         </n-list-item>
 
         <n-list-item>
-          <w-title prefix="bar">
+          <WTitle prefix="bar">
             Other tab Icon (Open the custom animation name page and then come back)
-          </w-title>
+          </WTitle>
 
           <n-button
             :disabled="getOtherTabButtonDisabled"
@@ -279,6 +279,6 @@ function onDynamicQueryandParam(type: number) {
           </n-button>
         </n-list-item>
       </n-list>
-    </w-demo-card>
+    </WDemoCard>
   </div>
 </template>

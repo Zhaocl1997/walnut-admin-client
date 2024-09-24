@@ -58,6 +58,7 @@ const comp = {
     'DynamicTags',
     'Form',
     'Icon',
+    'IconButton',
     'Input',
     'InputNumber',
     'Modal',

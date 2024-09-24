@@ -1,19 +1,19 @@
-import type { WTree } from '../types'
+import type { ICompUITreeInst, ICompUITreeProps } from '../types'
 
-export function useTree<T = RowData>(props: WTree.Props<T>): WTree.Hook.useTree<T> {
+export function useTree<T = RowData>(props: ICompUITreeProps<T>) {
   isInSetup()
 
-  const wTreeRef = ref<Nullable<WTree.Inst.WTreeInst<T>>>(null)
+  const wTreeRef = shallowRef<ICompUITreeInst<T>>()
 
-  const register = (instance: WTree.Inst.WTreeInst<T>) => {
+  const register = (instance: ICompUITreeInst<T>) => {
     wTreeRef.value = instance
 
     watchEffect(() => {
-      props && instance.setProps(props)
+      instance.setProps(props)
     })
   }
 
-  const methods: WTree.Inst.WTreeInst<T> = {
+  const methods: Partial<ICompUITreeInst<T>> = {
     setProps: props => wTreeRef.value?.setProps(props),
   }
 

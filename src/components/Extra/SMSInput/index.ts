@@ -1,9 +1,8 @@
 export { default } from './index.vue'
 
-// TODO 888
-export interface WSMSInputProps {
+export interface ICompExtraSMSInputProps {
   retrySeconds?: number
   simpleVerify?: boolean
-  onBeforeCountdown?: () => Promise<boolean>
+  onBeforeCountdown?: (startLoading?: Fn, stopLoading?: Fn) => Promise<boolean>
   onSuccess?: (startCountdown: () => void) => Promise<void>
 }
