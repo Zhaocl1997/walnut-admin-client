@@ -23,15 +23,14 @@ const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: tru
 const percentage = ref(0)
 const status = ref<Status>('success')
 
-const [DefineTemplate, ReuseTemplate] = createReusableTemplate()
-
-const { onTargetBlur, onTargetFocus, WithCapLockWrapper } = WithCapLockToolTip()
+const { onTargetBlur, onTargetFocus, WithCapLockWrapper } = WithCapLockToolTip(toRef(props, 'capslock'))
 
 watch(
   () => value.value,
   (val) => {
-    if (!props.progress)
+    if (!props.progress) {
       return
+    }
     const strong: number = checkStrStrong(val!)
 
     status.value = statusTable[strong]
@@ -48,7 +47,7 @@ function onKeyup(e: KeyboardEvent) {
 
 <template>
   <div class="w-full">
-    <DefineTemplate>
+    <WithCapLockWrapper>
       <n-input
         v-model:value="value"
         type="password"
@@ -64,12 +63,7 @@ function onKeyup(e: KeyboardEvent) {
         @focus="onTargetFocus"
         @blur="onTargetBlur"
       />
-    </DefineTemplate>
-
-    <WithCapLockWrapper v-if="capslock">
-      <ReuseTemplate />
     </WithCapLockWrapper>
-    <ReuseTemplate v-else />
 
     <n-progress
       v-if="progress"

@@ -1,4 +1,4 @@
-export function WithCapLockToolTip() {
+export function WithCapLockToolTip(lock: Ref<boolean>) {
   const { t } = useAppI18n()
 
   const tooltipShow = ref(false)
@@ -31,19 +31,26 @@ export function WithCapLockToolTip() {
 
     inheritAttrs: false,
 
-    setup(props, ctx) {
-      console.log(123)
+    setup(_, ctx) {
+      const [DefineTemplate, ReuseTemplate] = createReusableTemplate()
 
       return () => (
-        <n-tooltip v-model={[tooltipShow.value, 'show']} trigger="manual" placement="right">
-          {{
-            default: () => t('comp.password.capslock'),
-            trigger: () => ctx.slots.default!(),
-          }}
-        </n-tooltip>
+        <>
+          <DefineTemplate>{{ default: () => ctx.slots.default!() }}</DefineTemplate>
+          {lock.value
+            ? (
+                <n-tooltip v-model={[tooltipShow.value, 'show']} trigger="manual" placement="right">
+                  {{
+                    default: () => t('comp.password.capslock'),
+                    trigger: () => <ReuseTemplate></ReuseTemplate>,
+                  }}
+                </n-tooltip>
+              )
+            : <ReuseTemplate></ReuseTemplate>}
+        </>
       )
     },
   })
 
-  return { onTargetFocus, onTargetBlur, WithCapLockWrapper }
+  return { WithCapLockWrapper, onTargetFocus, onTargetBlur }
 }
