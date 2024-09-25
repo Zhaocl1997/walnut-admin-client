@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { toggleClass } from 'easy-fns-ts'
-import type { ICompUIModalProps } from '..'
-import { useModalDraggable } from './hook/useModalDraggable'
+import { useModalDraggable } from './useModalDraggable'
+import type { ICompUIModalProps } from '.'
 
 defineOptions({
   name: 'WModal',
@@ -25,8 +25,8 @@ const isFullscreen = ref(false)
 
 watch(
   () => show.value,
-  () => {
-    if (props.draggable) {
+  (v) => {
+    if (v && props.draggable) {
       nextTick(() => {
         const dragEl
             = modelRef.value?.containerRef.querySelector('.w-card-header')

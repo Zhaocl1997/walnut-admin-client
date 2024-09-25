@@ -11,7 +11,15 @@ withDefaults(defineProps<ICompUIDrawerProps>(), {
   defaultButton: true,
 })
 
-defineEmits<{ yes: [], no: [] }>()
+const emits = defineEmits<{ yes: [], no: [] }>()
+
+function onNo() {
+  emits('no')
+}
+
+function onYes() {
+  emits('yes')
+}
 </script>
 
 <template>
@@ -33,7 +41,7 @@ defineEmits<{ yes: [], no: [] }>()
         <n-space v-if="defaultButton" size="small">
           <n-button
             size="small"
-            :on-click="() => $emit('no')"
+            :on-click="onNo"
             :disabled="loading"
           >
             {{ $t('app.button.no') }}
@@ -42,7 +50,7 @@ defineEmits<{ yes: [], no: [] }>()
           <n-button
             size="small"
             type="primary"
-            :on-click="() => $emit('yes')"
+            :on-click="onYes"
             :disabled="loading"
             :loading="loading"
           >

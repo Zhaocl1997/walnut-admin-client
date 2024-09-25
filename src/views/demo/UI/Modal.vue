@@ -1,22 +1,23 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'DrawerDemo',
+  name: 'ModalDemo',
   defaultView: false,
 })
 
-const drawerShow = ref(false)
+const modalShow = ref(false)
 
-const configFormData = ref<any>({
-  title: 'Drawer Title',
-  helpMessage: 'Drawer Help Message',
+const configFormData = ref({
+  title: 'Modal Title',
+  helpMessage: 'Modal Help Message',
   closable: true,
   maskClosable: true,
   width: '40%',
-  count: 40,
+  height: undefined,
+  count: 20,
   loading: false,
-  placement: 'right',
+  draggable: true,
   scope: false,
-  resizable: false,
+  fullscreen: true,
 })
 
 const [register] = useForm<typeof configFormData.value>({
@@ -68,8 +69,12 @@ const [register] = useForm<typeof configFormData.value>({
         label: 'Width',
         path: 'width',
       },
-      componentProp: {
-        disabled: computed(() => configFormData.value.resizable),
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        label: 'Height',
+        path: 'height',
       },
     },
     {
@@ -80,16 +85,17 @@ const [register] = useForm<typeof configFormData.value>({
       },
     },
     {
-      type: 'Base:Radio',
+      type: 'Base:Switch',
       formProp: {
-        label: 'Placement',
-        path: 'placement',
+        label: 'Draggable',
+        path: 'draggable',
       },
-      componentProp: {
-        options: ['top', 'right', 'bottom', 'left'].map(item => ({
-          label: item,
-          value: item,
-        })),
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        label: 'Full Screen',
+        path: 'fullscreen',
       },
     },
     {
@@ -101,18 +107,11 @@ const [register] = useForm<typeof configFormData.value>({
       },
     },
     {
-      type: 'Base:Switch',
-      formProp: {
-        label: 'Resizable',
-        path: 'resizable',
-      },
-    },
-    {
       type: 'Base:Button',
       componentProp: {
-        textProp: 'Open Drawer',
+        textProp: 'Open Modal',
         onClick: () => {
-          drawerShow.value = true
+          modalShow.value = true
         },
       },
     },
@@ -121,31 +120,29 @@ const [register] = useForm<typeof configFormData.value>({
 </script>
 
 <template>
-  <WDemoCard title="Drawer">
+  <WDemoCard id="modal-target" title="Modal">
     <n-space vertical>
       <WForm :model="configFormData" @hook="register" />
     </n-space>
 
-    <WDrawer
-      v-model:show="drawerShow"
+    <WModal
+      v-model:show="modalShow"
       :title="configFormData.title"
       :help-message="configFormData.helpMessage"
       :closable="configFormData.closable"
       :mask-closable="configFormData.maskClosable"
-      :width="configFormData.resizable ? undefined : configFormData.width"
+      :width="configFormData.width"
+      :height="configFormData.height"
       :loading="configFormData.loading"
-      :placement="configFormData.placement"
-      :to="configFormData.scope ? '#Drawer' : undefined"
-      :trap-focus="!configFormData.scope"
-      :block-scroll="!configFormData.scope"
-      :resizable="configFormData.resizable"
-      :default-width="configFormData.width"
-      @yes="drawerShow = false"
-      @no="drawerShow = false"
+      :draggable="configFormData.draggable"
+      :fullscreen="configFormData.fullscreen"
+      :to="configFormData.scope ? '#modal-target' : undefined"
+      @yes="modalShow = false"
+      @no="modalShow = false"
     >
       <div v-for="item in configFormData.count" :key="item">
-        this is drawer content {{ item }}
+        this is modal content {{ item }}
       </div>
-    </WDrawer>
+    </WModal>
   </WDemoCard>
 </template>

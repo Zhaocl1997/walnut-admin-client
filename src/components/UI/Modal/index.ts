@@ -1,7 +1,8 @@
 import type { ModalProps } from 'naive-ui'
 
-export { default } from './src/index.vue'
+export { default } from './index.vue'
 
+// TODO 000
 export interface ICompUIModalProps extends /* @vue-ignore */ ModalProps {
   loading?: boolean
   title?: string
