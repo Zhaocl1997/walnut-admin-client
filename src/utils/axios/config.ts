@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
-import { cacheAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer, cancelAdapterEnhancer } from './src/adapters'
+import qs from 'qs'
+import { cacheAdapterEnhancer, cancelAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer } from './src/adapters'
 
 const { axiosTimeout } = useAppEnv('seconds')
 
@@ -10,6 +11,12 @@ const adapter = axios.getAdapter('fetch')
 
 export const originalConfig: AxiosRequestConfig = {
   baseURL: httpUrl,
+
+  paramsSerializer: {
+    // default, string array use comma to join into string
+    // ['a', 'b'] => 'a,b'
+    serialize: params => qs.stringify(params, { arrayFormat: 'comma' }),
+  },
 
   // time out, default is 10s
   timeout: Number(axiosTimeout) * 1000,
