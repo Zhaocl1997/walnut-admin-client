@@ -1,13 +1,27 @@
-import type { WCheckboxProps } from '@/components/UI/Checkbox'
-import type { WRadioProps } from '@/components/UI/Radio'
-import type { WSelectProps } from '@/components/UI/Select'
+import type { ICompUICheckboxProps } from '@/components/UI/Checkbox'
+import type { ICompUIRadioProps } from '@/components/UI/Radio'
+import type { ICompUISelectProps } from '@/components/UI/Select'
 
-export type IDictType = 'select' | 'checkbox' | 'radio'
+export type ICompExtraDictRenderType = 'select' | 'checkbox' | 'radio'
 
-export interface IDictProps {
+interface ICompExtraDictSelect {
   dictType: string
-  dictRenderType?: IDictType
-  renderComponentProps?: WSelectProps | WCheckboxProps | WRadioProps
+  dictRenderType?: 'select'
+  renderComponentProps?: ICompUISelectProps
 }
+
+interface ICompExtraDictCheckbox {
+  dictType: string
+  dictRenderType?: 'checkbox'
+  renderComponentProps?: ICompUICheckboxProps
+}
+
+interface ICompExtraDictRadio {
+  dictType: string
+  dictRenderType?: 'radio'
+  renderComponentProps?: ICompUIRadioProps
+}
+
+export type ICompExtraDictProps = ICompExtraDictSelect | ICompExtraDictCheckbox | ICompExtraDictRadio
 
 export { default } from './index.vue'
