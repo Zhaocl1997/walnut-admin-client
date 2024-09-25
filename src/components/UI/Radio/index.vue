@@ -1,0 +1,28 @@
+<script lang="ts" setup>
+import type { RadioGroupProps } from 'naive-ui'
+import type { ICompUIRadioProps } from '.'
+
+defineOptions({
+  name: 'WUIRadio',
+})
+
+const props = withDefaults(defineProps<ICompUIRadioProps>(), { button: false })
+const attrs: RadioGroupProps = useAttrs()
+</script>
+
+<template>
+  <n-radio-group>
+    <template v-if="!button">
+      <n-space>
+        <n-radio v-for="item in options" :key="(item.value as string)" v-bind="item">
+          {{ item.label }}
+        </n-radio>
+      </n-space>
+    </template>
+    <template v-else>
+      <n-radio-button v-for="item in options" :key="(item.value as string)" v-bind="item">
+        {{ item.label }}
+      </n-radio-button>
+    </template>
+  </n-radio-group>
+</template>

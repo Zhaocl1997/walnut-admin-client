@@ -7,11 +7,9 @@ defineOptions({
 })
 
 const state = reactive({
-  radio1: '',
-  radio2: '1',
-  radio3: '4',
-  radio4: 4,
-  radio5: null,
+  radio1: undefined,
+  radio2: 1,
+  radio3: undefined,
 })
 </script>
 
@@ -29,28 +27,15 @@ const state = reactive({
         </WTitle>
 
         <n-space vertical>
-          <w-radio
+          <WRadio
             v-model:value="state.radio1"
             :options="options"
-            value-type="number"
           />
 
-          <w-radio
+          <WRadio
             v-model:value="state.radio2"
             :options="options"
-            value-type="number"
-          />
-
-          <w-radio
-            v-model:value="state.radio3"
-            :options="options"
-            value-type="number"
-          />
-
-          <w-radio
-            v-model:value="state.radio4"
-            :options="options"
-            value-type="number"
+            size="large"
           />
         </n-space>
       </n-list-item>
@@ -60,10 +45,9 @@ const state = reactive({
           Button Radio
         </WTitle>
 
-        <w-radio
-          v-model:value="state.radio5"
+        <WRadio
+          v-model:value="state.radio3"
           :options="options"
-          value-type="number"
           button
         />
       </n-list-item>

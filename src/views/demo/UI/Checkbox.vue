@@ -30,21 +30,21 @@ const state = reactive({
         </WTitle>
 
         <n-space vertical>
-          <w-checkbox
+          <WCheckbox
             v-model:value="state.checkbox1"
             :options="options"
             value-type="number"
             multiple
           />
 
-          <w-checkbox
+          <WCheckbox
             v-model:value="state.checkbox2"
             :options="options"
             value-type="number"
             multiple
           />
 
-          <w-checkbox
+          <WCheckbox
             v-model:value="state.checkbox3"
             :options="options"
             value-type="number"
@@ -62,7 +62,7 @@ const state = reactive({
         </WTitle>
 
         <n-space vertical>
-          <w-checkbox
+          <WCheckbox
             v-model:value="state.checkbox4"
             :options="options"
             value-type="number"
@@ -70,7 +70,7 @@ const state = reactive({
             multiple
           />
 
-          <w-checkbox
+          <WCheckbox
             v-model:value="state.checkbox5"
             :options="options"
             value-type="number"
@@ -78,7 +78,7 @@ const state = reactive({
             multiple
           />
 
-          <w-checkbox
+          <WCheckbox
             v-model:value="state.checkbox6"
             :options="options"
             value-type="number"

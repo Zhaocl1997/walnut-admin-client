@@ -1,8 +1,8 @@
-import { WithValue } from '../../HOC/WithValue'
-import WCheckbox from './src/index.vue'
+import type { CheckboxGroupProps, CheckboxProps } from 'naive-ui'
 
-const HOCCheckbox = WithValue(WCheckbox)
+export { default } from './index.vue'
 
-export * from './src/types'
-
-export default HOCCheckbox
+// TODO 000
+export interface ICompUICheckboxProps extends /* @vue-ignore */ CheckboxGroupProps {
+  options: CheckboxProps[]
+}

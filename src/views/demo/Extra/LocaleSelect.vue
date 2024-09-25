@@ -5,11 +5,11 @@ defineOptions({
 })
 
 const state = reactive({
-  locale1: '',
+  locale1: undefined,
   locale2: 'app.button.yes',
-  locale3: '',
+  locale3: undefined,
   locale4: 'sys.menu.homepage',
-  locale5: '',
+  locale5: undefined,
 })
 </script>
 
@@ -24,8 +24,14 @@ const state = reactive({
         </WTitle>
 
         <n-space vertical>
-          <WLocaleSelect v-model:value="state.locale1" />
-          <WLocaleSelect v-model:value="state.locale2" />
+          <WLocaleSelect
+            v-model:value="state.locale1"
+            class="w-96"
+          />
+          <WLocaleSelect
+            v-model:value="state.locale2"
+            class="w-96"
+          />
         </n-space>
       </n-list-item>
 
@@ -37,11 +43,13 @@ const state = reactive({
         <n-space vertical>
           <WLocaleSelect
             v-model:value="state.locale3"
+            class="w-96"
             prefix="sys.menu."
           />
 
           <WLocaleSelect
             v-model:value="state.locale4"
+            class="w-96"
             prefix="sys.menu."
           />
         </n-space>
@@ -55,6 +63,7 @@ const state = reactive({
         <n-space vertical>
           <WLocaleSelect
             v-model:value="state.locale5"
+            class="w-96"
             preset-key="sys.menu."
           />
         </n-space>

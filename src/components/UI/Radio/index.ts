@@ -1,8 +1,9 @@
-import { WithValue } from '../../HOC/WithValue'
-import WRadio from './src/index.vue'
+import type { RadioGroupProps, RadioProps } from 'naive-ui'
 
-const HOCRadio = WithValue(WRadio)
+export { default } from './index.vue'
 
-export * from './src/types'
-
-export default HOCRadio
+// TODO 000
+export interface ICompUIRadioProps extends /* @vue-ignore */ RadioGroupProps {
+  options: RadioProps[]
+  button?: boolean
+}

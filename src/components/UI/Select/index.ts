@@ -1,8 +1,9 @@
-import { WithValue } from '../../HOC/WithValue'
-import WSelect from './src/index.vue'
+import type { SelectProps, TooltipProps } from 'naive-ui'
 
-const HOCSelect = WithValue(WSelect)
+export { default } from './index.vue'
 
-export * from './src/types'
-
-export default HOCSelect
+// TODO 000
+export interface ICompUISelectProps extends /* @vue-ignore */ SelectProps {
+  tooltip?: boolean
+  tooltipProps?: TooltipProps
+}

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { SelectMixedOption } from 'naive-ui/es/select/src/interface'
+
 defineOptions({
   name: 'SelectDemo',
   defaultView: false,
@@ -16,7 +18,7 @@ const state = reactive<any>({
   select9: '999',
 })
 
-const options: OptionDataItem[] = []
+const options: SelectMixedOption[] = []
 
 for (let i = 0; i < 100; i++) {
   options.push({
@@ -46,13 +48,13 @@ options.push({
         </WTitle>
 
         <n-space vertical>
-          <w-select
+          <WSelect
             v-model:value="state.select1"
             :options="options"
             clearable
           />
 
-          <w-select
+          <WSelect
             v-model:value="state.select2"
             :options="options"
             clearable
@@ -69,14 +71,14 @@ options.push({
         </WTitle>
 
         <n-space vertical>
-          <w-select
+          <WSelect
             v-model:value="state.select3"
             :options="options"
             clearable
             multiple
           />
 
-          <w-select
+          <WSelect
             v-model:value="state.select4"
             :options="options"
             clearable
@@ -93,7 +95,7 @@ options.push({
           Multiple but value is string
         </WTitle>
 
-        <w-select
+        <WSelect
           v-model:value="state.select5"
           :options="options"
           clearable
@@ -102,7 +104,7 @@ options.push({
         />
       </n-list-item>
 
-      <n-list-item>
+      <!-- <n-list-item>
         <WTitle
           prefix="bar"
           help-message="The example is role select, later will got MORE components like this"
@@ -111,6 +113,7 @@ options.push({
         </WTitle>
 
         <n-space vertical>
+          TODO business component
           <w-role-select v-model:value="state.select6" />
 
           <w-role-select v-model:value="state.select7" multiple />
@@ -121,19 +124,22 @@ options.push({
             value-separator="|"
           />
         </n-space>
-      </n-list-item>
+      </n-list-item> -->
 
       <n-list-item>
         <WTitle prefix="bar">
           If label too long, you can add a tooltip prop
         </WTitle>
 
-        <w-select
+        <WSelect
           v-model:value="state.select9"
           class="w-1/2"
           :options="options"
           clearable
           tooltip
+          :tooltip-props="{
+            placement: 'left',
+          }"
         />
       </n-list-item>
     </n-list>

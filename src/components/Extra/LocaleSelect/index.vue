@@ -4,7 +4,6 @@ import type { ICompExtraLocaleSelectProps } from '.'
 
 defineOptions({
   name: 'WLocaleSelect',
-  inheritAttrs: false,
 })
 
 const props = defineProps<ICompExtraLocaleSelectProps>()
@@ -26,7 +25,9 @@ const options = computed(() =>
 )
 
 function onRenderLabel(option: SelectOption) {
-  return `${option.label} (${option.value})`
+  if (option.value) {
+    return `${option.label} (${option.value})`
+  }
 }
 
 async function onNewLocale() {
@@ -54,30 +55,31 @@ onDeactivated(() => {
 </script>
 
 <template>
-  <div class="w-full hstack gap-2">
-    <WSelect
-      v-model:show="show"
-      v-model:value="value!"
-      :options="options"
-      clearable
-      filterable
-      :render-label="onRenderLabel"
-      tooltip
-    >
-      <template #action>
-        <n-space>
-          <WButton size="small" icon="ant-design:plus-outlined" @click="onNewLocale">
-            {{ $t('app.button.create') }}
-          </WButton>
+  <WSelect
+    v-model:show="show"
+    v-model:value="value!"
+    :options="options"
+    clearable
+    filterable
+    :render-label="onRenderLabel"
+    tooltip
+    :tooltip-props="{
+      placement: 'right',
+    }"
+  >
+    <template #action>
+      <n-space>
+        <WButton size="small" icon="ant-design:plus-outlined" @click="onNewLocale">
+          {{ $t('app.button.create') }}
+        </WButton>
 
-          <WButton
-            size="small" icon="ant-design:sync-outlined" :loading="loading" :disabled="loading"
-            @click="onRefresh"
-          >
-            {{ $t('app.base.refresh') }}
-          </WButton>
-        </n-space>
-      </template>
-    </WSelect>
-  </div>
+        <WButton
+          size="small" icon="ant-design:sync-outlined" :loading="loading" :disabled="loading"
+          @click="onRefresh"
+        >
+          {{ $t('app.base.refresh') }}
+        </WButton>
+      </n-space>
+    </template>
+  </WSelect>
 </template>
