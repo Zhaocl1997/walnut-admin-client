@@ -33,7 +33,7 @@ async function onClick() {
       onVerify()
     }
     else {
-      AppWarn('SMSInput cannot start verify')
+      AppConsoleWarn('SMSInput', 'cannot start verify')
     }
   }
 }

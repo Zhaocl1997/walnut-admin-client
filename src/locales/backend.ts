@@ -28,7 +28,7 @@ export async function AppI18nGetI18nMsg(lang: string, cache = 1) {
     },
   })
 
-  AppInfo(messages)
+  AppConsoleInfo('I18n', messages)
 
   return messages
 }

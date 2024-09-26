@@ -7,11 +7,11 @@ import { setupStore } from '@/store/pinia'
 
 function setupErrorhandler(app: App) {
   app.config.errorHandler = (error) => {
-    new AppError(error)
+    AppConsoleErr('AppErrorHandler', error)
   }
 
   app.config.warnHandler = (warn) => {
-    AppWarn(warn)
+    AppConsoleWarn('AppWarnHandler', warn)
   }
 }
 
@@ -38,5 +38,5 @@ export async function setupApp(app: App) {
   if (isDev())
     app.config.performance = true
 
-  AppInfo('App Initializing...')
+  AppConsoleInfo('setupApp', 'App Initializing...')
 }

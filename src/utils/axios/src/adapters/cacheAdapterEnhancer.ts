@@ -38,7 +38,7 @@ export function cacheAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
         return responsePromise
       }
 
-      AppInfo(`Axios HIT CACHE: key => ${index}`)
+      AppConsoleInfo('Axios Cache', `Axios HIT CACHE: key => ${index}`)
 
       return responsePromise
     }

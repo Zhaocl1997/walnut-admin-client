@@ -13,7 +13,7 @@ export function createBeforeEachGuard(router: Router) {
     window.$loadingBar.start()
 
     if (to.fullPath)
-      AppLog(`Entering Route : ${to.fullPath}`)
+      AppConsoleLog('Route Guard', `Entering Route : ${to.fullPath}`)
 
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()

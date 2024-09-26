@@ -26,7 +26,7 @@ export function getDictTarget(type: string, value: StringOrNumber) {
 // init dict, no return value, just set dict data into dict map
 export async function initDict(types: string | string[]): Promise<void> {
   if (!types || types.length === 0) {
-    AppWarn('Need to provide dict `types` to get dicts')
+    AppConsoleWarn('useDict', 'Need to provide dict `types` to get dicts')
     return
   }
 
@@ -52,7 +52,7 @@ export function useDict(types: string[]): { loading: Ref<boolean>, execDict: () 
 export function useDict(types: string | string[]): void
 export function useDict(types: string | string[]) {
   if (!types || types.length === 0) {
-    AppWarn('Need to provide dict `types` to get dicts')
+    AppConsoleWarn('useDict', 'Need to provide dict `types` to get dicts')
     return
   }
 

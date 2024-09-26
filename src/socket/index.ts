@@ -21,11 +21,11 @@ export function setupSocket() {
   })
 
   AppSocket.on('connect', () => {
-    AppInfo('Socket connected.')
+    AppConsoleInfo('Socket', 'Socket connected.')
   })
 
   AppSocket.on('error', (e) => {
-    AppInfo(e)
+    AppConsoleErr('Socket', e)
   })
 
   // listen to force quit event, which could be excuted by admin

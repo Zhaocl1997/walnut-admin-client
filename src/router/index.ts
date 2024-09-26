@@ -15,7 +15,7 @@ export const AppRouter = createRouter({
 export function setupRouter(app: App) {
   app.use(AppRouter)
   createRouterGuard(AppRouter)
-  AppInfo('Router Initializing...')
+  AppConsoleInfo('Router', 'Router Initializing...')
 }
 
 export function useAppRoute() {

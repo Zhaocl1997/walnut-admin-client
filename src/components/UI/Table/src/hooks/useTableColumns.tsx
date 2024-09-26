@@ -298,9 +298,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
       setProps({ scrollX: w })
     }
     else {
-      AppWarn(
-        `Table with 'localeUniqueKey' ${props.value.localeUniqueKey} has a column without width. This may cause 'scrollX' calculate error.`,
-      )
+      AppConsoleWarn('WTable', `Table with 'localeUniqueKey' ${props.value.localeUniqueKey} has a column without width. This may cause 'scrollX' calculate error.`)
     }
   }
 

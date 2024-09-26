@@ -5,6 +5,7 @@ export interface useEventParams<N = string, P = any> {
   params?: P
 }
 
+// TODO need to remove?
 export function useEvents<T extends useEventParams>(props: MaybeRefSelf<any>, pool?: string[]) {
   const instance = getCurrentInstance()!
 
@@ -12,7 +13,7 @@ export function useEvents<T extends useEventParams>(props: MaybeRefSelf<any>, po
 
   const onEvent = (val: T) => {
     if (Array.isArray(pool) && !pool?.includes(val.name)) {
-      AppWarn(`Event "${val.name}" hasn't been registered to 'emits' option !`)
+      AppConsoleWarn('useEvents', `Event "${val.name}" hasn't been registered to 'emits' option !`)
       return
     }
 
