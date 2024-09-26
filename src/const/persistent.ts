@@ -15,8 +15,14 @@ export const AppConstPersistKey = {
 
   SCROLL: 'SCROLL',
 
+  // finger print
   FP_ID: 'FPID',
+
+  // ua info, fetch from EXTERNAL_LINKS.UA
   UA_INFO: 'UA_INFO',
+
+  // button retry keep after refresh map
+  BUTTON_RETRY: 'BUTTON_RETRY_MAP',
 } as const
 
 export const AppConstStorageType = {

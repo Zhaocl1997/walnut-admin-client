@@ -4,7 +4,7 @@ export function useRouterQuery(path: string) {
 
   const routeQuery = computed({
     get() {
-      return route.query[path] ?? undefined
+      return route.query[path] as string ?? undefined
     },
     set(val) {
       router.replace({ query: { [path]: val } })

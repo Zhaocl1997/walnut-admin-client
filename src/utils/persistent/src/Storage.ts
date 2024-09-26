@@ -1,24 +1,28 @@
-interface AppStorageOptions {
+import type { Serializer } from '@vueuse/core'
+
+interface IAppStorageOptions<T> {
   storage?: typeof localStorage | typeof sessionStorage
   expire?: number
   encrypt?: boolean
   usePresetKey?: boolean
+  serializer?: Serializer<T>
 }
+
+export const getStorageKey = (key: string) => `${storagePrefix}__${key.replaceAll('-', '_').toLocaleUpperCase()}__`
 
 // app storage
 // default cache 7 days
 // defualt only encrypt in prod
-export function useAppStorage<T>(key: string, initialValue: MaybeComputedRef<T>, options: AppStorageOptions = {}) {
-  const { storage = localStorage, expire = +import.meta.env.VITE_SECONDS_PERSIST * 1000, encrypt = isProd(), usePresetKey = true } = options
+// map/set need to pass `serializer`, and no more expire nor encrypt
+export function useAppStorage<T>(key: string, initialValue: MaybeComputedRef<T>, options: IAppStorageOptions<T> = {}) {
+  const { storage = localStorage, expire = +import.meta.env.VITE_SECONDS_PERSIST * 1000, encrypt = isProd(), usePresetKey = true, serializer } = options
 
   const getKey = usePresetKey
-    ? `${storagePrefix}__${key
-    .replaceAll('-', '_')
-    .toLocaleUpperCase()}__`
+    ? getStorageKey(key)
     : key
 
   return useStorage<T>(getKey, initialValue, storage, {
-    serializer: {
+    serializer: serializer ?? {
       read: (val) => {
         if (!val)
           return null

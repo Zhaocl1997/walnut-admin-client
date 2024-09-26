@@ -48,7 +48,7 @@ export function filterTree<T, R = T>(tree: TreeNodeItem<T>[], cb: (node: T) => b
 
 // get country code from online free api
 export function getCountryCodeOnline() {
-  return fetch('https://ip2c.org/s')
+  return fetch(EXTERNAL_LINKS.IP)
     .then(response => response.text())
     .then((response) => {
       const result = (response || '').toString()

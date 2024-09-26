@@ -44,7 +44,7 @@ async function onSuccess(startCountdown: Fn) {
         <n-space vertical>
           <WSMSInput v-model:value="state.input1" clearable placeholder="default 60s" />
 
-          <WSMSInput v-model:value="state.input2" clearable placeholder="custom 30s" :retry-seconds="30" />
+          <WSMSInput v-model:value="state.input2" clearable placeholder="custom 30s" :retry-seconds="30" retry-key="refresh-still-count-down" />
 
           <WSMSInput
             v-model:value="state.input3"

@@ -1,3 +1,5 @@
+import { StorageSerializers } from '@vueuse/core'
+
 export { default } from './index.vue'
 
 export interface ICompUIButtonRetryProps {
@@ -5,4 +7,4 @@ export interface ICompUIButtonRetryProps {
   retrySeconds?: number
 }
 
-export const buttonRetryMapPersistent = useLocalStorage('button-retry-map', new Map<string, number>())
+export const buttonRetryMapPersistent = useAppStorage<Map<string, number>>(AppConstPersistKey.BUTTON_RETRY, new Map<string, number>(), { serializer: StorageSerializers.map })
