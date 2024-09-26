@@ -2,7 +2,7 @@
 import type { ICompExtraFlipperProps } from '.'
 
 defineOptions({
-  name: 'WFlipper',
+  name: 'WCompExtraFlipper',
   inheritAttrs: false,
 })
 

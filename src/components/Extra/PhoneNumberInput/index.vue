@@ -7,7 +7,7 @@ import { getExamplePhoneNumber, phoneNumberExample } from './utils'
 import type { ICompExtraPhoneNumberInputProps, ICompExtraPhoneNumberInputUpdateParams } from '.'
 
 defineOptions({
-  name: 'WPhoneNumberInput',
+  name: 'WCompExtraPhoneNumberInput',
 })
 
 const props = withDefaults(defineProps<ICompExtraPhoneNumberInputProps>(), {

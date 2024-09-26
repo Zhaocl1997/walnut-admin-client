@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 import type { ICompExtraScrollbarInst, ICompExtraScrollbarProps } from '.'
 
 defineOptions({
-  name: 'WScrollbar',
+  name: 'WCompExtraScrollbar',
   inheritAttrs: false,
 })
 

@@ -2,6 +2,11 @@
 import { formatTime } from 'easy-fns-ts'
 import FlipItem from './item.vue'
 
+defineOptions({
+  name: 'WCompExtraFlipClock',
+  inheritAttrs: false,
+})
+
 const now = useNow()
 
 const getTimeArr = computed(() => {

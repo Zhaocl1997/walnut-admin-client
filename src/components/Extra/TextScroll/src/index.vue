@@ -4,7 +4,7 @@ import TextScrollHorizontal from './Horizontal.vue'
 import TextScrollVertical from './Vertical.vue'
 
 defineOptions({
-  name: 'WTextScroll',
+  name: 'WCompExtraTextScroll',
 })
 
 const props = withDefaults(defineProps<ICompExtraTextScrollProps>(), {

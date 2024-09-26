@@ -2,7 +2,7 @@
 import type { ICompExtraArrowProps } from '.'
 
 defineOptions({
-  name: 'Arrow',
+  name: 'WCompExtraArrow',
 })
 
 const props = withDefaults(defineProps<ICompExtraArrowProps>(), { icon: 'ant-design:down-outlined' })

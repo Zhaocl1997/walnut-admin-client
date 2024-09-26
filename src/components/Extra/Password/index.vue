@@ -4,7 +4,7 @@ import { checkStrStrong, statusTable } from './utils'
 import type { ICompExtraPasswordProps } from '.'
 
 defineOptions({
-  name: 'WPasswordInput',
+  name: 'WCompExtraPasswordInput',
   inheritAttrs: false,
 })
 

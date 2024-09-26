@@ -3,7 +3,7 @@ import { useQRCode } from '@vueuse/integrations/useQRCode'
 import type { ICompExtraQRCodeProps } from '.'
 
 defineOptions({
-  name: 'WQRCode',
+  name: 'WCompExtraQRCode',
   inheritAttrs: false,
 })
 

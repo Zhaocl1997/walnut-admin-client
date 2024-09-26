@@ -5,7 +5,7 @@ import { IconBundleConfig } from '/build/icon/src/config.ts'
 import type { ICompExtraIconPickerProps } from '.'
 
 defineOptions({
-  name: 'WIconPicker',
+  name: 'WCompExtraIconPicker',
   inheritAttrs: false,
 })
 

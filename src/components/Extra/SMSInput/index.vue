@@ -3,7 +3,7 @@ import type { ICompExtraSMSInputProps } from '.'
 import type { WVerifyInst } from '@/components/Extra/Verify'
 
 defineOptions({
-  name: 'WSMSInput',
+  name: 'WCompExtraSMSInput',
 })
 
 const props = withDefaults(defineProps<ICompExtraSMSInputProps>(), {
@@ -51,6 +51,7 @@ function onVerifySuccess() {
         type="info"
         text
         :retry-seconds="retrySeconds"
+        :retry-key="retryKey"
         @click="onClick"
       >
         {{ $t('comp.verifyInput.send') }}

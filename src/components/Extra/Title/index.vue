@@ -2,7 +2,7 @@
 import type { ICompExtraTitleProps } from '.'
 
 defineOptions({
-  name: 'WTitle',
+  name: 'WCompExtraTitle',
 })
 
 defineProps<ICompExtraTitleProps>()

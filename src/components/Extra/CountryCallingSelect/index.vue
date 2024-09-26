@@ -7,7 +7,7 @@ import { getCountryCodeOnline } from '@/utils/shared'
 import './icon.css'
 
 defineOptions({
-  name: 'WCountryCallingSelect',
+  name: 'WCompExtraCountryCallingSelect',
 })
 
 const props = withDefaults(defineProps<ICompExtraCountryCallingSelectProps>(), {

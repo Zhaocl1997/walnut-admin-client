@@ -2,7 +2,7 @@
 import type { ICompExtraJSONProps } from '.'
 
 defineOptions({
-  name: 'WJSON',
+  name: 'WCompExtraJSON',
   inheritAttrs: false,
 })
 

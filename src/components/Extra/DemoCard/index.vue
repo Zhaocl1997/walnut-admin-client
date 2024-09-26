@@ -2,7 +2,7 @@
 import type { ICompExtraDemoCardProps } from '.'
 
 defineOptions({
-  name: 'WDemoCard',
+  name: 'WCompExtraDemoCard',
 })
 
 defineProps<ICompExtraDemoCardProps>()

@@ -2,7 +2,7 @@
 import type { ICompExtraMessageProps } from '.'
 
 defineOptions({
-  name: 'WMessage',
+  name: 'WCompExtraMessage',
 })
 
 withDefaults(defineProps<ICompExtraMessageProps>(), {

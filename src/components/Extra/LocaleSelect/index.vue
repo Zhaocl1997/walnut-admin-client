@@ -3,7 +3,7 @@ import type { SelectOption } from 'naive-ui'
 import type { ICompExtraLocaleSelectProps } from '.'
 
 defineOptions({
-  name: 'WLocaleSelect',
+  name: 'WCompExtraLocaleSelect',
 })
 
 const props = defineProps<ICompExtraLocaleSelectProps>()

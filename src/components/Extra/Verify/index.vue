@@ -4,7 +4,7 @@ import { makeImgSize, makeImgWithCanvas, paintPuzzle } from './utils'
 import type { ICompExtraVerifyProps } from '.'
 
 defineOptions({
-  name: 'WVerify',
+  name: 'WCompExtraVerify',
 })
 
 const props = withDefaults(defineProps<ICompExtraVerifyProps>(), {

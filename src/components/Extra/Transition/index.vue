@@ -4,7 +4,7 @@ import type { RendererElement } from 'vue'
 import type { ICompExtraTransitionProps } from '.'
 
 defineOptions({
-  name: 'WTransition',
+  name: 'WCompExtraTransition',
   inheritAttrs: false,
 })
 

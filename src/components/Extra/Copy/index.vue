@@ -2,7 +2,7 @@
 import type { ICompExtraCopyProps } from '.'
 
 defineOptions({
-  name: 'WCopy',
+  name: 'WCompExtraCopy',
 })
 
 const props = withDefaults(
