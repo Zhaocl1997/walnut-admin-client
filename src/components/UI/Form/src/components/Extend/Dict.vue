@@ -53,7 +53,7 @@ onMounted(onInit)
 </script>
 
 <template>
-  <w-select
+  <WSelect
     v-if="dictRenderType === 'select'"
     v-model:value="dictValue"
     :options="getTOptions"

@@ -175,7 +175,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <w-select
+  <WSelect
     :value="value"
     :options="getOptions"
     :multiple="multiple"

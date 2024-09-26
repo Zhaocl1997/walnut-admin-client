@@ -22,7 +22,7 @@ const state = ref({
 <template>
   <WDemoCard title="Select Tree">
     <!-- <WTitle show-left>Single 【{{ selectTree1 }}】 </WTitle>
-    <w-select-tree
+    <WSelect-tree
       v-model="selectTree1"
       :data="data"
       :props="props"
@@ -33,7 +33,7 @@ const state = ref({
     <br />
 
     <WTitle show-left>Multiple 【{{ selectTree2 }}】 </WTitle>
-    <w-select-tree
+    <WSelect-tree
       v-model="selectTree2"
       multiple
       :data="data"

@@ -38,7 +38,7 @@ onMounted(onInit)
 </script>
 
 <template>
-  <w-card
+  <WCard
     :title="t('app.monitor.server.disk')"
     size="small"
     :segmented="{
@@ -69,5 +69,5 @@ onMounted(onInit)
         :sharp="false"
       />
     </n-space>
-  </w-card>
+  </WCard>
 </template>

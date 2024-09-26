@@ -23,8 +23,8 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
     !getCurrentNode.value
       ? '/'
       : `${(getCurrentNode.value as AppSystemMenu[])
-          .map(item => item.path)
-          .join('/')}/`,
+        .map(item => item.path)
+        .join('/')}/`,
   )
 
   const treeExpandedKeys = ref<string[]>()
@@ -156,12 +156,12 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
             || formData.ternal !== AppConstMenuTernal.NONE
           ) {
             return (
-              <w-input
+              <WInput
                 v-model={[formData.name, 'value']}
                 clearable
                 valueModifiers={{ capitalize: true }}
               >
-              </w-input>
+              </WInput>
             )
           }
 

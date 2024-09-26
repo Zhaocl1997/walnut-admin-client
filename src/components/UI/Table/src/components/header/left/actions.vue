@@ -71,7 +71,7 @@ const options: ComputedRef<
 <template>
   <div class="hstack items-center space-x-2">
     <!-- preset buttons -->
-    <w-button
+    <WButton
       v-for="item in options"
       :key="item.type"
       :icon="item.icon"
@@ -91,7 +91,7 @@ const options: ComputedRef<
     />
 
     <!-- extra custom buttons -->
-    <w-button v-for="(item, index) in tableProps.extraHeaderActions" :key="index" v-bind="item" />
+    <WButton v-for="(item, index) in tableProps.extraHeaderActions" :key="index" v-bind="item" />
 
     <n-text
       v-if="

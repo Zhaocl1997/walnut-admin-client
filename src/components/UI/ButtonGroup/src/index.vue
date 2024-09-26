@@ -14,7 +14,7 @@ export default defineComponent({
     return () => (
       <n-button-group {...attrs}>
         {props.groups?.map(item => (
-          <w-button {...item}></w-button>
+          <WButton {...item}></WButton>
         ))}
       </n-button-group>
     )

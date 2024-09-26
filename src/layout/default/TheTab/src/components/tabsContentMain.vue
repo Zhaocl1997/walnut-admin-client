@@ -75,7 +75,7 @@ function onMouseUp(e: MouseEvent, name: string) {
 </script>
 
 <template>
-  <w-scrollbar
+  <WScrollbar
     ref="scrollRef"
     x-scrollable
     height="100%"
@@ -131,5 +131,5 @@ function onMouseUp(e: MouseEvent, name: string) {
         </div>
       </WTransition>
     </div>
-  </w-scrollbar>
+  </WScrollbar>
 </template>

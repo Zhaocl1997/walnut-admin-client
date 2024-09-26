@@ -185,7 +185,7 @@ function onCreate() {
 <template>
   <n-grid :x-gap="12">
     <n-gi :span="6">
-      <w-card
+      <WCard
         :segmented="{
           content: true,
         }"
@@ -205,11 +205,11 @@ function onCreate() {
         <template #default>
           <w-tree v-model:value="treeMenuValue" @hook="registerTree" />
         </template>
-      </w-card>
+      </WCard>
     </n-gi>
 
     <n-gi :span="18">
-      <w-card
+      <WCard
         :segmented="{
           content: true,
         }"
@@ -249,7 +249,7 @@ function onCreate() {
             @hook="registerForm"
           />
         </template>
-      </w-card>
+      </WCard>
     </n-gi>
   </n-grid>
 </template>

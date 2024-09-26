@@ -9,23 +9,23 @@ const state = reactive<Recordable>({
 })
 
 function onChange(value: string) {
-  console.log('[w-input change]', value)
+  console.log('[WInput change]', value)
 }
 
 function onInput(value: string) {
-  console.log('[w-input input]', value)
+  console.log('[WInput input]', value)
 }
 
 function onBlur() {
-  console.log('[w-input blur]')
+  console.log('[WInput blur]')
 }
 
 function onFocus() {
-  console.log('[w-input focus]')
+  console.log('[WInput focus]')
 }
 
 function onClear() {
-  console.log('[w-input clear]')
+  console.log('[WInput clear]')
 }
 </script>
 
@@ -39,7 +39,7 @@ function onClear() {
           Black List
         </WTitle>
 
-        <w-input
+        <WInput
           v-model:value="state.input1"
           :black-list="['<', '>']"
           placeholder="'<' and '>' are not allowed to input"
@@ -57,7 +57,7 @@ function onClear() {
           Password
         </WTitle>
 
-        <w-input
+        <WInput
           v-model:value="state.input2"
           type="password"
           show-password-on="mousedown"
@@ -71,7 +71,7 @@ function onClear() {
           Suffix(prop)
         </WTitle>
 
-        <w-input
+        <WInput
           v-model:value="state.input3"
           suffix="123"
           prefix="312"
@@ -85,7 +85,7 @@ function onClear() {
           Suffix Icon(prop)
         </WTitle>
 
-        <w-input
+        <WInput
           v-model:value="state.input4"
           suffix-icon="ant-design:home-outlined"
           prefix-icon="ant-design:home-outlined"
@@ -99,7 +99,7 @@ function onClear() {
           Help Message
         </WTitle>
 
-        <w-input
+        <WInput
           v-model:value="state.input5"
           help-message="Some help message"
           placeholder="With help message"
@@ -113,19 +113,19 @@ function onClear() {
         </WTitle>
 
         <n-space vertical>
-          <w-input
+          <WInput
             v-model:value.trim="state.input6"
             placeholder="Trim modifier"
             clearable
           />
 
-          <w-input
+          <WInput
             v-model:value.capitalize="state.input7"
             placeholder="Capitalize modifier"
             clearable
           />
 
-          <w-input
+          <WInput
             v-model:value.uppercase="state.input8"
             placeholder="Uppercase modifier"
             clearable
@@ -139,14 +139,14 @@ function onClear() {
         </WTitle>
 
         <n-space vertical>
-          <w-input
+          <WInput
             v-model:value="state.input9"
             placeholder="Content inside can be copied"
             clearable
             copiable
           />
 
-          <w-input
+          <WInput
             v-model:value="state.input10"
             placeholder="Content inside can be copied"
             clearable

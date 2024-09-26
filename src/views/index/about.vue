@@ -79,7 +79,7 @@ const DevDepItems = ref<WDescriptionsItem[]>(
 
 <template>
   <div class="space-y-2">
-    <w-card
+    <WCard
       :title="t('about.title.info')"
       size="small"
       :segmented="{
@@ -97,9 +97,9 @@ const DevDepItems = ref<WDescriptionsItem[]>(
         :label-style="{ width: '30%' }"
         :content-style="{ width: '20%' }"
       />
-    </w-card>
+    </WCard>
 
-    <w-card
+    <WCard
       :title="t('about.title.deps')"
       size="small"
       :segmented="{
@@ -117,9 +117,9 @@ const DevDepItems = ref<WDescriptionsItem[]>(
         :label-style="{ width: '30%' }"
         :content-style="{ width: '20%' }"
       />
-    </w-card>
+    </WCard>
 
-    <w-card
+    <WCard
       :title="t('about.title.devdeps')"
       size="small"
       :segmented="{
@@ -137,6 +137,6 @@ const DevDepItems = ref<WDescriptionsItem[]>(
         :label-style="{ width: '30%' }"
         :content-style="{ width: '20%' }"
       />
-    </w-card>
+    </WCard>
   </div>
 </template>

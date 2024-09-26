@@ -197,7 +197,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
               const dropdownButtons = visibleButtons.filter(i => i._dropdown).map(i => omit(i, '_dropdown'))
 
               const renderNormalButtons = normalButtons.map(i => (
-                <w-button
+                <WButton
                   {...omit(i, '_builtInType')}
                   disabled={isDisabled(i)}
                   onClick={() =>
@@ -207,7 +207,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
                       rowIndex,
                     })}
                 >
-                </w-button>
+                </WButton>
               ))
 
               const dropdownOptions: DropdownOption[] = dropdownButtons.map((i) => {

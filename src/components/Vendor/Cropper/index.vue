@@ -229,7 +229,7 @@ onMounted(() => {
       </n-gi>
 
       <n-gi :span="8" class="vstack">
-        <w-scrollbar v-if="flag" height="330px">
+        <WScrollbar v-if="flag" height="330px">
           <n-space vertical size="large">
             <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 200px" />
 
@@ -247,7 +247,7 @@ onMounted(() => {
               </n-gi>
             </n-grid>
           </n-space>
-        </w-scrollbar>
+        </WScrollbar>
 
         <n-space>
           <w-abs-image ref="absImage" @change="onUploadChange">

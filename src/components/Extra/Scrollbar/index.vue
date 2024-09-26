@@ -5,7 +5,6 @@ import type { ICompExtraScrollbarInst, ICompExtraScrollbarProps } from '.'
 
 defineOptions({
   name: 'WCompExtraScrollbar',
-  inheritAttrs: false,
 })
 
 const props = withDefaults(defineProps<ICompExtraScrollbarProps>(), {

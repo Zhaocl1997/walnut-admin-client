@@ -8,7 +8,7 @@ function onToogleCollapse() {
 </script>
 
 <template>
-  <w-button
+  <WButton
     type="info"
     text
     size="large"
