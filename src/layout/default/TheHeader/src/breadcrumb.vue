@@ -78,7 +78,7 @@ export default defineComponent({
     )
 
     return () => (
-      <w-transition appear name={appSetting.getBreadcrumbTransition}>
+      <WTransition appear name={appSetting.getBreadcrumbTransition}>
         {appSetting.getBreadcrumbShow && (
           <n-config-provider
             id={appSetting.getBreadcrumbId}
@@ -100,7 +100,7 @@ export default defineComponent({
             </n-breadcrumb>
           </n-config-provider>
         )}
-      </w-transition>
+      </WTransition>
     )
   },
 })

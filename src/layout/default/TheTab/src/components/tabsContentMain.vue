@@ -91,7 +91,7 @@ function onMouseUp(e: MouseEvent, name: string) {
         },
       ]"
     >
-      <w-transition appear :name="appSetting.tabs.itemTransition" group>
+      <WTransition appear :name="appSetting.tabs.itemTransition" group>
         <div
           v-for="(item, index) in appTab.tabs"
           :key="item.name"
@@ -129,7 +129,7 @@ function onMouseUp(e: MouseEvent, name: string) {
         >
           <TabsItem :item="item" :index="index" />
         </div>
-      </w-transition>
+      </WTransition>
     </div>
   </w-scrollbar>
 </template>

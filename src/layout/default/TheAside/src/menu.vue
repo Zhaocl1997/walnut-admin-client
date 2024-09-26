@@ -106,7 +106,7 @@ export default defineComponent({
     }
 
     return () => (
-      <w-transition appear name={appSetting.getMenuTransition}>
+      <WTransition appear name={appSetting.getMenuTransition}>
         {appSetting.getMenuShow && (
           <w-scrollbar
             height="100%"
@@ -141,7 +141,7 @@ export default defineComponent({
             </n-menu>
           </w-scrollbar>
         )}
-      </w-transition>
+      </WTransition>
     )
   },
 })

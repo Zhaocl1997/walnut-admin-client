@@ -15,7 +15,7 @@ function onClick() {
 </script>
 
 <template>
-  <w-transition appear name="slide-up">
+  <WTransition appear name="slide-up">
     <WIcon
       v-if="appSetting.getMenuCollapseIconStatus"
       :icon="
@@ -27,5 +27,5 @@ function onClick() {
       class="cursor-pointer"
       @click="onClick"
     />
-  </w-transition>
+  </WTransition>
 </template>

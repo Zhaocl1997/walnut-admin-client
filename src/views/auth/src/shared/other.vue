@@ -117,7 +117,7 @@ useEventListener('beforeunload', () => {
 
 <template>
   <div>
-    <w-transition appear group>
+    <WTransition appear group>
       <n-divider class="text-xs">
         {{ t('app.auth.other') }}
       </n-divider>
@@ -129,7 +129,7 @@ useEventListener('beforeunload', () => {
           </n-button>
         </span>
       </div>
-    </w-transition>
+    </WTransition>
   </div>
 </template>
 

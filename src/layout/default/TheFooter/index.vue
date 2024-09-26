@@ -3,7 +3,7 @@ const appSetting = useAppStoreSetting()
 </script>
 
 <template>
-  <w-transition appear :name="appSetting.getFooterTransition">
+  <WTransition appear :name="appSetting.getFooterTransition">
     <n-layout-footer
       v-if="appSetting.getFooterShow"
       :id="appSetting.getFooterId"
@@ -20,5 +20,5 @@ const appSetting = useAppStoreSetting()
         {{ appSetting.footer.content }}
       </div>
     </n-layout-footer>
-  </w-transition>
+  </WTransition>
 </template>

@@ -122,7 +122,7 @@ const getTitle = computed(() =>
       ]"
     />
 
-    <w-transition appear name="fade-left" :duration="100">
+    <WTransition appear name="fade-left" :duration="100">
       <w-text-scroll
         v-if="getShowTite"
         class="col-span-10 truncate whitespace-nowrap text-sm" :class="[
@@ -134,9 +134,9 @@ const getTitle = computed(() =>
       >
         {{ getTitle }}
       </w-text-scroll>
-    </w-transition>
+    </WTransition>
 
-    <w-transition appear name="fade-right">
+    <WTransition appear name="fade-right">
       <WIcon
         v-if="getShowCloseIcon"
         icon="ant-design:close-outlined"
@@ -144,6 +144,6 @@ const getTitle = computed(() =>
         class="absolute right-1 hover:(scale-125 transform rounded-full text-error)"
         @click.prevent.stop="onTabRemove(item.name)"
       />
-    </w-transition>
+    </WTransition>
   </div>
 </template>

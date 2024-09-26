@@ -45,12 +45,12 @@ useTimeoutFn(() => {
 
 <template>
   <n-layout has-sider>
-    <w-transition appear name="slide-left">
+    <WTransition appear name="slide-left">
       <TheAside
         v-if="appSetting.getMenuAdapterStatus"
         class="walnut-aside"
       />
-    </w-transition>
+    </WTransition>
 
     <n-drawer
       v-if="!appSetting.getMenuAdapterStatus"

@@ -10,7 +10,7 @@ async function onGoIndex() {
 </script>
 
 <template>
-  <w-transition appear :name="appSetting.getLogoTransition">
+  <WTransition appear :name="appSetting.getLogoTransition">
     <div
       v-if="appSetting.getLogoShow"
       :id="appSetting.getLogoId"
@@ -33,15 +33,15 @@ async function onGoIndex() {
       <div class="h-full w-full hstack items-center justify-between">
         <img src="/assets/logo.png" :alt="`${AppTitle} Logo`" class="h-9 w-9">
 
-        <w-transition name="zoom-down">
+        <WTransition name="zoom-down">
           <div
             v-show="!appMenu.collapse"
             class="text-center text-xl font-bold not-italic"
           >
             {{ AppTitle }}
           </div>
-        </w-transition>
+        </WTransition>
       </div>
     </div>
-  </w-transition>
+  </WTransition>
 </template>

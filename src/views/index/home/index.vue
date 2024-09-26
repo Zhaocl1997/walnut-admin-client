@@ -17,7 +17,7 @@ const { cards: chartCards, loading: chartCardLoading } = useChartCard()
   <div>
     <!-- number -->
     <div class="mb-2 flex flex-wrap">
-      <w-transition appear name="fade-down" group>
+      <WTransition appear name="fade-down" group>
         <div
           v-for="(item, index) in numberCards"
           :key="index"
@@ -28,12 +28,12 @@ const { cards: chartCards, loading: chartCardLoading } = useChartCard()
             :loading="numberCardLoading"
           />
         </div>
-      </w-transition>
+      </WTransition>
     </div>
 
     <!-- chart -->
     <div class="flex flex-wrap">
-      <w-transition appear name="fade-down" group>
+      <WTransition appear name="fade-down" group>
         <div
           v-for="(item, index) in chartCards"
           :key="index"
@@ -44,7 +44,7 @@ const { cards: chartCards, loading: chartCardLoading } = useChartCard()
             :loading="chartCardLoading"
           />
         </div>
-      </w-transition>
+      </WTransition>
     </div>
   </div>
 </template>
