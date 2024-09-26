@@ -60,12 +60,8 @@ export default defineComponent({
 
     const renderLabel = () => {
       if (item?.type === 'Extend:Dict' && item?.formProp?.label === true) {
-        const dictData = AppDictMap.get(item?.componentProp?.dictType!)
-
-        if (!dictData)
-          return
-
-        return t(dictData.name)
+        const dictName = getDictNameFromMap(item.componentProp?.dictType ?? '')!
+        return t(dictName)
       }
 
       return getFormTranslated(t, formProps, item!)

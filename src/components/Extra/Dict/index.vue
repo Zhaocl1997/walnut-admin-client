@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { Value } from 'naive-ui/es/select/src/interface'
 import type { ICompExtraDictProps } from '.'
-import type { AppDictTypeCommon } from '@/api/system/dict'
 
 defineOptions({
   name: 'WCompExtraDict',
@@ -18,9 +17,8 @@ const { t } = useAppI18n()
 
 const { loading, execDict } = useDict(props.dictType)
 
-const options = ref<AppDictTypeCommon[]>([])
 const getTOptions = computed(() =>
-  options.value.map(i => ({
+  getDictDataFromMap(props.dictType)?.map(i => ({
     label: t(i.label!),
     value: i.value,
   })),
@@ -29,9 +27,9 @@ const getTOptions = computed(() =>
 async function onInit() {
   if (!props.dictType) {
     AppWarn('WDict need to provide `dictType` prop')
+    return
   }
-  const res = await execDict()
-  options.value = res!
+  await execDict()
 }
 
 onBeforeMount(onInit)

@@ -10,18 +10,18 @@ export const dictDataAPI = new BaseAPI<AppSystemDictType>({
   section: 'dict/data',
 })
 
-export type AppDictTypeCommon = Pick<
+export type IAppStoreMapDictValue = ({ dictData:
+Pick<
   AppSystemDictData,
   'value' | 'label' | 'description' | 'order' | 'tagType'
->
-
-
+>[] } & Pick<AppSystemDictType, 'type' | 'name'>)
 
 // default all dict will cacahed for 10 minutes
-export function getDictByType(type: string) {
-  return AppAxios.get<AppDictTypeCommon[]>(
+export function getDictByType(types: string | string[]) {
+  return AppAxios.get<IAppStoreMapDictValue[]>(
     {
-      url: `/system/dict/data/s/${type}`,
+      url: '/system/dict/data/s',
+      params: { types },
       _throttle: 500,
       _cache: true,
     },

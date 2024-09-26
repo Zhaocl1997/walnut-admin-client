@@ -36,19 +36,7 @@ export default defineComponent({
         return <WJSON value={item.value}></WJSON>
 
       if (item.type === 'dict') {
-        const res = AppDictMap.get(item.dictType!)
-
-        const target = res?.dictData?.find(
-          i =>
-            (i.value === 'true'
-              ? true
-              : i.value === 'false'
-                ? false
-                : i.value) === item.value,
-        )
-
-        if (!target?.label)
-          return
+        const target = getDictTarget(item.dictType!, item.value)
 
         if (target.tagType) {
           return (
@@ -84,14 +72,14 @@ export default defineComponent({
         </n-descriptions-item>
       ))
 
-    onMounted(async () => {
-      // cached for dict column
-      await Promise.all(
-        props.items?.map(
-          async i => i.type === 'dict' && (await useDict(i.dictType!)),
-        )!,
-      )
-    })
+    // onMounted(async () => {
+    //   // cached for dict column
+    //   await Promise.all(
+    //     props.items?.map(
+    //       async i => i.type === 'dict' && (await useDict(i.dictType!)),
+    //     )!,
+    //   )
+    // })
 
     return () => <n-descriptions {...attrs}>{renderItems()}</n-descriptions>
   },

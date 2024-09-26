@@ -35,13 +35,6 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
   }
 
   watchEffect(async () => {
-    // cached for dict column
-    await Promise.all(
-      props.value.columns?.map(
-        async i => i.extendType === 'dict' && (await useDict(i.dictType)),
-      )!,
-    )
-
     // @ts-expect-error
     columns.value = props.value.columns
       ?.map(i => ({ ...i, _internalShow: i._internalShow ?? true }))
@@ -116,7 +109,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
 
             filterOptions: computed(() =>
               tItem.filter
-                ? AppDictMap.get(tItem.dictType)?.dictData.map(i => ({
+                ? getDictDataFromMap(tItem.dictType)?.map(i => ({
                   value: i.value,
                   label: t(i.label!),
                 }))
@@ -127,22 +120,15 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
               ApiTableListParams.value.query![tItem.key] ?? null,
 
             render(p) {
-              const res = AppDictMap.get(tItem.dictType)
-
-              const target = res?.dictData.find(
-                i => i.value === (p[tItem.key] as boolean).toString(),
-              )
-
-              if (!target?.label)
-                return
+              const target = getDictTarget(tItem.dictType, p[tItem.key] as string)
 
               if (tItem.tagProps)
-                return <n-tag {...tItem.tagProps(p)}>{t(target.label)}</n-tag>
+                return <n-tag {...tItem.tagProps(p)}>{t(target.label!)}</n-tag>
 
               if (target.tagType)
-                return <n-tag type={target.tagType}>{t(target.label)}</n-tag>
+                return <n-tag type={target.tagType}>{t(target.label!)}</n-tag>
 
-              return <span>{t(target.label)}</span>
+              return <span>{t(target.label!)}</span>
             },
           }
         }
@@ -318,9 +304,19 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
     }
   }
 
+  const handleDictData = async () => {
+    const usedDictTypes = props.value.columns?.filter(i => i.extendType === 'dict')?.map(i => i.dictType).filter(Boolean) as string[]
+    await initDict(usedDictTypes)
+  }
+
   onMounted(() => {
     // auto handle scrollX
     handleScrollX()
+  })
+
+  onBeforeMount(async () => {
+    // init dict data
+    await handleDictData()
   })
 
   return { columns }

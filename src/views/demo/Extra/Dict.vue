@@ -9,103 +9,156 @@ const state = reactive({
   dict2: undefined,
   dict3: undefined,
   dict4: '0',
-  dict5: [1, 2],
-  dict6: 9,
+  dict5: ['1', '2'],
+  dict6: '9',
   dict7: undefined,
   dict8: true,
   dict9: false,
 })
+
+const { loading: loading2, execDict: execDict2, dictData: dictData2 } = useDict('sys_shared_status')
+const { loading, execDict, dictData } = useDict(['gbt_sex', 'sys_shared_status'])
+
+const showHook = ref(true)
 </script>
 
 <template>
   <WDemoCard title="Dictionary">
-    <W-JSON :value="state" height="300px" />
+    <n-switch v-model:value="showHook" />
 
-    <n-list>
-      <n-list-item>
-        <WTitle
-          prefix="bar"
-          help-message="Highly packaged dict component, support render different component type"
-        >
-          Basic Usage
-        </WTitle>
+    <template v-if="showHook">
+      <n-list>
+        <n-list-item>
+          <n-spin :show="loading2">
+            <WJSON :value="dictData2" height="300px" />
+          </n-spin>
 
-        <n-space vertical>
-          <WDict v-model:value="state.dict1" dict-type="gbt_sex" />
+          <WTitle
+            class="mb-2"
+            prefix="bar"
+          >
+            useDict hook single
+          </WTitle>
+
+          <n-button @click="execDict2">
+            exec single
+          </n-button>
+        </n-list-item>
+
+        <n-list-item>
+          <n-spin :show="loading">
+            <WJSON :value="dictData" height="300px" />
+          </n-spin>
+
+          <WTitle
+            class="mb-2"
+            prefix="bar"
+          >
+            useDict hook multiple
+          </WTitle>
+
+          <n-button @click="execDict">
+            exec multiple
+          </n-button>
+        </n-list-item>
+      </n-list>
+    </template>
+
+    <template v-else>
+      <WJSON :value="state" height="300px" />
+
+      <n-list>
+        <n-list-item>
+          <WTitle
+            class="mb-2"
+            prefix="bar"
+            help-message="Highly packaged dict component, support render different component type"
+          >
+            Basic Usage
+          </WTitle>
+
+          <n-space vertical>
+            <WDict v-model:value="state.dict1" dict-type="gbt_sex" />
+
+            <WDict
+              v-model:value="state.dict2"
+              dict-type="gbt_sex"
+              dict-render-type="checkbox"
+            />
+
+            <WDict
+              v-model:value="state.dict3"
+              dict-type="gbt_sex"
+              dict-render-type="radio"
+            />
+          </n-space>
+        </n-list-item>
+
+        <n-list-item>
+          <WTitle
+            prefix="bar" class="mb-2"
+          >
+            Feedback
+          </WTitle>
+
+          <n-space vertical>
+            <WDict v-model:value="state.dict4" dict-type="gbt_sex" />
+
+            <WDict
+              v-model:value="state.dict5"
+              dict-type="gbt_sex"
+              dict-render-type="checkbox"
+            />
+
+            <WDict
+              v-model:value="state.dict6"
+              dict-type="gbt_sex"
+              dict-render-type="radio"
+            />
+          </n-space>
+        </n-list-item>
+
+        <n-list-item>
+          <WTitle
+            class="mb-2" prefix="bar"
+          >
+            Also support original component props
+          </WTitle>
 
           <WDict
-            v-model:value="state.dict2"
+            v-model:value="state.dict7"
             dict-type="gbt_sex"
-            dict-render-type="checkbox"
+            :render-component-props="{
+              multiple: true,
+              clearable: true,
+            }"
           />
+        </n-list-item>
 
-          <WDict
-            v-model:value="state.dict3"
-            dict-type="gbt_sex"
-            dict-render-type="radio"
-          />
-        </n-space>
-      </n-list-item>
+        <n-list-item>
+          <WTitle
+            class="mb-2" prefix="bar"
+          >
+            Handle boolean value
+          </WTitle>
 
-      <n-list-item>
-        <WTitle prefix="bar" class="mb-2">
-          Feedback
-        </WTitle>
+          <n-space vertical>
+            <WDict
+              v-model:value="state.dict8"
+              dict-type="sys_shared_status"
+              dict-render-type="radio"
+              :render-component-props="{ button: true }"
+            />
 
-        <n-space vertical>
-          <WDict v-model:value="state.dict4" dict-type="gbt_sex" />
-
-          <WDict
-            v-model:value="state.dict5"
-            dict-type="gbt_sex"
-            dict-render-type="checkbox"
-          />
-
-          <WDict
-            v-model:value="state.dict6"
-            dict-type="gbt_sex"
-            dict-render-type="radio"
-          />
-        </n-space>
-      </n-list-item>
-
-      <n-list-item>
-        <WTitle prefix="bar" class="mb-2">
-          Also support original component props
-        </WTitle>
-
-        <WDict
-          v-model:value="state.dict7"
-          dict-type="gbt_sex"
-          :render-component-props="{
-            multiple: true,
-            valueSeparator: ',',
-            clearable: true,
-          }"
-        />
-      </n-list-item>
-
-      <n-list-item>
-        <WTitle prefix="bar" class="mb-2">
-          Handle boolean value
-        </WTitle>
-
-        <n-space vertical>
-          <WDict
-            v-model:value="state.dict8"
-            dict-type="sys_shared_status"
-            dict-render-type="radio"
-            :render-component-props="{ button: true, valueType: 'boolean' }"
-          />
-
-          <WDict
-            v-model:value="state.dict9"
-            dict-type="sys_shared_status"
-            dict-render-type="radio"
-            :render-component-props="{ button: true, valueType: 'boolean' }"
-          />
-        </n-space>
-      </n-list-item>
-    </n-list>
+            <WDict
+              v-model:value="state.dict9"
+              dict-type="sys_shared_status"
+              dict-render-type="radio"
+              :render-component-props="{ button: true }"
+            />
+          </n-space>
+        </n-list-item>
+      </n-list>
+    </template>
   </WDemoCard>
 </template>

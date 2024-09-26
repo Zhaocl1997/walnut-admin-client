@@ -3,7 +3,7 @@
 
 <script lang="ts" setup>
 import type { WForm } from '../../types'
-import type { AppDictTypeCommon } from '@/api/system/dict'
+import type { AppSystemDictDataPicked } from '@/api/system/dict'
 import type { WCheckboxProps } from '@/components/UI/Checkbox'
 import type { WRadioProps } from '@/components/UI/Radio'
 import type { WSelectProps } from '@/components/UI/Select'
@@ -30,7 +30,7 @@ interface InternalProps {
 const { t } = useAppI18n()
 
 const dictValue = ref()
-const options = ref<AppDictTypeCommon>([])
+const options = ref<AppSystemDictDataPicked>([])
 const getTOptions = computed(() =>
   options.value.map(i => ({
     label: t(i.label!),
