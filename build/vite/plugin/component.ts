@@ -1,85 +1,26 @@
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import fg from 'fast-glob'
+import type { ComponentResolver } from 'unplugin-vue-components/types'
 
-const comp = {
-  Advanced: [
-    'CRUD',
-    'AIcon',
-    'ApiSelect',
-    'AreaCascader',
-    'RoleSelect',
-  ],
-  App: [
-    'AppDarkMode',
-    'AppFullScreen',
-    'AppLocalePicker',
-    'AppLock',
-    'AppSearch',
-    'AppSettings',
-    'AppAuthorize',
-  ],
-  Extra: [
-    'AbsImage',
-    'Arrow',
-    'CapsLockTooltip',
-    'Copy',
-    'CountryCallingSelect',
-    'DemoCard',
-    'Dict',
-    'EmailInput',
-    'FlipClock',
-    'Flipper',
-    'IconPicker',
-    'JSON',
-    'LocaleSelect',
-    'Message',
-    'Password',
-    'PhoneNumberInput',
-    'QRCode',
-    'Scrollbar',
-    'SMSInput',
-    'TextScroll',
-    'Title',
-    'Transition',
-    'TransitionSelect',
-    'Verify',
-  ],
-  UI: [
-    'Button',
-    'ButtonConfirm',
-    'ButtonRetry',
-    'ButtonGroup',
-    'Card',
-    'Checkbox',
-    'ColorPicker',
-    'DatePicker',
-    'Descriptions',
-    'Drawer',
-    'Dropdown',
-    'DynamicTags',
-    'Form',
-    'Icon',
-    'IconButton',
-    'Input',
-    'InputNumber',
-    'Modal',
-    'Radio',
-    'Select',
-    'Switch',
-    'Table',
-    'TimePicker',
-    'Tree',
-  ],
-  Vendor: [
-    'AvatarUpload',
-    'CodeMirror',
-    'Cropper',
-    'Echarts',
-    'LocationPicker',
-    'OSSUpload',
-    'SignPad',
-    'Tinymce',
-  ],
+function WalnutAdminComponentResolver(): ComponentResolver {
+  const allComponents = fg.sync('src/components/**/**/index.ts', { dot: true })
+  const componentMap = Object.fromEntries(allComponents.filter(i => !i.includes('utils')).map(i => [i.split('/').slice(-2, -1)[0], i.replace('src', '@')]))
+
+  console.log('Auto Register Components', componentMap)
+
+  return {
+    type: 'component',
+    resolve: (name) => {
+      if (name.startsWith('W')) {
+        const componentName = name.slice(1)
+
+        if (componentMap[componentName]) {
+          return componentMap[componentName]
+        }
+      }
+    },
+  }
 }
 
 export function createComponentPlugin(): VitePlugin {
@@ -105,21 +46,7 @@ export function createComponentPlugin(): VitePlugin {
       NaiveUiResolver(),
 
       // Custom
-      (name) => {
-        if (name.startsWith('W')) {
-          const componentName = name.slice(1)
-
-          let path = ''
-          Object.entries(comp).forEach(([key, value]) => {
-            for (let i = 0; i < value.length; i++) {
-              if (componentName === value[i])
-                path = `@/components/${key}/${componentName}`
-            }
-          })
-
-          return path
-        }
-      },
+      WalnutAdminComponentResolver(),
     ],
   })
 }
