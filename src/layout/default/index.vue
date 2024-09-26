@@ -32,15 +32,18 @@ const { scrollWrapper } = useAppScroll()
 //   }
 // })
 
+// P2 layout level hook
 useAppIntro()
 useAppContentFull()
 useAppTextSelection()
 useAppColorMode()
 useAppHijackF5()
 
-useTimeoutFn(() => {
-  !isDev() && useStarOnGithub()
-}, 500)
+if (!isDev()) {
+  useTimeoutFn(() => {
+    useStarOnGithub()
+  }, 500)
+}
 </script>
 
 <template>

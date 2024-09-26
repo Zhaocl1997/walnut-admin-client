@@ -16,7 +16,7 @@ const getKeepAliveInclude = computed(() => {
         v-if="appSetting.app.keepAlive"
         :include="getKeepAliveInclude"
       >
-        <component :is="Component" :key="route.fullPath" />
+        <component :is="Component" v-if="localRefreshFlag" :key="route.fullPath" />
       </keep-alive>
 
       <component :is="Component" v-else :key="route.fullPath" />

@@ -12,6 +12,7 @@ import { useAppLock } from '@/components/App/AppLock/useAppLock'
   await useAppMonitor()
 })()
 
+// P1 app level hook
 useAppTitle()
 useAppResize()
 useAppLocale()

@@ -8,6 +8,9 @@ let removeEvent: Fn
 const appLock = useAppStoreLock()
 
 export function createBeforeEachGuard(router: Router) {
+  // TODO beforeResolve
+  // TODO initial trigger twice
+  // logic optimise, with next()
   router.beforeEach(async (to, from) => {
     // start loadingbar
     window.$loadingBar.start()

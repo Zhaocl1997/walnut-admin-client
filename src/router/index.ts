@@ -39,7 +39,7 @@ export function useAppRouterPush(info: RouteLocationRaw) {
     })
   }
   catch (error) {
-    console.log(error)
+    AppConsoleErr('Router push', error)
 
     // maybe error
     useAppMessage().warning(AppI18n.global.t('app.menu.error'))
