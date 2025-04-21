@@ -11,8 +11,8 @@ export function useMenuTree() {
 
   // left menu tree data, do not need root node
   const getLeftMenu = computed(() => {
-    if (menuDataRef.value.length !== 0) {
-      return formatTree<AppSystemMenu>(menuDataRef.value[0]?.children!, {
+    if (menuDataRef.value.length !== 0 && menuDataRef.value[0]) {
+      return formatTree<AppSystemMenu>(menuDataRef.value[0].children!, {
         format: node => ({
           ...node,
           title: node.title ? t(node.title) : node.title,

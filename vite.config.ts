@@ -1,5 +1,6 @@
 import type { ConfigEnv, UserConfig } from 'vite'
 import { resolve } from 'node:path'
+import { cwd } from 'node:process'
 
 import { loadEnv } from 'vite'
 
@@ -29,7 +30,7 @@ const __APP_INFO__ = {
 
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv): UserConfig => {
-  const root = process.cwd()
+  const root = cwd()
 
   const env = loadEnv(mode, pathResolve(envDir)) as unknown as ImportMetaEnv
 

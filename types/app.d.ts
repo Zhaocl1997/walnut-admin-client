@@ -1,4 +1,4 @@
-import { RouteMeta } from 'vue-router'
+import type { RouteMeta } from 'vue-router'
 
 declare global {
   interface AppSecretKeysInterface {
@@ -8,7 +8,7 @@ declare global {
   /**
    * @description app base database schema model
    */
-  abstract interface AppBaseModel {
+  interface AppBaseModel {
     _id?: string
 
     /**
@@ -254,7 +254,7 @@ declare global {
     province?: string
     city?: string
     area?: string
-    
+
     userAgent?: string
     platform?: string
     os?: string
@@ -262,7 +262,7 @@ declare global {
 
     vp?: string
     sr?: string
-    
+
     device?: string
     engine?: string
 
