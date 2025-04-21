@@ -1,9 +1,9 @@
+import type { DataTableSortState } from 'naive-ui'
+
 import type {
   SorterMultiple,
   TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
-
-import type { DataTableSortState } from 'naive-ui'
 import type { WTable } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 

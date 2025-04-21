@@ -1,13 +1,13 @@
 <script lang="tsx" setup>
 import type { DropdownOption } from 'naive-ui'
 
-import { toJpeg } from 'html-to-image'
-
-import { getTabsContext } from '../hooks/useTabsContext'
 import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
 // TODO 99
 import WIcon from '@/components/UI/Icon'
+import { toJpeg } from 'html-to-image'
+
+import { getTabsContext } from '../hooks/useTabsContext'
 
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
@@ -64,11 +64,11 @@ const getOtherDisabled = computed(
 )
 
 async function onSelect(key: ValueOfAppConstTabDeleteType &
-'Refresh' &
-'Screen Full' &
-'Fix' &
-'Snapshot' &
-'NewWindow') {
+  'Refresh' &
+  'Screen Full' &
+  'Fix' &
+  'Snapshot' &
+  'NewWindow') {
   if (Object.values(AppConstTabDeleteType).includes(key))
     onTabRemove(currentMouseTab.value?.name as string, key)
 
@@ -107,7 +107,7 @@ async function onSelect(key: ValueOfAppConstTabDeleteType &
     }).then((dataUrl) => {
       const windowOpen = window.open('about:blank', 'image from canvas')
       windowOpen!.document.write(
-          `<img src='${dataUrl}' alt='${currentMouseTab.value?.name}'>`,
+        `<img src='${dataUrl}' alt='${currentMouseTab.value?.name}'>`,
       )
     })
   }

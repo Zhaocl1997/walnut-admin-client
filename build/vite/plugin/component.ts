@@ -1,7 +1,7 @@
-import Components from 'unplugin-vue-components/vite'
-import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
-import fg from 'fast-glob'
 import type { ComponentResolver } from 'unplugin-vue-components/types'
+import fg from 'fast-glob'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
 
 function WalnutAdminComponentResolver(): ComponentResolver {
   const allComponents = fg.sync('src/components/**/**/index.ts', { dot: true })

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { WDescriptionsItem } from '@/components/UI/Descriptions'
-
 import type { IServerInfo } from '@/api/app/monitor/server'
+
+import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 import { getOSInfo } from '@/api/app/monitor/server'
 
 defineOptions({

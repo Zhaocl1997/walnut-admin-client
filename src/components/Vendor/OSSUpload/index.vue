@@ -153,7 +153,7 @@ function onBeforeUpload(data: {
 }) {
   if (data.file.file!.size / 1024 > props.size) {
     useAppMessage().error(
-        `File size should not be more than ${props.size / 1024}M`,
+      `File size should not be more than ${props.size / 1024}M`,
     )
     return false
   }
@@ -191,12 +191,12 @@ onMounted(() => {
       :abstract="!image"
       :custom-request="onCustomRequest"
       :default-upload="false"
-      show-download-button
+
       :list-type="image ? 'image-card' : undefined"
       :disabled="disabled"
       :max="max"
       :accept="image ? '.jpg, .jpeg, .png' : accept"
-      multiple
+      multiple show-download-button
       @download="onDownload"
       @remove="onRemove"
       @update:file-list="onFileListChange"

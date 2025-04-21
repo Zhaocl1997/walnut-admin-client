@@ -1,6 +1,6 @@
 <script lang="tsx" setup>
-import { getTreeData, options } from '../data'
 import type { WForm } from '@/components/UI/Form'
+import { getTreeData, options } from '../data'
 
 defineOptions({
   name: 'BaseForm',

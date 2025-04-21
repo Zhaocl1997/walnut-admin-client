@@ -19,7 +19,7 @@ async function onBack() {
 const title = computed(
   () =>
     (currentRoute.value.query?.name
-    && t(currentRoute.value.query.name as string)) as string,
+      && t(currentRoute.value.query.name as string)) as string,
 )
 
 const getLocalePrefix = computed(() => `dict.${(currentRoute.value.query?.name as string)?.split('.').slice(-1)}.`)

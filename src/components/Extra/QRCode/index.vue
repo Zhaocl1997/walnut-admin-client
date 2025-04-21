@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useQRCode } from '@vueuse/integrations/useQRCode'
 import type { ICompExtraQRCodeProps } from '.'
+import { useQRCode } from '@vueuse/integrations/useQRCode'
 
 defineOptions({
   name: 'WCompExtraQRCode',

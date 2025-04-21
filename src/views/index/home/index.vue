@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import WHomeNumberCard from './components/NumberCard.vue'
 import WHomeChartCard from './components/ChartCard.vue'
+import WHomeNumberCard from './components/NumberCard.vue'
 
-import { useNumberCard } from './useNumberCard'
 import { useChartCard } from './useChartCard'
+import { useNumberCard } from './useNumberCard'
 
 defineOptions({
   name: 'Homepage',

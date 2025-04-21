@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { InputInst } from 'naive-ui'
+import type { ICompExtraIconPickerProps } from '.'
 import allIcons from '/build/_generated/icon-list.ts'
 import { IconBundleConfig } from '/build/icon/src/config.ts'
-import type { ICompExtraIconPickerProps } from '.'
 
 defineOptions({
   name: 'WCompExtraIconPicker',

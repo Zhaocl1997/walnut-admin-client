@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { isFunction } from 'easy-fns-ts'
 import { WithValueProps } from '@/components/HOC/WithValue'
+import { isFunction } from 'easy-fns-ts'
 
 defineOptions({
   name: 'WApiSelect',

@@ -60,12 +60,12 @@ function onInit() {
   chartInst.value!.setOption(
     isDark.value
       ? Object.assign(props.option, {
-        backgroundColor: 'transparent',
-        animation: !appSettings.app.reducedMotion,
-      })
+          backgroundColor: 'transparent',
+          animation: !appSettings.app.reducedMotion,
+        })
       : Object.assign(props.option, {
-        animation: !appSettings.app.reducedMotion,
-      }),
+          animation: !appSettings.app.reducedMotion,
+        }),
   )
 }
 

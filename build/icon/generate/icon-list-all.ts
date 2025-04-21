@@ -1,15 +1,15 @@
-import fg from 'fast-glob'
-import { IconSet } from '@iconify/tools'
 import type { IconifyJSON } from '@iconify/types'
+import { IconSet } from '@iconify/tools'
+import fg from 'fast-glob'
 
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
 
 import {
   IconBundleConfig,
-  IconLog,
-  WSvgPrefix,
   iconListPath,
+  IconLog,
   iconSVGPath,
+  WSvgPrefix,
 } from '../src'
 
 export async function getIconListAllArray() {

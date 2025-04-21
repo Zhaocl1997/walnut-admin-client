@@ -38,7 +38,7 @@ const getShowIcon = computed(
   () =>
     (!props.item.meta.affix && appSetting.tabs.showIcon)
     || (props.item.meta.affix
-    && appSetting.tabs.affixMode === AppConstTabAffixMode.ICON),
+      && appSetting.tabs.affixMode === AppConstTabAffixMode.ICON),
 )
 
 // only show when not mobile
@@ -63,8 +63,8 @@ const getShowCloseIcon = computed(
   () =>
     !props.item.meta.affix
     && (appSetting.tabs.closeMode === AppConstTabCloseMode.ALWAYS
-    || (appSetting.tabs.closeMode === AppConstTabCloseMode.HOVER
-    && getHovered.value)),
+      || (appSetting.tabs.closeMode === AppConstTabCloseMode.HOVER
+        && getHovered.value)),
 )
 
 // only show when tab is not affixed
@@ -74,7 +74,7 @@ const getShowTite = computed(
   () =>
     !props.item.meta.affix
     || (props.item.meta.affix
-    && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN),
+      && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN),
 )
 
 // scroll title and real title

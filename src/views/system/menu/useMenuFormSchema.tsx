@@ -1,6 +1,6 @@
+import type { WForm } from '@/components/UI/Form'
 import { findPath } from 'easy-fns-ts'
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
-import type { WForm } from '@/components/UI/Form'
 
 export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<RecordNullable<AppSystemMenu>>, treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>, menuActiveNamesOptions: Ref<{ name: string, title: string }[]>):
   | DeepMaybeRefSelf<WForm.Schema.Item<AppSystemMenu>[]>

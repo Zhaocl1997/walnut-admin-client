@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import { routes } from './routes'
 import { createRouterGuard } from './guard'
+import { routes } from './routes'
 import { parseQuery, stringifyQuery } from './utils/query'
 
 export const AppRouter = createRouter({

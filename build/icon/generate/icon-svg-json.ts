@@ -6,7 +6,7 @@ import {
 } from '@iconify/tools'
 
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
-import { IconLog, WSvgPrefix, iconSVGPath } from '../src'
+import { IconLog, iconSVGPath, WSvgPrefix } from '../src'
 
 export async function generateSvgJSON(whiteList?: string[]) {
   // build the empty json file

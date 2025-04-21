@@ -1,7 +1,7 @@
 import type { UploadFileInfo } from 'naive-ui'
+import { getAliSTSToken } from '@/api/shared/ali'
 import OSS from 'ali-oss'
 import { omit } from 'lodash-es'
-import { getAliSTSToken } from '@/api/shared/ali'
 
 const { demo } = useAppEnv('build')
 

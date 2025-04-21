@@ -1,8 +1,8 @@
+import axios from 'axios'
 import {
   easyTransformObjectStringBoolean,
 } from 'easy-fns-ts'
 import { merge } from 'lodash-es'
-import axios from 'axios'
 
 import { AppRequestEncryption, AppResponseEncryption } from '../crypto'
 import { checkReponseErrorStatus } from './checkStatus'

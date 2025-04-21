@@ -1,13 +1,13 @@
+import type { useEventParams } from '@/hooks/component/useEvent'
 import type { DataTableInst, TagProps } from 'naive-ui'
+
 import type {
   CreateRowKey,
   TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
-
-import type { WForm } from '../../Form'
 import type { WButtonProps } from '../../Button'
+import type { WForm } from '../../Form'
 import type { WTablePropType } from './props'
-import type { useEventParams } from '@/hooks/component/useEvent'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'

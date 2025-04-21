@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { ScrollbarInst } from 'naive-ui'
-import { nanoid } from 'nanoid'
 import type { ICompExtraScrollbarInst, ICompExtraScrollbarProps } from '.'
+import { nanoid } from 'nanoid'
 
 defineOptions({
   name: 'WCompExtraScrollbar',
@@ -119,7 +119,8 @@ defineExpose<ICompExtraScrollbarInst>({
             = scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
               ?.children[index]
               ?? scrollRef.value?.scrollbarInstRef?.containerRef?.children[0]
-                ?.children[0]?.children[index]
+                ?.children[0]
+                ?.children[index]
 
     scrollRef.value!.scrollTo(
       props.xScrollable

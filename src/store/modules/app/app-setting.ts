@@ -1,6 +1,3 @@
-import { defineStore } from 'pinia'
-import { StoreKeys } from '../../constant'
-import { store } from '../../pinia'
 import type {
   AppSettingsForApp,
   AppSettingsForBreadcrumb,
@@ -11,8 +8,11 @@ import type {
   AppSettingsForTabs,
   AppSettingsForTheme,
 } from '~/settings'
-
 import settings from '@/settings.json'
+import { defineStore } from 'pinia'
+import { StoreKeys } from '../../constant'
+
+import { store } from '../../pinia'
 
 type SetWithKeyOptions =
   | { key: 'app', value: AppSettingsForApp }

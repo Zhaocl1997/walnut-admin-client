@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import AsideMenu from './menu.vue'
-import AsideLogo from './logo.vue'
 import MenuCollpaseButton from './collapseButton.vue'
+import AsideLogo from './logo.vue'
+import AsideMenu from './menu.vue'
 
 const appMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()

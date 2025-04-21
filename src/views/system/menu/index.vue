@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { omit } from 'lodash-es'
+import { menuAPI } from '@/api/system/menu'
 
+import { useTree } from '@/components/UI/Tree'
+import { omit } from 'lodash-es'
 import { useMenuTree } from '../role/useMenuTree'
 import { useMenuFormSchema } from './useMenuFormSchema'
-import { menuAPI } from '@/api/system/menu'
-import { useTree } from '@/components/UI/Tree'
 
 defineOptions({
   // eslint-disable-next-line vue/no-reserved-component-names

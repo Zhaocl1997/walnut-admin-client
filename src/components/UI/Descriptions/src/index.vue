@@ -1,6 +1,6 @@
 <script lang="tsx">
-import { omit } from 'lodash-es'
 import type { WDescriptionProps, WDescriptionsItem } from './types'
+import { omit } from 'lodash-es'
 
 import { props } from './props'
 

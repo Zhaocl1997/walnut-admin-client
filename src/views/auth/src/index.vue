@@ -2,13 +2,13 @@
 import type { TabsInst } from 'naive-ui'
 
 import SignInWithAccount from './common/account.vue'
-import SignInWitSMS from './common/SMS.vue'
 import SignInWitEmail from './common/email.vue'
 import SignInWithQR from './common/QR.vue'
-
-import SharedOther from './shared/other.vue'
+import SignInWitSMS from './common/SMS.vue'
 
 import { setAuthContext } from './hooks/useAuthContext'
+
+import SharedOther from './shared/other.vue'
 
 defineOptions({
   name: 'AuthSignin',

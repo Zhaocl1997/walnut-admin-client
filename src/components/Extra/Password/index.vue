@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Status } from 'naive-ui/es/progress/src/interface'
-import { checkStrStrong, statusTable } from './utils'
 import type { ICompExtraPasswordProps } from '.'
+import { checkStrStrong, statusTable } from './utils'
 
 defineOptions({
   name: 'WCompExtraPasswordInput',

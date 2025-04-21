@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IconProps, IconifyIconLoaderAbort } from '@iconify/vue'
+import type { IconifyIconLoaderAbort, IconProps } from '@iconify/vue'
 import { Icon, iconExists, loadIcons } from '@iconify/vue'
 
 defineOptions({

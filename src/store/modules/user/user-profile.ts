@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia'
+import { getUserInfo } from '@/api/auth'
 import { upperFirst } from 'easy-fns-ts'
+import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
-import { getUserInfo } from '@/api/auth'
 
 const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
   state: (): UserProfileState => ({

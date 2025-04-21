@@ -2,12 +2,12 @@ import { resolve } from 'node:path'
 
 import * as TJS from 'typescript-json-schema'
 
+import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../utils'
 import {
   AppSettingsInterfaceFilePath,
   AppSettingsJSONFilePath,
   VScodeSettingsFilePath,
 } from '../utils/paths'
-import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../utils'
 
 const settings: TJS.PartialArgs = {
   required: true,

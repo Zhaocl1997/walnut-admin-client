@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import data, { defaultSuffix } from './data'
 import type { ICompExtraEmailInputProps } from '.'
+import data, { defaultSuffix } from './data'
 
 defineOptions({
   name: 'WCompExtraEmailInput',

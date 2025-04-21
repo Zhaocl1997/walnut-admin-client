@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useSortable } from '@vueuse/integrations/useSortable'
 import type { WTable } from '../../../types'
-
-import { useTableContext } from '../../../hooks/useTableContext'
 import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
+
+import { useSortable } from '@vueuse/integrations/useSortable'
+import { useTableContext } from '../../../hooks/useTableContext'
 
 defineOptions({
   name: 'WTableHeaderRightColumns',

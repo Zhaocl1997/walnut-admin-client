@@ -1,3 +1,13 @@
+import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
+
+import type { WEmailInputProps } from '@/components/Extra/EmailInput'
+import type { WLocaleSelectProps } from '@/components/Extra/LocaleSelect'
+import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
+import type { WPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
+import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
+import type { WTransitionProps } from '@/components/Extra/Transition'
+import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
+import type { useEventParams } from '@/hooks/component/useEvent'
 import type {
   DynamicInputProps,
   FormInst,
@@ -7,38 +17,28 @@ import type {
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
-
 import type { WButtonProps } from '../../Button'
 import type { WButtonGroupProps } from '../../ButtonGroup'
-import type { WInputProps } from '../../Input'
-import type { WInputNumberProps } from '../../InputNumber'
-import type { WSelectProps } from '../../Select'
-import type { WRadioProps } from '../../Radio'
 import type { WCheckboxProps } from '../../Checkbox'
-import type { ICompUISwitchPropsPartial } from '../../Switch'
-import type { WTimePickerProps } from '../../TimePicker'
-import type { WDatePickerProps } from '../../DatePicker'
-import type { WDynamicTagsProps } from '../../DynamicTags'
-import type { ICompUITreeProps } from '../../Tree'
 import type { WColorPickerProps } from '../../ColorPicker'
 
-import type { WDescriptionsItem } from '../../Descriptions'
+import type { WDatePickerProps } from '../../DatePicker'
 
-import type { WFormPropType } from './props'
+import type { WDescriptionsItem } from '../../Descriptions'
+import type { WDynamicTagsProps } from '../../DynamicTags'
+import type { WInputProps } from '../../Input'
+import type { WInputNumberProps } from '../../InputNumber'
+import type { WRadioProps } from '../../Radio'
+import type { WSelectProps } from '../../Select'
+import type { ICompUISwitchPropsPartial } from '../../Switch'
+import type { WTimePickerProps } from '../../TimePicker'
+import type { ICompUITreeProps } from '../../Tree'
 import type {
   WFormItemDictProps,
   WFormItemDividerProps,
   WFormItemQueryProps,
 } from './components/Extend/types'
-import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
-import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
-import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
-import type { useEventParams } from '@/hooks/component/useEvent'
-import type { WLocaleSelectProps } from '@/components/Extra/LocaleSelect'
-import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
-import type { WTransitionProps } from '@/components/Extra/Transition'
-import type { WPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
-import type { WEmailInputProps } from '@/components/Extra/EmailInput'
+import type { WFormPropType } from './props'
 
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 
@@ -188,14 +188,14 @@ export declare namespace WForm {
       type: T
 
       componentProp?: ComponentPropPool<D>[T] &
-      DomProps & {
+        DomProps & {
         /**
          * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
          */
-        defaultValue?: BaseDataType | BaseDataType[] | undefined | null
+          defaultValue?: BaseDataType | BaseDataType[] | undefined | null
 
-        placeholder?: string
-      }
+          placeholder?: string
+        }
 
       formProp?: Omit<FormItemProps, 'rule' | 'label'> & {
         /**

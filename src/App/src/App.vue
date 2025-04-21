@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import UIProvider from './naive/UIProvider.vue'
-import MsgProvider from './naive/MsgProvider.vue'
-import ThemeProvider from './naive/AppTheme.vue'
-
 import { useAppLocale } from '@/components/App/AppLocalePicker/useAppLocale'
 import { useAppLock } from '@/components/App/AppLock/useAppLock'
-;
+
+import ThemeProvider from './naive/AppTheme.vue'
+
+import MsgProvider from './naive/MsgProvider.vue'
+import UIProvider from './naive/UIProvider.vue'
 
 (async function () {
   await useUseragentInfo()

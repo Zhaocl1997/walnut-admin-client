@@ -1,7 +1,7 @@
 <script lang="tsx">
-import { omit } from 'lodash-es'
-import { clearIllegalChars, upperFirst } from 'easy-fns-ts'
 import type { WInputProps } from './types'
+import { clearIllegalChars, upperFirst } from 'easy-fns-ts'
+import { omit } from 'lodash-es'
 import { extendedProps, props } from './props'
 
 export default defineComponent({

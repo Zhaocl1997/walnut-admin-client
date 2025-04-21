@@ -2,11 +2,11 @@
 </script>
 
 <script lang="ts" setup>
-import type { WForm } from '../../types'
 import type { AppSystemDictDataPicked } from '@/api/system/dict'
 import type { WCheckboxProps } from '@/components/UI/Checkbox'
 import type { WRadioProps } from '@/components/UI/Radio'
 import type { WSelectProps } from '@/components/UI/Select'
+import type { WForm } from '../../types'
 
 defineOptions({
   name: 'WFormItemExtendDict',

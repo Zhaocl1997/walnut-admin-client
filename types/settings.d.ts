@@ -1,10 +1,3 @@
-/**
- * https://github.com/YousefED/typescript-json-schema
- * this interface is also used to generate json schema
- * if change this file, please in terminal run `npm run gen:schema` to generate `settings.json` VS Code support
- * all types below must be explicit import, no auto-import or global usage
- */
-import type { ValueOfAppConstTransitionName } from '../src/const/transition'
 import type {
   ValueOfAppConstBasicMode,
   ValueOfAppConstCollapseMode,
@@ -20,6 +13,13 @@ import type {
   ValueOfAppConstTabStyleMode,
   ValueOfAppConstTabUtilsShowMode,
 } from '../src/const/tab'
+/**
+ * https://github.com/YousefED/typescript-json-schema
+ * this interface is also used to generate json schema
+ * if change this file, please in terminal run `npm run gen:schema` to generate `settings.json` VS Code support
+ * all types below must be explicit import, no auto-import or global usage
+ */
+import type { ValueOfAppConstTransitionName } from '../src/const/transition'
 
 interface AppSettingsForApp {
   /**

@@ -1,21 +1,21 @@
 <script lang="tsx">
-import { renderSlot } from 'vue'
-import { easyOmit } from 'easy-fns-ts'
 import type { WForm } from './types'
-
-import { useFormSchemas } from './hooks/useFormSchemas'
-import { setFormContext } from './hooks/useFormContext'
-import { useFormEvents } from './hooks/useFormEvents'
-import { useFormAdvanced } from './hooks/useFormAdvanced'
-import { useFormBaseRules } from './hooks/useFormBaseRules'
-import { useFormDict } from './hooks/useFormDict'
-import { useFormDesc } from './hooks/useFormDesc'
-import { useFormMethods } from './hooks/useFormMethods'
-
-import { extendProps, props } from './props'
-import { components } from './utils/component'
+import { easyOmit } from 'easy-fns-ts'
+import { renderSlot } from 'vue'
 
 import WFormItem from './components/FormItem/index.vue'
+import { useFormAdvanced } from './hooks/useFormAdvanced'
+import { useFormBaseRules } from './hooks/useFormBaseRules'
+import { setFormContext } from './hooks/useFormContext'
+import { useFormDesc } from './hooks/useFormDesc'
+import { useFormDict } from './hooks/useFormDict'
+import { useFormEvents } from './hooks/useFormEvents'
+import { useFormMethods } from './hooks/useFormMethods'
+
+import { useFormSchemas } from './hooks/useFormSchemas'
+import { extendProps, props } from './props'
+
+import { components } from './utils/component'
 
 export default defineComponent({
   name: 'WForm',
@@ -111,8 +111,8 @@ export default defineComponent({
               <WTransition {...item?.transitionProp} appear>
                 <WFormItem item={item}>
                   {item.type === 'Base:Slot'
-                  && Object.keys(slots).includes(item.formProp?.path!)
-                  && renderSlot(slots, item.formProp?.path!)}
+                    && Object.keys(slots).includes(item.formProp?.path!)
+                    && renderSlot(slots, item.formProp?.path!)}
                 </WFormItem>
               </WTransition>
             </n-gi>

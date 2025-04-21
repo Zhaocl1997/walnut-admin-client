@@ -1,6 +1,6 @@
 import type { Slots } from 'vue'
-import { renderSlot } from 'vue'
 import { filter, isEmpty, isUndefined } from 'lodash-es'
+import { renderSlot } from 'vue'
 
 export function getDefaultSlotText(slots: Slots): string {
   const str = (slots.default && slots.default()[0].children) as string

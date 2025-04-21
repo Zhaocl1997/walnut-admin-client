@@ -1,16 +1,16 @@
 <script lang="tsx">
-import { omit } from 'lodash-es'
 import type { WTable } from '../src/types'
-
-import { setTableContext } from './hooks/useTableContext'
-import { useTableEvents } from './hooks/useTableEvents'
-import { useTableColumns } from './hooks/useTableColumns'
-import { useTableAPI } from './hooks/useTableAPI'
-
-import { extendProps, props } from './props'
+import { omit } from 'lodash-es'
 
 import TableHeader from './components/header/index.vue'
 import QueryForm from './components/queryForm.vue'
+import { useTableAPI } from './hooks/useTableAPI'
+import { useTableColumns } from './hooks/useTableColumns'
+
+import { setTableContext } from './hooks/useTableContext'
+
+import { useTableEvents } from './hooks/useTableEvents'
+import { extendProps, props } from './props'
 
 export default defineComponent({
   name: 'WTable',

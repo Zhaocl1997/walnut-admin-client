@@ -1,14 +1,14 @@
 <script lang="tsx" setup>
 import type { DropdownOption, TreeInst, TreeOption } from 'naive-ui'
-import type { TreeRenderProps } from 'naive-ui/lib/tree/src/interface'
-
-import { formatTree, treeToArr } from 'easy-fns-ts'
-import { cloneDeep } from 'lodash-es'
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
-import type { TreeNodeProps } from 'naive-ui/es/tree/src/interface'
-import type { ICompUITreeInst, ICompUITreeProps } from './types'
 
+import type { TreeNodeProps } from 'naive-ui/es/tree/src/interface'
+import type { TreeRenderProps } from 'naive-ui/lib/tree/src/interface'
+import type { ICompUITreeInst, ICompUITreeProps } from './types'
 import { useDropdown } from '@/components/UI/Dropdown'
+import { formatTree, treeToArr } from 'easy-fns-ts'
+
+import { cloneDeep } from 'lodash-es'
 
 defineOptions({
   name: 'WTree',
@@ -266,7 +266,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
               }}
             >
               {getProps.value.treeProps!.draggable
-              && userPermission.hasPermission(getProps.value.auths?.update) && (
+                && userPermission.hasPermission(getProps.value.auths?.update) && (
                 <WIcon
                   height="18"
                   class="cursor-move"
@@ -276,7 +276,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
               )}
 
               {getProps.value.deletable
-              && userPermission.hasPermission(getProps.value.auths?.delete) && (
+                && userPermission.hasPermission(getProps.value.auths?.delete) && (
                 <WIconButton
                   icon-props={{
                     icon: 'ant-design:delete-outlined',

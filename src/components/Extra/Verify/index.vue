@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { ICompExtraVerifyProps } from '.'
 import { getRandomInt } from 'easy-fns-ts'
 import { makeImgSize, makeImgWithCanvas, paintPuzzle } from './utils'
-import type { ICompExtraVerifyProps } from '.'
 
 defineOptions({
   name: 'WCompExtraVerify',
@@ -82,7 +82,7 @@ const getPuzzleCanvasStyle = computed(() => ({
     - getSliderBaseSize.value
     - (getPuzzleBaseSize.value - getSliderBaseSize.value)
     * ((getStyleWidth.value - getSliderBaseSize.value)
-    / (props.canvasWidth - getSliderBaseSize.value))
+      / (props.canvasWidth - getSliderBaseSize.value))
   }px)`,
 }))
 
@@ -110,7 +110,7 @@ function onInit(withCanvas = false) {
 
   const isFirefox
       = navigator.userAgent.includes('Firefox')
-      && navigator.userAgent.includes('Windows') // 是windows版火狐
+        && navigator.userAgent.includes('Windows') // 是windows版火狐
 
   const img = document.createElement('img')
 
@@ -298,7 +298,7 @@ function onVerify() {
     - (getStyleWidth.value - getSliderBaseSize.value)
     + (getPuzzleBaseSize.value - getSliderBaseSize.value)
     * ((getStyleWidth.value - getSliderBaseSize.value)
-    / (props.canvasWidth - getSliderBaseSize.value))
+      / (props.canvasWidth - getSliderBaseSize.value))
     - 3,
   )
 

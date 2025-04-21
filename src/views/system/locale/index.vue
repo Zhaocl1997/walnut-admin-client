@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { useLangList } from './useLangList'
 import type { WForm } from '@/components/UI/Form'
-
 import { localeAPI } from '@/api/system/locale'
+import { useLangList } from './useLangList'
 
 defineOptions({
   name: 'Locale',

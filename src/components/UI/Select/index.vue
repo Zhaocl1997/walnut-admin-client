@@ -1,6 +1,6 @@
 <script lang="tsx" setup>
-import type { RenderOption } from 'naive-ui/es/_internal/select-menu/src/interface'
 import type { SelectProps } from 'naive-ui'
+import type { RenderOption } from 'naive-ui/es/_internal/select-menu/src/interface'
 import type { ICompUISelectProps } from '.'
 
 defineOptions({

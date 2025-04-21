@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import TheIFrameWrapper from '../iframe/wrapper.vue'
+import TheAppBackToTop from './Features/backToTop.vue'
+import TheAppWatermark from './Features/watermark.vue'
 import TheAside from './TheAside'
 import TheContent from './TheContent'
 import TheFooter from './TheFooter'
+
 import TheHeader from './TheHeader'
 import TheTabs from './TheTab'
-
-import TheAppWatermark from './Features/watermark.vue'
-import TheAppBackToTop from './Features/backToTop.vue'
 
 import { useStarOnGithub } from './useStarOnGithub'
 

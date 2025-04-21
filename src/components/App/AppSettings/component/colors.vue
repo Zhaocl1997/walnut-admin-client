@@ -1,7 +1,7 @@
 <script lang="tsx">
+import WIcon from '@/components/UI/Icon'
 // TODO 99
 import { getThemeColors } from './utils'
-import WIcon from '@/components/UI/Icon'
 
 export default defineComponent({
   name: 'AppColors',

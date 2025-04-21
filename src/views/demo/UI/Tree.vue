@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { getTreeData } from '../data'
 import { useTree } from '@/components/UI/Tree'
+import { getTreeData } from '../data'
 
 defineOptions({
   name: 'DemoTree',

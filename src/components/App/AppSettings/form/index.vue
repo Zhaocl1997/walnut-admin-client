@@ -2,12 +2,12 @@
 import { modalColor } from '../shared'
 
 import SettingsFormApp from './app.vue'
-import SettingsFormLogo from './logo.vue'
-import SettingsFormHeader from './header.vue'
-import SettingsFormTab from './tab.vue'
 import SettingsFormBreadcrumb from './breadcrumb.vue'
-import SettingsFormMenu from './menu.vue'
 import SettingsFormFooter from './footer.vue'
+import SettingsFormHeader from './header.vue'
+import SettingsFormLogo from './logo.vue'
+import SettingsFormMenu from './menu.vue'
+import SettingsFormTab from './tab.vue'
 
 defineOptions({
   name: 'AppSettingsForm',

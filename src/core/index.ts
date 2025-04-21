@@ -1,5 +1,3 @@
-import { cloneDeep } from 'lodash-es'
-
 import { getPermissions } from '@/api/auth'
 import { buildRoutes } from '@/router/utils/route'
 

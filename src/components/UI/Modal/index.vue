@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { ICompUIModalProps } from '.'
 import { toggleClass } from 'easy-fns-ts'
 import { useModalDraggable } from './useModalDraggable'
-import type { ICompUIModalProps } from '.'
 
 defineOptions({
   name: 'WModal',

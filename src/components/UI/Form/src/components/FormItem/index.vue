@@ -1,6 +1,6 @@
 <script lang="tsx">
-import { clone, isBoolean, isFunction, omit } from 'lodash-es'
 import type { WForm } from '../../types'
+import { clone, isBoolean, isFunction, omit } from 'lodash-es'
 
 import { useFormContext } from '../../hooks/useFormContext'
 import {
@@ -80,7 +80,7 @@ export default defineComponent({
       <n-form-item
         vShow={getFormBooleanField(item, formProps.value, 'vShow')}
         {...(isBoolean(item?.formProp?.rule)
-        && isBoolean(item?.formProp?.label)
+          && isBoolean(item?.formProp?.label)
           ? omit(clone(item?.formProp), 'rule', 'label')
           : isBoolean(item?.formProp?.rule)
             ? omit(item?.formProp, 'rule')

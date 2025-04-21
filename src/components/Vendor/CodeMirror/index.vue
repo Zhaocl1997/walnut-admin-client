@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { Codemirror } from 'vue-codemirror'
-
 import type { EditorView, ViewUpdate } from '@codemirror/view'
-import { oneDark } from '@codemirror/theme-one-dark'
+
 import { redo, undo } from '@codemirror/commands'
 import { closeSearchPanel, openSearchPanel } from '@codemirror/search'
+import { oneDark } from '@codemirror/theme-one-dark'
+import { Codemirror } from 'vue-codemirror'
 
 import { languages } from './language'
 

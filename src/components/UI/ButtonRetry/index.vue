@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { type ICompUIButtonRetryProps, buttonRetryMapPersistent } from '.'
+import type { ICompUIButtonRetryProps } from '.'
+import { buttonRetryMapPersistent } from '.'
 
 defineOptions({
   name: 'WButtonRetry',

@@ -1,10 +1,10 @@
 <script lang="tsx" setup>
+import type { CountryCode } from 'libphonenumber-js'
 import type { InputInst } from 'naive-ui'
 import type { FormValidationStatus } from 'naive-ui/es/form/src/interface'
-import type { CountryCode } from 'libphonenumber-js'
+import type { ICompExtraPhoneNumberInputProps, ICompExtraPhoneNumberInputUpdateParams } from '.'
 import { getExampleNumber, parsePhoneNumberFromString } from 'libphonenumber-js'
 import { getExamplePhoneNumber, phoneNumberExample } from './utils'
-import type { ICompExtraPhoneNumberInputProps, ICompExtraPhoneNumberInputUpdateParams } from '.'
 
 defineOptions({
   name: 'WCompExtraPhoneNumberInput',

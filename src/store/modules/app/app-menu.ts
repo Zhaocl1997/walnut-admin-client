@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { arrToTree, orderTree } from 'easy-fns-ts'
 
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'

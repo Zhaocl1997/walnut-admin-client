@@ -1,8 +1,8 @@
+import type * as ECharts from 'echarts/core'
 import type { DialogApiInjection } from 'naive-ui/lib/dialog/src/DialogProvider'
 import type { LoadingBarApiInjection } from 'naive-ui/lib/loading-bar/src/LoadingBarProvider'
 import type { MessageApiInjection } from 'naive-ui/lib/message/src/MessageProvider'
 import type { NotificationApiInjection } from 'naive-ui/lib/notification/src/NotificationProvider'
-import type * as ECharts from 'echarts/core'
 
 declare global {
   declare interface Window {

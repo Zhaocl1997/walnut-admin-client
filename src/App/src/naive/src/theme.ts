@@ -1,8 +1,8 @@
 import type { GlobalThemeOverrides, ThemeCommonVars } from 'naive-ui'
 
 import { adjustColor } from 'easy-fns-ts'
-import { darkTheme, lightTheme } from 'naive-ui'
 import { merge } from 'lodash-es'
+import { darkTheme, lightTheme } from 'naive-ui'
 
 const appSettings = useAppStoreSetting()
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { AliOSSClient } from '../../Vendor/OSSUpload/client'
 import type { WCropperInst } from '@/components/Vendor/Cropper'
+import { AliOSSClient } from '../../Vendor/OSSUpload/client'
 
 defineOptions({
   name: 'WAvatarUpload',

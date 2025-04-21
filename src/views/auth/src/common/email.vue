@@ -1,8 +1,8 @@
 <script lang="tsx" setup>
+import { sendAuthEmail } from '@/api/auth/email'
 // TODO 99
 import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
-import { sendAuthEmail } from '@/api/auth/email'
 
 defineOptions({
   name: 'SignInWithEmail',

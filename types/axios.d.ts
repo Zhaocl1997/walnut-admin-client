@@ -1,5 +1,5 @@
-import type { SortOrder } from 'naive-ui/lib/data-table/src/interface'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { SortOrder } from 'naive-ui/lib/data-table/src/interface'
 
 declare module 'axios' {
   interface AxiosRequestConfig {

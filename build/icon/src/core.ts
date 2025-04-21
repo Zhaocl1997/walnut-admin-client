@@ -1,10 +1,10 @@
+import { BuildUtilsWarn } from '../../utils'
 import { generateIconUsedBundle } from '../generate/icon-bundle'
+import { generateIconDev } from '../generate/icon-dev'
 import { generateIconListAll } from '../generate/icon-list-all'
 import { generateIconListScan } from '../generate/icon-list-scan'
-import { generateSvgJSON } from '../generate/icon-svg-json'
-import { generateIconDev } from '../generate/icon-dev'
 import { rewriteSvgJSON, writeSvgJSONBundle } from '../generate/icon-svg-bundle'
-import { BuildUtilsWarn } from '../../utils'
+import { generateSvgJSON } from '../generate/icon-svg-json'
 import { IconBundleConfig } from './config'
 
 (async () => {

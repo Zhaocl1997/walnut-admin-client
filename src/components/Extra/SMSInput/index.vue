@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { ICompExtraSMSInputProps } from '.'
 import type { WVerifyInst } from '@/components/Extra/Verify'
+import type { ICompExtraSMSInputProps } from '.'
 
 defineOptions({
   name: 'WCompExtraSMSInput',

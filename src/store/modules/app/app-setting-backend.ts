@@ -1,7 +1,7 @@
+import { getPublicSettings } from '@/api/app/setting'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
-import { getPublicSettings } from '@/api/app/setting'
 
 const useAppStoreSettingBackendInside = defineStore(
   StoreKeys.APP_SETTING_BACKEND,

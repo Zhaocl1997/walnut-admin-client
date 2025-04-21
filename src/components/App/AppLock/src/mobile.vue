@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import UnlockButton from './components/UnlockButton.vue'
 import Network from './components/Network.vue'
+import UnlockButton from './components/UnlockButton.vue'
 
 const { level, charging } = useSharedBattery()
 const now = useNow()

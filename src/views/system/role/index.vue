@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useMenuTree } from './useMenuTree'
 import { roleAPI } from '@/api/system/role'
+import { useMenuTree } from './useMenuTree'
 
 defineOptions({
   name: 'Role',

@@ -1,6 +1,6 @@
+import { menuAPI } from '@/api/system/menu'
 import { arrToTree, formatTree, orderTree } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
-import { menuAPI } from '@/api/system/menu'
 
 export function useMenuTree() {
   const { t } = useAppI18n()

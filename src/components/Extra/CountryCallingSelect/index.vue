@@ -1,9 +1,9 @@
 <script lang="tsx" setup>
-import type { SelectMixedOption } from 'naive-ui/lib/select/src/interface'
 import type { CountryCode } from 'libphonenumber-js'
-import options from './data'
+import type { SelectMixedOption } from 'naive-ui/lib/select/src/interface'
 import type { ICompExtraCountryCallingSelectOption, ICompExtraCountryCallingSelectProps } from '.'
 import { getCountryCodeOnline } from '@/utils/shared'
+import options from './data'
 import './icon.css'
 
 defineOptions({

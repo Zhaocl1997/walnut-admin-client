@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { Options } from 'signature_pad'
-import SignaturePad from 'signature_pad'
-import { toJpeg, toPng } from 'html-to-image'
 import { genString } from 'easy-fns-ts'
+import { toJpeg, toPng } from 'html-to-image'
+import SignaturePad from 'signature_pad'
 
 defineOptions({
   name: 'WVendorSignaturePad',

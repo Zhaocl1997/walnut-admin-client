@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useAuthContext } from '../hooks/useAuthContext'
 import { getGiteeUri, getGithubUri, getWeiboUri } from '@/api/auth/third'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({
   name: 'SharedOtherWayToSignin',

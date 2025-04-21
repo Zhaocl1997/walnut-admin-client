@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { upperFirst } from 'lodash-es'
 import type { RendererElement } from 'vue'
 import type { ICompExtraTransitionProps } from '.'
+import { upperFirst } from 'lodash-es'
 
 defineOptions({
   name: 'WCompExtraTransition',

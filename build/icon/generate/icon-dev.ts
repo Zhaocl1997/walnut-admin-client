@@ -1,10 +1,10 @@
 import { BuildUtilsWriteFile } from '../../utils'
 import {
   IconBundleConfig,
-  WSvgPrefix,
   iconBundlePath,
   iconListPath,
   iconSVGPath,
+  WSvgPrefix,
 } from '../src'
 
 export async function generateIconDev() {

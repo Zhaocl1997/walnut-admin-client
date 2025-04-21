@@ -1,9 +1,14 @@
 <script lang="ts" setup>
 import type { RawEditorOptions } from 'tinymce'
-import { genString } from 'easy-fns-ts'
-
 import TinymceEditor from '@tinymce/tinymce-vue'
+
+import { genString } from 'easy-fns-ts'
 import tinymce from 'tinymce/tinymce'
+import { getContenteCSSUrl, getSkinUrl } from './resources/cdn'
+import { menubar } from './resources/menubar'
+import { plugins } from './resources/plugins'
+import { templates } from './resources/template'
+import { toolbar } from './resources/toolbar'
 import 'tinymce/themes/silver'
 import 'tinymce/models/dom'
 import 'tinymce/icons/default'
@@ -32,17 +37,12 @@ import 'tinymce/plugins/preview'
 import 'tinymce/plugins/quickbars'
 import 'tinymce/plugins/save'
 import 'tinymce/plugins/searchreplace'
+
 import 'tinymce/plugins/table'
 import 'tinymce/plugins/template'
 import 'tinymce/plugins/visualblocks'
 import 'tinymce/plugins/visualchars'
 import 'tinymce/plugins/wordcount'
-
-import { getContenteCSSUrl, getSkinUrl } from './resources/cdn'
-import { plugins } from './resources/plugins'
-import { toolbar } from './resources/toolbar'
-import { menubar } from './resources/menubar'
-import { templates } from './resources/template'
 
 defineOptions({
   name: 'WVendorTinymceEditor',

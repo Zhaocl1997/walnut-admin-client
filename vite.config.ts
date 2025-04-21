@@ -1,14 +1,14 @@
-import { resolve } from 'node:path'
 import type { ConfigEnv, UserConfig } from 'vite'
+import { resolve } from 'node:path'
 
 import { loadEnv } from 'vite'
 
-import { author, dependencies, devDependencies, name, repository, urls, version } from './package.json'
-
-import { createViteProxy } from './build/vite/proxy'
-import { createVitePlugins } from './build/vite/plugin'
 import { envDir, publicDir } from './build/constant'
+
 import { createRollupObfuscatorPlugin } from './build/rollup'
+import { createVitePlugins } from './build/vite/plugin'
+import { createViteProxy } from './build/vite/proxy'
+import { author, dependencies, devDependencies, name, repository, urls, version } from './package.json'
 import { useBuildEnv } from './src/hooks/core/useLoadEnv'
 
 function pathResolve(dir: string) {

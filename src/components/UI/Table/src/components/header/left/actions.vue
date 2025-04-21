@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { sortBy } from 'lodash-es'
 import type { WTable } from '../../../types'
+import { sortBy } from 'lodash-es'
 
 import { useTableContext } from '../../../hooks/useTableContext'
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { isFunction } from 'easy-fns-ts'
 import type { WCrud } from './types'
+import { isFunction } from 'easy-fns-ts'
 
 interface InternalProps extends WCrud.Props { }
 

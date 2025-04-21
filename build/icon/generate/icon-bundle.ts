@@ -11,9 +11,9 @@
  * For Iconify Tools documentation visit https://docs.iconify.design/tools/tools2/
  */
 
+import type { IconifyJSON, IconifyMetaData } from '@iconify/types'
 import { promises as fs } from 'node:fs'
 import { dirname } from 'node:path'
-import type { IconifyJSON, IconifyMetaData } from '@iconify/types'
 
 // Installation: npm install --save-dev @iconify/tools @iconify/utils @iconify/json @iconify/iconify
 import {
@@ -27,11 +27,11 @@ import { getIcons, minifyIconSet, stringToIcon } from '@iconify/utils'
 
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
 import {
-  IconLog,
-  WSvgPrefix,
   iconBundlePath,
   iconListPath,
+  IconLog,
   iconSVGPath,
+  WSvgPrefix,
 } from '../src'
 
 /**

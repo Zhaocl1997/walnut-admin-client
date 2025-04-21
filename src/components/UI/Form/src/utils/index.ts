@@ -53,7 +53,7 @@ export function getFormTranslated(t: Fn, props: ComputedRef<WForm.Props>, item: 
 
   const isLocaleWithTable
     = getBoolean(item.formProp?.localeWithTable)
-    && getBoolean(props.value.localeWithTable)
+      && getBoolean(props.value.localeWithTable)
 
   const format = (key: string) => {
     if (type === 'origin')
@@ -123,11 +123,11 @@ export function generateBaseRules(schemas: WForm.Schema.Item[], props: ComputedR
             i.formProp.path,
             i.formProp.rule
               ? getBaseRuleObj(
-                i,
-                (Array.isArray(i.formProp.rule)
-                  ? i.formProp.rule
-                  : [i.formProp.rule]) as FormItemRule[],
-              )
+                  i,
+                  (Array.isArray(i.formProp.rule)
+                    ? i.formProp.rule
+                    : [i.formProp.rule]) as FormItemRule[],
+                )
               : getBaseRuleObj(i),
           ]
         }

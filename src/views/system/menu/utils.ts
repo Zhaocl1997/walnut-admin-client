@@ -1,7 +1,7 @@
 /**
  * @link https://stackoverflow.com/questions/47062922/how-to-get-all-keys-with-values-from-nested-objects
  */
-export const deepKeys = function* (t: Recordable, pre: any[] = []): Generator {
+export function deepKeys (t: Recordable, pre: any[] = []): Generator {
   if (Array.isArray(t)) {
     // eslint-disable-next-line no-useless-return
     return

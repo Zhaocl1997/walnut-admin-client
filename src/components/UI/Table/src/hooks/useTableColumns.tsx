@@ -1,6 +1,6 @@
-import { omit } from 'lodash-es'
 import type { DropdownOption } from 'naive-ui'
 import type { WTable } from '../types'
+import { omit } from 'lodash-es'
 
 import { getTableTranslated } from '../utils'
 

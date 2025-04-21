@@ -1,10 +1,10 @@
-import { arrToTree, findPath, formatTree, orderTree } from 'easy-fns-ts'
-
 import type { RouteRecordNameGeneric } from 'vue-router'
-import { App404Route, App500Route } from '../routes/builtin'
+
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
 import IFrameReal from '@/layout/iframe/index.vue'
+import { findPath, formatTree } from 'easy-fns-ts'
+import { App404Route, App500Route } from '../routes/builtin'
 
 /**
  * @description flat tree route into two level route
@@ -70,13 +70,13 @@ function resolveIFrameComponent(name: RouteRecordNameGeneric, cache?: boolean) {
     new Promise((resolve) => {
       cache
         ? resolve({
-          ...IFrameFaker,
-          name,
-        })
+            ...IFrameFaker,
+            name,
+          })
         : resolve({
-          ...IFrameReal,
-          name,
-        })
+            ...IFrameReal,
+            name,
+          })
     })
 }
 

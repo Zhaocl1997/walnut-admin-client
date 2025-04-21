@@ -1,12 +1,12 @@
 <script lang="ts" setup>
+import AppMonitorServerBattery from './src/battery.vue'
 import AppMonitorServerCPU from './src/cpu.vue'
+import AppMonitorServerDisk from './src/disk.vue'
 import AppMonitorServerMem from './src/mem.vue'
+import AppMonitorServerNetwork from './src/network.vue'
 import AppMonitorServerOS from './src/os.vue'
 import AppMonitorServerSystem from './src/system.vue'
-import AppMonitorServerDisk from './src/disk.vue'
-import AppMonitorServerBattery from './src/battery.vue'
 import AppMonitorServerTime from './src/time.vue'
-import AppMonitorServerNetwork from './src/network.vue'
 
 defineOptions({
   name: 'AppMonitorServer',

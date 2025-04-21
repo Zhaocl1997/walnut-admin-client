@@ -1,18 +1,18 @@
 import type {
-  SortState,
   SorterMultiple,
+  SortState,
   TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
+import type { WTable } from '../types'
 import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
-import type { WTable } from '../types'
 
+import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'
 import {
   generateBaseListParams,
   generateDefaultSortParams,
   generateSortParams,
 } from '../utils'
-import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'
 
 export function useTableAPI(inst: Ref<WTable.Inst.NDataTableInst | undefined>, props: ComputedRef<WTable.Props>, setProps: WTable.SetProps) {
   const { t } = useAppI18n()
@@ -208,7 +208,8 @@ export function useTableAPI(inst: Ref<WTable.Inst.NDataTableInst | undefined>, p
               ((i as unknown as SortState).sorter as SorterMultiple)?.multiple,
             ),
         )
-        .filter(Boolean).length !== 0
+        .filter(Boolean)
+        .length !== 0
     ) {
       setProps({
         onUpdateSorter: async (p) => {

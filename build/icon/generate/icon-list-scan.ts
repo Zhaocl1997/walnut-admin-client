@@ -1,7 +1,7 @@
 import fg from 'fast-glob'
 
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../../utils'
-import { IconLog, iconListPath } from '../src/index'
+import { iconListPath, IconLog } from '../src/index'
 import { getIconListAllArray } from './icon-list-all'
 
 export async function generateIconListScan() {

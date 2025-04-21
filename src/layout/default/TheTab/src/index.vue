@@ -6,12 +6,12 @@ import TabsUtils from './components/tabsUtils.vue'
 
 import { useTabs } from './hooks/useTabs'
 import { useTabsActions } from './hooks/useTabsActions'
+import { setTabsContext } from './hooks/useTabsContext'
 import { useTabsContextMenu } from './hooks/useTabsContextMenu'
-import { useTabsUtils } from './hooks/useTabsUtils'
 import { useTabsDevTools } from './hooks/useTabsDevTools'
 import { useTabsPersistent } from './hooks/useTabsPersistent'
 
-import { setTabsContext } from './hooks/useTabsContext'
+import { useTabsUtils } from './hooks/useTabsUtils'
 
 const appSetting = useAppStoreSetting()
 const appAdapter = useAppStoreAdapter()
@@ -24,8 +24,8 @@ const getShowUtils = computed(
     !appAdapter.isMobile
     && appSetting.tabs.showUtils
     && (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.ALWAYS
-    || (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.OVERFLOW
-    && isOverflow.value)),
+      || (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.OVERFLOW
+        && isOverflow.value)),
 )
 
 const {

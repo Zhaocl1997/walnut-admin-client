@@ -1,5 +1,5 @@
-import qs from 'qs'
 import type { LocationQuery, LocationQueryRaw } from 'vue-router'
+import qs from 'qs'
 
 export function stringifyQuery(obj: LocationQueryRaw) {
   const appSetting = useAppStoreSetting()

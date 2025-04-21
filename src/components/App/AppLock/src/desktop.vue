@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Battery from './components/Battery.vue'
-import Network from './components/Network.vue'
 import FPS from './components/FPS.vue'
+import Network from './components/Network.vue'
 import UnlockButton from './components/UnlockButton.vue'
 
 const now = useNow()

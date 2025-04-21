@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { pick } from 'lodash-es'
-import WAvatar from '../components/avatar.vue'
 import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
 import { userAPI } from '@/api/system/user'
+import { pick } from 'lodash-es'
+import WAvatar from '../components/avatar.vue'
 
 defineOptions({
   name: 'WAccountSettingsTabInfo',

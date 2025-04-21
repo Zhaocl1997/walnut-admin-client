@@ -36,7 +36,7 @@ export default defineComponent({
           icon: () => {
             if (
               (node.type === AppConstMenuType.CATALOG
-              && expandedKeys.value?.includes(node.name!))
+                && expandedKeys.value?.includes(node.name!))
               || node.name === getMenuValue.value
             ) {
               return (

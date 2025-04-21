@@ -1,5 +1,5 @@
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from 'build/utils'
-import { IconLog, WSvgPrefix, iconBundlePath, iconListPath, iconSVGPath } from '../src'
+import { iconBundlePath, iconListPath, IconLog, iconSVGPath, WSvgPrefix } from '../src'
 import { generateSvgJSON } from './icon-svg-json'
 
 export async function writeSvgJSONBundle() {

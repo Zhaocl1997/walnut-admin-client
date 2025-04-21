@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 import { CropperCanvas, CropperCrosshair, CropperGrid, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
 import { genString } from 'easy-fns-ts'
-import type { WAbsImageInst } from '@/components/Extra/AbsImage'
 
 defineOptions({
   name: 'WVendorCropper',

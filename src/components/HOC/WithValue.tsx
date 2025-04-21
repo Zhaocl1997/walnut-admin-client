@@ -31,9 +31,9 @@ export function WithValue(WrappedComponent: ReturnType<typeof defineComponent>) 
           ? (v.value = (props.value as string[]).map(ov => fn(ov)))
           : (v.value
               = props.value
-              && (props.value as string)
-                .split(props.valueSeparator)
-                .map(ov => fn(ov)))
+                && (props.value as string)
+                  .split(props.valueSeparator)
+                  .map(ov => fn(ov)))
       }
 
       const transformBoolean = (v: any) => {

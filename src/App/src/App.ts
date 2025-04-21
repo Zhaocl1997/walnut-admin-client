@@ -1,9 +1,9 @@
-import StarportPlugin from 'vue-starport'
-
-import { setupSocket } from '@/socket'
 import { setupI18n } from '@/locales'
+
 import { setupRouter } from '@/router'
+import { setupSocket } from '@/socket'
 import { setupStore } from '@/store/pinia'
+import StarportPlugin from 'vue-starport'
 
 function setupErrorhandler(app: App) {
   app.config.errorHandler = (error) => {

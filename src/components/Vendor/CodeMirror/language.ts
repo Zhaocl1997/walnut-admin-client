@@ -1,5 +1,5 @@
-import { javascript, javascriptLanguage } from '@codemirror/lang-javascript'
 import type { CompletionContext } from '@codemirror/autocomplete'
+import { javascript, javascriptLanguage } from '@codemirror/lang-javascript'
 
 function myCompletions(context: CompletionContext) {
   const word = context.matchBefore(/\w*/)!

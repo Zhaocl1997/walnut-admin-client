@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { url } from './url'
 import type { WSignPadInst } from '@/components/Vendor/SignPad'
+import { url } from './url'
 
 defineOptions({
   name: 'SignPadDemo',

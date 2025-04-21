@@ -1,12 +1,12 @@
-import { defineStore } from 'pinia'
-
-import { StoreKeys } from '../../constant'
-import { store } from '../../pinia'
 import { authWithPwd, refreshToken, signout } from '@/api/auth'
-import { authWithEmail } from '@/api/auth/email'
-import { AppCoreFn1 } from '@/core'
 
+import { authWithEmail } from '@/api/auth/email'
 import { authWithPhoneNumber } from '@/api/auth/phone'
+import { AppCoreFn1 } from '@/core'
+import { defineStore } from 'pinia'
+import { StoreKeys } from '../../constant'
+
+import { store } from '../../pinia'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): UserAuthState => ({

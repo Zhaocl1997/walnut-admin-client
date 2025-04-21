@@ -1,8 +1,8 @@
-import { isUndefined } from 'lodash-es'
+import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 import type { WForm } from '../types'
 
+import { isUndefined } from 'lodash-es'
 import { getFormTranslated } from '../utils'
-import type { WDescriptionsItem } from '@/components/UI/Descriptions'
 
 export function useFormDesc(props: ComputedRef<WForm.Props<any>>, schemas: Ref<WForm.Schema.Item<any>[]>, t: Fn) {
   const getDefaultDescItemsBySchemas = computed(

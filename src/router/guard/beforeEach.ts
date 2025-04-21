@@ -1,7 +1,7 @@
-import { isEmpty, isUndefined } from 'lodash-es'
-
 import { AppCoreFn1 } from '@/core'
+
 import { _confirm_leave_map_ } from '@/store/modules/app/app-tab'
+import { isEmpty, isUndefined } from 'lodash-es'
 
 let removeEvent: Fn
 
@@ -63,7 +63,7 @@ export function createBeforeEachGuard(router: Router) {
       from.meta.leaveTip
       && to.name !== from.name
       && (_confirm_leave_map_.get(from.name) === undefined
-      || _confirm_leave_map_.get(from.name) === false)
+        || _confirm_leave_map_.get(from.name) === false)
     ) {
       const confirmed = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,

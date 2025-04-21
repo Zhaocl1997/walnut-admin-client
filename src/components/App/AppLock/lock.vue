@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import LockMobile from './src/mobile.vue'
 import LockDesktop from './src/desktop.vue'
+import LockMobile from './src/mobile.vue'
 
 defineOptions({
   name: 'Lock',

@@ -1,6 +1,6 @@
 <script lang="tsx">
-import { findPath } from 'easy-fns-ts'
 import type { DropdownOption } from 'naive-ui'
+import { findPath } from 'easy-fns-ts'
 import { darkTheme } from 'naive-ui'
 
 export default defineComponent({

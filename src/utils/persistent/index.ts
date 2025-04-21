@@ -1,5 +1,5 @@
-import { isProd } from '../constant/vue'
 import { storagePrefix } from '../constant/prefix'
+import { isProd } from '../constant/vue'
 import { Cookie } from './src/Cookie'
 
 const AppCookie = new Cookie({

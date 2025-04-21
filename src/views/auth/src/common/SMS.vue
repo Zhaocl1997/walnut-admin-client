@@ -1,9 +1,9 @@
 <script lang="tsx" setup>
+import type { PhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
+import { sendAuthTextMsg } from '@/api/auth/phone'
 // TODO 99
 import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
-import { sendAuthTextMsg } from '@/api/auth/phone'
-import type { PhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 
 defineOptions({
   name: 'SignInWithSMS',

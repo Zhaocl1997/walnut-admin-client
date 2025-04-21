@@ -1,5 +1,5 @@
-import { getRandomInt } from 'easy-fns-ts'
 import type { WHomeNumberCardProps } from './components/types'
+import { getRandomInt } from 'easy-fns-ts'
 
 const n = (t: number) => getRandomInt(10 ** t, 10 ** (t + 1))
 
