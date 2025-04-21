@@ -1,6 +1,4 @@
-import { resolve } from 'node:path'
-
-import * as TJS from 'typescript-json-schema'
+import * as TJS from 'ts-json-schema-generator'
 
 import { BuildUtilsReadFile, BuildUtilsWriteFile } from '../utils'
 import {
@@ -9,20 +7,14 @@ import {
   VScodeSettingsFilePath,
 } from '../utils/paths'
 
-const settings: TJS.PartialArgs = {
-  required: true,
+/** @type {import('ts-json-schema-generator/dist/src/Config').Config} */
+const config = {
+  path: AppSettingsInterfaceFilePath,
+  tsconfig: 'tsconfig.json',
+  type: 'AppSettings', // Or <type-name> if you want to generate schema for that one type only
 }
 
-const compilerOptions: TJS.CompilerOptions = {
-  strictNullChecks: true,
-}
-
-const program = TJS.getProgramFromFiles(
-  [resolve(AppSettingsInterfaceFilePath)],
-  compilerOptions,
-)
-
-const shapeSchema = TJS.generateSchema(program, 'AppSettings', settings)
+const shapeSchema = TJS.createGenerator(config).createSchema(config.type)
 
 ;(async () => {
   const data = await BuildUtilsReadFile(VScodeSettingsFilePath)
@@ -36,7 +28,7 @@ const shapeSchema = TJS.generateSchema(program, 'AppSettings', settings)
     schema: shapeSchema,
   }
 
-  const newData = JSON.stringify(obj, null, 4)
+  const newData = JSON.stringify(obj, null, 2)
 
   await BuildUtilsWriteFile(VScodeSettingsFilePath, newData)
 })()
