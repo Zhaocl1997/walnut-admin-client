@@ -13,12 +13,7 @@ async function createI18nOptions(): Promise<I18nOptions> {
   const backendMsg = await AppI18nGetI18nMsg(locale)
 
   return {
-    // you must set `false`, to use Compostion API
-    legacy: false,
-
     locale,
-
-    // missingWarn: false,
 
     messages: {
       [locale]: backendMsg,
