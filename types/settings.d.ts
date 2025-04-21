@@ -471,7 +471,7 @@ interface AppSettingsForFooter {
   content: string
 }
 
-interface AppSettings {
+export interface AppSettings {
   app: AppSettingsForApp
 
   themes: AppSettingsForTheme
