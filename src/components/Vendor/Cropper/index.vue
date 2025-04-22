@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { WAbsImageInst } from '@/components/Extra/AbsImage'
+import type { IWCompVendorCropperProps } from './props'
 import { CropperCanvas, CropperCrosshair, CropperGrid, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
 import { genString } from 'easy-fns-ts'
 
@@ -7,7 +8,7 @@ defineOptions({
   name: 'WVendorCropper',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {})
+const props = withDefaults(defineProps<IWCompVendorCropperProps>(), {})
 const emits = defineEmits(['update:value', 'update:src'])
 // need to call $define to work
 CropperCanvas.$define()
@@ -18,15 +19,6 @@ CropperHandle.$define()
 CropperViewer.$define()
 CropperGrid.$define()
 CropperCrosshair.$define()
-
-// TODO 888
-interface InternalProps {
-  src?: string
-  alt?: string
-  value?: string
-  disabled?: boolean
-  center?: boolean
-}
 
 const { t } = useAppI18n()
 

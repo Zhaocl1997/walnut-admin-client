@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Options } from 'signature_pad'
+import type { IWCompVendorSignPadProps } from './types'
 import { genString } from 'easy-fns-ts'
 import { toJpeg, toPng } from 'html-to-image'
 import SignaturePad from 'signature_pad'
@@ -8,22 +8,12 @@ defineOptions({
   name: 'WVendorSignaturePad',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<IWCompVendorSignPadProps>(), {
   width: '100%',
   height: '100%',
   // @ts-expect-error
   options: {},
 })
-
-// TODO 888
-interface InternalProps {
-  options?: Options
-  height?: string
-  width?: string
-  disabled?: boolean
-  defaultUrl?: string
-  content?: string
-}
 
 const signPadId = ref(`signpad-${genString(8)}`)
 const wrapperId = ref(`wrapper-${genString(8)}`)
@@ -43,6 +33,8 @@ const colors = [
   'rgb(0,188,212)',
   'rgb(239,239,239)',
 ]
+
+const isEmpty = () => signPadInst.value?.isEmpty()
 
 watchEffect(() => {
   if (props.disabled)
@@ -147,8 +139,6 @@ async function onFinalAction(type: 'png' | 'jpeg' = 'png', way: 'download' | 'ge
 function fromDataURL(url: string) {
   signPadInst.value?.fromDataURL(url)
 }
-
-const isEmpty = () => signPadInst.value?.isEmpty()
 
 function undo() {
   const data = signPadInst.value?.toData()

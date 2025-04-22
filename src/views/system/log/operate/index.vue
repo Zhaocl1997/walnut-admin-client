@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import { logOperateAPI } from '@/api/system/log'
 

@@ -5,6 +5,7 @@ import type {
   UploadInst,
 } from 'naive-ui'
 
+import type { IWCompVendorOSSUploadProps } from '.'
 import { genString } from 'easy-fns-ts'
 import { AliOSSClient } from './client'
 
@@ -13,7 +14,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<InternerProps>(), {
+const props = withDefaults(defineProps<IWCompVendorOSSUploadProps>(), {
   region: 'oss-cn-beijing',
   bucket: 'walnut-demo',
   folder: 'example',
@@ -24,22 +25,6 @@ const props = withDefaults(defineProps<InternerProps>(), {
 
 const emits = defineEmits(['update:value'])
 
-// TODO 888
-interface InternerProps {
-  value?: string[]
-  region?: string
-  bucket?: string
-  folder?: string
-  image?: boolean
-  disabled?: boolean
-  max?: number
-  accept?: string
-  // KB
-  size?: number
-  // KB, file size to decide whether to use multipart upload
-  crossoverSize?: number
-}
-
 const { t } = useAppI18n()
 
 const uploadRef = ref<Nullable<UploadInst>>(null)
@@ -49,6 +34,12 @@ const getChooseDisabled = computed(
   () => props.disabled || (listRef.value && listRef.value.length >= props.max),
 )
 
+const getUploadLoading = computed(
+  () =>
+    listRef.value
+    && listRef.value.some(({ status }) => status === 'uploading'),
+)
+
 const getUploadDisabled = computed(
   () =>
     props.disabled
@@ -56,12 +47,6 @@ const getUploadDisabled = computed(
     || listRef.value.length === 0
     || listRef.value.every(({ status }) => status === 'finished')
     || getUploadLoading.value,
-)
-
-const getUploadLoading = computed(
-  () =>
-    listRef.value
-    && listRef.value.some(({ status }) => status === 'uploading'),
 )
 
 watch(

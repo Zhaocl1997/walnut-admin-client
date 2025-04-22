@@ -1,7 +1,5 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
+import type { WFormItemQueryProps } from './types'
 import { useFormContext } from '../../hooks/useFormContext'
 import { toggleFormItemId } from '../../hooks/useFormItemId'
 
@@ -9,14 +7,7 @@ defineOptions({
   name: 'WFormItemExtendQuery',
 })
 
-const props = defineProps<InternalProps>()
-
-// TODO 888
-interface InternalProps {
-  countToFold?: number
-  foldable?: boolean
-  defaultFold?: boolean
-}
+const props = defineProps<WFormItemQueryProps>()
 
 const { t } = useAppI18n()
 

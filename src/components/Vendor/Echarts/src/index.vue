@@ -1,22 +1,15 @@
 <script lang="ts" setup>
-import type { EChartsOption } from 'echarts'
+import type { IWCompVendorEchartsProps } from './props'
 import { genString } from 'easy-fns-ts'
 
 defineOptions({
   name: 'WVendorECharts',
 })
 
-const props = withDefaults(defineProps<WEchartsProps>(), {
+const props = withDefaults(defineProps<IWCompVendorEchartsProps>(), {
   height: '400px',
   width: '100%',
 })
-
-// TODO 888
-interface WEchartsProps {
-  option: EChartsOption
-  height?: string
-  width?: string
-}
 
 const chartId = ref(`echarts-${genString(8)}`)
 // third party libs should use shallowRef !!!

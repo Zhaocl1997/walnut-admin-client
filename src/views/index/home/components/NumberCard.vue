@@ -1,31 +1,18 @@
 <script lang="ts" setup>
-import type { TagProps } from 'naive-ui'
+import type { WHomeNumberCardProps } from './types'
 
 defineOptions({
   name: 'WHomeNumberCard',
   defaultView: false,
 })
 
-const props = defineProps<InternalProps>()
-
-// TODO 888
-interface InternalProps {
-  title?: string
-  headerExtra?: {
-    text?: string
-    tagProps?: TagProps
-  }
-  loading?: boolean
-
-  number?: number
-  icon?: string
-}
+const props = defineProps<WHomeNumberCardProps>()
 
 const appSettings = useAppStoreSetting()
 
 const trend = ref(0)
 const showTrend = ref(true)
-const isPositive = ref<boolean | undefined>()
+const isPositive = ref<boolean>()
 
 watch(
   () => props.number,

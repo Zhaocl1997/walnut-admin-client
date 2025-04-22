@@ -1,31 +1,17 @@
-<script lang="ts">
-</script>
-
 <script lang="ts" setup>
 import type { AppSystemDictDataPicked } from '@/api/system/dict'
-import type { WCheckboxProps } from '@/components/UI/Checkbox'
-import type { WRadioProps } from '@/components/UI/Radio'
-import type { WSelectProps } from '@/components/UI/Select'
-import type { WForm } from '../../types'
+import type { WFormItemDictProps } from './types'
 
 defineOptions({
   name: 'WFormItemExtendDict',
   inheritAttrs: false,
 })
 
-// TODO 888
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<WFormItemDictProps>(), {
   dictRenderType: 'select',
 })
 
 const emits = defineEmits(['update:value'])
-
-interface InternalProps {
-  value?: any
-  dictType: string
-  dictRenderType?: WForm.DictComponentType
-  renderComponentProps?: WSelectProps | WCheckboxProps | WRadioProps
-}
 
 const { t } = useAppI18n()
 

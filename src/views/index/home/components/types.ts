@@ -1,24 +1,24 @@
 import type { TagProps } from 'naive-ui'
 
 export interface WHomeNumberCardProps {
-  title?: string
-  headerExtra?: {
-    text?: string
-    tagProps?: TagProps
+  title: string
+  headerExtra: {
+    text: string
+    tagProps: TagProps
   }
-  loading?: boolean
+  loading: boolean
 
-  number?: number
-  icon?: string
+  number: number
+  icon: string
 }
 
 export interface WHomeChartCardProps {
-  title?: string
-  headerExtra?: {
-    text?: string
-    tagProps?: TagProps
+  title: string
+  headerExtra: {
+    text: string
+    tagProps: TagProps
   }
-  loading?: boolean
+  loading: boolean
 
-  option?: EChartsOption
+  option: EChartsOption
 }

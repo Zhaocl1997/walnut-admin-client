@@ -1,6 +1,6 @@
 import type { Options } from 'signature_pad'
 
-export interface WSignPadProps {
+export interface IWCompVendorSignPadProps {
   options?: Options
   height?: string
   width?: string

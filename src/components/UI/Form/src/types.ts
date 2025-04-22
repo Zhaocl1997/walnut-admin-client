@@ -6,7 +6,7 @@ import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
 import type { WPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
 import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
 import type { WTransitionProps } from '@/components/Extra/Transition'
-import type { TinymceEditorProps } from '@/components/Vendor/Tinymce'
+import type { IWCompVendorTinymceEditorProps } from '@/components/Vendor/Tinymce'
 import type { useEventParams } from '@/hooks/component/useEvent'
 import type {
   DynamicInputProps,
@@ -172,7 +172,7 @@ export declare namespace WForm {
       'Extend:PhoneNumberInput': WPhoneNumberInputProps
       'Extend:EmailInput': WEmailInputProps
 
-      'Vendor:Tinymce': TinymceEditorProps
+      'Vendor:Tinymce': IWCompVendorTinymceEditorProps
     }
 
     interface DynamicSchemaItemProps<

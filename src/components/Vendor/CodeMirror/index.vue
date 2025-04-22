@@ -1,33 +1,25 @@
 <script lang="ts" setup>
 import type { EditorView, ViewUpdate } from '@codemirror/view'
 
+import type { IWCompVendorCodeMirrorProps } from './props'
 import { redo, undo } from '@codemirror/commands'
 import { closeSearchPanel, openSearchPanel } from '@codemirror/search'
 import { oneDark } from '@codemirror/theme-one-dark'
-import { Codemirror } from 'vue-codemirror'
 
+import { Codemirror } from 'vue-codemirror'
 import { languages } from './language'
 
 defineOptions({
   name: 'WVendorCodeMirror',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<IWCompVendorCodeMirrorProps>(), {
   placeholder: 'Code goes here...',
   height: '300px',
   autofocus: false,
 })
 
 const emits = defineEmits(['update:value', 'blur', 'focus'])
-
-// TODO 888
-interface InternalProps {
-  value: string
-  placeholder?: string
-  disabled?: boolean
-  height?: string
-  autofocus?: boolean
-}
 
 const { t } = useAppI18n()
 

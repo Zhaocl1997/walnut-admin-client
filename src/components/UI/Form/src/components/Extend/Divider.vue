@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { WFormItemDividerProps } from './types'
 import { isUndefined } from 'easy-fns-ts'
 import { useFormContext } from '../../hooks/useFormContext'
 
@@ -6,24 +7,9 @@ defineOptions({
   name: 'WFormItemExtendDivider',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<WFormItemDividerProps>(), {
   startIndex: 0,
 })
-
-// TODO 888
-interface InternalProps {
-  titlePlacement?: 'left' | 'right' | 'center'
-  dashed?: boolean
-  prefix?: 'bar' | undefined
-  type?: NaiveCompType
-  title?: string
-  helpMessage?: string | boolean
-  foldable?: boolean
-  startIndex?: number
-  endIndex?: number
-  index?: number
-  titleClass?: string
-}
 
 const active = ref(false)
 

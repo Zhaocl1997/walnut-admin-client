@@ -1,23 +1,17 @@
 <script lang="ts" setup>
+import type { IWCompVendorLocationPickerProps } from '.'
 import { genString } from 'easy-fns-ts'
 
 defineOptions({
   name: 'WVendorLocationPicker',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<IWCompVendorLocationPickerProps>(), {
   height: '50vh',
   width: '50vw',
 })
 
 const emits = defineEmits(['update:value'])
-
-// TODO 888
-interface InternalProps {
-  value?: number[]
-  height?: string
-  width?: string
-}
 
 const appKey = useAppStoreSecretKey()
 

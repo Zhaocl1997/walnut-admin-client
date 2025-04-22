@@ -1,18 +1,13 @@
 <script lang="ts" setup>
+import type { WAppFullScreenProps } from '.'
+
 defineOptions({
   name: 'AppFullScreen',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<WAppFullScreenProps>(), {
   size: '24',
 })
-
-// TODO 888
-interface InternalProps {
-  isFullscreen: boolean
-  clickEvent: Fn
-  size?: string
-}
 </script>
 
 <template>

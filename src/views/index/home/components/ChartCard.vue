@@ -1,24 +1,12 @@
 <script lang="ts" setup>
-import type { TagProps } from 'naive-ui'
+import type { WHomeChartCardProps } from './types'
 
 defineOptions({
   name: 'WHomeChartCard',
   defaultView: false,
 })
 
-const props = defineProps<InteralProps>()
-
-// TODO 888
-interface InteralProps {
-  title?: string
-  headerExtra?: {
-    text?: string
-    tagProps?: TagProps
-  }
-  loading?: boolean
-
-  option?: EChartsOption
-}
+const props = defineProps<WHomeChartCardProps>()
 </script>
 
 <template>

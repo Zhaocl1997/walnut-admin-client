@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import type { RawEditorOptions } from 'tinymce'
-import TinymceEditor from '@tinymce/tinymce-vue'
+import type { IWCompVendorTinymceEditorProps } from './types'
 
+import TinymceEditor from '@tinymce/tinymce-vue'
 import { genString } from 'easy-fns-ts'
 import tinymce from 'tinymce/tinymce'
 import { getContenteCSSUrl, getSkinUrl } from './resources/cdn'
@@ -36,8 +37,8 @@ import 'tinymce/plugins/pagebreak'
 import 'tinymce/plugins/preview'
 import 'tinymce/plugins/quickbars'
 import 'tinymce/plugins/save'
-import 'tinymce/plugins/searchreplace'
 
+import 'tinymce/plugins/searchreplace'
 import 'tinymce/plugins/table'
 import 'tinymce/plugins/template'
 import 'tinymce/plugins/visualblocks'
@@ -48,21 +49,13 @@ defineOptions({
   name: 'WVendorTinymceEditor',
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<IWCompVendorTinymceEditorProps>(), {
   value: '',
   disabled: false,
   width: '100%',
 })
 
 const emits = defineEmits(['update:value'])
-
-// TODO 888
-interface InternalProps {
-  value?: string
-  disabled?: boolean
-  height?: string
-  width?: string
-}
 
 interface TinymceVueInstance {
   rerender: (p: RawEditorOptions) => void
