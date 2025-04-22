@@ -12,6 +12,8 @@ const adapter = axios.getAdapter('fetch')
 export const originalConfig: AxiosRequestConfig = {
   baseURL: httpUrl,
 
+  withCredentials: true,
+
   paramsSerializer: {
     // default, string array use comma to join into string
     // ['a', 'b'] => 'a,b'
