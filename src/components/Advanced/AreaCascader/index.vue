@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { CascaderOption } from 'naive-ui'
+import type { WAreaCascaderProps } from './props'
 import {
   getAreaChildrenByPcode,
   getAreaFeedbackByCode,
@@ -10,7 +11,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<InternalProps>(), {
+const props = withDefaults(defineProps<WAreaCascaderProps>(), {
   value: null,
   depth: 4,
   showPath: true,
@@ -18,14 +19,6 @@ const props = withDefaults(defineProps<InternalProps>(), {
 })
 
 const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
-
-// TODO 888
-interface InternalProps {
-  value?: string | null | string[]
-  depth?: number
-  showPath?: boolean
-  multiple?: boolean
-}
 
 const options = ref<TreeNodeItem<AppSharedArea>[]>([])
 
@@ -74,7 +67,7 @@ async function onFeedback() {
 }
 
 onBeforeMount(async () => {
-  // await onInit()
+  await onInit()
   await onFeedback()
 })
 </script>
