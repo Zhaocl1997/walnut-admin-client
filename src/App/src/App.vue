@@ -8,7 +8,6 @@ import MsgProvider from './naive/MsgProvider.vue'
 import UIProvider from './naive/UIProvider.vue'
 
 (async function () {
-  await useUseragentInfo()
   await useAppMonitor()
 })()
 

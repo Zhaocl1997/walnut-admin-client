@@ -130,14 +130,14 @@ declare global {
     visitedTabs: Map<string, string[]>
   }
 
-  interface UserAgentInfo {
+  interface ExternalGeoIPInfo {
     country: string
-    province: string
     city: string
-    area: string
+    region?: string
     ip: string
     isp: string
-    net: string
+    longitude?: number
+    latitude?: number
   }
 
   /**

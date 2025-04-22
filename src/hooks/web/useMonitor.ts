@@ -13,21 +13,22 @@ function onInitialStateWithSendBeacon() {
 
   const blob = new Blob(
     [
-      JSON.stringify({
-        visitorId: fpId.value,
-        ip: UAInfo.value.ip,
-        country: UAInfo.value.country,
-        city: UAInfo.value.city,
-        area: UAInfo.value.area,
-        isp: UAInfo.value.isp,
-        province: UAInfo.value.province,
-        // @ts-expect-error
-        netType: navigator.connection.effectiveType,
-        platform: navigator.platform,
-        vp: `${window.innerWidth} * ${window.innerHeight}`,
-        sr: `${window.screen.width} * ${window.screen.height}`,
-        auth: !!userAuth.accessToken,
-      }),
+      // TODO
+      // JSON.stringify({
+      //   visitorId: fpId.value,
+      //   ip: GeoIPInfo.value.ip,
+      //   country: GeoIPInfo.value.country,
+      //   city: GeoIPInfo.value.city,
+      //   area: GeoIPInfo.value.area,
+      //   isp: GeoIPInfo.value.isp,
+      //   province: GeoIPInfo.value.province,
+      //   // @ts-expect-error
+      //   netType: navigator.connection.effectiveType,
+      //   platform: navigator.platform,
+      //   vp: `${window.innerWidth} * ${window.innerHeight}`,
+      //   sr: `${window.screen.width} * ${window.screen.height}`,
+      //   auth: !!userAuth.accessToken,
+      // }),
     ],
     { type: 'application/json; charset=UTF-8' },
   )

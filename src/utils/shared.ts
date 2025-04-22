@@ -59,3 +59,61 @@ export function getCountryCodeOnline() {
       return result.substr(2, 2)
     })
 }
+
+// easy detect device type
+export function detectDeviceType() {
+  const userAgent = navigator.userAgent.toLowerCase()
+
+  if (/mobile/i.test(userAgent)) {
+    return 'Mobile'
+  }
+  else if (/tablet/i.test(userAgent) || (/android/i.test(userAgent) && !/mobile/i.test(userAgent))) {
+    return 'Tablet'
+  }
+  else {
+    return 'Desktop'
+  }
+}
+
+// get cpu core count
+export function getCPUCoreCount() {
+  if ('hardwareConcurrency' in navigator) {
+    return navigator.hardwareConcurrency
+  }
+  else {
+    console.warn('navigator.hardwareConcurrency is not supported')
+    return 0
+  }
+}
+
+// get memory in gb
+export function getMemoryGB() {
+  if ('deviceMemory' in navigator) {
+    return navigator.deviceMemory
+  }
+  else {
+    console.warn('navigator.deviceMemory is not supported')
+    return 0
+  }
+}
+
+// get cpu archittecture
+export async function getGPUArchitecture() {
+  if ('gpu' in navigator) {
+    // @ts-expect-error
+    const adapter = await navigator.gpu.requestAdapter()
+
+    if (!adapter) {
+      console.warn('webGPU adapter is not supported')
+      return 'not supported'
+    }
+
+    const device = await adapter.requestDevice()
+
+    return device.adapterInfo.architecture
+  }
+  else {
+    console.warn('navigator.gpu is not supported')
+    return 'not supported'
+  }
+}

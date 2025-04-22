@@ -19,6 +19,8 @@ function setupErrorhandler(app: App) {
  * @description Entry to set up Vue App
  */
 export async function setupApp(app: App) {
+  await useExternalGeoIP()
+
   await useFingerprint()
 
   setupSocket()

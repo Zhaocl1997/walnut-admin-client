@@ -146,6 +146,40 @@ declare global {
     role?: string[]
   }
 
+  // system device
+  interface AppSystemDevice extends AppBaseModel {
+    deviceName?: string
+    deviceId?: string
+    deviceInfo?: {
+      os?: string
+      browser?: string
+      type?: string
+    }
+    hardwareInfo?: {
+      cpuCores?: number
+      memory?: number
+      gpu?: string
+    }
+    sr?: {
+      height: number
+      width: number
+    }
+    ipHistory?: string[]
+    active?: boolean
+    locked?: boolean
+    riskScore?: number
+    geoLocation?: {
+      type: 'Point'
+      coordinates: [number, number]
+    }
+    locationInfo?: {
+      country?: string
+      province?: string
+      city?: string
+      area?: string
+    }
+  }
+
   // system lang
   interface AppSystemLang extends AppBaseModel {
     lang?: string
@@ -275,4 +309,4 @@ declare global {
   }
 }
 
-export {}
+export { }
