@@ -1,3 +1,6 @@
-export { default } from './src/index.vue'
+export { default } from './index.vue'
 
-export * from './src/types'
+export interface ICompUICardProps {
+  headerPreset?: 'collapse' | 'refresh'
+  loading?: boolean
+}
