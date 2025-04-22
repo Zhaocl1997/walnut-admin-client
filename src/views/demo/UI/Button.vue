@@ -138,34 +138,6 @@ function onClick() {
           ]"
         />
       </n-list-item>
-
-      <!-- TODO button auth => disabled & tooltip handler? -->
-      <!--  <n-list-item>
-        <WTitle prefix="bar" class="mb-2">
-          Button with basic auth
-        </WTitle>
-
-        <WButton auth="system:user:list" @click="onClick">
-          Auth Button
-        </WButton>
-
-        <WButton auth="auth:donot:exist" @click="onClick">
-          Auth Button
-        </WButton>
-      </n-list-item>
-
-      <n-list-item>
-        <WTitle prefix="bar" class="mb-2">
-          Icon Button (need to provide `icon` and `text-prop`` props)
-        </WTitle>
-
-        <WButton
-          icon="ant-design:plus-outlined"
-          text-prop="Edit"
-          icon-button
-          @click="onClick"
-        />
-      </n-list-item> -->
     </n-list>
   </WDemoCard>
 </template>

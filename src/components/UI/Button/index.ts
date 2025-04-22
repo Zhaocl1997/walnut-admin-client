@@ -4,4 +4,5 @@ export interface ICompUIButtonProps {
   icon?: string
   textProp?: string | Fn<VNodeChild>
   debounce?: number
+  onClick?: (e: MouseEvent) => void
 }

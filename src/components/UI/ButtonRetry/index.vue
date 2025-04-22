@@ -3,7 +3,7 @@ import type { ICompUIButtonRetryProps } from '.'
 import { buttonRetryMapPersistent } from '.'
 
 defineOptions({
-  name: 'WButtonRetry',
+  name: 'WCompUIButtonRetry',
 })
 
 const props = withDefaults(defineProps<ICompUIButtonRetryProps>(), {

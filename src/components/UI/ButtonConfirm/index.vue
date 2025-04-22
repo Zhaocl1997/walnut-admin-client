@@ -2,7 +2,7 @@
 import type { ICompUIButtonConfirmProps } from '.'
 
 defineOptions({
-  name: 'WButtonConfirm',
+  name: 'WCompUIButtonConfirm',
 })
 
 withDefaults(defineProps<ICompUIButtonConfirmProps>(), {

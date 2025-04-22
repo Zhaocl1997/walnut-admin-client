@@ -2,7 +2,7 @@
 import type { ICompUIButtonProps } from '.'
 
 defineOptions({
-  name: 'WButton',
+  name: 'WCompUIButton',
 })
 
 const props = withDefaults(defineProps<ICompUIButtonProps>(), {

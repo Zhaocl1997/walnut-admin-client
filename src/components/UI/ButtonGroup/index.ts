@@ -1,3 +1,7 @@
-export { default } from './src/index.vue'
+import type { ICompUIButtonProps } from '../Button'
 
-export * from './src/types'
+export { default } from './index.vue'
+
+export interface ICompUIButtonGroupProps {
+  groups: ICompUIButtonProps[]
+}
