@@ -251,15 +251,22 @@ onMounted(() => {
 
         <n-space>
           <w-abs-image ref="absImage" @change="onUploadChange">
-            <w-a-icon
-              :text="false" size="small" height="16" placement="bottom" icon="ant-design:picture-outlined"
-              :help-message="t('comp.cropper.choose')"
+            <WIconButton
+              :icon-props="{ icon: 'ant-design:picture-outlined' }"
+              :button-props="{ text: false }"
+              tooltip
+              :tooltip-msg="t('comp.cropper.choose')"
             />
           </w-abs-image>
 
-          <w-a-icon
-            v-for="item in buttons" :key="item.icon" :text="false" size="small" height="16" placement="bottom"
-            :icon="item.icon" :disabled="!src" :help-message="item.helpMessage" @click="item.event"
+          <WIconButton
+            v-for="item in buttons"
+            :key="item.icon"
+            :icon-props="{ icon: item.icon }"
+            :button-props="{ text: false, disabled: !src }"
+            tooltip
+            :tooltip-msg="item.helpMessage"
+            @click="item.event"
           />
         </n-space>
       </n-gi>

@@ -218,7 +218,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
                   // the show below is actually used for permission
                   // the button that do not shown has been filtered early
                   show: userPermission.hasPermission(i.auth),
-                  icon: i?.icon ? () => <w-a-icon height="16" {...omit(i, ['_builtInType', '_dropdown'])}></w-a-icon> : undefined,
+                  icon: i?.icon ? () => <WIconButton {...omit(i, ['_builtInType', '_dropdown'])}></WIconButton> : undefined,
                 }
               })
 
@@ -228,7 +228,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
 
                   {dropdownButtons.length !== 0 && (
                     <n-dropdown size="small" trigger="click" options={dropdownOptions} onSelect={onDropdownSelect}>
-                      <w-a-icon icon="ant-design:more-outlined" height="20" text></w-a-icon>
+                      <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: true }}></WIconButton>
                     </n-dropdown>
                   )}
                 </div>

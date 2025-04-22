@@ -98,7 +98,7 @@ function getTitle(item: WTable.Column) {
     <template #trigger>
       <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
-          <w-a-icon text icon="ant-design:setting-outlined" height="20" @click="onOpenPopover" />
+          <WIconButton :icon-props="{ icon: 'ant-design:setting-outlined' }" :button-props="{ text: true }" @click="onOpenPopover" />
         </template>
 
         <template #header>

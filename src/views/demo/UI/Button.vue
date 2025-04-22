@@ -140,7 +140,6 @@ function onClick() {
       </n-list-item>
 
       <!-- TODO button auth => disabled & tooltip handler? -->
-      <!-- TODO icon button => remove w-a-icon -->
       <!--  <n-list-item>
         <WTitle prefix="bar" class="mb-2">
           Button with basic auth

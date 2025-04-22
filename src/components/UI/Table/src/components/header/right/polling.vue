@@ -75,22 +75,33 @@ function formatSeconds(value: number | null) {
     <template #trigger>
       <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
-          <w-a-icon
-            :class="{ 'animate-spin': isActive }" :style="{ ['animation-duration']: `${getPollingInterval}ms` }"
-            text icon="ant-design:sync-outlined" height="20" @click="onOpenPopover"
+          <WIconButton
+            :class="{ 'animate-spin': isActive }"
+            :style="{ ['animation-duration']: `${getPollingInterval}ms` }"
+            :icon-props="{ icon: 'ant-design:sync-outlined' }"
+            :button-props="{ text: true }"
+            @click="onOpenPopover"
           />
         </template>
 
         <template #default>
           <div class="flex flex-row flex-nowrap items-center gap-2">
-            <w-a-icon
-              text :icon="isActive ? 'ant-design:pause-circle-outlined' : 'ant-design:play-circle-outlined'"
-              height="19" :help-message="$t('app.base.play_pause')" @click="onPollingClick"
+            <WIconButton
+              :icon-props="{ icon: isActive ? 'ant-design:pause-circle-outlined' : 'ant-design:play-circle-outlined' }"
+              tooltip
+              :tooltip-msg="$t('app.base.play_pause')"
+              @click="onPollingClick"
             />
 
             <n-input-number
-              ref="inputNumberRef" :min="1" :default-value="getDefaultValue" :parse="parseSeconds"
-              :format="formatSeconds" style="width: 40px;" size="tiny" :show-button="false"
+              ref="inputNumberRef"
+              :min="1"
+              :default-value="getDefaultValue"
+              :parse="parseSeconds"
+              :format="formatSeconds"
+              style="width: 40px;"
+              size="tiny"
+              :show-button="false"
               @update:value="onUpdatePolling"
             />
           </div>

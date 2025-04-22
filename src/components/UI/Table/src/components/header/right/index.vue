@@ -12,9 +12,13 @@ const { onApiTableList, tableProps } = useTableContext()
 
 <template>
   <div class="hstack children:cursor-pointer space-x-2">
-    <w-a-icon
-      v-if="!tableProps.polling" icon="ant-design:reload-outlined" height="20" :disabled="tableProps.loading"
-      :help-message="$t('app.base.refresh')" @click="onApiTableList"
+    <WIconButton
+      v-if="!tableProps.polling"
+      :icon-props="{ icon: 'ant-design:reload-outlined' }"
+      :button-props="{ disabled: tableProps.loading }"
+      tooltip
+      :tooltip-msg="$t('app.base.refresh')"
+      @click="onApiTableList"
     />
 
     <TableHeaderRightPolling v-if="tableProps.polling" />
