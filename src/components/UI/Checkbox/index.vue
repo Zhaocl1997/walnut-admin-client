@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import type { CheckboxGroupProps } from 'naive-ui'
 import type { ICompUICheckboxProps } from '.'
 
 defineOptions({
-  name: 'WUICheckbox',
+  name: 'WCompUICheckbox',
 })
 
-const props = withDefaults(defineProps<ICompUICheckboxProps>(), {})
-const attrs: CheckboxGroupProps = useAttrs()
+defineProps<ICompUICheckboxProps>()
 </script>
 
 <template>

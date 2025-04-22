@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'ColorPickerDemo',
+  name: 'DatePickerDemo',
   defaultView: false,
 })
 
@@ -8,7 +8,7 @@ const state = reactive<Recordable>({})
 </script>
 
 <template>
-  <WDemoCard title="Color Picker">
+  <WDemoCard title="Date Picker">
     <WJSON :value="state" height="80px" />
 
     <n-list>
@@ -17,7 +17,7 @@ const state = reactive<Recordable>({})
           Basic Usage
         </WTitle>
 
-        <WColorPicker v-model:value="state.color1" />
+        <WDatePicker v-model:value="state.color1" />
       </n-list-item>
     </n-list>
   </WDemoCard>

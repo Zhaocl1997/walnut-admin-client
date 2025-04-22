@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'WDatePicker',
+  name: 'WCompUIDatePicker',
 })
 </script>
 
