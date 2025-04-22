@@ -3,7 +3,7 @@ import { isString } from 'easy-fns-ts'
 const { persist } = useAppEnv('seconds')
 
 export interface CookieOptions {
-  prefixKey: string
+  prefixKey?: string
   encrypt: boolean
 }
 
@@ -17,7 +17,7 @@ export class Cookie {
   }
 
   private getKey(key: string) {
-    return `${this.prefixKey}__${key}`.toLocaleUpperCase()
+    return this.prefixKey ? `${this.prefixKey}__${key}`.toLocaleUpperCase() : key
   }
 
   // default 7 days
@@ -47,7 +47,7 @@ export class Cookie {
           try {
             return JSON.parse(result)
           }
-          catch (e) {
+          catch {
             return val
           }
         }
