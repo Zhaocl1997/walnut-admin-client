@@ -5,7 +5,7 @@ defineOptions({
 })
 
 function onClick() {
-  console.log('icon clicked')
+  AppConsoleLog('Demo', 'icon clicked')
 }
 </script>
 
@@ -295,6 +295,7 @@ function onClick() {
           tooltip
           tooltip-msg="tooltip & confirm icon button"
           confirm
+          :pop-confirm-props="{ showArrow: false }"
           @confirm="onClick"
         />
       </n-list-item>

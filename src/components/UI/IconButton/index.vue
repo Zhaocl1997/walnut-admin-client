@@ -2,10 +2,10 @@
 import type { ICompUIIconButtonProps } from '.'
 
 defineOptions({
-  name: 'WIconButton',
+  name: 'WCompUIIconButton',
 })
 
-const props = withDefaults(defineProps<ICompUIIconButtonProps>(), {
+withDefaults(defineProps<ICompUIIconButtonProps>(), {
   tooltip: false,
   confirm: false,
   confirmMsg: 'app.base.confirm',
@@ -34,7 +34,7 @@ function onPositiveClick() {
   </DefineIconButton>
 
   <DefineConfirm>
-    <n-popconfirm v-if="confirm" @positive-click="onPositiveClick">
+    <n-popconfirm v-if="confirm" v-bind="popConfirmProps" @positive-click="onPositiveClick">
       <template #default>
         <div class="whitespace-pre-line">
           {{ $t(confirmMsg) }}
@@ -48,7 +48,7 @@ function onPositiveClick() {
   </DefineConfirm>
 
   <DefineTooltip>
-    <n-tooltip v-if="tooltip" trigger="hover">
+    <n-tooltip v-if="tooltip" v-bind="tooltipProps" trigger="hover">
       <template #default>
         <div class="whitespace-pre-line">
           {{ tooltipMsg }}

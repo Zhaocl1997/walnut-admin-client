@@ -1,7 +1,7 @@
 export { default } from './index.vue'
 
 export interface ICompExtraCopyProps {
-  source: string
+  source?: string
   copiedDuring?: number
   icon?: boolean
 }

@@ -10,13 +10,18 @@ const props = withDefaults(
   { copiedDuring: 3000, icon: false },
 )
 
+const emits = defineEmits<{ click: [e: MouseEvent] }>()
+
 const { copy, copied } = useClipboard({
   copiedDuring: props.copiedDuring,
   legacy: true,
 })
 
-async function onClick() {
+async function onClick(e: MouseEvent) {
+  if (!props.source)
+    return
   await copy(props.source)
+  emits('click', e)
 }
 </script>
 
@@ -26,20 +31,15 @@ async function onClick() {
     dashed
     size="tiny"
     :type="copied ? 'success' : 'info'"
+    :disabled="!source"
     @click="onClick"
   >
     {{ copied ? $t('app.base.success') : $t('app.button.copy') }}
   </n-button>
 
-  <!-- TODO button icon replace -->
-  <n-button v-else :type="copied ? 'success' : 'info'" text @click="onClick">
-    <template #icon>
-      <WIcon
-        height="24"
-        :icon="
-          copied ? 'ant-design:check-circle-outlined' : 'ant-design:copy-outlined'
-        "
-      />
-    </template>
-  </n-button>
+  <WIconButton
+    v-else
+    :icon-props="{ icon: copied ? 'ant-design:check-circle-outlined' : 'ant-design:copy-outlined' }"
+    :button-props="{ type: copied ? 'success' : 'info', text: true, onClick, disabled: !source }"
+  />
 </template>

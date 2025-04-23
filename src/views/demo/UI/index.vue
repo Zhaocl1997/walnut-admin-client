@@ -5,7 +5,7 @@ defineOptions({
   name: 'DemoUI',
 })
 
-const currentComponentDemo = ref()
+const currentComponentDemo = useRouterQuery('c')
 
 const demoOptions: SelectOption[]
 = Object.entries(import.meta.glob('./*.vue', { import: 'default', eager: true }))

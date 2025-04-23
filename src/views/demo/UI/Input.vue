@@ -9,23 +9,23 @@ const state = reactive<Recordable>({
 })
 
 function onChange(value: string) {
-  console.log('[WInput change]', value)
+  AppConsoleLog('[WInput change]', value)
 }
 
 function onInput(value: string) {
-  console.log('[WInput input]', value)
+  AppConsoleLog('[WInput input]', value)
 }
 
-function onBlur() {
-  console.log('[WInput blur]')
+function onBlur(e: FocusEvent) {
+  AppConsoleLog('[WInput blur]', e)
 }
 
-function onFocus() {
-  console.log('[WInput focus]')
+function onFocus(e: FocusEvent) {
+  AppConsoleLog('[WInput focus]', e)
 }
 
-function onClear() {
-  console.log('[WInput clear]')
+function onClear(e: MouseEvent) {
+  AppConsoleLog('[WInput clear]', e)
 }
 </script>
 
@@ -109,6 +109,28 @@ function onClear() {
 
       <n-list-item>
         <WTitle prefix="bar" class="mb-2">
+          Copiable
+        </WTitle>
+
+        <n-space vertical>
+          <WInput
+            v-model:value="state.input9"
+            placeholder="Content inside can be copied"
+            clearable
+            copiable
+          />
+
+          <WInput
+            v-model:value="state.input10"
+            placeholder="Content inside can be copied"
+            clearable
+            copiable
+          />
+        </n-space>
+      </n-list-item>
+
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
           Builtin Modifier
         </WTitle>
 
@@ -129,28 +151,6 @@ function onClear() {
             v-model:value.uppercase="state.input8"
             placeholder="Uppercase modifier"
             clearable
-          />
-        </n-space>
-      </n-list-item>
-
-      <n-list-item>
-        <WTitle prefix="bar" class="mb-2">
-          Copiable
-        </WTitle>
-
-        <n-space vertical>
-          <WInput
-            v-model:value="state.input9"
-            placeholder="Content inside can be copied"
-            clearable
-            copiable
-          />
-
-          <WInput
-            v-model:value="state.input10"
-            placeholder="Content inside can be copied"
-            clearable
-            copiable
           />
         </n-space>
       </n-list-item>
