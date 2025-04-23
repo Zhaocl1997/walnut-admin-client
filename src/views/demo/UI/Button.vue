@@ -95,11 +95,11 @@ function onClick() {
             Confirm Button
           </WButtonConfirm>
 
-          <WButtonConfirm loading @confirm="onClick">
+          <WButtonConfirm :button-props="{ type: 'error', loading: true }" :show-icon="false" @confirm="onClick">
             loading
           </WButtonConfirm>
 
-          <WButtonConfirm disabled @confirm="onClick">
+          <WButtonConfirm :button-props="{ disabled: true }" @confirm="onClick">
             disabled
           </WButtonConfirm>
         </n-space>
@@ -131,6 +131,15 @@ function onClick() {
         </WTitle>
 
         <WButtonGroup
+          :groups="[
+            { textProp: 'Button 1', onClick },
+            { textProp: 'Button 2', onClick },
+            { textProp: 'Button 3', onClick },
+          ]"
+        />
+
+        <WButtonGroup
+          vertical
           :groups="[
             { textProp: 'Button 1', onClick },
             { textProp: 'Button 2', onClick },

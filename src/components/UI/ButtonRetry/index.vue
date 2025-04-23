@@ -6,25 +6,25 @@ defineOptions({
   name: 'WCompUIButtonRetry',
 })
 
-const props = withDefaults(defineProps<ICompUIButtonRetryProps>(), {
+const { retrySeconds, retryKey } = withDefaults(defineProps<ICompUIButtonRetryProps>(), {
   retrySeconds: 60,
 })
 
 const { t } = useAppI18n()
 
 const retryText = ref<string>()
-const _intervalSeconds = ref<number>(props.retrySeconds)
+const _intervalSeconds = ref<number>(retrySeconds)
 
 const getRetrySeconds = computed<number>({
   get() {
-    if (props.retryKey) {
-      return buttonRetryMapPersistent.value.get(props.retryKey)!
+    if (retryKey) {
+      return buttonRetryMapPersistent.value.get(retryKey)!
     }
     return _intervalSeconds.value!
   },
   set(newValue) {
-    if (props.retryKey) {
-      buttonRetryMapPersistent.value.set(props.retryKey, newValue ?? props.retrySeconds)
+    if (retryKey) {
+      buttonRetryMapPersistent.value.set(retryKey, newValue ?? retrySeconds)
     }
     else {
       _intervalSeconds.value = newValue
@@ -44,25 +44,25 @@ const { pause, resume } = useIntervalFn(() => {
 
     retryText.value = undefined
 
-    if (props.retryKey) {
-      buttonRetryMapPersistent.value.set(props.retryKey, props.retrySeconds)
+    if (retryKey) {
+      buttonRetryMapPersistent.value.set(retryKey, retrySeconds)
     }
     else {
-      _intervalSeconds.value = props.retrySeconds
+      _intervalSeconds.value = retrySeconds
     }
   }
 }, 1000, { immediate: false, immediateCallback: true })
 
 // init
 onBeforeMount(() => {
-  if (props.retryKey) {
+  if (retryKey) {
     if (getRetrySeconds.value) {
-      if (getRetrySeconds.value !== props.retrySeconds) {
+      if (getRetrySeconds.value !== retrySeconds) {
         resume()
       }
     }
     else {
-      buttonRetryMapPersistent.value.set(props.retryKey, props.retrySeconds)
+      buttonRetryMapPersistent.value.set(retryKey, retrySeconds)
     }
   }
 })

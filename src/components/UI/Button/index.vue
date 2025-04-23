@@ -5,7 +5,7 @@ defineOptions({
   name: 'WCompUIButton',
 })
 
-const props = withDefaults(defineProps<ICompUIButtonProps>(), {
+const { debounce, textProp } = withDefaults(defineProps<ICompUIButtonProps>(), {
   debounce: 100,
 })
 
@@ -15,11 +15,11 @@ function onClick(e: MouseEvent) {
   emits('click', e)
 }
 
-const debounceClick = useDebounceFn(onClick, props.debounce)
+const debounceClick = useDebounceFn(onClick, debounce)
 
-const onFinalClick = (e: MouseEvent) => props.debounce ? debounceClick(e) : onClick(e)
+const onFinalClick = (e: MouseEvent) => debounce ? debounceClick(e) : onClick(e)
 
-const ButtonText = () => props.textProp && (typeof props.textProp === 'string' ? props.textProp : props.textProp())
+const ButtonText = () => textProp && (typeof textProp === 'string' ? textProp : textProp())
 </script>
 
 <template>

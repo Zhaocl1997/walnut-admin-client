@@ -23,7 +23,7 @@ function onPositiveClick(e: MouseEvent) {
     </template>
 
     <template #trigger>
-      <WButton v-bind="$attrs" :debounce="0">
+      <WButton v-bind="buttonProps" :debounce="0">
         <slot />
       </WButton>
     </template>

@@ -1,8 +1,9 @@
+import type { ICompUIButtonProps } from '../Button'
 import { StorageSerializers } from '@vueuse/core'
 
 export { default } from './index.vue'
 
-export interface ICompUIButtonRetryProps {
+export interface ICompUIButtonRetryProps extends /* @vue-ignore */ ICompUIButtonProps {
   retryKey?: string
   retrySeconds?: number
 }
