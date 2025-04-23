@@ -18,7 +18,7 @@ const state = reactive({
 
 <template>
   <WDemoCard title="Checkbox">
-    <W-JSON :value="state" height="300px" />
+    <WJSON :value="state" height="300px" />
 
     <n-list>
       <n-list-item>

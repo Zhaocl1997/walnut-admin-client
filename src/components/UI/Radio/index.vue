@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import type { RadioGroupProps } from 'naive-ui'
 import type { ICompUIRadioProps } from '.'
 
 defineOptions({
-  name: 'WUIRadio',
+  name: 'WCompUIRadio',
 })
 
-const props = withDefaults(defineProps<ICompUIRadioProps>(), { button: false })
-const attrs: RadioGroupProps = useAttrs()
+withDefaults(defineProps<ICompUIRadioProps>(), { button: false })
 </script>
 
 <template>

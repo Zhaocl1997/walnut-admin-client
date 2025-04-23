@@ -12,7 +12,7 @@ const state = reactive({
 
 <template>
   <WDemoCard title="Dynamic Tags">
-    <W-JSON :value="state" height="200px" />
+    <WJSON :value="state" height="200px" />
 
     <n-list>
       <n-list-item>

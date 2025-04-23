@@ -36,7 +36,7 @@ options.push({
 
 <template>
   <WDemoCard title="Select">
-    <W-JSON :value="state" height="300px" />
+    <WJSON :value="state" height="300px" />
 
     <n-list>
       <n-list-item>

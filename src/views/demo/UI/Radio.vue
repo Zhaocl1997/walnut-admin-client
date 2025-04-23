@@ -9,13 +9,13 @@ defineOptions({
 const state = reactive({
   radio1: undefined,
   radio2: 1,
-  radio3: undefined,
+  radio3: '1',
 })
 </script>
 
 <template>
   <WDemoCard title="Radio">
-    <W-JSON :value="state" height="200px" />
+    <WJSON :value="state" height="200px" />
 
     <n-list>
       <n-list-item>
@@ -30,12 +30,14 @@ const state = reactive({
           <WRadio
             v-model:value="state.radio1"
             :options="options"
+            value-type="number"
           />
 
           <WRadio
             v-model:value="state.radio2"
             :options="options"
             size="large"
+            value-type="number"
           />
         </n-space>
       </n-list-item>
@@ -49,6 +51,7 @@ const state = reactive({
           v-model:value="state.radio3"
           :options="options"
           button
+          value-type="number"
         />
       </n-list-item>
     </n-list>
