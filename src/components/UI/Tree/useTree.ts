@@ -1,4 +1,4 @@
-import type { ICompUITreeInst, ICompUITreeProps } from '../types'
+import type { ICompUITreeInst, ICompUITreeProps } from '.'
 
 export function useTree<T = RowData>(props: ICompUITreeProps<T>): [(inst: ICompUITreeInst<T>) => void, ICompUITreeInst<T>] {
   isInSetup()

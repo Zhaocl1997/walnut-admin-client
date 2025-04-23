@@ -2,10 +2,15 @@
 import type { DropdownOption, TreeInst, TreeOption } from 'naive-ui'
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
 
-import type { TreeNodeProps } from 'naive-ui/es/tree/src/interface'
-import type { TreeRenderProps } from 'naive-ui/lib/tree/src/interface'
-import type { ICompUITreeInst, ICompUITreeProps } from './types'
+import type { TreeNodeProps, TreeRenderProps } from 'naive-ui/es/tree/src/interface'
+import type { ICompUITreeInst, ICompUITreeProps } from '.'
+
+// TODO 111 tsx file need to import explicitly or ts error
+import WTransition from '@/components/Extra/Transition'
 import { useDropdown } from '@/components/UI/Dropdown'
+import WIcon from '@/components/UI/Icon'
+import WIconButton from '@/components/UI/IconButton'
+
 import { formatTree, treeToArr } from 'easy-fns-ts'
 
 import { cloneDeep } from 'lodash-es'
@@ -71,6 +76,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
     type: 'group',
     label: 'Node',
     key: 'NodeAction',
+    show: getProps.value.multiple,
     children: [
       {
         key: 'check',
@@ -91,6 +97,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
     type: 'group',
     label: 'Cascade',
     key: 'CascadeAction',
+    show: getProps.value.multiple,
     children: [
       {
         key: 'cascade',
@@ -131,6 +138,21 @@ const contextMenuOptions = computed<DropdownMixedOption[]>(() => [
   },
 ])
 
+const getCombinedKeys = computed(() => checkedKeys.value.concat(indeterminateKeys.value))
+
+const getBottomChildKeys = computed(() => {
+  const res: TreeKey[] = []
+
+  formatTree(getProps.value.treeProps!.data!, {
+    format: (node) => {
+      if (!node[getProps.value.treeProps?.childrenField || 'children'])
+        res.push(node[getKeyField.value] as string)
+    },
+  })
+
+  return res
+})
+
 const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
   dropdownProps: {
     options: contextMenuOptions,
@@ -153,8 +175,6 @@ const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
     },
   },
 })
-
-const getCombinedKeys = computed(() => checkedKeys.value.concat(indeterminateKeys.value))
 
 function onSelectedKeys(keys: TreeKey[]) {
   selectedKeys.value = keys
@@ -195,6 +215,11 @@ function onToolbarSelect(key: string) {
     ).map(i => i[getKeyField.value]) as string[]
 
     checkAll.value = true
+
+    // in cascade mode, check all need to clear indeterminate keys
+    if (cascade.value) {
+      indeterminateKeys.value = []
+    }
 
     onCheckedKeys(checkedKeys.value)
   }
@@ -255,63 +280,54 @@ function onRenderPrefix({ option }: TreeRenderProps) {
 }
 
 function onRenderSuffix({ option }: TreeRenderProps) {
+  if (selectedKeys.value[0] !== option[getKeyField.value])
+    return undefined
+
   return (getProps.value.treeProps?.draggable || getProps.value.deletable)
     ? (
         <WTransition name="fade-right">
-          {selectedKeys.value[0] === option[getKeyField.value] && (
-            <div
-              class="flex flex-row flex-nowrap items-center justify-center"
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-            >
-              {getProps.value.treeProps!.draggable
-                && userPermission.hasPermission(getProps.value.auths?.update) && (
-                <WIcon
-                  height="18"
-                  class="cursor-move"
-                  icon="ant-design:drag-outlined"
-                >
-                </WIcon>
-              )}
+          <div
+            class="flex flex-row flex-nowrap items-center justify-center gap-x-1"
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
+          >
+            {getProps.value.treeProps!.draggable
+              && userPermission.hasPermission(getProps.value.auths?.update) && (
+              <WIcon
+                height="18"
+                class="cursor-move"
+                icon="ant-design:drag-outlined"
+              >
+              </WIcon>
+            )}
 
-              {getProps.value.deletable
-                && userPermission.hasPermission(getProps.value.auths?.delete) && (
-                <WIconButton
-                  icon-props={{
-                    icon: 'ant-design:delete-outlined',
-                  }}
-                  button-props={{
-                    type: 'error',
-                  }}
-                  tooltip
-                  tooltipMsg={t('app.button.delete')}
-                  confirm
-                  onConfirm={() => {
-                    getProps.value.onTreeNodeItemDelete!(toRaw(option))
-                  }}
-                >
-                </WIconButton>
-              )}
-            </div>
-          )}
+            {getProps.value.deletable
+              && userPermission.hasPermission(getProps.value.auths?.delete) && (
+              <WIconButton
+                icon-props={{
+                  icon: 'ant-design:delete-outlined',
+                }}
+                button-props={{
+                  type: 'error',
+                }}
+                tooltip
+                tooltipMsg={t('app.button.delete')}
+                confirm
+                onConfirm={() => {
+                  getProps.value.onTreeNodeItemDelete!(toRaw(option))
+                  if (getProps.value.multiple) {
+                    selectedKeys.value = []
+                  }
+                }}
+              >
+              </WIconButton>
+            )}
+          </div>
         </WTransition>
       )
     : undefined
 }
-
-const getBottomChildKeys = computed(() => {
-  const res: TreeKey[] = []
-
-  formatTree(getProps.value.treeProps!.data!, {
-    format: (node) => {
-      if (!node[getProps.value.treeProps?.childrenField || 'children'])
-        res.push(node[getKeyField.value] as string)
-    },
-  })
-
-  return res
-})
 
 function onFeedback() {
   if (getProps.value.multiple) {
@@ -344,28 +360,26 @@ defineExpose({
 
 <template>
   <div class="w-full">
-    <n-input
-      v-if="getProps.toolbar"
-      v-model:value="pattern"
-      style="width: 90% !important"
-      class="mb-2 ml-4"
-      clearable
-      round
-      size="small"
-      :disabled="getProps.treeProps?.disabled"
-    >
-      <template #suffix>
-        <n-dropdown
-          trigger="hover"
-          :options="getToolBarOptions"
-          show-arrow size="small"
-          :disabled="getProps.treeProps?.disabled"
-          @select="onToolbarSelect"
-        >
-          <WIcon height="20" icon="ant-design:more-outlined" class="cursor-pointer" />
-        </n-dropdown>
-      </template>
-    </n-input>
+    <div class="mb-2 px-2">
+      <n-input
+        v-if="getProps.toolbar"
+        v-model:value="pattern"
+        clearable
+        :disabled="getProps.treeProps?.disabled"
+      >
+        <template #suffix>
+          <n-dropdown
+            trigger="click"
+            :options="getToolBarOptions"
+            show-arrow size="small"
+            :disabled="getProps.treeProps?.disabled"
+            @select="onToolbarSelect"
+          >
+            <WIcon height="20" icon="ant-design:more-outlined" class="cursor-pointer" />
+          </n-dropdown>
+        </template>
+      </n-input>
+    </div>
 
     <WScrollbar :height="getProps.maxHeight ?? 'auto'">
       <n-tree

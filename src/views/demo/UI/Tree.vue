@@ -8,18 +8,29 @@ defineOptions({
 })
 
 const state = ref({
-  tree1: 1,
+  tree1: 9,
   tree2: [1, 4, 9, 11, 12],
 })
 
 const [register1] = useTree({
   toolbar: true,
+
+  deletable: true,
+  onTreeNodeItemDelete(option) {
+    AppConsoleLog('DemoTree', option)
+  },
+
+  maxHeight: '300px',
+
   treeProps: {
     data: getTreeData(),
     labelField: '_label',
     keyField: '_id',
     blockLine: true,
     blockNode: true,
+    showLine: true,
+    defaultExpandAll: true,
+    showIrrelevantNodes: false,
   },
 })
 
@@ -30,12 +41,12 @@ const [register2] = useTree({
 
   deletable: true,
   onTreeNodeItemDelete(option) {
-    console.log('deleted', option)
+    AppConsoleLog('DemoTree', option)
   },
 
   presetContextMenu: true,
   onPaste: (copy, current) => {
-    console.log(copy, current)
+    AppConsoleLog('DemoTree', { copy, current })
   },
 
   treeProps: {
@@ -47,7 +58,7 @@ const [register2] = useTree({
     cascade: true,
     draggable: true,
     onDrop: ({ node, dragNode, dropPosition }) => {
-      console.log('dragged', node, dragNode, dropPosition)
+      AppConsoleLog('DemoTree', { node, dragNode, dropPosition })
     },
   },
 })
