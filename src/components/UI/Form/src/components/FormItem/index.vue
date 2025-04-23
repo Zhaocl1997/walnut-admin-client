@@ -1,13 +1,16 @@
 <script lang="tsx">
 import type { WForm } from '../../types'
-import { clone, isBoolean, isFunction, omit } from 'lodash-es'
+// TODO 111 tsx file need to import explicitly or ts error
+import WMessage from '@/components/Extra/Message'
 
+import { clone, isBoolean, isFunction, omit } from 'lodash-es'
 import { useFormContext } from '../../hooks/useFormContext'
 import {
   generateRuleMessage,
   getFormBooleanField,
   getFormTranslated,
 } from '../../utils'
+
 import { componentMap } from './componentMap'
 
 export default defineComponent({
@@ -69,10 +72,10 @@ export default defineComponent({
 
     const renderLabelHelpMessage = () =>
       item?.formProp?.labelHelpMessage && (
-        <w-message
+        <WMessage
           msg={getFormTranslated(t, formProps, item!, 'helpMsg')}
         >
-        </w-message>
+        </WMessage>
       )
 
     const renderNFormItem = () => (

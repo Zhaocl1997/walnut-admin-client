@@ -1,5 +1,8 @@
 <script lang="tsx">
 import type { WDescriptionProps, WDescriptionsItem } from './types'
+// TODO 111 tsx file need to import explicitly or ts error
+import WJSON from '@/components/Extra/JSON'
+
 import { omit } from 'lodash-es'
 
 import { props } from './props'

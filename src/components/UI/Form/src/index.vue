@@ -1,8 +1,10 @@
 <script lang="tsx">
 import type { WForm } from './types'
+// TODO 111 tsx file need to import explicitly or ts error
+import WTransition from '@/components/Extra/Transition'
 import { easyOmit } from 'easy-fns-ts'
-import { renderSlot } from 'vue'
 
+import { renderSlot } from 'vue'
 import WFormItem from './components/FormItem/index.vue'
 import { useFormAdvanced } from './hooks/useFormAdvanced'
 import { useFormBaseRules } from './hooks/useFormBaseRules'
@@ -10,9 +12,10 @@ import { setFormContext } from './hooks/useFormContext'
 import { useFormDesc } from './hooks/useFormDesc'
 import { useFormDict } from './hooks/useFormDict'
 import { useFormEvents } from './hooks/useFormEvents'
-import { useFormMethods } from './hooks/useFormMethods'
 
+import { useFormMethods } from './hooks/useFormMethods'
 import { useFormSchemas } from './hooks/useFormSchemas'
+
 import { extendProps, props } from './props'
 
 import { components } from './utils/component'
