@@ -12,7 +12,7 @@ const configFormData = ref({
   closable: true,
   maskClosable: true,
   width: '40%',
-  height: undefined,
+  height: '50vh',
   count: 20,
   loading: false,
   draggable: true,
@@ -99,7 +99,6 @@ const [register] = useForm<typeof configFormData.value>({
       },
     },
     {
-      // TODO scope not working
       type: 'Base:Switch',
       formProp: {
         label: 'Scoped',
@@ -120,29 +119,31 @@ const [register] = useForm<typeof configFormData.value>({
 </script>
 
 <template>
-  <WDemoCard id="modal-target" title="Modal">
+  <WDemoCard id="modal-target" class="relative" title="Modal">
     <n-space vertical>
       <WForm :model="configFormData" @hook="register" />
     </n-space>
-
-    <WModal
-      v-model:show="modalShow"
-      :title="configFormData.title"
-      :help-message="configFormData.helpMessage"
-      :closable="configFormData.closable"
-      :mask-closable="configFormData.maskClosable"
-      :width="configFormData.width"
-      :height="configFormData.height"
-      :loading="configFormData.loading"
-      :draggable="configFormData.draggable"
-      :fullscreen="configFormData.fullscreen"
-      :to="configFormData.scope ? '#modal-target' : undefined"
-      @yes="modalShow = false"
-      @no="modalShow = false"
-    >
-      <div v-for="item in configFormData.count" :key="item">
-        this is modal content {{ item }}
-      </div>
-    </WModal>
   </WDemoCard>
+
+  <WModal
+    v-model:show="modalShow"
+    :title="configFormData.title"
+    :help-message="configFormData.helpMessage"
+    :closable="configFormData.closable"
+    :mask-closable="configFormData.maskClosable"
+    :width="configFormData.width"
+    :height="configFormData.height"
+    :loading="configFormData.loading"
+    :draggable="configFormData.draggable"
+    :fullscreen="configFormData.fullscreen"
+    :to="configFormData.scope ? '#modal-target' : undefined"
+    :trap-focus="!configFormData.scope"
+    :block-scroll="!configFormData.scope"
+    @yes="modalShow = false"
+    @no="modalShow = false"
+  >
+    <div v-for="item in configFormData.count" :key="item">
+      this is modal content {{ item }}
+    </div>
+  </WModal>
 </template>

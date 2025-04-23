@@ -9,7 +9,6 @@ export interface ICompUIModalProps extends /* @vue-ignore */ ModalProps {
   helpMessage?: string
   width?: string
   height?: string
-  draggable?: boolean
   fullscreen?: boolean
   defaultButton?: boolean
   segmented?: boolean

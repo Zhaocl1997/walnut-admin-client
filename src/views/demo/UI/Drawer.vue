@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { DrawerPlacement } from 'naive-ui'
+
 defineOptions({
   name: 'DrawerDemo',
   defaultView: false,
@@ -6,7 +8,7 @@ defineOptions({
 
 const drawerShow = ref(false)
 
-const configFormData = ref<any>({
+const configFormData = ref({
   title: 'Drawer Title',
   helpMessage: 'Drawer Help Message',
   closable: true,
@@ -14,7 +16,7 @@ const configFormData = ref<any>({
   width: '40%',
   count: 40,
   loading: false,
-  placement: 'right',
+  placement: 'right' as DrawerPlacement,
   scope: false,
   resizable: false,
 })
@@ -120,7 +122,7 @@ const [register] = useForm<typeof configFormData.value>({
 </script>
 
 <template>
-  <WDemoCard id="drawer-target" class="relative h-full w-50vw" title="Drawer">
+  <WDemoCard id="drawer-target" class="relative" title="Drawer">
     <n-space vertical>
       <WForm :model="configFormData" @hook="register" />
     </n-space>

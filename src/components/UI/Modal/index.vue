@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import type { ICompUIModalProps } from '.'
 import { toggleClass } from 'easy-fns-ts'
-import { useModalDraggable } from './useModalDraggable'
 
 defineOptions({
-  name: 'WModal',
+  name: 'WCompUIModal',
 })
 
-const props = withDefaults(defineProps<ICompUIModalProps>(), {
+withDefaults(defineProps<ICompUIModalProps>(), {
   width: '25%',
   height: 'auto',
   draggable: true,
@@ -22,21 +21,6 @@ const show = defineModel<boolean>('show', { required: true, default: false })
 
 const modelRef = shallowRef()
 const isFullscreen = ref(false)
-
-watch(
-  () => show.value,
-  (v) => {
-    if (v && props.draggable) {
-      nextTick(() => {
-        const dragEl
-            = modelRef.value?.containerRef.querySelector('.w-card-header')
-        const dragDom = modelRef.value?.containerRef.querySelector('.w-modal')
-
-        useModalDraggable(dragEl, dragDom)
-      })
-    }
-  },
-)
 
 function onFullScreen() {
   const dragDom = modelRef.value?.containerRef.querySelector('.w-modal')
@@ -96,7 +80,7 @@ function onUpdateShow(v: boolean) {
     </template>
 
     <template #default>
-      <WScrollbar :height="height">
+      <WScrollbar :height="isFullscreen ? 'calc(100vh - 180px)' : height">
         <n-spin :show="loading">
           <slot />
         </n-spin>
