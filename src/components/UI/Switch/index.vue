@@ -2,7 +2,7 @@
 import type { ICompUISwitchProps } from '.'
 
 defineOptions({
-  name: 'WSwitch',
+  name: 'WCompUISwitch',
 })
 
 defineProps<ICompUISwitchProps>()
