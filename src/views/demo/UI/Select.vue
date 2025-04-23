@@ -12,23 +12,17 @@ const state = reactive<any>({
   select3: ['1', '3', '5'],
   select4: [1, 3, 5],
   select5: '2,4,6',
-  select6: '',
-  select7: [],
-  select8: '',
-  select9: '999',
+  select6: '999',
 })
 
-const options: SelectMixedOption[] = []
+const options = ref<SelectMixedOption[]>(Array.from({ length: 100 }).map((_, i) => ({
+  value: `${i + 1}`,
+  label: `label-${i + 1}`,
+})))
 
-for (let i = 0; i < 100; i++) {
-  options.push({
-    value: `${i + 1}`,
-    label: `label-${i + 1}`,
-  })
-}
-
-options.push({
+options.value.push({
   value: '999',
+  tooltop: true,
   label:
       'label-999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999',
 })
@@ -104,39 +98,18 @@ options.push({
         />
       </n-list-item>
 
-      <!-- <n-list-item>
-        <WTitle
-          prefix="bar"
-          help-message="The example is role select, later will got MORE components like this"
-        >
-          Highly packaged for a remote list select
-        </WTitle>
-
-        <n-space vertical>
-          TODO business component
-          <w-role-select v-model:value="state.select6" />
-
-          <w-role-select v-model:value="state.select7" multiple />
-
-          <w-role-select
-            v-model:value="state.select8"
-            multiple
-            value-separator="|"
-          />
-        </n-space>
-      </n-list-item> -->
-
       <n-list-item>
         <WTitle prefix="bar" class="mb-2">
           If label too long, you can add a tooltip prop
         </WTitle>
 
         <WSelect
-          v-model:value="state.select9"
-          class="w-1/2"
+          v-model:value="state.select6"
+          class="w-64"
           :options="options"
           clearable
           tooltip
+          :tooltip-threshold="50"
           :tooltip-props="{
             placement: 'left',
           }"

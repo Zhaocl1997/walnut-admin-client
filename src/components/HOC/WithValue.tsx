@@ -1,3 +1,5 @@
+import { omit } from 'lodash-es'
+
 export const WithValueProps = {
   value: [String, Number, Boolean, Array] as PropType<
     string | number | boolean | string[] | number[] | (string & number)[]
@@ -11,20 +13,23 @@ export const WithValueProps = {
   },
 
   valueSeparator: String as PropType<string>,
-}
+} as const
 
 export type WithValueProp = Partial<ExtractPropTypes<typeof WithValueProps>>
 
-export function WithValue(WrappedComponent: ReturnType<typeof defineComponent>) {
-  return defineComponent({
+export function WithValue<T>(WrappedComponent: ReturnType<typeof defineComponent>) {
+  return defineComponent<WithValueProp & T>({
     name: 'WithValue',
 
     props: WithValueProps,
 
     emits: ['update:value'],
 
-    setup(props, { emit, slots }) {
+    setup(p, { emit, slots }) {
       const v = ref()
+
+      // TODO dirty as
+      const props = p as unknown as WithValueProp
 
       const formateDefaultValue = (fn: Fn) => {
         !props.valueSeparator
@@ -85,7 +90,7 @@ export function WithValue(WrappedComponent: ReturnType<typeof defineComponent>) 
 
       return () => (
         <WrappedComponent
-          {...props}
+          {...omit(props, ['valueType', 'valueSeparator'])}
           value={v.value}
           onUpdateValue={onUpdateValue}
         >

@@ -1,9 +1,13 @@
 import type { SelectProps, TooltipProps } from 'naive-ui'
 
-export { default } from './index.vue'
+import { WithValue } from '@/components/HOC/WithValue'
+import RawWSelect from './index.vue'
+
+export default WithValue<ICompUISelectProps>(RawWSelect)
 
 // TODO 000
 export interface ICompUISelectProps extends /* @vue-ignore */ SelectProps {
   tooltip?: boolean
+  tooltipThreshold?: number
   tooltipProps?: TooltipProps
 }

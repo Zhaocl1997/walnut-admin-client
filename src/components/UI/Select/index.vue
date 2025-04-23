@@ -1,17 +1,20 @@
 <script lang="tsx" setup>
-import type { SelectProps } from 'naive-ui'
+import type { SelectOption, SelectProps } from 'naive-ui'
 import type { RenderOption } from 'naive-ui/es/_internal/select-menu/src/interface'
 import type { ICompUISelectProps } from '.'
 
 defineOptions({
-  name: 'WUISelect',
+  name: 'WCompUISelect',
 })
 
-const props = withDefaults(defineProps<ICompUISelectProps>(), {})
+const props = withDefaults(defineProps<ICompUISelectProps>(), {
+  tooltipThreshold: 100,
+})
 const attrs: SelectProps = useAttrs()
 
 const renderOption: RenderOption = ({ node, option, selected }) => {
-  return props.tooltip
+  const label = (option as SelectOption).label
+  return (props.tooltip && label && label.length > props.tooltipThreshold)
     ? (
         <n-tooltip {...props.tooltipProps}>
           {{
