@@ -1,6 +1,9 @@
+import type { CardProps } from 'naive-ui'
+
 export { default } from './index.vue'
 
-export interface ICompUICardProps {
+// TODO 000
+export interface ICompUICardProps extends /* @vue-ignore */ CardProps {
   headerPreset?: 'collapse' | 'refresh'
   loading?: boolean
 }

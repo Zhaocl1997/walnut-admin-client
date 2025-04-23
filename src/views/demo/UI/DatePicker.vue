@@ -13,7 +13,7 @@ const state = reactive<Recordable>({})
 
     <n-list>
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Basic Usage
         </WTitle>
 

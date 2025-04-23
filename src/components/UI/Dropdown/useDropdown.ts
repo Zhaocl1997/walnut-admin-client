@@ -1,4 +1,4 @@
-import type { ICompUIDropdownInst, ICompUIDropdownProps } from '../types'
+import type { ICompUIDropdownInst, ICompUIDropdownProps } from '.'
 
 export function useDropdown(props: ICompUIDropdownProps): [(inst: ICompUIDropdownInst) => void, ICompUIDropdownInst] {
   isInSetup()

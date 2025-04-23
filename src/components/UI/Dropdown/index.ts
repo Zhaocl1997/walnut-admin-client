@@ -1,5 +1,17 @@
-export * from './src/hooks/useDropdown'
+import type { DropdownProps } from 'naive-ui'
 
-export { default } from './src/index.vue'
+export { default } from './index.vue'
 
-export * from './src/types'
+export * from './useDropdown'
+
+export interface ICompUIDropdownProps {
+  dropdownProps?: DropdownProps
+}
+
+export interface ICompUIDropdownInst {
+  setProps: (p: ICompUIDropdownProps) => void
+
+  openDropdown: (e: MouseEvent) => void
+
+  closeDropdown: () => void
+}

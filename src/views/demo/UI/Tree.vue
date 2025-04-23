@@ -61,14 +61,14 @@ const [register2] = useTree({
       <n-list-item>
         <n-grid :cols="2">
           <n-gi>
-            <WTitle prefix="bar">
+            <WTitle prefix="bar" class="mb-2">
               Single Choose Tree
             </WTitle>
 
             <WTree v-model:value="state.tree1" @hook="register1" />
           </n-gi>
           <n-gi>
-            <WTitle prefix="bar">
+            <WTitle prefix="bar" class="mb-2">
               Multiple Choose Tree
             </WTitle>
 

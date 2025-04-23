@@ -23,7 +23,7 @@ export function WithValue(WrappedComponent: ReturnType<typeof defineComponent>) 
 
     emits: ['update:value'],
 
-    setup(props, { attrs, emit, slots }) {
+    setup(props, { emit, slots }) {
       const v = ref()
 
       const formateDefaultValue = (fn: Fn) => {

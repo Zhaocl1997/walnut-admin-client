@@ -35,7 +35,7 @@ function onClear() {
 
     <n-list>
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Black List
         </WTitle>
 
@@ -53,7 +53,7 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Password
         </WTitle>
 
@@ -67,7 +67,7 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Suffix(prop)
         </WTitle>
 
@@ -81,7 +81,7 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Suffix Icon(prop)
         </WTitle>
 
@@ -95,7 +95,7 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Help Message
         </WTitle>
 
@@ -108,7 +108,7 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Builtin Modifier
         </WTitle>
 
@@ -134,7 +134,7 @@ function onClear() {
       </n-list-item>
 
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Copiable
         </WTitle>
 

@@ -16,14 +16,14 @@ const state = reactive({
 
     <n-list>
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Basic usage
         </WTitle>
 
         <n-space vertical>
-          <w-dynamic-tags v-model:value="state.dynamicTag1" />
+          <WDynamicTags v-model:value="state.dynamicTag1" />
 
-          <w-dynamic-tags v-model:value="state.dynamicTag2" />
+          <WDynamicTags v-model:value="state.dynamicTag2" />
         </n-space>
       </n-list-item>
     </n-list>

@@ -93,7 +93,6 @@ const [register] = useForm<typeof configFormData.value>({
       },
     },
     {
-      // TODO scope not working
       type: 'Base:Switch',
       formProp: {
         label: 'Scoped',
@@ -121,31 +120,31 @@ const [register] = useForm<typeof configFormData.value>({
 </script>
 
 <template>
-  <WDemoCard id="drawer-target" class="h-full w-50vw" title="Drawer">
+  <WDemoCard id="drawer-target" class="relative h-full w-50vw" title="Drawer">
     <n-space vertical>
       <WForm :model="configFormData" @hook="register" />
     </n-space>
-
-    <WDrawer
-      v-model:show="drawerShow"
-      :title="configFormData.title"
-      :help-message="configFormData.helpMessage"
-      :closable="configFormData.closable"
-      :mask-closable="configFormData.maskClosable"
-      :width="configFormData.resizable ? undefined : configFormData.width"
-      :loading="configFormData.loading"
-      :placement="configFormData.placement"
-      :to="configFormData.scope ? '#drawer-target' : undefined"
-      :trap-focus="!configFormData.scope"
-      :block-scroll="!configFormData.scope"
-      :resizable="configFormData.resizable"
-      :default-width="configFormData.width"
-      @yes="drawerShow = false"
-      @no="drawerShow = false"
-    >
-      <div v-for="item in configFormData.count" :key="item">
-        this is drawer content {{ item }}
-      </div>
-    </WDrawer>
   </WDemoCard>
+
+  <WDrawer
+    v-model:show="drawerShow"
+    :title="configFormData.title"
+    :help-message="configFormData.helpMessage"
+    :closable="configFormData.closable"
+    :mask-closable="configFormData.maskClosable"
+    :width="configFormData.resizable ? undefined : configFormData.width"
+    :loading="configFormData.loading"
+    :placement="configFormData.placement"
+    :to="configFormData.scope ? '#drawer-target' : undefined"
+    :trap-focus="!configFormData.scope"
+    :block-scroll="!configFormData.scope"
+    :resizable="configFormData.resizable"
+    :default-width="configFormData.width"
+    @yes="drawerShow = false"
+    @no="drawerShow = false"
+  >
+    <div v-for="item in configFormData.count" :key="item">
+      this is drawer content {{ item }}
+    </div>
+  </WDrawer>
 </template>

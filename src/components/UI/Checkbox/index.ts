@@ -1,7 +1,11 @@
 import type { CheckboxProps } from 'naive-ui'
 
-export { default } from './index.vue'
+import { WithValue } from '@/components/HOC/WithValue'
+import RawWCheckBox from './index.vue'
 
-export interface ICompUICheckboxProps {
+export default WithValue(RawWCheckBox)
+
+// TODO 000
+export interface ICompUICheckboxProps extends /* @vue-ignore */ CheckboxProps {
   options: CheckboxProps[]
 }

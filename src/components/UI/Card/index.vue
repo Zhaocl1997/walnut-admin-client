@@ -47,7 +47,3 @@ function onRefresh() {
     </template>
   </n-card>
 </template>
-
-<style lang="scss" scoped>
-
-</style>

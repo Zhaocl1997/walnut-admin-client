@@ -39,7 +39,7 @@ const values = ref({
     <WJSON :value="values" />
 
     <n-divider />
-    <WTitle prefix="bar">
+    <WTitle prefix="bar" class="mb-2">
       Base single cascader
     </WTitle>
 
@@ -71,7 +71,7 @@ const values = ref({
     </n-space>
 
     <n-divider />
-    <WTitle prefix="bar">
+    <WTitle prefix="bar" class="mb-2">
       Base Single feedback
     </WTitle>
 
@@ -103,7 +103,7 @@ const values = ref({
     </n-space>
 
     <n-divider />
-    <WTitle prefix="bar">
+    <WTitle prefix="bar" class="mb-2">
       Base multiple cascader
     </WTitle>
 
@@ -140,7 +140,7 @@ const values = ref({
     </n-space>
 
     <n-divider />
-    <WTitle prefix="bar">
+    <WTitle prefix="bar" class="mb-2">
       Base multiple feedback
     </WTitle>
 

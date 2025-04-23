@@ -1,6 +1,9 @@
+import type { ColorPickerProps } from 'naive-ui'
+
 export { default } from './index.vue'
 
-export interface ICompUIColorPickerProps {
+// TODO 000
+export interface ICompUIColorPickerProps extends /* @vue-ignore */ ColorPickerProps {
   // TODO
   eyeDropper?: boolean
 }

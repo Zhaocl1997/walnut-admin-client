@@ -5,9 +5,7 @@ defineOptions({
   name: 'WCompUIButton',
 })
 
-const { debounce, textProp } = withDefaults(defineProps<ICompUIButtonProps>(), {
-  debounce: 100,
-})
+const { debounce = 100, textProp } = defineProps<ICompUIButtonProps>()
 
 const emits = defineEmits<{ click: [e: MouseEvent] }>()
 

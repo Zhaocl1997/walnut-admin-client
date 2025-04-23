@@ -127,7 +127,7 @@ options.push({
       </n-list-item> -->
 
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           If label too long, you can add a tooltip prop
         </WTitle>
 

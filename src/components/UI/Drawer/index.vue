@@ -5,11 +5,7 @@ defineOptions({
   name: 'WDrawer',
 })
 
-withDefaults(defineProps<ICompUIDrawerProps>(), {
-  closable: false,
-  loading: false,
-  defaultButton: true,
-})
+const { closable = false, loading = false, defaultButton = true } = defineProps<ICompUIDrawerProps>()
 
 const emits = defineEmits<{ yes: [], no: [] }>()
 

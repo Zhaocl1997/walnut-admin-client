@@ -6,9 +6,7 @@ defineOptions({
   name: 'WCompUIButtonRetry',
 })
 
-const { retrySeconds, retryKey } = withDefaults(defineProps<ICompUIButtonRetryProps>(), {
-  retrySeconds: 60,
-})
+const { retrySeconds = 60, retryKey } = defineProps<ICompUIButtonRetryProps>()
 
 const { t } = useAppI18n()
 

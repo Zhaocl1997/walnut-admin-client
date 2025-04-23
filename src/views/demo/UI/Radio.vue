@@ -41,7 +41,7 @@ const state = reactive({
       </n-list-item>
 
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Button Radio
         </WTitle>
 

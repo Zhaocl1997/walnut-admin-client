@@ -5,9 +5,7 @@ defineOptions({
   name: 'WCompUIButtonConfirm',
 })
 
-withDefaults(defineProps<ICompUIButtonConfirmProps>(), {
-  confirmMsg: 'app.base.confirm',
-})
+const { confirmMsg = 'app.base.confirm' } = defineProps<ICompUIButtonConfirmProps>()
 
 const emits = defineEmits<{ confirm: [e: MouseEvent] }>()
 

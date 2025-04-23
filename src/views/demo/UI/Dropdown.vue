@@ -1,85 +1,77 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
+import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
+import { useDropdown } from '@/components/UI/Dropdown'
+
 defineOptions({
   name: 'DropdownDemo',
   defaultView: false,
 })
 
-const state = reactive({
-  dropdown1: '',
-  dropdown2: '',
-  dropdown3: '',
-  dropdown4: '',
+const contextMenuOptions = computed<Partial<DropdownMixedOption>[]>(() => [
+  {
+    key: '1',
+    label: 'New York City',
+    disabled: true,
+  },
+  {
+    key: '2',
+    label: 'Pairs',
+  },
+  {
+    key: '3',
+    label: 'London',
+    icon: () => <WIcon icon="ant-design:question-circle-outlined"></WIcon>,
+  },
+  {
+    key: '4',
+    label: 'Tokyo',
+  },
+  {
+    key: '5',
+    label: 'Beijing',
+  },
+  {
+    key: '6',
+    label: 'Shanghai',
+  },
+])
 
-  disabled: false,
-  divided: false,
-  icon: false,
+const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
+  dropdownProps: {
+    options: contextMenuOptions,
+    onSelect: (key) => {
+      AppConsoleLog('DEMO', key)
+      closeDropdown()
+    },
+  },
 })
 
-const options = computed(() => {
-  return [
-    {
-      value: '1',
-      label: 'New York City',
-      disabled: state.disabled,
-    },
-    {
-      value: '2',
-      label: 'Pairs',
-    },
-    {
-      value: '3',
-      label: 'London',
-      icon: state.icon ? 'el-icon-question' : '',
-    },
-    {
-      value: '4',
-      label: 'Tokyo',
-    },
-    {
-      value: '5',
-      label: 'Beijing',
-      divided: state.divided,
-    },
-    {
-      value: '6',
-      label: 'Shanghai',
-    },
-  ]
-})
+function onRightClick(e: MouseEvent) {
+  e.preventDefault()
+  openDropdown(e)
+}
 </script>
 
 <template>
   <WDemoCard title="Dropdown">
-    <!--
-    <WTitle show-left>Base usage 【{{ dropdown1 }}】</WTitle>
-    <el-form inline>
-      <el-space>
-        <el-form-item label="Disabled">
-          <el-switch v-model="disabled" />
-        </el-form-item>
+    <n-list>
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Basic usage
+        </WTitle>
 
-        <el-form-item label="Divider">
-          <el-switch v-model="divided" />
-        </el-form-item>
+        <WDropdown @hook="registerDropdown" />
 
-        <el-form-item label="Icon">
-          <el-switch v-model="icon" />
-        </el-form-item>
-      </el-space>
-    </el-form>
+        <n-space>
+          <div class="h-64 w-64 bg-gray-6" @click="openDropdown">
+            click to open dropdown
+          </div>
 
-    <br />
-
-    <w-dropdown v-model="dropdown1" :options="options" trigger="click">
-      <template #default>
-        <div>
-          <WIcon
-            icon="ant-design:info-circle-outlined"
-            class="cursor-pointer"
-            width="24"
-          ></WIcon>
-        </div>
-      </template>
-    </w-dropdown> -->
+          <div class="h-64 w-64 bg-gray-4" @click.right="onRightClick">
+            right click to open dropdown
+          </div>
+        </n-space>
+      </n-list-item>
+    </n-list>
   </WDemoCard>
 </template>

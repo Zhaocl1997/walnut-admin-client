@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import type { ICompUIDropdownInst, ICompUIDropdownProps } from './types'
+import type { ICompUIDropdownInst, ICompUIDropdownProps } from '.'
 
 defineOptions({
-  name: 'WDropdown',
-  inheritAttrs: false,
+  name: 'WCompUIDropdown',
 })
 
 const props = defineProps<ICompUIDropdownProps>()
