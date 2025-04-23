@@ -1,3 +1,8 @@
-export { default } from './src/index.vue'
+import type { InputNumberProps } from 'naive-ui'
 
-export * from './src/types'
+export { default } from './index.vue'
+
+// TODO 000
+export interface ICompUIInputNumberProps extends /* @vue-ignore */ InputNumberProps {
+  suffix?: string
+}
