@@ -3,7 +3,7 @@ import type { IconifyIconLoaderAbort, IconProps } from '@iconify/vue'
 import { Icon, iconExists, loadIcons } from '@iconify/vue'
 
 defineOptions({
-  name: 'WIcon',
+  name: 'WCompUIIcon',
 })
 
 const props = withDefaults(defineProps<IconProps>(), { inline: true })

@@ -6,8 +6,6 @@ export const IconBundleConfig: IconConfig = {
 
   treeshake: false,
 
-  cache: false,
-
   // see full icon in https://icon-sets.iconify.design/
   list: [
     WSvgPrefix, // this is custom svg icons
