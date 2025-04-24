@@ -161,7 +161,6 @@
     "vite-plugin-mkcert": "1.17.8",
     "vite-plugin-progress": "0.0.7",
     "vite-plugin-restart": "0.4.2",
-    "vite-plugin-terminal": "1.3.0",
     "vue-tsc": "2.2.8"
   },
   "config": {

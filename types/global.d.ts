@@ -1,5 +1,4 @@
 // https://jkchao.github.io/typescript-book-chinese/
-/// <reference types="vite-plugin-terminal/client" />
 /// <reference types="vite/client" />
 
 declare interface Fn<T = any, R = T> {

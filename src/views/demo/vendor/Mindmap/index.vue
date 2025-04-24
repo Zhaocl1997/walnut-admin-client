@@ -150,9 +150,6 @@ const data = ref([
                         left: false,
                         children: [
                           {
-                            name: 'vite-plugin-terminal',
-                          },
-                          {
                             name: 'vite-plugin-mkcert',
                           },
                           {

@@ -57,9 +57,6 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   // I'm pretty sure packages below will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
   if (dev) {
-    // https://github.com/patak-dev/vite-plugin-terminal
-    vitePlugins.push(createTerminalPlugin())
-
     // https://github.com/liuweiGL/vite-plugin-mkcert
     env.https && vitePlugins.push(createHttpsPlugin())
 
