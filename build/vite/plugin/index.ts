@@ -6,6 +6,7 @@ import { createBannerPlugin } from './banner'
 import { createCdnImportPlugin } from './cdn-import'
 import { createComponentPlugin } from './component'
 import { createCompressionPlugin } from './compression'
+import { createDevtoolsPlugin } from './devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createInspectPlugin } from './inspect'
@@ -57,9 +58,10 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   // I'm pretty sure packages below will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
   if (dev) {
-    // https://github.com/liuweiGL/vite-plugin-mkcert
-    env.https && vitePlugins.push(createHttpsPlugin())
+    // https://github.com/vuejs/devtools
+    vitePlugins.push(createDevtoolsPlugin())
 
+    // https://github.com/unplugin/unplugin-turbo-console
     vitePlugins.push(createTurboConsolePlugin())
 
     // https://github.com/antfu/vite-plugin-inspect
@@ -67,6 +69,9 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/antfu/vite-plugin-restart
     vitePlugins.push(createRestartPlugin())
+
+    // https://github.com/liuweiGL/vite-plugin-mkcert
+    env.https && vitePlugins.push(createHttpsPlugin())
   }
 
   if (stage) {
