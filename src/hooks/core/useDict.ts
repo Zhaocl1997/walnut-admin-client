@@ -1,14 +1,14 @@
 import type { IAppStoreMapDictValue } from '@/api/system/dict'
 import { getDictByType } from '@/api/system/dict'
 
-const AppStoreMapDict = reactive(new Map<string, IAppStoreMapDictValue>())
+const AppStoreMapDict = ref(new Map<string, IAppStoreMapDictValue>())
 
 function setDictIntoMap(type: string, data: IAppStoreMapDictValue) {
-  return AppStoreMapDict.set(type, data)
+  return AppStoreMapDict.value.set(type, data)
 }
 
-export function getDictFromMap(type: string) {
-  return AppStoreMapDict.get(type)
+function getDictFromMap(type: string) {
+  return AppStoreMapDict.value.get(type)
 }
 
 export function getDictNameFromMap(type: string) {
@@ -20,7 +20,7 @@ export function getDictDataFromMap(type: string) {
 }
 
 export function getDictTarget(type: string, value: StringOrNumber) {
-  return getDictDataFromMap(type)?.find(i => i.value === value) || {}
+  return getDictDataFromMap(type)?.find(i => i.value === value)
 }
 
 // init dict, no return value, just set dict data into dict map
@@ -31,14 +31,14 @@ export async function initDict(types: string | string[]): Promise<void> {
   }
 
   if (typeof types === 'string') {
-    if (AppStoreMapDict.has(types))
+    if (AppStoreMapDict.value.has(types))
       return
     const res = await getDictByType(types)
     setDictIntoMap(types, res[0])
   }
   else {
     await Promise.allSettled(types.map(async (type) => {
-      if (AppStoreMapDict.has(type))
+      if (AppStoreMapDict.value.has(type))
         return
       const res = await getDictByType(type)
       setDictIntoMap(type, res.find(i => i.type === type)!)
@@ -72,7 +72,7 @@ export function useDict(types: string | string[]) {
 
   const execDict = async () => {
     if (isStringType) {
-      if (AppStoreMapDict.has(types))
+      if (AppStoreMapDict.value.has(types))
         return getDictFromMap(types)
     }
 
@@ -84,7 +84,7 @@ export function useDict(types: string | string[]) {
         return res
       }
       else {
-        const nonExistedDictTypes = types.filter(type => !Array.from(AppStoreMapDict.keys()).includes(type))
+        const nonExistedDictTypes = types.filter(type => !Array.from(AppStoreMapDict.value.keys()).includes(type))
         if (!nonExistedDictTypes.length) {
           return getDictDataFromTypes(types)
         }

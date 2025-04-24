@@ -24,7 +24,7 @@ import type { WColorPickerProps } from '../../ColorPicker'
 
 import type { WDatePickerProps } from '../../DatePicker'
 
-import type { WDescriptionsItem } from '../../Descriptions'
+import type { ICompUIDescriptionsItem } from '../../Descriptions'
 import type { WDynamicTagsProps } from '../../DynamicTags'
 import type { WInputProps } from '../../Input'
 import type { WInputNumberProps } from '../../InputNumber'
@@ -258,7 +258,7 @@ export declare namespace WForm {
         vShow?: boolean | Events.Callback<D, boolean>
       }
 
-      descriptionProp?: Partial<WDescriptionsItem<D>>
+      descriptionProp?: Partial<ICompUIDescriptionsItem<D>>
     }
 
     type DividerSchema<D> = DynamicSchemaItemProps<

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { WDescriptionsItem } from '@/components/UI/Descriptions'
+import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
 
 defineOptions({
   name: 'About',
@@ -9,7 +9,7 @@ const { t } = useAppI18n()
 
 const { lastBuildTime, version, deps, devDeps, urls } = __APP_INFO__
 
-const infoItems = computed<WDescriptionsItem[]>(
+const infoItems = computed<ICompUIDescriptionsItem[]>(
   () =>
     [
       {
@@ -55,25 +55,25 @@ const infoItems = computed<WDescriptionsItem[]>(
           type: 'info',
         },
       },
-    ] as WDescriptionsItem[],
+    ],
 )
 
-const DepItems = ref<WDescriptionsItem[]>(
+const DepItems = ref<ICompUIDescriptionsItem[]>(
   Object.entries(deps).map(([k, v]) => ({
     label: k,
     value: v,
     type: 'link',
     typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
-  })) as WDescriptionsItem[],
+  })),
 )
 
-const DevDepItems = ref<WDescriptionsItem[]>(
+const DevDepItems = ref<ICompUIDescriptionsItem[]>(
   Object.entries(devDeps).map(([k, v]) => ({
     label: k,
     value: v,
     type: 'link',
     typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
-  })) as WDescriptionsItem[],
+  })),
 )
 </script>
 
@@ -88,7 +88,7 @@ const DevDepItems = ref<WDescriptionsItem[]>(
       }"
       header-preset="collapse"
     >
-      <w-descriptions
+      <WDescriptions
         size="small"
         label-placement="left"
         bordered
@@ -108,7 +108,7 @@ const DevDepItems = ref<WDescriptionsItem[]>(
       }"
       header-preset="collapse"
     >
-      <w-descriptions
+      <WDescriptions
         size="small"
         label-placement="left"
         bordered
@@ -128,7 +128,7 @@ const DevDepItems = ref<WDescriptionsItem[]>(
       }"
       header-preset="collapse"
     >
-      <w-descriptions
+      <WDescriptions
         size="small"
         label-placement="left"
         bordered

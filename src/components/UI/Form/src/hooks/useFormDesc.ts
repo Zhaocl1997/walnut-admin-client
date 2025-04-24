@@ -1,4 +1,4 @@
-import type { WDescriptionsItem } from '@/components/UI/Descriptions'
+import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
 import type { WForm } from '../types'
 
 import { isUndefined } from 'lodash-es'
@@ -19,7 +19,7 @@ export function useFormDesc(props: ComputedRef<WForm.Props<any>>, schemas: Ref<W
           value: props.value.model![i.formProp?.path!],
           span: i.descriptionProp?.span ?? props.value.descriptionProps?.column,
           formatter: i.descriptionProp?.formatter,
-        })) as WDescriptionsItem[],
+        })) as ICompUIDescriptionsItem[],
   )
 
   const descProps = {

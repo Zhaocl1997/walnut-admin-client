@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { IServerInfo } from '@/api/app/monitor/server'
 
-import type { WDescriptionsItem } from '@/components/UI/Descriptions'
+import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
 import { getSysInfo } from '@/api/app/monitor/server'
 
 defineOptions({
@@ -16,7 +16,7 @@ const { t } = useAppI18n()
 const info = ref<IServerInfo.System>()
 const loading = ref(false)
 
-const items = computed<WDescriptionsItem[]>(() =>
+const items = computed<ICompUIDescriptionsItem[]>(() =>
   Object.entries(info.value ?? {}).map(([k, v]) => ({
     label: t(`app.monitor.server.system.${k}`),
     value: v,
@@ -51,7 +51,7 @@ onMounted(onInit)
     :loading="loading"
     @refresh="onInit"
   >
-    <w-descriptions
+    <WDescriptions
       v-if="!loading"
       size="small"
       label-placement="left"
