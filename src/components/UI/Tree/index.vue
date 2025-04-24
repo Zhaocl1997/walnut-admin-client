@@ -16,7 +16,7 @@ import { formatTree, treeToArr } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 
 defineOptions({
-  name: 'WTree',
+  name: 'WCompUITree',
   inheritAttrs: false,
 })
 

@@ -2,7 +2,7 @@
 import type { ICompUIDrawerProps } from '.'
 
 defineOptions({
-  name: 'WDrawer',
+  name: 'WCompUIDrawer',
 })
 
 const { closable = false, loading = false, defaultButton = true } = defineProps<ICompUIDrawerProps>()
