@@ -1,19 +1,19 @@
 /**
  * @link https://stackoverflow.com/questions/47062922/how-to-get-all-keys-with-values-from-nested-objects
  */
-export function deepKeys (t: Recordable, pre: any[] = []): Generator {
+export function deepKeys(t: Recordable, pre: any[] = []): string[] {
   if (Array.isArray(t)) {
-    // eslint-disable-next-line no-useless-return
-    return
+    return []
   }
   else if (Object(t) === t) {
-    for (const [k, v] of Object.entries(t)) yield * deepKeys(v, [...pre, k])
+    return Object.entries(t).flatMap(([k, v]) => deepKeys(v, [...pre, k]))
   }
   else {
-    yield { value: pre.join('.'), label: t }
+    return [pre.join('.')]
   }
 }
 
+/**
 /**
  * @description Generate view options arr through vite feature `globEager`
  * see more https://vitejs.dev/guide/features.html#glob-import
