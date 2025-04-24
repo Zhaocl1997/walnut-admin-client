@@ -31,9 +31,10 @@ export function getFormTranslated(t: Fn, props: ComputedRef<WForm.Props>, item: 
   const path = item.formProp?.path
   const label = item.formProp?.label
 
+  // TODO for what??
   // got label, return label
-  if (label)
-    return unref(label)
+  // if (label)
+  //   return unref(label)
 
   // no locale nor no path
   // just return target field

@@ -17,22 +17,24 @@ import type {
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
-import type { WButtonProps } from '../../Button'
-import type { WButtonGroupProps } from '../../ButtonGroup'
-import type { WCheckboxProps } from '../../Checkbox'
-import type { WColorPickerProps } from '../../ColorPicker'
 
-import type { WDatePickerProps } from '../../DatePicker'
-
+import type { ICompUIButtonProps } from '../../Button'
+import type { ICompUIButtonConfirmProps } from '../../ButtonConfirm'
+import type { ICompUIButtonGroupProps } from '../../ButtonGroup'
+import type { ICompUIButtonRetryProps } from '../../ButtonRetry'
+import type { ICompUICheckboxProps } from '../../Checkbox'
+import type { ICompUIColorPickerProps } from '../../ColorPicker'
+import type { ICompUIDatePickerProps } from '../../DatePicker'
 import type { ICompUIDescriptionsItem } from '../../Descriptions'
-import type { WDynamicTagsProps } from '../../DynamicTags'
-import type { WInputProps } from '../../Input'
-import type { WInputNumberProps } from '../../InputNumber'
-import type { WRadioProps } from '../../Radio'
-import type { WSelectProps } from '../../Select'
-import type { ICompUISwitchPropsPartial } from '../../Switch'
-import type { WTimePickerProps } from '../../TimePicker'
+import type { ICompUIDynamicTagsProps } from '../../DynamicTags'
+import type { ICompUIInputProps } from '../../Input'
+import type { ICompUIInputNumberProps } from '../../InputNumber'
+import type { ICompUIRadioProps } from '../../Radio'
+import type { ICompUISelectProps } from '../../Select'
+import type { ICompUISwitchProps } from '../../Switch'
+import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'
+
 import type {
   WFormItemDictProps,
   WFormItemDividerProps,
@@ -44,7 +46,10 @@ export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'reg
 
 export const BUILTIN_FORM_TYPE = [
   'Button',
+  'ButtonConfirm',
   'ButtonGroup',
+  'ButtonRetry',
+
   'Checkbox',
   'ColorPicker',
   'DatePicker',
@@ -140,18 +145,20 @@ export declare namespace WForm {
       'Base:Slider': SliderProps
       'Base:TreeSelect': TreeSelectProps
 
-      'Base:Button': WButtonProps
-      'Base:ButtonGroup': WButtonGroupProps
-      'Base:Input': WInputProps
-      'Base:InputNumber': WInputNumberProps
-      'Base:Select': WSelectProps
-      'Base:Radio': WRadioProps
-      'Base:Checkbox': WCheckboxProps
-      'Base:ColorPicker': WColorPickerProps
-      'Base:Switch': ICompUISwitchPropsPartial
-      'Base:TimePicker': WTimePickerProps
-      'Base:DatePicker': WDatePickerProps
-      'Base:DynamicTags': WDynamicTagsProps
+      'Base:Button': ICompUIButtonProps
+      'Base:ButtonConfirm': ICompUIButtonConfirmProps
+      'Base:ButtonGroup': ICompUIButtonGroupProps
+      'Base:ButtonRetry': ICompUIButtonRetryProps
+      'Base:Checkbox': ICompUICheckboxProps
+      'Base:ColorPicker': ICompUIColorPickerProps
+      'Base:DatePicker': ICompUIDatePickerProps
+      'Base:DynamicTags': ICompUIDynamicTagsProps
+      'Base:Input': ICompUIInputProps
+      'Base:InputNumber': ICompUIInputNumberProps
+      'Base:Radio': ICompUIRadioProps
+      'Base:Select': ICompUISelectProps
+      'Base:Switch': ICompUISwitchProps
+      'Base:TimePicker': ICompUITimePickerProps
       'Base:Tree': ICompUITreeProps
 
       'Extend:Divider': WFormItemDividerProps
@@ -292,7 +299,9 @@ export declare namespace WForm {
     type DynamicInputSchema<D> = DynamicSchemaItemProps<'Base:DynamicInput', D>
 
     type ButtonSchema<D> = DynamicSchemaItemProps<'Base:Button', D>
+    type ButtonConfirmSchema<D> = DynamicSchemaItemProps<'Base:ButtonConfirm', D>
     type ButtonGroupSchema<D> = DynamicSchemaItemProps<'Base:ButtonGroup', D>
+    type ButtonRetry<D> = DynamicSchemaItemProps<'Base:ButtonRetry', D>
     type InputSchema<D> = DynamicSchemaItemProps<'Base:Input', D>
     type InputNumberSchema<D> = DynamicSchemaItemProps<'Base:InputNumber', D>
     type SelectSchema<D> = DynamicSchemaItemProps<'Base:Select', D>
@@ -324,8 +333,12 @@ export declare namespace WForm {
       | RenderSchema<D>
       | SlotSchema<D>
       | DynamicInputSchema<D>
+
       | ButtonSchema<D>
+      | ButtonConfirmSchema<D>
       | ButtonGroupSchema<D>
+      | ButtonRetry<D>
+
       | InputSchema<D>
       | InputNumberSchema<D>
       | SelectSchema<D>

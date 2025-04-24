@@ -9,19 +9,20 @@ defineOptions({
 const formRef = ref<WForm.Inst.WFormInst>()
 
 const { stateRef: formData, resetState: resetFormData } = useState({
-  formInput: null,
-  formInputNumber: 3,
-  formSelect: null,
-  formRadio: null,
   formCheckbox: null,
   formColorPicker: null,
-  formSwitch: true,
-  formTimePicker: null,
   formDatePicker: null,
   formDynamicTags: [],
-  formDynamicInput: [],
-  formSlider: 10,
+  formInput: null,
+  formInputNumber: null,
+  formRadio: null,
+  formSelect: null,
+  formSwitch: null,
+  formTimePicker: null,
   formTree: null,
+
+  formDynamicInput: [],
+  formSlider: null,
   formTreeSelect: null,
   formSlot: null,
   formRender: null,
@@ -122,13 +123,60 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
   },
 
   {
+    type: 'Base:Checkbox',
+    formProp: {
+      label: 'Checkbox',
+      path: 'formCheckbox',
+    },
+    componentProp: {
+      options,
+      valueType: 'number',
+      multiple: true,
+      valueSeparator: '|',
+    },
+  },
+  {
+    type: 'Base:ColorPicker',
+    formProp: {
+      label: 'Color Picker',
+      path: 'formColorPicker',
+    },
+    componentProp: {
+      eyeDropper: true,
+    },
+  },
+
+  {
+    type: 'Base:DatePicker',
+    formProp: {
+      label: 'DatePicker',
+      path: 'formDatePicker',
+    },
+    componentProp: {
+      type: 'datetime',
+    },
+  },
+
+  {
+    type: 'Base:DynamicTags',
+    formProp: {
+      label: 'DynamicTags',
+      path: 'formDynamicTags',
+      ruleType: 'array',
+    },
+    componentProp: {
+      round: true,
+    },
+  },
+
+  {
     type: 'Base:Input',
     formProp: {
       label: 'Input',
       path: 'formInput',
       labelHelpMessage: [
-        '1. Set `whitespace` in `formProp` true, it will treat whitespace as invalid input.',
-        '2. Set `trim` in `componentProp.valueModifiers` true, it will force to disable input whitespace.',
+        '1. Allow string and string array',
+        '2. Also allow `true` to auto translate base on `formProps.path`',
       ],
     },
     componentProp: {
@@ -145,20 +193,10 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     },
     componentProp: {
       min: 3,
-      max: 10,
+      max: 100,
     },
   },
-  {
-    type: 'Base:Select',
-    formProp: {
-      label: 'Select',
-      path: 'formSelect',
-    },
-    componentProp: {
-      options,
-      valueType: 'number',
-    },
-  },
+
   {
     type: 'Base:Radio',
     formProp: {
@@ -170,24 +208,17 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     },
   },
   {
-    type: 'Base:Checkbox',
+    type: 'Base:Select',
     formProp: {
-      label: 'Checkbox',
-      path: 'formCheckbox',
+      label: 'Select',
+      path: 'formSelect',
     },
     componentProp: {
       options,
       valueType: 'number',
       multiple: true,
+      valueSeparator: ',',
     },
-  },
-  {
-    type: 'Base:ColorPicker',
-    formProp: {
-      label: 'Color Picker',
-      path: 'formColorPicker',
-    },
-    componentProp: {},
   },
   {
     type: 'Base:Switch',
@@ -206,29 +237,26 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     },
     componentProp: {
       format: 'HH:mm:ss',
+      class: 'w-full',
     },
   },
   {
-    type: 'Base:DatePicker',
+    type: 'Base:Tree',
     formProp: {
-      label: 'DatePicker',
-      path: 'formDatePicker',
+      label: 'Tree',
+      path: 'formTree',
     },
     componentProp: {
-      type: 'datetime',
+      treeProps: {
+        data: getTreeData(),
+        labelField: '_label',
+        keyField: '_id',
+        blockLine: true,
+        blockNode: true,
+      },
     },
   },
-  // {
-  //   type: 'Base:DynamicTags',
-  //   formProp: {
-  //     label: 'DynamicTags',
-  //     path: 'formDynamicTags',
-  //     ruleType: 'array',
-  //   },
-  //   componentProp: {
-  //     round: true,
-  //   },
-  // },
+
   // {
   //   type: 'Base:DynamicInput',
   //   formProp: {
@@ -253,22 +281,7 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
   //     min: 10,
   //   },
   // },
-  // {
-  //   type: 'Base:Tree',
-  //   formProp: {
-  //     label: 'Tree',
-  //     path: 'formTree',
-  //   },
-  //   componentProp: {
-  //     treeProps: {
-  //       data: getTreeData(),
-  //       labelField: '_label',
-  //       keyField: '_id',
-  //       blockLine: true,
-  //       blockNode: true,
-  //     },
-  //   },
-  // },
+
   // {
   //   type: 'Base:TreeSelect',
   //   formProp: {

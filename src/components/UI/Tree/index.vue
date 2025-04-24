@@ -360,9 +360,11 @@ defineExpose({
 
 <template>
   <div class="w-full">
-    <div class="mb-2 px-2">
+    <div
+      v-if="getProps.toolbar"
+      class="mb-2 px-2"
+    >
       <n-input
-        v-if="getProps.toolbar"
         v-model:value="pattern"
         clearable
         :disabled="getProps.treeProps?.disabled"
