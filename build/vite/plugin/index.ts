@@ -12,7 +12,7 @@ import { createInspectPlugin } from './inspect'
 import { createLegacyPlugin } from './legacy'
 import { createBuildProgressPlugin } from './progress'
 import { createRestartPlugin } from './restart'
-import { createTerminalPlugin } from './terminal'
+import { createTurboConsolePlugin } from './turbo-console'
 import { createUnoCSSPlugin } from './unocss'
 import { createVisualizerPlugin } from './visualizer'
 
@@ -59,6 +59,8 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   if (dev) {
     // https://github.com/liuweiGL/vite-plugin-mkcert
     env.https && vitePlugins.push(createHttpsPlugin())
+
+    vitePlugins.push(createTurboConsolePlugin())
 
     // https://github.com/antfu/vite-plugin-inspect
     vitePlugins.push(createInspectPlugin())

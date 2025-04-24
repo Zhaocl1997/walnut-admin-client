@@ -5,7 +5,7 @@ defineOptions({
 })
 
 function onClick() {
-  AppConsoleLog('Demo', 'icon clicked')
+  console.log('Demo', 'icon clicked')
 }
 </script>
 

@@ -17,7 +17,7 @@ const [register1] = useTree({
 
   deletable: true,
   onTreeNodeItemDelete(option) {
-    AppConsoleLog('DemoTree', option)
+    console.log('DemoTree', option)
   },
 
   maxHeight: '300px',
@@ -41,12 +41,12 @@ const [register2] = useTree({
 
   deletable: true,
   onTreeNodeItemDelete(option) {
-    AppConsoleLog('DemoTree', option)
+    console.log('DemoTree', option)
   },
 
   presetContextMenu: true,
   onPaste: (copy, current) => {
-    AppConsoleLog('DemoTree', { copy, current })
+    console.log('DemoTree', { copy, current })
   },
 
   treeProps: {
@@ -58,7 +58,7 @@ const [register2] = useTree({
     cascade: true,
     draggable: true,
     onDrop: ({ node, dragNode, dropPosition }) => {
-      AppConsoleLog('DemoTree', { node, dragNode, dropPosition })
+      console.log('DemoTree', { node, dragNode, dropPosition })
     },
   },
 })

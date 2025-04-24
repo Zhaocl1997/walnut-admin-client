@@ -13,7 +13,7 @@ export function useEvents<T extends useEventParams>(props: MaybeRefSelf<any>, po
 
   const onEvent = (val: T) => {
     if (Array.isArray(pool) && !pool?.includes(val.name)) {
-      AppConsoleWarn('useEvents', `Event "${val.name}" hasn't been registered to 'emits' option !`)
+      console.warn('useEvents', `Event "${val.name}" hasn't been registered to 'emits' option !`)
       return
     }
 

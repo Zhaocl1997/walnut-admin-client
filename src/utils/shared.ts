@@ -13,7 +13,7 @@ export function getDefaultSlotText(slots: Slots): string {
 
 export function isInSetup() {
   if (!getCurrentInstance())
-    AppConsoleErr('IsInSetup', 'Hook can only be used in `setup` function!')
+    console.error('IsInSetup', 'Hook can only be used in `setup` function!')
 }
 
 export function renderSlots<T extends Recordable>(slots: Slots) {

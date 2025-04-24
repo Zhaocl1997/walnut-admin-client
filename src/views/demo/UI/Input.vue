@@ -9,23 +9,23 @@ const state = reactive<Recordable>({
 })
 
 function onChange(value: string) {
-  AppConsoleLog('[WInput change]', value)
+  console.log('[WInput change]', value)
 }
 
 function onInput(value: string) {
-  AppConsoleLog('[WInput input]', value)
+  console.log('[WInput input]', value)
 }
 
 function onBlur(e: FocusEvent) {
-  AppConsoleLog('[WInput blur]', e)
+  console.log('[WInput blur]', e)
 }
 
 function onFocus(e: FocusEvent) {
-  AppConsoleLog('[WInput focus]', e)
+  console.log('[WInput focus]', e)
 }
 
 function onClear(e: MouseEvent) {
-  AppConsoleLog('[WInput clear]', e)
+  console.log('[WInput clear]', e)
 }
 </script>
 

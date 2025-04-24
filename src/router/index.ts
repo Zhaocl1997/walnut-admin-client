@@ -15,7 +15,7 @@ export const AppRouter = createRouter({
 export function setupRouter(app: App) {
   app.use(AppRouter)
   createRouterGuard(AppRouter)
-  AppConsoleInfo('Router', 'Router Initializing...')
+  console.info('Router', 'Router Initializing...')
 }
 
 export function useAppRoute() {
@@ -39,7 +39,7 @@ export function useAppRouterPush(info: RouteLocationRaw) {
     })
   }
   catch (error) {
-    AppConsoleErr('Router push', error)
+    console.error('Router push', error)
 
     // maybe error
     useAppMessage().warning(AppI18n.global.t('app.menu.error'))

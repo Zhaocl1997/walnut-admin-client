@@ -28,7 +28,7 @@ export async function setupI18n(app: App) {
   const options = await createI18nOptions()
   AppI18n = createI18n(options)
   app.use(AppI18n)
-  AppConsoleInfo('I18n', 'Locale Initializing...')
+  console.info('I18n', 'Locale Initializing...')
 }
 
 export const useAppI18n = () => useI18n()

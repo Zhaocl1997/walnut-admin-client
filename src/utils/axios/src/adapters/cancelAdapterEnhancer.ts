@@ -22,7 +22,7 @@ function addToCancelPool(config: AxiosRequestConfig, id: string, pathname: strin
     k: key,
     p: pathname,
     c: () => {
-      AppConsoleInfo('Axios cancel', `Axios cancel request: key => ${key}; id => ${id}`)
+      console.info('Axios cancel', `Axios cancel request: key => ${key}; id => ${id}`)
       cancel()
     },
   })

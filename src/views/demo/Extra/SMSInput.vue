@@ -13,7 +13,7 @@ const state = ref({
 })
 
 async function onBeforeCountdown() {
-  AppConsoleLog('SMSInput Demo', 'do something before count down start, need to return boolean')
+  console.log('SMSInput Demo', 'do something before count down start, need to return boolean')
   await new Promise(res => setTimeout(() => {
     res(true)
   }, 1000))
@@ -21,7 +21,7 @@ async function onBeforeCountdown() {
 }
 
 async function onSuccess(startCountdown: Fn) {
-  AppConsoleLog('SMSInput Demo', 'do something after verify success, need to call startCountdown manually')
+  console.log('SMSInput Demo', 'do something after verify success, need to call startCountdown manually')
 
   await new Promise(res => setTimeout(() => {
     res(true)

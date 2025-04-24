@@ -40,7 +40,7 @@ const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
   dropdownProps: {
     options: contextMenuOptions,
     onSelect: (key) => {
-      AppConsoleLog('DEMO', key)
+      console.log('DEMO', key)
       closeDropdown()
     },
   },

@@ -7,11 +7,11 @@ import StarportPlugin from 'vue-starport'
 
 function setupErrorhandler(app: App) {
   app.config.errorHandler = (error) => {
-    AppConsoleErr('AppErrorHandler', error)
+    console.error('AppErrorHandler', error)
   }
 
   app.config.warnHandler = (warn) => {
-    AppConsoleWarn('AppWarnHandler', warn)
+    console.warn('AppWarnHandler', warn)
   }
 }
 
@@ -40,5 +40,5 @@ export async function setupApp(app: App) {
   if (isDev())
     app.config.performance = true
 
-  AppConsoleInfo('setupApp', 'App Initializing...')
+  console.info('setupApp', 'App Initializing...')
 }

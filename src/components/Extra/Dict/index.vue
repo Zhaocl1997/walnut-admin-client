@@ -26,7 +26,7 @@ const getTOptions = computed(() =>
 
 async function onInit() {
   if (!props.dictType) {
-    AppConsoleWarn('WDict', 'need to provide `dictType` prop')
+    console.warn('WDict', 'need to provide `dictType` prop')
     return
   }
   await execDict()
