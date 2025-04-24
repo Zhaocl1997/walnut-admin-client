@@ -9,6 +9,10 @@ defineOptions({
 const formRef = ref<WForm.Inst.WFormInst>()
 
 const { stateRef: formData, resetState: resetFormData } = useState({
+  // base
+  formSlot: null,
+  formRender: null,
+
   // ui
   formCheckbox: null,
   formColorPicker: null,
@@ -31,11 +35,11 @@ const { stateRef: formData, resetState: resetFormData } = useState({
   formSMSInput: null,
   formTransitionPicker: null,
 
-  formDynamicInput: [],
+  // raw
+  formDynamicInput: null,
   formSlider: null,
   formTreeSelect: null,
-  formSlot: null,
-  formRender: null,
+
   formRoleSelect: null,
   formAreaCascader: null,
   formTinymce: null,
@@ -48,6 +52,27 @@ const { stateRef: formData, resetState: resetFormData } = useState({
 const msg = useAppMessage()
 
 const schemas: WForm.Schema.Item<typeof formData.value>[] = [
+  {
+    type: 'Base:Slot',
+    formProp: {
+      label: 'Slot',
+      path: 'formSlot',
+    },
+  },
+  {
+    type: 'Base:Render',
+    formProp: {
+      label: 'Render',
+      path: 'formRender',
+    },
+    componentProp: {
+      render: ({ formData }) => (
+        <n-input vModel={[formData.formRender, 'value']}></n-input>
+      ),
+    },
+  },
+
+  // ui
   {
     type: 'Base:Button',
     formProp: {
@@ -332,63 +357,45 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     },
   },
 
-  // {
-  //   type: 'Base:DynamicInput',
-  //   formProp: {
-  //     label: 'Dynamic Input',
-  //     path: 'formDynamicInput',
-  //     ruleType: 'array',
-  //   },
-  //   componentProp: {
-  //     preset: 'pair',
-  //     showSortButton: true,
-  //     min: 1,
-  //   },
-  // },
-  // {
-  //   type: 'Base:Slider',
-  //   formProp: {
-  //     label: 'Slider',
-  //     path: 'formSlider',
-  //   },
-  //   componentProp: {
-  //     max: 24,
-  //     min: 10,
-  //   },
-  // },
+  // raw
+  {
+    type: 'Raw:DynamicInput',
+    formProp: {
+      label: 'Dynamic Input',
+      path: 'formDynamicInput',
+      ruleType: 'array',
+    },
+    componentProp: {
+      preset: 'pair',
+      showSortButton: true,
+      min: 1,
+    },
+  },
+  {
+    type: 'Raw:Slider',
+    formProp: {
+      label: 'Slider',
+      path: 'formSlider',
+    },
+    componentProp: {
+      max: 24,
+      min: 10,
+    },
+  },
 
-  // {
-  //   type: 'Base:TreeSelect',
-  //   formProp: {
-  //     label: 'TreeSelect',
-  //     path: 'formTreeSelect',
-  //   },
-  //   componentProp: {
-  //     options: getTreeData(),
-  //     labelField: '_label',
-  //     keyField: '_id',
-  //     clearable: true,
-  //   },
-  // },
-  // {
-  //   type: 'Base:Slot',
-  //   formProp: {
-  //     label: 'Slot',
-  //     path: 'formSlot',
-  //   },
-  // },
-  // {
-  //   type: 'Base:Render',
-  //   formProp: {
-  //     label: 'Render',
-  //     path: 'formRender',
-  //   },
-  //   componentProp: {
-  //     render: ({ formData }) => (
-  //       <n-input vModel={[formData.formRender, 'value']}></n-input>
-  //     ),
-  //   },
-  // },
+  {
+    type: 'Raw:TreeSelect',
+    formProp: {
+      label: 'TreeSelect',
+      path: 'formTreeSelect',
+    },
+    componentProp: {
+      options: getTreeData(),
+      labelField: '_label',
+      keyField: '_id',
+      clearable: true,
+    },
+  },
 
   // {
   //   type: 'Extend:RoleSelect',
@@ -453,12 +460,15 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     title="Base Form"
     description="Display all support types in schemas."
   >
-    <div class="mb-4">
-      <WJSON :value="formData" height="300px" />
+    <div class="sticky top-24 z-50 h-full">
+      <div class="bg-bodyColor p-4">
+        <WJSON :value="formData" height="300px" />
+      </div>
     </div>
 
     <WForm
       ref="formRef"
+      class="pt-4"
       :model="formData"
       :schemas="schemas"
       label-width="120px"

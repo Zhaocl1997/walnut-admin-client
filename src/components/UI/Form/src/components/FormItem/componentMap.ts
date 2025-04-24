@@ -60,17 +60,19 @@ function getExtraComponents(type: typeof BUILT_IN_FORM_ITEM_TYPE_EXTRA) {
 // Form component map
 const componentMap = new Map()
 
+// ui
 const UIComponents = getUIComponents(BUILT_IN_FORM_ITEM_TYPE_UI)
 BUILT_IN_FORM_ITEM_TYPE_UI.forEach((key) => {
   componentMap.set(key, UIComponents[key])
 })
 
+// extra
 const ExtraComponents = getExtraComponents(BUILT_IN_FORM_ITEM_TYPE_EXTRA)
 BUILT_IN_FORM_ITEM_TYPE_EXTRA.forEach((key) => {
   componentMap.set(key, ExtraComponents[key])
 })
 
-// set extra component here
+// raw
 componentMap.set('Slider', NSlider)
 componentMap.set('DynamicInput', NDynamicInput)
 componentMap.set('TreeSelect', NTreeSelect)

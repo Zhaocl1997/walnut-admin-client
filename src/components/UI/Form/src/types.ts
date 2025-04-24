@@ -121,14 +121,12 @@ export declare namespace WForm {
     }
 
     interface ComponentPropPool<D = any> {
+
+      // base
       'Base:Render': {
         render: Events.Callback<D, VNode | VNode[] | string>
       }
       'Base:Slot': Record<string, never>
-
-      'Base:DynamicInput': DynamicInputProps
-      'Base:Slider': SliderProps
-      'Base:TreeSelect': TreeSelectProps
 
       // @/components/UI
       'Base:Button': ICompUIButtonProps
@@ -155,6 +153,14 @@ export declare namespace WForm {
       'Extra:PhoneNumberInput': ICompExtraPhoneNumberInputProps
       'Extra:SMSInput': ICompExtraSMSInputProps
       'Extra:TransitionSelect': ICompExtraTransitionProps
+
+      // raw
+      'Base:DynamicInput': DynamicInputProps
+      'Base:Slider': SliderProps
+      'Base:TreeSelect': TreeSelectProps
+      'Raw:DynamicInput': DynamicInputProps
+      'Raw:Slider': SliderProps
+      'Raw:TreeSelect': TreeSelectProps
 
       'Extend:Divider': WFormItemDividerProps
       'Extend:Query': WFormItemQueryProps
@@ -256,90 +262,103 @@ export declare namespace WForm {
       descriptionProp?: Partial<ICompUIDescriptionsItem<D>>
     }
 
-    type DividerSchema<D> = DynamicSchemaItemProps<
-      'Extend:Divider',
-      D,
-      {
-        // since sticky element will got a transparent background, so we need to provide a bgColor
-        sticky: boolean
-        bgColor: string
-      }
-    >
-    type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
-    type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
+    namespace SchemaItem {
 
-    type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
-    type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Extend:AreaCascader', D>
+      type DividerSchema<D> = DynamicSchemaItemProps<
+        'Extend:Divider',
+        D,
+        {
+          // since sticky element will got a transparent background, so we need to provide a bgColor
+          sticky: boolean
+          bgColor: string
+        }
+      >
+      type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
+      type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
 
-    type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
+      type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
+      type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Extend:AreaCascader', D>
 
-    type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
-    type SlotSchema<D> = DynamicSchemaItemProps<'Base:Slot', D>
-    type DynamicInputSchema<D> = DynamicSchemaItemProps<'Base:DynamicInput', D>
+      type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
 
-    // ui
-    type ButtonSchema<D> = DynamicSchemaItemProps<'Base:Button', D>
-    type ButtonConfirmSchema<D> = DynamicSchemaItemProps<'Base:ButtonConfirm', D>
-    type ButtonGroupSchema<D> = DynamicSchemaItemProps<'Base:ButtonGroup', D>
-    type ButtonRetry<D> = DynamicSchemaItemProps<'Base:ButtonRetry', D>
-    type InputSchema<D> = DynamicSchemaItemProps<'Base:Input', D>
-    type InputNumberSchema<D> = DynamicSchemaItemProps<'Base:InputNumber', D>
-    type SelectSchema<D> = DynamicSchemaItemProps<'Base:Select', D>
-    type RadioSchema<D> = DynamicSchemaItemProps<'Base:Radio', D>
-    type CheckboxSchema<D> = DynamicSchemaItemProps<'Base:Checkbox', D>
-    type ColorPickerSchema<D> = DynamicSchemaItemProps<'Base:ColorPicker', D>
-    type SwitchSchema<D> = DynamicSchemaItemProps<'Base:Switch', D>
-    type TimePickerSchema<D> = DynamicSchemaItemProps<'Base:TimePicker', D>
-    type DatePickerSchema<D> = DynamicSchemaItemProps<'Base:DatePicker', D>
-    type DynamicTagsSchema<D> = DynamicSchemaItemProps<'Base:DynamicTags', D>
-    type SliderSchema<D> = DynamicSchemaItemProps<'Base:Slider', D>
-    type TreeSelectSchema<D> = DynamicSchemaItemProps<'Base:TreeSelect', D>
-    type TreeSchema<D> = DynamicSchemaItemProps<'Base:Tree', D>
+      // base
+      type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
+      type SlotSchema<D> = DynamicSchemaItemProps<'Base:Slot', D>
 
-    // extra
-    type EmailInputSchema<D> = DynamicSchemaItemProps<'Extra:EmailInput', D>
-    type IconPickerSchema<D> = DynamicSchemaItemProps<'Extra:IconPicker', D>
-    type LocaleSchema<D> = DynamicSchemaItemProps<'Extra:LocaleSelect', D>
-    type PasswordSchema<D> = DynamicSchemaItemProps<'Extra:Password', D>
-    type PhoneNumberInputSchema<D> = DynamicSchemaItemProps<'Extra:PhoneNumberInput', D>
-    type SMSInputSchema<D> = DynamicSchemaItemProps<'Extra:SMSInput', D>
-    type TransitionSelectSchema<D> = DynamicSchemaItemProps<'Extra:TransitionSelect', D>
+      // ui
+      type ButtonSchema<D> = DynamicSchemaItemProps<'Base:Button', D>
+      type ButtonConfirmSchema<D> = DynamicSchemaItemProps<'Base:ButtonConfirm', D>
+      type ButtonGroupSchema<D> = DynamicSchemaItemProps<'Base:ButtonGroup', D>
+      type ButtonRetry<D> = DynamicSchemaItemProps<'Base:ButtonRetry', D>
+      type CheckboxSchema<D> = DynamicSchemaItemProps<'Base:Checkbox', D>
+      type ColorPickerSchema<D> = DynamicSchemaItemProps<'Base:ColorPicker', D>
+      type DatePickerSchema<D> = DynamicSchemaItemProps<'Base:DatePicker', D>
+      type DynamicTagsSchema<D> = DynamicSchemaItemProps<'Base:DynamicTags', D>
+      type InputSchema<D> = DynamicSchemaItemProps<'Base:Input', D>
+      type InputNumberSchema<D> = DynamicSchemaItemProps<'Base:InputNumber', D>
+      type RadioSchema<D> = DynamicSchemaItemProps<'Base:Radio', D>
+      type SelectSchema<D> = DynamicSchemaItemProps<'Base:Select', D>
+      type SwitchSchema<D> = DynamicSchemaItemProps<'Base:Switch', D>
+      type TimePickerSchema<D> = DynamicSchemaItemProps<'Base:TimePicker', D>
+      type TreeSchema<D> = DynamicSchemaItemProps<'Base:Tree', D>
+
+      // extra
+      type EmailInputSchema<D> = DynamicSchemaItemProps<'Extra:EmailInput', D>
+      type IconPickerSchema<D> = DynamicSchemaItemProps<'Extra:IconPicker', D>
+      type LocaleSchema<D> = DynamicSchemaItemProps<'Extra:LocaleSelect', D>
+      type PasswordSchema<D> = DynamicSchemaItemProps<'Extra:Password', D>
+      type PhoneNumberInputSchema<D> = DynamicSchemaItemProps<'Extra:PhoneNumberInput', D>
+      type SMSInputSchema<D> = DynamicSchemaItemProps<'Extra:SMSInput', D>
+      type TransitionSelectSchema<D> = DynamicSchemaItemProps<'Extra:TransitionSelect', D>
+
+      // raw
+      type DynamicInputSchema<D> = DynamicSchemaItemProps<'Raw:DynamicInput', D>
+      type SliderSchema<D> = DynamicSchemaItemProps<'Raw:Slider', D>
+      type TreeSelectSchema<D> = DynamicSchemaItemProps<'Raw:TreeSelect', D>
+    }
 
     type Item<D = any> =
-      | DividerSchema<D>
-      | QuerySchema<D>
-      | DictSchema<D>
-      | LocaleSchema<D>
-      | PhoneNumberInputSchema<D>
-      | EmailInputSchema<D>
-      | IconPickerSchema<D>
-      | TransitionSelectSchema<D>
-      | RoleSelectSchema<D>
-      | AreaCacaderSchema<D>
-      | PasswordSchema<D>
-      | SMSInputSchema<D>
-      | TinymceSchema<D>
-      | RenderSchema<D>
-      | SlotSchema<D>
-      | DynamicInputSchema<D>
+      | SchemaItem.DividerSchema<D>
+      | SchemaItem.QuerySchema<D>
+      | SchemaItem.DictSchema<D>
 
-      | ButtonSchema<D>
-      | ButtonConfirmSchema<D>
-      | ButtonGroupSchema<D>
-      | ButtonRetry<D>
+      | SchemaItem.RoleSelectSchema<D>
+      | SchemaItem.AreaCacaderSchema<D>
+      | SchemaItem.TinymceSchema<D>
 
-      | InputSchema<D>
-      | InputNumberSchema<D>
-      | SelectSchema<D>
-      | RadioSchema<D>
-      | CheckboxSchema<D>
-      | ColorPickerSchema<D>
-      | SwitchSchema<D>
-      | TimePickerSchema<D>
-      | DatePickerSchema<D>
-      | DynamicTagsSchema<D>
-      | SliderSchema<D>
-      | TreeSelectSchema<D>
-      | TreeSchema<D>
+      // base
+      | SchemaItem.RenderSchema<D>
+      | SchemaItem.SlotSchema<D>
+
+      // ui
+      | SchemaItem.ButtonSchema<D>
+      | SchemaItem.ButtonConfirmSchema<D>
+      | SchemaItem.ButtonGroupSchema<D>
+      | SchemaItem.ButtonRetry<D>
+      | SchemaItem.CheckboxSchema<D>
+      | SchemaItem.ColorPickerSchema<D>
+      | SchemaItem.DatePickerSchema<D>
+      | SchemaItem.DynamicTagsSchema<D>
+      | SchemaItem.InputSchema<D>
+      | SchemaItem.InputNumberSchema<D>
+      | SchemaItem.RadioSchema<D>
+      | SchemaItem.SelectSchema<D>
+      | SchemaItem.SwitchSchema<D>
+      | SchemaItem.TimePickerSchema<D>
+      | SchemaItem.TreeSchema<D>
+
+      // extra
+      | SchemaItem.EmailInputSchema<D>
+      | SchemaItem.IconPickerSchema<D>
+      | SchemaItem.LocaleSchema<D>
+      | SchemaItem.PasswordSchema<D>
+      | SchemaItem.PhoneNumberInputSchema<D>
+      | SchemaItem.SMSInputSchema<D>
+      | SchemaItem.TransitionSelectSchema<D>
+
+      // raw
+      | SchemaItem.DynamicInputSchema<D>
+      | SchemaItem.SliderSchema<D>
+      | SchemaItem.TreeSelectSchema<D>
   }
 }
