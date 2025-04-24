@@ -3,7 +3,7 @@ import type { RadioGroupProps, RadioProps } from 'naive-ui'
 import { WithValue } from '@/components/HOC/WithValue'
 import RawWRadio from './index.vue'
 
-export default WithValue(RawWRadio)
+export default WithValue<ICompUIRadioProps>(RawWRadio)
 
 // TODO 000
 export interface ICompUIRadioProps extends /* @vue-ignore */ RadioGroupProps {
