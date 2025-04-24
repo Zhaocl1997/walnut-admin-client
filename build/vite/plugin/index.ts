@@ -1,6 +1,7 @@
+import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
 
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { creatAutoImportPlugin } from './auto-import'
 import { createBannerPlugin } from './banner'
 import { createCdnImportPlugin } from './cdn-import'
@@ -9,7 +10,6 @@ import { createCompressionPlugin } from './compression'
 import { createDevtoolsPlugin } from './devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
-import { createInspectPlugin } from './inspect'
 import { createLegacyPlugin } from './legacy'
 import { createBuildProgressPlugin } from './progress'
 import { createRestartPlugin } from './restart'
@@ -18,7 +18,7 @@ import { createUnoCSSPlugin } from './unocss'
 import { createVisualizerPlugin } from './visualizer'
 
 export function createVitePlugins(mode: string, env: IViteEnv) {
-  const vitePlugins: (VitePlugin | VitePlugin[])[] = [
+  const vitePlugins: PluginOption = [
     vue({
       template: {
         compilerOptions: {
@@ -63,9 +63,6 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/unplugin/unplugin-turbo-console
     vitePlugins.push(createTurboConsolePlugin())
-
-    // https://github.com/antfu/vite-plugin-inspect
-    vitePlugins.push(createInspectPlugin())
 
     // https://github.com/antfu/vite-plugin-restart
     vitePlugins.push(createRestartPlugin())

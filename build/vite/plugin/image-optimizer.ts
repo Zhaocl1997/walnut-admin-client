@@ -1,6 +1,6 @@
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
-export function createImageOptimizerPlugin(): VitePlugin {
+export function createImageOptimizerPlugin() {
   return ViteImageOptimizer({
     test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
     exclude: undefined,

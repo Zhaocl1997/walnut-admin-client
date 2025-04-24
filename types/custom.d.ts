@@ -32,9 +32,6 @@ declare global {
   type ValueOfAppConstLayoutMode = import('@/const').ValueOfAppConstLayoutMode
   type ValueOfAppConstLockMode = import('@/const').ValueOfAppConstLockMode
 
-  // vite
-  type VitePlugin = import('vite').Plugin
-
   // easy-fns-ts
   type Nullable<T> = import('easy-fns-ts').Nullable<T>
   type StringOrNumber = import('easy-fns-ts').StringOrNumber

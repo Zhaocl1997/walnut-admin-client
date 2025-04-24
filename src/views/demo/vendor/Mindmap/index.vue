@@ -153,9 +153,6 @@ const data = ref([
                             name: 'vite-plugin-mkcert',
                           },
                           {
-                            name: 'vite-plugin-inspect',
-                          },
-                          {
                             name: 'vite-plugin-restart',
                           },
                         ],

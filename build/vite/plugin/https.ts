@@ -1,5 +1,5 @@
 import mkcert from 'vite-plugin-mkcert'
 
-export function createHttpsPlugin(): VitePlugin {
+export function createHttpsPlugin() {
   return mkcert({ source: 'coding' })
 }

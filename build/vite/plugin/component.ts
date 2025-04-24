@@ -21,7 +21,7 @@ function WalnutAdminComponentResolver(): ComponentResolver {
   }
 }
 
-export function createComponentPlugin(): VitePlugin {
+export function createComponentPlugin() {
   return Components({
     dirs: ['@/components'],
 

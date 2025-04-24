@@ -1,5 +1,5 @@
 import progress from 'vite-plugin-progress'
 
-export function createBuildProgressPlugin(): VitePlugin {
+export function createBuildProgressPlugin() {
   return progress()
 }
