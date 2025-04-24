@@ -49,7 +49,7 @@ const [register] = useForm<typeof footerRelatives>({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',
       },

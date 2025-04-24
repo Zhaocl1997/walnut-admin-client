@@ -49,7 +49,7 @@ const [register] = useForm<typeof headerRelatives>({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',
       },

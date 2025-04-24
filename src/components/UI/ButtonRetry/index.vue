@@ -81,6 +81,14 @@ defineExpose({
 
 <template>
   <div>
-    <WButton v-bind="$attrs" :disabled="!!retryText" :debounce="0" :text-prop="retryText ?? attrs.textProp" @click="onButtonClick" />
+    <WButton
+      v-bind="$attrs"
+      :disabled="!!retryText"
+      :debounce="0"
+      :text-prop="retryText ?? attrs.textProp"
+      @click="onButtonClick"
+    >
+      <slot />
+    </WButton>
   </div>
 </template>

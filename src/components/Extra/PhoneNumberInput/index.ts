@@ -11,6 +11,7 @@ export interface ICompExtraPhoneNumberInputProps {
   whiteList?: CountryCode[]
   blackList?: CountryCode[]
   autoDefaultCountry?: boolean
+  autoFocusAfterCountrySelect?: boolean
 }
 
 export interface ICompExtraPhoneNumberInputUpdateParams {

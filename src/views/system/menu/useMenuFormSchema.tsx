@@ -221,7 +221,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
     },
 
     {
-      type: 'Extend:LocaleSelect',
+      type: 'Extra:LocaleSelect',
       formProp: {
         path: 'title',
         labelHelpMessage: true,
@@ -237,7 +237,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
     },
 
     {
-      type: 'Extend:IconPicker',
+      type: 'Extra:IconPicker',
       formProp: {
         path: 'icon',
       },
@@ -369,7 +369,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
     },
 
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'animationName',
         rule: false,
@@ -383,7 +383,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
     },
 
     {
-      type: 'Extend:IconPicker',
+      type: 'Extra:IconPicker',
       formProp: {
         path: 'activeIcon',
         rule: false,

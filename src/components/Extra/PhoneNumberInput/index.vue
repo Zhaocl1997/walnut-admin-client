@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<ICompExtraPhoneNumberInputProps>(), {
   disabled: false,
   example: false,
   autoDefaultCountry: false,
+  autoFocusAfterCountrySelect: false,
 })
 
 const emits = defineEmits<{ change: [params: ICompExtraPhoneNumberInputUpdateParams] }>()
@@ -67,9 +68,11 @@ const getInputSpan = computed(() => {
 
 function onUpdateSelectValue() {
   value.value = ''
-  nextTick(() => {
-    inputRef.value?.focus()
-  })
+  if (props.autoFocusAfterCountrySelect) {
+    nextTick(() => {
+      inputRef.value?.focus()
+    })
+  }
 }
 
 // only number input

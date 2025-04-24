@@ -1,11 +1,14 @@
 import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
 
-import type { WEmailInputProps } from '@/components/Extra/EmailInput'
-import type { WLocaleSelectProps } from '@/components/Extra/LocaleSelect'
+// extra
+import type { ICompExtraEmailInputProps } from '@/components/Extra/EmailInput'
+import type { ICompExtraIconPickerProps } from '@/components/Extra/IconPicker'
+import type { ICompExtraLocaleSelectProps } from '@/components/Extra/LocaleSelect'
 import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
-import type { WPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
+import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
 import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
-import type { WTransitionProps } from '@/components/Extra/Transition'
+import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
+
 import type { IWCompVendorTinymceEditorProps } from '@/components/Vendor/Tinymce'
 import type { useEventParams } from '@/hooks/component/useEvent'
 import type {
@@ -18,6 +21,7 @@ import type {
   TreeSelectProps,
 } from 'naive-ui'
 
+// ui types
 import type { ICompUIButtonProps } from '../../Button'
 import type { ICompUIButtonConfirmProps } from '../../ButtonConfirm'
 import type { ICompUIButtonGroupProps } from '../../ButtonGroup'
@@ -43,25 +47,6 @@ import type {
 import type { WFormPropType } from './props'
 
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
-
-export const BUILTIN_FORM_TYPE = [
-  'Button',
-  'ButtonConfirm',
-  'ButtonGroup',
-  'ButtonRetry',
-
-  'Checkbox',
-  'ColorPicker',
-  'DatePicker',
-  'DynamicTags',
-  'Input',
-  'InputNumber',
-  'Radio',
-  'Select',
-  'Switch',
-  'TimePicker',
-  'Tree',
-] as const
 
 export declare namespace WForm {
   type preset = 'modal' | 'drawer'
@@ -145,6 +130,7 @@ export declare namespace WForm {
       'Base:Slider': SliderProps
       'Base:TreeSelect': TreeSelectProps
 
+      // @/components/UI
       'Base:Button': ICompUIButtonProps
       'Base:ButtonConfirm': ICompUIButtonConfirmProps
       'Base:ButtonGroup': ICompUIButtonGroupProps
@@ -161,23 +147,25 @@ export declare namespace WForm {
       'Base:TimePicker': ICompUITimePickerProps
       'Base:Tree': ICompUITreeProps
 
+      // @/components/Extra
+      'Extra:EmailInput': ICompExtraEmailInputProps
+      'Extra:IconPicker': ICompExtraIconPickerProps
+      'Extra:LocaleSelect': ICompExtraLocaleSelectProps
+      'Extra:Password': ICompExtraPasswordProps
+      'Extra:PhoneNumberInput': ICompExtraPhoneNumberInputProps
+      'Extra:SMSInput': ICompExtraSMSInputProps
+      'Extra:TransitionSelect': ICompExtraTransitionProps
+
       'Extend:Divider': WFormItemDividerProps
       'Extend:Query': WFormItemQueryProps
 
-      'Extend:IconPicker': Record<string, never>
-      'Extend:TransitionSelect': Record<string, never>
       'Extend:RoleSelect': {
         multiple?: boolean
         valueSeparator?: string
         valueType?: 'string' | 'number'
       }
       'Extend:AreaCascader': WAreaCascaderProps
-      'Extend:Password': ICompExtraPasswordProps
-      'Extend:SMSInput': ICompExtraSMSInputProps
       'Extend:Dict': WFormItemDictProps
-      'Extend:LocaleSelect': WLocaleSelectProps
-      'Extend:PhoneNumberInput': WPhoneNumberInputProps
-      'Extend:EmailInput': WEmailInputProps
 
       'Vendor:Tinymce': IWCompVendorTinymceEditorProps
     }
@@ -251,7 +239,7 @@ export declare namespace WForm {
 
       gridProp?: GridItemProps
 
-      transitionProp?: Omit<Partial<WTransitionProps>, 'group'>
+      transitionProp?: Omit<Partial<ICompExtraTransitionProps>, 'group'>
 
       extraProp?: Partial<EP> & {
         /**
@@ -279,18 +267,9 @@ export declare namespace WForm {
     >
     type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
     type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
-    type LocaleSchema<D> = DynamicSchemaItemProps<'Extend:LocaleSelect', D>
-    type PhoneNumberInputSchema<D> = DynamicSchemaItemProps<'Extend:PhoneNumberInput', D>
-    type EmailInputSchema<D> = DynamicSchemaItemProps<'Extend:EmailInput', D>
-    type IconPickerSchema<D> = DynamicSchemaItemProps<'Extend:IconPicker', D>
-    type TransitionSelectSchema<D> = DynamicSchemaItemProps<
-      'Extend:TransitionSelect',
-      D
-    >
+
     type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
     type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Extend:AreaCascader', D>
-    type PasswordSchema<D> = DynamicSchemaItemProps<'Extend:Password', D>
-    type SMSInputSchema<D> = DynamicSchemaItemProps<'Extend:SMSInput', D>
 
     type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
 
@@ -298,6 +277,7 @@ export declare namespace WForm {
     type SlotSchema<D> = DynamicSchemaItemProps<'Base:Slot', D>
     type DynamicInputSchema<D> = DynamicSchemaItemProps<'Base:DynamicInput', D>
 
+    // ui
     type ButtonSchema<D> = DynamicSchemaItemProps<'Base:Button', D>
     type ButtonConfirmSchema<D> = DynamicSchemaItemProps<'Base:ButtonConfirm', D>
     type ButtonGroupSchema<D> = DynamicSchemaItemProps<'Base:ButtonGroup', D>
@@ -315,6 +295,15 @@ export declare namespace WForm {
     type SliderSchema<D> = DynamicSchemaItemProps<'Base:Slider', D>
     type TreeSelectSchema<D> = DynamicSchemaItemProps<'Base:TreeSelect', D>
     type TreeSchema<D> = DynamicSchemaItemProps<'Base:Tree', D>
+
+    // extra
+    type EmailInputSchema<D> = DynamicSchemaItemProps<'Extra:EmailInput', D>
+    type IconPickerSchema<D> = DynamicSchemaItemProps<'Extra:IconPicker', D>
+    type LocaleSchema<D> = DynamicSchemaItemProps<'Extra:LocaleSelect', D>
+    type PasswordSchema<D> = DynamicSchemaItemProps<'Extra:Password', D>
+    type PhoneNumberInputSchema<D> = DynamicSchemaItemProps<'Extra:PhoneNumberInput', D>
+    type SMSInputSchema<D> = DynamicSchemaItemProps<'Extra:SMSInput', D>
+    type TransitionSelectSchema<D> = DynamicSchemaItemProps<'Extra:TransitionSelect', D>
 
     type Item<D = any> =
       | DividerSchema<D>

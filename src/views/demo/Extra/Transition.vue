@@ -20,7 +20,7 @@ const [register] = useForm({
   span: 12,
   schemas: [
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'name',
       },

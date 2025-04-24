@@ -202,7 +202,7 @@ const [
     // create/update form schemas
     schemas: [
       {
-        type: 'Extend:LocaleSelect',
+        type: 'Extra:LocaleSelect',
         formProp: {
           path: 'name',
         },

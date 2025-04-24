@@ -51,7 +51,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
   disabled: loading,
   schemas: [
     {
-      type: 'Extend:PhoneNumberInput',
+      type: 'Extra:PhoneNumberInput',
       formProp: {
         path: 'phoneNumber',
         locale: false,
@@ -89,7 +89,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
       },
     },
     {
-      type: 'Extend:SMSInput',
+      type: 'Extra:SMSInput',
       formProp: {
         path: 'verifyCode',
         ruleType: 'string',

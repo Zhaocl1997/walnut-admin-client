@@ -194,6 +194,7 @@ onBeforeMount(() => {
     :auto-focus="false"
     :default-button="false"
     :segmented="false"
+    draggable
   >
     <n-spin :show="loading">
       <div class="relative vstack items-center justify-center">

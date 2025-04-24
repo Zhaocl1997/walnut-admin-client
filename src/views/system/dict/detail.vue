@@ -234,7 +234,7 @@ const [
       },
 
       {
-        type: 'Extend:LocaleSelect',
+        type: 'Extra:LocaleSelect',
         formProp: {
           path: 'label',
         },

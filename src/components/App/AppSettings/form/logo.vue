@@ -51,7 +51,7 @@ const [register] = useForm<typeof logoRelatives>({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',
       },

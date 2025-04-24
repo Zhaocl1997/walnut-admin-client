@@ -69,7 +69,7 @@ const [register, { validate }] = useForm<typeof accountFormData>({
       },
     },
     {
-      type: 'Extend:Password',
+      type: 'Extra:Password',
       formProp: {
         path: 'password',
         ruleType: 'string',

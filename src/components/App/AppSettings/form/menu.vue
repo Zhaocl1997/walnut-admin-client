@@ -45,7 +45,7 @@ const [register] = useForm<typeof menuRelatives>({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',
       },

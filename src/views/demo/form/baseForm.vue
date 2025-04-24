@@ -9,6 +9,7 @@ defineOptions({
 const formRef = ref<WForm.Inst.WFormInst>()
 
 const { stateRef: formData, resetState: resetFormData } = useState({
+  // ui
   formCheckbox: null,
   formColorPicker: null,
   formDatePicker: null,
@@ -21,20 +22,26 @@ const { stateRef: formData, resetState: resetFormData } = useState({
   formTimePicker: null,
   formTree: null,
 
+  // extra
+  formEmailInput: null,
+  formIconPicker: null,
+  formLocaleSelect: null,
+  formPassword: null,
+  formPhoneNumberInput: null,
+  formSMSInput: null,
+  formTransitionPicker: null,
+
   formDynamicInput: [],
   formSlider: null,
   formTreeSelect: null,
   formSlot: null,
   formRender: null,
-  formIconPicker: null,
-  formTransitionPicker: null,
   formRoleSelect: null,
   formAreaCascader: null,
   formTinymce: null,
   formDictSelect: null,
   formDictCheckbox: null,
   formDictRadio: null,
-  formLocale: null,
   formPhoneNumber: null,
 })
 
@@ -247,6 +254,7 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
       path: 'formTree',
     },
     componentProp: {
+      maxHeight: '200px',
       treeProps: {
         data: getTreeData(),
         labelField: '_label',
@@ -254,6 +262,73 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
         blockLine: true,
         blockNode: true,
       },
+    },
+  },
+
+  // extra
+  {
+    type: 'Extra:EmailInput',
+    formProp: {
+      label: 'Email Input',
+      path: 'formEmailInput',
+    },
+    componentProp: {},
+  },
+  {
+    type: 'Extra:IconPicker',
+    formProp: {
+      label: 'Icon Picker',
+      path: 'formIconPicker',
+    },
+    componentProp: { preset: 'input' },
+  },
+  {
+    type: 'Extra:LocaleSelect',
+    formProp: {
+      label: 'Locale Select',
+      path: 'formLocaleSelect',
+    },
+    componentProp: {
+      prefix: 'dict.',
+      creatable: false,
+    },
+  },
+  {
+    type: 'Extra:Password',
+    formProp: {
+      label: 'Password Input',
+      path: 'formPassword',
+    },
+    componentProp: { capslock: true },
+  },
+  {
+    type: 'Extra:PhoneNumberInput',
+    formProp: {
+      label: 'Phone Number',
+      path: 'formPhoneNumberInput',
+    },
+    componentProp: {
+      preferred: true,
+      example: true,
+      autoDefaultCountry: true,
+    },
+  },
+  {
+    type: 'Extra:SMSInput',
+    formProp: {
+      label: 'SMS Input',
+      path: 'formSMSInput',
+    },
+    componentProp: {
+      retryKey: 'form-sms-input',
+      retrySeconds: 10,
+    },
+  },
+  {
+    type: 'Extra:TransitionSelect',
+    formProp: {
+      label: 'Transition Select',
+      path: 'formTransitionPicker',
     },
   },
 
@@ -314,20 +389,7 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
   //     ),
   //   },
   // },
-  // {
-  //   type: 'Extend:IconPicker',
-  //   formProp: {
-  //     label: 'Icon Picker',
-  //     path: 'formIconPicker',
-  //   },
-  // },
-  // {
-  //   type: 'Extend:TransitionSelect',
-  //   formProp: {
-  //     label: 'Transition Select',
-  //     path: 'formTransitionPicker',
-  //   },
-  // },
+
   // {
   //   type: 'Extend:RoleSelect',
   //   formProp: {
@@ -382,28 +444,7 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
   //     dictRenderType: 'radio',
   //   },
   // },
-  // {
-  //   type: 'Extend:LocaleSelect',
-  //   formProp: {
-  //     label: 'Locale Select',
-  //     path: 'formLocale',
-  //   },
-  //   componentProp: {
-  //     prefix: 'dict.',
-  //   },
-  // },
-  // {
-  //   type: 'Extend:PhoneNumberInput',
-  //   formProp: {
-  //     label: 'Phone Number',
-  //     path: 'formPhoneNumber',
-  //   },
-  //   componentProp: {
-  //     preferred: true,
-  //     example: true,
-  //     autoDefaultCountry: true,
-  //   },
-  // },
+
 ]
 </script>
 

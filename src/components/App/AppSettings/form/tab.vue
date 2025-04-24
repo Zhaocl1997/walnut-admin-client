@@ -49,7 +49,7 @@ const [register] = useForm<typeof tabRelatives>({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',
       },
@@ -170,7 +170,7 @@ const [register] = useForm<typeof tabRelatives>({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'itemTransition',
       },

@@ -41,7 +41,7 @@ const [registerUpdate, { onOpen }] = useForm({
 
   schemas: [
     {
-      type: 'Extend:Password',
+      type: 'Extra:Password',
       formProp: {
         path: 'newPassword',
         label: computed(() => t('app.base.pass.new')),

@@ -43,7 +43,7 @@ const [register4] = useForm<typeof breadcrumbRelatives>({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',
       },

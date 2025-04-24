@@ -1,14 +1,41 @@
 import { NDynamicInput, NSlider, NTreeSelect } from 'naive-ui'
-import { BUILTIN_FORM_TYPE } from '../../types'
+
+const BUILT_IN_FORM_ITEM_TYPE_UI = [
+  'Button',
+  'ButtonConfirm',
+  'ButtonGroup',
+  'ButtonRetry',
+  'Checkbox',
+  'ColorPicker',
+  'DatePicker',
+  'DynamicTags',
+  'Input',
+  'InputNumber',
+  'Radio',
+  'Select',
+  'Switch',
+  'TimePicker',
+  'Tree',
+] as const
+
+const BUILT_IN_FORM_ITEM_TYPE_EXTRA = [
+  'EmailInput',
+  'IconPicker',
+  'LocaleSelect',
+  'Password',
+  'PhoneNumberInput',
+  'SMSInput',
+  'TransitionSelect',
+] as const
 
 /**
- * @description Generate all usable components through `BUILTIN_FORM_TYPE`.
+ * @description Generate all usable components through `BUILT_IN_FORM_ITEM_TYPE_UI`.
  * Problems:
  *  1. Need to have same structure as examples if want to add new component
- *  2. Need to add corresponding `TYPE` to `BUILTIN_FORM_TYPE`
+ *  2. Need to add corresponding `TYPE` to `BUILT_IN_FORM_ITEM_TYPE_UI`
  */
-function getAllComponents(type: typeof BUILTIN_FORM_TYPE) {
-  const ret: any = {}
+function getUIComponents(type: typeof BUILT_IN_FORM_ITEM_TYPE_UI) {
+  const ret: Recordable = {}
 
   type.forEach((key) => {
     // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
@@ -18,27 +45,36 @@ function getAllComponents(type: typeof BUILTIN_FORM_TYPE) {
 
   return ret
 }
+function getExtraComponents(type: typeof BUILT_IN_FORM_ITEM_TYPE_EXTRA) {
+  const ret: Recordable = {}
+
+  type.forEach((key) => {
+    // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+    // Below for prod, no alias and must point to file with extension
+    ret[key] = createAsyncComponent(() => import(`../../../../../Extra/${key}/index.ts`))
+  })
+
+  return ret
+}
 
 // Form component map
 const componentMap = new Map()
-const allComponents = getAllComponents(BUILTIN_FORM_TYPE)
+
+const UIComponents = getUIComponents(BUILT_IN_FORM_ITEM_TYPE_UI)
+BUILT_IN_FORM_ITEM_TYPE_UI.forEach((key) => {
+  componentMap.set(key, UIComponents[key])
+})
+
+const ExtraComponents = getExtraComponents(BUILT_IN_FORM_ITEM_TYPE_EXTRA)
+BUILT_IN_FORM_ITEM_TYPE_EXTRA.forEach((key) => {
+  componentMap.set(key, ExtraComponents[key])
+})
 
 // set extra component here
 componentMap.set('Slider', NSlider)
 componentMap.set('DynamicInput', NDynamicInput)
 componentMap.set('TreeSelect', NTreeSelect)
-componentMap.set(
-  'IconPicker',
-  createAsyncComponent(
-    () => import('../../../../../Extra/IconPicker/index'),
-  ),
-)
-componentMap.set(
-  'TransitionSelect',
-  createAsyncComponent(
-    () => import('../../../../../Extra/TransitionSelect/index'),
-  ),
-)
+
 componentMap.set(
   'RoleSelect',
   createAsyncComponent(
@@ -63,39 +99,5 @@ componentMap.set(
     () => import('../Extend/Dict.vue'),
   ),
 )
-componentMap.set(
-  'LocaleSelect',
-  createAsyncComponent(
-    () => import('../../../../../Extra/LocaleSelect/index'),
-  ),
-)
-componentMap.set(
-  'Password',
-  createAsyncComponent(
-    () => import('../../../../../Extra/Password/index'),
-  ),
-)
-componentMap.set(
-  'SMSInput',
-  createAsyncComponent(
-    () => import('../../../../../Extra/SMSInput/index'),
-  ),
-)
-componentMap.set(
-  'PhoneNumberInput',
-  createAsyncComponent(
-    () => import('../../../../../Extra/PhoneNumberInput/index'),
-  ),
-)
-componentMap.set(
-  'EmailInput',
-  createAsyncComponent(
-    () => import('../../../../../Extra/EmailInput/index'),
-  ),
-)
-
-BUILTIN_FORM_TYPE.forEach((key) => {
-  componentMap.set(key, allComponents[key])
-})
 
 export { componentMap }

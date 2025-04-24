@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Status } from 'naive-ui/es/progress/src/interface'
+import type { ProgressStatus } from 'naive-ui'
 import type { ICompExtraPasswordProps } from '.'
 import { checkStrStrong, statusTable } from './utils'
 
@@ -20,7 +20,7 @@ const emits = defineEmits<{ submit: [] }>()
 const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: true })
 
 const percentage = ref(0)
-const status = ref<Status>('success')
+const status = ref<ProgressStatus>('success')
 
 watch(
   () => value.value,

@@ -39,7 +39,7 @@ const [register1] = useForm({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         label: 'Transition for Input 1',
         path: 'transition1',
@@ -53,7 +53,7 @@ const [register1] = useForm({
       },
     },
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         label: 'Transition for Input 2',
         path: 'transition2',

@@ -51,7 +51,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
   disabled: loading,
   schemas: [
     {
-      type: 'Extend:EmailInput',
+      type: 'Extra:EmailInput',
       formProp: {
         path: 'emailAddress',
         ruleType: 'string',
@@ -85,7 +85,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       },
     },
     {
-      type: 'Extend:SMSInput',
+      type: 'Extra:SMSInput',
       formProp: {
         path: 'verifyCode',
         ruleType: 'string',

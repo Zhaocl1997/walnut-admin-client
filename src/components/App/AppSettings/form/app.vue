@@ -122,7 +122,7 @@ const [register] = useForm<typeof appRelatives>({
     },
 
     {
-      type: 'Extend:TransitionSelect',
+      type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transitionName',
       },

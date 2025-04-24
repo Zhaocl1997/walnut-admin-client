@@ -79,8 +79,9 @@ export function getFormTranslated(t: Fn, props: ComputedRef<WForm.Props>, item: 
  */
 export const inputFormItemTypeList = [
   'Base:Input',
-  'Extend:Password',
-  'Extend:SMSInput',
+  'Base:InputNumber',
+  'Extra:Password',
+  'Extra:SMSInput',
 ]
 
 /**
