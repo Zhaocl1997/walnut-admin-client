@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { ICompUIButtonRetryProps } from '.'
+import type { ICompUIButtonProps } from '../Button'
 import { buttonRetryMapPersistent } from '.'
 
 defineOptions({
@@ -7,6 +8,9 @@ defineOptions({
 })
 
 const { retrySeconds = 60, retryKey } = defineProps<ICompUIButtonRetryProps>()
+const emits = defineEmits<{ click: [e: MouseEvent], retryClick: [startCountDown: Fn] }>()
+
+const attrs: ICompUIButtonProps = useAttrs()
 
 const { t } = useAppI18n()
 
@@ -65,14 +69,18 @@ onBeforeMount(() => {
   }
 })
 
+function onButtonClick(e: MouseEvent) {
+  emits('click', e)
+  emits('retryClick', () => resume())
+}
+
 defineExpose({
   onStartCountdown: () => resume(),
 })
 </script>
 
 <template>
-  <WButton :disabled="!!retryText" :debounce="0">
-    <slot v-if="!retryText" />
-    <span v-else>{{ retryText }}</span>
-  </WButton>
+  <div>
+    <WButton v-bind="$attrs" :disabled="!!retryText" :debounce="0" :text-prop="retryText ?? attrs.textProp" @click="onButtonClick" />
+  </div>
 </template>

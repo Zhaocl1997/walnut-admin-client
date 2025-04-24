@@ -7,4 +7,5 @@ export { default } from './index.vue'
 export interface ICompUIButtonConfirmProps extends /* @vue-ignore */ PopconfirmProps {
   confirmMsg?: string
   buttonProps?: ICompUIButtonProps
+  onConfirm?: Fn
 }
