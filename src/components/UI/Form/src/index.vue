@@ -47,7 +47,7 @@ export default defineComponent({
     const { onEvent } = useFormEvents(getProps)
 
     // @ts-expect-error
-    const baseRules = useFormBaseRules(getProps, formSchemas)
+    const baseRules = useFormBaseRules(t, getProps, formSchemas)
 
     // @ts-expect-error
     setFormContext({

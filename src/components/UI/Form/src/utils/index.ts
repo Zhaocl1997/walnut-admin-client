@@ -97,7 +97,7 @@ export function generateRuleMessage(t: Fn, p: ComputedRef<WForm.Props>, i: WForm
 /**
  * @description generate base rules based on schemas
  */
-export function generateBaseRules(schemas: WForm.Schema.Item[], props: ComputedRef<WForm.Props>) {
+export function generateBaseRules(t: Fn, schemas: WForm.Schema.Item[], props: ComputedRef<WForm.Props>) {
   const getBaseRuleObj = (
     i: WForm.Schema.Item,
     extra?: FormItemRule[],
@@ -108,7 +108,7 @@ export function generateBaseRules(schemas: WForm.Schema.Item[], props: ComputedR
         type: i.formProp?.ruleType || 'any',
         trigger: ['change', 'input'],
         required: true,
-        message: generateRuleMessage(AppI18n.global.t, props, i),
+        message: generateRuleMessage(t, props, i),
       },
     ]
 
