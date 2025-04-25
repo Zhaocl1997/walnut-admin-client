@@ -113,6 +113,7 @@
     "@types/rollup-plugin-visualizer": "5.0.3",
     "@types/signature_pad": "4.0.0",
     "@types/sortablejs": "1.15.8",
+    "@unocss/eslint-config": "66.0.0",
     "@unocss/eslint-plugin": "66.0.0",
     "@unocss/preset-icons": "66.0.0",
     "@unocss/reset": "66.0.0",

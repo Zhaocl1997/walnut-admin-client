@@ -186,6 +186,9 @@ importers:
       '@types/sortablejs':
         specifier: 1.15.8
         version: 1.15.8
+      '@unocss/eslint-config':
+        specifier: 66.0.0
+        version: 66.0.0(eslint@9.25.0(jiti@2.4.2))(typescript@5.8.3)
       '@unocss/eslint-plugin':
         specifier: 66.0.0
         version: 66.0.0(eslint@9.25.0(jiti@2.4.2))(typescript@5.8.3)
@@ -2076,6 +2079,10 @@ packages:
 
   '@unocss/core@66.0.0':
     resolution: {integrity: sha512-PdVbSMHNDDkr++9nkqzsZRAkaU84gxMTEgYbqI7dt2p1DXp/5tomVtmMsr2/whXGYKRiUc0xZ3p4Pzraz8TcXA==}
+
+  '@unocss/eslint-config@66.0.0':
+    resolution: {integrity: sha512-xTMbWe8a51IpdcipV0mwbc2uYldY+dNKPGEF8TFAEvVH8zQvtMxuOKC1itOPe29o4dm/TABK/p+Gxt44RL/ISw==}
+    engines: {node: '>=14'}
 
   '@unocss/eslint-plugin@66.0.0':
     resolution: {integrity: sha512-KTP6uK0loH9+PkUjL2F4eyuMcUZRiVYkg4zJfqVWNctE1yGkuTUzCvm6ORRvLakajAU8G/Zzvuo1pE94zyZQbw==}
@@ -8822,6 +8829,14 @@ snapshots:
       unconfig: 7.0.0
 
   '@unocss/core@66.0.0': {}
+
+  '@unocss/eslint-config@66.0.0(eslint@9.25.0(jiti@2.4.2))(typescript@5.8.3)':
+    dependencies:
+      '@unocss/eslint-plugin': 66.0.0(eslint@9.25.0(jiti@2.4.2))(typescript@5.8.3)
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
+      - typescript
 
   '@unocss/eslint-plugin@66.0.0(eslint@9.25.0(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
