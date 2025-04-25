@@ -2,7 +2,7 @@ import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
 import type { WForm } from '../types'
 
 import { isUndefined } from 'lodash-es'
-import { getFormTranslated } from '../utils'
+import { formItemUtils } from '../utils'
 
 export function useFormDesc(props: ComputedRef<WForm.Props<any>>, schemas: Ref<WForm.Schema.Item<any>[]>, t: Fn) {
   const getDefaultDescItemsBySchemas = computed(
@@ -15,7 +15,7 @@ export function useFormDesc(props: ComputedRef<WForm.Props<any>>, schemas: Ref<W
           show: i.descriptionProp?.show,
           // @ts-expect-error
           dictType: i.descriptionProp?.dictType!,
-          label: getFormTranslated(t, props, i),
+          label: formItemUtils.getTranslatedString(t, i, unref(props)),
           value: props.value.model![i.formProp?.path!],
           span: i.descriptionProp?.span ?? props.value.descriptionProps?.column,
           formatter: i.descriptionProp?.formatter,

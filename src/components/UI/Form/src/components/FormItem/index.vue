@@ -2,8 +2,7 @@
 import type { WForm } from '../../types'
 import { isFunction } from 'lodash-es'
 import { useFormContext } from '../../hooks/useFormContext'
-import { getFormBooleanField, getFormTranslated } from '../../utils'
-import { componentMap } from './componentMap'
+import { formItemUtils } from '../../utils'
 
 defineOptions({
   name: 'WCompUIFormItem',
@@ -25,21 +24,21 @@ function FormItemRender() {
     })
 }
 
-const getBuiltInComp = componentMap.get(item?.type.split(':')[1])
+const getBuiltInComp = formItemUtils.getTargetComponent(item)
 </script>
 
 <template>
-  <n-form-item v-if="getFormBooleanField(item, formProps, 'vIf')">
+  <n-form-item v-if="formItemUtils.getIfOrShowBooleanValue(item, formProps, 'vIf')">
     <template #label>
       <div class="flex flex-row flex-nowrap items-center justify-end gap-x-1">
         <template v-if="item.type === 'Business:Dict' && item.formProp?.label === true">
           {{ $t(getFormItemDictLabel) }}
         </template>
         <template v-else>
-          {{ getFormTranslated($t, formProps, item) }}
+          {{ formItemUtils.getTranslatedString($t, item, formProps) }}
         </template>
 
-        <WMessage v-if="item.formProp?.labelHelpMessage" :msg="getFormTranslated($t, formProps, item, 'helpMsg')" />
+        <WMessage v-if="item.formProp?.labelHelpMessage" :msg="formItemUtils.getTranslatedString($t, item, formProps, 'helpMsg')" />
       </div>
     </template>
 

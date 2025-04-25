@@ -1,7 +1,7 @@
 import type { WForm } from '../types'
 import { isUndefined } from 'lodash-es'
 
-import { getFormBooleanField } from '../utils'
+import { formItemUtils } from '../utils'
 import { formIdMap, getFormItemId, setFormItemId } from './useFormItemId'
 
 export function useFormSchemas(props: ComputedRef<WForm.Props>) {
@@ -22,8 +22,8 @@ export function useFormSchemas(props: ComputedRef<WForm.Props>) {
         })
         .filter(
           i =>
-            getFormBooleanField(i, props.value, 'vIf')
-            && getFormBooleanField(i, props.value, 'vShow'),
+            formItemUtils.getIfOrShowBooleanValue(i, props.value, 'vIf')
+            && formItemUtils.getIfOrShowBooleanValue(i, props.value, 'vShow'),
         )
     },
     {
