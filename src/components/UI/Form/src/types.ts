@@ -19,10 +19,13 @@ import type {
   FormInst,
   FormItemProps,
   FormItemRule,
+  FormProps,
+  FormRules,
   GridItemProps,
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
+import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
 // ui types
 import type { ICompUIButtonProps } from '../../Button'
 import type { ICompUIButtonConfirmProps } from '../../ButtonConfirm'
@@ -31,17 +34,18 @@ import type { ICompUIButtonRetryProps } from '../../ButtonRetry'
 import type { ICompUICheckboxProps } from '../../Checkbox'
 import type { ICompUIColorPickerProps } from '../../ColorPicker'
 import type { ICompUIDatePickerProps } from '../../DatePicker'
-import type { ICompUIDescriptionsItem } from '../../Descriptions'
+import type { ICompUIDescriptionProps, ICompUIDescriptionsItem } from '../../Descriptions'
 import type { ICompUIDynamicTagsProps } from '../../DynamicTags'
 import type { ICompUIInputProps } from '../../Input'
 import type { ICompUIInputNumberProps } from '../../InputNumber'
 import type { ICompUIRadioProps } from '../../Radio'
+
 import type { ICompUISelectProps } from '../../Select'
-
 import type { ICompUISwitchProps } from '../../Switch'
-import type { ICompUITimePickerProps } from '../../TimePicker'
 
+import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'
+import type { ICompUIFormItemExtendQueryProps } from './components/Extend/Query'
 import type {
   WFormItemDividerProps,
   WFormItemQueryProps,
@@ -70,13 +74,13 @@ export declare namespace WForm {
       validate: (fields?: string[]) => Promise<boolean> | undefined
       restoreValidation: Fn
       setProps: Fn
-      onOpen: (beforeHook?: Fn) => Promise<void>
-      onClose: Fn
-      onYes: (
+      onOpen?: (beforeHook?: Fn) => Promise<void>
+      onClose?: Fn
+      onYes?: (
         apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
         done: () => void
       ) => void
-      onNo: Fn
+      onNo?: Fn
     }
   }
 
@@ -87,8 +91,66 @@ export declare namespace WForm {
     ]
   }
 
-  interface Props<D = any> extends Partial<Omit<WFormPropType, 'schemas'>> {
-    schemas?: Schema.Item<D>[]
+  // interface Props<D = any> extends Partial<Omit<WFormPropType, 'schemas'>> {
+  //   schemas?: Schema.Item<D>[]
+  // }
+  interface Props<T extends Recordable> {
+    // original
+    inline?: boolean
+    labelWidth?: StringOrNumber
+    labelAlign?: LabelAlign
+    labelPlacement?: LabelPlacement
+    model?: T
+    rules?: FormRules
+    disabled?: boolean
+    size?: Size
+    showRequireMark?: boolean
+    requireMarkPlacement?: 'left' | 'right' | 'right-hanging'
+    showFeedback?: boolean
+    showLabel?: boolean
+
+    // custom
+    schemas?: WForm.Schema.Item<T>[]
+    cols?: number
+    span?: number
+    xGap?: number
+    yGap?: number
+    perset?: WForm.preset
+    baseRules?: boolean
+
+    /**
+     * @description form item class, including the label and content
+     */
+    formItemClass?: string
+
+    /**
+     * @description class only for form item component
+     */
+    forItemComponentClass?: string
+
+    /**
+     * @description locale middle unique key implement with back end messages
+     * @example `form.${uniqueKey}.${path}` used for label locale
+     * @example `form.${uniqueKey}.${path}.helpMsg` built in for label help message
+     * So in this rule, all we need to do is provide a `localeUniqueKey` and config the messages in `Locale Manage`
+     * No need to privide a label property in `schema item formProp`, the built in logic will handle the label properly.
+     */
+    localeUniqueKey?: string
+
+    /**
+     * @description Used for form related to a localed table
+     */
+    localeWithTable?: boolean
+
+    /**
+     * @description display in descrition mode
+     */
+    useDescription?: boolean
+
+    /**
+     * @description description props
+     */
+    descriptionProps?: ICompUIDescriptionProps
   }
 
   interface Context {
@@ -157,9 +219,6 @@ export declare namespace WForm {
       'Extra:TransitionSelect': ICompExtraTransitionProps
 
       // raw
-      'Base:DynamicInput': DynamicInputProps
-      'Base:Slider': SliderProps
-      'Base:TreeSelect': TreeSelectProps
       'Raw:DynamicInput': DynamicInputProps
       'Raw:Slider': SliderProps
       'Raw:TreeSelect': TreeSelectProps
@@ -168,8 +227,10 @@ export declare namespace WForm {
       'Business:AreaCascader': ICompBusinessAreaCascaderProps
       'Business:Dict': ICompBusinessDictProps
 
+      // extend
+      'Extend:Query': ICompUIFormItemExtendQueryProps
+
       'Extend:Divider': WFormItemDividerProps
-      'Extend:Query': WFormItemQueryProps
 
       'Extend:RoleSelect': {
         multiple?: boolean
@@ -247,7 +308,7 @@ export declare namespace WForm {
         baseRuleApplied?: boolean
       }
 
-      gridProp?: GridItemProps
+      gridProp?: GridItemProps & { class: string }
 
       transitionProp?: Omit<Partial<ICompExtraTransitionProps>, 'group'>
 
@@ -277,7 +338,6 @@ export declare namespace WForm {
           bgColor: string
         }
       >
-      type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
 
       type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
 
@@ -322,11 +382,12 @@ export declare namespace WForm {
       type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Business:AreaCascader', D>
       type DictSchema<D> = DynamicSchemaItemProps<'Business:Dict', D>
 
+      // extend
+      type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
     }
 
     type Item<D = any> =
       | SchemaItem.DividerSchema<D>
-      | SchemaItem.QuerySchema<D>
 
       | SchemaItem.RoleSelectSchema<D>
       | SchemaItem.TinymceSchema<D>
@@ -370,5 +431,7 @@ export declare namespace WForm {
       | SchemaItem.AreaCacaderSchema<D>
       | SchemaItem.DictSchema<D>
 
+      // extend
+      | SchemaItem.QuerySchema<D>
   }
 }

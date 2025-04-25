@@ -4,8 +4,8 @@ import { isUndefined } from 'lodash-es'
 import { formItemUtils } from '../utils'
 import { formIdMap, getFormItemId, setFormItemId } from './useFormItemId'
 
-export function useFormSchemas(props: ComputedRef<WForm.Props>) {
-  const formSchemas = ref<WForm.Schema.Item<any>[]>()
+export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>) {
+  const formSchemas = ref<WForm.Schema.Item<T>[]>([])
 
   watch(
     () => [props.value.schemas, props.value.model, formIdMap] as const,

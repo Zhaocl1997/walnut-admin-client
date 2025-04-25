@@ -3,7 +3,6 @@ defineOptions({
   name: 'UseForm',
 })
 
-const desc = ref(false)
 const formData = ref({
   input1: '11',
   input2: '22',
@@ -16,14 +15,6 @@ const formData = ref({
 const [register, { validate, restoreValidation }] = useForm({
   span: 8,
   labelWidth: 100,
-  useDescription: desc,
-  descriptionProps: {
-    labelPlacement: 'left',
-    bordered: true,
-    column: 3,
-    // TODO bug
-    // column not working
-  },
   schemas: [
     {
       type: 'Base:Input',
@@ -101,19 +92,10 @@ const [register, { validate, restoreValidation }] = useForm({
   <WDemoCard title="useForm">
     <WJSON :value="formData" />
 
-    <n-switch v-model:value="desc">
-      <template #checked>
-        normal form
-      </template>
-      <template #unchecked>
-        description
-      </template>
-    </n-switch>
-
     <br>
     <br>
 
-    <w-form :model="formData" @hook="register" />
+    <WForm :model="formData" @hook="register" />
   </WDemoCard>
 </template>
 

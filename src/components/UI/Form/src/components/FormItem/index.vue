@@ -1,19 +1,34 @@
 <script lang="ts" setup generic="T">
 import type { WForm } from '../../types'
-import { isFunction } from 'lodash-es'
+import { clone, isBoolean, isFunction, omit } from 'lodash-es'
 import { useFormContext } from '../../hooks/useFormContext'
 import { formItemUtils } from '../../utils'
 
 defineOptions({
   name: 'WCompUIFormItem',
-  inheritAttrs: false,
 })
 
 const { item } = defineProps<{ item: WForm.Schema.Item<T> }>()
 
 const { formProps } = useFormContext()
 
-const getFormItemDictLabel = computed(() => getDictNameFromMap((item as WForm.Schema.SchemaItem.DictSchema<T>).componentProp!.dictType) as string)
+const getFormItemDictLabel = computed(() => getDictNameFromMap((item as WForm.Schema.SchemaItem.DictSchema<T>).componentProp!.dictType) as string ?? '')
+
+const getFormProps = computed(() => {
+  if (isBoolean(item?.formProp?.rule) && isBoolean(item?.formProp?.label)) {
+    return omit(clone(item?.formProp), 'rule', 'label')
+  }
+
+  if (isBoolean(item?.formProp?.rule)) {
+    return omit(clone(item?.formProp), 'rule')
+  }
+
+  if (isBoolean(item?.formProp?.label)) {
+    return omit(clone(item?.formProp), 'label')
+  }
+
+  return item.formProp
+})
 
 function FormItemRender() {
   const _item = item as WForm.Schema.SchemaItem.RenderSchema<T>
@@ -28,7 +43,11 @@ const getBuiltInComp = formItemUtils.getTargetComponent(item)
 </script>
 
 <template>
-  <n-form-item v-if="formItemUtils.getIfOrShowBooleanValue(item, formProps, 'vIf')">
+  <n-form-item
+    v-if="formItemUtils.getIfOrShowBooleanValue(item, formProps, 'vIf')"
+    :class="formProps.formItemClass"
+    v-bind="getFormProps"
+  >
     <template #label>
       <div class="flex flex-row flex-nowrap items-center justify-end gap-x-1">
         <template v-if="item.type === 'Business:Dict' && item.formProp?.label === true">
@@ -44,7 +63,7 @@ const getBuiltInComp = formItemUtils.getTargetComponent(item)
 
     <template #default>
       <FormItemRender v-if="item.type === 'Base:Render'" />
-      <slot v-else-if="item.type === 'Base:Slot'" />
+      <slot v-else-if="item.type === 'Base:Slot'" :name="item.formProp?.path" />
       <component
         :is="getBuiltInComp"
         v-if="getBuiltInComp"

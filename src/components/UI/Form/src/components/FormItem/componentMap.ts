@@ -33,6 +33,10 @@ const BUILT_IN_FORM_ITEM_TYPE_BUSINESS = [
   'Dict',
 ] as const
 
+const BUILT_IN_FORM_ITEM_TYPE_EXTEND = [
+  'Query',
+] as const
+
 /**
  * @description Generate all usable components through `BUILT_IN_FORM_ITEM_TYPE_UI`.
  * Problems:
@@ -72,6 +76,17 @@ function getBusinessComponents(type: typeof BUILT_IN_FORM_ITEM_TYPE_BUSINESS) {
 
   return ret
 }
+function getExtendComponents(type: typeof BUILT_IN_FORM_ITEM_TYPE_EXTEND) {
+  const ret: Recordable = {}
+
+  type.forEach((key) => {
+    // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+    // Below for prod, no alias and must point to file with extension
+    ret[key] = createAsyncComponent(() => import(`../Extend/${key}/index.ts`))
+  })
+
+  return ret
+}
 
 // Form component map
 const componentMap = new Map()
@@ -94,6 +109,12 @@ BUILT_IN_FORM_ITEM_TYPE_BUSINESS.forEach((key) => {
   componentMap.set(key, BusinessComponents[key])
 })
 
+// extend
+const ExtendComponents = getExtendComponents(BUILT_IN_FORM_ITEM_TYPE_EXTEND)
+BUILT_IN_FORM_ITEM_TYPE_EXTEND.forEach((key) => {
+  componentMap.set(key, ExtendComponents[key])
+})
+
 // raw
 componentMap.set('Slider', NSlider)
 componentMap.set('DynamicInput', NDynamicInput)
@@ -111,11 +132,5 @@ componentMap.set(
     () => import('../../../../../Vendor/Tinymce/index'),
   ),
 )
-// componentMap.set(
-//   'Dict',
-//   createAsyncComponent(
-//     () => import('../Extend/Dict.vue'),
-//   ),
-// )
 
 export { componentMap }

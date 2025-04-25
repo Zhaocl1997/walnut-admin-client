@@ -106,7 +106,7 @@ export function generateRuleMessage(t: Fn, p: ComputedRef<WForm.Props>, i: WForm
 /**
  * @description generate base rules based on schemas
  */
-export function generateBaseRules(t: Fn, schemas: WForm.Schema.Item[], props: ComputedRef<WForm.Props>) {
+export function generateBaseRules<T>(t: Fn, schemas: WForm.Schema.Item<T>[], props: ComputedRef<WForm.Props<T>>) {
   const getBaseRuleObj = (
     i: WForm.Schema.Item,
     extra?: FormItemRule[],

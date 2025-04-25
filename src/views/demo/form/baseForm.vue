@@ -67,9 +67,7 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
       path: 'formRender',
     },
     componentProp: {
-      render: ({ formData }) => (
-        <n-input vModel={[formData.formRender, 'value']}></n-input>
-      ),
+      render: ({ formData: _formData }) => (<n-input vModel={[_formData.formRender, 'value']}></n-input>),
     },
   },
 

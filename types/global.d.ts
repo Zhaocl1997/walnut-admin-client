@@ -48,13 +48,13 @@ declare type DeepMaybeRefSelf<T> =
       ? MaybeRefSelf<boolean>
       : T extends number
         ? MaybeRefSelf<number>
-      // : T extends Array<any>
-      // ? DeepMaybeRefSelf<T[number]>
-      // : T extends Record<string, any>
-      // ? {
-      //   [K in keyof T]: DeepMaybeRefSelf<T[K]>
-      // }
-        : MaybeRefSelf<T>
+        : T extends Array<any>
+          ? DeepMaybeRefSelf<T[number]>
+          : T extends Record<string, any>
+            ? {
+                [K in keyof T]: DeepMaybeRefSelf<T[K]>
+              }
+            : MaybeRefSelf<T>
 
 const __APP_INFO__: {
   name: string

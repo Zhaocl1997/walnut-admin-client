@@ -82,7 +82,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
     },
 
     {
-      type: 'Base:TreeSelect',
+      type: 'Raw:TreeSelect',
       formProp: {
         path: 'pid',
       },

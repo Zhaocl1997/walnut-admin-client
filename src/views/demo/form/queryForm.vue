@@ -8,9 +8,9 @@ defineOptions({
 const configData = ref({ foldable: false, countToFold: 2 })
 
 const formData = ref({
-  input1: undefined,
-  input2: undefined,
-  input3: undefined,
+  input1: '1',
+  input2: '2',
+  input3: '3',
   input4: undefined,
   input5: undefined,
   input6: undefined,
@@ -27,7 +27,7 @@ const [register1] = useForm<typeof configData.value>({
       },
     },
     {
-      type: 'Base:Slider',
+      type: 'Raw:Slider',
       formProp: {
         label: 'Count to fold',
         path: 'countToFold',
@@ -120,11 +120,11 @@ function onQuery({ done }: WForm.FinishLoading) {
     title="Query Form"
     description="Normally used in table search area."
   >
-    <w-form :model="configData" @hook="register1" />
+    <WForm :model="configData" @hook="register1" />
 
     <WJSON :value="formData" />
 
-    <w-form
+    <WForm
       :model="formData"
       @hook="register2"
       @reset="onReset"

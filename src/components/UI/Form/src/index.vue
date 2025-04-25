@@ -1,193 +1,114 @@
-<script lang="tsx">
+<script lang="ts" setup generic="T extends Recordable">
+import type { FormRules } from 'naive-ui'
 import type { WForm } from './types'
-// TODO 111 tsx file need to import explicitly or ts error
-import WTransition from '@/components/Extra/Transition'
-import { easyOmit } from 'easy-fns-ts'
-
-import { renderSlot } from 'vue'
-import WFormItem from './components/FormItem/index.vue'
-import { useFormAdvanced } from './hooks/useFormAdvanced'
-import { useFormBaseRules } from './hooks/useFormBaseRules'
+import { omit } from 'lodash-es'
+import WFormItem from '../src/components/FormItem/index.vue'
+import WFormItemBuiltInQuery from './components/Extend/Query'
 import { setFormContext } from './hooks/useFormContext'
-import { useFormDesc } from './hooks/useFormDesc'
 import { useFormDict } from './hooks/useFormDict'
-import { useFormEvents } from './hooks/useFormEvents'
 
+import { useFormEvents } from './hooks/useFormEvents'
 import { useFormMethods } from './hooks/useFormMethods'
 import { useFormSchemas } from './hooks/useFormSchemas'
 
-import { extendProps, props } from './props'
+import { generateBaseRules } from './utils'
 
-import { components } from './utils/component'
+defineOptions({
+  name: 'WCompUIForm',
+})
 
-export default defineComponent({
-  name: 'WForm',
+const props = withDefaults(defineProps<WForm.Props<T>>(), {
+  labelAlign: 'right',
+  labelPlacement: 'left',
+  model: (): any => {},
+  showRequireMark: undefined,
+  showFeedback: true,
+  showLabel: undefined,
+  schemas: () => [],
+  cols: 24,
+  span: 24,
+  xGap: 20,
+  yGap: 0,
+  baseRules: false,
+})
 
-  components,
+const emits = defineEmits<{ hook: [inst: WForm.Inst.WFormInst] }>()
 
-  inheritAttrs: false,
+const { t } = useAppI18n()
 
-  props,
+const formRef = templateRef<WForm.Inst.NFormInst>('formRef')
 
-  emits: ['hook', 'reset', 'query'],
+// TODO cannot use usePropsAdvanced
+const { setProps, getProps } = useProps(props)
 
-  setup(props: WForm.Props, { attrs, slots, emit, expose }) {
-    const formRef = ref<Nullable<WForm.Inst.NFormInst>>(null)
+const { formSchemas } = useFormSchemas<T>(getProps)
 
-    const { t } = useAppI18n()
+const { onEvent } = useFormEvents<T>(getProps)
 
-    const { setProps, getProps } = useProps<WForm.Props>(props)
+const { methods } = useFormMethods(formRef)
 
-    const { formSchemas } = useFormSchemas(getProps)
+useFormDict<T>(formSchemas)
 
-    // cached for dict form item
+const getFormRules = computed<FormRules>(() =>
+  getProps.value.baseRules
     // @ts-expect-error
-    useFormDict(formSchemas)
+    ? generateBaseRules<T>(t, formSchemas.value, getProps)
+    : getProps.value.rules)
 
-    const { onEvent } = useFormEvents(getProps)
+setFormContext({
+  formRef,
+  formProps: getProps,
+  formSchemas,
+  formEvent: onEvent,
+  setProps,
+})
 
-    // @ts-expect-error
-    const baseRules = useFormBaseRules(t, getProps, formSchemas)
+// expose
+defineExpose({
+  ...methods,
+})
 
-    // @ts-expect-error
-    setFormContext({
-      formRef,
-      formProps: getProps,
-      formSchemas,
-      formEvent: onEvent,
-      setProps,
-    })
-
-    const renderItem = () =>
-      formSchemas.value.map((item, index) => {
-        if (item.type === 'Extend:Query') {
-          return (
-            <n-gi
-              key="query"
-              class="flex items-center justify-end"
-              span={unref(getProps).span}
-              suffix={true}
-            >
-              <w-form-item-extend-query
-                {...item.componentProp}
-              >
-              </w-form-item-extend-query>
-            </n-gi>
-          )
-        }
-
-        if (item.type === 'Extend:Divider') {
-          return (
-          // TODO temporary solution
-          // should use v-show, but get errors
-            item._internalShow && (
-              <n-gi
-                key={item.formProp?.path}
-                span={24}
-                class={item.extraProp?.sticky ? 'sticky top-0 z-10' : ''}
-                style={
-                  item.extraProp?.sticky
-                    ? { backgroundColor: item.extraProp.bgColor }
-                    : {}
-                }
-              >
-                <WTransition {...item?.transitionProp} appear>
-                  <w-form-item-extend-divider
-                    index={index}
-                    {...item.componentProp}
-                  >
-                  </w-form-item-extend-divider>
-                </WTransition>
-              </n-gi>
-            )
-          )
-        }
-
-        return (
-        // TODO temporary solution
-        // should use v-show, but get errors
-          item._internalShow && (
-            <n-gi
-              key={item.formProp?.path}
-              {...(item?.gridProp ?? { span: unref(getProps).span })}
-            >
-              <WTransition {...item?.transitionProp} appear>
-                <WFormItem item={item}>
-                  {item.type === 'Base:Slot'
-                    && Object.keys(slots).includes(item.formProp?.path!)
-                    && renderSlot(slots, item.formProp?.path!)}
-                </WFormItem>
-              </WTransition>
-            </n-gi>
-          )
-        )
-      })
-
-    const getNFormProps = computed(() =>
-      easyOmit(getProps.value, Object.keys(extendProps)),
-    )
-
-    const renderBaseContent = () => {
-      if (unref(getProps).useDescription) {
-        const { descProps } = useFormDesc(getProps, formSchemas, t)
-
-        return (
-          <w-form-extend-descriptions
-            {...descProps}
-          >
-          </w-form-extend-descriptions>
-        )
-      }
-
-      return (
-        <n-form
-          ref={formRef}
-          {...getNFormProps.value}
-          class={attrs.class}
-          rules={baseRules.value}
-        >
-          <n-grid
-            cols={unref(getProps).cols}
-            xGap={unref(getProps).xGap}
-            yGap={unref(getProps).yGap}
-          >
-            {renderItem()}
-          </n-grid>
-        </n-form>
-      )
-    }
-
-    const { methods } = useFormMethods(formRef)
-
-    const { renderAdvanced, ...advancedMethods } = useFormAdvanced(
-      renderBaseContent,
-      getProps,
-      formRef,
-    )
-
-    // expose
-    useExpose({
-      apis: {
-        ...methods,
-        ...advancedMethods,
-      },
-      expose,
-    })
-
-    // hook
-    onEvent({
-      name: 'hook',
-      params: {
-        ...methods,
-        ...advancedMethods,
-        setProps,
-      },
-    })
-
-    return () =>
-      unref(getProps).preset ? renderAdvanced() : renderBaseContent()
-  },
+// hook
+emits('hook', {
+  ...methods,
+  setProps,
 })
 </script>
 
-<style scoped></style>
+<template>
+  <n-form ref="formRef" :rules="getFormRules" v-bind="omit(getProps, 'rules')">
+    <n-grid :cols="getProps.cols" :x-gap="getProps.xGap" :y-gap="getProps.yGap">
+      <template
+        v-for="item in formSchemas"
+        :key="item.formProp?.path"
+      >
+        <n-gi
+          v-if="item.type === 'Extend:Query'"
+          key="form-query"
+          class="flex items-center justify-end" :span="getProps.span" suffix
+        >
+          <WTransition appear>
+            <n-form-item>
+              <WFormItemBuiltInQuery v-bind="item.componentProp" />
+            </n-form-item>
+          </WTransition>
+        </n-gi>
+
+        <n-gi
+          v-else
+          v-show="item._internalShow"
+          v-bind="item.gridProp"
+          :span="item.gridProp?.span ?? getProps.span"
+        >
+          <WTransition v-bind="item.transitionProp" appear>
+            <WFormItem :item="item">
+              <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
+                <slot :name="item.formProp?.path" />
+              </template>
+            </WFormItem>
+          </WTransition>
+        </n-gi>
+      </template>
+    </n-grid>
+  </n-form>
+</template>

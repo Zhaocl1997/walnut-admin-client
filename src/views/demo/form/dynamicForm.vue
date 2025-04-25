@@ -74,7 +74,7 @@ const [register1] = useForm({
       },
     },
     {
-      type: 'Base:Slider',
+      type: 'Raw:Slider',
       formProp: {
         label: 'Label width',
         path: 'labelWidth',
@@ -85,7 +85,7 @@ const [register1] = useForm({
       },
     },
     {
-      type: 'Base:Slider',
+      type: 'Raw:Slider',
       formProp: {
         label: 'Span',
         path: 'span',
@@ -96,7 +96,7 @@ const [register1] = useForm({
       },
     },
     {
-      type: 'Base:Slider',
+      type: 'Raw:Slider',
       formProp: {
         label: 'x-gap',
         path: 'xGap',
@@ -107,7 +107,7 @@ const [register1] = useForm({
       },
     },
     {
-      type: 'Base:Slider',
+      type: 'Raw:Slider',
       formProp: {
         label: 'y-gap',
         path: 'yGap',
@@ -125,7 +125,7 @@ const [register1] = useForm({
       },
     },
     {
-      type: 'Base:Slider',
+      type: 'Raw:Slider',
       formProp: {
         label: 'Input 1 span',
         path: 'inputOneSpan',

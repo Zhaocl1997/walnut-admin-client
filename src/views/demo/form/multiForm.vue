@@ -17,7 +17,7 @@ const [register2] = useForm({
   span: 24,
   schemas: [
     {
-      type: 'Base:DynamicInput',
+      type: 'Raw:DynamicInput',
       formProp: {
         path: 'dynamic1',
         label: 'Base Dynamic',
@@ -25,7 +25,7 @@ const [register2] = useForm({
       componentProp: {},
     },
     {
-      type: 'Base:DynamicInput',
+      type: 'Raw:DynamicInput',
       formProp: {
         path: 'dynamic2',
         label: 'Pair Key/Value',

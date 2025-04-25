@@ -1,10 +1,10 @@
-import type { DrawerContentProps, DrawerProps, ModalProps } from 'naive-ui'
+import type { DrawerContentProps, DrawerProps, FormProps, ModalProps } from 'naive-ui'
 import type {
   FormRules,
   LabelAlign,
   LabelPlacement,
 } from 'naive-ui/lib/form/src/interface'
-import type { WDescriptionProps } from '../../Descriptions'
+import type { ICompUIDescriptionProps } from '../../Descriptions'
 import type { WTable } from '../../Table'
 
 import type { WForm } from './types'
@@ -93,7 +93,7 @@ export const extendProps = {
   /**
    * @description description props
    */
-  descriptionProps: Object as PropType<WDescriptionProps>,
+  descriptionProps: Object as PropType<ICompUIDescriptionProps>,
 }
 
 export const props = {
@@ -136,3 +136,47 @@ export const props = {
 } as const
 
 export type WFormPropType = ExtractPropTypes<typeof props>
+
+export interface ICompUIFormProps<T> extends /* @vue-ignore */ FormProps {
+  schemas: WForm.Schema.Item<T>[]
+  cols?: number
+  span?: number
+  xGap?: number
+  yGap?: number
+  perset?: WForm.preset
+  baseRules?: boolean
+
+  /**
+   * @description form item class, including the label and content
+   */
+  formItemClass?: string
+
+  /**
+   * @description class only for form item component
+   */
+  forItemComponentClass?: string
+
+  /**
+   * @description locale middle unique key implement with back end messages
+   * @example `form.${uniqueKey}.${path}` used for label locale
+   * @example `form.${uniqueKey}.${path}.helpMsg` built in for label help message
+   * So in this rule, all we need to do is provide a `localeUniqueKey` and config the messages in `Locale Manage`
+   * No need to privide a label property in `schema item formProp`, the built in logic will handle the label properly.
+   */
+  localeUniqueKey?: string
+
+  /**
+   * @description Used for form related to a localed table
+   */
+  localeWithTable?: boolean
+
+  /**
+   * @description display in descrition mode
+   */
+  useDescription?: boolean
+
+  /**
+   * @description description props
+   */
+  descriptionProps?: ICompUIDescriptionProps
+}
