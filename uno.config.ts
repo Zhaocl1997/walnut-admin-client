@@ -9,6 +9,7 @@ import {
 
 export default defineConfig({
   shortcuts: [['hstack', 'flex flex-row flex-nowrap'], ['vstack', 'flex flex-col flex-nowrap']],
+
   theme: {
     colors: {
       // extend from naive-ui color
@@ -44,8 +45,9 @@ export default defineConfig({
   },
 
   presets: [
-    // TODO normalize
-    presetWind3({ dark: 'class' }),
+    presetWind3({
+      dark: 'class',
+    }),
     presetAttributify({ prefix: 'w:' }),
     presetTypography(),
     presetWebFonts({

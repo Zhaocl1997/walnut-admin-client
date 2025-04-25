@@ -6,7 +6,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const { dictType, dictValue } = withDefaults(defineProps<ICompBusinessDictLabelProps>(), {})
+const { dictType, dictValue } = defineProps<ICompBusinessDictLabelProps>()
 
 const target = computed(() => getDictTarget(dictType, dictValue))
 </script>
