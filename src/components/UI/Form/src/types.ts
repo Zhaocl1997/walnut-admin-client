@@ -1,7 +1,7 @@
 // business
 import type { ICompBusinessAreaCascaderProps } from '@/components/Business/AreaCascader'
-
 import type { ICompBusinessDictProps } from '@/components/Business/Dict'
+
 // extra
 import type { ICompExtraEmailInputProps } from '@/components/Extra/EmailInput'
 import type { ICompExtraIconPickerProps } from '@/components/Extra/IconPicker'
@@ -9,23 +9,23 @@ import type { ICompExtraLocaleSelectProps } from '@/components/Extra/LocaleSelec
 import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
 import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
 import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
-
 import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
-
 import type { IWCompVendorTinymceEditorProps } from '@/components/Vendor/Tinymce'
 import type { useEventParams } from '@/hooks/component/useEvent'
+
+// raw
 import type {
   DynamicInputProps,
   FormInst,
   FormItemProps,
   FormItemRule,
-  FormProps,
   FormRules,
   GridItemProps,
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
 import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
+
 // ui types
 import type { ICompUIButtonProps } from '../../Button'
 import type { ICompUIButtonConfirmProps } from '../../ButtonConfirm'
@@ -39,18 +39,14 @@ import type { ICompUIDynamicTagsProps } from '../../DynamicTags'
 import type { ICompUIInputProps } from '../../Input'
 import type { ICompUIInputNumberProps } from '../../InputNumber'
 import type { ICompUIRadioProps } from '../../Radio'
-
 import type { ICompUISelectProps } from '../../Select'
 import type { ICompUISwitchProps } from '../../Switch'
-
 import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'
+
+// extend
+import type { ICompUIFormItemExtendDividerProps } from './components/Extend/Divider'
 import type { ICompUIFormItemExtendQueryProps } from './components/Extend/Query'
-import type {
-  WFormItemDividerProps,
-  WFormItemQueryProps,
-} from './components/Extend/types'
-import type { WFormPropType } from './props'
 
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 
@@ -229,8 +225,7 @@ export declare namespace WForm {
 
       // extend
       'Extend:Query': ICompUIFormItemExtendQueryProps
-
-      'Extend:Divider': WFormItemDividerProps
+      'Extend:Divider': ICompUIFormItemExtendDividerProps
 
       'Extend:RoleSelect': {
         multiple?: boolean
@@ -329,16 +324,6 @@ export declare namespace WForm {
 
     namespace SchemaItem {
 
-      type DividerSchema<D> = DynamicSchemaItemProps<
-        'Extend:Divider',
-        D,
-        {
-          // since sticky element will got a transparent background, so we need to provide a bgColor
-          sticky: boolean
-          bgColor: string
-        }
-      >
-
       type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
 
       type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
@@ -384,6 +369,11 @@ export declare namespace WForm {
 
       // extend
       type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
+      type DividerSchema<D> = DynamicSchemaItemProps<'Extend:Divider', D, {
+        // since sticky element will got a transparent background, so we need to provide a bgColor
+        sticky: boolean
+        bgColor: string
+      }>
     }
 
     type Item<D = any> =

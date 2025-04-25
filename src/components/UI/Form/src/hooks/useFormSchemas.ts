@@ -20,11 +20,11 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>) {
             _internalShow: getFormItemId(i, idx),
           }
         })
-        .filter(
-          i =>
-            formItemUtils.getIfOrShowBooleanValue(i, props.value, 'vIf')
-            && formItemUtils.getIfOrShowBooleanValue(i, props.value, 'vShow'),
-        )
+        // .filter(
+        //   i =>
+        //     formItemUtils.getIfOrShowBooleanValue(i, props.value, 'vIf')
+        //     && formItemUtils.getIfOrShowBooleanValue(i, props.value, 'vShow'),
+        // )
     },
     {
       deep: true,

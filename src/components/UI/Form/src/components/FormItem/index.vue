@@ -44,7 +44,6 @@ const getBuiltInComp = formItemUtils.getTargetComponent(item)
 
 <template>
   <n-form-item
-    v-if="formItemUtils.getIfOrShowBooleanValue(item, formProps, 'vIf')"
     :class="formProps.formItemClass"
     v-bind="getFormProps"
   >

@@ -35,6 +35,7 @@ const BUILT_IN_FORM_ITEM_TYPE_BUSINESS = [
 
 const BUILT_IN_FORM_ITEM_TYPE_EXTEND = [
   'Query',
+  'Divider',
 ] as const
 
 /**
