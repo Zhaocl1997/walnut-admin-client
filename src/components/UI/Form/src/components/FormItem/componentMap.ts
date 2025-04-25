@@ -28,6 +28,10 @@ const BUILT_IN_FORM_ITEM_TYPE_EXTRA = [
   'TransitionSelect',
 ] as const
 
+const BUILT_IN_FORM_ITEM_TYPE_BUSINESS = [
+  'AreaCascader',
+] as const
+
 /**
  * @description Generate all usable components through `BUILT_IN_FORM_ITEM_TYPE_UI`.
  * Problems:
@@ -56,6 +60,17 @@ function getExtraComponents(type: typeof BUILT_IN_FORM_ITEM_TYPE_EXTRA) {
 
   return ret
 }
+function getBusinessComponents(type: typeof BUILT_IN_FORM_ITEM_TYPE_BUSINESS) {
+  const ret: Recordable = {}
+
+  type.forEach((key) => {
+    // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+    // Below for prod, no alias and must point to file with extension
+    ret[key] = createAsyncComponent(() => import(`../../../../../Business/${key}/index.ts`))
+  })
+
+  return ret
+}
 
 // Form component map
 const componentMap = new Map()
@@ -70,6 +85,12 @@ BUILT_IN_FORM_ITEM_TYPE_UI.forEach((key) => {
 const ExtraComponents = getExtraComponents(BUILT_IN_FORM_ITEM_TYPE_EXTRA)
 BUILT_IN_FORM_ITEM_TYPE_EXTRA.forEach((key) => {
   componentMap.set(key, ExtraComponents[key])
+})
+
+// extra
+const BusinessComponents = getBusinessComponents(BUILT_IN_FORM_ITEM_TYPE_BUSINESS)
+BUILT_IN_FORM_ITEM_TYPE_BUSINESS.forEach((key) => {
+  componentMap.set(key, BusinessComponents[key])
 })
 
 // raw
@@ -87,12 +108,6 @@ componentMap.set(
   'Tinymce',
   createAsyncComponent(
     () => import('../../../../../Vendor/Tinymce/index'),
-  ),
-)
-componentMap.set(
-  'AreaCascader',
-  createAsyncComponent(
-    () => import('../../../../../Advanced/AreaCascader/index'),
   ),
 )
 componentMap.set(

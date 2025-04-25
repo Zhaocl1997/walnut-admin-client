@@ -116,7 +116,7 @@ const descs: ICompUIDescriptionsItem[] = [
 </script>
 
 <template>
-  <WDemoCard title="Description Demo`">
+  <WDemoCard title="Description Demo">
     <n-list>
       <n-list-item>
         <WTitle prefix="bar" class="mb-2">

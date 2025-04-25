@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { CascaderOption } from 'naive-ui'
-import type { WAreaCascaderProps } from './props'
+import type { ICompBusinessAreaCascaderProps } from '.'
 import {
   getAreaChildrenByPcode,
   getAreaFeedbackByCode,
@@ -11,12 +11,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<WAreaCascaderProps>(), {
-  value: null,
-  depth: 4,
-  showPath: true,
-  multiple: false,
-})
+const { value = null, depth = 4, showPath = true, multiple = false } = defineProps<ICompBusinessAreaCascaderProps>()
 
 const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
 
@@ -27,7 +22,7 @@ async function onLoad(option: CascaderOption) {
   option.children = res.map(i => ({
     ...i,
     depth: (option.depth as number) + 1,
-    isLeaf: (option.depth as number) + 1 === props.depth,
+    isLeaf: (option.depth as number) + 1 === depth,
   }))
 }
 
@@ -35,7 +30,7 @@ async function onInit() {
   const res = await getAreaChildrenByPcode()
   options.value = res.map(i => ({
     ...i,
-    isLeaf: props.depth === 0,
+    isLeaf: depth === 0,
     depth: 0,
   }))
 }
@@ -45,22 +40,22 @@ function onUpdateValue(value: string) {
 }
 
 async function onFeedback() {
-  if (!props.value || props.value.length === 0)
+  if (!value || value.length === 0)
     return
 
   // single feedback
-  if (!props.multiple && typeof props.value === 'string') {
-    const feedback = await getAreaFeedbackByCode(props.value)
+  if (!multiple && typeof value === 'string') {
+    const feedback = await getAreaFeedbackByCode(value)
 
     options.value = feedback
   }
 
   // multiple feedback
   if (
-    props.multiple
-    && Array.isArray(props.value)
+    multiple
+    && Array.isArray(value)
   ) {
-    const feedbacks = await getAreaFeedbackByCode(props.value.join(','))
+    const feedbacks = await getAreaFeedbackByCode(value.join(','))
 
     options.value = feedbacks
   }

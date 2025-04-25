@@ -40,13 +40,14 @@ const { stateRef: formData, resetState: resetFormData } = useState({
   formSlider: null,
   formTreeSelect: null,
 
-  formRoleSelect: null,
+  // business
   formAreaCascader: null,
+
+  formRoleSelect: null,
   formTinymce: null,
   formDictSelect: null,
   formDictCheckbox: null,
   formDictRadio: null,
-  formPhoneNumber: null,
 })
 
 const msg = useAppMessage()
@@ -397,6 +398,20 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     },
   },
 
+  // business
+  {
+    type: 'Business:AreaCascader',
+    formProp: {
+      label: 'Area Cascader',
+      path: 'formAreaCascader',
+    },
+    componentProp: {
+      showPath: false,
+      multiple: true,
+      depth: 2,
+    },
+  },
+
   // {
   //   type: 'Extend:RoleSelect',
   //   formProp: {
@@ -404,13 +419,7 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
   //     path: 'formRoleSelect',
   //   },
   // },
-  // {
-  //   type: 'Extend:AreaCascader',
-  //   formProp: {
-  //     label: 'Area Cascader',
-  //     path: 'formAreaCascader',
-  //   },
-  // },
+
   // {
   //   type: 'Vendor:Tinymce',
   //   formProp: {

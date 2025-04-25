@@ -1,4 +1,5 @@
-import type { WAreaCascaderProps } from '@/components/Advanced/AreaCascader'
+// business
+import type { ICompBusinessAreaCascaderProps } from '@/components/Business/AreaCascader'
 
 // extra
 import type { ICompExtraEmailInputProps } from '@/components/Extra/EmailInput'
@@ -10,6 +11,7 @@ import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
 import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 
 import type { IWCompVendorTinymceEditorProps } from '@/components/Vendor/Tinymce'
+
 import type { useEventParams } from '@/hooks/component/useEvent'
 import type {
   DynamicInputProps,
@@ -20,7 +22,6 @@ import type {
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
-
 // ui types
 import type { ICompUIButtonProps } from '../../Button'
 import type { ICompUIButtonConfirmProps } from '../../ButtonConfirm'
@@ -36,6 +37,7 @@ import type { ICompUIInputNumberProps } from '../../InputNumber'
 import type { ICompUIRadioProps } from '../../Radio'
 import type { ICompUISelectProps } from '../../Select'
 import type { ICompUISwitchProps } from '../../Switch'
+
 import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'
 
@@ -162,6 +164,9 @@ export declare namespace WForm {
       'Raw:Slider': SliderProps
       'Raw:TreeSelect': TreeSelectProps
 
+      // business
+      'Business:AreaCascader': ICompBusinessAreaCascaderProps
+
       'Extend:Divider': WFormItemDividerProps
       'Extend:Query': WFormItemQueryProps
 
@@ -170,7 +175,6 @@ export declare namespace WForm {
         valueSeparator?: string
         valueType?: 'string' | 'number'
       }
-      'Extend:AreaCascader': WAreaCascaderProps
       'Extend:Dict': WFormItemDictProps
 
       'Vendor:Tinymce': IWCompVendorTinymceEditorProps
@@ -277,7 +281,6 @@ export declare namespace WForm {
       type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
 
       type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
-      type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Extend:AreaCascader', D>
 
       type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
 
@@ -315,6 +318,9 @@ export declare namespace WForm {
       type DynamicInputSchema<D> = DynamicSchemaItemProps<'Raw:DynamicInput', D>
       type SliderSchema<D> = DynamicSchemaItemProps<'Raw:Slider', D>
       type TreeSelectSchema<D> = DynamicSchemaItemProps<'Raw:TreeSelect', D>
+
+      // business
+      type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Business:AreaCascader', D>
     }
 
     type Item<D = any> =
@@ -323,7 +329,6 @@ export declare namespace WForm {
       | SchemaItem.DictSchema<D>
 
       | SchemaItem.RoleSelectSchema<D>
-      | SchemaItem.AreaCacaderSchema<D>
       | SchemaItem.TinymceSchema<D>
 
       // base
@@ -360,5 +365,9 @@ export declare namespace WForm {
       | SchemaItem.DynamicInputSchema<D>
       | SchemaItem.SliderSchema<D>
       | SchemaItem.TreeSelectSchema<D>
+
+      // business
+      | SchemaItem.AreaCacaderSchema<D>
+
   }
 }
