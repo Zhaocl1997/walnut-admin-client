@@ -11,7 +11,7 @@ withDefaults(defineProps<ICompExtraMessageProps>(), {
 </script>
 
 <template>
-  <span>
+  <span class="leading-0">
     <n-tooltip v-bind="$attrs">
       <template #default>
         <template v-if="typeof msg === 'string'">

@@ -15,7 +15,7 @@ export function getFormBooleanField(item: WForm.Schema.Item | undefined, props: 
 /**
  * @description generate form item label base on different config
  */
-export function getFormTranslated(t: Fn, props: ComputedRef<WForm.Props>, item: WForm.Schema.Item, type: WForm.LocaleType = 'origin') {
+export function getFormTranslated(t: Fn, props: MaybeRef<WForm.Props>, item: WForm.Schema.Item, type: WForm.LocaleType = 'origin') {
   // used for dict form item
   if (item.formProp?.label === true)
     return
@@ -24,7 +24,9 @@ export function getFormTranslated(t: Fn, props: ComputedRef<WForm.Props>, item: 
   if (!getBoolean(item?.descriptionProp?.show))
     return
 
-  const key = props.value.localeUniqueKey
+  const _props = toRaw<WForm.Props>(props)
+
+  const key = _props.localeUniqueKey
 
   const isLocale = key && getBoolean(item.formProp?.locale)
 
@@ -54,7 +56,7 @@ export function getFormTranslated(t: Fn, props: ComputedRef<WForm.Props>, item: 
 
   const isLocaleWithTable
     = getBoolean(item.formProp?.localeWithTable)
-      && getBoolean(props.value.localeWithTable)
+      && getBoolean(_props.localeWithTable)
 
   const format = (key: string) => {
     if (type === 'origin')

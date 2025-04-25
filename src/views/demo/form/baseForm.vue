@@ -53,364 +53,364 @@ const { stateRef: formData, resetState: resetFormData } = useState({
 const msg = useAppMessage()
 
 const schemas: WForm.Schema.Item<typeof formData.value>[] = [
-  // {
-  //   type: 'Base:Slot',
-  //   formProp: {
-  //     label: 'Slot',
-  //     path: 'formSlot',
-  //   },
-  // },
-  // {
-  //   type: 'Base:Render',
-  //   formProp: {
-  //     label: 'Render',
-  //     path: 'formRender',
-  //   },
-  //   componentProp: {
-  //     render: ({ formData }) => (
-  //       <n-input vModel={[formData.formRender, 'value']}></n-input>
-  //     ),
-  //   },
-  // },
+  {
+    type: 'Base:Slot',
+    formProp: {
+      label: 'Slot',
+      path: 'formSlot',
+    },
+  },
+  {
+    type: 'Base:Render',
+    formProp: {
+      label: 'Render',
+      path: 'formRender',
+    },
+    componentProp: {
+      render: ({ formData }) => (
+        <n-input vModel={[formData.formRender, 'value']}></n-input>
+      ),
+    },
+  },
 
-  // // ui
-  // {
-  //   type: 'Base:Button',
-  //   formProp: {
-  //     label: 'Button',
-  //   },
-  //   componentProp: {
-  //     textProp: 'Single Button',
-  //     type: 'info',
-  //     round: true,
-  //     onClick: () => {
-  //       console.log('single button in form')
-  //     },
-  //   },
-  // },
-  // {
-  //   type: 'Base:ButtonConfirm',
-  //   formProp: {
-  //     label: 'Confirm Button',
-  //   },
-  //   componentProp: {
-  //     confirmMsg: 'Form Confirm Button ???',
-  //     buttonProps: {
-  //       textProp: 'Trigger Text',
-  //       type: 'primary',
-  //     },
-  //     onConfirm: () => {
-  //       console.log('button confirmed')
-  //     },
-  //   },
-  // },
-  // {
-  //   type: 'Base:ButtonGroup',
-  //   formProp: {
-  //     label: 'Button Group',
-  //   },
-  //   componentProp: {
-  //     groups: [
-  //       {
-  //         textProp: 'Validate',
-  //         onClick: async () => {
-  //           const valid = await formRef.value?.validate()
-  //           if (valid)
-  //             msg.success('Success')
-  //           else
-  //             msg.error('Error')
-  //         },
-  //       },
-  //       {
-  //         textProp: 'Clear Validation',
-  //         onClick: () => {
-  //           formRef.value?.restoreValidation()
-  //         },
-  //       },
-  //       {
-  //         textProp: 'Reset Form Data',
-  //         onClick: () => {
-  //           resetFormData()
-  //         },
-  //       },
-  //     ],
-  //   },
-  //   gridProp: {
-  //     span: 24,
-  //   },
-  // },
-  // {
-  //   type: 'Base:ButtonRetry',
-  //   formProp: {
-  //     label: 'Retry Button',
-  //   },
-  //   componentProp: {
-  //     retryKey: 'form-retry-button',
-  //     retrySeconds: 10,
-  //     textProp: 'Retry button in form ???',
-  //     onRetryClick: (startCount: Fn) => {
-  //       console.log('retry clicked')
-  //       startCount()
-  //     },
-  //   },
-  // },
+  // ui
+  {
+    type: 'Base:Button',
+    formProp: {
+      label: 'Button',
+    },
+    componentProp: {
+      textProp: 'Single Button',
+      type: 'info',
+      round: true,
+      onClick: () => {
+        console.log('single button in form')
+      },
+    },
+  },
+  {
+    type: 'Base:ButtonConfirm',
+    formProp: {
+      label: 'Confirm Button',
+    },
+    componentProp: {
+      confirmMsg: 'Form Confirm Button ???',
+      buttonProps: {
+        textProp: 'Trigger Text',
+        type: 'primary',
+      },
+      onConfirm: () => {
+        console.log('button confirmed')
+      },
+    },
+  },
+  {
+    type: 'Base:ButtonGroup',
+    formProp: {
+      label: 'Button Group',
+    },
+    componentProp: {
+      groups: [
+        {
+          textProp: 'Validate',
+          onClick: async () => {
+            const valid = await formRef.value?.validate()
+            if (valid)
+              msg.success('Success')
+            else
+              msg.error('Error')
+          },
+        },
+        {
+          textProp: 'Clear Validation',
+          onClick: () => {
+            formRef.value?.restoreValidation()
+          },
+        },
+        {
+          textProp: 'Reset Form Data',
+          onClick: () => {
+            resetFormData()
+          },
+        },
+      ],
+    },
+    gridProp: {
+      span: 24,
+    },
+  },
+  {
+    type: 'Base:ButtonRetry',
+    formProp: {
+      label: 'Retry Button',
+    },
+    componentProp: {
+      retryKey: 'form-retry-button',
+      retrySeconds: 10,
+      textProp: 'Retry button in form ???',
+      onRetryClick: (startCount: Fn) => {
+        console.log('retry clicked')
+        startCount()
+      },
+    },
+  },
 
-  // {
-  //   type: 'Base:Checkbox',
-  //   formProp: {
-  //     label: 'Checkbox',
-  //     path: 'formCheckbox',
-  //   },
-  //   componentProp: {
-  //     options,
-  //     valueType: 'number',
-  //     multiple: true,
-  //     valueSeparator: '|',
-  //   },
-  // },
-  // {
-  //   type: 'Base:ColorPicker',
-  //   formProp: {
-  //     label: 'Color Picker',
-  //     path: 'formColorPicker',
-  //   },
-  //   componentProp: {
-  //     eyeDropper: true,
-  //   },
-  // },
+  {
+    type: 'Base:Checkbox',
+    formProp: {
+      label: 'Checkbox',
+      path: 'formCheckbox',
+    },
+    componentProp: {
+      options,
+      valueType: 'number',
+      multiple: true,
+      valueSeparator: '|',
+    },
+  },
+  {
+    type: 'Base:ColorPicker',
+    formProp: {
+      label: 'Color Picker',
+      path: 'formColorPicker',
+    },
+    componentProp: {
+      eyeDropper: true,
+    },
+  },
 
-  // {
-  //   type: 'Base:DatePicker',
-  //   formProp: {
-  //     label: 'DatePicker',
-  //     path: 'formDatePicker',
-  //   },
-  //   componentProp: {
-  //     type: 'datetime',
-  //   },
-  // },
+  {
+    type: 'Base:DatePicker',
+    formProp: {
+      label: 'DatePicker',
+      path: 'formDatePicker',
+    },
+    componentProp: {
+      type: 'datetime',
+    },
+  },
 
-  // {
-  //   type: 'Base:DynamicTags',
-  //   formProp: {
-  //     label: 'DynamicTags',
-  //     path: 'formDynamicTags',
-  //     ruleType: 'array',
-  //   },
-  //   componentProp: {
-  //     round: true,
-  //   },
-  // },
+  {
+    type: 'Base:DynamicTags',
+    formProp: {
+      label: 'DynamicTags',
+      path: 'formDynamicTags',
+      ruleType: 'array',
+    },
+    componentProp: {
+      round: true,
+    },
+  },
 
-  // {
-  //   type: 'Base:Input',
-  //   formProp: {
-  //     label: 'Input',
-  //     path: 'formInput',
-  //     labelHelpMessage: [
-  //       '1. Allow string and string array',
-  //       '2. Also allow `true` to auto translate base on `formProps.path`',
-  //     ],
-  //   },
-  //   componentProp: {
-  //     type: 'textarea',
-  //     showCount: true,
-  //     maxlength: 100,
-  //   },
-  // },
-  // {
-  //   type: 'Base:InputNumber',
-  //   formProp: {
-  //     label: 'InputNumber',
-  //     path: 'formInputNumber',
-  //   },
-  //   componentProp: {
-  //     min: 3,
-  //     max: 100,
-  //   },
-  // },
+  {
+    type: 'Base:Input',
+    formProp: {
+      label: 'Input',
+      path: 'formInput',
+      labelHelpMessage: [
+        '1. Allow string and string array',
+        '2. Also allow `true` to auto translate base on `formProps.path`',
+      ],
+    },
+    componentProp: {
+      type: 'textarea',
+      showCount: true,
+      maxlength: 100,
+    },
+  },
+  {
+    type: 'Base:InputNumber',
+    formProp: {
+      label: 'InputNumber',
+      path: 'formInputNumber',
+    },
+    componentProp: {
+      min: 3,
+      max: 100,
+    },
+  },
 
-  // {
-  //   type: 'Base:Radio',
-  //   formProp: {
-  //     label: 'Radio',
-  //     path: 'formRadio',
-  //   },
-  //   componentProp: {
-  //     options,
-  //   },
-  // },
-  // {
-  //   type: 'Base:Select',
-  //   formProp: {
-  //     label: 'Select',
-  //     path: 'formSelect',
-  //   },
-  //   componentProp: {
-  //     options,
-  //     valueType: 'number',
-  //     multiple: true,
-  //     valueSeparator: ',',
-  //   },
-  // },
-  // {
-  //   type: 'Base:Switch',
-  //   formProp: {
-  //     label: 'Switch',
-  //     path: 'formSwitch',
-  //     first: true,
-  //   },
-  //   componentProp: {},
-  // },
-  // {
-  //   type: 'Base:TimePicker',
-  //   formProp: {
-  //     label: 'TimePicker',
-  //     path: 'formTimePicker',
-  //   },
-  //   componentProp: {
-  //     format: 'HH:mm:ss',
-  //     class: 'w-full',
-  //   },
-  // },
-  // {
-  //   type: 'Base:Tree',
-  //   formProp: {
-  //     label: 'Tree',
-  //     path: 'formTree',
-  //   },
-  //   componentProp: {
-  //     maxHeight: '200px',
-  //     treeProps: {
-  //       data: getTreeData(),
-  //       labelField: '_label',
-  //       keyField: '_id',
-  //       blockLine: true,
-  //       blockNode: true,
-  //     },
-  //   },
-  // },
+  {
+    type: 'Base:Radio',
+    formProp: {
+      label: 'Radio',
+      path: 'formRadio',
+    },
+    componentProp: {
+      options,
+    },
+  },
+  {
+    type: 'Base:Select',
+    formProp: {
+      label: 'Select',
+      path: 'formSelect',
+    },
+    componentProp: {
+      options,
+      valueType: 'number',
+      multiple: true,
+      valueSeparator: ',',
+    },
+  },
+  {
+    type: 'Base:Switch',
+    formProp: {
+      label: 'Switch',
+      path: 'formSwitch',
+      first: true,
+    },
+    componentProp: {},
+  },
+  {
+    type: 'Base:TimePicker',
+    formProp: {
+      label: 'TimePicker',
+      path: 'formTimePicker',
+    },
+    componentProp: {
+      format: 'HH:mm:ss',
+      class: 'w-full',
+    },
+  },
+  {
+    type: 'Base:Tree',
+    formProp: {
+      label: 'Tree',
+      path: 'formTree',
+    },
+    componentProp: {
+      maxHeight: '200px',
+      treeProps: {
+        data: getTreeData(),
+        labelField: '_label',
+        keyField: '_id',
+        blockLine: true,
+        blockNode: true,
+      },
+    },
+  },
 
-  // // extra
-  // {
-  //   type: 'Extra:EmailInput',
-  //   formProp: {
-  //     label: 'Email Input',
-  //     path: 'formEmailInput',
-  //   },
-  //   componentProp: {},
-  // },
-  // {
-  //   type: 'Extra:IconPicker',
-  //   formProp: {
-  //     label: 'Icon Picker',
-  //     path: 'formIconPicker',
-  //   },
-  //   componentProp: { preset: 'input' },
-  // },
-  // {
-  //   type: 'Extra:LocaleSelect',
-  //   formProp: {
-  //     label: 'Locale Select',
-  //     path: 'formLocaleSelect',
-  //   },
-  //   componentProp: {
-  //     prefix: 'dict.',
-  //     creatable: false,
-  //   },
-  // },
-  // {
-  //   type: 'Extra:Password',
-  //   formProp: {
-  //     label: 'Password Input',
-  //     path: 'formPassword',
-  //   },
-  //   componentProp: { capslock: true },
-  // },
-  // {
-  //   type: 'Extra:PhoneNumberInput',
-  //   formProp: {
-  //     label: 'Phone Number',
-  //     path: 'formPhoneNumberInput',
-  //   },
-  //   componentProp: {
-  //     preferred: true,
-  //     example: true,
-  //     autoDefaultCountry: true,
-  //   },
-  // },
-  // {
-  //   type: 'Extra:SMSInput',
-  //   formProp: {
-  //     label: 'SMS Input',
-  //     path: 'formSMSInput',
-  //   },
-  //   componentProp: {
-  //     retryKey: 'form-sms-input',
-  //     retrySeconds: 10,
-  //   },
-  // },
-  // {
-  //   type: 'Extra:TransitionSelect',
-  //   formProp: {
-  //     label: 'Transition Select',
-  //     path: 'formTransitionPicker',
-  //   },
-  // },
+  // extra
+  {
+    type: 'Extra:EmailInput',
+    formProp: {
+      label: 'Email Input',
+      path: 'formEmailInput',
+    },
+    componentProp: {},
+  },
+  {
+    type: 'Extra:IconPicker',
+    formProp: {
+      label: 'Icon Picker',
+      path: 'formIconPicker',
+    },
+    componentProp: { preset: 'input' },
+  },
+  {
+    type: 'Extra:LocaleSelect',
+    formProp: {
+      label: 'Locale Select',
+      path: 'formLocaleSelect',
+    },
+    componentProp: {
+      prefix: 'dict.',
+      creatable: false,
+    },
+  },
+  {
+    type: 'Extra:Password',
+    formProp: {
+      label: 'Password Input',
+      path: 'formPassword',
+    },
+    componentProp: { capslock: true },
+  },
+  {
+    type: 'Extra:PhoneNumberInput',
+    formProp: {
+      label: 'Phone Number',
+      path: 'formPhoneNumberInput',
+    },
+    componentProp: {
+      preferred: true,
+      example: true,
+      autoDefaultCountry: true,
+    },
+  },
+  {
+    type: 'Extra:SMSInput',
+    formProp: {
+      label: 'SMS Input',
+      path: 'formSMSInput',
+    },
+    componentProp: {
+      retryKey: 'form-sms-input',
+      retrySeconds: 10,
+    },
+  },
+  {
+    type: 'Extra:TransitionSelect',
+    formProp: {
+      label: 'Transition Select',
+      path: 'formTransitionPicker',
+    },
+  },
 
-  // // raw
-  // {
-  //   type: 'Raw:DynamicInput',
-  //   formProp: {
-  //     label: 'Dynamic Input',
-  //     path: 'formDynamicInput',
-  //     ruleType: 'array',
-  //   },
-  //   componentProp: {
-  //     preset: 'pair',
-  //     showSortButton: true,
-  //     min: 1,
-  //   },
-  // },
-  // {
-  //   type: 'Raw:Slider',
-  //   formProp: {
-  //     label: 'Slider',
-  //     path: 'formSlider',
-  //   },
-  //   componentProp: {
-  //     max: 24,
-  //     min: 10,
-  //   },
-  // },
+  // raw
+  {
+    type: 'Raw:DynamicInput',
+    formProp: {
+      label: 'Dynamic Input',
+      path: 'formDynamicInput',
+      ruleType: 'array',
+    },
+    componentProp: {
+      preset: 'pair',
+      showSortButton: true,
+      min: 1,
+    },
+  },
+  {
+    type: 'Raw:Slider',
+    formProp: {
+      label: 'Slider',
+      path: 'formSlider',
+    },
+    componentProp: {
+      max: 24,
+      min: 10,
+    },
+  },
 
-  // {
-  //   type: 'Raw:TreeSelect',
-  //   formProp: {
-  //     label: 'TreeSelect',
-  //     path: 'formTreeSelect',
-  //   },
-  //   componentProp: {
-  //     options: getTreeData(),
-  //     labelField: '_label',
-  //     keyField: '_id',
-  //     clearable: true,
-  //   },
-  // },
+  {
+    type: 'Raw:TreeSelect',
+    formProp: {
+      label: 'TreeSelect',
+      path: 'formTreeSelect',
+    },
+    componentProp: {
+      options: getTreeData(),
+      labelField: '_label',
+      keyField: '_id',
+      clearable: true,
+    },
+  },
 
-  // // business
-  // {
-  //   type: 'Business:AreaCascader',
-  //   formProp: {
-  //     label: 'Area Cascader',
-  //     path: 'formAreaCascader',
-  //   },
-  //   componentProp: {
-  //     showPath: false,
-  //     multiple: true,
-  //     depth: 2,
-  //   },
-  // },
+  // business
+  {
+    type: 'Business:AreaCascader',
+    formProp: {
+      label: 'Area Cascader',
+      path: 'formAreaCascader',
+    },
+    componentProp: {
+      showPath: false,
+      multiple: true,
+      depth: 2,
+    },
+  },
   {
     type: 'Business:Dict',
     formProp: {

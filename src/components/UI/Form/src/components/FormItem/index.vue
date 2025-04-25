@@ -1,112 +1,58 @@
-<script lang="tsx">
+<script lang="ts" setup generic="T">
 import type { WForm } from '../../types'
-// TODO 111 tsx file need to import explicitly or ts error
-import WMessage from '@/components/Extra/Message'
-
-import { clone, isBoolean, isFunction, omit } from 'lodash-es'
+import { isFunction } from 'lodash-es'
 import { useFormContext } from '../../hooks/useFormContext'
-import {
-  generateRuleMessage,
-  getFormBooleanField,
-  getFormTranslated,
-} from '../../utils'
-
+import { getFormBooleanField, getFormTranslated } from '../../utils'
 import { componentMap } from './componentMap'
 
-export default defineComponent({
-  name: 'WFormItem',
-
+defineOptions({
+  name: 'WCompUIFormItem',
   inheritAttrs: false,
-
-  props: {
-    item: Object as PropType<WForm.Schema.Item>,
-  },
-
-  emits: [],
-
-  setup(props, { attrs, slots, emit, expose }) {
-    const { item } = props
-
-    const { t } = useAppI18n()
-
-    const { formProps } = useFormContext()
-
-    const renderBase
-        = item?.type === 'Base:Render'
-          ? () =>
-              isFunction(item!.componentProp?.render)
-              && item!.componentProp?.render!({
-                formData: formProps.value.model!,
-              })
-          : item?.type === 'Base:Slot'
-            ? () => slots.default!()
-            : () => {
-                const component = componentMap.get(item?.type.split(':')[1])
-
-                return (
-                  component && (
-                    <component
-                      is={component}
-                      v-model={[
-                        formProps.value.model![item?.formProp?.path!],
-                        'value',
-                      ]}
-                      {...item?.componentProp}
-                      class={formProps.value.formItemComponentClass}
-                      // TODO
-                      placeholder={generateRuleMessage(t, formProps, item!)}
-                    >
-                    </component>
-                  )
-                )
-              }
-
-    const renderLabel = () => {
-      if (item?.type === 'Business:Dict' && item?.formProp?.label === true) {
-        const dictName = getDictNameFromMap(item.componentProp.dictType)!
-        return t(dictName)
-      }
-
-      return getFormTranslated(t, formProps, item!)
-    }
-
-    const renderLabelHelpMessage = () =>
-      item?.formProp?.labelHelpMessage && (
-        <WMessage
-          msg={getFormTranslated(t, formProps, item!, 'helpMsg')}
-        >
-        </WMessage>
-      )
-
-    const renderNFormItem = () => (
-      // TODO optimise
-      <n-form-item
-        vShow={getFormBooleanField(item, formProps.value, 'vShow')}
-        {...(isBoolean(item?.formProp?.rule)
-          && isBoolean(item?.formProp?.label)
-          ? omit(clone(item?.formProp), 'rule', 'label')
-          : isBoolean(item?.formProp?.rule)
-            ? omit(item?.formProp, 'rule')
-            : isBoolean(item?.formProp?.label)
-              ? omit(clone(item?.formProp), 'label')
-              : item?.formProp)}
-        class={formProps.value.formItemClass}
-      >
-        {{
-          default: () => renderBase(),
-          label: () => (
-            <>
-              {renderLabel()}
-              {' '}
-              {renderLabelHelpMessage()}
-            </>
-          ),
-        }}
-      </n-form-item>
-    )
-
-    return () =>
-      getFormBooleanField(item, formProps.value, 'vIf') && renderNFormItem()
-  },
 })
+
+const { item } = defineProps<{ item: WForm.Schema.Item<T> }>()
+
+const { formProps } = useFormContext()
+
+const getFormItemDictLabel = computed(() => getDictNameFromMap((item as WForm.Schema.SchemaItem.DictSchema<T>).componentProp!.dictType) as string)
+
+function FormItemRender() {
+  const _item = item as WForm.Schema.SchemaItem.RenderSchema<T>
+
+  return isFunction(_item.componentProp?.render)
+    && _item!.componentProp?.render!({
+      formData: formProps.value.model!,
+    })
+}
+
+const getBuiltInComp = componentMap.get(item?.type.split(':')[1])
 </script>
+
+<template>
+  <n-form-item v-if="getFormBooleanField(item, formProps, 'vIf')">
+    <template #label>
+      <div class="flex flex-row flex-nowrap items-center justify-end gap-x-1">
+        <template v-if="item.type === 'Business:Dict' && item.formProp?.label === true">
+          {{ $t(getFormItemDictLabel) }}
+        </template>
+        <template v-else>
+          {{ getFormTranslated($t, formProps, item) }}
+        </template>
+
+        <WMessage v-if="item.formProp?.labelHelpMessage" :msg="getFormTranslated($t, formProps, item, 'helpMsg')" />
+      </div>
+    </template>
+
+    <template #default>
+      <FormItemRender v-if="item.type === 'Base:Render'" />
+      <slot v-else-if="item.type === 'Base:Slot'" />
+      <component
+        :is="getBuiltInComp"
+        v-if="getBuiltInComp"
+        v-model:value="formProps.model![item.formProp?.path!]"
+        v-bind="item.componentProp"
+        :class="formProps.formItemComponentClass"
+      />
+    </template>
+  </n-form-item>
+</template>
