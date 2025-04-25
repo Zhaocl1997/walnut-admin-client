@@ -216,15 +216,15 @@ const [
         },
       },
       {
-        type: 'Extend:Dict',
+        type: 'Business:Dict',
         formProp: {
           path: 'status',
         },
         componentProp: {
           dictType: 'sys_shared_status',
-          dictRenderType: 'radio',
+          renderType: 'radio',
           defaultValue: true,
-          renderComponentProps: {
+          componentProps: {
             button: true,
           },
         },

@@ -82,7 +82,7 @@ const [register] = useForm<typeof formData.value>({
       },
     },
     {
-      type: 'Extend:Dict',
+      type: 'Business:Dict',
       formProp: {
         path: 'gender',
         label: true,
@@ -90,8 +90,8 @@ const [register] = useForm<typeof formData.value>({
       },
       componentProp: {
         dictType: 'gbt_sex',
-        dictRenderType: 'radio',
-        renderComponentProps: {
+        renderType: 'radio',
+        componentProps: {
           button: true,
         },
       },

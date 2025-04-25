@@ -62,8 +62,8 @@ export default defineComponent({
               }
 
     const renderLabel = () => {
-      if (item?.type === 'Extend:Dict' && item?.formProp?.label === true) {
-        const dictName = getDictNameFromMap(item.componentProp?.dictType ?? '')!
+      if (item?.type === 'Business:Dict' && item?.formProp?.label === true) {
+        const dictName = getDictNameFromMap(item.componentProp.dictType)!
         return t(dictName)
       }
 

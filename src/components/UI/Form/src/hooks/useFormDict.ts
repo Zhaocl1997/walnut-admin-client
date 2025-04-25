@@ -6,7 +6,7 @@ export function useFormDict(schemas: Ref<WForm.Schema.Item<any>[]>) {
     // TODO optimise
     await Promise.all(
       schemas.value.map((i) => {
-        if (i.type === 'Extend:Dict')
+        if (i.type === 'Business:Dict')
           return initDict(i.componentProp!.dictType!)
         return undefined
       }).filter(Boolean),

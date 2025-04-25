@@ -7,7 +7,7 @@ import {
 } from '@/api/shared/area'
 
 defineOptions({
-  name: 'WAreaCascader',
+  name: 'WCompBusinessAreaCascader',
   inheritAttrs: false,
 })
 

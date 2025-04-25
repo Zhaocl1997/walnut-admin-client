@@ -209,7 +209,7 @@ const [
       },
 
       {
-        type: 'Extend:Dict',
+        type: 'Business:Dict',
         formProp: {
           path: 'settingType',
 

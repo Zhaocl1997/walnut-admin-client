@@ -10,11 +10,12 @@ export const dictDataAPI = new BaseAPI<AppSystemDictType>({
   section: 'dict/data',
 })
 
-export type IAppStoreMapDictValue = ({ dictData:
-Pick<
+export type IAppDictDataPicked = Pick<
   AppSystemDictData,
   'value' | 'label' | 'description' | 'order' | 'tagType'
->[] } & Pick<AppSystemDictType, 'type' | 'name'>)
+>
+
+export type IAppStoreMapDictValue = ({ dictData: IAppDictDataPicked[] } & Pick<AppSystemDictType, 'type' | 'name'>)
 
 // default all dict will cacahed for 10 minutes
 export function getDictByType(types: string | string[]) {

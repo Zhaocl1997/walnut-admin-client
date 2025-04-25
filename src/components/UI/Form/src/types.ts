@@ -1,6 +1,7 @@
 // business
 import type { ICompBusinessAreaCascaderProps } from '@/components/Business/AreaCascader'
 
+import type { ICompBusinessDictProps } from '@/components/Business/Dict'
 // extra
 import type { ICompExtraEmailInputProps } from '@/components/Extra/EmailInput'
 import type { ICompExtraIconPickerProps } from '@/components/Extra/IconPicker'
@@ -8,10 +9,10 @@ import type { ICompExtraLocaleSelectProps } from '@/components/Extra/LocaleSelec
 import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
 import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
 import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
+
 import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 
 import type { IWCompVendorTinymceEditorProps } from '@/components/Vendor/Tinymce'
-
 import type { useEventParams } from '@/hooks/component/useEvent'
 import type {
   DynamicInputProps,
@@ -36,13 +37,12 @@ import type { ICompUIInputProps } from '../../Input'
 import type { ICompUIInputNumberProps } from '../../InputNumber'
 import type { ICompUIRadioProps } from '../../Radio'
 import type { ICompUISelectProps } from '../../Select'
+
 import type { ICompUISwitchProps } from '../../Switch'
-
 import type { ICompUITimePickerProps } from '../../TimePicker'
-import type { ICompUITreeProps } from '../../Tree'
 
+import type { ICompUITreeProps } from '../../Tree'
 import type {
-  WFormItemDictProps,
   WFormItemDividerProps,
   WFormItemQueryProps,
 } from './components/Extend/types'
@@ -166,6 +166,7 @@ export declare namespace WForm {
 
       // business
       'Business:AreaCascader': ICompBusinessAreaCascaderProps
+      'Business:Dict': ICompBusinessDictProps
 
       'Extend:Divider': WFormItemDividerProps
       'Extend:Query': WFormItemQueryProps
@@ -175,7 +176,6 @@ export declare namespace WForm {
         valueSeparator?: string
         valueType?: 'string' | 'number'
       }
-      'Extend:Dict': WFormItemDictProps
 
       'Vendor:Tinymce': IWCompVendorTinymceEditorProps
     }
@@ -278,7 +278,6 @@ export declare namespace WForm {
         }
       >
       type QuerySchema<D> = DynamicSchemaItemProps<'Extend:Query', D>
-      type DictSchema<D> = DynamicSchemaItemProps<'Extend:Dict', D>
 
       type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
 
@@ -321,12 +320,13 @@ export declare namespace WForm {
 
       // business
       type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Business:AreaCascader', D>
+      type DictSchema<D> = DynamicSchemaItemProps<'Business:Dict', D>
+
     }
 
     type Item<D = any> =
       | SchemaItem.DividerSchema<D>
       | SchemaItem.QuerySchema<D>
-      | SchemaItem.DictSchema<D>
 
       | SchemaItem.RoleSelectSchema<D>
       | SchemaItem.TinymceSchema<D>
@@ -368,6 +368,7 @@ export declare namespace WForm {
 
       // business
       | SchemaItem.AreaCacaderSchema<D>
+      | SchemaItem.DictSchema<D>
 
   }
 }

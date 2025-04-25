@@ -30,6 +30,7 @@ const BUILT_IN_FORM_ITEM_TYPE_EXTRA = [
 
 const BUILT_IN_FORM_ITEM_TYPE_BUSINESS = [
   'AreaCascader',
+  'Dict',
 ] as const
 
 /**
@@ -110,11 +111,11 @@ componentMap.set(
     () => import('../../../../../Vendor/Tinymce/index'),
   ),
 )
-componentMap.set(
-  'Dict',
-  createAsyncComponent(
-    () => import('../Extend/Dict.vue'),
-  ),
-)
+// componentMap.set(
+//   'Dict',
+//   createAsyncComponent(
+//     () => import('../Extend/Dict.vue'),
+//   ),
+// )
 
 export { componentMap }
