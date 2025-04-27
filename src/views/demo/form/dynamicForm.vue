@@ -4,6 +4,7 @@ defineOptions({
 })
 
 const configFormData = ref({
+  visibleMode: 'auto-forward',
   vIf: true,
   vShow: true,
   transition1: 'fade' as ValueOfAppConstTransitionName,
@@ -31,6 +32,28 @@ const [register1] = useForm({
   labelWidth: 200,
   span: 12,
   schemas: [
+    {
+      type: 'Base:Radio',
+      formProp: {
+        label: 'v-if/v-show position mode',
+        path: 'visibleMode',
+      },
+      componentProp: {
+        options: [
+          {
+            label: 'AutoForward',
+            value: 'auto-forward',
+          },
+          {
+            label: 'NoMove',
+            value: 'no-move',
+          },
+        ],
+      },
+      gridProp: {
+        span: 24,
+      },
+    },
     {
       type: 'Base:Switch',
       formProp: {
@@ -139,6 +162,7 @@ const [register1] = useForm({
 })
 
 const [register2] = useForm<typeof formData.value>({
+  visibleMode: computed(() => configFormData.value.visibleMode),
   span: computed(() => configFormData.value.span),
   labelWidth: computed(() => configFormData.value.labelWidth),
   xGap: computed(() => configFormData.value.xGap),

@@ -117,6 +117,11 @@ export declare namespace WForm {
     baseRules?: boolean
 
     /**
+     * @description v-if/v-show form item visible position mode
+     */
+    visibleMode?: 'no-move' | 'auto-forward'
+
+    /**
      * @description form item class, including the label and content
      */
     formItemClass?: string
@@ -313,7 +318,7 @@ export declare namespace WForm {
         baseRuleApplied?: boolean
       }
 
-      gridProp?: GridItemProps & { class: string }
+      gridProp?: GridItemProps & { class?: string }
 
       transitionProp?: Omit<Partial<ICompExtraTransitionProps>, 'group'>
 

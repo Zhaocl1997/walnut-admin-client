@@ -34,6 +34,7 @@ const props = withDefaults(defineProps<WForm.Props<T>>(), {
   xGap: 20,
   yGap: 0,
   baseRules: false,
+  visibleMode: 'auto-forward',
 })
 
 const emits = defineEmits<WForm.Emits<T>>()
@@ -86,7 +87,14 @@ nextTick(() => {
 
 <template>
   <n-form ref="formRef" :rules="getFormRules" v-bind="omit(getProps, 'rules')">
-    <n-grid :cols="getProps.cols" :x-gap="getProps.xGap" :y-gap="getProps.yGap">
+    <div
+      class="grid"
+      :style="{
+        gridTemplateColumns: `repeat(${getProps.cols}, minmax(0, 1fr))`,
+        rowGap: `${getProps.yGap}px`,
+        columnGap: `${getProps.xGap}px`,
+      }"
+    >
       <template
         v-for="(item, index) in formSchemas"
         :key="item.type === 'Extend:Query' ? `form-query-${index}` : item.type === 'Extend:Divider' ? `form-divider-${index}` : item.formProp?.path"
@@ -119,23 +127,48 @@ nextTick(() => {
           </WTransition>
         </n-gi>
 
-        <n-gi
-          v-else-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"
-          v-bind="item.gridProp"
-          :span="item.gridProp?.span ?? getProps.span"
-        >
-          <WTransition v-bind="item.transitionProp" appear>
-            <WFormItem
-              v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"
-              :item="item"
+        <template v-else>
+          <template v-if="getProps.visibleMode === 'no-move'">
+            <div
+              v-bind="item.gridProp"
+              :style="{
+                gridColumn: `span ${item.gridProp?.span ?? getProps.span} / span ${item.gridProp?.span ?? getProps.span}`,
+              }"
             >
-              <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
-                <slot :name="item.formProp?.path" />
-              </template>
-            </WFormItem>
-          </WTransition>
-        </n-gi>
+              <WTransition v-bind="item.transitionProp" appear>
+                <WFormItem
+                  v-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"
+                  v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"
+                  :item="item"
+                >
+                  <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
+                    <slot :name="item.formProp?.path" />
+                  </template>
+                </WFormItem>
+              </WTransition>
+            </div>
+          </template>
+
+          <template v-if="getProps.visibleMode === 'auto-forward'">
+            <WTransition v-bind="item.transitionProp" appear>
+              <div
+                v-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"
+                v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"
+                v-bind="item.gridProp"
+                :style="{
+                  gridColumn: `span ${item.gridProp?.span ?? getProps.span} / span ${item.gridProp?.span ?? getProps.span}`,
+                }"
+              >
+                <WFormItem :item="item">
+                  <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
+                    <slot :name="item.formProp?.path" />
+                  </template>
+                </WFormItem>
+              </div>
+            </WTransition>
+          </template>
+        </template>
       </template>
-    </n-grid>
+    </div>
   </n-form>
 </template>
