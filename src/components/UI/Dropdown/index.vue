@@ -9,7 +9,7 @@ const props = defineProps<ICompUIDropdownProps>()
 
 const emit = defineEmits<{ hook: [inst: ICompUIDropdownInst] }>()
 
-const { setProps, getProps } = usePropsAdvanced<ICompUIDropdownProps>(props)
+const { setProps, getProps } = useProps<ICompUIDropdownProps>(props)
 
 const show = ref(false)
 const x = ref(0)

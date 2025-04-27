@@ -30,7 +30,7 @@ const value = defineModel<TreeKey | TreeKey[]>('value', { required: true })
 
 const { t } = useAppI18n()
 
-const { setProps, getProps } = usePropsAdvanced<ICompUITreeProps>(props)
+const { setProps, getProps } = useProps<ICompUITreeProps>(props)
 
 const userPermission = useAppStoreUserPermission()
 
