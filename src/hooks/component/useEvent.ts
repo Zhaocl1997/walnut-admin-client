@@ -25,7 +25,5 @@ export function useEvents<T extends useEventParams>(props: MaybeRefSelf<any>, po
       unref(props)[propEventName](val.params)
   }
 
-  return {
-    onEvent,
-  }
+  return onEvent
 }

@@ -27,7 +27,7 @@ export default defineComponent({
 
     const { setProps, getProps } = useProps<WTable.Props>(props)
 
-    const { onEvent } = useTableEvents(getProps)
+    const onEvent = useTableEvents(getProps)
 
     const {
       onApiTableList,
