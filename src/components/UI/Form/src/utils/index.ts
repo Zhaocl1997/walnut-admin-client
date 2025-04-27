@@ -4,10 +4,17 @@ import { defaultAppLocaleMessageKeys } from '../../../shared'
 import { componentMap } from '../components/FormItem/componentMap'
 
 export const formItemUtils = {
+
+  /**
+   * @description get dynamic component from componentMap
+   */
   getTargetComponent<T>(item: WForm.Schema.Item<T>) {
     return componentMap.get(item?.type.split(':')[1])
   },
 
+  /**
+   * @description get v-if/v-show value from extraProp
+   */
   getIfOrShowBooleanValue<T>(item: WForm.Schema.Item<T>, props: WForm.Props<T>, field: WForm.MaybeBooleanField, defaultValue = true) {
     const maybeBool = item?.extraProp?.[field]
 
@@ -17,6 +24,16 @@ export const formItemUtils = {
     return getBoolean(toRaw(maybeBool), defaultValue)
   },
 
+  /**
+   * @description generate form item based on item & index
+   */
+  generateFormItemId<T>(item: WForm.Schema.Item<T>, index: number) {
+    return wbtoa(`${item.type}-${index}-${item?.formProp?.path}`)
+  },
+
+  /**
+   * @description get translated string relatived with form
+   */
   getTranslatedString<T>(t: Fn, item: WForm.Schema.Item<T>, props: WForm.Props<T>, type: WForm.LocaleType = 'origin') {
     const itemFormProp = item.formProp!
 
@@ -94,12 +111,12 @@ export const inputFormItemTypeList = [
 /**
  * generate different default rule message through based on `inputFormItemTypeList`
  */
-export function generateRuleMessage(t: Fn, p: ComputedRef<WForm.Props>, i: WForm.Schema.Item) {
+export function generateRuleMessage<T>(t: Fn, i: WForm.Schema.Item<T>, p: ComputedRef<WForm.Props<T>>) {
   return t('comp.form.rule', {
     type: inputFormItemTypeList.includes(i.type)
       ? t('comp.base.input')
       : t('comp.base.choose'),
-    label: formItemUtils.getTranslatedString(t, i, p),
+    label: formItemUtils.getTranslatedString(t, i, p.value),
   })
 }
 
@@ -117,7 +134,7 @@ export function generateBaseRules<T>(t: Fn, schemas: WForm.Schema.Item<T>[], pro
         type: i.formProp?.ruleType || 'any',
         trigger: ['change', 'input'],
         required: true,
-        message: generateRuleMessage(t, props, i),
+        message: generateRuleMessage<T>(t, i, props),
       },
     ]
 
@@ -152,14 +169,10 @@ export function extractDefaultFormDataFromSchemas(schemas: WForm.Schema.Item[]) 
 
   return Object.fromEntries(
     unref(schemas)
-      ?.map<[string, BaseDataType | BaseDataType[] | null]>(i => [
-        i?.formProp?.path!,
+      .filter(i => !i.formProp?.path)
+      .map<[string, WForm.Schema.DefaultValue]>(i => [
+        i.formProp?.path ?? '',
         i?.componentProp?.defaultValue ?? null,
-      ])
-      .filter(i => i[0])!,
+      ]),
   )
-}
-
-export function generateFormItemId(item: WForm.Schema.Item, index: number) {
-  return wbtoa(`${item.type}-${index}-${item?.formProp?.path}`)
 }

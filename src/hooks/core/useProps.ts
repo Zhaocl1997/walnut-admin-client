@@ -3,7 +3,7 @@ export function useProps<T>(props: T) {
   const propsRef = ref<Partial<T>>()
 
   /**
-   * @description set props exposed as a method
+   * @description set props
    */
   const setProps = (newProps: Partial<T>) => {
     propsRef.value = { ...unref(propsRef), ...newProps }
@@ -14,8 +14,7 @@ export function useProps<T>(props: T) {
    */
   const getProps = computed<T>(() => ({ ...props, ...unref(propsRef) }))
 
-  return {
-    setProps,
-    getProps,
-  }
+  return { setProps, getProps }
 }
+
+export type IHooksUseProps = ReturnType<typeof useProps>

@@ -13,6 +13,7 @@ import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 import type { IWCompVendorTinymceEditorProps } from '@/components/Vendor/Tinymce'
 import type { useEventParams } from '@/hooks/component/useEvent'
 
+import type { IHooksUseProps } from '@/hooks/core/useProps'
 // raw
 import type {
   DynamicInputProps,
@@ -24,8 +25,8 @@ import type {
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
-import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
 
+import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
 // ui types
 import type { ICompUIButtonProps } from '../../Button'
 import type { ICompUIButtonConfirmProps } from '../../ButtonConfirm'
@@ -42,11 +43,12 @@ import type { ICompUIRadioProps } from '../../Radio'
 import type { ICompUISelectProps } from '../../Select'
 import type { ICompUISwitchProps } from '../../Switch'
 import type { ICompUITimePickerProps } from '../../TimePicker'
-import type { ICompUITreeProps } from '../../Tree'
 
+import type { ICompUITreeProps } from '../../Tree'
 // extend
 import type { ICompUIFormItemExtendDividerProps } from './components/Extend/Divider'
 import type { ICompUIFormItemExtendQueryProps } from './components/Extend/Query'
+import type { ICompUIFormHooksItemId } from './hooks/useFormItemId'
 
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 
@@ -90,7 +92,7 @@ export declare namespace WForm {
   // interface Props<D = any> extends Partial<Omit<WFormPropType, 'schemas'>> {
   //   schemas?: Schema.Item<D>[]
   // }
-  interface Props<T extends Recordable> {
+  interface Props<T> {
     // original
     inline?: boolean
     labelWidth?: StringOrNumber
@@ -149,12 +151,15 @@ export declare namespace WForm {
     descriptionProps?: ICompUIDescriptionProps
   }
 
-  interface Context {
+  interface Context<T> {
     formRef: Ref<Nullable<Inst.NFormInst>>
-    formProps: ComputedRef<Props>
     formSchemas: Ref<Schema.Item[]>
     formEvent: (val: Params.Entry) => void
-    setProps: (val: Props) => void
+    // TODO prop ctx
+    formProps: ComputedRef<Props<T>>
+    setProps: (val: Props<T>) => void
+    formItemIdCtx: ICompUIFormHooksItemId
+    formPropsCtx: IHooksUseProps
   }
 
   namespace Params {
@@ -253,7 +258,7 @@ export declare namespace WForm {
         /**
          * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
          */
-          defaultValue?: BaseDataType | BaseDataType[] | undefined | null
+          defaultValue?: DefaultValue
 
           placeholder?: string
         }
@@ -375,6 +380,8 @@ export declare namespace WForm {
         bgColor: string
       }>
     }
+
+    type DefaultValue = BaseDataType | BaseDataType[] | undefined | null
 
     type Item<D = any> =
       | SchemaItem.DividerSchema<D>

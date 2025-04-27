@@ -234,11 +234,11 @@ const [register2] = useForm<typeof formData.value>({
 
 <template>
   <WDemoCard title="Dynamic Form" description="Some features.">
-    <w-form :model="configFormData" @hook="register1" />
+    <WForm :model="configFormData" @hook="register1" />
 
     <WJSON :value="formData" />
 
-    <w-form :model="formData" @hook="register2" />
+    <WForm :model="formData" @hook="register2" />
   </WDemoCard>
 </template>
 

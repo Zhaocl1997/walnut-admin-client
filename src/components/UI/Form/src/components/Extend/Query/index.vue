@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { ICompUIFormItemExtendQueryProps } from '.'
 import { useFormContext } from '../../../hooks/useFormContext'
-import { toggleFormItemId } from '../../../hooks/useFormItemId'
 
 defineOptions({
   name: 'WFormItemExtendQuery',
@@ -17,7 +16,7 @@ const getText = computed(() =>
   active.value ? t('app.button.expand') : t('app.button.collapse'),
 )
 
-const { formEvent, formSchemas, setProps, formProps } = useFormContext()
+const { formEvent, formSchemas, setProps, formProps, formItemIdCtx } = useFormContext()
 
 function done() {
   setProps({ disabled: false })
@@ -49,7 +48,7 @@ function onToggle() {
   for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
     const item = formSchemas.value[i]
 
-    toggleFormItemId(item, i)
+    formItemIdCtx.toggleFormItemId(item, i)
   }
 }
 
