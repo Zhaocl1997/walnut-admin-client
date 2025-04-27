@@ -8,7 +8,7 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
 
   const { formIdMap, getFormItemId, setFormItemId } = formItemIdCtx
 
-  watchDebounced(
+  watchThrottled(
     () => [props.value.schemas, props.value.model, formIdMap] as const,
     ([s]) => {
       formSchemas.value = s
@@ -25,9 +25,9 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
     {
       deep: true,
       immediate: true,
-      debounce: 200,
+      throttle: 200,
     },
   )
 
-  return { formSchemas }
+  return formSchemas
 }
