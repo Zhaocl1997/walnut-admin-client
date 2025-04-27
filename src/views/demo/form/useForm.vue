@@ -12,7 +12,7 @@ const formData = ref({
   input6: '66',
 })
 
-const [register, { validate, restoreValidation }] = useForm({
+const [register, { validate, restoreValidation }] = useForm<typeof formData.value>({
   span: 8,
   labelWidth: 100,
   schemas: [

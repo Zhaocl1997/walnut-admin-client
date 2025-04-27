@@ -6,7 +6,7 @@ import { formItemUtils } from '../utils'
 // So I used a map-ref to store the collapse state
 // This is totally different from the v-if/v-show control, this is more like the internal collpase state
 export function useFormItemId() {
-  const formIdMap = ref(new Map())
+  const formIdMap = ref(new Map<string, boolean>())
 
   function setFormItemId(item: WForm.Schema.Item, index: number, value: boolean) {
     const id = formItemUtils.generateFormItemId(item, index)

@@ -49,6 +49,7 @@ import type { ICompUITreeProps } from '../../Tree'
 import type { ICompUIFormItemExtendDividerProps } from './components/Extend/Divider'
 import type { ICompUIFormItemExtendQueryProps } from './components/Extend/Query'
 import type { ICompUIFormHooksItemId } from './hooks/useFormItemId'
+import type { ICompUIFormHooksMethods } from './hooks/useFormMethods'
 
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 
@@ -61,37 +62,36 @@ export declare namespace WForm {
 
   type DictComponentType = 'select' | 'checkbox' | 'radio'
 
-  interface FinishLoading { done: Fn }
+  type DefaultValue = BaseDataType | BaseDataType[] | undefined | null
 
-  type onFinishFormLoadingCallback = Fn<FinishLoading, void | Promise<void>>
+  type onFinishFormLoadingCallback = Fn<Params.FinishLoading, void | Promise<void>>
 
   namespace Inst {
     type NFormInst = FormInst
 
-    interface WFormInst {
-      validate: (fields?: string[]) => Promise<boolean> | undefined
-      restoreValidation: Fn
-      setProps: Fn
-      onOpen?: (beforeHook?: Fn) => Promise<void>
-      onClose?: Fn
-      onYes?: (
-        apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
-        done: () => void
-      ) => void
-      onNo?: Fn
+    interface WFormInst<T> extends Omit<NFormInst, 'validate'> {
+      // rewrite
+      validate: (fields?: (keyof T)[]) => Promise<boolean>
+
+      setProps: IHooksUseProps<Props<T>>['setProps']
+
+      // onOpen?: (beforeHook?: Fn) => Promise<void>
+      // onClose?: Fn
+      // onYes?: (
+      //   apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
+      //   done: () => void
+      // ) => void
+      // onNo?: Fn
     }
   }
 
   namespace Hook {
-    type useFormReturnType = [
-      (instance: Inst.WFormInst) => void,
-      Pick<Inst.WFormInst, 'validate' | 'restoreValidation' | 'onOpen'>,
+    type useFormReturnType<T> = [
+      (instance: Inst.WFormInst<T>) => void,
+      ICompUIFormHooksMethods<T>,
     ]
   }
 
-  // interface Props<D = any> extends Partial<Omit<WFormPropType, 'schemas'>> {
-  //   schemas?: Schema.Item<D>[]
-  // }
   interface Props<T> {
     // original
     inline?: boolean
@@ -124,7 +124,7 @@ export declare namespace WForm {
     /**
      * @description class only for form item component
      */
-    forItemComponentClass?: string
+    formItemComponentClass?: string
 
     /**
      * @description locale middle unique key implement with back end messages
@@ -152,14 +152,17 @@ export declare namespace WForm {
   }
 
   interface Context<T> {
-    formRef: Ref<Nullable<Inst.NFormInst>>
-    formSchemas: Ref<Schema.Item[]>
-    formEvent: (val: Params.Entry) => void
-    // TODO prop ctx
-    formProps: ComputedRef<Props<T>>
-    setProps: (val: Props<T>) => void
+    formRef: Ref<Inst.NFormInst>
+    formSchemas: Ref<Schema.Item<T>[]>
+    formEvent: (val: Params.UseEvent<T>) => void
     formItemIdCtx: ICompUIFormHooksItemId
-    formPropsCtx: IHooksUseProps
+    formPropsCtx: IHooksUseProps<Props<T>>
+  }
+
+  interface Emits<T> {
+    hook: [inst: Inst.WFormInst<T>]
+    query: [params: Params.FinishLoading]
+    reset: [params: Params.FinishLoading]
   }
 
   namespace Params {
@@ -167,10 +170,12 @@ export declare namespace WForm {
       formData: T
     }
 
-    type Entry =
+    interface FinishLoading { done: Fn }
+
+    type UseEvent<T> =
       | useEventParams<'query', FinishLoading>
       | useEventParams<'reset', FinishLoading>
-      | useEventParams<'hook', Inst.WFormInst>
+      | useEventParams<'hook', Inst.WFormInst<T>>
   }
 
   namespace Events {
@@ -380,8 +385,6 @@ export declare namespace WForm {
         bgColor: string
       }>
     }
-
-    type DefaultValue = BaseDataType | BaseDataType[] | undefined | null
 
     type Item<D = any> =
       | SchemaItem.DividerSchema<D>

@@ -1,11 +1,12 @@
 import type { WForm } from '../types'
+import type { ICompUIFormHooksMethods } from './useFormMethods'
 
-export function useForm<T>(props: WForm.Props<T> | DeepMaybeRefSelf<WForm.Props<T>>): WForm.Hook.useFormReturnType {
+export function useForm<T>(props: WForm.Props<T>): WForm.Hook.useFormReturnType<T> {
   isInSetup()
 
-  const wFormRef = ref<Nullable<WForm.Inst.WFormInst>>(null)
+  const wFormRef = ref<WForm.Inst.WFormInst<T>>()
 
-  const register = (instance: WForm.Inst.WFormInst) => {
+  const register = (instance: WForm.Inst.WFormInst<T>) => {
     wFormRef.value = instance
 
     watchEffect(() => {
@@ -13,10 +14,9 @@ export function useForm<T>(props: WForm.Props<T> | DeepMaybeRefSelf<WForm.Props<
     })
   }
 
-  const methods = {
-    validate: (fields?: string[]) => wFormRef.value?.validate(fields),
+  const methods: ICompUIFormHooksMethods<T> = {
+    validate: async (fields?: (keyof T)[]) => await (wFormRef.value?.validate(fields) ?? Promise.resolve(false)),
     restoreValidation: () => wFormRef.value?.restoreValidation(),
-    onOpen: (beforeHook?: Fn) => wFormRef.value?.onOpen(beforeHook)!,
   }
 
   return [register, methods]

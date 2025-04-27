@@ -217,10 +217,10 @@ const [register2] = useForm<typeof formData.value>({
 
 <template>
   <WDemoCard title="Divider Form" description="Extend Divider Schema Item">
-    <w-form :model="configData" @hook="register1" />
+    <WForm :model="configData" @hook="register1" />
 
     <WJSON :value="formData" />
 
-    <w-form :model="formData" @hook="register2" />
+    <WForm :model="formData" @hook="register2" />
   </WDemoCard>
 </template>

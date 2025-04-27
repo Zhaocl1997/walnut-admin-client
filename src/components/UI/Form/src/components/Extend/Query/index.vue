@@ -16,7 +16,9 @@ const getText = computed(() =>
   active.value ? t('app.button.expand') : t('app.button.collapse'),
 )
 
-const { formEvent, formSchemas, setProps, formProps, formItemIdCtx } = useFormContext()
+const { formEvent, formSchemas, formItemIdCtx, formPropsCtx } = useFormContext()
+
+const { setProps, getProps } = formPropsCtx
 
 function done() {
   setProps({ disabled: false })
@@ -63,8 +65,8 @@ onMounted(() => {
     <n-button
       size="small"
       type="primary"
-      :disabled="formProps.disabled"
-      :loading="formProps.disabled"
+      :disabled="getProps.disabled"
+      :loading="getProps.disabled"
       @click="onQuery"
     >
       <template #default>
@@ -78,7 +80,7 @@ onMounted(() => {
     <n-button
       size="small"
       type="info"
-      :disabled="formProps.disabled"
+      :disabled="getProps.disabled"
       @click="onFormReset"
     >
       <template #default>
@@ -94,7 +96,7 @@ onMounted(() => {
       size="small"
       type="default"
       icon-placement="right"
-      :disabled="formProps.disabled"
+      :disabled="getProps.disabled"
       @click="onToggle"
     >
       <template #default>

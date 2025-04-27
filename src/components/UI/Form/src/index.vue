@@ -36,24 +36,23 @@ const props = withDefaults(defineProps<WForm.Props<T>>(), {
   baseRules: false,
 })
 
-const emits = defineEmits<{ hook: [inst: WForm.Inst.WFormInst] }>()
+const emits = defineEmits<WForm.Emits<T>>()
 
 const { t } = useAppI18n()
 
 const formRef = templateRef<WForm.Inst.NFormInst>('formRef')
 
-// TODO cannot use usePropsAdvanced
-const { setProps, getProps } = useProps(props)
+const formPropsCtx = useProps<WForm.Props<T>>(props)
+
+const { setProps, getProps } = formPropsCtx
 
 const formItemIdCtx = useFormItemId()
 
-const { formSchemas } = useFormSchemas<T>(getProps, formItemIdCtx)
+const formSchemas = useFormSchemas<T>(getProps, formItemIdCtx)
 
-const { onEvent } = useFormEvents<T>(getProps)
+const formEvent = useFormEvents<T>(getProps)
 
-const { methods } = useFormMethods(formRef)
-
-useFormDict<T>(formSchemas)
+const formMethods = useFormMethods<T>(formRef)
 
 const getFormRules = computed<FormRules>(() =>
   getProps.value.baseRules
@@ -63,22 +62,25 @@ const getFormRules = computed<FormRules>(() =>
 
 setFormContext({
   formRef,
-  formProps: getProps,
   formSchemas,
-  formEvent: onEvent,
-  setProps,
+  formEvent,
   formItemIdCtx,
+  formPropsCtx,
 })
 
 // expose
 defineExpose({
-  ...methods,
+  ...formMethods,
 })
 
 // hook
 emits('hook', {
-  ...methods,
+  ...formMethods,
   setProps,
+})
+
+nextTick(() => {
+  useFormDict<T>(formSchemas.value)
 })
 </script>
 
@@ -119,12 +121,14 @@ emits('hook', {
 
         <n-gi
           v-else-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"
-          v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"
           v-bind="item.gridProp"
           :span="item.gridProp?.span ?? getProps.span"
         >
           <WTransition v-bind="item.transitionProp" appear>
-            <WFormItem :item="item">
+            <WFormItem
+              v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"
+              :item="item"
+            >
               <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
                 <slot :name="item.formProp?.path" />
               </template>

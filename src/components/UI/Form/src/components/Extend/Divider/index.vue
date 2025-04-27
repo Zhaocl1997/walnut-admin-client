@@ -22,7 +22,7 @@ function onToggle() {
 
   for (
     let i = props.index! + props.startIndex! + 1;
-    i <= props.index! + (props.endIndex! ?? formSchemas.value.length);
+    i <= props.index! + (props.endIndex ?? formSchemas.value.length);
     i++
   ) {
     if (!isUndefined(formSchemas.value[i]?._internalShow)) {

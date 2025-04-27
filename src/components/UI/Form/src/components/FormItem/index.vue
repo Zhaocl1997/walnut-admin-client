@@ -10,7 +10,8 @@ defineOptions({
 
 const { item } = defineProps<{ item: WForm.Schema.Item<T> }>()
 
-const { formProps } = useFormContext()
+const { formPropsCtx } = useFormContext()
+const { getProps } = formPropsCtx
 
 const getFormItemDictLabel = computed(() => getDictNameFromMap((item as WForm.Schema.SchemaItem.DictSchema<T>).componentProp!.dictType) as string ?? '')
 
@@ -35,7 +36,7 @@ function FormItemRender() {
 
   return isFunction(_item.componentProp?.render)
     && _item!.componentProp?.render!({
-      formData: formProps.value.model!,
+      formData: getProps.value.model!,
     })
 }
 
@@ -44,7 +45,7 @@ const getBuiltInComp = formItemUtils.getTargetComponent(item)
 
 <template>
   <n-form-item
-    :class="formProps.formItemClass"
+    :class="getProps.formItemClass"
     v-bind="getFormProps"
   >
     <template #label>
@@ -53,10 +54,10 @@ const getBuiltInComp = formItemUtils.getTargetComponent(item)
           {{ $t(getFormItemDictLabel) }}
         </template>
         <template v-else>
-          {{ formItemUtils.getTranslatedString($t, item, formProps) }}
+          {{ formItemUtils.getTranslatedString($t, item, getProps) }}
         </template>
 
-        <WMessage v-if="item.formProp?.labelHelpMessage" :msg="formItemUtils.getTranslatedString($t, item, formProps, 'helpMsg')" />
+        <WMessage v-if="item.formProp?.labelHelpMessage" :msg="formItemUtils.getTranslatedString($t, item, getProps, 'helpMsg')" />
       </div>
     </template>
 
@@ -66,9 +67,9 @@ const getBuiltInComp = formItemUtils.getTargetComponent(item)
       <component
         :is="getBuiltInComp"
         v-if="getBuiltInComp"
-        v-model:value="formProps.model![item.formProp?.path!]"
+        v-model:value="getProps.model![item.formProp?.path!]"
         v-bind="item.componentProp"
-        :class="formProps.formItemComponentClass"
+        :class="getProps.formItemComponentClass"
       />
     </template>
   </n-form-item>

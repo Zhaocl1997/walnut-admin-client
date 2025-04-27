@@ -7,7 +7,7 @@ defineOptions({
 
 const configData = ref({ foldable: false, countToFold: 2 })
 
-const formData = ref({
+const formData = ref<Recordable>({
   input1: '1',
   input2: '2',
   input3: '3',
@@ -45,6 +45,14 @@ const [register1] = useForm<typeof configData.value>({
 
 const [register2] = useForm<typeof formData.value>({
   span: 8,
+  onReset: ({ done }: WForm.Params.FinishLoading) => {
+    console.log('reset')
+
+    setTimeout(() => {
+      done()
+      formData.value = {}
+    }, 2000)
+  },
   schemas: [
     {
       type: 'Base:Input',
@@ -98,15 +106,7 @@ const [register2] = useForm<typeof formData.value>({
   ],
 })
 
-function onReset({ done }: WForm.FinishLoading) {
-  console.log('reset')
-
-  setTimeout(() => {
-    done()
-  }, 2000)
-}
-
-function onQuery({ done }: WForm.FinishLoading) {
+function onQuery({ done }: WForm.Params.FinishLoading) {
   console.log('query')
 
   setTimeout(() => {
@@ -127,7 +127,6 @@ function onQuery({ done }: WForm.FinishLoading) {
     <WForm
       :model="formData"
       @hook="register2"
-      @reset="onReset"
       @query="onQuery"
     />
   </WDemoCard>

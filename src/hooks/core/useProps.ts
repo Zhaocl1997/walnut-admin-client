@@ -1,20 +1,20 @@
 // TODO rewrite
-export function useProps<T>(props: T) {
-  const propsRef = ref<Partial<T>>()
+export function useProps<P>(props: P) {
+  const propsRef = ref<Partial<P>>()
 
   /**
    * @description set props
    */
-  const setProps = (newProps: Partial<T>) => {
+  const setProps = (newProps: Partial<P>) => {
     propsRef.value = { ...unref(propsRef), ...newProps }
   }
 
   /**
    * @description get props
    */
-  const getProps = computed<T>(() => ({ ...props, ...unref(propsRef) }))
+  const getProps = computed<P>(() => ({ ...props, ...unref(propsRef) }))
 
   return { setProps, getProps }
 }
 
-export type IHooksUseProps = ReturnType<typeof useProps>
+export type IHooksUseProps<P> = ReturnType<typeof useProps<P>>

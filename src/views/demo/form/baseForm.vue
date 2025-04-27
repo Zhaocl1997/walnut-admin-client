@@ -6,8 +6,6 @@ defineOptions({
   name: 'BaseForm',
 })
 
-const formRef = ref<WForm.Inst.WFormInst>()
-
 const { stateRef: formData, resetState: resetFormData } = useState({
   // base
   formSlot: null,
@@ -49,6 +47,8 @@ const { stateRef: formData, resetState: resetFormData } = useState({
   formRoleSelect: null,
   formTinymce: null,
 })
+
+const formRef = templateRef<WForm.Inst.WFormInst<typeof formData.value>>('formRef')
 
 const msg = useAppMessage()
 
