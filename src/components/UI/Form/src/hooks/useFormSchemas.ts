@@ -1,13 +1,14 @@
 import type { WForm } from '../types'
+import type { ICompUIFormHooksItemId } from './useFormItemId'
+
 import { isUndefined } from 'lodash-es'
 
-import { formItemUtils } from '../utils'
-import { formIdMap, getFormItemId, setFormItemId } from './useFormItemId'
-
-export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>) {
+export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemIdCtx: ICompUIFormHooksItemId) {
   const formSchemas = ref<WForm.Schema.Item<T>[]>([])
 
-  watch(
+  const { formIdMap, getFormItemId, setFormItemId } = formItemIdCtx
+
+  watchDebounced(
     () => [props.value.schemas, props.value.model, formIdMap] as const,
     ([s]) => {
       formSchemas.value = s
@@ -20,15 +21,11 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>) {
             _internalShow: getFormItemId(i, idx),
           }
         })
-        // .filter(
-        //   i =>
-        //     formItemUtils.getIfOrShowBooleanValue(i, props.value, 'vIf')
-        //     && formItemUtils.getIfOrShowBooleanValue(i, props.value, 'vShow'),
-        // )
     },
     {
       deep: true,
       immediate: true,
+      debounce: 200,
     },
   )
 
