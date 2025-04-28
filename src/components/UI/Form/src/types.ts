@@ -163,6 +163,7 @@ export declare namespace WForm {
         defaultWidth?: string
         defaultHeight?: string
         width?: string
+        height?: string
       }
 
     /**

@@ -100,6 +100,7 @@ export function useFormDialog<T>(props: ComputedRef<WForm.Props<T>>, formRef: Re
       return () => {
         const title = onGetTitle(props.value.dialogProps?.title as string)
         const width = props.value.dialogProps?.width
+        const height = props.value.dialogProps?.height
         const maskClosable = !loading.value && props.value.dialogProps?.maskClosable
         const closable = !loading.value && props.value.dialogProps?.closable
         const defaultButton = getBoolean(props.value.dialogProps?.defaultButton, true)
@@ -114,6 +115,7 @@ export function useFormDialog<T>(props: ComputedRef<WForm.Props<T>>, formRef: Re
               v-model={[show.value, 'show']}
               title={title}
               width={width}
+              height={height}
               maskClosable={maskClosable}
               closable={closable}
               onYes={onYes}
