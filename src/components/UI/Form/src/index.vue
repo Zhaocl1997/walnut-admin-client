@@ -9,12 +9,13 @@ import WFormItemExtendQuery from './components/Extend/Query'
 
 import { setFormContext } from './hooks/useFormContext'
 
+import { useFormDialog } from './hooks/useFormDialog'
 import { useFormDict } from './hooks/useFormDict'
 import { useFormEvents } from './hooks/useFormEvents'
 import { useFormItemId } from './hooks/useFormItemId'
 import { useFormMethods } from './hooks/useFormMethods'
-import { useFormSchemas } from './hooks/useFormSchemas'
 
+import { useFormSchemas } from './hooks/useFormSchemas'
 import { formItemUtils as FIU, generateBaseRules, getScopeOrGlobalProp } from './utils'
 
 defineOptions({
@@ -51,11 +52,15 @@ const { setProps, getProps } = formPropsCtx
 
 const formItemIdCtx = useFormItemId()
 
+const dialogFormRef = templateRef<WForm.Inst.DialogInst>('dialogFormRef')
+const DialogWrapper = useFormDialog(getProps, formRef)
+const [DefineForm, ReuseForm] = createReusableTemplate()
+
 const formSchemas = useFormSchemas<T>(getProps, formItemIdCtx)
 
 const formEvent = useFormEvents<T>(getProps)
 
-const formMethods = useFormMethods<T>(formRef)
+const formMethods = useFormMethods<T>(formRef, dialogFormRef)
 
 const getFormRules = computed<FormRules>(() =>
   getProps.value.baseRules
@@ -110,54 +115,66 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
 </script>
 
 <template>
-  <n-form ref="formRef" :rules="getFormRules" v-bind="omit(getProps, 'rules')">
-    <div
-      class="relative grid"
-      :style="{
-        gridTemplateColumns: `repeat(${getProps.cols}, minmax(0, 1fr))`,
-        rowGap: `${getProps.yGap}px`,
-        columnGap: `${getProps.xGap}px`,
-      }"
-    >
-      <template
-        v-for="(item, index) in formSchemas"
-        :key="item.type === 'Extend:Query' ? `form-query-${index}` : item.type === 'Extend:Divider' ? `form-divider-${index}` : item.formProp?.path"
+  <DefineForm>
+    <n-form ref="formRef" :rules="getFormRules" v-bind="omit(getProps, 'rules')">
+      <div
+        class="relative grid"
+        :style="{
+          gridTemplateColumns: `repeat(${getProps.cols}, minmax(0, 1fr))`,
+          rowGap: `${getProps.yGap}px`,
+          columnGap: `${getProps.xGap}px`,
+        }"
       >
-        <div
-          v-if="item.type === 'Extend:Query'"
-          :style="Object.assign(getGridItemStyle(item, 'query'), item.gridProp?.style)"
-          :class="item.gridProp?.class"
+        <template
+          v-for="(item, index) in formSchemas"
+          :key="item.type === 'Extend:Query' ? `form-query-${index}` : item.type === 'Extend:Divider' ? `form-divider-${index}` : item.formProp?.path"
         >
-          <WTransition appear>
-            <n-form-item :show-feedback="false">
-              <WFormItemExtendQuery v-bind="item.componentProp" v-model:active="queryActive" />
-            </n-form-item>
-          </WTransition>
-        </div>
+          <div
+            v-if="item.type === 'Extend:Query'"
+            :style="Object.assign(getGridItemStyle(item, 'query'), item.gridProp?.style)"
+            :class="item.gridProp?.class"
+          >
+            <WTransition appear>
+              <n-form-item :show-feedback="false">
+                <WFormItemExtendQuery v-bind="item.componentProp" v-model:active="queryActive" />
+              </n-form-item>
+            </WTransition>
+          </div>
 
-        <div
-          v-else-if="item.type === 'Extend:Divider'"
-          :style="Object.assign(getGridItemStyle(item, 'divider'), item.gridProp?.style)"
-          :class="item.gridProp?.class"
-        >
-          <WTransition appear>
-            <n-form-item>
-              <WFormItemExtendDivider v-bind="item.componentProp" :index="index" />
-            </n-form-item>
-          </WTransition>
-        </div>
+          <div
+            v-else-if="item.type === 'Extend:Divider'"
+            :style="Object.assign(getGridItemStyle(item, 'divider'), item.gridProp?.style)"
+            :class="item.gridProp?.class"
+          >
+            <WTransition appear>
+              <n-form-item>
+                <WFormItemExtendDivider v-bind="item.componentProp" :index="index" />
+              </n-form-item>
+            </WTransition>
+          </div>
 
-        <template v-else>
-          <template v-if="getScopeOrGlobalProp(item, 'visibleProp.visibleMode', getProps) === 'no-move'">
-            <div :style="Object.assign(getGridItemStyle(item), item.gridProp?.style)" :class="item.gridProp?.class">
-              <WTransition
-                v-if="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
-                v-bind="item.transitionProp"
-                :transition-name="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
-                appear
-              >
+          <template v-else>
+            <template v-if="getScopeOrGlobalProp(item, 'visibleProp.visibleMode', getProps) === 'no-move'">
+              <div :style="Object.assign(getGridItemStyle(item), item.gridProp?.style)" :class="item.gridProp?.class">
+                <WTransition
+                  v-if="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
+                  v-bind="item.transitionProp"
+                  :transition-name="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
+                  appear
+                >
+                  <WFormItem
+                    v-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
+                    v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
+                    :item="item"
+                  >
+                    <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
+                      <slot :name="item.formProp?.path" />
+                    </template>
+                  </WFormItem>
+                </WTransition>
+
                 <WFormItem
-                  v-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
+                  v-else-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
                   v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
                   :item="item"
                 >
@@ -165,29 +182,32 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
                     <slot :name="item.formProp?.path" />
                   </template>
                 </WFormItem>
+              </div>
+            </template>
+
+            <template v-if="getScopeOrGlobalProp(item, 'visibleProp.visibleMode', getProps) === 'auto-forward'">
+              <WTransition
+                v-if="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
+                v-bind="item.transitionProp"
+                :transition-name="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
+                appear
+              >
+                <div
+                  v-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
+                  v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
+                  :style="Object.assign(getGridItemStyle(item), item.gridProp?.style)"
+                  :class="item.gridProp?.class"
+                >
+                  <WFormItem :item="item">
+                    <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
+                      <slot :name="item.formProp?.path" />
+                    </template>
+                  </WFormItem>
+                </div>
               </WTransition>
 
-              <WFormItem
-                v-else-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
-                v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
-                :item="item"
-              >
-                <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
-                  <slot :name="item.formProp?.path" />
-                </template>
-              </WFormItem>
-            </div>
-          </template>
-
-          <template v-if="getScopeOrGlobalProp(item, 'visibleProp.visibleMode', getProps) === 'auto-forward'">
-            <WTransition
-              v-if="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
-              v-bind="item.transitionProp"
-              :transition-name="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
-              appear
-            >
               <div
-                v-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
+                v-else-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
                 v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
                 :style="Object.assign(getGridItemStyle(item), item.gridProp?.style)"
                 :class="item.gridProp?.class"
@@ -198,23 +218,15 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
                   </template>
                 </WFormItem>
               </div>
-            </WTransition>
-
-            <div
-              v-else-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
-              v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
-              :style="Object.assign(getGridItemStyle(item), item.gridProp?.style)"
-              :class="item.gridProp?.class"
-            >
-              <WFormItem :item="item">
-                <template v-if="item.type === 'Base:Slot' && item.formProp?.path" #[item.formProp?.path]>
-                  <slot :name="item.formProp?.path" />
-                </template>
-              </WFormItem>
-            </div>
+            </template>
           </template>
         </template>
-      </template>
-    </div>
-  </n-form>
+      </div>
+    </n-form>
+  </DefineForm>
+
+  <DialogWrapper v-if="getProps.dialogPreset" ref="dialogFormRef">
+    <ReuseForm />
+  </DialogWrapper>
+  <ReuseForm v-else />
 </template>

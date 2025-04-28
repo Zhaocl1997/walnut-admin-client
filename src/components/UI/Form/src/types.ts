@@ -35,14 +35,17 @@ import type { ICompUICheckboxProps } from '../../Checkbox'
 import type { ICompUIColorPickerProps } from '../../ColorPicker'
 import type { ICompUIDatePickerProps } from '../../DatePicker'
 import type { ICompUIDescriptionProps, ICompUIDescriptionsItem } from '../../Descriptions'
+import type { ICompUIDrawerProps } from '../../Drawer'
 import type { ICompUIDynamicTagsProps } from '../../DynamicTags'
 import type { ICompUIInputProps } from '../../Input'
 import type { ICompUIInputNumberProps } from '../../InputNumber'
+import type { ICompUIModalProps } from '../../Modal'
 import type { ICompUIRadioProps } from '../../Radio'
 import type { ICompUISelectProps } from '../../Select'
-import type { ICompUISwitchProps } from '../../Switch'
-import type { ICompUITimePickerProps } from '../../TimePicker'
 
+import type { ICompUISwitchProps } from '../../Switch'
+import type { WTable } from '../../Table'
+import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'
 // extend
 import type { ICompUIFormItemExtendDividerProps } from './components/Extend/Divider'
@@ -54,7 +57,7 @@ export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'reg
 
 export declare namespace WForm {
 
-  type preset = 'modal' | 'drawer'
+  type FormDialogPreset = 'modal' | 'drawer'
 
   type LocaleType = 'origin' | 'helpMsg' | 'rule' | 'placeholder'
 
@@ -73,19 +76,22 @@ export declare namespace WForm {
   namespace Inst {
     type NFormInst = FormInst
 
-    interface WFormInst<T> extends Omit<NFormInst, 'validate'> {
+    interface WFormInst<T> extends Omit<NFormInst, 'validate'>, DialogInst {
       // rewrite
       validate: (fields?: (keyof T)[]) => Promise<boolean>
 
       setProps: IHooksUseProps<Props<T>>['setProps']
 
-      // onOpen?: (beforeHook?: Fn) => Promise<void>
-      // onClose?: Fn
-      // onYes?: (
-      //   apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
-      //   done: () => void
-      // ) => void
-      // onNo?: Fn
+      onYes?: (
+        apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
+        done: () => void
+      ) => void
+      onNo?: Fn
+    }
+
+    interface DialogInst {
+      onOpen: (beforeHook?: Fn) => Promise<void>
+      onClose: Fn
     }
   }
 
@@ -117,7 +123,7 @@ export declare namespace WForm {
     span?: number
     xGap?: number
     yGap?: number
-    perset?: WForm.preset
+    // perset?: WForm.preset
     baseRules?: boolean
 
     /**
@@ -139,6 +145,25 @@ export declare namespace WForm {
      * @description class only for form item component
      */
     formItemComponentClass?: string
+
+    /**
+     * @description model/drawer form preset
+     */
+    dialogPreset?: FormDialogPreset
+
+    /**
+     * @description model/drawer props
+     */
+    dialogProps?: (ICompUIModalProps | ICompUIDrawerProps) &
+      Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
+        actionType?: WTable.HeaderActionType
+        defaultButton?: boolean
+        detailTitle?: boolean
+        resizable?: boolean
+        defaultWidth?: string
+        defaultHeight?: string
+        width?: string
+      }
 
     /**
      * @description locale middle unique key implement with back end messages

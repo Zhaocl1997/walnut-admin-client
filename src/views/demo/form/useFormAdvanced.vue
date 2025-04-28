@@ -1,15 +1,17 @@
 <script lang="ts" setup>
+import { WForm } from '@/components/UI/Form'
+
 defineOptions({
   name: 'UseFormAdvanced',
 })
 
 const configData = ref({
-  preset: 'modal',
+  preset: 'modal' as WForm.FormDialogPreset,
   maskClosable: true,
   title: 'Title',
 })
 
-const formData = ref({})
+const formData = ref<Recordable>({})
 
 const [register1] = useForm<typeof configData.value>({
   span: 12,
@@ -49,9 +51,9 @@ const [register1] = useForm<typeof configData.value>({
   ],
 })
 
-const [register2, { onOpen }] = useForm({
-  preset: computed(() => configData.value.preset),
-  advancedProps: {
+const [register2, { onOpen }] = useForm<typeof formData.value>({
+  dialogPreset: computed(() => configData.value.preset),
+  dialogProps: {
     maskClosable: computed(() => configData.value.maskClosable),
     title: computed(() => configData.value.title),
     onYes: (_, done) => {
@@ -83,6 +85,7 @@ const [register2, { onOpen }] = useForm({
 })
 
 function onOpenAdvacned() {
+  console.log({ onOpen }, 123)
   onOpen((done) => {
     setTimeout(() => {
       done()
@@ -93,7 +96,7 @@ function onOpenAdvacned() {
 
 <template>
   <WDemoCard title="useForm(advanced)" description="Advanced Form usage.">
-    <w-form :model="configData" @hook="register1" />
+    <WForm :model="configData" @hook="register1" />
 
     <WJSON :value="formData" />
 
@@ -101,6 +104,6 @@ function onOpenAdvacned() {
       Open An Advanced Form
     </n-button>
 
-    <w-form :model="formData" @hook="register2" />
+    <WForm :model="formData" @hook="register2" />
   </WDemoCard>
 </template>

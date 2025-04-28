@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { WForm } from '@/components/UI/Form'
+
 defineOptions({
   name: 'DynamicForm',
 })
@@ -6,7 +8,7 @@ defineOptions({
 const configFormData = ref({
   transitionNameGlobal: undefined as ValueOfAppConstTransitionName | undefined,
   visibleModeGlobal: false,
-  visibleMode: 'auto-forward',
+  visibleMode: 'auto-forward' as WForm.FormVisibleMode,
   showFeedback: true,
   vIf: true,
   vShow: true,
@@ -210,7 +212,7 @@ const [register1] = useForm<typeof configFormData.value>({
 
 const [register2] = useForm<typeof formData.value>({
   transitionName: computed(() => configFormData.value.transitionNameGlobal ? 'slide-down' : undefined),
-  visibleMode: computed(() => configFormData.value.visibleMode),
+  visibleMode: computed(() => configFormData.value.visibleMode as WForm.FormVisibleMode),
   showFeedback: computed(() => configFormData.value.showFeedback),
   span: computed(() => configFormData.value.span),
   labelWidth: computed(() => configFormData.value.labelWidth),

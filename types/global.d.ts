@@ -36,25 +36,16 @@ declare type RecordNullable<T> = {
   [P in keyof T]?: Nullable<T[P]>
 }
 
-declare type MaybeRefSelf<T> = T | Ref<T> | ComputedRef<T>
-
-// TODO type
-// extend string => form type not intelligence
-// not extend string => other string not working
-declare type DeepMaybeRefSelf<T> =
-  T extends string
-    ? MaybeRefSelf<string>
-    : T extends boolean
-      ? MaybeRefSelf<boolean>
-      : T extends number
-        ? MaybeRefSelf<number>
-        : T extends Array<any>
-          ? DeepMaybeRefSelf<T[number]>
-          : T extends Record<string, any>
-            ? {
-                [K in keyof T]: DeepMaybeRefSelf<T[K]>
-              }
-            : MaybeRefSelf<T>
+type IDeepMaybeRef<T> =
+  T extends Ref<infer V>
+    ? MaybeRefOrGetter<V>
+    : T extends (...args: infer Args) => infer R
+      ? (...args: { [K in keyof Args]: IDeepMaybeRef<Args[K]> }) => IDeepMaybeRef<R>
+      : T extends Array<any> | object
+        ? {
+            [K in keyof T]: IDeepMaybeRef<T[K]>;
+          }
+        : MaybeRefOrGetter<T>
 
 const __APP_INFO__: {
   name: string

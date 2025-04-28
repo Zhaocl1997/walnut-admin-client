@@ -1,6 +1,6 @@
 import type { WForm } from '../types'
 
-export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst>) {
+export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst>, dialogRef: Ref<WForm.Inst.DialogInst>) {
   function validate(fields?: (keyof T)[]) {
     if (!fields || fields.length === 0) {
       return new Promise<boolean>((resolve) => {
@@ -28,6 +28,12 @@ export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst>) {
   return {
     validate,
     restoreValidation,
+    onOpen: (done: Fn) => {
+      dialogRef.value?.onOpen(done)
+    },
+    onClose: () => {
+      dialogRef.value?.onClose()
+    },
   }
 }
 
