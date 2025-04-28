@@ -5,7 +5,7 @@ defineOptions({
   name: 'QueryForm',
 })
 
-const configData = ref({ foldable: false, countToFold: 2 })
+const configData = ref({ foldable: false, countToFold: 2, span: 8 })
 
 const formData = ref<Recordable>({
   input1: '1',
@@ -29,6 +29,20 @@ const [register1] = useForm<typeof configData.value>({
     {
       type: 'Raw:Slider',
       formProp: {
+        label: 'Grid Span',
+        path: 'span',
+      },
+      componentProp: {
+        min: 0,
+        max: 24,
+      },
+      visibleProp: {
+        vShow: ({ formData }) => !!formData.foldable,
+      },
+    },
+    {
+      type: 'Raw:Slider',
+      formProp: {
         label: 'Count to fold',
         path: 'countToFold',
       },
@@ -44,7 +58,7 @@ const [register1] = useForm<typeof configData.value>({
 })
 
 const [register2] = useForm<typeof formData.value>({
-  span: 8,
+  span: computed(() => configData.value.span),
   onReset: ({ done }: WForm.Params.FinishLoading) => {
     console.log('reset')
 

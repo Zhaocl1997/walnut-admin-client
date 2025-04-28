@@ -9,6 +9,7 @@ import { componentMap } from '../components/FormItem/componentMap'
  */
 export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: 'transitionProp.transitionName', props: WForm.Props<T>): ValueOfAppConstTransitionName
 export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: 'visibleProp.visibleMode', props: WForm.Props<T>): WForm.FormVisibleMode
+export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: 'gridProp.span', props: WForm.Props<T>): number
 export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: WForm.FormScopeGlobalFields, props: WForm.Props<T>) {
   return get(item, itemField) ?? props[itemField.split('.')[1] as keyof WForm.Props<T>]
 }

@@ -21,7 +21,6 @@ import type {
   FormItemProps,
   FormItemRule,
   FormRules,
-  GridItemProps,
   SliderProps,
   TreeSelectProps,
 } from 'naive-ui'
@@ -65,7 +64,7 @@ export declare namespace WForm {
 
   type FormVisibleMode = 'no-move' | 'auto-forward'
 
-  type FormScopeGlobalFields = 'transitionProp.transitionName' | 'visibleProp.visibleMode'
+  type FormScopeGlobalFields = 'transitionProp.transitionName' | 'visibleProp.visibleMode' | 'gridProp.span'
 
   type DefaultValue = BaseDataType | BaseDataType[] | undefined | null
 
@@ -328,7 +327,15 @@ export declare namespace WForm {
         baseRuleApplied?: boolean
       }
 
-      gridProp?: GridItemProps & { class?: string }
+      /**
+       * @description grid prop
+       * @link https://www.naiveui.com/zh-CN/os-theme/components/grid#GridItem-Props
+       */
+      gridProp?: {
+        span?: number
+        offset?: number
+        suffix?: boolean
+      }
 
       /**
        * @description Customize form item transition
@@ -359,7 +366,7 @@ export declare namespace WForm {
       /**
        * @description Extra Prop placeholder for component
        */
-      extraProp?: & Partial<EP>
+      extraProp?: Partial<EP>
 
       descriptionProp?: Partial<ICompUIDescriptionsItem<D>>
     }

@@ -10,7 +10,7 @@ const props = defineProps<ICompUIFormItemExtendQueryProps>()
 
 const { t } = useAppI18n()
 
-const active = ref(false)
+const active = defineModel<boolean>('active', { required: true })
 
 const getText = computed(() =>
   active.value ? t('app.button.expand') : t('app.button.collapse'),
