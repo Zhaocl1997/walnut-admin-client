@@ -122,7 +122,7 @@ const getTitle = computed(() =>
       ]"
     />
 
-    <WTransition appear name="fade-left" :duration="100">
+    <WTransition appear transition-name="fade-left" :duration="100">
       <w-text-scroll
         v-if="getShowTite"
         class="col-span-10 truncate whitespace-nowrap text-sm" :class="[
@@ -136,7 +136,7 @@ const getTitle = computed(() =>
       </w-text-scroll>
     </WTransition>
 
-    <WTransition appear name="fade-right">
+    <WTransition appear transition-name="fade-right">
       <WIcon
         v-if="getShowCloseIcon"
         icon="ant-design:close-outlined"

@@ -91,7 +91,7 @@ function onMouseUp(e: MouseEvent, name: string) {
         },
       ]"
     >
-      <WTransition appear :name="appSetting.tabs.itemTransition" group>
+      <WTransition appear :transition-name="appSetting.tabs.itemTransition" group>
         <div
           v-for="(item, index) in appTab.tabs"
           :key="item.name"

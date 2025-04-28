@@ -76,7 +76,7 @@ watch(locale, () => {
             <div class="w-full">
               <AuthFormTab ref="signInRef" />
 
-              <WTransition name="fade-left-big" appear :duration="1700" />
+              <WTransition transition-name="fade-left-big" appear :duration="1700" />
             </div>
           </div>
         </n-card>

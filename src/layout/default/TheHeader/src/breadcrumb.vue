@@ -78,7 +78,7 @@ export default defineComponent({
     )
 
     return () => (
-      <WTransition appear name={appSetting.getBreadcrumbTransition}>
+      <WTransition appear transition-name={appSetting.getBreadcrumbTransition}>
         {appSetting.getBreadcrumbShow && (
           <n-config-provider
             id={appSetting.getBreadcrumbId}

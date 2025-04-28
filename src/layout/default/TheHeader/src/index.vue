@@ -17,7 +17,7 @@ function onShowAside() {
 </script>
 
 <template>
-  <WTransition appear :name="appSetting.getHeaderTransition">
+  <WTransition appear :transition-name="appSetting.getHeaderTransition">
     <n-layout-header
       v-if="appSetting.getHeaderShow"
       :id="appSetting.getHeaderId"
@@ -49,7 +49,7 @@ function onShowAside() {
             <HeaderBreadCrumb />
           </template>
 
-          <!-- <WTransition name="slide-up">
+          <!-- <WTransition transition-name="slide-up">
               <div
                 v-if="appSetting.app.layout === 'top-menu'"
                 class="hstack items-center justify-between"

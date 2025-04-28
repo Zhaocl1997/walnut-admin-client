@@ -106,7 +106,7 @@ export default defineComponent({
     }
 
     return () => (
-      <WTransition appear name={appSetting.getMenuTransition}>
+      <WTransition appear transition-name={appSetting.getMenuTransition}>
         {appSetting.getMenuShow && (
           <WScrollbar
             height="100%"

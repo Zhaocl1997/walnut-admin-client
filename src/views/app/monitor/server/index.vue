@@ -34,7 +34,7 @@ function onNetworkAuthorizeSuccess(p: string) {
     <n-grid-item>
       <n-grid cols="1" :x-gap="4" :y-gap="4" responsive="screen">
         <n-grid-item>
-          <WTransition name="fade-down" appear>
+          <WTransition transition-name="fade-down" appear>
             <AppMonitorServerCPU />
           </WTransition>
         </n-grid-item>
@@ -46,14 +46,14 @@ function onNetworkAuthorizeSuccess(p: string) {
             preset-width="100%"
             preset-height="230px"
           >
-            <WTransition name="fade-down" appear :duration="400">
+            <WTransition transition-name="fade-down" appear :duration="400">
               <AppMonitorServerMem />
             </WTransition>
           </w-app-authorize>
         </n-grid-item>
 
         <n-grid-item>
-          <WTransition name="fade-down" appear :duration="500">
+          <WTransition transition-name="fade-down" appear :duration="500">
             <AppMonitorServerOS />
           </WTransition>
         </n-grid-item>
@@ -66,7 +66,7 @@ function onNetworkAuthorizeSuccess(p: string) {
             preset-height="230px"
             @iptc-success="onSystemAuthorizeSuccess"
           >
-            <WTransition name="fade-down" appear :duration="600">
+            <WTransition transition-name="fade-down" appear :duration="600">
               <AppMonitorServerSystem
                 :system-permission="systemPermission"
               />
@@ -79,19 +79,19 @@ function onNetworkAuthorizeSuccess(p: string) {
     <n-grid-item>
       <n-grid cols="1" :x-gap="4" :y-gap="4" responsive="screen">
         <n-grid-item>
-          <WTransition name="fade-down" appear :duration="700">
+          <WTransition transition-name="fade-down" appear :duration="700">
             <AppMonitorServerDisk />
           </WTransition>
         </n-grid-item>
 
         <n-grid-item>
-          <WTransition name="fade-down" appear :duration="800">
+          <WTransition transition-name="fade-down" appear :duration="800">
             <AppMonitorServerBattery />
           </WTransition>
         </n-grid-item>
 
         <n-grid-item>
-          <WTransition name="fade-down" appear :duration="900">
+          <WTransition transition-name="fade-down" appear :duration="900">
             <AppMonitorServerTime />
           </WTransition>
         </n-grid-item>
@@ -104,7 +104,7 @@ function onNetworkAuthorizeSuccess(p: string) {
             preset-height="230px"
             @iptc-success="onNetworkAuthorizeSuccess"
           >
-            <WTransition name="fade-down" appear :duration="1000">
+            <WTransition transition-name="fade-down" appear :duration="1000">
               <AppMonitorServerNetwork
                 :network-permission="networkPermission"
               />

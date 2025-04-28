@@ -48,7 +48,7 @@ if (!isDev()) {
 
 <template>
   <n-layout has-sider>
-    <WTransition appear name="slide-left">
+    <WTransition appear transition-name="slide-left">
       <TheAside
         v-if="appSetting.getMenuAdapterStatus"
         class="walnut-aside"

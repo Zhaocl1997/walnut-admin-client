@@ -28,7 +28,7 @@ const getAllIFramePages = computed(() =>
 <template>
   <template v-if="getAllIFramePages.length > 0">
     <template v-for="item in getAllIFramePages" :key="item.name">
-      <WTransition :name="appSetting.getTransition" mode="out-in" appear>
+      <WTransition :transition-name="appSetting.getTransition" mode="out-in" appear>
         <WIFrame
           v-if="item.url && appTab.tabs.map((i) => i.name).includes(item.name!)"
           v-show="item.name === $route.name" :frame-src="item.url!"

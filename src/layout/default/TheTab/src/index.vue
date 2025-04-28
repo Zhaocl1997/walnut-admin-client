@@ -72,7 +72,7 @@ setTabsContext({
 </script>
 
 <template>
-  <WTransition appear :name="appSetting.getTabsTrasition">
+  <WTransition appear :transition-name="appSetting.getTabsTrasition">
     <n-layout-header
       v-if="appSetting.getTabsShow" :id="appSetting.getTabsId" bordered
       :inverted="appSetting.getTabsInverted" :style="{ zIndex: 999, height: `${appSetting.tabs.height}px` }" :class="{
@@ -82,7 +82,7 @@ setTabsContext({
     >
       <div class="h-full hstack justify-between">
         <!-- left utils -->
-        <WTransition appear name="fade-left">
+        <WTransition appear transition-name="fade-left">
           <TabsUtils v-if="getShowUtils" class="hstack flex-none justify-start" :lists="leftUtils" />
         </WTransition>
 
@@ -97,7 +97,7 @@ setTabsContext({
         />
 
         <!-- right utils -->
-        <WTransition appear name="fade-right">
+        <WTransition appear transition-name="fade-right">
           <TabsUtils v-if="getShowUtils" class="hstack flex-none justify-end" :lists="rightUtils" />
         </WTransition>
 

@@ -8,26 +8,20 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<ICompExtraTransitionProps>(), {
-  name: 'fade',
-  mode: 'out-in',
-  group: false,
-  appear: false,
-  duration: 300,
-})
+const { transitionName = 'fade', mode = 'out-in', group = false, appear = false, duration = 300 } = defineProps<ICompExtraTransitionProps>()
 
 function getActiveClass(m: 'In' | 'Out') {
-  const isDash = props.name?.includes('-')
+  const isDash = transitionName?.includes('-')
   if (isDash) {
     return (
-      `animate__animated animate__${props.name?.split('-')[0] + m + upperFirst(props.name.split('-')[1])}`
+      `animate__animated animate__${transitionName?.split('-')[0] + m + upperFirst(transitionName.split('-')[1])}`
     )
   }
-  return `animate__animated animate__${props.name}${m}`
+  return `animate__animated animate__${transitionName}${m}`
 }
 
 function onBeforeEnter(el: RendererElement) {
-  el.style.animationDuration = `${props.duration / 1000}s`
+  el.style.animationDuration = `${duration / 1000}s`
 }
 </script>
 

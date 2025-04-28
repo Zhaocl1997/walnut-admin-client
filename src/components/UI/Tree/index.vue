@@ -285,7 +285,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
 
   return (getProps.value.treeProps?.draggable || getProps.value.deletable)
     ? (
-        <WTransition name="fade-right">
+        <WTransition transition-name="fade-right">
           <div
             class="flex flex-row flex-nowrap items-center justify-center gap-x-1"
             onClick={(e) => {

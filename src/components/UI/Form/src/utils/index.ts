@@ -45,7 +45,7 @@ export const formItemUtils = {
     const itemFormProp = item.formProp!
 
     // used for dict form item
-    if (itemFormProp.label === true)
+    if (itemFormProp?.label === true)
       return
 
     // used for desc form item
@@ -55,10 +55,10 @@ export const formItemUtils = {
     // locale unique key
     const key = props.localeUniqueKey
 
-    const needLocale = key && getBoolean(itemFormProp.locale)
+    const needLocale = key && getBoolean(itemFormProp?.locale)
 
-    const path = itemFormProp.path
-    const label = itemFormProp.label
+    const path = itemFormProp?.path
+    const label = itemFormProp?.label
 
     // TODO for what??
     // got label, return label
@@ -71,7 +71,7 @@ export const formItemUtils = {
       if (type === 'origin')
         return label
       if (type === 'helpMsg')
-        return itemFormProp.labelHelpMessage
+        return itemFormProp?.labelHelpMessage
       if (type === 'placeholder')
         return item.componentProp?.placeholder
       return
@@ -82,7 +82,7 @@ export const formItemUtils = {
       return t(`app.base.${path}`)
 
     const isLocaleWithTable
-      = getBoolean(itemFormProp.localeWithTable)
+      = getBoolean(itemFormProp?.localeWithTable)
         && getBoolean(props.localeWithTable)
 
     const format = (key: string) => {

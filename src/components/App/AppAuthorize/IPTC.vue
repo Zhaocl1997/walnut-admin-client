@@ -69,7 +69,7 @@ function onKeyup(e: KeyboardEvent) {
 </script>
 
 <template>
-  <WTransition appear name="fade-down">
+  <WTransition appear transition-name="fade-down">
     <div
       v-if="!rightPermission"
       class="relative flex items-center justify-center"

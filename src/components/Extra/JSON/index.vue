@@ -28,7 +28,7 @@ const isHovered = useElementHover(jsonRef)
     <div ref="jsonRef">
       <n-code :code="getJSON" language="json" word-wrap :trim="false" />
 
-      <WTransition v-if="copy" appear name="fade-right">
+      <WTransition v-if="copy" appear transition-name="fade-right">
         <WCopy
           v-show="isHovered"
           :source="getJSON"

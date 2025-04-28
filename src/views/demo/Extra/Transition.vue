@@ -56,7 +56,7 @@ function onAddRandom() {
         <WForm :model="formData" @hook="register" />
 
         <div class="h-36">
-          <WTransition :name="formData.name">
+          <WTransition :transition-name="formData.name">
             <div v-show="show" class="h-36 w-36 bg-red-400" />
           </WTransition>
         </div>
@@ -72,7 +72,7 @@ function onAddRandom() {
         </n-button>
 
         <div class="flex flex-row flex-wrap gap-2">
-          <WTransition :name="formData.name" group>
+          <WTransition :transition-name="formData.name" group>
             <div v-for="(item, index) in items" :key="index" class="h-36 w-36 flex items-center justify-center bg-red-400 text-center text-16 font-bold">
               {{ item }}
             </div>

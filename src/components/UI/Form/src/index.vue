@@ -135,7 +135,7 @@ nextTick(() => {
                 gridColumn: `span ${item.gridProp?.span ?? getProps.span} / span ${item.gridProp?.span ?? getProps.span}`,
               }"
             >
-              <WTransition v-bind="item.transitionProp" :name="item?.transitionProp?.name ?? getProps.transitionName" appear>
+              <WTransition v-bind="item.transitionProp" :transition-name="item?.transitionProp?.name ?? getProps.transitionName" appear>
                 <WFormItem
                   v-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"
                   v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"
@@ -150,7 +150,7 @@ nextTick(() => {
           </template>
 
           <template v-if="formItemUtils.getScopeOrGlobalProp(item, 'extraProp', getProps, 'visibleMode') === 'auto-forward'">
-            <WTransition v-bind="item.transitionProp" :name="item?.transitionProp?.name ?? getProps.transitionName" appear>
+            <WTransition v-bind="item.transitionProp" :transition-name="item?.transitionProp?.name ?? getProps.transitionName" appear>
               <div
                 v-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"
                 v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"

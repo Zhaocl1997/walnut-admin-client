@@ -75,7 +75,7 @@ watch(
             :duration="appSettings.app.reducedMotion ? 0 : 3000"
           />
 
-          <WTransition appear name="slide-up">
+          <WTransition transition-name name="slide-up">
             <n-tag
               v-show="isPositive !== undefined && showTrend"
               class="ml-2"
@@ -101,7 +101,7 @@ watch(
           </WTransition>
         </div>
 
-        <WTransition appear name="slide-right">
+        <WTransition transition-name name="slide-right">
           <WIcon
             height="48"
             :icon="icon"
