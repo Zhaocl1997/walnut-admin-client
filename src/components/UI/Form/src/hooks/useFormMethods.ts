@@ -5,7 +5,7 @@ export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst>) {
     if (!fields || fields.length === 0) {
       return new Promise<boolean>((resolve) => {
         formRef.value?.validate((err) => {
-          resolve(!!err)
+          resolve(!err)
         })
       })
     }
@@ -13,7 +13,7 @@ export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst>) {
       return new Promise<boolean>((resolve) => {
         formRef.value?.validate(
           (err) => {
-            resolve(!!err)
+            resolve(!err)
           },
           rule => fields?.includes(rule?.key as keyof T),
         )

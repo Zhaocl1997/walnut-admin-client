@@ -215,5 +215,5 @@ const [register, { validate }] = useForm<typeof emailFormData>({
 </script>
 
 <template>
-  <w-form :model="emailFormData" @hook="register" />
+  <WForm :model="emailFormData" @hook="register" />
 </template>

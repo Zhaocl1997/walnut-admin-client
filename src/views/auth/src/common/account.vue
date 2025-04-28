@@ -29,8 +29,6 @@ async function onSubmit() {
     try {
       await appAuth.AuthWithBasicPassword(accountFormData)
 
-      loading.value = false
-
       // close demonstrate notification
       appNaive.destroyAllNotiInst()
     }
@@ -141,7 +139,9 @@ function setFormData(userName: string, password: string) {
 }
 
 onMounted(() => {
-  setFormData(appAuth.remember?.userName!, appAuth.remember?.password!)
+  if (appAuth.remember) {
+    setFormData(appAuth.remember.userName!, appAuth.remember.password!)
+  }
 })
 
 defineExpose({
@@ -150,5 +150,5 @@ defineExpose({
 </script>
 
 <template>
-  <w-form :model="accountFormData" @hook="register" />
+  <WForm :model="accountFormData" @hook="register" />
 </template>

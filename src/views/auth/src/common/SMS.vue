@@ -220,5 +220,5 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
 </script>
 
 <template>
-  <w-form :model="SMSFormData" @hook="register" />
+  <WForm :model="SMSFormData" @hook="register" />
 </template>
