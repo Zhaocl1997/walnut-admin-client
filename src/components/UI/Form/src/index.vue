@@ -128,7 +128,7 @@ nextTick(() => {
         </n-gi>
 
         <template v-else>
-          <template v-if="formItemUtils.getScopeOrGlobalProp(item, getProps, 'visibleMode') === 'no-move'">
+          <template v-if="formItemUtils.getScopeOrGlobalProp(item, 'extraProp', getProps, 'visibleMode') === 'no-move'">
             <div
               v-bind="item.gridProp"
               :style="{
@@ -149,7 +149,7 @@ nextTick(() => {
             </div>
           </template>
 
-          <template v-if="formItemUtils.getScopeOrGlobalProp(item, getProps, 'visibleMode') === 'auto-forward'">
+          <template v-if="formItemUtils.getScopeOrGlobalProp(item, 'extraProp', getProps, 'visibleMode') === 'auto-forward'">
             <WTransition v-bind="item.transitionProp" :name="item?.transitionProp?.name ?? getProps.transitionName" appear>
               <div
                 v-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"

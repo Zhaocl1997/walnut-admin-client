@@ -122,7 +122,7 @@ export declare namespace WForm {
     baseRules?: boolean
 
     /**
-     * @description v-if/v-show form item visible position mode
+     * @description global v-if/v-show form item visible position mode
      */
     visibleMode?: FormVisibleMode
 

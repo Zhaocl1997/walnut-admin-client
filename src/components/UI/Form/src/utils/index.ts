@@ -27,8 +27,8 @@ export const formItemUtils = {
   /**
    * @description get v-if/v-show value from extraProp
    */
-  getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, props: WForm.Props<T>, field: WForm.ScopeOrGlobalField) {
-    return item?.extraProp?.[field] ?? props[field]
+  getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: keyof WForm.Schema.Item<T>, props: WForm.Props<T>, field: WForm.ScopeOrGlobalField) {
+    return item?.[itemField]?.[field] ?? props[field]
   },
 
   /**
