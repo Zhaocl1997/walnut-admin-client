@@ -22,9 +22,11 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
         titlePlacement: 'left',
         foldable: true,
       },
-      extraProp: {
-        sticky: true,
-        bgColor: modalColor,
+      gridProp: {
+        class: 'sticky top-0 z-10 py-2',
+        style: {
+          backgroundColor: modalColor,
+        },
       },
     },
 

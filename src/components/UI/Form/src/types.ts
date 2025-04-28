@@ -335,6 +335,8 @@ export declare namespace WForm {
         span?: number
         offset?: number
         suffix?: boolean
+        class?: string
+        style?: CSSProperties
       }
 
       /**
