@@ -10,6 +10,7 @@ const configFormData = ref({
   showFeedback: true,
   vIf: true,
   vShow: true,
+  vShowInput3: true,
   transition1: 'fade-right-big' as ValueOfAppConstTransitionName,
   transition2: 'fade-left-big' as ValueOfAppConstTransitionName,
   disabled: false,
@@ -82,7 +83,7 @@ const [register1] = useForm<typeof configFormData.value>({
           },
         ],
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.visibleModeGlobal,
       },
     },
@@ -100,7 +101,7 @@ const [register1] = useForm<typeof configFormData.value>({
         label: 'Transition for Input 1',
         path: 'transition1',
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => !formData.transitionNameGlobal,
       },
     },
@@ -117,8 +118,15 @@ const [register1] = useForm<typeof configFormData.value>({
         label: 'Transition for Input 2',
         path: 'transition2',
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => !formData.transitionNameGlobal,
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        label: '`v-show` to control `Input 3`',
+        path: 'vShowInput3',
       },
     },
     {
@@ -223,9 +231,9 @@ const [register2] = useForm<typeof formData.value>({
         span: computed(() => configFormData.value.inputOneSpan),
       },
       transitionProp: {
-        name: computed(() => configFormData.value.transition1),
+        transitionName: computed(() => configFormData.value.transition1),
       },
-      extraProp: {
+      visibleProp: {
         vIf: computed(() => configFormData.value.vIf),
         visibleMode: 'auto-forward',
       },
@@ -240,9 +248,9 @@ const [register2] = useForm<typeof formData.value>({
         clearable: true,
       },
       transitionProp: {
-        name: computed(() => configFormData.value.transition2),
+        transitionName: computed(() => configFormData.value.transition2),
       },
-      extraProp: {
+      visibleProp: {
         vShow: computed(() => configFormData.value.vShow),
       },
     },
@@ -260,6 +268,9 @@ const [register2] = useForm<typeof formData.value>({
       componentProp: {
         clearable: true,
       },
+      visibleProp: {
+        vShow: computed(() => configFormData.value.vShowInput3),
+      },
     },
     {
       type: 'Base:Input',
@@ -271,7 +282,7 @@ const [register2] = useForm<typeof formData.value>({
       componentProp: {
         clearable: true,
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.input3,
       },
     },

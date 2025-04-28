@@ -41,7 +41,7 @@ const [register1] = useForm<typeof configData.value>({
           label: i,
         })),
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.title,
       },
     },
@@ -51,7 +51,7 @@ const [register1] = useForm<typeof configData.value>({
         label: 'Dashed',
         path: 'dashed',
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.title,
       },
     },
@@ -64,7 +64,7 @@ const [register1] = useForm<typeof configData.value>({
       componentProp: {
         clearable: true,
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.title,
       },
     },
@@ -74,7 +74,7 @@ const [register1] = useForm<typeof configData.value>({
         label: 'Foldable',
         path: 'foldable',
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.title,
       },
     },
@@ -88,7 +88,7 @@ const [register1] = useForm<typeof configData.value>({
         min: 0,
         max: computed(() => configData.value.endIndex),
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.foldable,
       },
     },
@@ -102,7 +102,7 @@ const [register1] = useForm<typeof configData.value>({
         min: computed(() => configData.value.startIndex),
         max: 6,
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.foldable,
       },
     },
@@ -121,7 +121,7 @@ const [register1] = useForm<typeof configData.value>({
         ],
         multiple: true,
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.title,
       },
     },
@@ -136,7 +136,7 @@ const [register1] = useForm<typeof configData.value>({
           i => ({ value: i, label: i }),
         ),
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => formData.prefix.length !== 0,
       },
     },

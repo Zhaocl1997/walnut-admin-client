@@ -36,7 +36,7 @@ const [register1] = useForm<typeof configData.value>({
         min: 1,
         max: 6,
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) => !!formData.foldable,
       },
     },

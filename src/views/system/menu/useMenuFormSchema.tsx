@@ -112,7 +112,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
           button: true,
         },
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -122,7 +122,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
       componentProp: {
         title: 'form.menu.divider2',
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -136,7 +136,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         clearable: true,
         prefix: getRoutePathPrefix,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -182,7 +182,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
           }
         },
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -206,7 +206,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
           formData.value.name = target?.name
         },
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU
           && formData.ternal === AppConstMenuTernal.NONE,
@@ -231,7 +231,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         prefix: 'sys.menu.',
         presetKey: 'sys.menu.',
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -241,7 +241,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
       formProp: {
         path: 'icon',
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -264,7 +264,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
       componentProp: {
         options: menuTernalOptions,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU
           && actionType.value === 'create',
@@ -279,7 +279,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
       componentProp: {
         clearable: true,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU
           && formData.ternal !== AppConstMenuTernal.NONE,
@@ -293,7 +293,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         labelHelpMessage: true,
         rule: false,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU
           && formData.ternal !== AppConstMenuTernal.EXTERNAL,
@@ -307,7 +307,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         labelHelpMessage: true,
         rule: false,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -319,7 +319,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         labelHelpMessage: true,
         rule: false,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
@@ -330,7 +330,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         path: 'permission',
         rule: false,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.ELEMENT,
       },
     },
@@ -351,7 +351,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         filterable: true,
         clearable: true,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
@@ -362,7 +362,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         path: 'menuActiveSameTab',
         rule: false,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU && !!formData.menuActiveName,
       },
@@ -377,7 +377,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
       componentProp: {
         clearable: true,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
@@ -388,7 +388,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         path: 'activeIcon',
         rule: false,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -402,7 +402,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
       componentProp: {
         clearable: true,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
       },
     },
@@ -413,7 +413,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         path: 'position',
         rule: false,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
@@ -424,7 +424,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         path: 'leaveTip',
         rule: false,
       },
-      extraProp: {
+      visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },

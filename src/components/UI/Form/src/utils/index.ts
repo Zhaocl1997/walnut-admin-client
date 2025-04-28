@@ -1,5 +1,6 @@
 import type { FormItemRule } from 'naive-ui'
 import type { WForm } from '../types'
+import { get } from 'lodash-es'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 import { componentMap } from '../components/FormItem/componentMap'
 
@@ -13,10 +14,10 @@ export const formItemUtils = {
   },
 
   /**
-   * @description get v-if/v-show value from extraProp
+   * @description get v-if/v-show boolean
    */
-  getIfOrShowBooleanValue<T>(item: WForm.Schema.Item<T>, props: WForm.Props<T>, field: WForm.MaybeBooleanField, defaultValue = true) {
-    const maybeBool = item?.extraProp?.[field]
+  getIfOrShowBoolean<T>(item: WForm.Schema.Item<T>, props: WForm.Props<T>, field: WForm.MaybeBooleanField, defaultValue = true) {
+    const maybeBool = item?.visibleProp?.[field]
 
     if (typeof maybeBool === 'function')
       return maybeBool({ formData: props.model! })
@@ -25,10 +26,10 @@ export const formItemUtils = {
   },
 
   /**
-   * @description get v-if/v-show value from extraProp
+   * @description get scope or global prop
    */
-  getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: keyof WForm.Schema.Item<T>, props: WForm.Props<T>, field: WForm.ScopeOrGlobalField) {
-    return item?.[itemField]?.[field] ?? props[field]
+  getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: WForm.FormScopeGlobalFields, props: WForm.Props<T>) {
+    return get(item, itemField) ?? props[itemField.split('.')[1] as keyof WForm.Props<T>]
   },
 
   /**

@@ -81,7 +81,7 @@ const [
           componentProp: {
             defaultValue: currentRoute.value.params.id as string,
           },
-          extraProp: {
+          visibleProp: {
             vIf: false,
           },
         },
@@ -228,7 +228,7 @@ const [
           clearable: true,
           defaultValue: currentRoute.value.params.id as string,
         },
-        extraProp: {
+        visibleProp: {
           vShow: false,
         },
       },

@@ -61,11 +61,11 @@ export declare namespace WForm {
 
   type MaybeBooleanField = 'vIf' | 'vShow'
 
-  type ScopeOrGlobalField = 'visibleMode' | 'transitionName'
-
   type DictComponentType = 'select' | 'checkbox' | 'radio'
 
   type FormVisibleMode = 'no-move' | 'auto-forward'
+
+  type FormScopeGlobalFields = 'transitionProp.transitionName' | 'visibleProp.visibleMode'
 
   type DefaultValue = BaseDataType | BaseDataType[] | undefined | null
 
@@ -336,10 +336,10 @@ export declare namespace WForm {
       transitionProp?: Omit<Partial<ICompExtraTransitionProps>, 'group'>
 
       /**
-       * @description By default support v-if/v-show control
-       * Also scoped `visibleMode` supported, override the same prop on form
+       * @description v-if/v-show control
+       * Also scoped `visibleMode` supported, override the same galobal prop on form
        */
-      extraProp?: {
+      visibleProp?: {
         /**
          * @description v-if control visible
          */
@@ -354,7 +354,12 @@ export declare namespace WForm {
          * @description v-if/v-show form item visible position mode
          */
         visibleMode?: FormVisibleMode
-      } & Partial<EP>
+      }
+
+      /**
+       * @description Extra Prop placeholder for component
+       */
+      extraProp?: & Partial<EP>
 
       descriptionProp?: Partial<ICompUIDescriptionsItem<D>>
     }

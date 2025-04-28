@@ -204,11 +204,11 @@ const [register] = useForm<typeof appRelatives>({
         suffix: 's',
         showButton: false,
         precision: 0,
+        disabled: computed(() => !appRelatives.lockStatus),
       },
-      extraProp: {
+      visibleProp: {
         vShow: ({ formData }) =>
           formData.lockStatus && formData.lockMode === AppConstLockMode.IDLE,
-        disabled: computed(() => !appRelatives.lockStatus),
       },
     },
 
