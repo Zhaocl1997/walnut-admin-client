@@ -4,11 +4,14 @@ defineOptions({
 })
 
 const configFormData = ref({
+  transitionNameGlobal: undefined as ValueOfAppConstTransitionName | undefined,
+  visibleModeGlobal: false,
   visibleMode: 'auto-forward',
+  showFeedback: true,
   vIf: true,
   vShow: true,
-  transition1: 'fade' as ValueOfAppConstTransitionName,
-  transition2: 'fade' as ValueOfAppConstTransitionName,
+  transition1: 'fade-right-big' as ValueOfAppConstTransitionName,
+  transition2: 'fade-left-big' as ValueOfAppConstTransitionName,
   disabled: false,
   labelHelpMessage: true,
   labelWidth: 80,
@@ -28,10 +31,39 @@ const formData = ref({
   input6: undefined,
 })
 
-const [register1] = useForm({
+const [register1] = useForm<typeof configFormData.value>({
   labelWidth: 200,
   span: 12,
+  visibleMode: 'no-move',
   schemas: [
+    {
+      type: 'Base:Switch',
+      formProp: {
+        label: 'Global Transition',
+        path: 'transitionNameGlobal',
+        labelHelpMessage: 'Rules is simple, scoped filed in form item has higher priority than global field in form prop',
+      },
+      componentProp: {},
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        label: 'Global Visible Mode',
+        path: 'visibleModeGlobal',
+        labelHelpMessage: 'Rules is simple, scoped filed in form item has higher priority than global field in form prop',
+      },
+      componentProp: {},
+    },
+
+    {
+      type: 'Base:Switch',
+      formProp: {
+        label: 'NForm Built In Feedback',
+        path: 'showFeedback',
+      },
+      componentProp: {},
+    },
+
     {
       type: 'Base:Radio',
       formProp: {
@@ -50,10 +82,11 @@ const [register1] = useForm({
           },
         ],
       },
-      gridProp: {
-        span: 24,
+      extraProp: {
+        vIf: ({ formData }) => formData.visibleModeGlobal,
       },
     },
+
     {
       type: 'Base:Switch',
       formProp: {
@@ -66,6 +99,9 @@ const [register1] = useForm({
       formProp: {
         label: 'Transition for Input 1',
         path: 'transition1',
+      },
+      extraProp: {
+        vIf: ({ formData }) => !formData.transitionNameGlobal,
       },
     },
     {
@@ -81,6 +117,9 @@ const [register1] = useForm({
         label: 'Transition for Input 2',
         path: 'transition2',
       },
+      extraProp: {
+        vIf: ({ formData }) => !formData.transitionNameGlobal,
+      },
     },
     {
       type: 'Base:Switch',
@@ -92,7 +131,7 @@ const [register1] = useForm({
     {
       type: 'Base:Switch',
       formProp: {
-        label: 'Label help message',
+        label: 'Input 3 Label help message',
         path: 'labelHelpMessage',
       },
     },
@@ -162,7 +201,9 @@ const [register1] = useForm({
 })
 
 const [register2] = useForm<typeof formData.value>({
+  transitionName: computed(() => configFormData.value.transitionNameGlobal ? 'slide-down' : undefined),
   visibleMode: computed(() => configFormData.value.visibleMode),
+  showFeedback: computed(() => configFormData.value.showFeedback),
   span: computed(() => configFormData.value.span),
   labelWidth: computed(() => configFormData.value.labelWidth),
   xGap: computed(() => configFormData.value.xGap),
@@ -173,6 +214,7 @@ const [register2] = useForm<typeof formData.value>({
       formProp: {
         label: computed(() => configFormData.value.inputOneLabel),
         path: 'input1',
+        labelHelpMessage: ['Input 1 has scoped visible mode, will always move forward no matter global visible mode'],
       },
       componentProp: {
         clearable: true,
@@ -185,6 +227,7 @@ const [register2] = useForm<typeof formData.value>({
       },
       extraProp: {
         vIf: computed(() => configFormData.value.vIf),
+        visibleMode: 'auto-forward',
       },
     },
     {
@@ -223,6 +266,7 @@ const [register2] = useForm<typeof formData.value>({
       formProp: {
         label: 'Input 4',
         path: 'input4',
+        labelHelpMessage: 'Input 4 has scoped transition name',
       },
       componentProp: {
         clearable: true,
@@ -258,6 +302,8 @@ const [register2] = useForm<typeof formData.value>({
 
 <template>
   <WDemoCard title="Dynamic Form" description="Some features.">
+    <WJSON :value="configFormData" height="250px" />
+
     <WForm :model="configFormData" @hook="register1" />
 
     <WJSON :value="formData" />

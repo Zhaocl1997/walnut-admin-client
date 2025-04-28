@@ -54,13 +54,18 @@ import type { ICompUIFormHooksMethods } from './hooks/useFormMethods'
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 
 export declare namespace WForm {
+
   type preset = 'modal' | 'drawer'
 
   type LocaleType = 'origin' | 'helpMsg' | 'rule' | 'placeholder'
 
   type MaybeBooleanField = 'vIf' | 'vShow'
 
+  type ScopeOrGlobalField = 'visibleMode' | 'transitionName'
+
   type DictComponentType = 'select' | 'checkbox' | 'radio'
+
+  type FormVisibleMode = 'no-move' | 'auto-forward'
 
   type DefaultValue = BaseDataType | BaseDataType[] | undefined | null
 
@@ -119,7 +124,12 @@ export declare namespace WForm {
     /**
      * @description v-if/v-show form item visible position mode
      */
-    visibleMode?: 'no-move' | 'auto-forward'
+    visibleMode?: FormVisibleMode
+
+    /**
+     * @description global transition name
+     */
+    transitionName?: ValueOfAppConstTransitionName
 
     /**
      * @description form item class, including the label and content
@@ -320,9 +330,16 @@ export declare namespace WForm {
 
       gridProp?: GridItemProps & { class?: string }
 
+      /**
+       * @description Customize form item transition
+       */
       transitionProp?: Omit<Partial<ICompExtraTransitionProps>, 'group'>
 
-      extraProp?: Partial<EP> & {
+      /**
+       * @description By default support v-if/v-show control
+       * Also scoped `visibleMode` supported, override the same prop on form
+       */
+      extraProp?: {
         /**
          * @description v-if control visible
          */
@@ -332,7 +349,12 @@ export declare namespace WForm {
          * @description v-show control visible
          */
         vShow?: boolean | Events.Callback<D, boolean>
-      }
+
+        /**
+         * @description v-if/v-show form item visible position mode
+         */
+        visibleMode?: FormVisibleMode
+      } & Partial<EP>
 
       descriptionProp?: Partial<ICompUIDescriptionsItem<D>>
     }

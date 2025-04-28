@@ -128,14 +128,14 @@ nextTick(() => {
         </n-gi>
 
         <template v-else>
-          <template v-if="getProps.visibleMode === 'no-move'">
+          <template v-if="formItemUtils.getScopeOrGlobalProp(item, getProps, 'visibleMode') === 'no-move'">
             <div
               v-bind="item.gridProp"
               :style="{
                 gridColumn: `span ${item.gridProp?.span ?? getProps.span} / span ${item.gridProp?.span ?? getProps.span}`,
               }"
             >
-              <WTransition v-bind="item.transitionProp" appear>
+              <WTransition v-bind="item.transitionProp" :name="item?.transitionProp?.name ?? getProps.transitionName" appear>
                 <WFormItem
                   v-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"
                   v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"
@@ -149,8 +149,8 @@ nextTick(() => {
             </div>
           </template>
 
-          <template v-if="getProps.visibleMode === 'auto-forward'">
-            <WTransition v-bind="item.transitionProp" appear>
+          <template v-if="formItemUtils.getScopeOrGlobalProp(item, getProps, 'visibleMode') === 'auto-forward'">
+            <WTransition v-bind="item.transitionProp" :name="item?.transitionProp?.name ?? getProps.transitionName" appear>
               <div
                 v-if="formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vIf')"
                 v-show="item._internalShow && formItemUtils.getIfOrShowBooleanValue(item, getProps, 'vShow')"

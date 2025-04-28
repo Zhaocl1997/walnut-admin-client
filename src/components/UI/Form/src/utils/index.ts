@@ -25,6 +25,13 @@ export const formItemUtils = {
   },
 
   /**
+   * @description get v-if/v-show value from extraProp
+   */
+  getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, props: WForm.Props<T>, field: WForm.ScopeOrGlobalField) {
+    return item?.extraProp?.[field] ?? props[field]
+  },
+
+  /**
    * @description generate form item based on item & index
    */
   generateFormItemId<T>(item: WForm.Schema.Item<T>, index: number) {
