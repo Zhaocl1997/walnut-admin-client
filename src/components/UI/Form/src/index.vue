@@ -15,7 +15,7 @@ import { useFormItemId } from './hooks/useFormItemId'
 import { useFormMethods } from './hooks/useFormMethods'
 import { useFormSchemas } from './hooks/useFormSchemas'
 
-import { formItemUtils as FIU, generateBaseRules } from './utils'
+import { formItemUtils as FIU, generateBaseRules, getScopeOrGlobalProp } from './utils'
 
 defineOptions({
   name: 'WCompUIForm',
@@ -38,8 +38,6 @@ const props = withDefaults(defineProps<WForm.Props<T>>(), {
 })
 
 const emits = defineEmits<WForm.Emits<T>>()
-
-const getValue = FIU.getScopeOrGlobalProp
 
 const { t } = useAppI18n()
 
@@ -130,14 +128,14 @@ nextTick(() => {
         </n-gi>
 
         <template v-else>
-          <template v-if="getValue(item, 'visibleProp.visibleMode', getProps) === 'no-move'">
+          <template v-if="getScopeOrGlobalProp(item, 'visibleProp.visibleMode', getProps) === 'no-move'">
             <div
               v-bind="item.gridProp"
               :style="{
                 gridColumn: `span ${item.gridProp?.span ?? getProps.span} / span ${item.gridProp?.span ?? getProps.span}`,
               }"
             >
-              <WTransition v-bind="item.transitionProp" :transition-name="getValue(item, 'transitionProp.transitionName', getProps)" appear>
+              <WTransition v-bind="item.transitionProp" :transition-name="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)" appear>
                 <WFormItem
                   v-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
                   v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
@@ -151,8 +149,8 @@ nextTick(() => {
             </div>
           </template>
 
-          <template v-if="getValue(item, 'visibleProp.visibleMode', getProps) === 'auto-forward'">
-            <WTransition v-bind="item.transitionProp" :transition-name="getValue(item, 'transitionProp.transitionName', getProps)" appear>
+          <template v-if="getScopeOrGlobalProp(item, 'visibleProp.visibleMode', getProps) === 'auto-forward'">
+            <WTransition v-bind="item.transitionProp" :transition-name="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)" appear>
               <div
                 v-if="FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
                 v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"

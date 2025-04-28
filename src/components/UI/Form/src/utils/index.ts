@@ -4,8 +4,16 @@ import { get } from 'lodash-es'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 import { componentMap } from '../components/FormItem/componentMap'
 
-export const formItemUtils = {
+/**
+ * @description get scope or global prop
+ */
+export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: 'transitionProp.transitionName', props: WForm.Props<T>): ValueOfAppConstTransitionName
+export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: 'visibleProp.visibleMode', props: WForm.Props<T>): WForm.FormVisibleMode
+export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: WForm.FormScopeGlobalFields, props: WForm.Props<T>) {
+  return get(item, itemField) ?? props[itemField.split('.')[1] as keyof WForm.Props<T>]
+}
 
+export const formItemUtils = {
   /**
    * @description get dynamic component from componentMap
    */
@@ -23,13 +31,6 @@ export const formItemUtils = {
       return maybeBool({ formData: props.model! })
 
     return getBoolean(toRaw(maybeBool), defaultValue)
-  },
-
-  /**
-   * @description get scope or global prop
-   */
-  getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: WForm.FormScopeGlobalFields, props: WForm.Props<T>) {
-    return get(item, itemField) ?? props[itemField.split('.')[1] as keyof WForm.Props<T>]
   },
 
   /**
@@ -178,7 +179,7 @@ export function extractDefaultFormDataFromSchemas(schemas: WForm.Schema.Item[]) 
   return Object.fromEntries(
     unref(schemas)
       .filter(i => !i.formProp?.path)
-      .map<[string, WForm.Schema.DefaultValue]>(i => [
+      .map<[string, WForm.DefaultValue]>(i => [
         i.formProp?.path ?? '',
         i?.componentProp?.defaultValue ?? null,
       ]),
