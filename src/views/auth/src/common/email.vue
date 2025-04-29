@@ -1,11 +1,11 @@
 <script lang="tsx" setup>
 import { sendAuthEmail } from '@/api/auth/email'
-// TODO 99
+// TODO 111
 import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({
-  name: 'SignInWithEmail',
+  transitionName: 'SignInWithEmail',
   defaultView: false,
 })
 
@@ -80,7 +80,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         clearable: true,
       },
       transitionProp: {
-        name: 'fade-up-big',
+        transitionName: 'fade-up-big',
         duration: 500,
       },
     },
@@ -118,7 +118,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         simpleVerify: true,
       },
       transitionProp: {
-        name: 'fade-up-big',
+        transitionName: 'fade-up-big',
         duration: 700,
       },
     },
@@ -146,7 +146,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
                 <NText
                   type="info"
                   strong
-                  onClick={(e: Event) => {
+                  onClick={(e: MouseEvent) => {
                     e.stopPropagation()
                     openExternalLink(AppAuthServiceAgreementPath)
                   }}
@@ -159,7 +159,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
                 <NText
                   type="info"
                   strong
-                  onClick={(e: Event) => {
+                  onClick={(e: MouseEvent) => {
                     e.stopPropagation()
                     openExternalLink(AppAuthPrivacyPolicyPath)
                   }}
@@ -174,7 +174,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         },
       },
       transitionProp: {
-        name: 'fade-up-big',
+        transitionName: 'fade-up-big',
         duration: 900,
       },
     },
@@ -194,7 +194,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         ),
         loading,
         disabled: computed(
-          () => (emailFormData.agree as unknown as boolean) && loading.value,
+          () => !!emailFormData.agree && loading.value,
         ),
         style: {
           width: '100%',
@@ -206,7 +206,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         onClick: onSubmit,
       },
       transitionProp: {
-        name: 'fade-up-big',
+        transitionName: 'fade-up-big',
         duration: 1100,
       },
     },

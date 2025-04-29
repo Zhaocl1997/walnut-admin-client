@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-// TODO 99
+// TODO 111
 import { NButton, NCheckbox } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -14,9 +14,9 @@ const appNaive = useAppStoreNaive()
 
 const { loading } = useAuthContext()
 
-const accountFormData = reactive<AppPayloadAuth.Password>({
-  userName: '',
-  password: '',
+const accountFormData = ref<AppPayloadAuth.Password>({
+  userName: undefined,
+  password: undefined,
   rememberMe: true,
 })
 
@@ -27,7 +27,7 @@ async function onSubmit() {
     loading.value = true
 
     try {
-      await appAuth.AuthWithBasicPassword(accountFormData)
+      await appAuth.AuthWithBasicPassword(accountFormData.value)
 
       // close demonstrate notification
       appNaive.destroyAllNotiInst()
@@ -42,7 +42,7 @@ function onForgetPassword() {
   useAppMsgSuccess('Forget password')
 }
 
-const [register, { validate }] = useForm<typeof accountFormData>({
+const [register, { validate }] = useForm<typeof accountFormData.value>({
   localeUniqueKey: 'app.auth',
   baseRules: true,
   showLabel: false,
@@ -62,7 +62,7 @@ const [register, { validate }] = useForm<typeof accountFormData>({
         },
       },
       transitionProp: {
-        name: 'fade-left-big',
+        transitionName: 'fade-left-big',
         duration: 500,
       },
     },
@@ -76,7 +76,7 @@ const [register, { validate }] = useForm<typeof accountFormData>({
         onSubmit,
       },
       transitionProp: {
-        name: 'fade-left-big',
+        transitionName: 'fade-left-big',
         duration: 700,
       },
     },
@@ -104,7 +104,7 @@ const [register, { validate }] = useForm<typeof accountFormData>({
         ),
       },
       transitionProp: {
-        name: 'fade-left-big',
+        transitionName: 'fade-left-big',
         duration: 900,
       },
     },
@@ -126,7 +126,7 @@ const [register, { validate }] = useForm<typeof accountFormData>({
         onClick: onSubmit,
       },
       transitionProp: {
-        name: 'fade-left-big',
+        transitionName: 'fade-left-big',
         duration: 1100,
       },
     },
@@ -134,8 +134,8 @@ const [register, { validate }] = useForm<typeof accountFormData>({
 })
 
 function setFormData(userName: string, password: string) {
-  accountFormData.userName = userName
-  accountFormData.password = password
+  accountFormData.value.userName = userName
+  accountFormData.value.password = password
 }
 
 onMounted(() => {

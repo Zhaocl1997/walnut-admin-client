@@ -22,7 +22,7 @@ defineOptions({
   name: 'WCompUIForm',
 })
 
-const props = withDefaults(defineProps<WForm.Props<T>>(), {
+const props = withDefaults(defineProps<WForm.Props<T> & { class?: string }>(), {
   labelAlign: 'right',
   labelPlacement: 'left',
   model: (): any => {},
@@ -49,6 +49,8 @@ const formRef = templateRef<WForm.Inst.NFormInst>('formRef')
 const formPropsCtx = useProps<WForm.Props<T>>(props)
 
 const { setProps, getProps } = formPropsCtx
+
+const getFormProps = computed(() => omit(getProps.value, ['rules', 'schemas', 'cols', 'span', 'xGap', 'yGap', 'baseRules', 'visibleMode', 'localeWithTable', 'useDescription']))
 
 const formItemIdCtx = useFormItemId()
 
@@ -116,7 +118,7 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
 
 <template>
   <DefineForm>
-    <n-form ref="formRef" :rules="getFormRules" v-bind="omit(getProps, 'rules')">
+    <n-form ref="formRef" :rules="getFormRules" v-bind="getFormProps">
       <div
         class="relative grid"
         :style="{

@@ -5,7 +5,7 @@ import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
 import type { TreeNodeProps, TreeRenderProps } from 'naive-ui/es/tree/src/interface'
 import type { ICompUITreeInst, ICompUITreeProps } from '.'
 
-// TODO 111 tsx file need to import explicitly or ts error
+// TODO 111
 import WTransition from '@/components/Extra/Transition'
 import { useDropdown } from '@/components/UI/Dropdown'
 import WIcon from '@/components/UI/Icon'

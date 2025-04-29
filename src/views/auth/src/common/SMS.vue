@@ -1,12 +1,12 @@
 <script lang="tsx" setup>
-import type { PhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
+import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 import { sendAuthTextMsg } from '@/api/auth/phone'
-// TODO 99
+// TODO 111
 import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({
-  name: 'SignInWithSMS',
+  transitionName: 'SignInWithSMS',
   defaultView: false,
 })
 
@@ -79,12 +79,12 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         preferred: true,
         example: true,
         autoDefaultCountry: true,
-        onUpdate: (val: PhoneNumberInputUpdateParams) => {
+        onUpdate: (val: ICompExtraPhoneNumberInputUpdateParams) => {
           countryCallingCode.value = val.countryCallingCode
         },
       },
       transitionProp: {
-        name: 'fade-down-big',
+        transitionName: 'fade-down-big',
         duration: 500,
       },
     },
@@ -122,7 +122,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         simpleVerify: true,
       },
       transitionProp: {
-        name: 'fade-down-big',
+        transitionName: 'fade-down-big',
         duration: 700,
       },
     },
@@ -179,7 +179,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         },
       },
       transitionProp: {
-        name: 'fade-down-big',
+        transitionName: 'fade-down-big',
         duration: 900,
       },
     },
@@ -211,7 +211,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         onClick: onSubmit,
       },
       transitionProp: {
-        name: 'fade-down-big',
+        transitionName: 'fade-down-big',
         duration: 1100,
       },
     },

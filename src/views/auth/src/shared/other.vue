@@ -123,11 +123,12 @@ useEventListener('beforeunload', () => {
       </n-divider>
 
       <div class="w-full hstack justify-evenly children:cursor-pointer hover:children:text-primary">
-        <span v-for="item in iconArr" :key="item.key" :title="item.title" @click="onClick(item.key)">
-          <n-button text :disabled="loading">
-            <WIcon :icon="item.icon" width="20" :disabled="loading" />
-          </n-button>
-        </span>
+        <WIconButton
+          v-for="item in iconArr"
+          :key="item.key"
+          :button-props="{ text: true, disabled: loading, onClick: () => onClick(item.key), title: item.title }"
+          :icon-props="{ icon: item.icon, width: '20' }"
+        />
       </div>
     </WTransition>
   </div>
@@ -135,7 +136,6 @@ useEventListener('beforeunload', () => {
 
 <style scoped>
 .w-divider {
-  margin-top: 8px !important;
-  margin-bottom: 8px !important;
+  margin: 12px 0 !important;
 }
 </style>
