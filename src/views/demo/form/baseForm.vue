@@ -4,9 +4,10 @@ import { getTreeData, options } from '../data'
 
 defineOptions({
   name: 'BaseForm',
+  defaultView: false,
 })
 
-const { stateRef: formData, resetState: resetFormData } = useState({
+const { stateRef: formData, resetState: resetFormData } = useState<Recordable>({
   // base
   formSlot: null,
   formRender: null,

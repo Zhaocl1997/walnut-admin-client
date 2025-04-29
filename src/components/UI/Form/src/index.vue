@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<WForm.Props<T> & { class?: string }>(), {
   schemas: () => [],
   cols: 24,
   span: 24,
-  xGap: 20,
+  xGap: 0,
   yGap: 0,
   baseRules: false,
   visibleMode: 'auto-forward',
@@ -65,8 +65,8 @@ const formMethods = useFormMethods<T>(formRef, dialogFormRef)
 
 const getFormRules = computed<FormRules>(() =>
   getProps.value.baseRules
-    // @ts-expect-error
-    ? generateBaseRules<T>(t, formSchemas.value, getProps)
+    // @ts-expect-error too deep, don't know why
+    ? generateBaseRules<T>(t, formSchemas, getProps)
     : getProps.value.rules)
 
 setFormContext({

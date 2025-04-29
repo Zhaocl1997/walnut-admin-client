@@ -1,4 +1,4 @@
-import type { FormItemRule } from 'naive-ui'
+import type { FormItemRule, FormRules } from 'naive-ui'
 import type { WForm } from '../types'
 import { get } from 'lodash-es'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
@@ -133,7 +133,7 @@ export function generateRuleMessage<T>(t: Fn, i: WForm.Schema.Item<T>, p: Comput
 /**
  * @description generate base rules based on schemas
  */
-export function generateBaseRules<T>(t: Fn, schemas: WForm.Schema.Item<T>[], props: ComputedRef<WForm.Props<T>>) {
+export function generateBaseRules<T>(t: Fn, schemas: Ref<WForm.Schema.Item<T>[]>, props: ComputedRef<WForm.Props<T>>): FormRules {
   const getBaseRuleObj = (
     i: WForm.Schema.Item,
     extra?: FormItemRule[],
@@ -152,7 +152,7 @@ export function generateBaseRules<T>(t: Fn, schemas: WForm.Schema.Item<T>[], pro
   }
 
   return Object.fromEntries(
-    schemas
+    schemas.value
       .map((i) => {
         if (i.formProp?.path && i.formProp?.rule !== false) {
           return [

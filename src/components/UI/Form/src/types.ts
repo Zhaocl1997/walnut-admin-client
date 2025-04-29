@@ -71,13 +71,17 @@ export declare namespace WForm {
 
   type DefaultValue = BaseDataType | BaseDataType[] | undefined | null
 
-  type onFinishFormLoadingCallback = Fn<Params.FinishLoading, void | Promise<void>>
+  type onFinishFormLoadingCallback = Fn<Params.Dialog.FinishLoading, void | Promise<void>>
+
+  type FormFnCallback<T = any, R = void> = (
+    params: Params.Callback<T>
+  ) => R | undefined
 
   namespace Inst {
     type NFormInst = FormInst
 
     interface DialogInst {
-      onOpen: (beforeHook?: Fn) => Promise<void>
+      onOpen: (beforeHook?: (done: Fn) => void) => Promise<void>
       onClose: Fn
     }
 
@@ -91,7 +95,7 @@ export declare namespace WForm {
         apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
         done: () => void
       ) => void
-      onNo?: Fn
+      onNo?: (close: Fn) => void
     }
 
   }
@@ -103,7 +107,12 @@ export declare namespace WForm {
     ]
   }
 
-  interface Props<T> {
+  interface EventProps {
+    onQuery?: (params: Params.Dialog.FinishLoading) => void
+    onReset?: (params: Params.Dialog.FinishLoading) => void
+  }
+
+  interface Props<T> extends EventProps {
     // original
     inline?: boolean
     labelWidth?: StringOrNumber
@@ -201,9 +210,9 @@ export declare namespace WForm {
   }
 
   interface Emits<T> {
-    hook: [inst: Inst.WFormInst<T>]
-    query: [params: Params.FinishLoading]
-    reset: [params: Params.FinishLoading]
+    hook: [inst: Omit<Inst.WFormInst<T>, 'onYes' | 'onNo'> & Inst.DialogInst]
+    query?: [params: Params.Dialog.FinishLoading]
+    reset?: [params: Params.Dialog.FinishLoading]
   }
 
   namespace Params {
@@ -211,18 +220,14 @@ export declare namespace WForm {
       formData: T
     }
 
-    interface FinishLoading { done: Fn }
+    namespace Dialog {
+      interface FinishLoading { done: Fn }
+    }
 
     type UseEvent<T> =
-      | useEventParams<'query', FinishLoading>
-      | useEventParams<'reset', FinishLoading>
+      | useEventParams<'query', Dialog.FinishLoading>
+      | useEventParams<'reset', Dialog.FinishLoading>
       | useEventParams<'hook', Inst.WFormInst<T>>
-  }
-
-  namespace Events {
-    type Callback<T = any, R = void> = (
-      params: Params.Callback<T>
-    ) => R | undefined
   }
 
   namespace Schema {
@@ -235,7 +240,7 @@ export declare namespace WForm {
 
       // base
       'Base:Render': {
-        render: Events.Callback<D, VNode | VNode[] | string>
+        render: FormFnCallback<D, VNode | VNode[] | string>
       }
       'Base:Slot': Record<string, never>
 
@@ -379,12 +384,12 @@ export declare namespace WForm {
         /**
          * @description v-if control visible
          */
-        vIf?: boolean | Events.Callback<D, boolean>
+        vIf?: boolean | FormFnCallback<D, boolean>
 
         /**
          * @description v-show control visible
          */
-        vShow?: boolean | Events.Callback<D, boolean>
+        vShow?: boolean | FormFnCallback<D, boolean>
 
         /**
          * @description v-if/v-show form item visible position mode

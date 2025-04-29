@@ -3,6 +3,7 @@ import type { WForm } from '@/components/UI/Form'
 
 defineOptions({
   name: 'DynamicForm',
+  defaultView: false,
 })
 
 const configFormData = ref({

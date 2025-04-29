@@ -28,8 +28,8 @@ export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst>, dialogRef:
   return {
     validate,
     restoreValidation,
-    onOpen: (done: Fn) => {
-      dialogRef.value?.onOpen(done)
+    onOpen: async (beforeHook: (done: Fn) => void) => {
+      await dialogRef.value?.onOpen(beforeHook)
     },
     onClose: () => {
       dialogRef.value?.onClose()

@@ -2,7 +2,8 @@
 import type { WForm } from '@/components/UI/Form'
 
 defineOptions({
-  name: 'UseFormAdvanced',
+  name: 'DialogForm',
+  defaultView: false,
 })
 
 const configData = ref({
@@ -55,6 +56,7 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
   dialogPreset: computed(() => configData.value.preset),
   dialogProps: {
     maskClosable: computed(() => configData.value.maskClosable),
+    draggable: true,
     title: computed(() => configData.value.title),
     onYes: (_, done) => {
       setTimeout(() => {
@@ -63,14 +65,13 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
         formData.value = {}
       }, 2000)
     },
-    onNo: (done) => {
-      done()
+    onNo: (close) => {
+      close()
     },
     width: '500px',
-    height: '50vh',
   },
   labelWidth: 80,
-  schemas: Array.from({ length: 20 }, (v, k) => {
+  schemas: Array.from({ length: 4 }, (v, k) => {
     return {
       type: 'Base:Input',
       formProp: {
@@ -86,22 +87,24 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
 })
 
 function onOpenAdvacned() {
-  onOpen((done) => {
-    setTimeout(() => {
-      done()
-    }, 2000)
-  })
+  setTimeout(() => {
+    onOpen((done) => {
+      setTimeout(() => {
+        done()
+      }, 2000)
+    })
+  }, 500)
 }
 </script>
 
 <template>
-  <WDemoCard title="useForm(advanced)" description="Advanced Form usage.">
+  <WDemoCard title="Dialog FOrm" description="Form implement with modal/drawer">
     <WForm :model="configData" @hook="register1" />
 
     <WJSON :value="formData" />
 
     <n-button @click="onOpenAdvacned">
-      Open An Advanced Form
+      Open Dialog Form
     </n-button>
 
     <WForm :model="formData" @hook="register2" />

@@ -10,7 +10,7 @@ export function useForm<T>(props: IDeepMaybeRef<WForm.Props<T>> | WForm.Props<T>
     wFormRef.value = instance
 
     watchEffect(() => {
-      props && instance.setProps(props)
+      props && instance.setProps(props as WForm.Props<T>)
     })
   }
 

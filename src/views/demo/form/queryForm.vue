@@ -3,6 +3,7 @@ import type { WForm } from '@/components/UI/Form'
 
 defineOptions({
   name: 'QueryForm',
+  defaultView: false,
 })
 
 const configData = ref({ foldable: false, countToFold: 2, span: 8 })
@@ -59,7 +60,7 @@ const [register1] = useForm<typeof configData.value>({
 
 const [register2] = useForm<typeof formData.value>({
   span: computed(() => configData.value.span),
-  onReset: ({ done }: WForm.Params.FinishLoading) => {
+  onReset: ({ done }: WForm.Params.Dialog.FinishLoading) => {
     console.log('reset')
 
     setTimeout(() => {
@@ -120,7 +121,7 @@ const [register2] = useForm<typeof formData.value>({
   ],
 })
 
-function onQuery({ done }: WForm.Params.FinishLoading) {
+function onQuery({ done }: WForm.Params.Dialog.FinishLoading) {
   console.log('query')
 
   setTimeout(() => {

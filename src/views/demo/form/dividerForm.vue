@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 defineOptions({
   name: 'DividerForm',
+  defaultView: false,
 })
 
 const configData = ref({

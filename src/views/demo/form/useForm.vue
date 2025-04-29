@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 defineOptions({
   name: 'UseForm',
+  defaultView: false,
 })
 
-const formData = ref({
+const { stateRef: formData, resetState: resetFormData } = useState({
   input1: '11',
   input2: '22',
   input3: '33',
@@ -79,6 +80,12 @@ const [register, { validate, restoreValidation }] = useForm<typeof formData.valu
             textProp: 'Clear Validation',
             onClick: async () => {
               await restoreValidation!()
+            },
+          },
+          {
+            textProp: 'Reset to Initial State Form Data',
+            onClick: () => {
+              resetFormData()
             },
           },
         ],
