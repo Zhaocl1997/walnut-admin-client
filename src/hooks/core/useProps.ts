@@ -1,18 +1,19 @@
-// TODO rewrite
+import { merge } from 'lodash-es'
+
 export function useProps<P>(props: P) {
   const propsRef = ref<Partial<P>>()
 
   /**
    * @description set props
    */
-  const setProps = (newProps: Partial<P>) => {
-    propsRef.value = { ...unref(propsRef), ...newProps }
+  const setProps = (newProps: IDeepMaybeRef<P> | P) => {
+    propsRef.value = merge(unref(propsRef), newProps)
   }
 
   /**
    * @description get props
    */
-  const getProps = computed<P>(() => ({ ...props, ...unref(propsRef) }))
+  const getProps = computed<P>(() => merge(props, unref(propsRef)))
 
   return { setProps, getProps }
 }

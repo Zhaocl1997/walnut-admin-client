@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { WForm } from '@/components/UI/Form'
+import type { WForm } from '@/components/UI/Form'
 
 defineOptions({
   name: 'UseFormAdvanced',
@@ -67,6 +67,7 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
       done()
     },
     width: '500px',
+    height: '50vh',
   },
   labelWidth: 80,
   schemas: Array.from({ length: 20 }, (v, k) => {
@@ -85,7 +86,6 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
 })
 
 function onOpenAdvacned() {
-  console.log({ onOpen }, 123)
   onOpen((done) => {
     setTimeout(() => {
       done()

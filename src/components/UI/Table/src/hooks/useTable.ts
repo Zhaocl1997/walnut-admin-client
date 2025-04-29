@@ -1,6 +1,6 @@
 import type { WTable } from '../types'
 
-export function useTable<T>(props: DeepMaybeRefSelf<WTable.Props<T>>): WTable.Hook.useTableReturnType {
+export function useTable<T>(props: IDeepMaybeRef<WTable.Props<T>> | WTable.Props<T>): WTable.Hook.useTableReturnType {
   isInSetup()
 
   const wTableRef = ref<Nullable<WTable.Inst.WTableInst>>(null)

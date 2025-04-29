@@ -36,16 +36,25 @@ declare type RecordNullable<T> = {
   [P in keyof T]?: Nullable<T[P]>
 }
 
+// thanks to deepseek R1
 type IDeepMaybeRef<T> =
-  T extends Ref<infer V>
-    ? MaybeRefOrGetter<V>
-    : T extends (...args: infer Args) => infer R
-      ? (...args: { [K in keyof Args]: IDeepMaybeRef<Args[K]> }) => IDeepMaybeRef<R>
-      : T extends Array<any> | object
-        ? {
-            [K in keyof T]: IDeepMaybeRef<T[K]>;
-          }
-        : MaybeRefOrGetter<T>
+  // 处理函数类型（禁用分发）
+  [T] extends [(...args: infer Args) => infer R] ? (
+    (...args: { [K in keyof Args]: IDeepMaybeRef<Args[K]> }) => IDeepMaybeRef<R>
+  ) :
+  // 优先处理精确基础类型（关键修改：使用 T extends 而非 extends T）
+    T extends boolean ? MaybeRefOrGetter<boolean> :
+      T extends number ? MaybeRefOrGetter<number> :
+        T extends string ? MaybeRefOrGetter<string> :
+        // 处理 Ref 类型
+          T extends Ref<infer V> ? MaybeRefOrGetter<V> :
+          // 处理数组类型（禁用分发）
+              [T] extends [Array<infer U>] ? Array<IDeepMaybeRef<U>> :
+              // 处理对象类型（禁用分发）
+                  [T] extends [object] ? { [K in keyof T]: IDeepMaybeRef<T[K]> } :
+                  // 处理联合类型（保持联合结构）
+                      [T] extends [unknown] ? MaybeRefOrGetter<T> :
+                        never
 
 const __APP_INFO__: {
   name: string

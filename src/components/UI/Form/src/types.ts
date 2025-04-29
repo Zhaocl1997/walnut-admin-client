@@ -76,6 +76,11 @@ export declare namespace WForm {
   namespace Inst {
     type NFormInst = FormInst
 
+    interface DialogInst {
+      onOpen: (beforeHook?: Fn) => Promise<void>
+      onClose: Fn
+    }
+
     interface WFormInst<T> extends Omit<NFormInst, 'validate'>, DialogInst {
       // rewrite
       validate: (fields?: (keyof T)[]) => Promise<boolean>
@@ -89,10 +94,6 @@ export declare namespace WForm {
       onNo?: Fn
     }
 
-    interface DialogInst {
-      onOpen: (beforeHook?: Fn) => Promise<void>
-      onClose: Fn
-    }
   }
 
   namespace Hook {
