@@ -14,7 +14,7 @@ export const getStorageKey = (key: string) => `${storagePrefix}__${key.replaceAl
 // default cache 7 days
 // defualt only encrypt in prod
 // map/set need to pass `serializer`, and no more expire nor encrypt
-export function useAppStorage<T>(key: string, initialValue: MaybeComputedRef<T>, options: IAppStorageOptions<T> = {}) {
+export function useAppStorage<T>(key: string, initialValue: MaybeRef<T>, options: IAppStorageOptions<T> = {}) {
   const { storage = localStorage, expire = +import.meta.env.VITE_SECONDS_PERSIST * 1000, encrypt = isProd(), usePresetKey = true, serializer } = options
 
   const getKey = usePresetKey

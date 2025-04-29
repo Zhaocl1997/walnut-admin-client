@@ -40,11 +40,6 @@ declare global {
   type OptionDataItem<T = any> = import('easy-fns-ts').OptionDataItem<T>
   type TreeNodeItem<T = any> = import('easy-fns-ts').TreeNodeItem<T>
 
-  // vueuse
-  type MaybeRef<T> = import('@vueuse/core').MaybeRef<T>
-  type MaybeComputedRef<T> = import('@vueuse/core').MaybeComputedRef<T>
-  type DeepMaybeRef<T> = import('@vueuse/core').DeepMaybeRef<T>
-
   // App Relatives
   type AppSettings = import('./settings').AppSettings
 
