@@ -7,6 +7,8 @@ export interface ICompUIInputProps extends /* @vue-ignore */ InputProps {
   blackList?: string[]
   suffix?: string
   prefix?: string
+  prefixClass?: string
+  suffixClass?: string
   suffixIcon?: string
   prefixIcon?: string
   helpMessage?: string

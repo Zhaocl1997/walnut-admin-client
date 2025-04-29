@@ -30,7 +30,7 @@ defineExpose({})
 <template>
   <n-input v-model:value="inputValue" @update:value="onInputValue">
     <template #prefix>
-      <div v-if="prefix">
+      <div v-if="prefix" :class="prefixClass">
         {{ prefix }}
       </div>
       <WIcon v-else-if="prefixIcon" :icon="prefixIcon" />
@@ -38,7 +38,7 @@ defineExpose({})
     </template>
 
     <template #suffix>
-      <div v-if="suffix">
+      <div v-if="suffix" :class="suffixClass">
         {{ suffix }}
       </div>
       <WIcon v-else-if="suffixIcon" :icon="suffixIcon" />
