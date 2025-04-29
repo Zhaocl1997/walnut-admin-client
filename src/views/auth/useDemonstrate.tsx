@@ -10,7 +10,6 @@ export function useDemonstrate() {
     duration: 60000,
     title: 'Demonstrate only',
     keepAliveOnHover: true,
-    placement: 'top-left',
     content: () => {
       return (
         <n-space vertical size="small">

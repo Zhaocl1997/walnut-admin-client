@@ -13,7 +13,7 @@ export function useProps<P>(props: P) {
   /**
    * @description get props
    */
-  const getProps = computed<P>(() => merge(props, unref(propsRef)))
+  const getProps = computed<P>(() => ({ ...props, ...unref(propsRef) }))
 
   return { setProps, getProps }
 }
