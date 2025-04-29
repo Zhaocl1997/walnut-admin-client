@@ -13,7 +13,7 @@ withDefaults(defineProps<ICompExtraIconPickerProps>(), {
   preset: 'input',
 })
 
-const value = defineModel<string>('value', { required: true, default: '' })
+const value = defineModel<string>('value', { default: 'ant-design:home-outlined' })
 
 const ALL = 'All'
 
@@ -173,6 +173,7 @@ onBeforeMount(() => {
         class="mr-2 h-auto cursor-pointer"
         :icon="value"
         width="24"
+        @click.prevent.stop
       />
     </template>
   </WInput>

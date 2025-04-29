@@ -8,11 +8,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<ICompUIInputProps>(), {})
 
-const inputValue = defineModel<string>('value')
+const emits = defineEmits<{ click: [e: MouseEvent] }>()
 
-function onCopy(e: MouseEvent) {
-  e.stopPropagation()
-}
+const inputValue = defineModel<string>('value')
 
 function onInputValue(val: string) {
   if (!props.pair) {
@@ -24,11 +22,17 @@ function onInputValue(val: string) {
   inputValue.value = val
 }
 
+function onClick(e: MouseEvent) {
+  e.preventDefault()
+  e.stopPropagation()
+  emits('click', e)
+}
+
 defineExpose({})
 </script>
 
 <template>
-  <n-input v-model:value="inputValue" @update:value="onInputValue">
+  <n-input v-model:value="inputValue" @update:value="onInputValue" @click="onClick">
     <template #prefix>
       <div v-if="prefix" :class="prefixClass">
         {{ prefix }}
@@ -42,7 +46,9 @@ defineExpose({})
         {{ suffix }}
       </div>
       <WIcon v-else-if="suffixIcon" :icon="suffixIcon" />
-      <WCopy v-else-if="copiable" icon :source="inputValue" @click="onCopy" />
+      <div v-else-if="copiable" class="flex flex-row flex-nowrap items-center justify-center" @click.prevent.stop>
+        <WCopy icon :source="inputValue" />
+      </div>
       <WMessage v-else-if="helpMessage" :msg="helpMessage" />
       <slot v-else name="suffix" />
     </template>

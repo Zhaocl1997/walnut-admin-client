@@ -32,7 +32,7 @@ async function onClick(e: MouseEvent) {
     size="tiny"
     :type="copied ? 'success' : 'info'"
     :disabled="!source"
-    @click="onClick"
+    @click.stop="onClick"
   >
     {{ copied ? $t('app.base.success') : $t('app.button.copy') }}
   </n-button>
