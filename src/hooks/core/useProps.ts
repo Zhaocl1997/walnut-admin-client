@@ -1,4 +1,4 @@
-import { merge } from 'lodash-es'
+import { cloneDeep, merge } from 'lodash-es'
 
 export function useProps<P>(props: P) {
   const propsRef = ref<Partial<P>>()
@@ -13,7 +13,7 @@ export function useProps<P>(props: P) {
   /**
    * @description get props
    */
-  const getProps = computed<P>(() => merge(props, unref(propsRef)))
+  const getProps = computed<P>(() => merge(cloneDeep(props), unref(propsRef)))
 
   return { setProps, getProps }
 }
