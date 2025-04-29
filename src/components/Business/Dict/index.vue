@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { IAppDictDataPicked } from '@/api/system/dict'
 import type { ICompBusinessDictProps } from '.'
 
 defineOptions({
@@ -12,45 +11,57 @@ const dictValue = defineModel<any>('value', { required: true })
 
 const { t } = useAppI18n()
 
-const options = ref<IAppDictDataPicked[]>([])
-const getTOptions = computed<OptionDataItem[]>(() =>
-  options.value.map(i => ({
+const { loading, execDict } = useDict(dictType)
+
+const getTOptions = computed(() =>
+  getDictDataFromMap(dictType)?.map(i => ({
     label: t(i.label!),
-    value: i.value as string,
+    value: i.value,
   })),
 )
 
 async function onInit() {
-  const res = await useDict(dictType)
-  options.value = res.dictData.value?.dictData ?? []
+  if (!dictType) {
+    console.warn('WDict', 'need to provide `dictType` prop')
+    return
+  }
+  await execDict()
 }
 
-onMounted(onInit)
+onBeforeMount(onInit)
 </script>
 
 <template>
-  <!-- @vue-ignore -->
-  <WSelect
-    v-if="renderType === 'select'"
-    v-model:value="dictValue"
-    :options="getTOptions"
-    v-bind="componentProps"
-  />
+  <n-spin :show="loading" :content-style="{ width: '100% !important' }">
+    <!-- @vue-ignore -->
+    <WSelect
+      v-if="renderType === 'select'"
+      v-model:value="dictValue"
+      :options="getTOptions"
+      v-bind="componentProps"
+    />
 
-  <!-- @vue-ignore -->
-  <WCheckbox
-    v-if="renderType === 'checkbox'"
-    v-model:value="dictValue"
-    :options="getTOptions"
-    v-bind="componentProps"
-    multiple
-  />
+    <!-- @vue-ignore -->
+    <WCheckbox
+      v-if="renderType === 'checkbox'"
+      v-model:value="dictValue"
+      :options="getTOptions"
+      v-bind="componentProps"
+      multiple
+    />
 
-  <!-- @vue-ignore -->
-  <WRadio
-    v-if="renderType === 'radio'"
-    v-model:value="dictValue"
-    :options="getTOptions"
-    v-bind="componentProps"
-  />
+    <!-- @vue-ignore -->
+    <WRadio
+      v-if="renderType === 'radio'"
+      v-model:value="dictValue"
+      :options="getTOptions"
+      v-bind="componentProps"
+    />
+  </n-spin>
 </template>
+
+<style lang="scss" scoped>
+.w-spin-container {
+  width: 100% !important;
+}
+</style>

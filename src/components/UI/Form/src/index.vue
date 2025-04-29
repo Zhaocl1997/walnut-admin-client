@@ -10,7 +10,6 @@ import WFormItemExtendQuery from './components/Extend/Query'
 import { setFormContext } from './hooks/useFormContext'
 
 import { useFormDialog } from './hooks/useFormDialog'
-import { useFormDict } from './hooks/useFormDict'
 import { useFormEvents } from './hooks/useFormEvents'
 import { useFormItemId } from './hooks/useFormItemId'
 import { useFormMethods } from './hooks/useFormMethods'
@@ -87,10 +86,6 @@ defineExpose({
 emits('hook', {
   ...formMethods,
   setProps,
-})
-
-nextTick(() => {
-  useFormDict<T>(formSchemas.value)
 })
 
 // need to optimise or not?

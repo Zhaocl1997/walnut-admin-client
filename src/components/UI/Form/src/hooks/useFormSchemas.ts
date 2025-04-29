@@ -1,7 +1,8 @@
 import type { WForm } from '../types'
 import type { ICompUIFormHooksItemId } from './useFormItemId'
-
 import { isUndefined } from 'lodash-es'
+
+import { useFormDict } from './useFormDict'
 
 export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemIdCtx: ICompUIFormHooksItemId) {
   const formSchemas = ref<WForm.Schema.Item<T>[]>([])
@@ -21,6 +22,8 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
             _internalShow: getFormItemId(i, idx),
           }
         })
+
+      useFormDict<T>(formSchemas.value)
     },
     {
       deep: true,
