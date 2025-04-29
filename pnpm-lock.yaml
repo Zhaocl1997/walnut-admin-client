@@ -324,6 +324,9 @@ importers:
       vite-plugin-cdn2:
         specifier: 1.1.0
         version: 1.1.0(rollup@4.40.0)
+      vite-plugin-checker:
+        specifier: 0.9.1
+        version: 0.9.1(eslint@9.25.0(jiti@2.4.2))(meow@13.2.0)(optionator@0.9.4)(typescript@5.8.3)(vite@6.3.2(@types/node@22.14.1)(jiti@2.4.2)(sass@1.86.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1))(vue-tsc@2.2.8(typescript@5.8.3))
       vite-plugin-compression2:
         specifier: 1.3.3
         version: 1.3.3(rollup@4.40.0)(vite@6.3.2(@types/node@22.14.1)(jiti@2.4.2)(sass@1.86.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1))
@@ -6222,6 +6225,9 @@ packages:
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
 
+  tiny-invariant@1.3.3:
+    resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
+
   tinyexec@0.3.2:
     resolution: {integrity: sha512-KQQR9yN7R5+OSwaK0XQoj22pwHoTlgYqmUscPYoknOoWCWfj/5/ABTMRi69FrKU5ffPVh5QcFikpWJI/P1ocHA==}
 
@@ -6621,6 +6627,40 @@ packages:
 
   vite-plugin-cdn2@1.1.0:
     resolution: {integrity: sha512-mqz9frTLpwT7XVuJppb/OmsEaJOxcY5Xt/+VOeewQAJTsl91TZe1ySv+YyoQbVn+BQbamNHZbUteIuoQzRFdpQ==}
+
+  vite-plugin-checker@0.9.1:
+    resolution: {integrity: sha512-neH3CSNWdkZ+zi+WPt/0y5+IO2I0UAI0NX6MaXqU/KxN1Lz6np/7IooRB6VVAMBa4nigqm1GRF6qNa4+EL5jDQ==}
+    engines: {node: '>=14.16'}
+    peerDependencies:
+      '@biomejs/biome': '>=1.7'
+      eslint: '>=7'
+      meow: ^13.2.0
+      optionator: ^0.9.4
+      stylelint: '>=16'
+      typescript: '*'
+      vite: '>=2.0.0'
+      vls: '*'
+      vti: '*'
+      vue-tsc: ~2.2.2
+    peerDependenciesMeta:
+      '@biomejs/biome':
+        optional: true
+      eslint:
+        optional: true
+      meow:
+        optional: true
+      optionator:
+        optional: true
+      stylelint:
+        optional: true
+      typescript:
+        optional: true
+      vls:
+        optional: true
+      vti:
+        optional: true
+      vue-tsc:
+        optional: true
 
   vite-plugin-compression2@1.3.3:
     resolution: {integrity: sha512-Mb+xi/C5b68awtF4fNwRBPtoZiyUHU3I0SaBOAGlerlR31kusq1si6qG31lsjJH8T7QNg/p3IJY2HY9O9SvsfQ==}
@@ -13581,6 +13621,8 @@ snapshots:
 
   through@2.3.8: {}
 
+  tiny-invariant@1.3.3: {}
+
   tinyexec@0.3.2: {}
 
   tinyexec@1.0.1: {}
@@ -13975,6 +14017,25 @@ snapshots:
     transitivePeerDependencies:
       - rollup
       - supports-color
+
+  vite-plugin-checker@0.9.1(eslint@9.25.0(jiti@2.4.2))(meow@13.2.0)(optionator@0.9.4)(typescript@5.8.3)(vite@6.3.2(@types/node@22.14.1)(jiti@2.4.2)(sass@1.86.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1))(vue-tsc@2.2.8(typescript@5.8.3)):
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      chokidar: 4.0.3
+      npm-run-path: 6.0.0
+      picocolors: 1.1.1
+      picomatch: 4.0.2
+      strip-ansi: 7.1.0
+      tiny-invariant: 1.3.3
+      tinyglobby: 0.2.13
+      vite: 6.3.2(@types/node@22.14.1)(jiti@2.4.2)(sass@1.86.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1)
+      vscode-uri: 3.1.0
+    optionalDependencies:
+      eslint: 9.25.0(jiti@2.4.2)
+      meow: 13.2.0
+      optionator: 0.9.4
+      typescript: 5.8.3
+      vue-tsc: 2.2.8(typescript@5.8.3)
 
   vite-plugin-compression2@1.3.3(rollup@4.40.0)(vite@6.3.2(@types/node@22.14.1)(jiti@2.4.2)(sass@1.86.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1)):
     dependencies:

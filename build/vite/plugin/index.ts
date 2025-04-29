@@ -5,6 +5,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { creatAutoImportPlugin } from './auto-import'
 import { createBannerPlugin } from './banner'
 import { createCdnImportPlugin } from './cdn-import'
+import { createCheckerPlugin } from './checker'
 import { createComponentPlugin } from './component'
 import { createCompressionPlugin } from './compression'
 import { createDevtoolsPlugin } from './devtool'
@@ -37,6 +38,9 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     // https://github.com/unocss/unocss
     createUnoCSSPlugin(),
 
+    // https://github.com/fi3ework/vite-plugin-checker
+    // createCheckerPlugin(),
+
     // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
     // {
     //   name: 'singleHMR',
@@ -53,7 +57,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
   const dev = mode === 'development'
   const stage = mode === 'staging'
-  const prod = mode === 'production'
+  const _prod = mode === 'production'
 
   // I'm pretty sure packages below will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
