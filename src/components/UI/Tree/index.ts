@@ -61,5 +61,5 @@ export interface ICompUITreeProps<T = RowData> {
 }
 
 export type ICompUITreeInst<T = RowData> = Partial<TreeInst & {
-  setProps: (p: ICompUITreeProps<T>) => void
+  setProps: (p: IDeepMaybeRef<ICompUITreeProps<T>> | ICompUITreeProps<T>) => void
 }>
