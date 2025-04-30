@@ -34,38 +34,35 @@ async function onUpdateValue(keys: TreeKey | TreeKey[]) {
 }
 
 async function onFeedback() {
-  try {
-    if (multiple) {
-      if (!Array.isArray(value.value) || !value.value.length)
-        return
+  if (multiple) {
+    if (!Array.isArray(value.value) || !value.value.length)
+      return
 
-      // internal value
-      internalValue.value = value.value
+    // internal value
+    internalValue.value = value.value
 
-      await nextTick()
-      const data = nTreeSelctRef.value.getCheckedData()
-      const leafNodeKeyList = data.options.filter(i => !i.children || i.children.length === 0).map(i => i[treeSelectProps.keyField])
-      const intersection = Array.from(new Set(leafNodeKeyList).intersection(new Set(internalValue.value)))
-      internalValue.value = intersection
+    await nextTick()
 
-      // expanded keys
-      const allNodes = new Set<TreeKey>([...internalValue.value.map(i => findPath(treeSelectProps?.options, n => n[treeSelectProps.keyField] === i) ?? []).flat().map(i => i[treeSelectProps.keyField] as TreeKey)])
-      expandedKeys.value = Array.from(allNodes)
-    }
-    else {
-      if (!value.value)
-        return
+    // expanded keys
+    const data = nTreeSelctRef.value.getCheckedData()
+    // get no children node
+    const leafNodeKeyList = data.options.filter(i => !i.children || i.children.length === 0).map(i => i[treeSelectProps.keyField])
+    const intersection = Array.from(new Set(leafNodeKeyList).intersection(new Set(internalValue.value)))
+    internalValue.value = intersection
 
-      // internal value
-      internalValue.value = value.value
-
-      // expanded keys
-      const targetNodeSingleTree = findPath(treeSelectProps?.options, n => n[treeSelectProps.keyField] === internalValue.value) as [] ?? []
-      expandedKeys.value = targetNodeSingleTree.map(i => i[treeSelectProps.keyField])
-    }
+    const allNodes = new Set<TreeKey>([...internalValue.value.map(i => findPath(treeSelectProps?.options, n => n[treeSelectProps.keyField] === i) ?? []).flat().map(i => i[treeSelectProps.keyField] as TreeKey)])
+    expandedKeys.value = Array.from(allNodes)
   }
-  catch (error) {
-    console.log(error)
+  else {
+    if (!value.value)
+      return
+
+    // internal value
+    internalValue.value = value.value
+
+    // expanded keys
+    const targetNodeSingleTree = findPath(treeSelectProps?.options, n => n[treeSelectProps.keyField] === internalValue.value) as [] ?? []
+    expandedKeys.value = targetNodeSingleTree.map(i => i[treeSelectProps.keyField])
   }
 }
 

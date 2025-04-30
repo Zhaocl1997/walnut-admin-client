@@ -9,15 +9,36 @@ defineOptions({
 
 const state = ref({
   tree1: undefined,
-  tree2: undefined,
+  tree2: [],
+  tree3: undefined,
+  tree4: [],
 })
 
 setTimeout(() => {
-  state.value.tree1 = 9
-  state.value.tree2 = [1, 4, 9, 11, 12]
+  state.value.tree3 = 9
+  state.value.tree4 = [1, 4, 9, 11, 12]
 }, 2000)
 
 const [register1] = useTree({
+  maxHeight: '300px',
+  treeProps: {
+    data: getTreeData(),
+    labelField: '_label',
+    keyField: '_id',
+  },
+})
+
+const [register2] = useTree({
+  multiple: true,
+  maxHeight: '300px',
+  treeProps: {
+    data: getTreeData(),
+    labelField: '_label',
+    keyField: '_id',
+  },
+})
+
+const [register3] = useTree({
   toolbar: true,
 
   deletable: true,
@@ -34,12 +55,11 @@ const [register1] = useTree({
     blockLine: true,
     blockNode: true,
     showLine: true,
-    defaultExpandAll: true,
     showIrrelevantNodes: false,
   },
 })
 
-const [register2] = useTree({
+const [register4] = useTree({
   multiple: true,
   toolbar: true,
   presetPrefixIcon: true,
@@ -60,7 +80,6 @@ const [register2] = useTree({
     keyField: '_id',
     blockLine: true,
     blockNode: true,
-    cascade: true,
     draggable: true,
     onDrop: ({ node, dragNode, dropPosition }) => {
       console.log('DemoTree', { node, dragNode, dropPosition })
@@ -89,6 +108,25 @@ const [register2] = useTree({
             </WTitle>
 
             <WTree v-model:value="state.tree2" @hook="register2" />
+          </n-gi>
+        </n-grid>
+      </n-list-item>
+
+      <n-list-item>
+        <n-grid :cols="2">
+          <n-gi>
+            <WTitle prefix="bar" class="mb-2">
+              Single Feedback
+            </WTitle>
+
+            <WTree v-model:value="state.tree3" @hook="register3" />
+          </n-gi>
+          <n-gi>
+            <WTitle prefix="bar" class="mb-2">
+              Multiple Feedback
+            </WTitle>
+
+            <WTree v-model:value="state.tree4" @hook="register4" />
           </n-gi>
         </n-grid>
       </n-list-item>

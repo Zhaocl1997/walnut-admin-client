@@ -11,7 +11,7 @@ import { useDropdown } from '@/components/UI/Dropdown'
 import WIcon from '@/components/UI/Icon'
 import WIconButton from '@/components/UI/IconButton'
 
-import { formatTree, treeToArr } from 'easy-fns-ts'
+import { findPath, formatTree, treeToArr } from 'easy-fns-ts'
 
 import { cloneDeep } from 'lodash-es'
 
@@ -34,7 +34,7 @@ const { setProps, getProps } = useProps<ICompUITreeProps>(props)
 
 const userPermission = useAppStoreUserPermission()
 
-const nTreeRef = shallowRef<TreeInst>()
+const nTreeRef = templateRef<TreeInst>('nTreeRef')
 const selectedKeys = ref<TreeKey[]>([])
 const checkedKeys = ref<TreeKey[]>([])
 const indeterminateKeys = ref<TreeKey[]>([])
@@ -332,29 +332,43 @@ function onRenderSuffix({ option }: TreeRenderProps) {
     : undefined
 }
 
-function onFeedback() {
-  if (getProps.value.multiple) {
+async function onFeedback() {
+  if (getProps.value.multiple && Array.isArray(value.value)) {
     if (cascade.value) {
-      checkedKeys.value = (value.value as TreeKey[])?.filter(i => getBottomChildKeys.value.includes(i))
-      indeterminateKeys.value = (value.value as TreeKey[])?.filter(i => !getBottomChildKeys.value.includes(i))
+      checkedKeys.value = (value.value)?.filter(i => getBottomChildKeys.value.includes(i))
+      indeterminateKeys.value = (value.value)?.filter(i => !getBottomChildKeys.value.includes(i))
 
-      nextTick(() => {
-        if (nTreeRef.value) {
-          checkedKeys.value = nTreeRef.value.getCheckedData().keys!
-          indeterminateKeys.value = nTreeRef.value.getIndeterminateData().keys!
-        }
-      })
+      await nextTick()
+
+      if (nTreeRef.value) {
+        checkedKeys.value = nTreeRef.value.getCheckedData().keys!
+        indeterminateKeys.value = nTreeRef.value.getIndeterminateData().keys!
+      }
     }
-    else { checkedKeys.value = value.value as TreeKey[] }
+    else { checkedKeys.value = value.value }
+
+    // expanded keys
+    const data = nTreeRef.value.getCheckedData()
+    // get no children node
+    const leafNodeKeyList = data.options.filter(i => !i.children || i.children.length === 0).map(i => i[getKeyField.value])
+    const intersection = Array.from(new Set(leafNodeKeyList).intersection(new Set(value.value)))
+    const allNodes = new Set<TreeKey>([...intersection.map(i => findPath(getProps.value?.treeProps?.data, n => n[getKeyField.value] === i) ?? []).flat().map(i => i[getKeyField.value] as TreeKey)])
+    expandedKeys.value = Array.from(allNodes)
   }
-  else { selectedKeys.value = [value.value] as TreeKey[] }
+  else {
+    selectedKeys.value = [value.value] as TreeKey[]
+
+    // expanded keys
+    const targetNodeSingleTree = findPath(getProps.value?.treeProps?.data, n => n[getKeyField.value] === value.value) as [] ?? []
+    expandedKeys.value = targetNodeSingleTree.map(i => i[getKeyField.value])
+  }
 }
 
 watch(
   () => value.value,
   async () => {
     await nextTick()
-    onFeedback()
+    await onFeedback()
   },
 )
 
@@ -395,13 +409,14 @@ defineExpose({
     <WScrollbar :height="getProps.maxHeight ?? 'auto'">
       <n-tree
         ref="nTreeRef"
-        :style="{ height: getProps.maxHeight }"
         v-bind="getProps.treeProps"
-        :cascade="cascade"
+        v-model:expanded-keys="expandedKeys"
+        :default-expanded-keys="expandedKeys"
+        :style="{ height: getProps.maxHeight }"
         :selected-keys="selectedKeys"
         :checked-keys="checkedKeys"
-        :expanded-keys="expandedKeys"
         :indeterminate-keys="indeterminateKeys"
+        :cascade="cascade"
         :checkable="getProps.multiple"
         :pattern="pattern"
         :node-props="nodeProps"
