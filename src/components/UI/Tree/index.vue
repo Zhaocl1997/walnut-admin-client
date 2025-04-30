@@ -155,6 +155,7 @@ const getBottomChildKeys = computed(() => {
 
 const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
   dropdownProps: {
+    // @ts-expect-error don't know why
     options: contextMenuOptions,
     disabled: getProps.value.treeProps?.disabled,
     onSelect: (key) => {

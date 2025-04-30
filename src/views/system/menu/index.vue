@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { menuAPI } from '@/api/system/menu'
+import type { WForm } from '@/components/UI/Form'
 
+import { menuAPI } from '@/api/system/menu'
 import { useTree } from '@/components/UI/Tree'
 import { omit } from 'lodash-es'
 import { useMenuTree } from '../role/useMenuTree'
@@ -14,9 +15,36 @@ defineOptions({
 const { t } = useAppI18n()
 
 // ref
-const actionType = ref<ActionType>('')
-const treeMenuValue = ref<string>('')
-const panelTitle = ref<string>('')
+const actionType = ref<ActionType>('create')
+const targetTreeItem = ref()
+
+const loading = ref(false)
+
+// state
+const { stateRef: formData, resetState: resetFormData } = useState<AppSystemMenu>({
+  type: 'catalog',
+  status: true,
+
+  path: null,
+  name: null,
+  component: null,
+
+  title: null,
+  icon: null,
+  order: 0,
+  ternal: 'none',
+  url: null,
+  cache: true,
+  show: true,
+  affix: false,
+  permission: null,
+  menuActiveName: null,
+  menuActiveSameTab: false,
+
+  activeIcon: null,
+  badge: null,
+  animationName: null,
+})
 
 const { getLeftMenu, getTreeSelect, onInit, menuActiveNamesOptions }
     = useMenuTree()
@@ -50,11 +78,12 @@ const [registerTree] = useTree<AppSystemMenu>({
   },
 
   treeProps: {
-    // @ts-expect-error
+    // @ts-expect-error actually works
     data: getLeftMenu,
     keyField: '_id',
     blockLine: true,
     blockNode: true,
+    disabled: computed(() => loading.value),
 
     filter: (pattern, node) => {
       if (
@@ -74,33 +103,6 @@ const [registerTree] = useTree<AppSystemMenu>({
   },
 })
 
-// state
-const { stateRef: formData, resetState: resetFormData }
-    = useState<AppSystemMenu>({
-      type: 'catalog',
-      status: true,
-
-      path: null,
-      name: null,
-      component: null,
-
-      title: null,
-      icon: null,
-      order: 0,
-      ternal: 'none',
-      url: null,
-      cache: true,
-      show: true,
-      affix: false,
-      permission: null,
-      menuActiveName: null,
-      menuActiveSameTab: false,
-
-      activeIcon: null,
-      badge: null,
-      animationName: null,
-    })
-
 // schemas
 const schemas = useMenuFormSchema(
   actionType,
@@ -110,146 +112,118 @@ const schemas = useMenuFormSchema(
 )
 
 // form
-const [registerForm, { validate, restoreValidation }]
-    = useForm<AppSystemMenu>({
-      localeUniqueKey: 'menu',
+const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
+  localeUniqueKey: 'menu',
 
-      labelWidth: 140,
+  labelWidth: 140,
 
-      span: 12,
+  span: 12,
 
-      baseRules: true,
+  baseRules: true,
 
-      schemas: [
-        ...schemas,
+  disabled: computed(() => loading.value),
 
-        {
-          type: 'Base:ButtonGroup',
-          gridProp: {
-            span: 24,
+  schemas: [
+    ...schemas,
+
+    {
+      type: 'Base:ButtonGroup',
+      gridProp: {
+        span: 24,
+      },
+      componentProp: {
+        groups: [
+          {
+            textProp: () => t('app.button.save'),
+            type: 'primary',
+            auth: computed(() => `system:menu:${actionType.value}`),
+            loading,
+            disabled: loading,
+            onClick: async () => {
+              const isValid = await validate()
+
+              if (!isValid)
+                return
+
+              loading.value = true
+
+              try {
+                await menuAPI[actionType.value](formData.value)
+                useAppMsgSuccess()
+                resetFormData()
+                onInit()
+                targetTreeItem.value = undefined
+              }
+              finally {
+                loading.value = false
+              }
+            },
           },
-          componentProp: {
-            groups: [
-              {
-                textProp: () => t('app.button.save'),
-                type: 'primary',
-                auth: 'system:menu:update',
-                onClick: async () => {
-                  const isValid = await validate()
-
-                  if (!isValid)
-                    return
-
-                  await menuAPI[actionType.value](formData.value)
-                  useAppMsgSuccess()
-                  resetFormData()
-                  await onInit()
-                  treeMenuValue.value = ''
-                  actionType.value = ''
-                },
-              },
-              {
-                textProp: () => t('app.button.reset'),
-                onClick: async () => {
-                  await restoreValidation()
-                  resetFormData()
-                  actionType.value = ''
-                },
-              },
-            ],
+          {
+            textProp: () => t('app.button.reset'),
+            auth: computed(() => `system:menu:${actionType.value}`),
+            loading,
+            disabled: loading,
+            onClick: async () => {
+              await restoreValidation()
+              resetFormData()
+              actionType.value = ''
+            },
           },
-        },
-      ],
-    })
+        ],
+      },
+    },
+  ] as IDeepMaybeRef<WForm.Schema.Item<AppSystemMenu>>[],
+})
 
-// effect
-watchEffect(async () => {
-  if (treeMenuValue.value) {
-    resetFormData()
-    const res = await menuAPI.read(treeMenuValue.value)
+watch(() => targetTreeItem.value, async () => {
+  if (targetTreeItem.value) {
+    const res = await menuAPI.read(targetTreeItem.value)
     actionType.value = 'update'
     formData.value = Object.assign(formData.value, res)
   }
+  else {
+    actionType.value = 'create'
+    resetFormData()
+  }
 
-  await restoreValidation()
+  restoreValidation()
 })
-
-function onCreate() {
-  actionType.value = 'create'
-  treeMenuValue.value = ''
-  resetFormData()
-  panelTitle.value = t('app.button.create')
-}
 </script>
 
 <template>
   <n-grid :x-gap="12">
     <n-gi :span="6">
-      <WCard
+      <n-card
         :segmented="{
           content: true,
+          footer: 'soft',
         }"
       >
-        <template #header>
-          <WAppAuthorize value="system:menu:create">
-            <n-button @click="onCreate">
-              {{ t('app.button.create') }}
-
-              <template #icon>
-                <WIcon icon="ant-design:plus-outlined" />
-              </template>
-            </n-button>
-          </WAppAuthorize>
-        </template>
-
         <template #default>
-          <w-tree v-model:value="treeMenuValue" @hook="registerTree" />
+          <WTree v-model:value="targetTreeItem" @hook="registerTree" />
         </template>
-      </WCard>
+      </n-card>
     </n-gi>
 
     <n-gi :span="18">
-      <WCard
+      <n-card
         :segmented="{
           content: true,
+          footer: 'soft',
         }"
       >
-        <template #header>
-          <div class="flex items-center">
-            <WIcon
-              :icon="
-                actionType === 'create'
-                  ? 'ant-design:plus-outlined'
-                  : actionType === 'update'
-                    ? 'ant-design:edit-outlined'
-                    : 'ant-design:menu-outlined'
-              "
-              height="24"
-              class="mr-1"
-            />
+        <template #default>
+          <n-alert :title="t('page.menu.alert')" type="info" class="mb-4" />
 
-            <span v-show="actionType === 'create'">{{ panelTitle }}</span>
-            <span v-show="actionType === 'update'">
-              {{
-                formData.title
-                  ? `${t('app.button.read')}: ${t(formData.title)}`
-                  : t('page.menu.permission')
-              }}
-            </span>
-            <span v-show="!actionType">{{ t('page.menu.defTitle') }}</span>
+          <div v-show="actionType">
+            <WForm
+              :model="formData"
+              @hook="register"
+            />
           </div>
         </template>
-
-        <template #default>
-          <n-alert :title="t('page.menu.alert')" type="info" />
-
-          <w-form
-            v-show="treeMenuValue || actionType === 'create'"
-            :model="formData"
-            @hook="registerForm"
-          />
-        </template>
-      </WCard>
+      </n-card>
     </n-gi>
   </n-grid>
 </template>

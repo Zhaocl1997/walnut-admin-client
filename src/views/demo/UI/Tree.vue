@@ -8,9 +8,14 @@ defineOptions({
 })
 
 const state = ref({
-  tree1: 9,
-  tree2: [1, 4, 9, 11, 12],
+  tree1: undefined,
+  tree2: undefined,
 })
+
+setTimeout(() => {
+  state.value.tree1 = 9
+  state.value.tree2 = [1, 4, 9, 11, 12]
+}, 2000)
 
 const [register1] = useTree({
   toolbar: true,

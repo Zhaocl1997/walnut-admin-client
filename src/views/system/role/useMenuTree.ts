@@ -34,7 +34,7 @@ export function useMenuTree() {
   }) as ComputedRef<TreeNodeItem<AppSystemMenu>[]>
 
   const onInit = async () => {
-    const res = await menuAPI.list()
+    const res = await menuAPI.list({ page: { page: 1, pageSize: 999 } })
 
     // build, order and format
     const menuData = orderTree<AppSystemMenu>(
@@ -65,9 +65,7 @@ export function useMenuTree() {
       }))
   }
 
-  onMounted(async () => {
-    await onInit()
-  })
+  onMounted(onInit)
 
   return { getLeftMenu, getTreeSelect, menuActiveNamesOptions, onInit }
 }

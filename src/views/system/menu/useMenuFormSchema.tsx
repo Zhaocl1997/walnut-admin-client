@@ -1,10 +1,19 @@
 import type { WForm } from '@/components/UI/Form'
+// TODO 111
+import WInput from '@/components/UI/Input'
+import WRadio from '@/components/UI/Radio'
+
 import { findPath } from 'easy-fns-ts'
+// TODO 111
+import { NSelect } from 'naive-ui'
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 
-export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<RecordNullable<AppSystemMenu>>, treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>, menuActiveNamesOptions: Ref<{ name: string, title: string }[]>):
-  | IDeepMaybeRef<WForm.Schema.Item<AppSystemMenu>[]>
-  | WForm.Schema.Item<AppSystemMenu>[] {
+export function useMenuFormSchema(
+  actionType: Ref<ActionType>,
+  formData: Ref<RecordNullable<AppSystemMenu>>,
+  treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>,
+  menuActiveNamesOptions: Ref<{ name: string, title: string }[]>,
+) {
   // get view options and name options
   const { viewOptions, nameOptions } = getViewsOptions()
 
@@ -50,48 +59,27 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         path: 'type',
       },
       componentProp: {
-        render: ({ formData }) => {
-          if (actionType.value === 'create' || !actionType.value) {
-            return (
-              <w-radio
-                v-model={[formData.type, 'value']}
-                options={menuTypeOptions}
-              >
-                {formData.type}
-              </w-radio>
-            )
-          }
-
-          if (actionType.value === 'update') {
-            return (
-              <n-tag
-                type={
-                  formData.type === 'menu'
-                    ? 'success'
-                    : formData.type === 'element'
-                      ? 'warning'
-                      : 'info'
-                }
-              >
-                {formData.type}
-              </n-tag>
-            )
-          }
-        },
+        render: ({ formData }) => (
+          <WRadio
+            v-model={[formData.type, 'value']}
+            options={menuTypeOptions}
+          >
+            {formData.type}
+          </WRadio>
+        ),
       },
     },
 
+    // TODO empty not work
     {
       type: 'Raw:TreeSelect',
       formProp: {
         path: 'pid',
       },
       componentProp: {
-        // @ts-expect-error
         options: treeData,
         keyField: '_id',
         labelField: 'title',
-        // @ts-expect-error
         expandedKeys: getTreeSelectExpandKeys,
         onUpdateExpandedKeys: (v) => {
           treeExpandedKeys.value = v
@@ -135,6 +123,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
       componentProp: {
         clearable: true,
         prefix: getRoutePathPrefix,
+        prefixClass: 'text-gray-5',
       },
       visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
@@ -170,14 +159,14 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
             && formData.ternal === AppConstMenuTernal.NONE
           ) {
             return (
-              <n-select
+              <NSelect
                 v-model={[formData.name, 'value']}
                 clearable
                 filterable
                 disabled
                 options={nameOptions}
               >
-              </n-select>
+              </NSelect>
             )
           }
         },
@@ -345,6 +334,7 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         options: computed(() =>
           menuActiveNamesOptions.value.map(i => ({
             value: i.name,
+            // @ts-expect-error fuck t
             label: AppI18n.global.t(i.title),
           })),
         ),
@@ -428,5 +418,5 @@ export function useMenuFormSchema(actionType: Ref<ActionType>, formData: Ref<Rec
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
-  ]
+  ] as WForm.Schema.Item<AppSystemMenu>[]
 }

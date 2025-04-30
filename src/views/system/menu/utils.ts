@@ -19,7 +19,7 @@ export function deepKeys(t: Recordable, pre: any[] = []): string[] {
  * see more https://vitejs.dev/guide/features.html#glob-import
  */
 export function getViewsOptions() {
-  const views = import.meta.glob('@/views/**/*.vue', {
+  const views: { [k: string]: { name: string, defaultView: boolean } } = import.meta.glob('@/views/**/*.vue', {
     eager: true,
     import: 'default',
   })
