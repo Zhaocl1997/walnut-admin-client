@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import type { RawEditorOptions } from 'tinymce'
-import type { IWCompVendorTinymceEditorProps } from './types'
+import type { ICompVendorTinymceProps } from '.'
 
 import TinymceEditor from '@tinymce/tinymce-vue'
 import { genString } from 'easy-fns-ts'
 import tinymce from 'tinymce/tinymce'
-import { getContenteCSSUrl, getSkinUrl } from './resources/cdn'
-import { menubar } from './resources/menubar'
-import { plugins } from './resources/plugins'
-import { templates } from './resources/template'
-import { toolbar } from './resources/toolbar'
+import { getContenteCSSUrl, getSkinUrl } from './cdn'
+import { menubar, plugins, toolbar } from './resource'
+
+// TODO need to self host https://github.com/hugerte/hugerte-docs/blob/main/integrations/vue.md
+
 import 'tinymce/themes/silver'
 import 'tinymce/models/dom'
 import 'tinymce/icons/default'
@@ -37,10 +37,8 @@ import 'tinymce/plugins/pagebreak'
 import 'tinymce/plugins/preview'
 import 'tinymce/plugins/quickbars'
 import 'tinymce/plugins/save'
-
 import 'tinymce/plugins/searchreplace'
 import 'tinymce/plugins/table'
-import 'tinymce/plugins/template'
 import 'tinymce/plugins/visualblocks'
 import 'tinymce/plugins/visualchars'
 import 'tinymce/plugins/wordcount'
@@ -49,7 +47,7 @@ defineOptions({
   name: 'WCompVendorTinymce',
 })
 
-const props = withDefaults(defineProps<IWCompVendorTinymceEditorProps>(), {
+const props = withDefaults(defineProps<ICompVendorTinymceProps>(), {
   value: '',
   disabled: false,
   width: '100%',
@@ -80,6 +78,7 @@ const getLangName = computed(() => appLocale.locale)
 const tinymceOptions = computed((): RawEditorOptions => {
   return {
     selector: `#${editorId.value}`,
+    license_key: 'gpl',
 
     // remove right bottom logo
     branding: false,
@@ -105,9 +104,6 @@ const tinymceOptions = computed((): RawEditorOptions => {
     plugins,
     menubar,
     toolbar,
-
-    // templates
-    templates,
   }
 })
 

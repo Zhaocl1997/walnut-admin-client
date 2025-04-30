@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<ICompVendorEChartsProps>(), {
 
 const chartId = ref(`echarts-${genString(8)}`)
 // third party libs should use shallowRef !!!
-const chartInst = shallowRef<Nullable<echarts.ECharts>>(null)
+const chartInst = shallowRef<echarts.ECharts>()
 
 const appLocale = useAppStoreLocale()
 const appSettings = useAppStoreSetting()

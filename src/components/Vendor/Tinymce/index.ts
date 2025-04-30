@@ -1,3 +1,8 @@
-export * from './src/types'
+export default createAsyncComponent(() => import('./index.vue'))
 
-export default createAsyncComponent(() => import('./src/index.vue'))
+export interface ICompVendorTinymceProps {
+  value?: string
+  disabled?: boolean
+  height?: string
+  width?: string
+}
