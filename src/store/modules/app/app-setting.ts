@@ -44,7 +44,7 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
   getters: {
     // app
-    getTransition(state) {
+    getTransition(state): ValueOfAppConstTransitionName {
       const { currentRoute } = useAppRouter()
 
       const setting = state.app
@@ -57,7 +57,7 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
           return (
             currentRoute.value.meta?.animationName
             || AppConstTransitionName.FADE
-          )
+          ) as ValueOfAppConstTransitionName
         }
       }
 

@@ -189,6 +189,8 @@ watch(() => targetTreeItem.value, async () => {
 
   restoreValidation()
 })
+
+// TODO why this page initial echart & oss ?
 </script>
 
 <template>

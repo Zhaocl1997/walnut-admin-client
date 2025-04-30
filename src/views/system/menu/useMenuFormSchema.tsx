@@ -36,15 +36,6 @@ export function useMenuFormSchema(
         .join('/')}/`,
   )
 
-  const treeExpandedKeys = ref<string[]>()
-
-  // get tree select expanded keys
-  const getTreeSelectExpandKeys = computed(
-    () =>
-      treeExpandedKeys.value
-      ?? (getCurrentNode.value as AppSystemMenu[])?.map(i => i._id!),
-  )
-
   return [
     {
       type: 'Extend:Divider',
@@ -72,17 +63,15 @@ export function useMenuFormSchema(
 
     // TODO empty not work
     {
-      type: 'Raw:TreeSelect',
+      type: 'Base:TreeSelect',
       formProp: {
         path: 'pid',
       },
       componentProp: {
-        options: treeData,
-        keyField: '_id',
-        labelField: 'title',
-        expandedKeys: getTreeSelectExpandKeys,
-        onUpdateExpandedKeys: (v) => {
-          treeExpandedKeys.value = v
+        treeSelectProps: {
+          options: treeData ?? [],
+          keyField: '_id',
+          labelField: 'title',
         },
       },
     },
