@@ -127,7 +127,8 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
           :key="item.type === 'Extend:Query' ? `form-query-${index}` : item.type === 'Extend:Divider' ? `form-divider-${index}` : item.formProp?.path"
         >
           <div
-            v-if="item.type === 'Extend:Query'"
+            v-if="item.type === 'Extend:Query' && FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
+            v-show="FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
             :style="Object.assign(getGridItemStyle(item, 'query'), item.gridProp?.style)"
             :class="item.gridProp?.class"
           >
@@ -139,7 +140,8 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
           </div>
 
           <div
-            v-else-if="item.type === 'Extend:Divider'"
+            v-else-if="item.type === 'Extend:Divider' && FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
+            v-show="FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
             :style="Object.assign(getGridItemStyle(item, 'divider'), item.gridProp?.style)"
             :class="item.gridProp?.class"
           >
