@@ -35,7 +35,8 @@ export class BaseAPI<T> {
   update(data: T) {
     return AppAxios.put<T>(
       {
-        url: `${this.baseAPI}`,
+        // TODO update
+        url: `${this.baseAPI}/${data._id}`,
         data,
         _demonstrate: demo,
 
