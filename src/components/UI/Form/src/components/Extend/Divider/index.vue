@@ -56,7 +56,7 @@ const getHelpMsg = computed(() => {
       {{ t(title!) }}
     </WTitle>
 
-    <w-arrow
+    <WArrow
       v-if="foldable"
       :active="!active"
       class="mb-1 ml-1"

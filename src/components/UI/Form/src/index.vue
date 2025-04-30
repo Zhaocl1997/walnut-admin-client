@@ -182,7 +182,7 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
               </div>
             </template>
 
-            <template v-if="getScopeOrGlobalProp(item, 'visibleProp.visibleMode', getProps) === 'auto-forward'">
+            <template v-else-if="getScopeOrGlobalProp(item, 'visibleProp.visibleMode', getProps) === 'auto-forward'">
               <WTransition
                 v-if="getScopeOrGlobalProp(item, 'transitionProp.transitionName', getProps)"
                 v-bind="item.transitionProp"
