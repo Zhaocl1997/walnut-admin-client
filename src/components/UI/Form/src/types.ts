@@ -47,6 +47,7 @@ import type { ICompUISwitchProps } from '../../Switch'
 import type { WTable } from '../../Table'
 import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'
+import type { ICompUITreeSelectProps } from '../../TreeSelect'
 // extend
 import type { ICompUIFormItemExtendDividerProps } from './components/Extend/Divider'
 import type { ICompUIFormItemExtendQueryProps } from './components/Extend/Query'
@@ -260,6 +261,7 @@ export declare namespace WForm {
       'Base:Switch': ICompUISwitchProps
       'Base:TimePicker': ICompUITimePickerProps
       'Base:Tree': ICompUITreeProps
+      'Base:TreeSelect': ICompUITreeSelectProps
 
       // @/components/Extra
       'Extra:EmailInput': ICompExtraEmailInputProps
@@ -273,7 +275,6 @@ export declare namespace WForm {
       // raw
       'Raw:DynamicInput': DynamicInputProps
       'Raw:Slider': SliderProps
-      'Raw:TreeSelect': TreeSelectProps
 
       // business
       'Business:AreaCascader': ICompBusinessAreaCascaderProps
@@ -431,6 +432,7 @@ export declare namespace WForm {
       type SwitchSchema<D> = DynamicSchemaItemProps<'Base:Switch', D>
       type TimePickerSchema<D> = DynamicSchemaItemProps<'Base:TimePicker', D>
       type TreeSchema<D> = DynamicSchemaItemProps<'Base:Tree', D>
+      type TreeSelectSchema<D> = DynamicSchemaItemProps<'Base:TreeSelect', D>
 
       // extra
       type EmailInputSchema<D> = DynamicSchemaItemProps<'Extra:EmailInput', D>
@@ -444,7 +446,6 @@ export declare namespace WForm {
       // raw
       type DynamicInputSchema<D> = DynamicSchemaItemProps<'Raw:DynamicInput', D>
       type SliderSchema<D> = DynamicSchemaItemProps<'Raw:Slider', D>
-      type TreeSelectSchema<D> = DynamicSchemaItemProps<'Raw:TreeSelect', D>
 
       // business
       type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Business:AreaCascader', D>
@@ -485,6 +486,7 @@ export declare namespace WForm {
       | SchemaItem.SwitchSchema<D>
       | SchemaItem.TimePickerSchema<D>
       | SchemaItem.TreeSchema<D>
+      | SchemaItem.TreeSelectSchema<D>
 
       // extra
       | SchemaItem.EmailInputSchema<D>
@@ -498,7 +500,6 @@ export declare namespace WForm {
       // raw
       | SchemaItem.DynamicInputSchema<D>
       | SchemaItem.SliderSchema<D>
-      | SchemaItem.TreeSelectSchema<D>
 
       // business
       | SchemaItem.AreaCacaderSchema<D>

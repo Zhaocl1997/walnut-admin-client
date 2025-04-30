@@ -1,4 +1,4 @@
-import { NDynamicInput, NSlider, NTreeSelect } from 'naive-ui'
+import { NDynamicInput, NSlider } from 'naive-ui'
 
 const BUILT_IN_FORM_ITEM_TYPE_UI = [
   'Button',
@@ -16,6 +16,7 @@ const BUILT_IN_FORM_ITEM_TYPE_UI = [
   'Switch',
   'TimePicker',
   'Tree',
+  'TreeSelect',
 ] as const
 
 const BUILT_IN_FORM_ITEM_TYPE_EXTRA = [
@@ -119,7 +120,6 @@ BUILT_IN_FORM_ITEM_TYPE_EXTEND.forEach((key) => {
 // raw
 componentMap.set('Slider', NSlider)
 componentMap.set('DynamicInput', NDynamicInput)
-componentMap.set('TreeSelect', NTreeSelect)
 
 componentMap.set(
   'RoleSelect',

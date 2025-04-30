@@ -24,6 +24,7 @@ const { stateRef: formData, resetState: resetFormData } = useState<Recordable>({
   formSwitch: null,
   formTimePicker: null,
   formTree: null,
+  formTreeSelect: null,
 
   // extra
   formEmailInput: null,
@@ -37,7 +38,6 @@ const { stateRef: formData, resetState: resetFormData } = useState<Recordable>({
   // raw
   formDynamicInput: null,
   formSlider: null,
-  formTreeSelect: null,
 
   // business
   formAreaCascader: null,
@@ -72,6 +72,12 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     },
   },
 
+  {
+    type: 'Extend:Divider',
+    componentProp: {
+      title: 'UI Components',
+    },
+  },
   // ui
   {
     type: 'Base:Button',
@@ -289,7 +295,28 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
       },
     },
   },
+  {
+    type: 'Base:TreeSelect',
+    formProp: {
+      label: 'TreeSelect',
+      path: 'formTreeSelect',
+    },
+    componentProp: {
+      treeSelectProps: {
+        options: getTreeData(),
+        labelField: '_label',
+        keyField: '_id',
+        clearable: true,
+      },
+    },
+  },
 
+  {
+    type: 'Extend:Divider',
+    componentProp: {
+      title: 'Extra Components',
+    },
+  },
   // extra
   {
     type: 'Extra:EmailInput',
@@ -357,6 +384,12 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     },
   },
 
+  {
+    type: 'Extend:Divider',
+    componentProp: {
+      title: 'Naive UI Raw Components',
+    },
+  },
   // raw
   {
     type: 'Raw:DynamicInput',
@@ -384,19 +417,11 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
   },
 
   {
-    type: 'Raw:TreeSelect',
-    formProp: {
-      label: 'TreeSelect',
-      path: 'formTreeSelect',
-    },
+    type: 'Extend:Divider',
     componentProp: {
-      options: getTreeData(),
-      labelField: '_label',
-      keyField: '_id',
-      clearable: true,
+      title: 'Business Components, need API support',
     },
   },
-
   // business
   {
     type: 'Business:AreaCascader',
@@ -481,6 +506,7 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
       :schemas="schemas"
       label-width="120px"
       base-rules
+      :span="12"
     >
       <template #formSlot>
         <n-input v-model:value="formData.formSlot" />
