@@ -1,6 +1,6 @@
 import type { ICompUIDropdownInst, ICompUIDropdownProps } from '.'
 
-export function useDropdown(props: ICompUIDropdownProps): [(inst: ICompUIDropdownInst) => void, ICompUIDropdownInst] {
+export function useDropdown(props: IDeepMaybeRef<ICompUIDropdownProps> | ICompUIDropdownProps): [(inst: ICompUIDropdownInst) => void, ICompUIDropdownInst] {
   isInSetup()
 
   const wDropdownRef = shallowRef<ICompUIDropdownInst>()
