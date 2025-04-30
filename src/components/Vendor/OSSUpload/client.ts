@@ -57,6 +57,7 @@ export class AliOSSClient {
     data: UploadFileInfo,
     folder: string,
   ): Promise<{ id: string, value: string } | undefined> {
+    // demo mode, do not actually upload
     if (demo)
       return
 
@@ -141,7 +142,7 @@ export class AliOSSClient {
           headers,
           checkpoint: AliOSSClient.checkPoint!,
           // 获取分片上传进度、断点和返回值。
-          progress: (p, cpt, res) => {
+          progress: (p, cpt, _res) => {
             AliOSSClient.checkPoint = cpt
             onProcessCallback({ percent: Math.ceil(p * 100) })
           },
@@ -193,6 +194,6 @@ export class AliOSSClient {
   }
 }
 
-(async function () {
-  await AliOSSClient.instance.getConfig()
-})()
+// ;(async () => {
+//   await AliOSSClient.instance.getConfig()
+// })()

@@ -3,11 +3,92 @@ defineOptions({
   name: 'OSSUploadDemo',
 })
 
-const state = ref<any>({
+const configData = ref({
+  disabled: false,
+  max: 3,
+  size: 1024,
+  crossoverSize: 1024 * 5,
+  download: true,
+  remove: true,
+  preview: true,
+})
+
+const [register] = useForm<typeof configData.value>({
+  span: 12,
+  xGap: 20,
+  schemas: [
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'disabled',
+        label: 'Disabled',
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'download',
+        label: 'Download',
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'remove',
+        label: 'Remove',
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'preview',
+        label: 'Preview',
+      },
+    },
+    {
+      type: 'Raw:Slider',
+      formProp: {
+        path: 'max',
+        label: 'Max file count',
+      },
+      componentProp: {
+        min: 0,
+        max: 10,
+      },
+    },
+    {
+      type: 'Raw:Slider',
+      formProp: {
+        path: 'size',
+        label: 'File KB limit',
+      },
+      componentProp: {
+        min: 0,
+        max: 8192,
+        step: 1024,
+      },
+    },
+    {
+      type: 'Raw:Slider',
+      formProp: {
+        path: 'crossoverSize',
+        label: 'Threhold to trigger multipart upload',
+      },
+      componentProp: {
+        min: 1024,
+        max: 8192,
+        step: 1024,
+      },
+    },
+  ],
+})
+
+const formData = ref<Recordable>({
+  fileList1: ['city.jpg', 'football.jpg'],
   fileList2: ['test-png.png', 'test-docx.docx', 'test-pdf.pdf'],
-  fileList3: ['test-png.png', 'test-docx.docx', 'test-pdf.pdf'],
-  fileList6: ['person.jpg', 'furniture.jpg'],
-  fileList7: ['city.jpg', 'football.jpg'],
+  // fileList3: ['test-png.png', 'test-docx.docx', 'test-pdf.pdf'],
+  // fileList6: ['person.jpg', 'furniture.jpg'],
+  // fileList7: ['city.jpg', 'football.jpg'],
 })
 </script>
 
@@ -16,17 +97,42 @@ const state = ref<any>({
     <n-list>
       <n-list-item>
         <WDemoCard title="Basic Usage">
-          <WJSON :value="state.fileList1" />
+          <WForm :model="configData" @hook="register" />
 
-          <w-OSS-upload v-model:value="state.fileList1" />
+          <WJSON :value="formData.fileList1" />
+
+          <n-space vertical>
+            <WOSSUpload
+              v-model:value="formData.fileList1"
+              image
+              :disabled="configData.disabled"
+              :max="configData.max"
+              :size="configData.size"
+              :crossover-size="configData.crossoverSize"
+              :download="configData.download"
+              :remove="configData.remove"
+              :preview="configData.preview"
+            />
+
+            <WOSSUpload
+              v-model:value="formData.fileList2"
+              :disabled="configData.disabled"
+              :max="configData.max"
+              :size="configData.size"
+              :crossover-size="configData.crossoverSize"
+              :download="configData.download"
+              :remove="configData.remove"
+              :preview="configData.preview"
+            />
+          </n-space>
         </WDemoCard>
       </n-list-item>
 
-      <n-list-item>
+      <!-- <n-list-item>
         <WDemoCard title="Feedback">
           <WJSON :value="state.fileList2" />
 
-          <w-OSS-upload v-model:value="state.fileList2" />
+          <WOSSUpload v-model:value="state.fileList2" />
         </WDemoCard>
       </n-list-item>
 
@@ -34,7 +140,7 @@ const state = ref<any>({
         <WDemoCard title="Disabled">
           <WJSON :value="state.fileList3" />
 
-          <w-OSS-upload v-model:value="state.fileList3" disabled />
+          <WOSSUpload v-model:value="state.fileList3" disabled />
         </WDemoCard>
       </n-list-item>
 
@@ -49,7 +155,7 @@ const state = ref<any>({
         >
           <WJSON :value="state.fileList4" />
 
-          <w-OSS-upload
+          <WOSSUpload
             v-model:value="state.fileList4"
             :max="2"
             accept=".doc,.docx"
@@ -64,7 +170,7 @@ const state = ref<any>({
         >
           <WJSON :value="state.fileList5" />
 
-          <w-OSS-upload
+          <WOSSUpload
             v-model:value="state.fileList5"
             image
             :size="1024"
@@ -76,7 +182,7 @@ const state = ref<any>({
         <WDemoCard title="Image Upload Feedback">
           <WJSON :value="state.fileList6" />
 
-          <w-OSS-upload
+          <WOSSUpload
             v-model:value="state.fileList6"
             image
             :size="1024"
@@ -88,7 +194,7 @@ const state = ref<any>({
         <WDemoCard title="Image Upload Disabled">
           <WJSON :value="state.fileList7" />
 
-          <w-OSS-upload
+          <WOSSUpload
             v-model:value="state.fileList7"
             image
             :size="1024"
@@ -108,13 +214,13 @@ const state = ref<any>({
         >
           <WJSON :value="state.fileList8" />
 
-          <w-OSS-upload
+          <WOSSUpload
             v-model:value="state.fileList8"
             :size="1024 * 100"
             :crossover-size="1024 * 5"
           />
         </WDemoCard>
-      </n-list-item>
+      </n-list-item> -->
     </n-list>
   </WDemoCard>
 </template>

@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import type { WAbsImageInst } from '@/components/Extra/AbsImage'
-import type { IWCompVendorCropperProps } from './props'
+import type { ICompVendorCropperProps } from '.'
 import { CropperCanvas, CropperCrosshair, CropperGrid, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
 import { genString } from 'easy-fns-ts'
 
 defineOptions({
-  name: 'WVendorCropper',
+  name: 'WCompVendorCropper',
 })
 
-const props = withDefaults(defineProps<IWCompVendorCropperProps>(), {})
+const props = withDefaults(defineProps<ICompVendorCropperProps>(), {})
 const emits = defineEmits(['update:value', 'update:src'])
 // need to call $define to work
 CropperCanvas.$define()

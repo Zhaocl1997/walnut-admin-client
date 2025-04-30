@@ -5,70 +5,58 @@ import type {
   UploadInst,
 } from 'naive-ui'
 
-import type { IWCompVendorOSSUploadProps } from '.'
+import type { ICompVendorOSSUploadProps } from '.'
 import { genString } from 'easy-fns-ts'
 import { AliOSSClient } from './client'
 
 defineOptions({
-  name: 'WVendorOSSUpload',
-  inheritAttrs: false,
+  name: 'WCompVendorOSSUpload',
 })
 
-const props = withDefaults(defineProps<IWCompVendorOSSUploadProps>(), {
+const props = withDefaults(defineProps<ICompVendorOSSUploadProps>(), {
   region: 'oss-cn-beijing',
   bucket: 'walnut-demo',
   folder: 'example',
-  max: 10,
-  size: 1024 * 10,
-  crossoverSize: 1024 * 30,
+  max: 3,
+  size: 1024 * 1,
+  crossoverSize: 1024 * 5,
+  download: true,
+  remove: true,
+  preview: true,
 })
 
-const emits = defineEmits(['update:value'])
+const value = defineModel<string[]>('value', { default: [] })
 
 const { t } = useAppI18n()
 
-const uploadRef = ref<Nullable<UploadInst>>(null)
-const listRef = ref<UploadFileInfo[]>()
+const uploadRef = templateRef<UploadInst>('uploadRef')
+const fileList = ref<UploadFileInfo[]>()
 
 const getChooseDisabled = computed(
-  () => props.disabled || (listRef.value && listRef.value.length >= props.max),
+  () => props.disabled || (fileList.value && fileList.value.length >= props.max),
 )
 
 const getUploadLoading = computed(
   () =>
-    listRef.value
-    && listRef.value.some(({ status }) => status === 'uploading'),
+    fileList.value
+    && fileList.value.some(({ status }) => status === 'uploading'),
 )
 
 const getUploadDisabled = computed(
   () =>
     props.disabled
-    || !listRef.value
-    || listRef.value.length === 0
-    || listRef.value.every(({ status }) => status === 'finished')
+    || !fileList.value
+    || fileList.value.length === 0
+    || fileList.value.every(({ status }) => status === 'finished')
     || getUploadLoading.value,
-)
-
-watch(
-  () => listRef.value,
-  (val) => {
-    if (!val)
-      return
-
-    emits(
-      'update:value',
-      val.filter(i => i.status === 'finished').map(item => item.name),
-    )
-  },
-  { immediate: true, deep: true },
 )
 
 function onCustomRequest({
   file,
-  data,
-  headers,
-  withCredentials,
-  action,
+  data: _data,
+  headers: _headers,
+  withCredentials: _withCredentials,
+  action: _action,
   onFinish,
   onError,
   onProgress,
@@ -85,19 +73,23 @@ function onCustomRequest({
   // }
 
   formData.append(file.name, file.file!)
+
   ;(file.file!.size <= props.crossoverSize * 1024
     ? AliOSSClient.instance.upload(file, props.folder)
     : AliOSSClient.instance.multiUpload(file, props.folder, onProgress)
   )
     .then((data) => {
-      const { id, value } = data!
+      const { id, value: _value } = data!
 
       onFinish()
 
-      const index = listRef.value!.findIndex(i => i.id === id)
+      const index = fileList.value!.findIndex(i => i.id === id)
 
+      // replace url
       if (index !== -1)
-        listRef.value![index].url = AliOSSClient.instance.getFullUrl(value)
+        fileList.value![index].url = AliOSSClient.instance.getFullUrl(_value)
+
+      value.value = fileList.value.filter(i => i.status === 'finished').map(item => item.name)
     })
     .catch(() => {
       onError()
@@ -108,17 +100,13 @@ async function onRemove(data: {
   file: UploadFileInfo
   fileList: UploadFileInfo[]
 }) {
-  const index = listRef.value!.findIndex(i => i.id === data.file.id)
+  const index = fileList.value!.findIndex(i => i.id === data.file.id)
 
   if (index !== -1) {
-    listRef.value!.splice(index, 1)
+    fileList.value!.splice(index, 1)
 
     await AliOSSClient.instance.abortMultipartUpload()
   }
-}
-
-function onFileListChange(fileList: UploadFileInfo[]) {
-  listRef.value = fileList
 }
 
 function onUpload(e: Event) {
@@ -146,16 +134,24 @@ function onBeforeUpload(data: {
   return true
 }
 
-onMounted(() => {
-  setTimeout(() => {
-    listRef.value = props.value?.map(i => ({
-      id: genString(8),
-      name: i,
-      status: 'finished',
-      url: AliOSSClient.instance.getFullUrl(`${props.folder}/${i}`),
-    }))
-  }, 500)
-})
+watch(
+  () => value.value,
+  async (v) => {
+    await AliOSSClient.instance.getConfig()
+    if (v && v.length) {
+      fileList.value = v.map(i => ({
+        id: genString(8),
+        name: i,
+        status: 'finished',
+        url: AliOSSClient.instance.getFullUrl(`${props.folder}/${i}`),
+      }))
+    }
+  },
+  {
+    deep: true,
+    immediate: true,
+  },
+)
 </script>
 
 <template>
@@ -172,19 +168,20 @@ onMounted(() => {
 
     <n-upload
       ref="uploadRef"
-      v-model:file-list="listRef"
+      v-model:file-list="fileList"
       :abstract="!image"
       :custom-request="onCustomRequest"
       :default-upload="false"
-
       :list-type="image ? 'image-card' : undefined"
       :disabled="disabled"
+      :show-download-button="download"
+      :show-remove-button="remove"
+      :show-preview-button="preview"
       :max="max"
       :accept="image ? '.jpg, .jpeg, .png' : accept"
-      multiple show-download-button
+      :multiple="max > 0 && max !== 1"
       @download="onDownload"
       @remove="onRemove"
-      @update:file-list="onFileListChange"
       @before-upload="onBeforeUpload"
     >
       <template v-if="image">

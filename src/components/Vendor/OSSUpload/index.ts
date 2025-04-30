@@ -1,12 +1,14 @@
 export { default } from './index.vue'
 
-export interface IWCompVendorOSSUploadProps {
-  value?: string[]
+export interface ICompVendorOSSUploadProps {
   region?: string
   bucket?: string
   folder?: string
   image?: boolean
   disabled?: boolean
+  download?: boolean
+  remove?: boolean
+  preview?: boolean
   max?: number
   accept?: string
   // KB
