@@ -54,8 +54,11 @@ async function onFeedback() {
     expandedKeys.value = Array.from(allNodes)
   }
   else {
-    if (!value.value)
+    if (!value.value) {
+      internalValue.value = null
+      expandedKeys.value = []
       return
+    }
 
     // internal value
     internalValue.value = value.value
@@ -85,10 +88,10 @@ defineExpose({})
     v-model:expanded-keys="expandedKeys"
     v-model:indeterminate-keys="indeterminateKeys"
     :value="internalValue"
-    v-bind="treeSelectProps"
     :multiple="multiple"
     :cascade="multiple"
     :checkable="multiple"
+    v-bind="treeSelectProps"
     @update:value="onUpdateValue"
   />
 </template>
