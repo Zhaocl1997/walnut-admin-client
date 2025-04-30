@@ -122,6 +122,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
 ])
 
 const getKeyField = computed(() => getProps.value.treeProps!.keyField!)
+const getTreeData = computed(() => getProps.value.treeProps!.data!)
 
 const contextMenuOptions = computed<DropdownMixedOption[]>(() => [
   {
@@ -347,20 +348,24 @@ async function onFeedback() {
     }
     else { checkedKeys.value = value.value }
 
-    // expanded keys
-    const data = nTreeRef.value.getCheckedData()
-    // get no children node
-    const leafNodeKeyList = data.options.filter(i => !i.children || i.children.length === 0).map(i => i[getKeyField.value])
-    const intersection = Array.from(new Set(leafNodeKeyList).intersection(new Set(value.value)))
-    const allNodes = new Set<TreeKey>([...intersection.map(i => findPath(getProps.value?.treeProps?.data, n => n[getKeyField.value] === i) ?? []).flat().map(i => i[getKeyField.value] as TreeKey)])
-    expandedKeys.value = Array.from(allNodes)
+    if (getTreeData.value) {
+      // expanded keys
+      const data = nTreeRef.value.getCheckedData()
+      // get no children node
+      const leafNodeKeyList = data.options.filter(i => !i.children || i.children.length === 0).map(i => i[getKeyField.value])
+      const intersection = Array.from(new Set(leafNodeKeyList).intersection(new Set(value.value)))
+      const allNodes = new Set<TreeKey>([...intersection.map(i => findPath(getTreeData.value, n => n[getKeyField.value] === i) ?? []).flat().map(i => i[getKeyField.value] as TreeKey)])
+      expandedKeys.value = Array.from(allNodes)
+    }
   }
   else {
     selectedKeys.value = [value.value] as TreeKey[]
 
-    // expanded keys
-    const targetNodeSingleTree = findPath(getProps.value?.treeProps?.data, n => n[getKeyField.value] === value.value) as [] ?? []
-    expandedKeys.value = targetNodeSingleTree.map(i => i[getKeyField.value])
+    if (getTreeData.value) {
+      // expanded keys
+      const targetNodeSingleTree = findPath(getTreeData.value, n => n[getKeyField.value] === value.value) as [] ?? []
+      expandedKeys.value = targetNodeSingleTree.map(i => i[getKeyField.value])
+    }
   }
 }
 
