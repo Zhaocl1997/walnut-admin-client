@@ -44,7 +44,7 @@ const props = defineProps<WHomeChartCardProps>()
         :sharp="false"
       />
 
-      <w-echarts v-else :option="option" />
+      <WECharts v-else :option="option" />
     </template>
   </n-card>
 </template>

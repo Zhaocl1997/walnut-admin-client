@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { IWCompVendorEchartsProps } from './props'
+import type { ICompVendorEChartsProps } from '.'
 import { genString } from 'easy-fns-ts'
 
 defineOptions({
-  name: 'WVendorECharts',
+  name: 'WCompVendorECharts',
 })
 
-const props = withDefaults(defineProps<IWCompVendorEchartsProps>(), {
+const props = withDefaults(defineProps<ICompVendorEChartsProps>(), {
   height: '400px',
   width: '100%',
 })
@@ -44,7 +44,7 @@ function onInit() {
     return
 
   // if ondemand usage, just uncomment top echarts import, and change below to `echarts.init`
-  const chart = echarts.init(target, getSkinName.value, {
+  const chart = window.echarts.init(target, getSkinName.value, {
     locale: getLangName.value,
   })
 

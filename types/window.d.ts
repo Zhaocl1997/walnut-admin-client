@@ -23,12 +23,5 @@ declare global {
     HOST_TYPE: string
     BMAP_STATUS_SUCCESS: number
     BMAP_ANCHOR_BOTTOM_RIGHT: number
-
-    // sohu city information
-    returnCitySN: {
-      cip: string
-      cid: string
-      cname: string
-    }
   }
 }
