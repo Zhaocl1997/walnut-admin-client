@@ -156,6 +156,7 @@ const getBottomChildKeys = computed(() => {
 const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
   dropdownProps: {
     options: contextMenuOptions,
+    disabled: getProps.value.treeProps?.disabled,
     onSelect: (key) => {
       if (key === 'copy')
         copyTarget.value = cloneDeep(toRaw(currentTarget.value))
@@ -310,6 +311,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
                 }}
                 button-props={{
                   type: 'error',
+                  disabled: getProps.value.treeProps?.disabled,
                 }}
                 tooltip
                 tooltipMsg={t('app.button.delete')}
@@ -342,12 +344,18 @@ function onFeedback() {
         }
       })
     }
-    else {
-      checkedKeys.value = value.value as TreeKey[]
-    }
+    else { checkedKeys.value = value.value as TreeKey[] }
   }
   else { selectedKeys.value = [value.value] as TreeKey[] }
 }
+
+watch(
+  () => value.value,
+  async () => {
+    await nextTick()
+    onFeedback()
+  },
+)
 
 onMounted(onFeedback)
 
