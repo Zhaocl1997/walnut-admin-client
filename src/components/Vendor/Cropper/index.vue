@@ -2,12 +2,19 @@
 import type { WCompExtraAbsImageInst } from '@/components/Extra/AbsImage'
 import type { ICompVendorCropperProps } from '.'
 import { CropperCanvas, CropperCrosshair, CropperGrid, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
-import { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
+
+// TODO
+// 1. shade style error
+// 2. onGetCropperValue error
 
 defineOptions({
   name: 'WCompVendorCropper',
 })
+
 const { disabled = false } = defineProps<ICompVendorCropperProps>()
+
+const nanoid = customAlphabet('1234567890abcdef', 10)
 
 const blobURL = defineModel<string>('value')
 const srcURL = defineModel<string>('src')
@@ -24,8 +31,12 @@ CropperCrosshair.$define()
 
 const { t } = useAppI18n()
 
-const selectionId = ref(`c-${nanoid(8)}`)
+const selectionId = ref(`cropper-${nanoid(8)}`)
+watchEffect(() => {
+  console.log(`Cropper ID: ${selectionId.value}`)
+})
 
+const blobRef = shallowRef<Blob>()
 const absImageRef = templateRef<WCompExtraAbsImageInst>('absImageRef')
 const cropperImageRef = templateRef<CropperImage>('cropperImageRef')
 const cropperSelectionRef = templateRef<CropperSelection>('cropperSelectionRef')
@@ -42,18 +53,10 @@ const {
   tempBlobURL: tempBlobURLCropper,
 } = useBlob()
 
-const debouncedSelectionChange = useDebounceFn(() => {
-  nextTick(async () => {
-    await onGetCropperValue()
-  })
-}, 500)
-
-function onSelectionChange(e: any) {
-  debouncedSelectionChange()
-  if (cropperSelectionRef.value)
-    return
+const onSelectionChange = useDebounceFn(async (e: any) => {
+  await onGetCropperValue()
   initSelectionData.value = e.detail
-}
+}, 500)
 
 async function onReset() {
   cropperImageRef.value!.$resetTransform()
@@ -105,20 +108,18 @@ async function onUploadChange() {
 }
 
 async function onGetCropperValue() {
-  const canvas = await cropperSelectionRef.value?.$toCanvas()
-
-  const base64 = canvas?.toDataURL('image/png')
-
-  const blob = await base64ToBlob(base64)
-
-  await createBlobUrlCropper(blob)
-
-  blobURL.value = tempBlobURLCropper.value
+  try {
+    const canvas = await cropperSelectionRef.value?.$toCanvas()
+    const base64 = canvas.toDataURL('image/png')
+    const blob = await base64ToBlob(base64)
+    blobRef.value = blob
+    await createBlobUrlCropper(blob)
+    blobURL.value = tempBlobURLCropper.value
+  }
+  catch (error) {
+    console.log(error)
+  }
 }
-
-defineExpose({
-  onGetCropperBlob: () => absImageRef.value?.onGetBlob(),
-})
 
 const buttons = [
   {
@@ -162,6 +163,10 @@ const buttons = [
     helpMessage: t('app.button.download'),
   },
 ]
+
+defineExpose({
+  onGetCropperBlob: () => blobRef.value ?? absImageRef.value?.onGetBlob(),
+})
 </script>
 
 <template>
@@ -170,13 +175,21 @@ const buttons = [
     <n-gi :span="16">
       <cropper-canvas background :disabled="disabled" style="width: 100%; height: 400px">
         <cropper-image
-          v-if="src" ref="cropperImageRef" :src="src" :alt="alt" :rotatable="src" :scalable="src" :skewable="src"
-          :translatable="src" crossorigin="anonymous"
+          v-if="src"
+          ref="cropperImageRef"
+          :src="src"
+          :alt="alt"
+          :rotatable="src"
+          :scalable="src"
+          :skewable="src"
+          :translatable="src"
+          cross-origin="anonymous"
         />
 
         <cropper-shade hidden />
 
         <cropper-handle action="select" plain />
+        <cropper-handle action="move" plain />
 
         <cropper-selection
           :id="selectionId"
@@ -206,7 +219,7 @@ const buttons = [
     </n-gi>
 
     <n-gi :span="8" class="vstack">
-      <WScrollbar height="330px">
+      <WScrollbar height="360px">
         <n-space vertical size="large">
           <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 200px" />
 

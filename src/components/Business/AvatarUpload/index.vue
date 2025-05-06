@@ -3,10 +3,10 @@ import type { WCropperInst } from '@/components/Vendor/Cropper'
 import { AliOSSClient } from '../../Vendor/OSSUpload/client'
 
 defineOptions({
-  name: 'WCompVendorAvatarUpload',
+  name: 'WCompBusinessAvatarUpload',
 })
 
-const emits = defineEmits(['change'])
+const emits = defineEmits<{ change: [cropperUrl: string], success: [newAvatar: string] }>()
 
 const { t } = useAppI18n()
 
@@ -16,13 +16,9 @@ const userId = userProfile.profile._id!
 const show = ref(false)
 const loading = ref(false)
 const cropperUrl = ref<string>()
-const srcUrl = ref<string>()
+const avatarUrl = ref<string>()
 
-const cropperRef = ref<WCropperInst>()
-
-onMounted(() => {
-  srcUrl.value = userProfile.getAvatar
-})
+const cropperRef = templateRef<WCropperInst>('cropperRef')
 
 function onYes() {
   if (cropperUrl.value)
@@ -33,17 +29,11 @@ function onYes() {
 
 function onNo() {
   show.value = false
-  cropperUrl.value = undefined
-}
-
-function onUpdateShow(s: boolean) {
-  if (!s)
-    cropperUrl.value = undefined
 }
 
 async function onOSSUpload() {
   if (!cropperUrl.value)
-    return
+    return false
 
   loading.value = true
 
@@ -62,7 +52,8 @@ async function onOSSUpload() {
     })
 
     if (result.res.status === 200) {
-      emits('change', `${result.url}?t=${new Date().getTime()}`)
+      const newUrl = `${result.url}?t=${new Date().getTime()}`
+      emits('success', newUrl)
       return true
     }
 
@@ -76,6 +67,11 @@ async function onOSSUpload() {
 defineExpose({
   onOSSUpload,
 })
+
+onMounted(async () => {
+  // to fix cors error, transform url to base64
+  avatarUrl.value = await imgUrlToBase64(userProfile.getAvatar)
+})
 </script>
 
 <template>
@@ -87,20 +83,18 @@ defineExpose({
     <WModal
       v-model:show="show"
       :title="t('comp:avatar-upload:title')"
-      width="800px"
+      width="60vw"
       :auto-focus="false"
       :loading="loading"
       display-directive="show"
       @yes="onYes"
       @no="onNo"
-      @update:show="onUpdateShow"
     >
       <WCropper
         ref="cropperRef"
         v-model:value="cropperUrl"
-        v-model:src="srcUrl"
+        v-model:src="avatarUrl"
         alt="Avatar"
-        center
       />
     </WModal>
   </div>

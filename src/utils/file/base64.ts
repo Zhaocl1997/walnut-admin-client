@@ -41,21 +41,23 @@ export function blobToBase64(blob: Blob) {
  */
 export function imgUrlToBase64(url: string, mineType = 'image/png') {
   return new Promise<string>((resolve, reject) => {
-    let canvas: HTMLCanvasElement = document.createElement('canvas')
-    const ctx = canvas!.getContext('2d')
-
     const img = new Image()
     img.crossOrigin = 'Anonymous'
-    img.onload = function () {
-      if (!canvas || !ctx)
-        return reject(new Error('Error'))
+    img.src = url
 
+    img.onload = function () {
+      let canvas: HTMLCanvasElement = document.createElement('canvas')
+      const ctx = canvas!.getContext('2d')
       canvas.height = img.height
       canvas.width = img.width
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       resolve(canvas.toDataURL(mineType))
       canvas = null
     }
-    img.src = url
+
+    img.onerror = function () {
+      console.error('Failed to load image')
+      reject(new Error('imgUrlToBase64 error'))
+    }
   })
 }

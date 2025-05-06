@@ -11,9 +11,10 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
 
   getters: {
     getDisplayName(): string {
-      return upperFirst(
-        (this.profile?.nickName! ?? this.profile?.userName!) || '',
-      )
+      if (this.profile.nickName)
+        return upperFirst(this.profile.nickName)
+      if (this.profile.userName)
+        return upperFirst(this.profile.userName)
     },
 
     getNameFirstLetter(): string {
@@ -37,6 +38,10 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
 
     clearProfile() {
       this.setProfile({})
+    },
+
+    setAvatar(newAvatar: string) {
+      this.setProfile(Object.assign(this.profile, { avatar: newAvatar }))
     },
   },
 })

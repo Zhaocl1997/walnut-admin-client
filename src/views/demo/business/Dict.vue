@@ -24,7 +24,7 @@ const showHook = ref(true)
 
 <template>
   <WDemoCard title="Dictionary">
-    <n-switch v-model:value="showHook" />
+    <n-switch v-model:value="showHook" class="mb-2" />
 
     <template v-if="showHook">
       <n-list>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 defineOptions({
   name: 'AreaCascaderDemo',
-
   defaultView: false,
 })
 
@@ -44,27 +43,27 @@ const values = ref({
     </WTitle>
 
     <n-space vertical>
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue1"
         :depth="0"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue2"
         :depth="1"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue3"
         :depth="2"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue4"
         :depth="3"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue5"
         :depth="4"
       />
@@ -76,27 +75,27 @@ const values = ref({
     </WTitle>
 
     <n-space vertical>
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue6"
         :depth="0"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue7"
         :depth="1"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue8"
         :depth="2"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue9"
         :depth="3"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue10"
         :depth="4"
       />
@@ -108,31 +107,31 @@ const values = ref({
     </WTitle>
 
     <n-space vertical>
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue11"
         multiple
         :depth="0"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue12"
         multiple
         :depth="1"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue13"
         multiple
         :depth="2"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue14"
         multiple
         :depth="3"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue15"
         multiple
         :depth="4"
@@ -145,31 +144,31 @@ const values = ref({
     </WTitle>
 
     <n-space vertical>
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue16"
         multiple
         :depth="0"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue17"
         multiple
         :depth="1"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue18"
         multiple
         :depth="2"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue19"
         multiple
         :depth="3"
       />
 
-      <w-area-cascader
+      <WAreaCascader
         v-model:value="values.areaValue20"
         multiple
         :depth="4"

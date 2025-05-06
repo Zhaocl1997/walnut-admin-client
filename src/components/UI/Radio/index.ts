@@ -4,6 +4,6 @@ export { default } from './index.vue'
 
 // TODO 000
 export interface ICompUIRadioProps extends /* @vue-ignore */ RadioGroupProps {
-  options: RadioProps[]
+  options?: RadioProps[]
   button?: boolean
 }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { WAvatarUploadInst } from '@/components/Vendor/AvatarUpload'
+import type { WAvatarUploadInst } from '@/components/Business/AvatarUpload'
 import { userAPI } from '@/api/system/user'
 import { pick } from 'lodash-es'
 import WAvatar from '../components/avatar.vue'
