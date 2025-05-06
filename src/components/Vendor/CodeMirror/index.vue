@@ -1,25 +1,29 @@
 <script lang="ts" setup>
 import type { EditorView, ViewUpdate } from '@codemirror/view'
 
-import type { IWCompVendorCodeMirrorProps } from './props'
+import type { IWCompVendorCodeMirrorProps } from '.'
 import { redo, undo } from '@codemirror/commands'
 import { closeSearchPanel, openSearchPanel } from '@codemirror/search'
 import { oneDark } from '@codemirror/theme-one-dark'
 
+// TODO not update any more, move the code to this folder
+// https://github.com/surmon-china/vue-codemirror/blob/main/src/codemirror.ts
 import { Codemirror } from 'vue-codemirror'
 import { languages } from './language'
 
 defineOptions({
-  name: 'WVendorCodeMirror',
+  name: 'WCompVendorCodeMirror',
 })
 
-const props = withDefaults(defineProps<IWCompVendorCodeMirrorProps>(), {
+withDefaults(defineProps<IWCompVendorCodeMirrorProps>(), {
   placeholder: 'Code goes here...',
   height: '300px',
   autofocus: false,
 })
 
-const emits = defineEmits(['update:value', 'blur', 'focus'])
+const emits = defineEmits<{ blur: [e: ViewUpdate], focus: [e: ViewUpdate] }>()
+
+const value = defineModel<string>('value')
 
 const { t } = useAppI18n()
 
@@ -72,8 +76,8 @@ function onReady(payload: any) {
   view.value = payload.view
 }
 
-function onChange(v: string, e: ViewUpdate) {
-  emits('update:value', v)
+function onChange(v: string, _e: ViewUpdate) {
+  value.value = v
 }
 
 function onFocus(e: ViewUpdate) {

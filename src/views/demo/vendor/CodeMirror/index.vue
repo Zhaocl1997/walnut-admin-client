@@ -27,21 +27,21 @@ const code2 = ref(Object.values(code2Raw)[0])
   <WDemoCard title="CodeMirror Demo">
     <n-list>
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Basic (javascript)
         </WTitle>
 
-        <w-code-mirror v-model:value="code1" />
+        <WCodeMirror v-model:value="code1" />
       </n-list-item>
     </n-list>
 
     <n-list>
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Disabled (javascript)
         </WTitle>
 
-        <w-code-mirror v-model:value="code2" disabled />
+        <WCodeMirror v-model:value="code2" disabled />
       </n-list-item>
     </n-list>
   </WDemoCard>
