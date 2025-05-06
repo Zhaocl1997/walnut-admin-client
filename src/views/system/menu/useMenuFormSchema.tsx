@@ -61,7 +61,6 @@ export function useMenuFormSchema(
       },
     },
 
-    // TODO empty not work
     {
       type: 'Base:TreeSelect',
       formProp: {
@@ -120,48 +119,40 @@ export function useMenuFormSchema(
     },
 
     // when type is `catalog`, it's just input
-    // when type is `menu`, it's select
     {
-      type: 'Base:Render',
+      type: 'Base:Input',
       formProp: {
         path: 'name',
         labelHelpMessage: true,
       },
       componentProp: {
-        render: ({ formData }) => {
-          if (
-            formData.type === AppConstMenuType.CATALOG
-            || formData.ternal !== AppConstMenuTernal.NONE
-          ) {
-            return (
-              <WInput
-                v-model={[formData.name, 'value']}
-                clearable
-                valueModifiers={{ capitalize: true }}
-              >
-              </WInput>
-            )
-          }
-
-          if (
-            formData.type === AppConstMenuType.MENU
-            && formData.ternal === AppConstMenuTernal.NONE
-          ) {
-            return (
-              <NSelect
-                v-model={[formData.name, 'value']}
-                clearable
-                filterable
-                disabled
-                options={nameOptions}
-              >
-              </NSelect>
-            )
-          }
+        clearable: true,
+        valueModifiers: {
+          capitalize: true,
         },
       },
       visibleProp: {
-        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT
+          && (formData.type === AppConstMenuType.CATALOG || formData.ternal !== AppConstMenuTernal.NONE),
+      },
+    },
+
+    // when type is `menu`, it's select
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'name',
+        labelHelpMessage: true,
+      },
+      componentProp: {
+        clearable: true,
+        filterable: true,
+        disabled: true,
+        options: nameOptions,
+      },
+      visibleProp: {
+        vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT
+          && (formData.type === AppConstMenuType.MENU && formData.ternal === AppConstMenuTernal.NONE),
       },
     },
 
@@ -181,13 +172,11 @@ export function useMenuFormSchema(
         onUpdateValue: (val: string) => {
           // Get the name property automatically from vue `name` property
           const target = viewOptions.find(item => item.value === val)
-          formData.value.name = target?.name
+          formData.value = Object.assign(formData.value, { name: target?.name })
         },
       },
       visibleProp: {
-        vIf: ({ formData }) =>
-          formData.type === AppConstMenuType.MENU
-          && formData.ternal === AppConstMenuTernal.NONE,
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU && formData.ternal === AppConstMenuTernal.NONE,
       },
     },
 

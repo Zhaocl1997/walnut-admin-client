@@ -167,7 +167,7 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
             onClick: async () => {
               await restoreValidation()
               resetFormData()
-              actionType.value = ''
+              actionType.value = 'create'
             },
           },
         ],
