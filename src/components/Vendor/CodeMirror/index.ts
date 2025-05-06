@@ -1,6 +1,6 @@
 export default createAsyncComponent(() => import('./index.vue'))
 
-export interface IWCompVendorCodeMirrorProps {
+export interface ICompVendorCodeMirrorProps {
   value: string
   placeholder?: string
   disabled?: boolean

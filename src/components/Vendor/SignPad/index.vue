@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IWCompVendorSignPadProps } from './types'
+import type { ICompVendorSignPadProps } from './types'
 import { genString } from 'easy-fns-ts'
 import { toJpeg, toPng } from 'html-to-image'
 import SignaturePad from 'signature_pad'
@@ -8,31 +8,30 @@ defineOptions({
   name: 'WVendorSignaturePad',
 })
 
-const props = withDefaults(defineProps<IWCompVendorSignPadProps>(), {
+const props = withDefaults(defineProps<ICompVendorSignPadProps>(), {
   width: '100%',
   height: '100%',
-  // @ts-expect-error
-  options: {},
+  colors: () => ([
+    'rgb(0,0,0)',
+    'rgb(255,193,7)',
+    'rgb(255,87,34)',
+    'rgb(233,30,99)',
+    'rgb(103,58,183)',
+    'rgb(0,188,212)',
+    'rgb(239,239,239)',
+
+  ]),
+  options: () => ({}),
 })
 
 const signPadId = ref(`signpad-${genString(8)}`)
 const wrapperId = ref(`wrapper-${genString(8)}`)
 
-const signPadInst = shallowRef<Nullable<SignaturePad>>(null)
+const signPadInst = shallowRef<SignaturePad>()
 
 const url = ref<string>()
 const color = ref<string>('rgb(0, 0, 0)')
 const pencil = ref<number>(2)
-
-const colors = [
-  'rgb(0,0,0)',
-  'rgb(255,193,7)',
-  'rgb(255,87,34)',
-  'rgb(233,30,99)',
-  'rgb(103,58,183)',
-  'rgb(0,188,212)',
-  'rgb(239,239,239)',
-]
 
 const isEmpty = () => signPadInst.value?.isEmpty()
 
@@ -149,7 +148,7 @@ function undo() {
   }
 }
 
-const getImage = (type = 'png') => onFinalAction(type, 'get')
+const getImage = (type: 'png' | 'jpeg' = 'png') => onFinalAction(type, 'get')
 
 onMounted(() => {
   onInit()
@@ -192,7 +191,7 @@ defineExpose({
 
       <!-- left utils -->
       <div
-        class="signpad-utils z-{9999} absolute left-4 top-1/2 -translate-y-1/2"
+        class="signpad-utils absolute left-4 top-1/2 z-[9999] -translate-y-1/2"
       >
         <n-space vertical>
           <n-tooltip :disabled="disabled" trigger="click" placement="right">
@@ -210,8 +209,10 @@ defineExpose({
                 <n-slider
                   v-model:value="pencil"
                   :max="20"
-
-                  vertical show-tooltip
+                  vertical
+                  tooltip
+                  show-tooltip
+                  class="whitespace-nowrap"
                   @update:value="onChangePencil"
                 />
               </div>
@@ -231,7 +232,7 @@ defineExpose({
             <template #default>
               <div class="h-48 vstack gap-1">
                 <div
-                  v-for="(item, index) in colors" :key="index"
+                  v-for="(item, index) in props.colors" :key="index"
                   class="h-6 w-6"
                   :class="[
                     { 'shadow-2xl brightness-50 contrast-50': item === color },
@@ -286,3 +287,5 @@ defineExpose({
     </div>
   </n-watermark>
 </template>
+
+<style lang="scss" scoped></style>

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { WSignPadInst } from '@/components/Vendor/SignPad'
+import type { ICompVendorSignPadInst } from '@/components/Vendor/SignPad'
 import { url } from './url'
 
 defineOptions({
   name: 'SignPadDemo',
 })
 
-const signPadRef = ref<WSignPadInst>()
+const signPadRef = templateRef<ICompVendorSignPadInst>('signPadRef')
 
 const imageSrc = ref()
 
@@ -16,55 +16,53 @@ async function onGet() {
 </script>
 
 <template>
-  <div>
-    <WDemoCard title="Signature Pad Demo">
-      <n-list>
-        <n-list-item>
-          <WTitle prefix="bar">
-            Basic
+  <WDemoCard title="Signature Pad Demo">
+    <n-list>
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Basic
+        </WTitle>
+
+        <WSignPad height="300px" width="800px" />
+      </n-list-item>
+    </n-list>
+
+    <n-list>
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Disabled
+        </WTitle>
+
+        <WSignPad
+          height="300px"
+          width="800px"
+          :default-url="url"
+          disabled
+        />
+      </n-list-item>
+    </n-list>
+
+    <n-list>
+      <n-list-item>
+        <n-space vertical size="small">
+          <WTitle prefix="bar" class="mb-2">
+            Watermark
           </WTitle>
 
-          <w-sign-pad height="300px" width="800px" />
-        </n-list-item>
-      </n-list>
+          <n-button class="mb-2" @click="onGet">
+            Get Picture
+          </n-button>
 
-      <n-list>
-        <n-list-item>
-          <WTitle prefix="bar">
-            Disabled
-          </WTitle>
-
-          <w-sign-pad
+          <WSignPad
+            ref="signPadRef"
             height="300px"
             width="800px"
-            :default-url="url"
-            disabled
+            content="walnut admin"
           />
-        </n-list-item>
-      </n-list>
 
-      <n-list>
-        <n-list-item>
-          <n-space vertical size="small">
-            <WTitle prefix="bar">
-              Watermark
-            </WTitle>
-
-            <n-button @click="onGet">
-              Get Picture
-            </n-button>
-
-            <n-image :src="imageSrc" />
-
-            <w-sign-pad
-              ref="signPadRef"
-              height="300px"
-              width="800px"
-              content="walnut admin"
-            />
-          </n-space>
-        </n-list-item>
-      </n-list>
-    </WDemoCard>
-  </div>
+          <n-image :src="imageSrc" />
+        </n-space>
+      </n-list-item>
+    </n-list>
+  </WDemoCard>
 </template>

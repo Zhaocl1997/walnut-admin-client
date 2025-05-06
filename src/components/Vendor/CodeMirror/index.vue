@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { EditorView, ViewUpdate } from '@codemirror/view'
 
-import type { IWCompVendorCodeMirrorProps } from '.'
+import type { ICompVendorCodeMirrorProps } from '.'
 import { redo, undo } from '@codemirror/commands'
 import { closeSearchPanel, openSearchPanel } from '@codemirror/search'
 import { oneDark } from '@codemirror/theme-one-dark'
@@ -15,7 +15,7 @@ defineOptions({
   name: 'WCompVendorCodeMirror',
 })
 
-withDefaults(defineProps<IWCompVendorCodeMirrorProps>(), {
+withDefaults(defineProps<ICompVendorCodeMirrorProps>(), {
   placeholder: 'Code goes here...',
   height: '300px',
   autofocus: false,
