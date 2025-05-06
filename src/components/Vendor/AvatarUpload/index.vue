@@ -3,7 +3,7 @@ import type { WCropperInst } from '@/components/Vendor/Cropper'
 import { AliOSSClient } from '../../Vendor/OSSUpload/client'
 
 defineOptions({
-  name: 'WAvatarUpload',
+  name: 'WCompVendorAvatarUpload',
 })
 
 const emits = defineEmits(['change'])
@@ -84,7 +84,7 @@ defineExpose({
       {{ t('comp:avatar-upload:button') }}
     </n-button>
 
-    <w-modal
+    <WModal
       v-model:show="show"
       :title="t('comp:avatar-upload:title')"
       width="800px"
@@ -95,13 +95,13 @@ defineExpose({
       @no="onNo"
       @update:show="onUpdateShow"
     >
-      <w-cropper
+      <WCropper
         ref="cropperRef"
         v-model:value="cropperUrl"
         v-model:src="srcUrl"
         alt="Avatar"
         center
       />
-    </w-modal>
+    </WModal>
   </div>
 </template>

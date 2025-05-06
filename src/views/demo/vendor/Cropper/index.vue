@@ -34,24 +34,28 @@ async function onUploadAvatar() {
       <n-list-item>
         <WTitle
           prefix="bar"
-          help-message="w-cropper has two v-model. \n One is `v-model:value` meaning the cropper base64 data. \n The other is `v-model:src` meaning the full image url."
+          help-message="WCropper has two v-model.
+           One is `v-model:value` meaning the cropper blob url.
+           The other is `v-model:src` meaning the original image url."
         >
           Basic
         </WTitle>
 
-        <WJSON :value="{ srcValue, cropperValue }" />
+        <div class="mb-2">
+          <WJSON :value="{ srcValue, cropperValue }" />
 
-        <img :src="srcValue" alt="cropper demo" class="mr-4 h-48 w-auto">
-        <img :src="cropperValue" alt="cropper demo" class="h-48 w-auto">
+          <img :src="srcValue" alt="cropper demo" class="mr-4 h-48 w-auto">
+          <img :src="cropperValue" alt="cropper demo" class="h-48 w-auto">
+        </div>
 
-        <w-cropper
+        <WCropper
           v-model:value="cropperValue"
           v-model:src="srcValue"
           alt="cropper-demo"
         />
       </n-list-item>
 
-      <n-list-item>
+      <!-- <n-list-item>
         <WTitle prefix="bar">
           Avatar Upload (OSS)
         </WTitle>
@@ -66,7 +70,7 @@ async function onUploadAvatar() {
         <n-button class="mt-2" @click="onUploadAvatar">
           Upload
         </n-button>
-      </n-list-item>
+      </n-list-item> -->
     </n-list>
   </WDemoCard>
 </template>

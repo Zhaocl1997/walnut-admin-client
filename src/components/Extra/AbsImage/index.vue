@@ -7,8 +7,8 @@ defineOptions({
 
 const emits = defineEmits<{ change: [] }>()
 
-const { createBlobUrl } = useBlob()
 const currentFile = shallowRef<Blob>()
+const objectUrl = useObjectUrl(currentFile)
 
 async function onUploadChange(options: { file: UploadFileInfo }) {
   currentFile.value = options.file.file!
@@ -17,7 +17,7 @@ async function onUploadChange(options: { file: UploadFileInfo }) {
 }
 
 defineExpose({
-  onGetBlobURL: () => createBlobUrl(currentFile.value!),
+  onGetBlobURL: () => objectUrl.value,
   onGetBase64: () => blobToBase64(currentFile.value!),
   onGetBlob: () => currentFile.value,
 })

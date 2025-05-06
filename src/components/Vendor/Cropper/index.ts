@@ -5,9 +5,7 @@ export interface WCropperInst {
 }
 
 export interface ICompVendorCropperProps {
-  src?: string
   alt?: string
-  value?: string
   disabled?: boolean
   center?: boolean
 }

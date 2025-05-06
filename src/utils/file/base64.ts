@@ -41,8 +41,7 @@ export function blobToBase64(blob: Blob) {
  */
 export function imgUrlToBase64(url: string, mineType = 'image/png') {
   return new Promise<string>((resolve, reject) => {
-    // https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toDataURL
-    let canvas = document.createElement('canvas') as Nullable<HTMLCanvasElement>
+    let canvas: HTMLCanvasElement = document.createElement('canvas')
     const ctx = canvas!.getContext('2d')
 
     const img = new Image()

@@ -1,10 +1,15 @@
+// try to use https://vueuse.org/core/useObjectUrl
+// below is just a copy
 export function useBlob() {
   const URL = window.URL || window.webkitURL
 
-  const tempBlobURL = ref<string>()
+  const tempBlobURL = shallowRef<string>()
 
   const destroyBlobUrl = () => {
-    URL.revokeObjectURL(tempBlobURL.value!)
+    if (tempBlobURL.value) {
+      URL.revokeObjectURL(tempBlobURL.value)
+    }
+    tempBlobURL.value = undefined
   }
 
   const createBlobUrl = (b: Blob) =>

@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-import type { WAbsImageInst } from '@/components/Extra/AbsImage'
+import type { WCompExtraAbsImageInst } from '@/components/Extra/AbsImage'
 
 defineOptions({
   name: 'AbsImageDemo',
   defaultView: false,
 })
 
-const blobURL = ref<string>()
-const base64 = ref<string>()
+const blobURL = shallowRef<string>()
+const base64 = shallowRef<string>()
 const hasFile = ref(false)
 const fileName = ref<string>()
 
-const absImageRef = shallowRef<WAbsImageInst>()
+const absImageRef = templateRef<WCompExtraAbsImageInst>('absImageRef')
 
 async function onRenderBlobURL() {
   const res = await absImageRef.value?.onGetBlobURL()
@@ -47,8 +47,7 @@ async function onDownloadByBlob() {
 
         <n-space vertical>
           <WAbsImage ref="absImageRef" @change="hasFile = true">
-            <n-button>Choose Image</n-button>
-            {{ hasFile ? 'Got image' : 'No image yet' }}
+            <n-button>{{ hasFile ? 'Got image' : 'No image yet' }}</n-button>
           </WAbsImage>
 
           <n-input
