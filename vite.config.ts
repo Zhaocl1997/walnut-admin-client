@@ -80,8 +80,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       hmr: {
         overlay: false,
       },
-
-      // https: true,
     },
 
     envPrefix: 'VITE_',

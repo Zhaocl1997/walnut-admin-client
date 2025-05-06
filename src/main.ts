@@ -5,6 +5,7 @@ import { App, setupApp } from './App'
 import 'virtual:uno.css'
 
 // reset css
+// TODO influence naive ui style
 import '@unocss/reset/sanitize/sanitize.css'
 import '@unocss/reset/sanitize/assets.css'
 
