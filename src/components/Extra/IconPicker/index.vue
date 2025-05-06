@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import type { InputInst } from 'naive-ui'
 import type { ICompExtraIconPickerProps } from '.'
+
+import { useFormItem } from 'naive-ui/es/_mixins'
+
+// @ts-expect-error build generated files
 import allIcons from '/build/_generated/icon-list.ts'
+// @ts-expect-error build generated files
 import { IconBundleConfig } from '/build/icon/src/config.ts'
 
 defineOptions({
@@ -9,22 +14,26 @@ defineOptions({
   inheritAttrs: false,
 })
 
-withDefaults(defineProps<ICompExtraIconPickerProps>(), {
+const props = withDefaults(defineProps<ICompExtraIconPickerProps>(), {
   preset: 'input',
 })
 
-const value = defineModel<string>('value', { default: 'ant-design:home-outlined' })
+const formItem = useFormItem(props)
+const { nTriggerFormInput, mergedDisabledRef, mergedStatusRef, mergedSizeRef } = formItem
 
 const ALL = 'All'
+
+const value = defineModel<string>('value', { default: 'ant-design:home-outlined' })
+
+const rootInputRef = templateRef<InputInst>('rootInputRef')
 
 const page = ref(1)
 const pageSize = ref(50)
 const show = ref(false)
 const filters = ref('')
-const rootInputRef = shallowRef<InputInst>()
 const loading = ref(false)
 const currentTab = ref(ALL)
-const currentIcon = ref('')
+const currentIcon = ref<string>()
 
 const getTabLists = computed(() => [ALL, ...IconBundleConfig.list])
 
@@ -57,16 +66,16 @@ const getTotal = computed(() => getResponse.value.total)
 
 // use watch to fake the loading
 watchThrottled(
-  () => getLists,
-  () => {
+  () => getLists.value,
+  async () => {
     loading.value = true
 
-    setTimeout(() => {
-      loading.value = false
-    }, 250)
+    await nextTick()
+
+    loading.value = false
   },
   {
-    throttle: 250,
+    throttle: 750,
     deep: true,
   },
 )
@@ -107,10 +116,7 @@ function onChooseIcon(icon: string) {
   value.value = icon
 
   // fix not trigger rule in form
-  // rootInputRef.value?.focus()
-  // nextTick(() => {
-  //   rootInputRef.value?.blur()
-  // })
+  nTriggerFormInput()
 }
 
 function onClear(e: MouseEvent) {
@@ -164,6 +170,9 @@ onBeforeMount(() => {
     clearable
     readonly
     copiable
+    :status="mergedStatusRef"
+    :disabled="mergedDisabledRef"
+    :size="mergedSizeRef"
     @click="onOpenPopover"
     @clear="onClear"
   >
@@ -224,7 +233,7 @@ onBeforeMount(() => {
         >
           <div class="col-span-3 flex items-center justify-center">
             <WIcon
-              :icon="currentIcon"
+              :icon="currentIcon ?? 'ant-design:home-outlined'"
               height="96"
               class="drop-shadow-2xl"
             />
@@ -234,7 +243,7 @@ onBeforeMount(() => {
             <span v-for="icon in getLists" :key="icon" :title="icon">
               <WIcon
                 :icon="icon"
-                width="36"
+                width="32"
                 class="m-0.5 inline border-2 border-gray-700 rounded border-solid hover:cursor-pointer" :class="[
                   {
                     'bg-light-blue-300': icon === value,
