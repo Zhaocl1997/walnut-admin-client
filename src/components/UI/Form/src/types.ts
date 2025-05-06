@@ -10,7 +10,7 @@ import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
 import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
 import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
 import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
-import type { IWCompVendorTinymceEditorProps } from '@/components/Vendor/Tinymce'
+import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
 import type { useEventParams } from '@/hooks/component/useEvent'
 
 import type { IHooksUseProps } from '@/hooks/core/useProps'
@@ -219,6 +219,7 @@ export declare namespace WForm {
   namespace Params {
     interface Callback<T = any> {
       formData: T
+      formProps?: Schema.SchemaItemFormProps
     }
 
     namespace Dialog {
@@ -290,7 +291,52 @@ export declare namespace WForm {
         valueType?: 'string' | 'number'
       }
 
-      'Vendor:Tinymce': IWCompVendorTinymceEditorProps
+      'Vendor:Tinymce': ICompVendorTinymceProps
+    }
+
+    type SchemaItemFormProps = Omit<FormItemProps, 'rule' | 'label'> & {
+      /**
+       * @override
+       * @description add boolean type to rule
+       * Set `rule` false when set `baseRules` true but this form item uses no rule
+       */
+      rule?: FormItemRule | FormItemRule[] | undefined | boolean
+
+      /**
+       * @override
+       * @description add boolean type to label
+       * Used for dict form item label, set true to use dict type name as form label
+       */
+      label?: string | boolean
+
+      /**
+       * @description when using `base-rules`, you can provide a `ruleType` to specific the value type, default would ba a `any`
+       * Need to mention that array value must specific a `ruleType: 'array'` to make default rules work
+       */
+      ruleType?: RuleType
+
+      /**
+       * @description normally is string or string array.
+       * But with locale implement, need to specify show help message, which means a boolean.
+       */
+      labelHelpMessage?: string | string[] | boolean
+
+      /**
+       * @description Used for localed form item which do not need to locale with the whole form
+       * TRUE when localeUniqueKey has value, specify FALSE when no need to locale the label or labelHelpMessage.
+       */
+      locale?: boolean
+
+      /**
+       * @description Used for form related to a localed table
+       */
+      localeWithTable?: boolean
+
+      /**
+       * @description Used for render/slot typed item, whether apply the default base rules
+       * @deprecated
+       */
+      baseRuleApplied?: boolean
     }
 
     interface DynamicSchemaItemProps<
@@ -315,50 +361,7 @@ export declare namespace WForm {
           placeholder?: string
         }
 
-      formProp?: Omit<FormItemProps, 'rule' | 'label'> & {
-        /**
-         * @override
-         * @description add boolean type to rule
-         * Set `rule` false when set `baseRules` true but this form item uses no rule
-         */
-        rule?: FormItemRule | FormItemRule[] | undefined | boolean
-
-        /**
-         * @override
-         * @description add boolean type to label
-         * Used for dict form item label, set true to use dict type name as form label
-         */
-        label?: string | boolean
-
-        /**
-         * @description when using `base-rules`, you can provide a `ruleType` to specific the value type, default would ba a `any`
-         * Need to mention that array value must specific a `ruleType: 'array'` to make default rules work
-         */
-        ruleType?: RuleType
-
-        /**
-         * @description normally is string or string array.
-         * But with locale implement, need to specify show help message, which means a boolean.
-         */
-        labelHelpMessage?: string | string[] | boolean
-
-        /**
-         * @description Used for localed form item which do not need to locale with the whole form
-         * TRUE when localeUniqueKey has value, specify FALSE when no need to locale the label or labelHelpMessage.
-         */
-        locale?: boolean
-
-        /**
-         * @description Used for form related to a localed table
-         */
-        localeWithTable?: boolean
-
-        /**
-         * @description Used for render/slot typed item, whether apply the default base rules
-         * @deprecated
-         */
-        baseRuleApplied?: boolean
-      }
+      formProp?: SchemaItemFormProps
 
       /**
        * @description grid prop

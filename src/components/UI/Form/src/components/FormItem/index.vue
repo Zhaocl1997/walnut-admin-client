@@ -37,6 +37,7 @@ function FormItemRender() {
   return isFunction(_item.componentProp?.render)
     && _item!.componentProp?.render!({
       formData: getProps.value.model!,
+      formProps: getFormProps.value,
     })
 }
 
