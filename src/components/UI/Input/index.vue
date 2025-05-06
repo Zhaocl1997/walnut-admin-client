@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { InputInst } from 'naive-ui'
 import type { ICompUIInputProps } from '.'
 import { clearIllegalChars, upperFirst } from 'easy-fns-ts'
 
@@ -9,6 +10,8 @@ defineOptions({
 const props = withDefaults(defineProps<ICompUIInputProps>(), {})
 
 const emits = defineEmits<{ click: [e: MouseEvent] }>()
+
+const inputRef = templateRef<InputInst>('inputRef')
 
 const inputValue = defineModel<string>('value')
 
@@ -28,7 +31,10 @@ function onClick(e: MouseEvent) {
   emits('click', e)
 }
 
-defineExpose({})
+defineExpose({
+  focus: () => inputRef.value?.focus(),
+  blur: () => inputRef.value?.blur(),
+})
 </script>
 
 <template>
