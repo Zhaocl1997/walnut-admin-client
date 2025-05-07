@@ -7,7 +7,8 @@ defineOptions({
   name: 'WTableHeaderRight',
 })
 
-const { onApiTableList, tableProps } = useTableContext()
+const { onApiList, tablePropsCtx } = useTableContext()
+const { getProps: tableProps } = tablePropsCtx
 </script>
 
 <template>
@@ -15,10 +16,9 @@ const { onApiTableList, tableProps } = useTableContext()
     <WIconButton
       v-if="!tableProps.polling"
       :icon-props="{ icon: 'ant-design:reload-outlined' }"
-      :button-props="{ disabled: tableProps.loading }"
+      :button-props="{ disabled: tableProps.loading, onClick: onApiList }"
       tooltip
       :tooltip-msg="$t('app.base.refresh')"
-      @click="onApiTableList"
     />
 
     <TableHeaderRightPolling v-if="tableProps.polling" />

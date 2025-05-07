@@ -1,42 +1,35 @@
-import type {
-  SorterMultiple,
-  SortState,
-  TableBaseColumn,
-} from 'naive-ui/lib/data-table/src/interface'
+import type { IHooksUseProps } from '@/hooks/core/useProps'
+
+import type { SorterMultiple } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
+
+import type { ICompUITableHooksAPIListParams } from './useTableAPIListParams'
 import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
-
 import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'
 import {
-  generateBaseListParams,
   generateDefaultSortParams,
   generateSortParams,
 } from '../utils'
 
-export function useTableAPI(inst: Ref<WTable.Inst.NDataTableInst | undefined>, props: ComputedRef<WTable.Props>, setProps: WTable.SetProps) {
+export function useTableAPI<T>(
+  inst: Ref<WTable.Inst.NDataTableInst>,
+  propsCtx: IHooksUseProps<Partial<WTable.Props<T>>>,
+  columns: Ref<WTable.Column<T>[]>,
+  listParams: ICompUITableHooksAPIListParams<T>,
+) {
+  const initial = ref(false)
   const { t } = useAppI18n()
   const userPermission = useAppStoreUserPermission()
+  const { getProps: props, setProps } = propsCtx
 
-  const {
-    stateRef: ApiTableListParams,
-    resetState: resetParams,
-    commit: commitParams,
-  } = useState<WalnutBaseListParams>({
-    query: {},
-    sort: [],
-    page: {
-      page: 1,
-      pageSize: 10,
-    },
-  })
+  const { apiListParams, resetParams, commitParams } = listParams
 
   const total = ref(0)
-
   const checkedRowKeys = ref<StringOrNumber[]>([])
 
   // api list
-  const onApiTableList = async () => {
+  const onApiList = async () => {
     // no list auth, return
     if (!userPermission.hasPermission(props.value.auths?.list)) {
       useAppNotiError(t('sys.msg.noAuthority'))
@@ -46,49 +39,58 @@ export function useTableAPI(inst: Ref<WTable.Inst.NDataTableInst | undefined>, p
     // start table loading
     setProps({ loading: true })
 
-    // used for format sort params, query and page didn't change
-    const params = generateBaseListParams(ApiTableListParams.value)
-
-    if (params.sort?.length === 0) {
-      params.sort = generateSortParams(
-        generateDefaultSortParams(props.value.columns!),
+    // `onBeforeRequest`: excute it and set query value
+    // won't commit this as default query form data
+    const beforeRequestHook = props.value.apiProps?.onBeforeRequest
+    if (isFunction(beforeRequestHook)) {
+      const beforeHookQuery = await beforeRequestHook(
+        cloneDeep(apiListParams.value.query),
       )
-    }
 
-    // is got `onBeforeRequest`, then excute it and set query value
-    if (isFunction(props?.value?.apiProps?.onBeforeRequest!)) {
-      params.query = props?.value?.apiProps?.onBeforeRequest!(
-        cloneDeep(params.query),
-      )
+      apiListParams.value.query = Object.assign(apiListParams.value.query, beforeHookQuery)
     }
 
     try {
-      const res = await props.value.apiProps?.listApi!(params)!
+      const res = await props.value.apiProps?.listApi(apiListParams.value)
 
       total.value = res.total
 
-      setProps({
-        data: res.data,
-        pagination: {
-          itemCount: res.total,
-          page: ApiTableListParams.value.page?.page,
-          pageSize: ApiTableListParams.value.page?.pageSize,
-          showSizePicker: true,
-          showQuickJumper: true,
-          pageSizes: [10, 30, 50],
-          pageSlot: 7,
-          onUpdatePage: async (p) => {
-            ApiTableListParams.value.page!.page = p
-            await onApiTableList()
+      if (!initial.value) {
+        setProps({
+          data: res.data,
+          pagination: {
+            itemCount: res.total,
+            page: apiListParams.value.page?.page,
+            pageSize: apiListParams.value.page?.pageSize,
+            showSizePicker: true,
+            showQuickJumper: true,
+            pageSizes: [10, 30, 50],
+            pageSlot: 7,
+            onUpdatePage: async (p) => {
+              apiListParams.value.page.page = p
+              await onApiList()
+            },
+            onUpdatePageSize: async (p) => {
+              apiListParams.value.page.page = 1
+              apiListParams.value.page.pageSize = p
+              await onApiList()
+            },
+            prefix: () => t('comp.pagination.total', { total: res.total }),
           },
-          onUpdatePageSize: async (p) => {
-            ApiTableListParams.value.page!.page = 1
-            ApiTableListParams.value.page!.pageSize = p
-            await onApiTableList()
+        })
+
+        initial.value = true
+      }
+      else {
+        setProps({
+          data: res.data,
+          pagination: {
+            itemCount: res.total,
+            page: apiListParams.value.page?.page,
+            pageSize: apiListParams.value.page?.pageSize,
           },
-          prefix: () => t('comp.pagination.total', { total: res.total }),
-        },
-      })
+        })
+      }
     }
     finally {
       setProps({ loading: false })
@@ -96,100 +98,131 @@ export function useTableAPI(inst: Ref<WTable.Inst.NDataTableInst | undefined>, p
   }
 
   // api delete (default)
-  const onApiTableDelete = async (id: StringOrNumber) => {
-    const ret = await props.value.apiProps?.deleteApi!(id)
-    if (ret) {
+  const onApiDelete = async (id: StringOrNumber) => {
+    const res = await props.value.apiProps?.deleteApi!(id)
+    if (res) {
       useAppMsgSuccess()
-      await onApiTableList()
+      await onApiList()
+      return res
     }
   }
 
   // api deleteMany (default)
-  const onApiTableDeleteMany = async () => {
-    const ret = await props.value.apiProps?.deleteManyApi!(
+  const onApiDeleteMany = async () => {
+    const res = await props.value.apiProps?.deleteManyApi!(
       checkedRowKeys.value.join(','),
     )
 
-    if (ret) {
+    if (res) {
       useAppMsgSuccess()
 
       if (
-        ApiTableListParams.value.page!.page!
-        * ApiTableListParams.value.page!.pageSize!
+        apiListParams.value.page.page
+        * apiListParams.value.page.pageSize
         > total.value - checkedRowKeys.value.length
       ) {
-        ApiTableListParams.value.page!.page = 1
+        apiListParams.value.page.page = 1
       }
 
-      await onApiTableList()
+      await onApiList()
 
       // use `length = 0` can clear the arr
       checkedRowKeys.value.length = 0
+
+      return res
     }
   }
 
   // query event
-  const onApiTableQuery: WTable.FinishLoadingCallback = async ({ done }) => {
-    ApiTableListParams.value.page!.page = 1
-    await onApiTableList()
+  const onApiQuery: WTable.FinishLoadingCallback = async ({ done }) => {
+    apiListParams.value.page.page = 1
+    await onApiList()
     done()
   }
 
   // reset event
-  const onApiTableReset: WTable.FinishLoadingCallback = async ({ done }) => {
+  const onApiReset: WTable.FinishLoadingCallback = async ({ done }) => {
     resetParams()
     inst.value?.clearSorter()
     inst.value?.clearFilters()
-    await onApiTableList()
+    await onApiList()
     done()
   }
 
-  const handleListApi = async () => {
-    if (!isFunction(props?.value?.apiProps?.listApi))
+  // api list init
+  const onApiListInit = async () => {
+    if (!isFunction(props.value.apiProps?.listApi))
       return
 
-    // set remote true to fit naive-ui
+    // set remote true for naive-ui
     setProps({ remote: true })
 
+    // handle params.query default
     if (
       !isUndefined(props.value.queryFormProps)
-      && !isUndefined(props.value.queryFormProps?.schemas!)
+      && !isUndefined(props.value.queryFormProps?.schemas)
     ) {
-      // need to initial query form data based on schemas
-      const defaultQueryFormData = extractDefaultFormDataFromSchemas(
-        props.value.queryFormProps?.schemas!,
-      )
-
       // set default value to query
-      ApiTableListParams.value.query = cloneDeep(defaultQueryFormData)
+      apiListParams.value.query = Object.assign(apiListParams.value.query, extractDefaultFormDataFromSchemas(
+        props.value.queryFormProps?.schemas,
+      ))
 
       // commit change, make this version a default version
       commitParams()
     }
 
-    if (
-      props.value.columns!.some(
-        i => (i as TableBaseColumn).defaultSortOrder,
-      )
-    ) {
-      // @ts-expect-error
+    // handle params.sort default
+    if (columns.value.some(i => i.defaultSortOrder)) {
       // TODO sort two types
-      ApiTableListParams.value.sort = generateDefaultSortParams(
-        props.value.columns!,
-      )
+      // set default value to sort
+      apiListParams.value.sort = Object.assign(apiListParams.value.sort, generateDefaultSortParams(
+        columns.value!,
+      ))
 
       // commit change, make this version a default version
       commitParams()
     }
 
-    await onApiTableList()
+    await onApiList()
   }
 
-  const handleSelectionColumn = () => {
+  // sorter
+  const onSorter = () => {
     if (
-      props.value.columns?.map(i => i.type).includes('selection')
-      && isFunction(props?.value?.apiProps?.deleteManyApi!)
+      columns.value?.some(i => i.sorter === true || isNumber((i.sorter as SorterMultiple)?.multiple))
     ) {
+      setProps({
+        onUpdateSorter: async (sorts) => {
+          if (!sorts)
+            return
+          apiListParams.value.sort = Object.assign(apiListParams.value.sort, generateSortParams<T>(sorts))
+          if (!isUndefined(props.value?.apiProps)) {
+            await onApiList()
+          }
+        },
+      })
+    }
+  }
+
+  // filter
+  const onFilter = () => {
+    if (columns.value?.some(i => i.filter === true)) {
+      setProps({
+        onUpdateFilters: async (filters) => {
+          if (!filters)
+            return
+          apiListParams.value.query = Object.assign(apiListParams.value.query, filters)
+          if (!isUndefined(props.value?.apiProps)) {
+            await onApiList()
+          }
+        },
+      })
+    }
+  }
+
+  // checked row keys
+  const onCheckedRowKeys = () => {
+    if (columns.value?.map(i => i.type).includes('selection')) {
       setProps({
         onUpdateCheckedRowKeys: (rowKeys: StringOrNumber[]) => {
           checkedRowKeys.value = rowKeys
@@ -198,72 +231,30 @@ export function useTableAPI(inst: Ref<WTable.Inst.NDataTableInst | undefined>, p
     }
   }
 
-  const handleSortParams = () => {
-    if (
-      props.value.columns
-        ?.map(
-          i =>
-            (i as unknown as SortState).sorter === true
-            || isNumber(
-              ((i as unknown as SortState).sorter as SorterMultiple)?.multiple,
-            ),
-        )
-        .filter(Boolean)
-        .length !== 0
-    ) {
-      setProps({
-        onUpdateSorter: async (p) => {
-          if (!p)
-            return
-          ApiTableListParams.value.sort = p
-          await onApiTableList()
-        },
-      })
-    }
-  }
-
-  const handleDictFilter = () => {
-    if (props.value.columns?.some(i => i.filter === true)) {
-      setProps({
-        onUpdateFilters: async (filters) => {
-          ApiTableListParams.value.query = Object.assign(
-            ApiTableListParams.value.query,
-            filters,
-          )
-
-          await onApiTableList()
-        },
-      })
-    }
-  }
-
   onMounted(async () => {
-    if (!isUndefined(props.value?.apiProps)) {
-      // Step 1
-      // handle initial query form data
-      await handleListApi()
+    // Step 1
+    // handle initial query form data
+    await onApiListInit()
 
-      // Step 2
-      // handle sort params and event
-      handleSortParams()
+    // Step 2
+    // handle sort params and event
+    onSorter()
 
-      // Step 3
-      // handle selection column to manage checkedRowKeys
-      handleSelectionColumn()
+    // Step 3
+    // handle preset dict column filter event
+    onFilter()
 
-      // Step 4
-      // handle preset dict column filter event
-      handleDictFilter()
-    }
+    // Step 4
+    // handle selection column to manage checkedRowKeys
+    onCheckedRowKeys()
   })
 
   return {
-    onApiTableList,
-    ApiTableListParams,
-    onApiTableQuery,
-    onApiTableReset,
-    onApiTableDelete,
-    onApiTableDeleteMany,
+    onApiList,
+    onApiQuery,
+    onApiReset,
+    onApiDelete,
+    onApiDeleteMany,
     checkedRowKeys,
   }
 }

@@ -12,60 +12,65 @@ const { t } = useI18n()
 
 const userPermission = useAppStoreUserPermission()
 
-const { onEvent, tableProps, checkedRowKeys } = useTableContext()
+const { tablePropsCtx, checkedRowKeys } = useTableContext()
+
+const { getProps: tableProps } = tablePropsCtx
 
 const getDeleteDisabled = computed(() => checkedRowKeys.value.length === 0)
 
-function isShow(t: WTable.HeaderActionType) {
-  return tableProps.value.headerActions!.includes(t)
+function isShow(t: WTable.HeaderLeftBulitInActionType) {
+  return tableProps.value.headerLeftBuiltInActions.map(i => i._builtInType).includes(t)
 }
 
-const options: ComputedRef<
-  {
-    type: WTable.HeaderActionType
-    text: string
-    icon: string
-    disabled?: boolean
-    auth?: string
-  }[]
-> = computed(() =>
+const options = computed<{
+  type: WTable.HeaderLeftBulitInActionType
+  text: string
+  icon: string
+  disabled?: boolean
+  auth?: string
+}[]>(() =>
   sortBy(
     [
       {
-        type: 'create' as WTable.HeaderActionType,
+        type: 'create' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app.button.create'),
         auth: tableProps.value.auths?.create,
       },
       {
-        type: 'update' as WTable.HeaderActionType,
+        type: 'update' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:edit-outlined',
         text: t('app.button.read'),
         auth: tableProps.value.auths?.update,
       },
       {
-        type: 'delete' as WTable.HeaderActionType,
+        type: 'delete' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:delete-outlined',
         text: t('app.button.delete'),
         disabled: getDeleteDisabled.value,
         auth: tableProps.value.auths?.deleteMany,
       },
       {
-        type: 'import' as WTable.HeaderActionType,
+        type: 'import' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app.button.import'),
         auth: tableProps.value.auths?.import,
       },
       {
-        type: 'export' as WTable.HeaderActionType,
+        type: 'export' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app.button.export'),
         auth: tableProps.value.auths?.export,
       },
     ],
-    i => tableProps.value.headerActions?.indexOf(i.type),
+    i => tableProps.value.headerLeftBuiltInActions.map(i => i._builtInType).indexOf(i.type),
   ).filter(i => isShow(i.type)),
 )
+
+function onButtonClick(key: WTable.HeaderLeftBulitInActionType) {
+  const target = tableProps.value.headerLeftBuiltInActions.find(i => i._builtInType === key)
+  target && target.onPresetClick()
+}
 </script>
 
 <template>
@@ -75,23 +80,17 @@ const options: ComputedRef<
       v-for="item in options"
       :key="item.type"
       :icon="item.icon"
-      :on-click="
-        () =>
-          onEvent({
-            name: 'tableHeaderActions',
-            params: { type: item.type },
-          })
-      "
       :text-prop="item.text"
       :disabled="
         item.type === 'delete' ? getDeleteDisabled : tableProps.loading
       "
       :confirm="item.type === 'delete'"
       :auth="item.auth"
+      @click="onButtonClick(item.type)"
     />
 
     <!-- extra custom buttons -->
-    <WButton v-for="(item, index) in tableProps.extraHeaderActions" :key="index" v-bind="item" />
+    <WButton v-for="(item, index) in tableProps.headerLeftExtraActions" :key="index" v-bind="item" />
 
     <n-text
       v-if="

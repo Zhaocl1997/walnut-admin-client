@@ -1,99 +1,138 @@
-<script lang="tsx">
-import type { WTable } from '../src/types'
-import { omit } from 'lodash-es'
+<script lang="ts" setup generic="T">
+import type { ICompUITableHooksAPIListParams } from './hooks/useTableAPIListParams'
+import type { WTable } from './types'
 
+import { omit } from 'lodash-es'
 import TableHeader from './components/header/index.vue'
+
 import QueryForm from './components/queryForm.vue'
 import { useTableAPI } from './hooks/useTableAPI'
+import { useTableAPIListParams } from './hooks/useTableAPIListParams'
 import { useTableColumns } from './hooks/useTableColumns'
-
 import { setTableContext } from './hooks/useTableContext'
-
 import { useTableEvents } from './hooks/useTableEvents'
-import { extendProps, props } from './props'
+import { useTableMethods } from './hooks/useTableMethods'
+import { extendedTablePropKeys } from './utils'
 
-export default defineComponent({
-  name: 'WTable',
+defineOptions({
+  name: 'WCompUITable',
+})
 
-  inheritAttrs: false,
+const props = withDefaults(defineProps<WTable.Props<T>>(), {
+  // original default
+  allowCheckingNotLoaded: false,
+  bordered: true,
+  bottomBordered: true,
+  cascade: true,
+  childrenKey: 'children',
+  columns: () => [],
+  data: () => [],
+  defaultCheckedRowKeys: () => [],
+  defaultExpandedRowKeys: () => [],
+  defaultExpandAll: false,
+  filterIconPopoverProps: () => ({
+    trigger: 'click',
+    placement: 'bottom',
+  }),
+  flexHeight: false,
+  headerHeight: 28,
+  indent: 16,
+  loading: false,
+  minRowHeight: 28,
+  paginateSinglePage: true,
+  pagination: false,
+  paginationBehaviorOnFilter: 'current',
+  remote: false,
+  singleColumn: false,
+  singleLine: true,
+  size: 'medium',
+  stickyExpandedRows: false,
+  striped: false,
+  summayPlacement: 'bottom',
+  tableLayout: 'auto',
+  virtualScroll: false,
+  virtualScrollHeader: false,
+  virtualScrollX: false,
 
-  // @ts-expect-error
-  props,
+  // extend
+  headerLeftBuiltInActions: () => ([{ _builtInType: 'create' }, { _builtInType: 'delete' }]),
+  headerLeftExtraActions: () => ([]),
+})
 
-  emits: ['hook', 'tableHeaderActions'],
+const emits = defineEmits<WTable.Emits<T>>()
 
-  setup(props: WTable.Props) {
-    const tableRef = ref<WTable.Inst.NDataTableInst>()
+// @ts-expect-error 类型“DataTableInst”不满足约束“HTMLElement | Component | SVGElement”。
+const tableRef = templateRef<WTable.Inst.NDataTableInst>('tableRef')
 
-    const { setProps, getProps } = useProps<WTable.Props>(props)
+const tablePropsCtx = useProps<WTable.Props<T>>(props)
 
-    const onEvent = useTableEvents(getProps)
+const { setProps, getProps } = tablePropsCtx
 
-    const {
-      onApiTableList,
-      ApiTableListParams,
-      onApiTableQuery,
-      onApiTableReset,
-      onApiTableDelete,
-      onApiTableDeleteMany,
-      checkedRowKeys,
-    } = useTableAPI(tableRef, getProps, setProps)
+const getTableProps = computed(() => omit(getProps.value, extendedTablePropKeys))
 
-    const { columns } = useTableColumns(
-      getProps,
-      ApiTableListParams,
-      setProps,
-    )
+const listParams: ICompUITableHooksAPIListParams<T> = useTableAPIListParams()
 
-    const getNDataTableProps = computed(() =>
-      omit(getProps.value, Object.keys(extendProps)),
-    )
+const tableColumns = useTableColumns(tablePropsCtx, listParams.apiListParams)
 
-    const render = () => (
-      <>
-        {getProps.value.queryFormProps && (
-          <n-card class="mb-1">
-            <QueryForm></QueryForm>
-          </n-card>
-        )}
+const {
+  onApiList,
+  onApiQuery,
+  onApiReset,
+  onApiDelete,
+  onApiDeleteMany,
+  checkedRowKeys,
+} = useTableAPI<T>(tableRef, tablePropsCtx, tableColumns, listParams)
 
-        <n-card>
-          <TableHeader></TableHeader>
+const tableEvent = useTableEvents<T>(getProps)
 
-          <n-data-table
-            ref={tableRef}
-            {...getNDataTableProps.value}
-            columns={columns.value.filter(i => i._internalShow)}
-          >
-          </n-data-table>
-        </n-card>
-      </>
-    )
+const tableMethods = useTableMethods<T>(tableRef)
 
-    onEvent({
-      name: 'hook',
-      params: {
-        setProps,
-        onApiTableList,
-        onApiTableDelete,
-        onApiTableDeleteMany,
-        onGetApiTableListParams: () => ApiTableListParams,
-      },
-    })
+setTableContext({
+  tableRef,
+  tableColumns,
+  tableEvent,
+  tablePropsCtx,
 
-    setTableContext({
-      tableRef,
-      onEvent,
-      tableProps: getProps,
-      onApiTableList,
-      ApiTableListParams,
-      onApiTableQuery,
-      onApiTableReset,
-      checkedRowKeys,
-      tableColumns: columns,
-    })
+  apiListParams: listParams.apiListParams,
+  onApiList,
+  onApiQuery,
+  onApiReset,
 
-    return () => render()
-  },
+  checkedRowKeys,
+})
+
+// expose
+defineExpose({
+  ...tableMethods,
+})
+
+// hook
+emits('hook', {
+  ...tableMethods,
+  setProps,
+  onApiList,
+  onApiDelete,
+  onApiDeleteMany,
+  onGetApiListParams: () => listParams.apiListParams.value,
 })
 </script>
+
+<template>
+  <n-card v-if="getProps.queryFormProps" class="mb-2">
+    <QueryForm />
+  </n-card>
+
+  <n-card>
+    <TableHeader />
+
+    <n-data-table
+      ref="tableRef"
+      v-bind="getTableProps"
+      :columns="tableColumns.filter(i => i._internalShow)"
+    />
+  </n-card>
+</template>
+
+<style lang="scss" scoped>
+
+</style>

@@ -2,23 +2,24 @@ import type { DataTableSortState } from 'naive-ui'
 
 import type {
   SorterMultiple,
-  TableBaseColumn,
 } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 
-export function generateDefaultSortParams(columns: WTable.Column[]) {
+export const extendedTablePropKeys: (keyof WTable.Props)[] = ['localeUniqueKey', 'auths', 'apiProps', 'queryFormProps', 'headerLeftBuiltInActions', 'headerLeftExtraActions', 'polling']
+
+export function generateDefaultSortParams<T>(columns: WTable.Column<T>[]) {
   return columns
     ?.map((i) => {
-      if ((i as TableBaseColumn).defaultSortOrder) {
+      if (i.defaultSortOrder) {
         return {
-          columnKey: (i as TableBaseColumn).key,
-          order: (i as TableBaseColumn).defaultSortOrder,
-        } as DataTableSortState
+          columnKey: i.key,
+          order: i.defaultSortOrder,
+        }
       }
       return undefined
     })
-    .filter(Boolean) as DataTableSortState | DataTableSortState[]
+    .filter(Boolean) as DataTableSortState[]
 }
 
 /**
@@ -50,25 +51,9 @@ export function generateSortParams<T>(sort: DataTableSortState | DataTableSortSt
 }
 
 /**
- * @description generate base list params
- */
-export function generateBaseListParams(params: WalnutBaseListParams) {
-  const ret: WalnutBaseListParams = {}
-
-  Object.entries(params).forEach(([key, value]) => {
-    if (key === 'sort')
-      ret.sort = generateSortParams(value)
-    else
-      ret[key] = value
-  })
-
-  return ret
-}
-
-/**
  * @description generate table item title base on different config
  */
-export function getTableTranslated(props: ComputedRef<WTable.Props>, item: WTable.Column, helpMsg = false) {
+export function getTableTranslated<T>(props: ComputedRef<Partial<WTable.Props<T>>>, item: WTable.Column<T>, helpMsg = false): string {
   const { t } = useAppI18n()
 
   const key = props.value.localeUniqueKey
@@ -80,8 +65,8 @@ export function getTableTranslated(props: ComputedRef<WTable.Props>, item: WTabl
   const path = item.key
 
   return isLocale && path
-    ? defaultAppLocaleMessageKeys.includes(path)
+    ? defaultAppLocaleMessageKeys.includes(String(path))
       ? t(`app.base.${path}`)
       : t(isHelpMsg(`table.${key}.${path}`))
-    : item.title
+    : typeof item.title === 'string' ? item.title : 'RenderFn'
 }

@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup  generic="T">
 import type { WTable } from '../../../types'
 import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
@@ -15,12 +15,14 @@ const popoverShow = ref(false)
 
 const tableColumnSettingRef = ref()
 
+const draggableClass = 'table-column-draggable'
+
 const { start, stop } = useSortable(tableColumnSettingRef, tableColumns, {
   animation: 150,
   delay: 50,
   delayOnTouchOnly: true,
 
-  draggable: '.table-column-draggable',
+  draggable: `.${draggableClass}`,
   onEnd: (evt) => {
     const { oldIndex, newIndex } = evt
 
@@ -58,7 +60,7 @@ function onOpenPopover() {
 }
 
 // check one column
-function onUpdateItemChecked(item: WTable.Column) {
+function onUpdateItemChecked(item: WTable.Column<T>) {
   item._internalShow = !item._internalShow
 }
 
@@ -70,14 +72,14 @@ function onUpdateCheckAllChecked() {
 }
 
 // set column fix state
-function onSetFix(item: WTable.Column, position: 'left' | 'right') {
+function onSetFix(item: WTable.Column<T>, position: 'left' | 'right') {
   if (!item.fixed)
     item.fixed = position
   else
     item.fixed = undefined
 }
 
-function getTitle(item: WTable.Column) {
+function getTitle(item: WTable.Column<T>) {
   if (typeof item.title === 'string')
     return item.title
 
@@ -98,7 +100,9 @@ function getTitle(item: WTable.Column) {
     <template #trigger>
       <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
-          <WIconButton :icon-props="{ icon: 'ant-design:setting-outlined' }" :button-props="{ text: true }" @click="onOpenPopover" />
+          <span>
+            <WIconButton :icon-props="{ icon: 'ant-design:setting-outlined' }" :button-props="{ text: true, onClick: onOpenPopover }" />
+          </span>
         </template>
 
         <template #header>
@@ -111,7 +115,7 @@ function getTitle(item: WTable.Column) {
           <div id="tableSortable" ref="tableColumnSettingRef">
             <div
               v-for="item in tableColumns" :key="item.key" class="mx-1 my-2 hstack justify-between" :class="[
-                { 'table-column-draggable': !isInBlackList(item.key) },
+                { draggableClass: !isInBlackList(item.key) },
               ]"
             >
               <div class="mr-8 hstack items-center">
@@ -142,14 +146,16 @@ function getTitle(item: WTable.Column) {
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <WIcon
-                        icon="mdi:arrow-collapse-left" height="20" class="cursor-pointer text-primary" :style="{
+                        icon="mdi:arrow-collapse-left"
+                        height="20"
+                        class="cursor-pointer text-primary"
+                        :style="{
                           color:
                             item.fixed === 'left'
                               ? `${getThemeOverridesCommon.infoColor} !important`
                               : 'currentColor',
-                        }" @click="
-                          !isInBlackList(item.key) && onSetFix(item, 'left')
-                        "
+                        }"
+                        @click="!isInBlackList(item.key) && onSetFix(item, 'left')"
                       />
                     </n-button>
                   </template>
@@ -167,14 +173,16 @@ function getTitle(item: WTable.Column) {
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <WIcon
-                        icon="mdi:arrow-collapse-right" height="20" class="cursor-pointer" :style="{
+                        icon="mdi:arrow-collapse-right"
+                        height="20"
+                        class="cursor-pointer"
+                        :style="{
                           color:
                             item.fixed === 'right'
                               ? `${getThemeOverridesCommon.infoColor} !important`
                               : 'currentColor',
-                        }" @click="
-                          !isInBlackList(item.key) && onSetFix(item, 'right')
-                        "
+                        }"
+                        @click="!isInBlackList(item.key) && onSetFix(item, 'right')"
                       />
                     </n-button>
                   </template>

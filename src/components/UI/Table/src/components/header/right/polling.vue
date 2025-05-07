@@ -6,11 +6,12 @@ defineOptions({
   name: 'WTableHeaderRightPolling',
 })
 
-const { tableProps, onApiTableList } = useTableContext()
+const { tablePropsCtx, onApiList } = useTableContext()
+const { getProps: tableProps } = tablePropsCtx
 
 const popoverShow = ref(false)
-const inputNumberRef = ref<InputNumberInst>()
-const insidePollingTime = ref()
+const inputNumberRef = templateRef<InputNumberInst>('inputNumberRef')
+const insidePollingTime = ref<number>()
 
 const getPollingInterval = computed(() => insidePollingTime.value ?? tableProps.value.polling)
 
@@ -20,7 +21,7 @@ const { current } = useMagicKeys()
 const keys = computed(() => Array.from(current))
 
 const { pause, resume, isActive } = useIntervalFn(() => {
-  onApiTableList()
+  onApiList()
 }, getPollingInterval, { immediate: true })
 
 function onOpenPopover() {
@@ -57,6 +58,7 @@ function onUpdatePolling(v: number) {
 
 function parseSeconds(input: string) {
   const nums = input.replace(/([,s\s])/g, '').trim()
+  // eslint-disable-next-line regexp/no-unused-capturing-group
   if (/^\d+(\.(\d+)?)?$/.test(nums))
     return Number(nums)
   return nums === '' ? null : Number.NaN
@@ -79,8 +81,7 @@ function formatSeconds(value: number | null) {
             :class="{ 'animate-spin': isActive }"
             :style="{ ['animation-duration']: `${getPollingInterval}ms` }"
             :icon-props="{ icon: 'ant-design:sync-outlined' }"
-            :button-props="{ text: true }"
-            @click="onOpenPopover"
+            :button-props="{ text: true, onClick: onOpenPopover }"
           />
         </template>
 
@@ -88,9 +89,9 @@ function formatSeconds(value: number | null) {
           <div class="flex flex-row flex-nowrap items-center gap-2">
             <WIconButton
               :icon-props="{ icon: isActive ? 'ant-design:pause-circle-outlined' : 'ant-design:play-circle-outlined' }"
+              :button-props="{ onClick: onPollingClick }"
               tooltip
               :tooltip-msg="$t('app.base.play_pause')"
-              @click="onPollingClick"
             />
 
             <n-input-number

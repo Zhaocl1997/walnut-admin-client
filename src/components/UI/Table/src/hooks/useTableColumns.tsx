@@ -1,33 +1,46 @@
 import type { DropdownOption } from 'naive-ui'
+import type { FilterOption } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
+// TODO 111
+import WDictLabel from '@/components/Business/DictLabel'
+import WMessage from '@/components/Extra/Message'
+import WButton from '@/components/UI/Button'
+import WIcon from '@/components/UI/Icon'
+import WIconButton from '@/components/UI/IconButton'
 import { omit } from 'lodash-es'
+import { NA, NDropdown, NTag } from 'naive-ui'
 
 import { getTableTranslated } from '../utils'
 
 // Extend Naive UI columns
-export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListParams: Ref<WalnutBaseListParams>, setProps: WTable.SetProps) {
-  const columns = ref<WTable.Column[]>([])
+export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, apiListParams: Ref<WalnutBaseListParams<T>>) {
+  const columns = ref<WTable.Column<T>[]>([])
   const { t } = useAppI18n()
   const userPermission = useAppStoreUserPermission()
+  const { getProps: props, setProps } = propsCtx
 
-  const transformColumn = (item: WTable.Column) => {
-    if (item.type === 'expand' || item.type === 'selection')
+  const builtInType = ['expand', 'selection']
+
+  const transformColumn = (item: WTable.Column<T>) => {
+    if (builtInType.includes(item.type))
       return item
 
     return {
       ...item,
-      title: () => (
-        <>
-          {getTableTranslated(props, item)}
-          {item.titleHelpMessage && (
-            <w-message
-              msg={getTableTranslated(props, item, true)}
-              class="inline"
-            >
-            </w-message>
-          )}
-        </>
-      ),
+      title: typeof item.title === 'string'
+        ? () => (
+            <>
+              {getTableTranslated(props, item)}
+              {item.titleHelpMessage && (
+                <WMessage
+                  msg={getTableTranslated(props, item, true)}
+                  class="inline"
+                >
+                </WMessage>
+              )}
+            </>
+          )
+        : item.title,
 
       // this is used for column settings to display text correctly
       _titleText: () => getTableTranslated(props, item),
@@ -35,7 +48,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
   }
 
   watchEffect(async () => {
-    // @ts-expect-error
+    // @ts-expect-error computed error
     columns.value = props.value.columns
       ?.map(i => ({ ...i, _internalShow: i._internalShow ?? true }))
       .map((item) => {
@@ -48,24 +61,22 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
         if (tItem.extendType === 'formatter') {
           return {
             ...tItem,
-
             render(p) {
-              return tItem.formatter(p)
+              return tItem.formatter ? tItem.formatter(p) : p
             },
           }
         }
 
-        // index based on ApiTableListParams
+        // index based on apiListParams
         if (tItem.extendType === 'index') {
           return {
             ...tItem,
-
+            title: t('app.base.index'),
             width: 70,
-
             render(_, index) {
               return (
-                (ApiTableListParams.value.page?.page! - 1)
-                * ApiTableListParams.value.page?.pageSize!
+                (apiListParams.value.page?.page - 1)
+                * apiListParams.value.page?.pageSize
                 + index
                 + 1
               )
@@ -77,9 +88,8 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
         if (tItem.extendType === 'link') {
           return {
             ...tItem,
-
             render(p) {
-              return <n-a onClick={() => tItem.onClick(p)}>{p[tItem.key]}</n-a>
+              return <span onClick={() => tItem.onClick(p)}><NA>{tItem.formatter ? tItem.formatter(p) : p[tItem.key]}</NA></span>
             },
           }
         }
@@ -88,10 +98,9 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
         if (tItem.extendType === 'tag') {
           return {
             ...tItem,
-
             render(p) {
               return (
-                <n-tag {...tItem.tagProps!(p)}>{tItem.formatter(p)}</n-tag>
+                <NTag {...tItem.tagProps!(p)}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
               )
             },
           }
@@ -107,7 +116,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
               ? () => t(`dict.name.${tItem.dictType}`)
               : tItem.title,
 
-            filterOptions: computed(() =>
+            filterOptions: computed<FilterOption[]>(() =>
               tItem.filter
                 ? getDictDataFromMap(tItem.dictType)?.map(i => ({
                   value: i.value,
@@ -117,56 +126,68 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
             ),
 
             filterOptionValue:
-              ApiTableListParams.value.query![tItem.key] ?? null,
+              apiListParams.value.query![tItem.key] ?? null,
 
             render(p) {
-              const target = getDictTarget(tItem.dictType, p[tItem.key] as string)
-
-              if (tItem.tagProps)
-                return <n-tag {...tItem.tagProps(p)}>{t(target.label!)}</n-tag>
-
-              if (target.tagType)
-                return <n-tag type={target.tagType}>{t(target.label!)}</n-tag>
-
-              return <span>{t(target.label!)}</span>
+              return <WDictLabel dictType={tItem.dictType} dictValue={p[tItem.key]}></WDictLabel>
             },
           }
         }
 
         // action
         if (tItem.extendType === 'action') {
-          const defaultBuiltInButtons: WTable.ExtendType.ActionButtons<any>[] = [
+          const defaultBuiltInButtons: WTable.ExtendType.ActionButtons<T>[] = [
             {
               _builtInType: 'create',
-              auth: props.value.auths?.create,
-              iconButton: true,
-              icon: 'ant-design:plus-outlined',
-              textProp: () => t('app.button.create'),
-              type: 'success',
+              buttonProps: {
+                auth: props.value.auths?.create,
+                type: 'success',
+                size: 'small',
+                text: true,
+                textProp: () => t('app.button.create'),
+              },
+              iconProps: {
+                icon: 'ant-design:plus-outlined',
+              },
             },
             {
               _builtInType: 'read',
-              auth: props.value.auths?.read,
-              iconButton: true,
-              icon: 'ant-design:edit-outlined',
-              textProp: () => t('app.button.read'),
-              type: 'info',
+              buttonProps: {
+                auth: props.value.auths?.read,
+                type: 'info',
+                size: 'small',
+                text: true,
+                textProp: () => t('app.button.read'),
+              },
+              iconProps: {
+                icon: 'ant-design:edit-outlined',
+              },
             },
             {
               _builtInType: 'delete',
-              auth: props.value.auths?.delete,
-              iconButton: true,
-              icon: 'ant-design:delete-outlined',
-              textProp: () => t('app.button.delete'),
-              type: 'error',
+              buttonProps: {
+                auth: props.value.auths?.delete,
+                type: 'error',
+                size: 'small',
+                text: true,
+                textProp: () => t('app.button.delete'),
+              },
+              iconProps: {
+                icon: 'ant-design:delete-outlined',
+              },
             },
             {
               _builtInType: 'detail',
-              auth: props.value.auths?.read,
-              iconButton: true,
-              icon: 'ant-design:eye-outlined',
-              textProp: () => t('app.button.detail'),
-              type: 'success',
+              buttonProps: {
+                auth: props.value.auths?.read,
+                type: 'success',
+                size: 'small',
+                text: true,
+                textProp: () => t('app.button.detail'),
+              },
+              iconProps: {
+                icon: 'ant-design:eye-outlined',
+              },
             },
           ]
 
@@ -181,16 +202,13 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
             ...tItem,
 
             render(rowData, rowIndex) {
-              const onDropdownSelect = (key: string) => {
-                tItem.onActionButtonsClick({
-                  type: key,
-                  rowData,
-                  rowIndex,
-                })
+              const onDropdownSelect = (key: WTable.ColumnActionType) => {
+                const target = bs.find(i => i._builtInType === key)
+                target && target.onPresetClick(rowData, rowIndex)
               }
 
-              const isShow = (i: WTable.ExtendType.ActionButtons<RowData>) => getFunctionBoolean(i._show, rowData)
-              const isDisabled = (i: WTable.ExtendType.ActionButtons<RowData>) => getFunctionBoolean(i._disabled, rowData, false)
+              const isShow = (i: WTable.ExtendType.ActionButtons<T>) => getFunctionBoolean(i._show, rowData)
+              const isDisabled = (i: WTable.ExtendType.ActionButtons<T>) => getFunctionBoolean(i._disabled, rowData, false)
 
               const visibleButtons = bs.filter(i => isShow(i)).map(i => omit(i, '_show'))
               const normalButtons = visibleButtons.filter(i => !i._dropdown).map(i => omit(i, '_dropdown'))
@@ -198,38 +216,32 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
 
               const renderNormalButtons = normalButtons.map(i => (
                 <WButton
-                  {...omit(i, '_builtInType')}
+                  {...omit(i, '_builtInType').buttonProps}
+                  icon={i.iconProps.icon as string}
                   disabled={isDisabled(i)}
-                  onClick={() =>
-                    tItem.onActionButtonsClick({
-                      type: i._builtInType,
-                      rowData,
-                      rowIndex,
-                    })}
+                  onClick={() => i.onPresetClick(rowData, rowIndex)}
                 >
                 </WButton>
               ))
 
-              const dropdownOptions: DropdownOption[] = dropdownButtons.map((i) => {
-                return {
-                  key: i._builtInType,
-                  label: i.textProp,
-                  disabled: isDisabled(i),
-                  // the show below is actually used for permission
-                  // the button that do not shown has been filtered early
-                  show: userPermission.hasPermission(i.auth),
-                  icon: i?.icon ? () => <WIconButton {...omit(i, ['_builtInType', '_dropdown'])}></WIconButton> : undefined,
-                }
-              })
+              const dropdownOptions: DropdownOption[] = dropdownButtons.map(i => ({
+                key: i._builtInType,
+                label: i.buttonProps.textProp,
+                disabled: isDisabled(i),
+                // the show below is actually used for permission
+                // the button that do not shown has been filtered early
+                show: userPermission.hasPermission(i.buttonProps.auth),
+                icon: i?.iconProps?.icon ? () => <WIconButton {...omit(i, ['_builtInType', '_dropdown'])}></WIconButton> : undefined,
+              }))
 
               return (
-                <div class="flex items-center justify-center whitespace-nowrap space-x-2">
+                <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">
                   {renderNormalButtons}
 
                   {dropdownButtons.length !== 0 && (
-                    <n-dropdown size="small" trigger="click" options={dropdownOptions} onSelect={onDropdownSelect}>
+                    <NDropdown size="small" trigger="click" options={dropdownOptions} onSelect={onDropdownSelect}>
                       <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: true }}></WIconButton>
-                    </n-dropdown>
+                    </NDropdown>
                   )}
                 </div>
               )
@@ -241,14 +253,11 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
         if (tItem.extendType === 'icon') {
           return {
             ...tItem,
-
             width: 80,
-
             render(p) {
               return (
                 <WIcon
                   width="24"
-                  class="-mb-2"
                   icon={
                     typeof tItem.extendIconName === 'string'
                       ? tItem.extendIconName
@@ -265,11 +274,11 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
       })
   })
 
-  const handleScrollX = () => {
+  const onScrollX = () => {
     // first is naive column type
-    // second is extent column type
+    // second is extend column type
     const whiteList = [
-      ['expand', 'selection'],
+      builtInType,
       ['index', 'icon'],
     ]
 
@@ -287,7 +296,7 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
           return 80
         }
       })
-      .filter(i => i)
+      .filter(Boolean)
 
     if (
       widths?.length !== 0
@@ -302,20 +311,22 @@ export function useTableColumns(props: ComputedRef<WTable.Props>, ApiTableListPa
     }
   }
 
-  const handleDictData = async () => {
-    const usedDictTypes = props.value.columns?.filter(i => i.extendType === 'dict')?.map(i => i.dictType).filter(Boolean) as string[]
-    await initDict(usedDictTypes)
+  const onDictData = async () => {
+    if (props.value.columns.some(i => i.extendType === 'dict')) {
+      const usedDictTypes = props.value.columns?.filter(i => i.extendType === 'dict')?.map(i => i.dictType).filter(Boolean)
+      await initDict(usedDictTypes)
+    }
   }
 
   onMounted(() => {
     // auto handle scrollX
-    handleScrollX()
+    onScrollX()
   })
 
   onBeforeMount(async () => {
     // init dict data
-    await handleDictData()
+    await onDictData()
   })
 
-  return { columns }
+  return columns
 }

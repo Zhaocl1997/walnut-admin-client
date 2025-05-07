@@ -1,18 +1,17 @@
 import type { useEventParams } from '@/hooks/component/useEvent'
-import type { DataTableInst, TagProps } from 'naive-ui'
+import type { IHooksUseProps } from '@/hooks/core/useProps'
 
-import type {
-  CreateRowKey,
-  TableBaseColumn,
-} from 'naive-ui/lib/data-table/src/interface'
-import type { WButtonProps } from '../../Button'
+import type { DataTableBaseColumn, DataTableColumn, DataTableCreateRowKey, DataTableCreateSummary, DataTableExpandColumn, DataTableFilterState, DataTableInst, DataTableSelectionColumn, DataTableSortState, PaginationProps, PopoverProps, ScrollbarProps, TagProps } from 'naive-ui'
+import type { HTMLAttributes } from 'vue'
+import type { ICompUIButtonProps } from '../../Button'
 import type { WForm } from '../../Form'
-import type { WTablePropType } from './props'
+import type { ICompUIIconButtonProps } from '../../IconButton'
+import type { ICompUITableHooksMethods } from './hooks/useTableMethods'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'
 
-  type HeaderActionType = 'create' | 'update' | 'delete' | 'export' | 'import'
+  type HeaderLeftBulitInActionType = 'create' | 'update' | 'delete' | 'export' | 'import'
 
   type FinishLoadingCallback = WForm.onFinishFormLoadingCallback
 
@@ -28,14 +27,14 @@ export declare namespace WTable {
   }
 
   /**
-   * @description Set props
+   * @description callback function
    */
-  type SetProps<T = RowData> = (p: Partial<Props<T>>) => void
+  type TableFnCallback<T, R = void> = (rowData: T, rowIndex?: number) => R
 
   /**
-   * @description render function
+   * @description set table props
    */
-  type RenderFn<T, R = void> = (rowData: T, rowIndex?: number) => R
+  type SetTableProps<T> = IHooksUseProps<Props<T>>['setProps']
 
   /**
    * @description Inst
@@ -43,46 +42,236 @@ export declare namespace WTable {
   namespace Inst {
     type NDataTableInst = DataTableInst
 
-    interface ExtendInst {
-      setProps: SetProps
+    interface ExtendInst<T> {
+      setProps: SetTableProps<T>
 
       /**
        * @description API table default init function
        */
-      onApiTableList: (extraParams?: Recordable<any>) => Promise<void>
+      onApiList: () => Promise<void>
 
       /**
        * @description API table default delete function
        */
-      onApiTableDelete: (id: StringOrNumber) => Promise<void>
+      onApiDelete: (id: StringOrNumber) => Promise<T>
 
       /**
        * @description API table default delete many function
        */
-      onApiTableDeleteMany: () => Promise<void>
+      onApiDeleteMany: (ids: string) => Promise<T[]>
 
       /**
        * @description get list params
        */
-      onGetApiTableListParams: () => Ref<WalnutBaseListParams>
+      onGetApiListParams: () => WalnutBaseListParams<T>
+
     }
 
-    interface WTableInst extends NDataTableInst, ExtendInst { }
+    interface WTableInst<T> extends Partial<NDataTableInst>, ExtendInst<T> { }
   }
 
   /**
    * @description Hook
    */
   namespace Hook {
-    type useTableReturnType = [
-      (instance: Inst.WTableInst) => void,
-      Inst.WTableInst,
+    type useTableReturnType<T> = [
+      (instance: Inst.WTableInst<T>) => void,
+      ICompUITableHooksMethods<T>,
     ]
   }
 
   /**
-   * @description extend table column types
+   * @description Props
    */
+  interface Props<T = Recordable> {
+    // original
+    allowCheckingNotLoaded?: boolean
+    bordered?: boolean
+    bottomBordered?: boolean
+    checkedRowKeys?: StringOrNumber[]
+    cascade?: boolean
+    childrenKey?: string
+    defaultCheckedRowKeys?: StringOrNumber[]
+    defaultExpandedRowKeys?: StringOrNumber[]
+    defaultExpandAll?: boolean
+    expandedRowKeys?: StringOrNumber[]
+    filterIconPopoverProps?: PopoverProps
+    flexHeight?: boolean
+    getCsvCell?: (value: any, row: object, col: DataTableBaseColumn) => string
+    getCsvHeader?: (cols: Array<DataTableColumn>) => string
+    headerHeight?: number
+    heightForRow?: (rowData: object, index: number) => number
+    indent?: number
+    loading?: boolean
+    maxHeight?: StringOrNumber
+    minHeight?: StringOrNumber
+    minRowHeight?: number
+    paginateSinglePage?: boolean
+    pagination?: boolean | PaginationProps
+    paginationBehaviorOnFilter?: 'first' | 'current'
+    remote?: boolean
+    renderCell?: (value: any, rowData: object, column: DataTableBaseColumn) => VNodeChild
+    renderExpandIcon?: ({ expanded, rowData }: { expanded: boolean, rowData: object }) => VNodeChild
+    rowClassName?: string | ((rowData: object, index: number) => string)
+    rowProps?: (rowData: object, rowIndex: number) => HTMLAttributes
+    scrollX?: StringOrNumber
+    scorllbarProps?: ScrollbarProps
+    singleColumn?: boolean
+    singleLine?: boolean
+    size?: 'small' | 'medium' | 'large'
+    spinProps?: { strokeWidth?: number, stroke?: string }
+    stickyExpandedRows?: boolean
+    striped?: boolean
+    summary?: DataTableCreateSummary
+    summayPlacement?: 'top' | 'bottom'
+    tableLayout?: 'auto' | 'fixed'
+    virtualScroll?: boolean
+    virtualScrollHeader?: boolean
+    virtualScrollX?: boolean
+    onUpdateCheckedRowKeys?: (keys: Array<string | number>) => void
+    onUpdateSorter?: (options: DataTableSortState | DataTableSortState[] | null) => void
+    onUpdateFilters?: (filters: DataTableFilterState, initiatorColumn: DataTableBaseColumn) => void
+
+    /**
+     * @override
+     * @description for generic
+     */
+    data?: T[]
+
+    /**
+     * @override
+     * @description Rewrite NDataTable columns type, add our own custom column type
+     * And better generic support
+     */
+    columns?: Column<T>[]
+
+    /**
+     * @override
+     * @description for generic
+     */
+    rowKey?: DataTableCreateRowKey<T>
+
+    /**
+     * @extends
+     * @description locale unique key, for this table fields
+     * @example 'locale' / 'lang'
+     */
+    localeUniqueKey?: string
+
+    /**
+     * @extends
+     * @description api table auth controll
+     */
+    auths?: Auths
+
+    /**
+     * @extends
+     * @description api relative props
+     */
+    apiProps?: {
+      /**
+       * @description before request hook, you can change the request params here or do some request
+       * @retrurn WalnutBaseListParams<T>
+       */
+      onBeforeRequest: (params: T) => Promise<T>
+
+      /**
+       * @description list api, need to follow response structure
+       * @retrurn WalnutBaseListResponse<T>
+       */
+      listApi?: (params: WalnutBaseListParams<T>) => Promise<WalnutBaseListResponse<T>>
+
+      /**
+       * @description delete api, need to follow response structure
+       * @retrurn T
+       */
+      deleteApi?: (id: StringOrNumber) => Promise<T>
+
+      /**
+       * @description delete many api, need to follow response structure
+       * @retrurn T[]
+       */
+      deleteManyApi?: (ids: string) => Promise<T[]>
+    }
+
+    /**
+     * @extends
+     * @description query form props
+     */
+    queryFormProps?: WForm.Props<T>
+
+    /**
+     * @extends
+     * @description header left built in actions
+     */
+    headerLeftBuiltInActions?: {
+      _builtInType?: WTable.HeaderLeftBulitInActionType
+
+      /**
+       * @description click event, do not use buttonProps.onClick
+       */
+      onPresetClick?: () => void
+    }[]
+
+    /**
+     * @extends
+     * @description header left extra actions
+     */
+    headerLeftExtraActions?: ICompUIButtonProps[]
+
+    /**
+     * @extends
+     * @description polling milliseconds
+     */
+    polling?: number
+  }
+
+  /**
+   * @description Table context
+   */
+  interface Context<T> {
+    tableRef: Ref<Inst.NDataTableInst>
+    tableColumns: Ref<Column<T>[]>
+    tableEvent: (val: Params.UseEvent<T>) => void
+    tablePropsCtx: IHooksUseProps<Props<T>>
+
+    apiListParams: Ref<WalnutBaseListParams<T>>
+    onApiList: () => Promise<void>
+    onApiQuery: WForm.onFinishFormLoadingCallback
+    onApiReset: WForm.onFinishFormLoadingCallback
+
+    checkedRowKeys: Ref<StringOrNumber[]>
+  }
+
+  /**
+   * @description Table Emits
+   */
+  interface Emits<T> {
+    hook: [inst: Inst.WTableInst<T>]
+  }
+
+  /**
+   * @description Table Params
+   */
+  namespace Params {
+    type UseEvent<T> =
+      | useEventParams<'hook', Inst.WTableInst<T>>
+  }
+
+  /**
+   * @description Table Column
+   */
+  type Column<T> =
+    | (ExtendType.Action<T>
+      | ExtendType.Icon<T>
+      | ExtendType.Formatter<T>
+      | ExtendType.Link<T>
+      | ExtendType.Dictionary<T>
+      | ExtendType.Tag<T>
+      | ExtendType.Index<T>)
+    & (Partial<DataTableSelectionColumn<T>>
+      | Partial<DataTableExpandColumn<T>>)
+
   namespace ExtendType {
     /**
      * @description action button basic extend prop
@@ -91,12 +280,12 @@ export declare namespace WTable {
       /**
        * @description custom show callback for action button
        */
-      _disabled?: RenderFn<T, boolean> | boolean
+      _disabled?: TableFnCallback<T, boolean> | boolean
 
       /**
        * @description custom show callback for action button
        */
-      _show?: RenderFn<T, boolean> | boolean
+      _show?: TableFnCallback<T, boolean> | boolean
 
       /**
        * @description button show in dropdown or outside
@@ -107,17 +296,22 @@ export declare namespace WTable {
     /**
      * @description action column buttons type
      */
-    interface ActionButtons<T> extends ActionButtonsBasic<T>, WButtonProps {
+    interface ActionButtons<T> extends ActionButtonsBasic<T>, ICompUIIconButtonProps {
       /**
        * @description builtIn button, support `create` / `read` / `delete` / `detail`
        */
-      _builtInType: ColumnActionType | string
+      _builtInType: ColumnActionType
+
+      /**
+       * @description click event, do not use buttonProps.onClick
+       */
+      onPresetClick?: TableFnCallback<T, void>
     }
 
     /**
      * @description base extend table column type
      */
-    type BaseExtend<T, E> = TableBaseColumn<T> & {
+    type BaseExtend<T, E> = Omit<DataTableBaseColumn<T>, 'type'> & {
       /**
        * @description extend type string
        */
@@ -148,36 +342,37 @@ export declare namespace WTable {
     /**
      * @description preset index column, default is used for api table with pageNum and pageSize
      */
-    type Index<T = RowData> = BaseExtend<T, 'index'>
+    type Index<T = Recordable> = BaseExtend<T, 'index'>
 
     /**
      * @description preset formatter column, used for just some text transform
      */
-    type Formatter<T = RowData> = BaseExtend<T, 'formatter'> & {
-      formatter: RenderFn<T, string>
+    type Formatter<T = Recordable> = BaseExtend<T, 'formatter'> & {
+      formatter: TableFnCallback<T, string>
     }
 
     /**
      * @description preset icon column, use `WIcon`by default
      */
-    type Icon<T = RowData> = BaseExtend<T, 'icon'> & {
-      extendIconName: string | RenderFn<T, string>
+    type Icon<T = Recordable> = BaseExtend<T, 'icon'> & {
+      extendIconName: string | TableFnCallback<T, string>
     }
 
     /**
      * @description preset link column, used for a link redirect
      */
-    type Link<T = RowData> = BaseExtend<T, 'link'> & {
-      onClick: RenderFn<T>
+    type Link<T = Recordable> = BaseExtend<T, 'link'> & {
+      onClick: TableFnCallback<T>
+      formatter: TableFnCallback<T, string>
     }
 
     /**
      * @description preset dictionay column, must provide `dictType`
      * Also support a tag display, pass `tagProps` to show `n-tag` properly
      */
-    type Dictionary<T = RowData> = BaseExtend<T, 'dict'> & {
+    type Dictionary<T = Recordable> = BaseExtend<T, 'dict'> & {
       dictType: string
-      tagProps?: RenderFn<T, TagProps>
+      tagProps?: TableFnCallback<T, TagProps>
 
       // set this true means use `dict.name` as table column label
       useDictNameAsTitle?: boolean
@@ -186,89 +381,21 @@ export declare namespace WTable {
     /**
      * @description normal tag render, provide a tagProps to config. Also provide formatter function
      */
-    type Tag<T = RowData> = BaseExtend<T, 'tag'> & {
-      tagProps?: RenderFn<T, TagProps>
-      formatter: RenderFn<T, string>
+    type Tag<T = Recordable> = BaseExtend<T, 'tag'> & {
+      tagProps?: TableFnCallback<T, TagProps>
+      formatter: TableFnCallback<T, string>
     }
 
     /**
      * @description preset acion column, default includes three buttons: read / delete
      */
-    type Action<T = RowData> = BaseExtend<T, 'action'> & {
+    type Action<T = Recordable> = BaseExtend<T, 'action'> & {
 
       /**
        * @description action column button config
        */
       actionButtons: ActionButtons<T>[]
-
-      /**
-       * @description action column button click event
-       */
-      onActionButtonsClick: ({
-        type,
-        rowData,
-        rowIndex,
-      }: {
-        type: ColumnActionType | string
-        rowData: T
-        rowIndex?: number
-      }) => Promise<void> | void
     }
   }
 
-  /**
-   * @description extend column entry
-   */
-  // TODO optimise typing
-  type Column<T = RowData> =
-    | ExtendType.Action<T>
-    | ExtendType.Icon<T>
-    | ExtendType.Formatter<T>
-    | ExtendType.Link<T>
-    | ExtendType.Dictionary<T>
-    | ExtendType.Tag<T>
-    | ExtendType.Index<T>
-
-  /**
-   * @description Props
-   */
-  interface Props<T = RowData>
-    extends Partial<Omit<WTablePropType, 'columns' | 'rowKey'>> {
-    /**
-     * @override
-     * @description Rewrite NDataTable columns type, add our own custom column type
-     * And better generic support
-     */
-    columns?: Column<T>[]
-
-    /**
-     * @override
-     * @description for generic
-     */
-    rowKey?: CreateRowKey<T>
-  }
-
-  /**
-   * @description Emit
-   */
-  namespace Emit {
-    type Entry =
-      | useEventParams<'hook', Inst.ExtendInst>
-      | useEventParams<'tableHeaderActions', { type: HeaderActionType }>
-  }
-
-  /**
-   * @description Table context
-   */
-  interface Context {
-    tableRef: Ref<Inst.NDataTableInst | undefined>
-    onEvent: (params: Emit.Entry) => void
-    tableProps: ComputedRef<Props>
-    onApiTableList: (extraParams?: Recordable<any> | undefined) => Promise<void>
-    ApiTableListParams: Ref<WalnutBaseListParams>
-    onApiTableQuery: WForm.onFinishFormLoadingCallback
-    onApiTableReset: WForm.onFinishFormLoadingCallback
-    checkedRowKeys: Ref<StringOrNumber[]>
-    tableColumns: Ref<Column[]>
-  }
 }
