@@ -69,6 +69,7 @@ const getFormRules = computed<FormRules>(() =>
     ? generateBaseRules<T>(t, formSchemas, getProps)
     : getProps.value.rules)
 
+// set context
 setFormContext({
   formRef,
   formSchemas,

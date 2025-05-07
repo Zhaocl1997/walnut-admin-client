@@ -173,7 +173,7 @@ export function generateBaseRules<T>(t: Fn, schemas: Ref<WForm.Schema.Item<T>[]>
   )
 }
 
-export function extractDefaultFormDataFromSchemas(schemas: WForm.Schema.Item[]) {
+export function extractDefaultFormDataFromSchemas<T>(schemas: WForm.Schema.Item<T>[]) {
   if (!schemas)
     return {}
 

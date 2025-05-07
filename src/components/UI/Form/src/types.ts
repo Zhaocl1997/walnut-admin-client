@@ -22,7 +22,6 @@ import type {
   FormItemRule,
   FormRules,
   SliderProps,
-  TreeSelectProps,
 } from 'naive-ui'
 
 import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
@@ -74,10 +73,14 @@ export declare namespace WForm {
 
   type onFinishFormLoadingCallback = Fn<Params.Dialog.FinishLoading, void | Promise<void>>
 
-  type FormFnCallback<T = any, R = void> = (
-    params: Params.Callback<T>
-  ) => R | undefined
+  /**
+   * @description callback function
+   */
+  type FormFnCallback<T = any, R = void> = ({ formData, formProps }: { formData: T, formProps?: Schema.SchemaItemFormProps }) => R
 
+  /**
+   * @description Inst
+   */
   namespace Inst {
     type NFormInst = FormInst
 
@@ -93,7 +96,7 @@ export declare namespace WForm {
       setProps: IHooksUseProps<Props<T>>['setProps']
 
       onYes?: (
-        apiHandler: (apiFn: Fn, params: RowData) => Promise<void>,
+        apiHandler: (apiFn: Fn, params: Recordable) => Promise<void>,
         done: () => void
       ) => void
       onNo?: (close: Fn) => void
@@ -167,7 +170,7 @@ export declare namespace WForm {
      */
     dialogProps?: (ICompUIModalProps | ICompUIDrawerProps) &
       Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
-        actionType?: WTable.HeaderActionType
+        actionType?: WTable.HeaderLeftBulitInActionType
         defaultButton?: boolean
         detailTitle?: boolean
         resizable?: boolean
@@ -202,6 +205,9 @@ export declare namespace WForm {
     descriptionProps?: ICompUIDescriptionProps
   }
 
+  /**
+   * @description Form context
+   */
   interface Context<T> {
     formRef: Ref<Inst.NFormInst>
     formSchemas: Ref<Schema.Item<T>[]>
@@ -210,12 +216,18 @@ export declare namespace WForm {
     formPropsCtx: IHooksUseProps<Props<T>>
   }
 
+  /**
+   * @description Form Emits
+   */
   interface Emits<T> {
     hook: [inst: Omit<Inst.WFormInst<T>, 'onYes' | 'onNo'> & Inst.DialogInst]
     query?: [params: Params.Dialog.FinishLoading]
     reset?: [params: Params.Dialog.FinishLoading]
   }
 
+  /**
+   * @description Form Params
+   */
   namespace Params {
     interface Callback<T = any> {
       formData: T
@@ -227,11 +239,14 @@ export declare namespace WForm {
     }
 
     type UseEvent<T> =
+      | useEventParams<'hook', Inst.WFormInst<T>>
       | useEventParams<'query', Dialog.FinishLoading>
       | useEventParams<'reset', Dialog.FinishLoading>
-      | useEventParams<'hook', Inst.WFormInst<T>>
   }
 
+  /**
+   * @description Form Schema
+   */
   namespace Schema {
     interface DomProps {
       style?: Partial<CSSStyleDeclaration>
