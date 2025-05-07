@@ -36,11 +36,11 @@ export default defineComponent({
     })
 
     const renderBase = (item: AppSystemMenu) => (
-      <div class="inline">
+      <div class="flex flex-row flex-nowrap items-center">
         {appSetting.breadcrumb.showIcon && (
-          <WIcon icon={item.icon} height="20" class="mr-1 -mb-1"></WIcon>
+          <WIcon icon={item.icon} height="20" class="mr-1"></WIcon>
         )}
-        <span class="">{t(item.title!)}</span>
+        <div style="line-height: normal">{t(item.title!)}</div>
       </div>
     )
 
