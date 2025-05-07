@@ -6,7 +6,7 @@ defineOptions({
   defaultView: false,
 })
 
-const props = defineProps<WHomeChartCardProps>()
+defineProps<WHomeChartCardProps>()
 </script>
 
 <template>
@@ -17,9 +17,7 @@ const props = defineProps<WHomeChartCardProps>()
     }"
   >
     <template #header>
-      <n-skeleton v-if="loading" text width="20%" />
-
-      <n-h2 v-else prefix="bar" align-text :type="headerExtra?.tagProps.type">
+      <n-h2 prefix="bar" align-text :type="headerExtra?.tagProps.type">
         <n-text>
           {{ title }}
         </n-text>
@@ -27,24 +25,13 @@ const props = defineProps<WHomeChartCardProps>()
     </template>
 
     <template #header-extra>
-      <n-skeleton v-if="loading" round width="80px" height="28px" />
-
-      <n-tag v-else v-bind="headerExtra?.tagProps">
+      <n-tag v-bind="headerExtra?.tagProps">
         <n-gradient-text :type="headerExtra?.tagProps.type">
-          {{ headerExtra.text }}
+          {{ headerExtra?.text }}
         </n-gradient-text>
       </n-tag>
     </template>
 
-    <template #default>
-      <n-skeleton
-        v-if="loading"
-        width="100%"
-        height="44vh"
-        :sharp="false"
-      />
-
-      <WECharts v-else :option="option" />
-    </template>
+    <WECharts :option="option" />
   </n-card>
 </template>

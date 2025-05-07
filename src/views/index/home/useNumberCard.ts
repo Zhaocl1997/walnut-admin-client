@@ -98,7 +98,7 @@ export function useNumberCard() {
     })
   }
 
-  const { pause, resume, isActive } = useIntervalFn(
+  useIntervalFn(
     async () => {
       loading.value = true
       const res = await onCallApi()

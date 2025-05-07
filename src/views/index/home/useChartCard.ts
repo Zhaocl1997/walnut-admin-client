@@ -270,7 +270,7 @@ export function useChartCard() {
     })
   }
 
-  const { pause, resume, isActive } = useIntervalFn(
+  useIntervalFn(
     async (): Promise<void> => {
       loading.value = true
       const res = await onCallApi()
