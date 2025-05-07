@@ -27,7 +27,7 @@
     // "noUncheckedIndexedAccess": true,      /* Include 'undefined' in index signature results */
 
     /* Module Resolution Options */
-    "moduleResolution": "node", /* Base directory to resolve non-absolute module names. */
+    "moduleResolution": "bundler", /* Base directory to resolve non-absolute module names. */
     "paths": {
       "@/*": ["src/*"],
       "~/*": ["types/*"]
