@@ -1,16 +1,14 @@
 import type { WForm } from '@/components/UI/Form'
 // TODO 111
-import WInput from '@/components/UI/Input'
 import WRadio from '@/components/UI/Radio'
 
 import { findPath } from 'easy-fns-ts'
-// TODO 111
-import { NSelect } from 'naive-ui'
+
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 
 export function useMenuFormSchema(
-  actionType: Ref<ActionType>,
-  formData: Ref<RecordNullable<AppSystemMenu>>,
+  actionType: Ref<IActionType>,
+  formData: Ref<AppSystemMenu>,
   treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>,
   menuActiveNamesOptions: Ref<{ name: string, title: string }[]>,
 ) {

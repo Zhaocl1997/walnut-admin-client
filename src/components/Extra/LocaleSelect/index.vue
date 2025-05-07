@@ -7,7 +7,7 @@ defineOptions({
 })
 
 const { prefix, presetKey, creatable = true, refreshable = true } = defineProps<ICompExtraLocaleSelectProps>()
-const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: true })
+const value = defineModel<string>('value', { required: true })
 
 const { locale, messages } = useAppI18n()
 const loading = ref(false)

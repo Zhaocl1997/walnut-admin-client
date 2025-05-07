@@ -12,7 +12,7 @@
       "\r",
       "const emits = defineEmits<{ event: [params: any] }>()\r",
       "\r",
-      "const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: true })\r",
+      "const value = defineModel<string>('value', { required: true })\r",
       "\r",
       "defineExpose({})\r",
       "</script>\r",

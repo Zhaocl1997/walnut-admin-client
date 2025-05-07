@@ -15,7 +15,7 @@ defineOptions({
 const { t } = useAppI18n()
 
 // ref
-const actionType = ref<ActionType>('create')
+const actionType = ref<IActionType>('create')
 const targetTreeItem = ref()
 
 const loading = ref(false)

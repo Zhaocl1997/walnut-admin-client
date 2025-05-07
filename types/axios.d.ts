@@ -112,7 +112,7 @@ declare global {
      */
     requestInterceptors?: (
       config: AxiosRequestConfig
-    ) => AxiosRequestConfig | Promise<RowData>
+    ) => AxiosRequestConfig | Promise<Recordable>
 
     /**
      * @description Axios original request error catch
@@ -124,7 +124,7 @@ declare global {
      */
     responseInterceptors?: (
       res: AxiosResponse<WalnutBaseResponseStructure>
-    ) => Promise<RowData | void>
+    ) => Promise<Recordable | void>
 
     /**
      * @description Axios original response error catch
@@ -135,7 +135,7 @@ declare global {
   /**
    * @description Back end api base result structure
    */
-  interface WalnutBaseResponseStructure<T = RowData> {
+  interface WalnutBaseResponseStructure<T = Recordable> {
     /**
      * @description request code, not equal to axios `statusCode`. This is customizable code
      */
@@ -155,7 +155,7 @@ declare global {
   /**
    * @description Back list api response structure
    */
-  interface WalnutBaseListResponse<T = RowData> {
+  interface WalnutBaseListResponse<T = Recordable> {
     /**
      * @description List base structure
      */
@@ -170,7 +170,7 @@ declare global {
   /**
    * @description base sort params
    */
-  type WalnutBaseSortParams<T = RowData> = {
+  type WalnutBaseSortParams<T = Recordable> = {
     field: keyof T
     order: SortOrder
     priority: number
@@ -187,21 +187,21 @@ declare global {
   /**
    * @description Back list api params structure
    */
-  interface WalnutBaseListParams<T = RowData> {
+  interface WalnutBaseListParams<T = Recordable> {
     /**
      * @description query object
      */
-    query?: T | null
+    query?: T
 
     /**
      * @description sort object
      */
-    sort?: WalnutBaseSortParams<T> | null
+    sort?: WalnutBaseSortParams<T>
 
     /**
      * @description pagination object
      */
-    page?: WalnutBasePageParams | null
+    page?: WalnutBasePageParams
   }
 }
 

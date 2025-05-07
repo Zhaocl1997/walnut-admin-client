@@ -18,7 +18,7 @@ const renderOption: RenderOption = ({ node, option, selected }) => {
     ? (
         <n-tooltip {...props.tooltipProps}>
           {{
-            default: () => attrs.renderLabel ? attrs.renderLabel(option, selected) : <span>{(option as RowData).label}</span>,
+            default: () => attrs.renderLabel ? attrs.renderLabel(option, selected) : <span>{(option as Recordable).label}</span>,
             trigger: () => node,
           }}
         </n-tooltip>

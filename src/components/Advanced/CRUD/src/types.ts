@@ -5,7 +5,7 @@ import type { WTable } from '@/components/UI/Table'
 export declare namespace WCrud {
   type SetProps<T> = (p: Partial<Props<T>>) => void
 
-  interface Props<T = RowData> {
+  interface Props<T = Recordable> {
     baseAPI?: BaseAPIType<T>
     onBeforeRequest?: (data: T) => T
     tableProps?: Omit<WTable.Props<T>, 'apiProps'>
@@ -13,21 +13,21 @@ export declare namespace WCrud {
   }
 
   namespace Inst {
-    interface WCrudInst<T = RowData> {
+    interface WCrudInst<T = Recordable> {
       setProps: SetProps<T>
       onTableOpenCreateForm: Fn<T>
       onApiTableReadAndOpenUpdateForm: (id: StringOrNumber) => Promise<void>
       onApiTableDelete: (is: StringOrNumber) => Promise<void>
       onApiTableDeleteMany: () => Promise<void>
       onGetFormData: () => Ref<T>
-      onGetActionType: () => Ref<ActionType>
+      onGetActionType: () => Ref<IActionType>
       onGetApiTableListParams: () => Ref<WalnutBaseListParams<T>>
       onApiTableList: () => Promise<void>
       onApiTableCloseForm: Fn
     }
   }
 
-  type useFormReturnType<T = RowData> = [
+  type useFormReturnType<T = Recordable> = [
     (instance: Inst.WCrudInst<T>) => void,
     Omit<Inst.WCrudInst<T>, 'setProps'>,
   ]

@@ -4,7 +4,12 @@ export interface ICompUIFormItemExtendDividerProps {
   titlePlacement?: 'left' | 'right' | 'center'
   dashed?: boolean
   prefix?: 'bar' | undefined
-  type?: NaiveCompType
+  type?: 'default'
+    | 'primary'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error'
   title?: string
   helpMessage?: string | boolean
   foldable?: boolean

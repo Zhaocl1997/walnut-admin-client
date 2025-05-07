@@ -5,7 +5,7 @@ defineOptions({
   name: 'WCompExtraTransitionSelect',
 })
 
-const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: true })
+const value = defineModel<string>('value', { required: true })
 
 function getChilren(group: string) {
   return Object.entries(AppConstTransitionName)

@@ -4,7 +4,7 @@ export { default } from './index.vue'
 
 export * from './useTree'
 
-export interface ICompUITreeProps<T = RowData> {
+export interface ICompUITreeProps<T = Recordable> {
   /**
    * @description NTree original props
    */
@@ -60,6 +60,6 @@ export interface ICompUITreeProps<T = RowData> {
   }
 }
 
-export type ICompUITreeInst<T = RowData> = Partial<TreeInst & {
+export type ICompUITreeInst<T = Recordable> = Partial<TreeInst & {
   setProps: (p: IDeepMaybeRef<ICompUITreeProps<T>> | ICompUITreeProps<T>) => void
 }>

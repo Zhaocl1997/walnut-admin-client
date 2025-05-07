@@ -1,6 +1,6 @@
 import type { WCrud } from './types'
 
-export function useCRUD<T = RowData>(props: IDeepMaybeRef<WCrud.Props<T>> | WCrud.Props<T>): WCrud.useFormReturnType<T> {
+export function useCRUD<T = Recordable>(props: IDeepMaybeRef<WCrud.Props<T>> | WCrud.Props<T>): WCrud.useFormReturnType<T> {
   isInSetup()
 
   const wCrudRef = ref<Nullable<WCrud.Inst.WCrudInst<T>>>(null)

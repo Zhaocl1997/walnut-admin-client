@@ -14,7 +14,7 @@ const { setProps, getProps } = useProps<InternalProps>(prop)
 emit('hook', { setProps })
 
 // ref
-const actionType = ref<ActionType>('')
+const actionType = ref<IActionType>('')
 
 const { stateRef: formData, resetState: resetFormData } = useState({})
 

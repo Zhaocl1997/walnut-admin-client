@@ -43,8 +43,8 @@ const pattern = ref<string>()
 const expandAll = ref<boolean>(false)
 const checkAll = ref<boolean>(false)
 const cascade = ref<boolean>(true)
-const copyTarget = ref<RowData>({})
-const currentTarget = ref<RowData>({})
+const copyTarget = ref<Recordable>({})
+const currentTarget = ref<Recordable>({})
 
 const getToolBarOptions = computed((): DropdownOption[] => [
   {

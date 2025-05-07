@@ -10,31 +10,11 @@ declare type PromiseFn<T = any> = (args?: T) => Promise<void>
 
 declare type Recordable<T = any> = Record<string, T>
 
-declare type ComponentTrigger = 'hover' | 'click' | 'contentmenu'
+declare type IActionType = 'create' | 'update' | ''
 
-declare type ActionType = 'create' | 'update' | ''
-
-declare type TargetContext = '_self' | '_blank'
+declare type ITargetContext = '_self' | '_blank'
 
 declare type ValueOf<T> = T[keyof T]
-
-declare type MaybeNullOrUndefined<T> = T | null | undefined
-
-declare type NaiveCompType =
-  | 'default'
-  | 'primary'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'error'
-
-declare interface RowData {
-  [key: string]: unknown
-}
-
-declare type RecordNullable<T> = {
-  [P in keyof T]?: Nullable<T[P]>
-}
 
 // thanks to deepseek R1
 type IDeepMaybeRef<T> =

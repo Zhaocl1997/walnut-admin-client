@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<ICompExtraPasswordProps>(), {
 
 const emits = defineEmits<{ submit: [] }>()
 
-const value = defineModel<MaybeNullOrUndefined<string>>('value', { required: true })
+const value = defineModel<string>('value', { required: true })
 
 const percentage = ref(0)
 const status = ref<ProgressStatus>('success')

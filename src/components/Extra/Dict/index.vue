@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<ICompExtraDictProps>(), {
   dictRenderType: 'select',
 })
 
-const dictValue = defineModel<MaybeNullOrUndefined<Value>>('value', { required: true })
+const dictValue = defineModel<Value>('value', { required: true })
 
 const { t } = useAppI18n()
 
@@ -38,19 +38,16 @@ onBeforeMount(onInit)
 <template>
   <n-spin :show="loading">
     <template v-if="!loading">
-      <!-- @vue-expect-error -->
       <WSelect
         v-if="dictRenderType === 'select'" v-model:value="dictValue" :options="getTOptions"
         v-bind="renderComponentProps"
       />
 
-      <!-- @vue-expect-error -->
       <WCheckbox
         v-if="dictRenderType === 'checkbox'" v-model:value="dictValue" :options="getTOptions"
         v-bind="renderComponentProps" multiple
       />
 
-      <!-- @vue-expect-error -->
       <WRadio
         v-if="dictRenderType === 'radio'" v-model:value="dictValue" :options="getTOptions"
         v-bind="renderComponentProps"
