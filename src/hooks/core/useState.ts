@@ -2,10 +2,10 @@
  * @description wrapper for `useManualRefHistory` function
  * @link https://vueuse.org/core/usemanualrefhistory/#usemanualrefhistory
  */
-export function useState<T = Recordable>(state: RecordNullable<T>) {
-  const insideState = ref<RecordNullable<T>>(state)
+export function useState<T>(state: T) {
+  const insideState = ref<T>(state) as Ref<T>
 
-  const { reset, commit, history, clear } = useManualRefHistory(insideState, {
+  const { reset, commit, history, clear } = useManualRefHistory<T>(insideState, {
     clone: true,
   })
 
