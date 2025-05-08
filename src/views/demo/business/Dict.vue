@@ -10,10 +10,10 @@ const state = reactive({
   dict3: undefined,
   dict4: '0',
   dict5: ['1', '2'],
-  dict6: '9',
+  dict6: 9,
   dict7: undefined,
-  dict8: true,
-  dict9: false,
+  dict8: 'true',
+  dict9: 'false',
 })
 
 const { loading: loading2, execDict: execDict2, dictData: dictData2 } = useDict('sys_shared_status')
@@ -83,13 +83,13 @@ const showHook = ref(true)
             <WDict
               v-model:value="state.dict2"
               dict-type="gbt_sex"
-              dict-render-type="checkbox"
+              render-type="checkbox"
             />
 
             <WDict
               v-model:value="state.dict3"
               dict-type="gbt_sex"
-              dict-render-type="radio"
+              render-type="radio"
             />
           </n-space>
         </n-list-item>
@@ -107,13 +107,13 @@ const showHook = ref(true)
             <WDict
               v-model:value="state.dict5"
               dict-type="gbt_sex"
-              dict-render-type="checkbox"
+              render-type="checkbox"
             />
 
             <WDict
               v-model:value="state.dict6"
               dict-type="gbt_sex"
-              dict-render-type="radio"
+              render-type="radio"
             />
           </n-space>
         </n-list-item>
@@ -128,7 +128,7 @@ const showHook = ref(true)
           <WDict
             v-model:value="state.dict7"
             dict-type="gbt_sex"
-            :render-component-props="{
+            :component-props="{
               multiple: true,
               clearable: true,
             }"
@@ -146,15 +146,15 @@ const showHook = ref(true)
             <WDict
               v-model:value="state.dict8"
               dict-type="sys_shared_status"
-              dict-render-type="radio"
-              :render-component-props="{ button: true }"
+              render-type="radio"
+              :component-props="{ button: true, valueType: 'boolean' }"
             />
 
             <WDict
               v-model:value="state.dict9"
               dict-type="sys_shared_status"
-              dict-render-type="radio"
-              :render-component-props="{ button: true }"
+              render-type="radio"
+              :component-props="{ button: true, valueType: 'boolean' }"
             />
           </n-space>
         </n-list-item>

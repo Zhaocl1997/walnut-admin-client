@@ -35,7 +35,7 @@ onBeforeMount(onInit)
   <n-spin :show="loading" :content-style="{ width: '100% !important' }">
     <!-- @vue-ignore -->
     <WSelect
-      v-if="renderType === 'select'"
+      v-if="renderType === 'select' && getTOptions?.length"
       v-model:value="dictValue"
       :options="getTOptions"
       v-bind="componentProps"
@@ -43,7 +43,7 @@ onBeforeMount(onInit)
 
     <!-- @vue-ignore -->
     <WCheckbox
-      v-if="renderType === 'checkbox'"
+      v-if="renderType === 'checkbox' && getTOptions?.length"
       v-model:value="dictValue"
       :options="getTOptions"
       v-bind="componentProps"
@@ -52,7 +52,7 @@ onBeforeMount(onInit)
 
     <!-- @vue-ignore -->
     <WRadio
-      v-if="renderType === 'radio'"
+      v-if="renderType === 'radio' && getTOptions?.length"
       v-model:value="dictValue"
       :options="getTOptions"
       v-bind="componentProps"

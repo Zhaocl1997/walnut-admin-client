@@ -28,7 +28,6 @@ export function WithValue<T>(WrappedComponent: ReturnType<typeof defineComponent
     setup(p, { emit, slots }) {
       const v = ref()
 
-      // TODO dirty as
       const props = p as unknown as WithValueProp
 
       const formateDefaultValue = (fn: Fn) => {
@@ -41,40 +40,53 @@ export function WithValue<T>(WrappedComponent: ReturnType<typeof defineComponent
                   .map(ov => fn(ov)))
       }
 
-      const transformBoolean = (v: any) => {
-        if (v === true)
-          return 'true'
-        if (v === false)
-          return 'false'
-        if (v === 'true')
-          return true
-        if (v === 'false')
-          return false
+      const transformBoolean = (val: any) => {
+        if (props.valueType === 'string') {
+          if (val === true)
+            return 'true'
+          if (val === false)
+            return 'false'
+        }
+
+        if (props.valueType === 'boolean') {
+          if (val === 'true')
+            return true
+          if (val === 'false')
+            return false
+          return val
+        }
       }
 
-      watchEffect(() => {
-        if ([null, undefined, '', Number.NaN].includes(props.value as any)) {
-          v.value = null
-          return
-        }
+      watch(
+        () => props.value,
+        (newV) => {
+          if ([null, undefined, '', Number.NaN].includes(newV as any)) {
+            v.value = null
+            return
+          }
 
-        if (props.multiple === true) {
-          if (props.valueType === 'string')
-            formateDefaultValue(ov => ov.toString())
-          else if (props.valueType === 'number')
-            formateDefaultValue(ov => +ov)
-          else
-            formateDefaultValue(ov => transformBoolean(ov))
-        }
-        else {
-          if (props.valueType === 'string')
-            v.value = `${props.value}`
-          else if (props.valueType === 'number')
-            v.value = +props.value!
-          else
-            v.value = transformBoolean(props.value)
-        }
-      })
+          if (props.multiple === true) {
+            if (props.valueType === 'string')
+              formateDefaultValue(ov => ov.toString())
+            else if (props.valueType === 'number')
+              formateDefaultValue(ov => +ov)
+            else if (props.valueType === 'boolean')
+              formateDefaultValue(ov => transformBoolean(ov))
+          }
+          else {
+            if (props.valueType === 'string')
+              v.value = `${newV}`
+            else if (props.valueType === 'number')
+              v.value = +newV!
+            else if (props.valueType === 'boolean')
+              v.value = transformBoolean(newV)
+          }
+        },
+        {
+          deep: true,
+          immediate: true,
+        },
+      )
 
       const onUpdateValue = (val: StringOrNumber[]) => {
         v.value = val
