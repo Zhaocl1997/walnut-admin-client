@@ -26,27 +26,24 @@ export function generateDefaultSortParams<T>(columns: WTable.Column<T>[]) {
  * @description generate base sort object
  */
 export function generateSortParams<T>(sort: DataTableSortState | DataTableSortState[]): WalnutBaseSortParams<T> {
-  if (Array.isArray(sort)) {
-    if (sort.every(i => i.order === false))
-      return []
+  const getBase = (i: DataTableSortState) => ({
+    field: i.columnKey as keyof T,
+    order: i.order,
+    priority: (i.sorter as SorterMultiple)?.multiple,
+  })
 
-    return sort.map(i => ({
-      field: i.columnKey as keyof T,
-      order: i.order,
-      priority: (i.sorter as SorterMultiple)?.multiple,
-    }))
+  if (Array.isArray(sort)) {
+    if (sort.some(i => i.order === false)) {
+      return sort.filter(i => i.order !== false).map(getBase)
+    }
+
+    return sort.map(getBase)
   }
   else {
     if (sort.order === false)
       return []
 
-    return [
-      {
-        field: sort.columnKey as keyof T,
-        order: sort.order,
-        priority: (sort.sorter as SorterMultiple)?.multiple,
-      },
-    ]
+    return [getBase(sort)]
   }
 }
 
