@@ -60,14 +60,7 @@ const [register1] = useForm<typeof configData.value>({
 
 const [register2] = useForm<typeof formData.value>({
   span: computed(() => configData.value.span),
-  onReset: ({ done }: WForm.Params.Dialog.FinishLoading) => {
-    console.log('reset')
-
-    setTimeout(() => {
-      done()
-      formData.value = {}
-    }, 2000)
-  },
+  xGap: 20,
   schemas: [
     {
       type: 'Base:Input',
@@ -128,6 +121,14 @@ function onQuery({ done }: WForm.Params.Dialog.FinishLoading) {
     done()
   }, 2000)
 }
+
+function onReset({ done }: WForm.Params.Dialog.FinishLoading) {
+  console.log('reset')
+
+  setTimeout(() => {
+    done()
+  }, 2000)
+}
 </script>
 
 <template>
@@ -143,6 +144,7 @@ function onQuery({ done }: WForm.Params.Dialog.FinishLoading) {
       :model="formData"
       @hook="register2"
       @query="onQuery"
+      @reset="onReset"
     />
   </WDemoCard>
 </template>

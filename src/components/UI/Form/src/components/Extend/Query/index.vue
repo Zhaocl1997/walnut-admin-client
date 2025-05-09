@@ -26,22 +26,12 @@ function done() {
 
 function onFormReset() {
   setProps({ disabled: true })
-  formEvent({
-    name: 'reset',
-    params: {
-      done,
-    },
-  })
+  formEvent('reset', { done })
 }
 
 function onQuery() {
   setProps({ disabled: true })
-  formEvent({
-    name: 'query',
-    params: {
-      done,
-    },
-  })
+  formEvent('query', { done })
 }
 
 function onToggle() {

@@ -11,7 +11,6 @@ import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNu
 import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
 import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
-import type { useEventParams } from '@/hooks/component/useEvent'
 
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 // raw
@@ -78,10 +77,15 @@ export declare namespace WForm {
    */
   type FormFnCallback<T = any, R = void> = ({ formData, formProps }: { formData: T, formProps?: Schema.SchemaItemFormProps }) => R
 
-  /**
-   * @description Inst
-   */
-  namespace Inst {
+    /**
+     * @description set table props
+     */
+    type SetFormProps<T> = IHooksUseProps<Props<T>>['setProps']
+
+    /**
+     * @description Inst
+     */
+    namespace Inst {
     type NFormInst = FormInst
 
     interface DialogInst {
@@ -89,12 +93,16 @@ export declare namespace WForm {
       onClose: Fn
     }
 
-    interface WFormInst<T> extends Omit<NFormInst, 'validate'>, DialogInst {
+    interface ExtendInst<T> {
+      setProps: SetFormProps<T>
+
+    }
+
+    interface WFormInst<T> extends Omit<NFormInst, 'validate'>, DialogInst, ExtendInst<T> {
       // rewrite
       validate: (fields?: (keyof T)[]) => Promise<boolean>
 
-      setProps: IHooksUseProps<Props<T>>['setProps']
-
+      // TODO wtf
       onYes?: (
         apiHandler: (apiFn: Fn, params: Recordable) => Promise<void>,
         done: () => void
@@ -102,212 +110,213 @@ export declare namespace WForm {
       onNo?: (close: Fn) => void
     }
 
-  }
-
-  namespace Hook {
-    type useFormReturnType<T> = [
-      (instance: Inst.WFormInst<T>) => void,
-      ICompUIFormHooksMethods<T>,
-    ]
-  }
-
-  interface EventProps {
-    onQuery?: (params: Params.Dialog.FinishLoading) => void
-    onReset?: (params: Params.Dialog.FinishLoading) => void
-  }
-
-  interface Props<T> extends EventProps {
-    // original
-    inline?: boolean
-    labelWidth?: StringOrNumber
-    labelAlign?: LabelAlign
-    labelPlacement?: LabelPlacement
-    model?: T
-    rules?: FormRules
-    disabled?: boolean
-    size?: Size
-    showRequireMark?: boolean
-    requireMarkPlacement?: 'left' | 'right' | 'right-hanging'
-    showFeedback?: boolean
-    showLabel?: boolean
-
-    // custom
-    schemas?: WForm.Schema.Item<T>[]
-    cols?: number
-    span?: number
-    xGap?: number
-    yGap?: number
-    // perset?: WForm.preset
-    baseRules?: boolean
+    }
 
     /**
-     * @description global v-if/v-show form item visible position mode
+     * @description Hooks
      */
-    visibleMode?: FormVisibleMode
+    namespace Hooks {
+
+      namespace UseForm {
+      type Props<T> = WForm.Props<T> | ComputedRef<WForm.Props<T>> | IDeepMaybeRef<WForm.Props<T>>
+
+      type Methods<T> = ICompUIFormHooksMethods<T> & Pick<Inst.WFormInst<T>, 'onOpen' | 'onClose'>
+
+      type ReturnType<T> = [
+        (instance: Inst.WFormInst<T>) => void,
+        Methods<T>,
+      ]
+      }
+    }
+
+    interface Props<T> {
+      // original
+      inline?: boolean
+      labelWidth?: StringOrNumber
+      labelAlign?: LabelAlign
+      labelPlacement?: LabelPlacement
+      model?: T
+      rules?: FormRules
+      disabled?: boolean
+      size?: Size
+      showRequireMark?: boolean
+      requireMarkPlacement?: 'left' | 'right' | 'right-hanging'
+      showFeedback?: boolean
+      showLabel?: boolean
+
+      // custom
+      schemas?: WForm.Schema.Item<T>[]
+      cols?: number
+      span?: number
+      xGap?: number
+      yGap?: number
+      // perset?: WForm.preset
+      baseRules?: boolean
+
+      /**
+       * @description global v-if/v-show form item visible position mode
+       */
+      visibleMode?: FormVisibleMode
+
+      /**
+       * @description global transition name
+       */
+      transitionName?: ValueOfAppConstTransitionName
+
+      /**
+       * @description form item class, including the label and content
+       */
+      formItemClass?: string
+
+      /**
+       * @description class only for form item component
+       */
+      formItemComponentClass?: string
+
+      /**
+       * @description model/drawer form preset
+       */
+      dialogPreset?: FormDialogPreset
+
+      /**
+       * @description model/drawer props
+       */
+      dialogProps?: (ICompUIModalProps | ICompUIDrawerProps) &
+        Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
+          actionType?: WTable.HeaderLeftBulitInActionType
+          defaultButton?: boolean
+          detailTitle?: boolean
+          resizable?: boolean
+          defaultWidth?: string
+          defaultHeight?: string
+          width?: string
+          height?: string
+        }
+
+      /**
+       * @description locale middle unique key implement with back end messages
+       * @example `form.${uniqueKey}.${path}` used for label locale
+       * @example `form.${uniqueKey}.${path}.helpMsg` built in for label help message
+       * So in this rule, all we need to do is provide a `localeUniqueKey` and config the messages in `Locale Manage`
+       * No need to privide a label property in `schema item formProp`, the built in logic will handle the label properly.
+       */
+      localeUniqueKey?: string
+
+      /**
+       * @description Used for form related to a localed table
+       */
+      localeWithTable?: boolean
+
+      /**
+       * @description display in descrition mode
+       */
+      useDescription?: boolean
+
+      /**
+       * @description description props
+       */
+      descriptionProps?: ICompUIDescriptionProps
+    }
 
     /**
-     * @description global transition name
+     * @description Form context
      */
-    transitionName?: ValueOfAppConstTransitionName
+    interface Context<T> {
+      formRef: Ref<Inst.NFormInst>
+      formSchemas: Ref<Schema.Item<T>[]>
+      formEvent: ShortEmits<Emits<T>>
+      formItemIdCtx: ICompUIFormHooksItemId
+      formPropsCtx: IHooksUseProps<Props<T>>
+    }
 
     /**
-     * @description form item class, including the label and content
+     * @description Form Emits
      */
-    formItemClass?: string
+    interface Emits<T> {
+      hook: [inst: Omit<Inst.WFormInst<T>, 'onYes' | 'onNo'> & Inst.DialogInst]
+      query?: [params: Params.Dialog.FinishLoading]
+      reset?: [params: Params.Dialog.FinishLoading]
+    }
 
     /**
-     * @description class only for form item component
+     * @description Form Params
      */
-    formItemComponentClass?: string
-
-    /**
-     * @description model/drawer form preset
-     */
-    dialogPreset?: FormDialogPreset
-
-    /**
-     * @description model/drawer props
-     */
-    dialogProps?: (ICompUIModalProps | ICompUIDrawerProps) &
-      Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
-        actionType?: WTable.HeaderLeftBulitInActionType
-        defaultButton?: boolean
-        detailTitle?: boolean
-        resizable?: boolean
-        defaultWidth?: string
-        defaultHeight?: string
-        width?: string
-        height?: string
+    namespace Params {
+      interface Callback<T = any> {
+        formData: T
+        formProps?: Schema.SchemaItemFormProps
       }
 
-    /**
-     * @description locale middle unique key implement with back end messages
-     * @example `form.${uniqueKey}.${path}` used for label locale
-     * @example `form.${uniqueKey}.${path}.helpMsg` built in for label help message
-     * So in this rule, all we need to do is provide a `localeUniqueKey` and config the messages in `Locale Manage`
-     * No need to privide a label property in `schema item formProp`, the built in logic will handle the label properly.
-     */
-    localeUniqueKey?: string
-
-    /**
-     * @description Used for form related to a localed table
-     */
-    localeWithTable?: boolean
-
-    /**
-     * @description display in descrition mode
-     */
-    useDescription?: boolean
-
-    /**
-     * @description description props
-     */
-    descriptionProps?: ICompUIDescriptionProps
-  }
-
-  /**
-   * @description Form context
-   */
-  interface Context<T> {
-    formRef: Ref<Inst.NFormInst>
-    formSchemas: Ref<Schema.Item<T>[]>
-    formEvent: (val: Params.UseEvent<T>) => void
-    formItemIdCtx: ICompUIFormHooksItemId
-    formPropsCtx: IHooksUseProps<Props<T>>
-  }
-
-  /**
-   * @description Form Emits
-   */
-  interface Emits<T> {
-    hook: [inst: Omit<Inst.WFormInst<T>, 'onYes' | 'onNo'> & Inst.DialogInst]
-    query?: [params: Params.Dialog.FinishLoading]
-    reset?: [params: Params.Dialog.FinishLoading]
-  }
-
-  /**
-   * @description Form Params
-   */
-  namespace Params {
-    interface Callback<T = any> {
-      formData: T
-      formProps?: Schema.SchemaItemFormProps
-    }
-
-    namespace Dialog {
-      interface FinishLoading { done: Fn }
-    }
-
-    type UseEvent<T> =
-      | useEventParams<'hook', Inst.WFormInst<T>>
-      | useEventParams<'query', Dialog.FinishLoading>
-      | useEventParams<'reset', Dialog.FinishLoading>
-  }
-
-  /**
-   * @description Form Schema
-   */
-  namespace Schema {
-    interface DomProps {
-      style?: Partial<CSSStyleDeclaration>
-      class?: string
-    }
-
-    interface ComponentPropPool<D = any> {
-
-      // base
-      'Base:Render': {
-        render: FormFnCallback<D, VNode | VNode[] | string>
-      }
-      'Base:Slot': Record<string, never>
-
-      // @/components/UI
-      'Base:Button': ICompUIButtonProps
-      'Base:ButtonConfirm': ICompUIButtonConfirmProps
-      'Base:ButtonGroup': ICompUIButtonGroupProps
-      'Base:ButtonRetry': ICompUIButtonRetryProps
-      'Base:Checkbox': ICompUICheckboxProps
-      'Base:ColorPicker': ICompUIColorPickerProps
-      'Base:DatePicker': ICompUIDatePickerProps
-      'Base:DynamicTags': ICompUIDynamicTagsProps
-      'Base:Input': ICompUIInputProps
-      'Base:InputNumber': ICompUIInputNumberProps
-      'Base:Radio': ICompUIRadioProps
-      'Base:Select': ICompUISelectProps
-      'Base:Switch': ICompUISwitchProps
-      'Base:TimePicker': ICompUITimePickerProps
-      'Base:Tree': ICompUITreeProps
-      'Base:TreeSelect': ICompUITreeSelectProps
-
-      // @/components/Extra
-      'Extra:EmailInput': ICompExtraEmailInputProps
-      'Extra:IconPicker': ICompExtraIconPickerProps
-      'Extra:LocaleSelect': ICompExtraLocaleSelectProps
-      'Extra:Password': ICompExtraPasswordProps
-      'Extra:PhoneNumberInput': ICompExtraPhoneNumberInputProps
-      'Extra:SMSInput': ICompExtraSMSInputProps
-      'Extra:TransitionSelect': ICompExtraTransitionProps
-
-      // raw
-      'Raw:DynamicInput': DynamicInputProps
-      'Raw:Slider': SliderProps
-
-      // business
-      'Business:AreaCascader': ICompBusinessAreaCascaderProps
-      'Business:Dict': ICompBusinessDictProps
-
-      // extend
-      'Extend:Query': ICompUIFormItemExtendQueryProps
-      'Extend:Divider': ICompUIFormItemExtendDividerProps
-
-      'Extend:RoleSelect': {
-        multiple?: boolean
-        valueSeparator?: string
-        valueType?: 'string' | 'number'
+      namespace Dialog {
+        interface FinishLoading { done: Fn }
       }
 
-      'Vendor:Tinymce': ICompVendorTinymceProps
     }
+
+    /**
+     * @description Form Schema
+     */
+    namespace Schema {
+      interface DomProps {
+        style?: Partial<CSSStyleDeclaration>
+        class?: string
+      }
+
+      interface ComponentPropPool<D = any> {
+
+        // base
+        'Base:Render': {
+          render: FormFnCallback<D, VNode | VNode[] | string>
+        }
+        'Base:Slot': Record<string, never>
+
+        // @/components/UI
+        'Base:Button': ICompUIButtonProps
+        'Base:ButtonConfirm': ICompUIButtonConfirmProps
+        'Base:ButtonGroup': ICompUIButtonGroupProps
+        'Base:ButtonRetry': ICompUIButtonRetryProps
+        'Base:Checkbox': ICompUICheckboxProps
+        'Base:ColorPicker': ICompUIColorPickerProps
+        'Base:DatePicker': ICompUIDatePickerProps
+        'Base:DynamicTags': ICompUIDynamicTagsProps
+        'Base:Input': ICompUIInputProps
+        'Base:InputNumber': ICompUIInputNumberProps
+        'Base:Radio': ICompUIRadioProps
+        'Base:Select': ICompUISelectProps
+        'Base:Switch': ICompUISwitchProps
+        'Base:TimePicker': ICompUITimePickerProps
+        'Base:Tree': ICompUITreeProps
+        'Base:TreeSelect': ICompUITreeSelectProps
+
+        // @/components/Extra
+        'Extra:EmailInput': ICompExtraEmailInputProps
+        'Extra:IconPicker': ICompExtraIconPickerProps
+        'Extra:LocaleSelect': ICompExtraLocaleSelectProps
+        'Extra:Password': ICompExtraPasswordProps
+        'Extra:PhoneNumberInput': ICompExtraPhoneNumberInputProps
+        'Extra:SMSInput': ICompExtraSMSInputProps
+        'Extra:TransitionSelect': ICompExtraTransitionProps
+
+        // raw
+        'Raw:DynamicInput': DynamicInputProps
+        'Raw:Slider': SliderProps
+
+        // business
+        'Business:AreaCascader': ICompBusinessAreaCascaderProps
+        'Business:Dict': ICompBusinessDictProps
+
+        // extend
+        'Extend:Query': ICompUIFormItemExtendQueryProps
+        'Extend:Divider': ICompUIFormItemExtendDividerProps
+
+        'Extend:RoleSelect': {
+          multiple?: boolean
+          valueSeparator?: string
+          valueType?: 'string' | 'number'
+        }
+
+        'Vendor:Tinymce': ICompVendorTinymceProps
+      }
 
     type SchemaItemFormProps = Omit<FormItemProps, 'rule' | 'label'> & {
       /**
@@ -525,5 +534,5 @@ export declare namespace WForm {
 
       // extend
       | SchemaItem.QuerySchema<D>
-  }
+    }
 }

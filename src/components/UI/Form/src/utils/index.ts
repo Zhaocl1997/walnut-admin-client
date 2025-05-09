@@ -179,10 +179,29 @@ export function extractDefaultFormDataFromSchemas<T>(schemas: WForm.Schema.Item<
 
   return Object.fromEntries(
     unref(schemas)
-      .filter(i => !i.formProp?.path)
+      .filter(i => i.formProp?.path)
       .map<[string, WForm.DefaultValue]>(i => [
-        i.formProp?.path ?? '',
+        i.formProp.path,
         i?.componentProp?.defaultValue ?? null,
       ]),
   )
 }
+
+export const extendedFormPropKeys: (keyof WForm.Props<Recordable>)[] = [
+  'schemas',
+  'cols',
+  'span',
+  'xGap',
+  'yGap',
+  'baseRules',
+  'visibleMode',
+  'transitionName',
+  'formItemClass',
+  'formItemComponentClass',
+  'dialogPreset',
+  'dialogProps',
+  'localeUniqueKey',
+  'localeWithTable',
+  'useDescription',
+  'descriptionProps',
+]

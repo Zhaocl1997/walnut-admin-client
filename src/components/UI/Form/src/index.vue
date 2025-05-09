@@ -10,12 +10,11 @@ import WFormItemExtendQuery from './components/Extend/Query'
 import { setFormContext } from './hooks/useFormContext'
 
 import { useFormDialog } from './hooks/useFormDialog'
-import { useFormEvents } from './hooks/useFormEvents'
 import { useFormItemId } from './hooks/useFormItemId'
 import { useFormMethods } from './hooks/useFormMethods'
 
 import { useFormSchemas } from './hooks/useFormSchemas'
-import { formItemUtils as FIU, generateBaseRules, getScopeOrGlobalProp } from './utils'
+import { extendedFormPropKeys, formItemUtils as FIU, generateBaseRules, getScopeOrGlobalProp } from './utils'
 
 defineOptions({
   name: 'WCompUIForm',
@@ -49,7 +48,7 @@ const formPropsCtx = useProps<WForm.Props<T>>(props)
 
 const { setProps, getProps } = formPropsCtx
 
-const getFormProps = computed(() => omit(getProps.value, ['rules', 'schemas', 'cols', 'span', 'xGap', 'yGap', 'baseRules', 'visibleMode', 'localeWithTable', 'useDescription']))
+const getFormProps = computed(() => omit(getProps.value, extendedFormPropKeys))
 
 const formItemIdCtx = useFormItemId()
 
@@ -59,9 +58,7 @@ const [DefineForm, ReuseForm] = createReusableTemplate()
 
 const formSchemas = useFormSchemas<T>(getProps, formItemIdCtx)
 
-const formEvent = useFormEvents<T>(getProps)
-
-const formMethods = useFormMethods<T>(formRef, dialogFormRef)
+const formMethods = useFormMethods<T>(formRef)
 
 const getFormRules = computed<FormRules>(() =>
   getProps.value.baseRules
@@ -73,7 +70,7 @@ const getFormRules = computed<FormRules>(() =>
 setFormContext({
   formRef,
   formSchemas,
-  formEvent,
+  formEvent: emits,
   formItemIdCtx,
   formPropsCtx,
 })
@@ -87,6 +84,12 @@ defineExpose({
 emits('hook', {
   ...formMethods,
   setProps,
+  onOpen: async (beforeHook?: (done: Fn) => void) => {
+    await dialogFormRef.value?.onOpen(beforeHook)
+  },
+  onClose: () => {
+    dialogFormRef.value?.onClose()
+  },
 })
 
 // need to optimise or not?
