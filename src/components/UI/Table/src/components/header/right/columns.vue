@@ -115,7 +115,10 @@ function getTitle(item: WTable.Column<T>) {
         <template #default>
           <div id="tableSortable" ref="tableColumnSettingRef">
             <div
-              v-for="item in tableColumns" :key="item.key" class="mx-1 my-2 hstack justify-between" :class="[
+              v-for="item in tableColumns"
+              :key="item.key"
+              class="mx-1 my-2 hstack justify-between"
+              :class="[
                 { draggableClass: !isInBlackList(item.key) },
               ]"
             >
@@ -124,7 +127,10 @@ function getTitle(item: WTable.Column<T>) {
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <WIcon
-                        icon="ant-design:drag-outlined" height="20" class="mr-2 cursor-move" :class="[
+                        icon="ant-design:drag-outlined"
+                        height="20"
+                        class="mr-2 cursor-move"
+                        :class="[
                           { 'cursor-not-allowed': isInBlackList(item.key) },
                         ]"
                       />
@@ -135,7 +141,8 @@ function getTitle(item: WTable.Column<T>) {
                 </n-tooltip>
 
                 <n-checkbox
-                  :disabled="isInBlackList(item.key)" :checked="item._internalShow"
+                  :disabled="isInBlackList(item.key)"
+                  :checked="item._internalShow"
                   @update-checked="onUpdateItemChecked(item)"
                 >
                   {{ getTitle(item) }}
@@ -143,13 +150,13 @@ function getTitle(item: WTable.Column<T>) {
               </div>
 
               <div class="hstack items-center justify-center">
-                <n-tooltip trigger="hover">
+                <n-tooltip trigger="hover" placement="left" style="padding: 0 !important">
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <WIcon
                         icon="mdi:arrow-collapse-left"
                         height="20"
-                        class="cursor-pointer text-primary"
+                        class="cursor-pointer"
                         :style="{
                           color:
                             item.fixed === 'left'
@@ -161,16 +168,14 @@ function getTitle(item: WTable.Column<T>) {
                     </n-button>
                   </template>
 
-                  {{
-                    item.fixed === 'left'
-                      ? $t('table.base.settings.column.unfix')
-                      : $t('table.base.settings.column.fixLeft')
-                  }}
+                  <span>
+                    {{ item.fixed === 'left' ? $t('table.base.settings.column.unfix') : $t('table.base.settings.column.fixLeft') }}
+                  </span>
                 </n-tooltip>
 
                 <n-divider vertical />
 
-                <n-tooltip trigger="hover">
+                <n-tooltip trigger="hover" placement="left" style="padding: 0 !important">
                   <template #trigger>
                     <n-button text :disabled="isInBlackList(item.key)">
                       <WIcon
@@ -188,11 +193,9 @@ function getTitle(item: WTable.Column<T>) {
                     </n-button>
                   </template>
 
-                  {{
-                    item.fixed === 'right'
-                      ? $t('table.base.settings.column.unfix')
-                      : $t('table.base.settings.column.fixRight')
-                  }}
+                  <span class="p-0">
+                    {{ item.fixed === 'right' ? $t('table.base.settings.column.unfix') : $t('table.base.settings.column.fixRight') }}
+                  </span>
                 </n-tooltip>
               </div>
             </div>
@@ -202,3 +205,7 @@ function getTitle(item: WTable.Column<T>) {
     </template>
   </n-tooltip>
 </template>
+
+<style lang="scss" scoped>
+
+</style>
