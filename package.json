@@ -95,7 +95,7 @@
     "web-vitals": "4.2.4"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "4.12.0",
+    "@antfu/eslint-config": "4.13.0",
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
     "@iconify/json": "2.2.329",
