@@ -1,8 +1,14 @@
+import { omit } from 'lodash-es'
+
 export type BaseAPIType<T> = BaseAPI<T>
 
 const { demo } = useAppEnv('build')
 
-export class BaseAPI<T> {
+function omitUnnecessaryFields<T extends AppBaseModel>(data: T) {
+  return omit(data, ['_id', 'createdAt', 'updatedAt'])
+}
+
+export class BaseAPI<T extends AppBaseModel> {
   private readonly baseAPI: string
 
   constructor({ model, section }: { model: string, section: string }) {
@@ -20,7 +26,7 @@ export class BaseAPI<T> {
     return AppAxios.post(
       {
         url: `${this.baseAPI}`,
-        data,
+        data: omitUnnecessaryFields<T>(data),
         _demonstrate: demo,
       },
     )
@@ -37,9 +43,8 @@ export class BaseAPI<T> {
       {
         // TODO update
         url: `${this.baseAPI}/${data._id}`,
-        data,
+        data: omitUnnecessaryFields<T>(data),
         _demonstrate: demo,
-
       },
     )
   }
@@ -49,7 +54,6 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/${id}`,
         _demonstrate: demo,
-
       },
     )
   }
@@ -59,9 +63,7 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/deleteMany/${id}`,
         _demonstrate: demo,
-
       },
-
     )
   }
 
@@ -70,9 +72,7 @@ export class BaseAPI<T> {
       {
         url: `${this.baseAPI}/clear`,
         _demonstrate: demo,
-
       },
-
     )
   }
 }
