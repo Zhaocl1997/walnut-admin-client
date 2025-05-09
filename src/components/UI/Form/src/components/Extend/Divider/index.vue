@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { ICompUIFormItemExtendDividerProps } from '.'
-import { isUndefined } from 'lodash-es'
 import { useFormContext } from '../../../hooks/useFormContext'
 
 defineOptions({
@@ -13,7 +12,7 @@ const props = withDefaults(defineProps<ICompUIFormItemExtendDividerProps>(), {
 
 const active = ref(false)
 
-const { formSchemas } = useFormContext()
+const { formSchemas, formItemIdCtx } = useFormContext()
 
 const { t } = useAppI18n()
 
@@ -25,10 +24,9 @@ function onToggle() {
     i <= props.index! + (props.endIndex ?? formSchemas.value.length);
     i++
   ) {
-    if (!isUndefined(formSchemas.value[i]?._internalShow)) {
-      formSchemas.value[i]!._internalShow
-          = !formSchemas.value[i]?._internalShow
-    }
+    const item = formSchemas.value[i]
+
+    formItemIdCtx.toggleFormItemId(item, i)
   }
 }
 

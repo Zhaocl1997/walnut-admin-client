@@ -62,7 +62,7 @@ const formMethods = useFormMethods<T>(formRef)
 
 const getFormRules = computed<FormRules>(() =>
   getProps.value.baseRules
-    // @ts-expect-error too deep, don't know why
+    // @ts-expect-error too deep
     ? generateBaseRules<T>(t, formSchemas, getProps)
     : getProps.value.rules)
 

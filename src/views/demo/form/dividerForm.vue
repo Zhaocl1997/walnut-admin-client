@@ -155,6 +155,7 @@ const formData = ref({
 
 const [register2] = useForm<typeof formData.value>({
   span: 8,
+  xGap: 20,
   schemas: [
     {
       type: 'Extend:Divider',

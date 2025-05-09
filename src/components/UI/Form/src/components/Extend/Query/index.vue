@@ -37,7 +37,7 @@ function onQuery() {
 function onToggle() {
   active.value = !active.value
 
-  for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
+  for (let i = props.countToFold; i < formSchemas.value.length; i++) {
     const item = formSchemas.value[i]
 
     formItemIdCtx.toggleFormItemId(item, i)
