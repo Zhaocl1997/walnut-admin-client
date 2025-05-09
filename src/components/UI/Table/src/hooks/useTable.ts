@@ -1,20 +1,19 @@
 import type { WTable } from '../types'
-import type { ICompUITableHooksMethods } from './useTableMethods'
 
-export function useTable<T>(props: IDeepMaybeRef<WTable.Props<T>> | WTable.Props<T>): WTable.Hook.useTableReturnType<T> {
+export function useTable<T>(props: WTable.Hooks.UseTable.Props<T>): WTable.Hooks.UseTable.ReturnType<T> {
   isInSetup()
 
   const wTableRef = ref<WTable.Inst.WTableInst<T>>()
 
   const register = (instance: WTable.Inst.WTableInst<T>) => {
     wTableRef.value = instance
-
-    watchEffect(() => {
-      props && instance.setProps(props as WTable.Props<T>)
-    })
   }
 
-  const methods: ICompUITableHooksMethods<T> & Pick<WTable.Inst.WTableInst<T>, 'onApiList' | 'onApiDelete' | 'onApiDeleteMany' | 'onGetApiListParams'> = {
+  watchEffect(() => {
+    props && wTableRef.value?.setProps(unref(props) as WTable.Props<T>)
+  })
+
+  const methods: WTable.Hooks.UseTable.Methods<T> = {
     clearFilters: () => wTableRef.value.clearFilters(),
     clearSorter: () => wTableRef.value.clearSorter(),
     onApiList: () => wTableRef.value.onApiList(),
