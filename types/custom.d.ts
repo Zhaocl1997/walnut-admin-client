@@ -5,6 +5,13 @@ declare global {
   type VNodeChild = import('vue').VNodeChild
   type CSSProperties = import('vue').CSSProperties
 
+  // below 3 from vue
+  type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never
+  type RecordToUnion<T extends Record<string, any>> = T[keyof T]
+  type ShortEmits<T extends Record<string, any>> = UnionToIntersection<RecordToUnion<{
+    [K in keyof T]: (evt: K, ...args: T[K]) => void;
+  }>>
+
   // vue-router
   type Router = import('vue-router').Router
   type RouteRecordRaw = import('vue-router').RouteRecordRaw
