@@ -14,7 +14,7 @@ import { useFormItemId } from './hooks/useFormItemId'
 import { useFormMethods } from './hooks/useFormMethods'
 
 import { useFormSchemas } from './hooks/useFormSchemas'
-import { extendedFormPropKeys, formItemUtils as FIU, generateBaseRules, getScopeOrGlobalProp } from './utils'
+import { calculateRemainingSpans, extendedFormPropKeys, formItemUtils as FIU, generateBaseRules, getScopeOrGlobalProp } from './utils'
 
 defineOptions({
   name: 'WCompUIForm',
@@ -92,13 +92,29 @@ emits('hook', {
   },
 })
 
-// need to optimise or not?
 function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'): CSSProperties {
   const span = getScopeOrGlobalProp(item, 'gridProp.span', getProps.value)
 
   if (mode === 'query') {
+    const avaiableSchemaLength = getProps.value.schemas
+      .filter(i => FIU.getIfOrShowBoolean(i, getProps.value, 'vIf'))
+      .filter(i => FIU.getIfOrShowBoolean(i, getProps.value, 'vShow'))
+      .filter((i, idx) => formItemIdCtx.getFormItemId(i, idx))
+      .length
+
+    const totalItem = queryActive.value ? avaiableSchemaLength : avaiableSchemaLength - 1
+
+    const remainSpan = calculateRemainingSpans(totalItem, 24, Array.from<number>({ length: totalItem }).fill(getProps.value.span))
+
+    if (remainSpan > 6) {
+      return {
+        gridColumn: `span ${remainSpan} / span ${remainSpan}`,
+        justifySelf: 'end',
+      }
+    }
+
     return {
-      gridColumn: !queryActive.value ? `span 24 / span 24` : undefined,
+      gridColumn: `span 24 / span 24`,
       justifySelf: 'end',
     }
   }
