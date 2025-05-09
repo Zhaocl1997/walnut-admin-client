@@ -3,22 +3,32 @@ import type { ICompBusinessDictLabelProps } from '.'
 
 defineOptions({
   name: 'WCompBusinessDictLabel',
-  inheritAttrs: false,
 })
 
 const { dictType, dictValue } = defineProps<ICompBusinessDictLabelProps>()
 
+const { loading, execDict } = useDict(dictType)
+
 const target = computed(() => getDictTarget(dictType, dictValue))
+
+async function onInit() {
+  if (!dictType) {
+    console.warn('WDictLabel', 'need to provide `dictType` prop')
+    return
+  }
+  await execDict()
+}
+
+onBeforeMount(onInit)
 </script>
 
 <template>
-  <template v-if="target">
-    <n-tag v-if="target.tagType" :type="target.tagType">
-      {{ $t(target.label!) }}
-    </n-tag>
-    <span v-else>{{ $t(target.label!) }}</span>
-  </template>
-  <template v-else>
-    Dict Label Error
-  </template>
+  <n-spin :show="loading" :content-style="{ width: '100% !important' }">
+    <template v-if="target">
+      <n-tag v-if="target.tagType" :type="target.tagType">
+        {{ $t(target.label!) }}
+      </n-tag>
+      <span v-else>{{ $t(target.label!) }}</span>
+    </template>
+  </n-spin>
 </template>
