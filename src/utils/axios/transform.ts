@@ -118,25 +118,8 @@ export const transform: WalnutAxiosTransform = {
       return Promise.reject(new Error('Error'))
     }
 
-    const badRequestCodeList: number[] = [
-      BussinessCodeConst.SIGNIN_USER_NOT_FOUND,
-      BussinessCodeConst.SIGNIN_PASS_NOT_VALID,
-      BussinessCodeConst.SIGNIN_USER_BANNED,
-      BussinessCodeConst.USER_EXIST,
-      BussinessCodeConst.DATA_EXISTED,
-      BussinessCodeConst.DATA_NOT_FOUND,
-      BussinessCodeConst.DATA_DELETE_ERROR,
-      BussinessCodeConst.DATA_ERROR,
-      BussinessCodeConst.DATA_BAD_ID,
-      BussinessCodeConst.VERIFY_CODE_ERROR,
-      BussinessCodeConst.NOT_FOUND,
-      BussinessCodeConst.DATABASE_ERROR,
-      BussinessCodeConst.INTERNAL_SERVER,
-      BussinessCodeConst.CUSTOM_ERROR,
-      BussinessCodeConst.PERMISSION_DENIED,
-    ]
-
-    if (badRequestCodeList.includes(code)) {
+    // custom error cdoe
+    if (errorCodeList.includes(code)) {
       useAppNotiError(msg)
       return Promise.reject(new Error('Error'))
     }

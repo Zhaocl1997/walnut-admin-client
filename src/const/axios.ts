@@ -6,32 +6,41 @@ export const BussinessCodeConst = {
   REFRESH_TOKEN_EXPIRED: 40102,
 
   PERMISSION_DENIED: 40105,
-
-  USER_EXIST: 4009,
-
-  SIGNIN_USER_NOT_FOUND: 4010,
-
-  SIGNIN_PASS_NOT_VALID: 40103,
-
-  SIGNIN_USER_BANNED: 40104,
-
-  DATA_EXISTED: 40003,
-
-  DATA_NOT_FOUND: 40401,
-
-  DATA_DELETE_ERROR: 4022,
-
-  DATA_ERROR: 4023,
-
-  VERIFY_CODE_ERROR: 4024,
-
-  DATA_BAD_ID: 4030,
-
-  NOT_FOUND: 40400,
-
-  INTERNAL_SERVER: 50000,
-
-  DATABASE_ERROR: 50001,
-
-  CUSTOM_ERROR: 9999,
 } as const
+
+// see more in backend nestjs project `reponseCode` const
+export const errorCodeList = [
+  40000,
+  40001,
+  40002,
+  40003,
+  40004,
+  40100,
+  40101,
+  40102,
+  40103,
+  40104,
+  40105,
+  40106,
+  40107,
+  40108,
+  40109,
+  40300,
+  40400,
+  40401,
+  40600,
+  40601,
+  40602,
+  40603,
+  40604,
+  40605,
+  40800,
+  42900,
+  50000,
+  50001,
+  50300,
+  50301,
+  50400,
+  50500,
+  9999,
+]
