@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup  generic="T">
 import { useTableContext } from '../hooks/useTableContext'
 
 const { tablePropsCtx, apiListParams, onApiQuery, onApiReset }
@@ -6,13 +6,16 @@ const { tablePropsCtx, apiListParams, onApiQuery, onApiReset }
 
 const { getProps: tableProps } = tablePropsCtx
 
-const [register] = useForm({
+const getFormProps = computed(() => ({
   ...tableProps.value?.queryFormProps,
-  disabled: computed(() => tableProps.value.loading),
-})
+  disabled: tableProps.value.loading,
+}))
+
+const [register] = useForm<T>(getFormProps)
 </script>
 
 <template>
+  <!-- @vue-generic {T} -->
   <WForm
     :model="apiListParams.query"
     @hook="register"
