@@ -27,20 +27,18 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
     return {
       ...item,
-      title: typeof item.title === 'string'
-        ? () => (
-            <>
-              {getTableTranslated(props, item)}
-              {item.titleHelpMessage && (
-                <WMessage
-                  msg={getTableTranslated(props, item, true)}
-                  class="inline"
-                >
-                </WMessage>
-              )}
-            </>
-          )
-        : item.title,
+      title: () => (
+        <>
+          {getTableTranslated(props, item)}
+          {item.titleHelpMessage && (
+            <WMessage
+              msg={getTableTranslated(props, item, true)}
+              class="inline"
+            >
+            </WMessage>
+          )}
+        </>
+      ),
 
       // this is used for column settings to display text correctly
       _titleText: () => getTableTranslated(props, item),
@@ -100,7 +98,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             ...tItem,
             render(p) {
               return (
-                <NTag {...tItem.tagProps!(p)}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
+                <NTag {...tItem.tagProps(p)}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
               )
             },
           }
@@ -175,6 +173,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               iconProps: {
                 icon: 'ant-design:delete-outlined',
               },
+              confirm: true,
             },
             {
               _builtInType: 'detail',
@@ -215,13 +214,17 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               const dropdownButtons = visibleButtons.filter(i => i._dropdown).map(i => omit(i, '_dropdown'))
 
               const renderNormalButtons = normalButtons.map(i => (
-                <WButton
-                  {...omit(i, '_builtInType').buttonProps}
-                  icon={i.iconProps.icon as string}
-                  disabled={isDisabled(i)}
-                  onClick={() => i.onPresetClick(rowData, rowIndex)}
+                <WIconButton
+                  button-props={{
+                    ...i.buttonProps,
+                    disabled: isDisabled(i),
+                    onClick: !i.confirm ? () => i.onPresetClick(rowData, rowIndex) : null,
+                  }}
+                  icon-props={i.iconProps}
+                  confirm={i.confirm}
+                  onConfirm={() => i.onPresetClick(rowData, rowIndex)}
                 >
-                </WButton>
+                </WIconButton>
               ))
 
               const dropdownOptions: DropdownOption[] = dropdownButtons.map(i => ({
