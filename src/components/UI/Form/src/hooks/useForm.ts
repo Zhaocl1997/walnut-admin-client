@@ -1,20 +1,19 @@
 import type { WForm } from '../types'
-import type { ICompUIFormHooksMethods } from './useFormMethods'
 
-export function useForm<T>(props: IDeepMaybeRef<WForm.Props<T>> | WForm.Props<T>): WForm.Hook.useFormReturnType<T> {
+export function useForm<T>(props: WForm.Hooks.UseForm.Props<T>): WForm.Hooks.UseForm.ReturnType<T> {
   isInSetup()
 
   const wFormRef = ref<WForm.Inst.WFormInst<T>>()
 
   const register = (instance: WForm.Inst.WFormInst<T>) => {
     wFormRef.value = instance
-
-    watchEffect(() => {
-      props && instance.setProps(props as WForm.Props<T>)
-    })
   }
 
-  const methods: ICompUIFormHooksMethods<T> = {
+  watchEffect(() => {
+    props && wFormRef.value?.setProps(unref(props) as WForm.Props<T>)
+  })
+
+  const methods: WForm.Hooks.UseForm.Methods<T> = {
     validate: async (fields?: (keyof T)[]) => await (wFormRef.value?.validate(fields) ?? Promise.resolve(false)),
     restoreValidation: () => wFormRef.value?.restoreValidation(),
     onOpen: (beforeHook?: Fn) => wFormRef.value?.onOpen(beforeHook),
