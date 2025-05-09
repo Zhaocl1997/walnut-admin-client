@@ -10,7 +10,6 @@ import { useTableAPI } from './hooks/useTableAPI'
 import { useTableAPIListParams } from './hooks/useTableAPIListParams'
 import { useTableColumns } from './hooks/useTableColumns'
 import { setTableContext } from './hooks/useTableContext'
-import { useTableEvents } from './hooks/useTableEvents'
 import { useTableMethods } from './hooks/useTableMethods'
 import { extendedTablePropKeys } from './utils'
 
@@ -83,14 +82,12 @@ const {
   checkedRowKeys,
 } = useTableAPI<T>(tableRef, tablePropsCtx, tableColumns, listParams)
 
-const tableEvent = useTableEvents<T>(getProps)
-
 const tableMethods = useTableMethods<T>(tableRef)
 
 setTableContext({
   tableRef,
   tableColumns,
-  tableEvent,
+  tableEvent: emits,
   tablePropsCtx,
 
   apiListParams: listParams.apiListParams,

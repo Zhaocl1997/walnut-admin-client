@@ -1,4 +1,3 @@
-import type { useEventParams } from '@/hooks/component/useEvent'
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 
 import type { DataTableBaseColumn, DataTableColumn, DataTableCreateRowKey, DataTableCreateSummary, DataTableExpandColumn, DataTableFilterState, DataTableInst, DataTableSelectionColumn, DataTableSortState, PaginationProps, PopoverProps, ScrollbarProps, TagProps } from 'naive-ui'
@@ -29,7 +28,7 @@ export declare namespace WTable {
   /**
    * @description callback function
    */
-  type TableFnCallback<T, R = void> = (rowData: T, rowIndex?: number) => R
+  type TableFnCallback<T, R = void, P = false> = (rowData: T, rowIndex?: number) => P extends true ? Promise<P> : R
 
   /**
    * @description set table props
@@ -71,13 +70,20 @@ export declare namespace WTable {
   }
 
   /**
-   * @description Hook
+   * @description Hooks
    */
-  namespace Hook {
-    type useTableReturnType<T> = [
-      (instance: Inst.WTableInst<T>) => void,
-      ICompUITableHooksMethods<T>,
-    ]
+  namespace Hooks {
+    namespace UseTable {
+      type Props<T> = WTable.Props<T> | ComputedRef<WTable.Props<T>> | IDeepMaybeRef<WTable.Props<T>>
+
+      type Methods<T> = ICompUITableHooksMethods<T> & Pick<Inst.WTableInst<T>, 'onApiList' | 'onApiDelete' | 'onApiDeleteMany' | 'onGetApiListParams'>
+
+      type ReturnType<T> = [
+        (instance: Inst.WTableInst<T>) => void,
+        Methods<T>,
+      ]
+    }
+
   }
 
   /**
@@ -173,7 +179,7 @@ export declare namespace WTable {
        * @description before request hook, you can change the request params here or do some request
        * @retrurn WalnutBaseListParams<T>
        */
-      onBeforeRequest: (params: T) => Promise<T>
+      onBeforeRequest?: (params: T) => Promise<T>
 
       /**
        * @description list api, need to follow response structure
@@ -232,7 +238,7 @@ export declare namespace WTable {
   interface Context<T> {
     tableRef: Ref<Inst.NDataTableInst>
     tableColumns: Ref<Column<T>[]>
-    tableEvent: (val: Params.UseEvent<T>) => void
+    tableEvent: ShortEmits<Emits<T>>
     tablePropsCtx: IHooksUseProps<Props<T>>
 
     apiListParams: Ref<WalnutBaseListParams<T>>
@@ -248,14 +254,6 @@ export declare namespace WTable {
    */
   interface Emits<T> {
     hook: [inst: Inst.WTableInst<T>]
-  }
-
-  /**
-   * @description Table Params
-   */
-  namespace Params {
-    type UseEvent<T> =
-      | useEventParams<'hook', Inst.WTableInst<T>>
   }
 
   /**
@@ -305,7 +303,7 @@ export declare namespace WTable {
       /**
        * @description click event, do not use buttonProps.onClick
        */
-      onPresetClick?: TableFnCallback<T, void>
+      onPresetClick?: TableFnCallback<T, void, true>
     }
 
     /**

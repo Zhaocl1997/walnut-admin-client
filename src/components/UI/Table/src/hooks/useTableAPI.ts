@@ -92,6 +92,9 @@ export function useTableAPI<T>(
         })
       }
     }
+    catch (err) {
+      console.log(err)
+    }
     finally {
       setProps({ loading: false })
     }
