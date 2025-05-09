@@ -12,7 +12,7 @@ const { getProps: tableProps } = tablePropsCtx
 </script>
 
 <template>
-  <div class="hstack children:cursor-pointer space-x-2">
+  <div class="hstack items-center gap-x-2 children:cursor-pointer">
     <WIconButton
       v-if="!tableProps.polling"
       :icon-props="{ icon: 'ant-design:reload-outlined' }"
@@ -21,7 +21,7 @@ const { getProps: tableProps } = tablePropsCtx
       :tooltip-msg="$t('app.base.refresh')"
     />
 
-    <TableHeaderRightPolling v-if="tableProps.polling" />
+    <TableHeaderRightPolling v-if="tableProps.polling && tableProps.polling > 3000" />
 
     <TableHeaderRightColumns />
   </div>

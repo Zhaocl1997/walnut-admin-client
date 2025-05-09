@@ -20,9 +20,10 @@ const getDefaultValue = computed(() => getPollingInterval.value / 1000)
 const { current } = useMagicKeys()
 const keys = computed(() => Array.from(current))
 
-const { pause, resume, isActive } = useIntervalFn(() => {
-  onApiList()
-}, getPollingInterval, { immediate: true })
+const { start: resume, pause, isActive, percentage, flag } = useIntervalFnWithPercent(
+  getPollingInterval,
+  onApiList,
+)
 
 function onOpenPopover() {
   popoverShow.value = true
@@ -64,7 +65,7 @@ function parseSeconds(input: string) {
   return nums === '' ? null : Number.NaN
 }
 
-function formatSeconds(value: number | null) {
+function formatSeconds(value: number) {
   if (value === null)
     return ''
   return `${value} s`
@@ -77,12 +78,28 @@ function formatSeconds(value: number | null) {
     <template #trigger>
       <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
-          <WIconButton
-            :class="{ 'animate-spin': isActive }"
-            :style="{ ['animation-duration']: `${getPollingInterval}ms` }"
-            :icon-props="{ icon: 'ant-design:sync-outlined' }"
-            :button-props="{ text: true, onClick: onOpenPopover }"
-          />
+          <!-- <div>
+            <WIconButton
+              :icon-props="{
+                icon: 'ant-design:sync-outlined',
+                class: { 'animate-spin': isActive },
+                style: { ['animation-duration']: `${getPollingInterval}ms` },
+              }"
+              :button-props="{ text: true, onClick: onOpenPopover }"
+            />
+          </div> -->
+
+          <div class="h-4 w-4 flex items-center justify-center -mt-1.5" @click="onOpenPopover">
+            <n-progress
+              v-if="flag"
+              type="circle"
+              status="success"
+              :percentage="percentage"
+              :offset-degree="180"
+              :stroke-width="20"
+              :show-indicator="false"
+            />
+          </div>
         </template>
 
         <template #default>
@@ -96,7 +113,7 @@ function formatSeconds(value: number | null) {
 
             <n-input-number
               ref="inputNumberRef"
-              :min="1"
+              :min="3"
               :default-value="getDefaultValue"
               :parse="parseSeconds"
               :format="formatSeconds"
