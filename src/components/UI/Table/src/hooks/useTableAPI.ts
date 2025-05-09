@@ -18,14 +18,12 @@ export function useTableAPI<T>(
   columns: Ref<WTable.Column<T>[]>,
   listParams: ICompUITableHooksAPIListParams<T>,
 ) {
-  const initial = ref(false)
   const { t } = useAppI18n()
   const userPermission = useAppStoreUserPermission()
   const { getProps: props, setProps } = propsCtx
 
   const { apiListParams, resetParams, commitParams } = listParams
 
-  const total = ref(0)
   const checkedRowKeys = ref<StringOrNumber[]>([])
 
   // api list
@@ -53,44 +51,30 @@ export function useTableAPI<T>(
     try {
       const res = await props.value.apiProps?.listApi(apiListParams.value)
 
-      total.value = res.total
-
-      if (!initial.value) {
-        setProps({
-          data: res.data,
-          pagination: {
-            itemCount: res.total,
-            page: apiListParams.value.page?.page,
-            pageSize: apiListParams.value.page?.pageSize,
-            showSizePicker: true,
-            showQuickJumper: true,
-            pageSizes: [10, 30, 50],
-            pageSlot: 7,
-            onUpdatePage: async (p) => {
-              apiListParams.value.page.page = p
-              await onApiList()
-            },
-            onUpdatePageSize: async (p) => {
-              apiListParams.value.page.page = 1
-              apiListParams.value.page.pageSize = p
-              await onApiList()
-            },
-            prefix: () => t('comp.pagination.total', { total: res.total }),
+      setProps({
+        // actually i'm thinking is this really a good choice? like mutate the proxyed props inside the component
+        // @ts-expect-error haha
+        data: computed(() => res.data),
+        pagination: {
+          itemCount: res.total,
+          page: apiListParams.value.page?.page,
+          pageSize: apiListParams.value.page?.pageSize,
+          showSizePicker: true,
+          showQuickJumper: true,
+          pageSizes: [10, 30, 50],
+          pageSlot: 7,
+          onUpdatePage: async (p) => {
+            apiListParams.value.page.page = p
+            await onApiList()
           },
-        })
-
-        initial.value = true
-      }
-      else {
-        setProps({
-          data: res.data,
-          pagination: {
-            itemCount: res.total,
-            page: apiListParams.value.page?.page,
-            pageSize: apiListParams.value.page?.pageSize,
+          onUpdatePageSize: async (p) => {
+            apiListParams.value.page.page = 1
+            apiListParams.value.page.pageSize = p
+            await onApiList()
           },
-        })
-      }
+          prefix: () => t('comp.pagination.total', { total: res.total }),
+        },
+      })
     }
     catch (err) {
       console.log(err)
@@ -118,14 +102,6 @@ export function useTableAPI<T>(
 
     if (res) {
       useAppMsgSuccess()
-
-      if (
-        apiListParams.value.page.page
-        * apiListParams.value.page.pageSize
-        > total.value - checkedRowKeys.value.length
-      ) {
-        apiListParams.value.page.page = 1
-      }
 
       await onApiList()
 
@@ -198,7 +174,7 @@ export function useTableAPI<T>(
         onUpdateSorter: async (sorts) => {
           if (!sorts)
             return
-          apiListParams.value.sort = Object.assign(apiListParams.value.sort, generateSortParams<T>(sorts))
+          apiListParams.value.sort = generateSortParams<T>(sorts)
           if (!isUndefined(props.value?.apiProps)) {
             await onApiList()
           }
