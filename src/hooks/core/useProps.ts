@@ -1,21 +1,21 @@
-import { cloneDeep, merge } from 'lodash-es'
+import { merge } from 'lodash-es'
 
-export function useProps<P>(props: P) {
-  const propsRef = ref<Partial<P>>()
+export function useProps<T>(props: T) {
+  const propsRef = ref<Partial<T>>()
 
   /**
    * @description set props
    */
-  const setProps = (newProps: P) => {
+  const setProps = (newProps: T) => {
     propsRef.value = merge(unref(propsRef), newProps)
   }
 
   /**
    * @description get props
    */
-  const getProps = computed<P>(() => ({ ...props, ...unref(propsRef) }))
+  const getProps = computed<T>(() => ({ ...props, ...unref(propsRef) }))
 
   return { setProps, getProps }
 }
 
-export type IHooksUseProps<P> = ReturnType<typeof useProps<P>>
+export type IHooksUseProps<T> = ReturnType<typeof useProps<T>>

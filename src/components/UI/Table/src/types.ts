@@ -129,7 +129,7 @@ export declare namespace WTable {
     stickyExpandedRows?: boolean
     striped?: boolean
     summary?: DataTableCreateSummary
-    summayPlacement?: 'top' | 'bottom'
+    summaryPlacement?: 'top' | 'bottom'
     tableLayout?: 'auto' | 'fixed'
     virtualScroll?: boolean
     virtualScrollHeader?: boolean
@@ -303,7 +303,7 @@ export declare namespace WTable {
       /**
        * @description click event, do not use buttonProps.onClick
        */
-      onPresetClick?: TableFnCallback<T, void, true>
+      onPresetClick?: (rowData: T, rowIndex?: number) => Promise<T> | void
     }
 
     /**

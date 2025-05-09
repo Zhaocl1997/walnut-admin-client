@@ -24,6 +24,7 @@ export function getDictTarget(type: string, value: StringOrNumber) {
 }
 
 // init dict, no return value, just set dict data into dict map
+// used for form/table/desc init
 export async function initDict(types: string | string[]): Promise<void> {
   if (!types || types.length === 0) {
     console.warn('useDict', 'Need to provide dict `types` to get dicts')
