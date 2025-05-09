@@ -39,9 +39,6 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
           )}
         </>
       ),
-
-      // this is used for column settings to display text correctly
-      _titleText: () => getTableTranslated(props, item),
     }
   }
 

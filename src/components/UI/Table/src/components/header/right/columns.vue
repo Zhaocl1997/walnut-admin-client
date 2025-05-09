@@ -4,12 +4,16 @@ import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
 import { useSortable } from '@vueuse/integrations/useSortable'
 import { useTableContext } from '../../../hooks/useTableContext'
+import { getTableTranslated } from '../../../utils'
 
 defineOptions({
   name: 'WTableHeaderRightColumns',
 })
 
-const { tableColumns } = useTableContext()
+const { t } = useAppI18n()
+
+const { tableColumns, tablePropsCtx } = useTableContext()
+const { getProps: props } = tablePropsCtx
 
 const popoverShow = ref(false)
 
@@ -85,12 +89,9 @@ function getTitle(item: WTable.Column<T>) {
 
   // handle dict column title
   if (item.extendType === 'dict' && item.useDictNameAsTitle)
-    return (`dict.name.${item.dictType}`)
+    return t(`dict.name.${item.dictType}`)
 
-  if (typeof item._titleText === 'function')
-    return item._titleText()
-
-  return ('app.base.selection')
+  return getTableTranslated(props, item)
 }
 </script>
 
@@ -137,7 +138,7 @@ function getTitle(item: WTable.Column<T>) {
                   :disabled="isInBlackList(item.key)" :checked="item._internalShow"
                   @update-checked="onUpdateItemChecked(item)"
                 >
-                  {{ $t(getTitle(item)) }}
+                  {{ getTitle(item) }}
                 </n-checkbox>
               </div>
 
