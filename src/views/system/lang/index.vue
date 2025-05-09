@@ -7,25 +7,33 @@ defineOptions({
 
 // locale unique key
 const key = 'lang'
+const keyField = '_id'
 
 const [
   register,
   {
-    onTableOpenCreateForm,
-    onApiTableReadAndOpenUpdateForm,
-    onApiTableDelete,
+    onOpenCreateForm,
+    onReadAndOpenUpdateForm,
   },
 ] = useCRUD<AppSystemLang>({
   baseAPI: langAPI,
 
   tableProps: {
     localeUniqueKey: key,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
-    headerActions: ['create'],
+
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'create',
+        onPresetClick() {
+          onOpenCreateForm()
+        },
+      },
+    ],
 
     auths: {
       list: `system:${key}:list`,
@@ -34,17 +42,6 @@ const [
       update: `system:${key}:update`,
       delete: `system:${key}:delete`,
       deleteMany: `system:${key}:deleteMany`,
-    },
-
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onTableOpenCreateForm()
-          break
-
-        default:
-          break
-      }
     },
 
     queryFormProps: {
@@ -77,6 +74,7 @@ const [
         key: 'index',
         extendType: 'index',
         fixed: 'left',
+        width: 80,
       },
 
       {
@@ -93,6 +91,7 @@ const [
       {
         ...WTablePresetOrderColumn,
         sorter: {
+          // @ts-expect-error do not know why
           multiple: 1,
         },
       },
@@ -100,6 +99,7 @@ const [
       {
         ...WTablePresetStatusColumn,
         sorter: {
+          // @ts-expect-error do not know why
           multiple: 2,
         },
       },
@@ -107,6 +107,7 @@ const [
       {
         ...WTablePresetCreatedAtColumn,
         sorter: {
+          // @ts-expect-error do not know why
           multiple: 3,
         },
       },
@@ -114,37 +115,25 @@ const [
       {
         ...WTablePresetUpdatedAtColumn,
         sorter: {
+          // @ts-expect-error do not know why
           multiple: 4,
         },
       },
 
       {
         key: 'action',
-        width: 80,
+        width: 100,
         extendType: 'action',
         fixed: 'right',
         actionButtons: [
           {
             _builtInType: 'read',
-          },
-          {
-            _builtInType: 'delete',
+            // @ts-expect-error do not know why
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField])
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'read':
-              await onApiTableReadAndOpenUpdateForm(rowData._id!)
-              break
-
-            case 'delete':
-              await onApiTableDelete(rowData._id!)
-              break
-
-            default:
-              break
-          }
-        },
       },
     ],
   },
@@ -152,7 +141,7 @@ const [
   formProps: {
     localeUniqueKey: key,
     localeWithTable: true,
-    preset: 'modal',
+    dialogPreset: 'modal',
     baseRules: true,
     labelWidth: 80,
     xGap: 0,
@@ -198,6 +187,7 @@ const [
           defaultValue: true,
           componentProps: {
             button: true,
+            valueType: 'boolean',
           },
         },
       },
