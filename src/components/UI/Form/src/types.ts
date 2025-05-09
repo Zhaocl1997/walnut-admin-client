@@ -150,7 +150,6 @@ export declare namespace WForm {
       span?: number
       xGap?: number
       yGap?: number
-      // perset?: WForm.preset
       baseRules?: boolean
 
       /**

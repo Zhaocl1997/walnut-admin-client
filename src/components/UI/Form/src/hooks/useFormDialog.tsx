@@ -32,38 +32,43 @@ export function useFormDialog<T>(props: ComputedRef<WForm.Props<T>>, formRef: Re
       }
 
       const onYes = async () => {
-        await formRef.value!.validate()
+        try {
+          await formRef.value!.validate()
 
-        loading.value = true
+          loading.value = true
 
-        // if error, we want loading stop, but drawer do not disappear
-        // so `loading.value = false` is always excuting
-        // only when have result, close drawer and show message
-        const apiHandler = async (apiFn: Fn, params: Recordable) => {
-          try {
-            const result = await apiFn(params)
+          // if error, we want loading stop, but drawer do not disappear
+          // so `loading.value = false` is always excuting
+          // only when have result, close drawer and show message
+          const apiHandler = async (apiFn: Fn, params: Recordable) => {
+            try {
+              const result = await apiFn(params)
 
-            if (result) {
-              onClose()
-              useAppMsgSuccess()
+              if (result) {
+                onClose()
+                useAppMsgSuccess()
+              }
+              else {
+                return Promise.reject(new Error('Request Error'))
+              }
             }
-            else {
-              return Promise.reject(new Error('Request Error'))
+            // NOTICE do not catch here, we want block and do not excute code below
+            // catch (err) {
+            //   console.log('useFormDialog', err)
+            // }
+            finally {
+              done()
             }
           }
-          // NOTICE do not catch here, we want block and do not excute code below
-          // catch (err) {
-          //   console.log('useFormDialog', err)
-          // }
-          finally {
+
+          props.value.dialogProps?.onYes!(apiHandler, () => {
             done()
-          }
+            onClose()
+          })
         }
-
-        props.value.dialogProps?.onYes!(apiHandler, () => {
-          done()
-          onClose()
-        })
+        catch (err) {
+          console.log(err)
+        }
       }
 
       const onNo = () => {

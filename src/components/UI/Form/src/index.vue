@@ -117,7 +117,7 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
 
 <template>
   <DefineForm>
-    <n-form ref="formRef" :rules="getFormRules" v-bind="getFormProps">
+    <n-form ref="formRef" v-bind="getFormProps" :rules="getFormRules">
       <div
         class="relative grid"
         :style="{
