@@ -26,7 +26,7 @@ function onPositiveClick() {
 
 <template>
   <DefineIconButton>
-    <div>
+    <div class="flex items-center">
       <WButton v-bind="buttonProps" text :debounce="0">
         <template #icon>
           <WIcon v-bind="iconProps" />
@@ -36,7 +36,7 @@ function onPositiveClick() {
   </DefineIconButton>
 
   <DefineConfirm>
-    <n-popconfirm v-if="confirm" v-bind="popConfirmProps" @positive-click="onPositiveClick">
+    <n-popconfirm v-bind="popConfirmProps" @positive-click="onPositiveClick">
       <template #default>
         <div class="whitespace-pre-line">
           {{ $t(confirmMsg) }}
@@ -50,7 +50,7 @@ function onPositiveClick() {
   </DefineConfirm>
 
   <DefineTooltip>
-    <n-tooltip v-if="tooltip" v-bind="tooltipProps" trigger="hover">
+    <n-tooltip v-bind="tooltipProps" trigger="hover">
       <template #default>
         <div class="whitespace-pre-line">
           {{ tooltipMsg }}

@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import type { IconifyIconLoaderAbort, IconProps } from '@iconify/vue'
+import type { IconifyIconLoaderAbort } from '@iconify/vue'
+import type { ICompUIIconProps } from '.'
 import { Icon, iconExists, loadIcons } from '@iconify/vue'
 
 defineOptions({
   name: 'WCompUIIcon',
 })
 
-const props = withDefaults(defineProps<IconProps>(), { inline: true })
+const props = withDefaults(defineProps<ICompUIIconProps>(), { inline: true })
 
 // Variable to store function to cancel loading
 const loader = ref<IconifyIconLoaderAbort>()
