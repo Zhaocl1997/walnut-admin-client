@@ -12,14 +12,15 @@ const { currentRoute } = useRouter()
 
 // locale unique key
 const key = 'locale'
+const keyField = '_id'
 
 const [
   register,
   {
-    onTableOpenCreateForm,
-    onApiTableReadAndOpenUpdateForm,
-    onApiTableDelete,
-    onApiTableDeleteMany,
+    onOpenCreateForm,
+    onReadAndOpenUpdateForm,
+    onDeleteConfirm,
+    onDeleteManyConfirm,
     onGetFormData,
   },
 ] = useCRUD<AppSystemLocale & { oldKey?: string }>({
@@ -27,11 +28,26 @@ const [
 
   tableProps: {
     localeUniqueKey: key,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField]!,
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
+
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'create',
+        onPresetClick() {
+          onOpenCreateForm()
+        },
+      },
+      {
+        _builtInType: 'delete',
+        onPresetClick() {
+          onDeleteManyConfirm()
+        },
+      },
+    ],
 
     auths: {
       list: `system:${key}:list`,
@@ -40,21 +56,6 @@ const [
       update: `system:${key}:update`,
       delete: `system:${key}:delete`,
       deleteMany: `system:${key}:deleteMany`,
-    },
-
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onTableOpenCreateForm()
-          break
-
-        case 'delete':
-          onApiTableDeleteMany()
-          break
-
-        default:
-          break
-      }
     },
 
     queryFormProps: {
@@ -116,6 +117,7 @@ const [
       {
         key: 'key',
         width: 300,
+        // @ts-expect-error fk sort
         sorter: true,
         fixed: 'left',
       },
@@ -129,47 +131,37 @@ const [
 
       {
         ...WTablePresetCreatedAtColumn,
+        // @ts-expect-error fk sort
         sorter: true,
       },
 
       {
         ...WTablePresetUpdatedAtColumn,
+        // @ts-expect-error fk sort
         sorter: true,
       },
 
       {
         key: 'action',
-        width: 80,
+        width: 160,
         extendType: 'action',
         fixed: 'right',
         actionButtons: [
           {
             _builtInType: 'read',
+            async onPresetClick(rowData) {
+              const formData = onGetFormData()
+              formData.value = Object.assign(formData.value, { oldKey: rowData.key })
+              await onReadAndOpenUpdateForm(rowData[keyField])
+            },
           },
           {
             _builtInType: 'delete',
+            async onPresetClick(rowData) {
+              await onDeleteConfirm(rowData[keyField])
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'read':
-              {
-                const formData = onGetFormData()
-
-                formData.value.oldKey = rowData.key
-
-                await onApiTableReadAndOpenUpdateForm(rowData.key!)
-              }
-              break
-
-            case 'delete':
-              await onApiTableDelete(rowData.key!)
-              break
-
-            default:
-              break
-          }
-        },
       },
     ],
   },
@@ -181,13 +173,13 @@ const [
     // mostly for performance thought
     // but in this case, the schema is generated dynamically, default form data would generate wrongly
     // this can be fixed by use v-if to control visible
-    advancedProps: {
+    dialogProps: {
       displayDirective: 'if',
     },
 
     localeUniqueKey: key,
     localeWithTable: true,
-    preset: 'drawer',
+    dialogPreset: 'drawer',
     baseRules: true,
     labelWidth: 100,
     xGap: 0,
@@ -220,11 +212,13 @@ const [
   })),
 })
 
-onActivated(() => {
+onMounted(() => {
   const localeKey = currentRoute.value.query?.localeKey as string
 
+  console.log({ localeKey })
+
   if (localeKey)
-    onTableOpenCreateForm({ key: localeKey })
+    onOpenCreateForm({ key: localeKey })
 })
 </script>
 
