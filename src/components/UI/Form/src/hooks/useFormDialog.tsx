@@ -48,9 +48,13 @@ export function useFormDialog<T>(props: ComputedRef<WForm.Props<T>>, formRef: Re
               useAppMsgSuccess()
             }
             else {
-              return Promise.reject(new Error('Error'))
+              return Promise.reject(new Error('Request Error'))
             }
           }
+          // NOTICE do not catch here, we want block and do not excute code below
+          // catch (err) {
+          //   console.log('useFormDialog', err)
+          // }
           finally {
             done()
           }
