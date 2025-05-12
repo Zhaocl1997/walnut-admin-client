@@ -29,7 +29,7 @@ const value = defineModel<string[]>('value', { default: [] })
 
 const { t } = useAppI18n()
 
-const uploadRef = templateRef<UploadInst>('uploadRef')
+const uploadRef = useTemplateRef<UploadInst>('uploadRef')
 const fileList = ref<UploadFileInfo[]>()
 
 const getChooseDisabled = computed(

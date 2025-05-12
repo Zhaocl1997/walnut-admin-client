@@ -10,7 +10,7 @@ const { tablePropsCtx, onApiList } = useTableContext()
 const { getProps: tableProps } = tablePropsCtx
 
 const popoverShow = ref(false)
-const inputNumberRef = templateRef<InputNumberInst>('inputNumberRef')
+const inputNumberRef = useTemplateRef<InputNumberInst>('inputNumberRef')
 const insidePollingTime = ref<number>()
 
 const getPollingInterval = computed(() => insidePollingTime.value ?? tableProps.value.polling)

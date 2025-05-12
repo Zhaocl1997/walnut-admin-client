@@ -15,7 +15,7 @@ const value = defineModel<TreeKey | TreeKey[]>('value', { required: true })
 
 const internalValue = ref<TreeKey | TreeKey[]>()
 
-const nTreeSelctRef = templateRef<TreeSelectInst>('nTreeSelctRef')
+const nTreeSelctRef = useTemplateRef<TreeSelectInst>('nTreeSelctRef')
 
 const expandedKeys = ref<TreeKey[]>()
 const indeterminateKeys = ref<TreeKey[]>()

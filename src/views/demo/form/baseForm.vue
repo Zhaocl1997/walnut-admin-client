@@ -49,7 +49,7 @@ const { stateRef: formData, resetState: resetFormData } = useState<Recordable>({
   formTinymce: null,
 })
 
-const formRef = templateRef<WForm.Inst.WFormInst<typeof formData.value>>('formRef')
+const formRef = useTemplateRef<WForm.Inst.WFormInst<typeof formData.value>>('formRef')
 
 const msg = useAppMessage()
 

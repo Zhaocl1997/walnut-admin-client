@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<ICompUIInputProps>(), {})
 
 const emits = defineEmits<{ click: [e: MouseEvent] }>()
 
-const inputRef = templateRef<InputInst>('inputRef')
+const inputRef = useTemplateRef<InputInst>('inputRef')
 
 const inputValue = defineModel<string>('value')
 

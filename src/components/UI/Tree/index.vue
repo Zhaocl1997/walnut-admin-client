@@ -34,7 +34,7 @@ const { setProps, getProps } = useProps<ICompUITreeProps>(props)
 
 const userPermission = useAppStoreUserPermission()
 
-const nTreeRef = templateRef<TreeInst>('nTreeRef')
+const nTreeRef = useTemplateRef<TreeInst>('nTreeRef')
 const selectedKeys = ref<TreeKey[]>([])
 const checkedKeys = ref<TreeKey[]>([])
 const indeterminateKeys = ref<TreeKey[]>([])

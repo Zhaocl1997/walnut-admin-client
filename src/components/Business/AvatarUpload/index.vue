@@ -18,7 +18,7 @@ const loading = ref(false)
 const cropperUrl = ref<string>()
 const avatarUrl = ref<string>()
 
-const cropperRef = templateRef<WCropperInst>('cropperRef')
+const cropperRef = useTemplateRef<WCropperInst>('cropperRef')
 
 function onYes() {
   if (cropperUrl.value)

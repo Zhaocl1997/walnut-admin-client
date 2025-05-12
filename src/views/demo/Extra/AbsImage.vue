@@ -11,7 +11,7 @@ const base64 = shallowRef<string>()
 const hasFile = ref(false)
 const fileName = ref<string>()
 
-const absImageRef = templateRef<WCompExtraAbsImageInst>('absImageRef')
+const absImageRef = useTemplateRef<WCompExtraAbsImageInst>('absImageRef')
 
 async function onRenderBlobURL() {
   const res = await absImageRef.value?.onGetBlobURL()

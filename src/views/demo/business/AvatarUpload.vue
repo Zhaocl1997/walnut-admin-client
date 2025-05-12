@@ -8,7 +8,7 @@ defineOptions({
 
 const userProfile = useAppStoreUserProfile()
 
-const avatarUpload = templateRef<WAvatarUploadInst>('avatarUpload')
+const avatarUpload = useTemplateRef<WAvatarUploadInst>('avatarUpload')
 
 const avatarCropperUrl = ref<string>()
 

@@ -42,7 +42,7 @@ const { t } = useAppI18n()
 
 const queryActive = ref(false)
 
-const formRef = templateRef<WForm.Inst.NFormInst>('formRef')
+const formRef = useTemplateRef<WForm.Inst.NFormInst>('formRef')
 
 const formPropsCtx = useProps<WForm.Props<T>>(props)
 
@@ -52,7 +52,7 @@ const getFormProps = computed(() => omit(getProps.value, extendedFormPropKeys))
 
 const formItemIdCtx = useFormItemId()
 
-const dialogFormRef = templateRef<WForm.Inst.DialogInst>('dialogFormRef')
+const dialogFormRef = useTemplateRef<WForm.Inst.DialogInst>('dialogFormRef')
 const DialogWrapper = useFormDialog(getProps, formRef)
 const [DefineForm, ReuseForm] = createReusableTemplate()
 

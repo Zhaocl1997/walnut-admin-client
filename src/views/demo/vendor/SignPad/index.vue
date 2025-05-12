@@ -6,7 +6,7 @@ defineOptions({
   name: 'SignPadDemo',
 })
 
-const signPadRef = templateRef<ICompVendorSignPadInst>('signPadRef')
+const signPadRef = useTemplateRef<ICompVendorSignPadInst>('signPadRef')
 
 const imageSrc = ref()
 

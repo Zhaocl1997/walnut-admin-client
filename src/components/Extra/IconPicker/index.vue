@@ -25,7 +25,7 @@ const ALL = 'All'
 
 const value = defineModel<string>('value', { default: 'ant-design:home-outlined' })
 
-const rootInputRef = templateRef<InputInst>('rootInputRef')
+const rootInputRef = useTemplateRef<InputInst>('rootInputRef')
 
 const page = ref(1)
 const pageSize = ref(50)

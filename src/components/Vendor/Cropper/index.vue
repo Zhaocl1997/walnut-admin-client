@@ -37,9 +37,9 @@ watchEffect(() => {
 })
 
 const blobRef = shallowRef<Blob>()
-const absImageRef = templateRef<WCompExtraAbsImageInst>('absImageRef')
-const cropperImageRef = templateRef<CropperImage>('cropperImageRef')
-const cropperSelectionRef = templateRef<CropperSelection>('cropperSelectionRef')
+const absImageRef = useTemplateRef<WCompExtraAbsImageInst>('absImageRef')
+const cropperImageRef = useTemplateRef<CropperImage>('cropperImageRef')
+const cropperSelectionRef = useTemplateRef<CropperSelection>('cropperSelectionRef')
 
 const initSelectionData = ref<{
   x: number
