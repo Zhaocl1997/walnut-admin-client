@@ -59,7 +59,6 @@ function onUpdatePolling(v: number) {
 
 function parseSeconds(input: string) {
   const nums = input.replace(/([,s\s])/g, '').trim()
-  // eslint-disable-next-line regexp/no-unused-capturing-group
   if (/^\d+(\.(\d+)?)?$/.test(nums))
     return Number(nums)
   return nums === '' ? null : Number.NaN

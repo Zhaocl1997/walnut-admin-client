@@ -8,6 +8,7 @@ export default antfu(
       // LINK reasonable https://stackoverflow.com/a/78566802
       'ts/no-namespace': 'off',
       'no-console': 'off',
+      'regexp/no-unused-capturing-group': 'off',
     },
   },
 )
