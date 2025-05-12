@@ -38,7 +38,7 @@ function onPositiveClick() {
   <DefineConfirm>
     <n-popconfirm v-bind="popConfirmProps" @positive-click="onPositiveClick">
       <template #default>
-        <div class="whitespace-pre-line">
+        <div class="whitespace-nowrap">
           {{ $t(confirmMsg) }}
         </div>
       </template>
@@ -52,7 +52,7 @@ function onPositiveClick() {
   <DefineTooltip>
     <n-tooltip v-bind="tooltipProps" trigger="hover">
       <template #default>
-        <div class="whitespace-pre-line">
+        <div class="whitespace-nowrap">
           {{ tooltipMsg }}
         </div>
       </template>
