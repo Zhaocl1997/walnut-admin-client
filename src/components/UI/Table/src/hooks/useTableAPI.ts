@@ -96,6 +96,11 @@ export function useTableAPI<T>(
 
   // api deleteMany (default)
   const onApiDeleteMany = async () => {
+    const confirmed = await useAppConfirm(t('app.base.confirm'))
+
+    if (!confirmed)
+      return
+
     const res = await props.value.apiProps?.deleteManyApi!(
       checkedRowKeys.value.join(','),
     )
