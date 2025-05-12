@@ -193,5 +193,7 @@ const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
 </script>
 
 <template>
-  <WCRUD @hook="register" />
+  <div>
+    <WCRUD @hook="register" />
+  </div>
 </template>

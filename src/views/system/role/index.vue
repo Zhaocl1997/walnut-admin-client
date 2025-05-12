@@ -249,6 +249,8 @@ const [
 </script>
 
 <template>
-  <!-- @vue-generic {AppSystemRole} -->
-  <WCRUD @hook="register" />
+  <div>
+    <!-- @vue-generic {AppSystemRole} -->
+    <WCRUD @hook="register" />
+  </div>
 </template>

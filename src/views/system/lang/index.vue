@@ -195,6 +195,8 @@ const [
 </script>
 
 <template>
-  <!-- @vue-generic {AppSystemLang} -->
-  <WCRUD @hook="register" />
+  <div>
+    <!-- @vue-generic {AppSystemLang} -->
+    <WCRUD @hook="register" />
+  </div>
 </template>

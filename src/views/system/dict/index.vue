@@ -264,7 +264,9 @@ const [
 </script>
 
 <template>
-  <WCRUD @hook="register" />
+  <div>
+    <WCRUD @hook="register" />
+  </div>
 </template>
 
 <style lang="scss" scoped>

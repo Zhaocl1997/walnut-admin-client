@@ -211,6 +211,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- @vue-generic {AppSystemLocale} -->
-  <WCRUD @hook="register" />
+  <div>
+    <!-- @vue-generic {AppSystemLocale} -->
+    <WCRUD @hook="register" />
+  </div>
 </template>
