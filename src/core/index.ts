@@ -18,7 +18,7 @@ export async function AppCoreFn1() {
     = getRoutes()[getRoutes().findIndex(i => i.path === AppRootPath)]
 
   // Here is where we request from back end to get login user permissions.
-  const { permissionMenuTree, permissionStrings, permissionRouteTree } = await getPermissions()
+  const { permissionMenuTree, permissionStrings, permissionRouteTree, keepAliveNames } = await getPermissions()
 
   // set menu tree
   appMenu.setMenus(permissionMenuTree)
@@ -31,8 +31,7 @@ export async function AppCoreFn1() {
   userPermission.setPermissions(permissionStrings)
 
   // set keep alive route name
-  // TODO
-  // appMenu.setKeepAliveRouteNames(appMenu.createKeepAliveRouteNames(res))
+  appMenu.setKeepAliveRouteNames(appMenu.createKeepAliveRouteNames(keepAliveNames))
 
   // set index menu name, use for home page
   appMenu.setIndexMenuName(appMenu.menus[0].name!)

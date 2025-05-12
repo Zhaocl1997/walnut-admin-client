@@ -79,15 +79,8 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
      * Since we flat routes, so need to add root route name finally
      * @link https://github.com/vuejs/vue-router-next/issues/626
      */
-    createKeepAliveRouteNames(menus: AppSystemMenu[]): string[] {
-      return menus
-        .map((i) => {
-          if (i.type === AppConstMenuType.MENU && i.cache)
-            return i.name!
-          return ''
-        })
-        .filter(Boolean)
-        .concat(AppRootName)
+    createKeepAliveRouteNames(menus: string[]): string[] {
+      return menus.concat(AppRootName)
     },
 
     /**
