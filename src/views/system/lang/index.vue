@@ -128,7 +128,6 @@ const [
         actionButtons: [
           {
             _builtInType: 'read',
-            // @ts-expect-error do not know why
             async onPresetClick(rowData) {
               await onReadAndOpenUpdateForm(rowData[keyField])
             },

@@ -28,7 +28,7 @@ export declare namespace WTable {
   /**
    * @description callback function
    */
-  type TableFnCallback<T, R = void, P = false> = (rowData: T, rowIndex?: number) => P extends true ? Promise<P> : R
+  type TableFnCallback<T, R = void> = (rowData: T, rowIndex?: number) => Promise<T> | Promise<R> | R
 
   /**
    * @description set table props
@@ -303,7 +303,7 @@ export declare namespace WTable {
       /**
        * @description click event, do not use buttonProps.onClick
        */
-      onPresetClick?: (rowData: T, rowIndex?: number) => Promise<T> | void
+      onPresetClick?: TableFnCallback<T>
     }
 
     /**

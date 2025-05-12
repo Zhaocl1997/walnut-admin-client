@@ -8,7 +8,7 @@ defineOptions({
 })
 
 const { langList } = useLangList()
-const { currentRoute } = useRouter()
+const localeKey = useRouterQuery('localeKey')
 
 // locale unique key
 const key = 'locale'
@@ -166,20 +166,19 @@ const [
     ],
   },
 
-  // @ts-expect-error
-  formProps: computed<WForm.Props>(() => ({
+  formProps: {
     // set the n-drawer display-directive to 'if'
     // the default display-directive for advanced from with modal or drawer is 'show'
     // mostly for performance thought
     // but in this case, the schema is generated dynamically, default form data would generate wrongly
     // this can be fixed by use v-if to control visible
-    dialogProps: {
-      displayDirective: 'if',
-    },
+    // dialogProps: {
+    //   displayDirective: 'if',
+    // },
 
     localeUniqueKey: key,
     localeWithTable: true,
-    dialogPreset: 'drawer',
+    dialogPreset: 'modal',
     baseRules: true,
     labelWidth: 100,
     xGap: 0,
@@ -192,6 +191,7 @@ const [
         },
         componentProp: {
           clearable: true,
+          defaultValue: localeKey.value,
         },
       },
 
@@ -209,16 +209,13 @@ const [
         },
       })),
     ]),
-  })),
+  },
 })
 
 onMounted(() => {
-  const localeKey = currentRoute.value.query?.localeKey as string
-
-  console.log({ localeKey })
-
-  if (localeKey)
-    onOpenCreateForm({ key: localeKey })
+  if (localeKey.value) {
+    onOpenCreateForm()
+  }
 })
 </script>
 
