@@ -167,22 +167,13 @@ const [
   },
 
   formProps: {
-    // set the n-drawer display-directive to 'if'
-    // the default display-directive for advanced from with modal or drawer is 'show'
-    // mostly for performance thought
-    // but in this case, the schema is generated dynamically, default form data would generate wrongly
-    // this can be fixed by use v-if to control visible
-    // dialogProps: {
-    //   displayDirective: 'if',
-    // },
-
     localeUniqueKey: key,
     localeWithTable: true,
     dialogPreset: 'modal',
     baseRules: true,
     labelWidth: 100,
     xGap: 0,
-    // create/update form schemas
+    // @ts-expect-error create/update form schemas
     schemas: computed<WForm.Schema.Item[]>(() => [
       {
         type: 'Base:Input',
@@ -220,5 +211,6 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- @vue-generic {AppSystemLocale} -->
   <WCRUD @hook="register" />
 </template>
