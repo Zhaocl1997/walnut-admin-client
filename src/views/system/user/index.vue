@@ -9,23 +9,24 @@ const { t } = useAppI18n()
 
 // locale unique key
 const key = 'user'
+const keyField = '_id'
 
-const { stateRef: updatePasswordformData, resetState } = useState({ userId: '', newPassword: '' })
+const { stateRef: updatePasswordFormData, resetState: resetPasswordFormData } = useState({ userId: '', newPassword: '' })
 
-const [registerUpdate, { onOpen }] = useForm({
-  preset: 'modal',
+const [registerPassword, { onOpen }] = useForm({
+  dialogPreset: 'modal',
   baseRules: true,
   labelWidth: 100,
   xGap: 0,
 
-  advancedProps: {
+  dialogProps: {
     title: computed(() => t('app.base.pass.update')),
     width: '40%',
     onYes: async (_, done) => {
       try {
         // TODO
         // refresh request got problem, need to have a deep look
-        await updatePassowrd({ userId: updatePasswordformData.value.userId!, newPassword: updatePasswordformData.value.newPassword! })
+        await updatePassowrd({ userId: updatePasswordFormData.value.userId!, newPassword: updatePasswordFormData.value.newPassword! })
 
         useAppMsgSuccess()
       }
@@ -34,7 +35,7 @@ const [registerUpdate, { onOpen }] = useForm({
       }
     },
     onNo: (done) => {
-      resetState()
+      resetPasswordFormData()
       done()
     },
   },
@@ -57,21 +58,38 @@ const [registerUpdate, { onOpen }] = useForm({
 const [
   register,
   {
-    onTableOpenCreateForm,
-    onApiTableReadAndOpenUpdateForm,
-    onApiTableDelete,
-    onApiTableDeleteMany,
+    onOpenCreateForm,
+    onReadAndOpenUpdateForm,
+    onDeleteConfirm,
+    onDeleteManyConfirm,
   },
 ] = useCRUD<AppSystemUser>({
   baseAPI: userAPI,
 
+  strictFormData: true,
+
   tableProps: {
     localeUniqueKey: key,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
+
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'create',
+        onPresetClick() {
+          onOpenCreateForm()
+        },
+      },
+      {
+        _builtInType: 'delete',
+        onPresetClick() {
+          onDeleteManyConfirm()
+        },
+      },
+    ],
 
     auths: {
       list: `system:${key}:list`,
@@ -80,21 +98,6 @@ const [
       update: `system:${key}:update`,
       delete: `system:${key}:delete`,
       deleteMany: `system:${key}:deleteMany`,
-    },
-
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onTableOpenCreateForm()
-          break
-
-        case 'delete':
-          onApiTableDeleteMany()
-          break
-
-        default:
-          break
-      }
     },
 
     queryFormProps: {
@@ -142,6 +145,7 @@ const [
       {
         ...WTablePresetStatusColumn,
         sorter: {
+          // @ts-expect-error fk sort
           multiple: 3,
         },
       },
@@ -149,6 +153,7 @@ const [
       {
         ...WTablePresetCreatedAtColumn,
         sorter: {
+          // @ts-expect-error fk sort
           multiple: 1,
         },
       },
@@ -165,64 +170,74 @@ const [
         actionButtons: [
           {
             _builtInType: 'read',
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField])
+            },
           },
           {
             _builtInType: 'delete',
             _dropdown: true,
+            async onPresetClick(rowData) {
+              await onDeleteConfirm(rowData[keyField])
+            },
           },
           {
             _builtInType: 'update-pass',
-            textProp: () => t('app.base.pass.update'),
             _dropdown: true,
-            type: 'info',
-            size: 'tiny',
-            icon: 'mdi:update',
-            auth: 'system:user:pass:update',
-            _show: row => row.userName !== 'admin',
+            _show: row => row.userName !== AppConstRoles.ADMIN,
+            buttonProps: {
+              textProp: () => t('app.base.pass.update'),
+              type: 'info',
+              size: 'tiny',
+              auth: 'system:user:pass:update',
+            },
+            iconProps: {
+              icon: 'mdi:update',
+            },
           },
-          {
-            _builtInType: 'reset-pass',
-            textProp: () => t('app.base.pass.reset'),
-            _dropdown: true,
-            type: 'warning',
-            size: 'tiny',
-            icon: 'mdi:lock-reset',
-            auth: 'system:user:pass:reset',
-            _show: row => row.userName !== 'admin',
-          },
+          // {
+          //   _builtInType: 'reset-pass',
+          //   textProp: () => t('app.base.pass.reset'),
+          //   _dropdown: true,
+          //   type: 'warning',
+          //   size: 'tiny',
+          //   icon: 'mdi:lock-reset',
+          //   auth: 'system:user:pass:reset',
+          //   _show: row => row.userName !== AppConstRoles.ADMIN,
+          // },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'read':
-              await onApiTableReadAndOpenUpdateForm(rowData._id!)
-              break
+        // onActionButtonsClick: async ({ type, rowData }) => {
+        //   switch (type) {
+        //     case 'read':
+        //       await onReadAndOpenUpdateForm(rowData._id!)
+        //       break
 
-            case 'delete':
-              await onApiTableDelete(rowData._id!)
-              break
+        //     case 'delete':
+        //       await onDeleteConfirm(rowData._id!)
+        //       break
 
-            case 'update-pass':
-              updatePasswordformData.value.userId = rowData._id
-              onOpen()
-              break
+        //     case 'update-pass':
+        //       updatePasswordFormData.value.userId = rowData._id
+        //       onOpen()
+        //       break
 
-            case 'reset-pass':
-              {
-                const confirm = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
+        //     case 'reset-pass':
+        //       {
+        //         const confirm = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
 
-                if (confirm) {
-                  const res = await resetPassowrd({ userId: rowData._id! })
+        //         if (confirm) {
+        //           const res = await resetPassowrd({ userId: rowData._id! })
 
-                  if (res)
-                    useAppMsgSuccess()
-                }
-              }
-              break
+        //           if (res)
+        //             useAppMsgSuccess()
+        //         }
+        //       }
+        //       break
 
-            default:
-              break
-          }
-        },
+        //     default:
+        //       break
+        //   }
+        // },
       },
     ],
   },
@@ -230,7 +245,7 @@ const [
   formProps: {
     localeUniqueKey: key,
     localeWithTable: true,
-    preset: 'drawer',
+    dialogPreset: 'drawer',
     baseRules: true,
     labelWidth: 140,
     xGap: 0,
@@ -257,6 +272,7 @@ const [
           defaultValue: true,
           componentProps: {
             button: true,
+            valueType: 'boolean',
           },
         },
       },
@@ -264,7 +280,7 @@ const [
       {
         type: 'Extend:RoleSelect',
         formProp: {
-          path: 'role',
+          path: 'roles',
           labelHelpMessage: true,
         },
         componentProp: {
@@ -280,6 +296,6 @@ const [
   <div>
     <WCRUD @hook="register" />
 
-    <w-form :model="updatePasswordformData" @hook="registerUpdate" />
+    <WForm :model="updatePasswordFormData" @hook="registerPassword" />
   </div>
 </template>

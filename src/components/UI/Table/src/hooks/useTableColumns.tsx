@@ -194,15 +194,15 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               return button ? Object.assign(button, item) : item
             })
 
+          const onDropdownSelect = (key: WTable.ColumnActionType, rowData, rowIndex) => {
+            const target = bs.find(i => i._builtInType === key)
+            target && target.onPresetClick(rowData, rowIndex)
+          }
+
           return {
             ...tItem,
 
             render(rowData, rowIndex) {
-              const onDropdownSelect = (key: WTable.ColumnActionType) => {
-                const target = bs.find(i => i._builtInType === key)
-                target && target.onPresetClick(rowData, rowIndex)
-              }
-
               const isShow = (i: WTable.ExtendType.ActionButtons<T>) => getFunctionBoolean(i._show, rowData)
               const isDisabled = (i: WTable.ExtendType.ActionButtons<T>) => getFunctionBoolean(i._disabled, rowData, false)
 
@@ -210,7 +210,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               const normalButtons = visibleButtons.filter(i => !i._dropdown).map(i => omit(i, '_dropdown'))
               const dropdownButtons = visibleButtons.filter(i => i._dropdown).map(i => omit(i, '_dropdown'))
 
-              const renderNormalButtons = normalButtons.map(i => (
+              const renderButton = i => (
                 <WIconButton
                   button-props={{
                     ...i.buttonProps,
@@ -222,25 +222,38 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                   onConfirm={() => i.onPresetClick(rowData, rowIndex)}
                 >
                 </WIconButton>
-              ))
+              )
 
-              const dropdownOptions: DropdownOption[] = dropdownButtons.map(i => ({
-                key: i._builtInType,
-                label: i.buttonProps.textProp,
-                disabled: isDisabled(i),
-                // the show below is actually used for permission
-                // the button that do not shown has been filtered early
-                show: userPermission.hasPermission(i.buttonProps.auth),
-                icon: i?.iconProps?.icon ? () => <WIconButton {...omit(i, ['_builtInType', '_dropdown'])}></WIconButton> : undefined,
-              }))
+              const renderNormalButtons = normalButtons.map(renderButton)
+
+              const dropdownOptions: DropdownOption[] = dropdownButtons.map(i => i.iconProps?.icon
+                ? {
+                    type: 'render',
+                    key: i._builtInType,
+                    disabled: isDisabled(i),
+                    // the show below is actually used for permission
+                    // the button that do not shown has been filtered early
+                    show: userPermission.hasPermission(i.buttonProps.auth),
+                    render: i?.iconProps?.icon ? () => <div class="mx-2">{renderButton(i)}</div> : undefined,
+                  }
+                : {
+                    key: i._builtInType,
+                    label: i.buttonProps.textProp,
+                    disabled: isDisabled(i),
+                    // the show below is actually used for permission
+                    // the button that do not shown has been filtered early
+                    show: userPermission.hasPermission(i.buttonProps.auth),
+                  })
 
               return (
                 <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">
                   {renderNormalButtons}
 
                   {dropdownButtons.length !== 0 && (
-                    <NDropdown size="small" trigger="click" options={dropdownOptions} onSelect={onDropdownSelect}>
-                      <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: true }}></WIconButton>
+                    <NDropdown size="small" trigger="click" options={dropdownOptions} onSelect={key => onDropdownSelect(key, rowData, rowIndex)}>
+                      <div>
+                        <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: false }}></WIconButton>
+                      </div>
                     </NDropdown>
                   )}
                 </div>

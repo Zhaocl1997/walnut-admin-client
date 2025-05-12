@@ -143,7 +143,7 @@ declare global {
     description?: string
     avatar?: string
     status?: boolean
-    role?: string[]
+    roles?: string[]
   }
 
   // system device
