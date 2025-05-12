@@ -13,6 +13,14 @@ export declare namespace WCrud {
     onBeforeRequest?: (data: T) => T
     tableProps?: Omit<WTable.Props<T>, 'apiProps'>
     formProps?: Partial<WForm.Props<T>>
+
+    /**
+     * @default false
+     * @description strict create/update form data based on schema item
+     * some fields from read endpoint is useless in update endpoint, will cause params error
+     * set true to pick fields that are declared in form schema, also concat with _id by default
+     */
+    strictFormData?: boolean
   }
 
   /**
@@ -28,24 +36,19 @@ export declare namespace WCrud {
   namespace Inst {
     interface WCrudInst<T> {
       setProps: SetProps<T>
-      onOpenCreateForm: () => void
+      onOpenCreateForm: (generateDefaultFormData?: boolean) => void
       onReadAndOpenUpdateForm: (id: StringOrNumber) => Promise<void>
       onDeleteConfirm: (id: StringOrNumber) => Promise<T>
       onDeleteManyConfirm: () => Promise<T[]>
       onGetFormData: () => Ref<T>
+      onGetActionType: () => Ref<IActionType>
 
       // onApiTableDeleteMany: () => Promise<void>
       // onGetApiTableListParams: () => Ref<WalnutBaseListParams<T>>
-      // onGetActionType: () => Ref<IActionType>
       // onApiTableList: () => Promise<void>
       // onApiTableCloseForm: Fn
     }
   }
-
-  type useCrudReturnType<T> = [
-    (instance: Inst.WCrudInst<T>) => void,
-    Omit<Inst.WCrudInst<T>, 'setProps'>,
-  ]
 
   /**
    * @description Hooks

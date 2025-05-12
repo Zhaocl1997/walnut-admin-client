@@ -3,8 +3,11 @@ import type { WForm } from '@/components/UI/Form'
 import type { WTable } from '@/components/UI/Table'
 import type { WCrud } from './types'
 import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
+import { pick } from 'lodash-es'
 
-const props = withDefaults(defineProps<WCrud.Props<T>>(), {})
+const props = withDefaults(defineProps<WCrud.Props<T>>(), {
+  strictFormData: false,
+})
 
 const emit = defineEmits<WCrud.Emits<T>>()
 
@@ -16,29 +19,26 @@ const { setProps, getProps } = crudPropsCtx
 const actionType = ref<IActionType>()
 
 // create/update form data
-const { stateRef: formData, resetState: resetFormData, commit: commitFormData } = useState<T>({})
+const { stateRef: formData, resetState: resetFormData, commit: commitFormData } = useState<T>({} as T)
 
-// generate create/update form default data
+const defaultFormDataGenerated = ref(false)
 // this is necessary, otherwise reset won't work
-watch(
-  () => getProps.value.formProps?.schemas,
-  (v) => {
-    if (!v || v.length === 0)
-      return
-
-    const initialFormData = extractDefaultFormDataFromSchemas(v)
+function onInitFormData() {
+  if (!defaultFormDataGenerated.value) {
+    const initialFormData = extractDefaultFormDataFromSchemas(getProps.value.formProps?.schemas)
     formData.value = Object.assign(formData.value, initialFormData)
     // make this as default form data
     commitFormData()
-  },
-  {
-    deep: true,
-    immediate: true,
-  },
-)
+    defaultFormDataGenerated.value = true
+    console.log('Default form data generated', formData.value)
+  }
+}
 
 // api
 const getBaseApi = computed(() => getProps.value.baseAPI)
+
+// get create/update form data
+const getFormData = computed(() => getProps.value.strictFormData ? pick(formData.value, getProps.value.formProps.schemas.filter(i => i.formProp?.path).map(i => i.formProp.path).concat('_id')) : formData.value)
 
 // get table props
 const getTableProps = computed<WTable.Props<T>>(() => ({
@@ -86,15 +86,14 @@ const getFormProps = computed<WForm.Props<T>>(() => ({
         getBaseApi.value[actionType.value].bind(getBaseApi.value),
         // Form API Solution 2
         // (data) => AppAxios.put({ url: '/system/locale', data }),
-
-        formData.value,
+        getFormData.value,
       )
       resetFormData()
       await onApiList()
     },
     onNo: (done) => {
-      done()
       resetFormData()
+      done()
     },
   },
 }))
@@ -103,7 +102,11 @@ const getFormProps = computed<WForm.Props<T>>(() => ({
 const [registerForm, { onOpen }] = useForm(getFormProps)
 
 // open create form
-function onOpenCreateForm() {
+function onOpenCreateForm(generateDefaultFormData = true) {
+  if (generateDefaultFormData) {
+    onInitFormData()
+  }
+
   actionType.value = 'create'
 
   onOpen()
@@ -134,7 +137,7 @@ emit('hook', {
   onDeleteManyConfirm: onApiDeleteMany,
 
   onGetFormData: () => formData,
-  // onGetActionType: () => actionType.value,
+  onGetActionType: () => actionType,
 
   // onApiList,
   // onApiDelete,
