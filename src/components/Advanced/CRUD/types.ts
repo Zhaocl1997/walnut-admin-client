@@ -28,7 +28,7 @@ export declare namespace WCrud {
   namespace Inst {
     interface WCrudInst<T> {
       setProps: SetProps<T>
-      onOpenCreateForm: (defaultFormData?: Partial<T>) => void
+      onOpenCreateForm: () => void
       onReadAndOpenUpdateForm: (id: StringOrNumber) => Promise<void>
       onDeleteConfirm: (id: StringOrNumber) => Promise<T>
       onDeleteManyConfirm: () => Promise<T[]>

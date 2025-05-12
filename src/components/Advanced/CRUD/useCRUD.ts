@@ -14,7 +14,7 @@ export function useCRUD<T>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.Use
   }
 
   const methods: WCrud.Hooks.UseCRUD.Methods<T> = {
-    onOpenCreateForm: (defaultFormData: Partial<T>) => wCrudRef.value?.onOpenCreateForm(defaultFormData),
+    onOpenCreateForm: () => wCrudRef.value?.onOpenCreateForm(),
     onReadAndOpenUpdateForm: async (id: StringOrNumber) =>
       await wCrudRef.value?.onReadAndOpenUpdateForm(id),
     onDeleteConfirm: async (id: StringOrNumber) =>

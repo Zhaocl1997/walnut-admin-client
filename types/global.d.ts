@@ -10,7 +10,7 @@ declare type PromiseFn<T = any> = (args?: T) => Promise<void>
 
 declare type Recordable<T = any> = Record<string, T>
 
-declare type IActionType = 'create' | 'update' | ''
+declare type IActionType = 'create' | 'update'
 
 declare type ITargetContext = '_self' | '_blank'
 

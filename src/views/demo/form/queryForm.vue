@@ -8,7 +8,7 @@ defineOptions({
 
 const configData = ref({ foldable: false, countToFold: 2, span: 8 })
 
-const formData = ref<Recordable>({
+const { stateRef: formData, resetState: resetFormData } = useState({
   input1: '1',
   input2: '2',
   input3: '3',
@@ -127,6 +127,7 @@ function onReset({ done }: WForm.Params.Dialog.FinishLoading) {
 
   setTimeout(() => {
     done()
+    resetFormData()
   }, 2000)
 }
 </script>

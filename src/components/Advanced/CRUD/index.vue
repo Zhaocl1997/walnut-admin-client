@@ -4,7 +4,7 @@ import type { WTable } from '@/components/UI/Table'
 import type { WCrud } from './types'
 import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
 
-const props = defineProps<WCrud.Props<T>>()
+const props = withDefaults(defineProps<WCrud.Props<T>>(), {})
 
 const emit = defineEmits<WCrud.Emits<T>>()
 
@@ -19,11 +19,13 @@ const actionType = ref<IActionType>()
 const { stateRef: formData, resetState: resetFormData, commit: commitFormData } = useState<T>({})
 
 // generate create/update form default data
+// this is necessary, otherwise reset won't work
 watch(
   () => getProps.value.formProps?.schemas,
   (v) => {
     if (!v || v.length === 0)
       return
+
     const initialFormData = extractDefaultFormDataFromSchemas(v)
     formData.value = Object.assign(formData.value, initialFormData)
     // make this as default form data
@@ -75,7 +77,7 @@ const getFormProps = computed<WForm.Props<T>>(() => ({
   dialogProps: {
     ...getProps.value.formProps?.dialogProps,
     width: getProps.value.formProps?.dialogProps?.width ?? '500px',
-    actionType,
+    actionType: actionType.value,
 
     // create/update confirm
     onYes: async (apiHandler) => {
@@ -101,15 +103,8 @@ const getFormProps = computed<WForm.Props<T>>(() => ({
 const [registerForm, { onOpen }] = useForm(getFormProps)
 
 // open create form
-function onOpenCreateForm(defaultFormData: Partial<T>) {
+function onOpenCreateForm() {
   actionType.value = 'create'
-
-  if (defaultFormData) {
-    // set default form data
-    formData.value = Object.assign(formData.value, defaultFormData)
-    // make this as default version
-    commitFormData()
-  }
 
   onOpen()
 }

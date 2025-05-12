@@ -182,7 +182,7 @@ export declare namespace WForm {
        */
       dialogProps?: (ICompUIModalProps | ICompUIDrawerProps) &
         Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
-          actionType?: WTable.HeaderLeftBulitInActionType
+          actionType?: IActionType
           defaultButton?: boolean
           detailTitle?: boolean
           resizable?: boolean
