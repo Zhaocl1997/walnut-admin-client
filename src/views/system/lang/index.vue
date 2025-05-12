@@ -74,7 +74,6 @@ const [
         key: 'index',
         extendType: 'index',
         fixed: 'left',
-        width: 80,
       },
 
       {

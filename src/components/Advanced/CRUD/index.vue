@@ -104,6 +104,7 @@ const [registerForm, { onOpen }] = useForm(getFormProps)
 // open create form
 function onOpenCreateForm(generateDefaultFormData = true) {
   if (generateDefaultFormData) {
+    // only generate default form data when open create dialog
     onInitFormData()
   }
 

@@ -8,29 +8,40 @@ defineOptions({
 
 // locale unique key
 const key = 'role'
+const keyField = '_id'
 
 const { getLeftMenu } = useMenuTree()
 
 const [
   register,
   {
-    onTableOpenCreateForm,
-    onApiTableReadAndOpenUpdateForm,
-    onApiTableDelete,
-    onApiTableDeleteMany,
+    onOpenCreateForm,
+    onReadAndOpenUpdateForm,
+    // TODO why ts not work
     onGetActionType,
     onGetFormData,
   },
 ] = useCRUD<AppSystemRole>({
   baseAPI: roleAPI,
 
+  strictFormData: true,
+
   tableProps: {
     localeUniqueKey: key,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
+
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'create',
+        onPresetClick() {
+          onOpenCreateForm()
+        },
+      },
+    ],
 
     auths: {
       list: `system:${key}:list`,
@@ -41,27 +52,13 @@ const [
       deleteMany: `system:${key}:deleteMany`,
     },
 
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onTableOpenCreateForm()
-          break
-
-        case 'delete':
-          onApiTableDeleteMany()
-          break
-
-        default:
-          break
-      }
-    },
-
     queryFormProps: {
       localeUniqueKey: key,
       localeWithTable: true,
       span: 6,
       showFeedback: false,
       labelWidth: 100,
+      // query form schemas
       schemas: [
         {
           type: 'Base:Input',
@@ -82,12 +79,6 @@ const [
     // table columns
     columns: [
       {
-        key: 'selection',
-        type: 'selection',
-        fixed: 'left',
-      },
-
-      {
         key: 'index',
         extendType: 'index',
         fixed: 'left',
@@ -97,6 +88,7 @@ const [
         key: 'roleName',
         width: 200,
         sorter: {
+          // @ts-expect-error fk sort
           multiple: 5,
         },
       },
@@ -110,13 +102,14 @@ const [
       },
 
       {
-        key: 'usersCount',
+        key: 'populated_usersCount',
         width: 120,
       },
 
       {
         ...WTablePresetOrderColumn,
         sorter: {
+          // @ts-expect-error fk sort
           multiple: 4,
         },
       },
@@ -124,6 +117,7 @@ const [
       {
         ...WTablePresetStatusColumn,
         sorter: {
+          // @ts-expect-error fk sort
           multiple: 3,
         },
       },
@@ -131,6 +125,7 @@ const [
       {
         ...WTablePresetCreatedAtColumn,
         sorter: {
+          // @ts-expect-error fk sort
           multiple: 2,
         },
       },
@@ -138,37 +133,24 @@ const [
       {
         ...WTablePresetUpdatedAtColumn,
         sorter: {
+          // @ts-expect-error fk sort
           multiple: 1,
         },
       },
 
       {
         key: 'action',
-        width: 80,
+        width: 160,
         extendType: 'action',
         fixed: 'right',
         actionButtons: [
           {
             _builtInType: 'read',
-          },
-          {
-            _builtInType: 'delete',
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField])
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'read':
-              await onApiTableReadAndOpenUpdateForm(rowData._id!)
-              break
-
-            case 'delete':
-              await onApiTableDelete(rowData._id!)
-              break
-
-            default:
-              break
-          }
-        },
       },
     ],
   },
@@ -176,11 +158,11 @@ const [
   formProps: {
     localeUniqueKey: key,
     localeWithTable: true,
-    preset: 'drawer',
+    dialogPreset: 'drawer',
     baseRules: true,
     labelWidth: 140,
     xGap: 0,
-
+    // create/update form schemas
     schemas: [
       {
         type: 'Base:Input',
@@ -190,9 +172,7 @@ const [
         },
         componentProp: {
           clearable: true,
-          disabled: computed(
-            (): boolean => onGetActionType().value === 'update',
-          ) as unknown as boolean,
+          disabled: computed(() => onGetActionType().value === 'update'),
         },
       },
       {
@@ -226,6 +206,7 @@ const [
           defaultValue: true,
           componentProps: {
             button: true,
+            valueType: 'boolean',
           },
         },
       },
@@ -240,25 +221,21 @@ const [
           presetPrefixIcon: true,
           toolbar: true,
           multiple: true,
-          maxHeight: '400px',
+          maxHeight: '600px',
+          defaultValue: [],
 
           treeProps: {
+            // @ts-expect-error tree data
             data: getLeftMenu,
             blockLine: true,
             blockNode: true,
             keyField: '_id',
             labelField: 'title',
-            disabled: computed(
-              () => {
-                // TODO ts-error
-                const formData = onGetFormData() as Ref<AppSystemRole>
-
-                const roleName = formData.value.roleName
-
-                return roleName === AppConstRoles.ADMIN
-              },
-            ),
-
+            disabled: computed(() => {
+              const formData = onGetFormData()
+              const roleName = formData.value.roleName
+              return roleName === AppConstRoles.ADMIN
+            }),
             renderLabel: ({ option }) =>
               option.type === AppConstMenuType.ELEMENT
                 ? (option.permission as string)
@@ -272,5 +249,6 @@ const [
 </script>
 
 <template>
+  <!-- @vue-generic {AppSystemRole} -->
   <WCRUD @hook="register" />
 </template>

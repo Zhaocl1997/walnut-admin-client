@@ -205,7 +205,7 @@ const [
 
 onMounted(() => {
   if (localeKey.value) {
-    onOpenCreateForm()
+    onOpenCreateForm(false)
   }
 })
 </script>
