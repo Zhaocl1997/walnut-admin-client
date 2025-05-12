@@ -275,7 +275,7 @@ function nodeProps({ option }: { option: TreeOption }): ReturnType<TreeNodeProps
 }
 
 function onRenderPrefix({ option }: TreeRenderProps) {
-  return getProps.value.presetPrefixIcon
+  return getProps.value.presetPrefixIcon && option.icon
     ? (
         <WIcon icon={option.icon as string} height="18"></WIcon>
       )
@@ -335,6 +335,13 @@ function onRenderSuffix({ option }: TreeRenderProps) {
 
 async function onFeedback() {
   if (getProps.value.multiple && Array.isArray(value.value)) {
+    if (!value.value.length) {
+      checkedKeys.value = []
+      indeterminateKeys.value = []
+      expandedKeys.value = []
+      return
+    }
+
     if (cascade.value) {
       checkedKeys.value = (value.value)?.filter(i => getBottomChildKeys.value.includes(i))
       indeterminateKeys.value = (value.value)?.filter(i => !getBottomChildKeys.value.includes(i))
@@ -375,9 +382,10 @@ watch(
     await nextTick()
     await onFeedback()
   },
+  {
+    immediate: true,
+  },
 )
-
-onMounted(onFeedback)
 
 emits('hook', { setProps })
 
