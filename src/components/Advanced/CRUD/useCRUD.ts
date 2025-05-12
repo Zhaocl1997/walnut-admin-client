@@ -3,15 +3,15 @@ import type { WCrud } from './types'
 export function useCRUD<T>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.UseCRUD.ReturnType<T> {
   isInSetup()
 
-  const wCrudRef = ref<WCrud.Inst.WCrudInst<T>>()
+  const wCrudRef = shallowRef<WCrud.Inst.WCrudInst<T>>()
 
   const register = (instance: WCrud.Inst.WCrudInst<T>) => {
     wCrudRef.value = instance
-
-    watchEffect(() => {
-      props && instance.setProps(props as WCrud.Props<T>)
-    })
   }
+
+  watchEffect(() => {
+    props && wCrudRef.value?.setProps(unref(props) as WCrud.Props<T>)
+  })
 
   const methods: WCrud.Hooks.UseCRUD.Methods<T> = {
     onOpenCreateForm: () => wCrudRef.value?.onOpenCreateForm(),
@@ -22,7 +22,7 @@ export function useCRUD<T>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.Use
     onDeleteManyConfirm: async () =>
       await wCrudRef.value?.onDeleteManyConfirm(),
     onGetFormData: () => wCrudRef.value?.onGetFormData(),
-    // onGetActionType: () => wCrudRef.value?.onGetActionType()!,
+    onGetActionType: () => wCrudRef.value?.onGetActionType(),
     // onGetApiTableListParams: () => wCrudRef.value?.onGetApiTableListParams()!,
     // onApiTableCloseForm: () => wCrudRef.value?.onApiTableCloseForm()!,
     // onApiTableList: async () => await wCrudRef.value?.onApiTableList(),

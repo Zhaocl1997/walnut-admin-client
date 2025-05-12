@@ -3,7 +3,7 @@ import type { WTable } from '../types'
 export function useTable<T>(props: WTable.Hooks.UseTable.Props<T>): WTable.Hooks.UseTable.ReturnType<T> {
   isInSetup()
 
-  const wTableRef = ref<WTable.Inst.WTableInst<T>>()
+  const wTableRef = shallowRef<WTable.Inst.WTableInst<T>>()
 
   const register = (instance: WTable.Inst.WTableInst<T>) => {
     wTableRef.value = instance

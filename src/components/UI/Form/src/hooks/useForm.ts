@@ -3,7 +3,7 @@ import type { WForm } from '../types'
 export function useForm<T>(props: WForm.Hooks.UseForm.Props<T>): WForm.Hooks.UseForm.ReturnType<T> {
   isInSetup()
 
-  const wFormRef = ref<WForm.Inst.WFormInst<T>>()
+  const wFormRef = shallowRef<WForm.Inst.WFormInst<T>>()
 
   const register = (instance: WForm.Inst.WFormInst<T>) => {
     wFormRef.value = instance
