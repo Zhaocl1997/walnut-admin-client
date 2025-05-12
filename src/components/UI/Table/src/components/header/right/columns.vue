@@ -17,32 +17,35 @@ const { getProps: props } = tablePropsCtx
 
 const popoverShow = ref(false)
 
-const tableColumnSettingRef = ref()
-
-const draggableClass = 'table-column-draggable'
+const tableColumnSettingRef = useTemplateRef<HTMLElement>('tableColumnSettingRef')
 
 const { start, stop } = useSortable(tableColumnSettingRef, tableColumns, {
   animation: 150,
   delay: 50,
   delayOnTouchOnly: true,
 
-  draggable: `.${draggableClass}`,
+  draggable: `.table-column-draggable`,
   onEnd: (evt) => {
     const { oldIndex, newIndex } = evt
 
-    const current = tableColumns.value![oldIndex!]
-    tableColumns.value?.splice(oldIndex!, 1)
-    tableColumns.value?.splice(newIndex!, 0, current)
+    const current = tableColumns.value[oldIndex]
+    tableColumns.value?.splice(oldIndex, 1)
+    tableColumns.value?.splice(newIndex, 0, current)
   },
 })
 
-watchEffect(() => {
-  if (popoverShow.value)
-    start()
+watch(
+  () => popoverShow.value,
+  async (v) => {
+    await nextTick()
 
-  else
-    stop()
-})
+    if (v)
+      start()
+
+    else
+      stop()
+  },
+)
 
 const blackList: StringOrNumber[] = ['selection', 'index', 'action']
 
@@ -119,7 +122,7 @@ function getTitle(item: WTable.Column<T>) {
               :key="item.key"
               class="mx-1 my-2 hstack justify-between"
               :class="[
-                { draggableClass: !isInBlackList(item.key) },
+                { 'table-column-draggable': !isInBlackList(item.key) },
               ]"
             >
               <div class="mr-8 hstack items-center">
@@ -137,7 +140,9 @@ function getTitle(item: WTable.Column<T>) {
                     </n-button>
                   </template>
 
-                  {{ $t('table.base.settings.column.drag') }}
+                  <span class="p-0">
+                    {{ $t('table.base.settings.column.drag') }}
+                  </span>
                 </n-tooltip>
 
                 <n-checkbox
@@ -168,7 +173,7 @@ function getTitle(item: WTable.Column<T>) {
                     </n-button>
                   </template>
 
-                  <span>
+                  <span class="p-0">
                     {{ item.fixed === 'left' ? $t('table.base.settings.column.unfix') : $t('table.base.settings.column.fixLeft') }}
                   </span>
                 </n-tooltip>
