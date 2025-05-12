@@ -60,7 +60,6 @@ const props = withDefaults(defineProps<WTable.Props<T>>(), {
 
 const emits = defineEmits<WTable.Emits<T>>()
 
-// @ts-expect-error 类型“DataTableInst”不满足约束“HTMLElement | Component | SVGElement”。
 const tableRef = useTemplateRef<WTable.Inst.NDataTableInst>('tableRef')
 
 const tablePropsCtx = useProps<WTable.Props<T>>(props)

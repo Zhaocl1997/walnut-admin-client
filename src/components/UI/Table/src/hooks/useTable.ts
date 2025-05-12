@@ -18,7 +18,7 @@ export function useTable<T>(props: WTable.Hooks.UseTable.Props<T>): WTable.Hooks
     clearSorter: () => wTableRef.value.clearSorter(),
     onApiList: () => wTableRef.value.onApiList(),
     onApiDelete: id => wTableRef.value.onApiDelete(id),
-    onApiDeleteMany: ids => wTableRef.value.onApiDeleteMany(ids),
+    onApiDeleteMany: () => wTableRef.value.onApiDeleteMany(),
     onGetApiListParams: () => wTableRef.value?.onGetApiListParams(),
   }
 

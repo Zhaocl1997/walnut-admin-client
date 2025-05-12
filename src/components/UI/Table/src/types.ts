@@ -57,7 +57,7 @@ export declare namespace WTable {
       /**
        * @description API table default delete many function
        */
-      onApiDeleteMany: (ids: string) => Promise<T[]>
+      onApiDeleteMany: () => Promise<T[]>
 
       /**
        * @description get list params
