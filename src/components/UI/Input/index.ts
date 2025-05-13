@@ -18,4 +18,7 @@ export interface ICompUIInputProps extends /* @vue-ignore */ InputProps {
     capitalize?: boolean
     uppercase?: boolean
   }
+
+  // for form schema ts support
+  onKeyupEnter?: (e: KeyboardEvent) => void
 }

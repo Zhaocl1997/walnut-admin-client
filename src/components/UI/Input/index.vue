@@ -9,7 +9,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<ICompUIInputProps>(), {})
 
-const emits = defineEmits<{ click: [e: MouseEvent] }>()
+const emits = defineEmits<{ click: [e: MouseEvent], keyupEnter: [e: KeyboardEvent] }>()
 
 const inputRef = useTemplateRef<InputInst>('inputRef')
 
@@ -31,6 +31,10 @@ function onClick(e: MouseEvent) {
   emits('click', e)
 }
 
+function onKeyupEnter(e: KeyboardEvent) {
+  emits('keyupEnter', e)
+}
+
 defineExpose({
   focus: () => inputRef.value?.focus(),
   blur: () => inputRef.value?.blur(),
@@ -38,7 +42,7 @@ defineExpose({
 </script>
 
 <template>
-  <n-input v-model:value="inputValue" @update:value="onInputValue" @click="onClick">
+  <n-input v-model:value="inputValue" @update:value="onInputValue" @click="onClick" @keyup.enter="onKeyupEnter">
     <template #prefix>
       <div v-if="prefix" :class="prefixClass">
         {{ prefix }}
