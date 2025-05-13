@@ -71,9 +71,9 @@ onBeforeMount(async () => {
             :dict-value="item.value"
           />
 
-          <span v-else class="whitespace-pre-wrap break-all">
+          <div v-else class="whitespace-pre-wrap break-all">
             {{ onFormat(item) }}
-          </span>
+          </div>
         </div>
       </template>
     </n-descriptions-item>

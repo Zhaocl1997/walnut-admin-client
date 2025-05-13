@@ -1,4 +1,4 @@
-import type { DropdownOption } from 'naive-ui'
+import type { DropdownOption, TagProps } from 'naive-ui'
 import type { FilterOption } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
 import WAppNotAuthorized from '@/components/App/AppNotAuthorized'
@@ -95,7 +95,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             ...tItem,
             render(p) {
               return (
-                <NTag {...tItem.tagProps(p)}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
+                <NTag {...(tItem.tagProps(p) as TagProps)}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
               )
             },
           }
@@ -115,13 +115,13 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               tItem.filter
                 ? getDictDataFromMap(tItem.dictType)?.map(i => ({
                   value: i.value,
-                  label: t(i.label!),
+                  label: t(i.label),
                 }))
                 : [],
             ),
 
             filterOptionValue:
-              apiListParams.value.query![tItem.key] ?? null,
+              apiListParams.value.query[tItem.key] ?? null,
 
             render(p) {
               return <WDictLabel dictType={tItem.dictType} dictValue={p[tItem.key]}></WDictLabel>
@@ -218,6 +218,8 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
               const visibleButtons = bs.filter(i => isShow(i)).map(i => omit(i, '_show'))
 
+              const hasDropdownButtons = bs.some(i => i._dropdown)
+
               const normalButtons = visibleButtons.filter(i => !i._dropdown).map(i => omit(i, '_dropdown'))
               const dropdownButtons = visibleButtons.filter(i => i._dropdown).map(i => omit(i, '_dropdown'))
 
@@ -257,11 +259,15 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                 <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">
                   {renderNormalButtons}
 
-                  <NDropdown size="small" trigger="click" options={dropdownOptions.length ? dropdownOptions : renderDropdownEmpty} onSelect={key => onDropdownSelect(key, rowData, rowIndex)}>
-                    <div>
-                      <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: false }}></WIconButton>
-                    </div>
-                  </NDropdown>
+                  {hasDropdownButtons
+                    ? (
+                        <NDropdown size="small" trigger="click" options={dropdownOptions.length ? dropdownOptions : renderDropdownEmpty} onSelect={key => onDropdownSelect(key, rowData, rowIndex)}>
+                          <div>
+                            <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: false }}></WIconButton>
+                          </div>
+                        </NDropdown>
+                      )
+                    : null}
                 </div>
               )
             },
@@ -273,15 +279,11 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
           return {
             ...tItem,
             width: 80,
-            render(p) {
+            render() {
               return (
                 <WIcon
                   width="24"
-                  icon={
-                    typeof tItem.extendIconName === 'string'
-                      ? tItem.extendIconName
-                      : tItem.extendIconName(p)
-                  }
+                  icon={tItem.extendIconName}
                 >
                 </WIcon>
               )

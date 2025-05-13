@@ -348,7 +348,7 @@ export declare namespace WTable {
      * @description preset icon column, use `WIcon`by default
      */
     type Icon<T = Recordable> = BaseExtend<T, 'icon'> & {
-      extendIconName: string | TableFnCallback<T, string>
+      extendIconName: string
     }
 
     /**

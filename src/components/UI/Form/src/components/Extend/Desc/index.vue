@@ -34,6 +34,8 @@ const getDescItems = computed(() => {
   <WDescriptions
     v-bind="formProps.descriptionProps"
     :label-placement="formProps.labelPlacement"
+    :label-align="formProps.labelAlign"
+    :label-style="{ width: `${formProps.labelWidth}px` }"
     :items="getDescItems"
   />
 </template>

@@ -207,6 +207,7 @@ export declare namespace WForm {
 
       /**
        * @description display in descrition mode
+       * @deprecated
        */
       useDescription?: boolean
 
