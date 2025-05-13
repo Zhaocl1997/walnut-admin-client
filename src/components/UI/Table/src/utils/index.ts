@@ -29,7 +29,7 @@ export function generateSortParams<T>(sort: DataTableSortState | DataTableSortSt
   const getBase = (i: DataTableSortState) => ({
     field: i.columnKey as keyof T,
     order: i.order,
-    priority: (i.sorter as SorterMultiple)?.multiple,
+    priority: (i.sorter as SorterMultiple)?.multiple ?? 1,
   })
 
   if (Array.isArray(sort)) {

@@ -157,11 +157,7 @@ export function useTableAPI<T>(
 
     // handle params.sort default
     if (columns.value.some(i => i.defaultSortOrder)) {
-      // TODO sort two types
-      // set default value to sort
-      apiListParams.value.sort = Object.assign(apiListParams.value.sort, generateDefaultSortParams(
-        columns.value!,
-      ))
+      apiListParams.value.sort = generateSortParams<T>(generateDefaultSortParams(columns.value))
 
       // commit change, make this version a default version
       commitParams()
