@@ -118,7 +118,7 @@ function getTitle(item: WTable.Column<T>) {
         <template #default>
           <div id="tableSortable" ref="tableColumnSettingRef">
             <div
-              v-for="item in tableColumns.filter(i => i.type !== 'selection')"
+              v-for="item in tableColumns"
               :key="item.key"
               class="mx-1 my-2 hstack justify-between"
               :class="[
