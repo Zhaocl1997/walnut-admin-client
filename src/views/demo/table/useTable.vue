@@ -109,7 +109,7 @@ const [register] = useTable<DemoData>({
       key: 'action',
       width: 100,
       extendType: 'action',
-      actionButtons: [
+      columnBuiltInActions: [
         {
           _builtInType: 'detail',
           onPresetClick(data, _index) {

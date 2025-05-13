@@ -126,7 +126,7 @@ const [
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        actionButtons: [
+        columnBuiltInActions: [
           {
             _builtInType: 'detail',
           },

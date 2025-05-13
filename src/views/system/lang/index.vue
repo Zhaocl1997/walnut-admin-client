@@ -124,7 +124,7 @@ const [
         width: 100,
         extendType: 'action',
         fixed: 'right',
-        actionButtons: [
+        columnBuiltInActions: [
           {
             _builtInType: 'read',
             async onPresetClick(rowData) {

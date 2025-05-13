@@ -229,7 +229,7 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
         width: 80,
         extendType: 'action',
         fixed: 'right',
-        actionButtons: [
+        columnBuiltInActions: [
           {
             _builtInType: 'detail',
           },

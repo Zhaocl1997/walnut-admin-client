@@ -143,7 +143,7 @@ const [
         width: 160,
         extendType: 'action',
         fixed: 'right',
-        actionButtons: [
+        columnBuiltInActions: [
           {
             _builtInType: 'read',
             async onPresetClick(rowData) {
