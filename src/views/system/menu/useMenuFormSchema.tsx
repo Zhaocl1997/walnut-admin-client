@@ -84,6 +84,7 @@ export function useMenuFormSchema(
         defaultValue: true,
         componentProps: {
           button: true,
+          valueType: 'boolean',
         },
       },
       visibleProp: {

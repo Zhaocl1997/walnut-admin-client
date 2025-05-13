@@ -12,16 +12,18 @@ defineOptions({
   name: 'Menu',
 })
 
+const keyField = '_id'
+
 const { t } = useAppI18n()
 
 // ref
 const actionType = ref<IActionType>('create')
-const targetTreeItem = ref()
+const targetTreeItem = ref<string>()
 
 const loading = ref(false)
 
 // state
-const { stateRef: formData, resetState: resetFormData } = useState<AppSystemMenu>({
+const { stateRef: formData, resetState: resetFormData, commit } = useState<AppSystemMenu>({
   type: 'catalog',
   status: true,
 
@@ -46,6 +48,8 @@ const { stateRef: formData, resetState: resetFormData } = useState<AppSystemMenu
   animationName: null,
 })
 
+commit()
+
 const { getLeftMenu, getTreeSelect, onInit, menuActiveNamesOptions }
     = useMenuTree()
 
@@ -62,17 +66,19 @@ const [registerTree] = useTree<AppSystemMenu>({
   },
 
   onTreeNodeItemDelete: async (deleted) => {
-    await menuAPI.delete(deleted._id!)
+    await menuAPI.delete(deleted[keyField])
     useAppMsgSuccess()
+    resetFormData()
     await onInit()
+    targetTreeItem.value = undefined
   },
 
   onPaste(copy, current) {
     // paste is just reset the pid, also need to remove some fields
 
     formData.value = {
-      ...omit(copy, ['_id', 'createdAt', 'updatedAt']),
-      pid: current._id,
+      ...omit(copy, [keyField, 'createdAt', 'updatedAt']),
+      pid: current[keyField],
     }
     actionType.value = 'create'
   },
@@ -80,7 +86,7 @@ const [registerTree] = useTree<AppSystemMenu>({
   treeProps: {
     // @ts-expect-error actually works
     data: getLeftMenu,
-    keyField: '_id',
+    keyField,
     blockLine: true,
     blockNode: true,
     disabled: computed(() => loading.value),
@@ -148,10 +154,10 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
               loading.value = true
 
               try {
-                await menuAPI[actionType.value](formData.value)
+                await menuAPI[actionType.value](omit(formData.value, 'children'))
                 useAppMsgSuccess()
                 resetFormData()
-                onInit()
+                await onInit()
                 targetTreeItem.value = undefined
               }
               finally {
@@ -167,6 +173,7 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
             onClick: async () => {
               await restoreValidation()
               resetFormData()
+              targetTreeItem.value = undefined
               actionType.value = 'create'
             },
           },
@@ -176,21 +183,22 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
   ] as IDeepMaybeRef<WForm.Schema.Item<AppSystemMenu>>[],
 })
 
-watch(() => targetTreeItem.value, async () => {
-  if (targetTreeItem.value) {
-    const res = await menuAPI.read(targetTreeItem.value)
-    actionType.value = 'update'
-    formData.value = Object.assign(formData.value, res)
-  }
-  else {
-    actionType.value = 'create'
-    resetFormData()
-  }
+watch(
+  () => targetTreeItem.value,
+  async () => {
+    if (targetTreeItem.value) {
+      const res = await menuAPI.read(targetTreeItem.value)
+      actionType.value = 'update'
+      formData.value = Object.assign(formData.value, res)
+    }
+    else {
+      actionType.value = 'create'
+      resetFormData()
+    }
 
-  restoreValidation()
-})
-
-// TODO why this page initial echart & oss ?
+    restoreValidation()
+  },
+)
 </script>
 
 <template>
