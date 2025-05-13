@@ -121,8 +121,8 @@ const getToolBarOptions = computed((): DropdownOption[] => [
   },
 ])
 
-const getKeyField = computed(() => getProps.value.treeProps!.keyField!)
-const getTreeData = computed(() => getProps.value.treeProps!.data!)
+const getKeyField = computed(() => getProps.value.treeProps?.keyField)
+const getTreeData = computed(() => getProps.value.treeProps?.data)
 
 const contextMenuOptions = computed<DropdownMixedOption[]>(() => [
   {
@@ -335,10 +335,8 @@ function onRenderSuffix({ option }: TreeRenderProps) {
 
 async function onFeedback() {
   if (getProps.value.multiple && Array.isArray(value.value)) {
-    if (!value.value.length) {
+    if (!value.value || !value.value.length) {
       checkedKeys.value = []
-      indeterminateKeys.value = []
-      expandedKeys.value = []
       return
     }
 
@@ -366,6 +364,11 @@ async function onFeedback() {
     }
   }
   else {
+    if (!value.value) {
+      selectedKeys.value = []
+      return
+    }
+
     selectedKeys.value = [value.value] as TreeKey[]
 
     if (getTreeData.value) {
