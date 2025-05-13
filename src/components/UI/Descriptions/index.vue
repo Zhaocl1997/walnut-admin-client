@@ -1,5 +1,5 @@
-<script lang="tsx" setup>
-import type { ICompUIDescriptionProps, ICompUIDescriptionsItem, ICompUIDescTypeDict, ICompUIDescTypeLink } from '.'
+<script lang="tsx" setup  generic="T">
+import type { ICompUIDescriptionProps, ICompUIDescriptionsItem, ICompUIDescTypeLink } from '.'
 import { omit } from 'lodash-es'
 
 defineOptions({
@@ -10,24 +10,28 @@ const { items, colon = false } = defineProps<ICompUIDescriptionProps>()
 
 const { t } = useAppI18n()
 
-const showDict = ref(false)
+const getData = computed(() => Object.fromEntries<BaseDataType>(items.map<[string, BaseDataType]>(i => [i.key!, i.value])))
 
-const getData = computed(() => Object.fromEntries<StringOrNumber>(items.map<[string, StringOrNumber]>(i => [i.key!, i.value])))
-
-const getShowItem = computed(() => items.filter(i => getBoolean(i.show)))
+const getShowItem = computed<ICompUIDescriptionsItem[]>(() => items.filter(i => getBoolean(i.show)))
 
 function onClickText(item: ICompUIDescriptionsItem) {
-  openExternalLink((item as ICompUIDescTypeLink).typeProps!.link)
+  openExternalLink((item as ICompUIDescTypeLink<T>).typeProps!.link)
 }
 
-onMounted(async () => {
+function onFormat(item: ICompUIDescriptionsItem) {
+  return (typeof item.formatter === 'function'
+    ? item.formatter(item.value, getData)
+    : item.value) || t('app.base.none')
+}
+
+const showDict = ref(false)
+onBeforeMount(async () => {
   if (items.some(i => i.type === 'dict')) {
-    await initDict(items.filter(i => i.type === 'dict').map(i => (i as ICompUIDescTypeDict).dictType))
+    const dictTypes = items.filter(i => i.type === 'dict').map(i => i.typeProps.dictType)
+    await initDict(dictTypes)
     showDict.value = true
   }
 })
-
-defineExpose({})
 </script>
 
 <template>
@@ -43,7 +47,7 @@ defineExpose({})
             v-if="item.type === 'tag'"
             v-bind="item.typeProps"
           >
-            {{ item.value }}
+            {{ onFormat(item) }}
           </n-tag>
 
           <n-text
@@ -52,7 +56,7 @@ defineExpose({})
             class="cursor-pointer"
             @click="onClickText(item)"
           >
-            {{ item.value }}
+            {{ onFormat(item) }}
           </n-text>
 
           <WJSON
@@ -62,15 +66,13 @@ defineExpose({})
           />
 
           <WDictLabel
-            v-else-if="item.type === 'dict'"
-            :dict-type="item.dictType"
+            v-else-if="showDict && item.type === 'dict'"
+            :dict-type="item.typeProps.dictType"
             :dict-value="item.value"
           />
 
           <span v-else class="whitespace-pre-wrap break-all">
-            {{ (typeof item.formatter === 'function'
-              ? item.formatter(item.value, getData)
-              : item.value) || t('app.base.none') }}
+            {{ onFormat(item) }}
           </span>
         </div>
       </template>

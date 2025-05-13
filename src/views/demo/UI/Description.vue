@@ -84,16 +84,20 @@ const descs: ICompUIDescriptionsItem[] = [
   {
     key: '6',
     type: 'dict',
-    dictType: 'gbt_sex',
+    typeProps: {
+      dictType: 'gbt_sex',
+    },
     label: 'Dict label 1',
     value: '1',
   },
   {
     key: '7',
     type: 'dict',
-    dictType: 'gbt_sex',
+    typeProps: {
+      dictType: 'sys_shared_status',
+    },
     label: 'Dict label 2',
-    value: '9',
+    value: true,
     labelClass: 'text-red',
     contentClass: 'my-2',
   },

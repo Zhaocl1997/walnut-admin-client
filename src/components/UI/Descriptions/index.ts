@@ -3,37 +3,34 @@ import type { DescriptionItemProps, DescriptionsProps, TagProps, TextProps } fro
 
 export { default } from './index.vue'
 
-export interface ICompUIDescTypeTag {
-  type: 'tag'
-  typeProps: TagProps
+export interface ICompUIDescTypeTag<T> extends ICompUIDescItemExtend<T, TagProps> {
+  type?: 'tag'
 }
 
-export interface ICompUIDescTypeLink {
-  type: 'link'
-  typeProps: TextProps & {
-    link: string
-  }
+export interface ICompUIDescTypeLink<T> extends ICompUIDescItemExtend<T, TextProps & {
+  link?: string
+}> {
+  type?: 'link'
 }
 
-export interface ICompUIDescTypeJson {
-  type: 'json'
-  typeProps: ICompExtraJSONProps
+export interface ICompUIDescTypeJson<T> extends ICompUIDescItemExtend<T, ICompExtraJSONProps> {
+  type?: 'json'
 }
 
-export interface ICompUIDescTypeDict {
-  type: 'dict'
-  dictType: string
+export interface ICompUIDescTypeDict<T> extends ICompUIDescItemExtend<T, { dictType?: string }> {
+  type?: 'dict'
 }
 
-export interface ICompUIDescItemExtend<T> {
+export interface ICompUIDescItemExtend<T, P> extends DescriptionItemProps {
   key?: string
   show?: boolean
-  value: StringOrNumber
-  formatter?: (val: StringOrNumber, record?: T) => string
+  value: BaseDataType
+  formatter?: (val: BaseDataType, record?: T) => string
+  typeProps?: P
 }
 
-export type ICompUIDescriptionsItem<D = any> = DescriptionItemProps & ICompUIDescItemExtend<D> &
-  (Partial<ICompUIDescTypeTag | ICompUIDescTypeLink | ICompUIDescTypeJson> | ICompUIDescTypeDict)
+export type ICompUIDescriptionsItem<D = any> =
+  ICompUIDescTypeTag<D> | ICompUIDescTypeLink<D> | ICompUIDescTypeJson<D> | ICompUIDescTypeDict<D>
 
 export interface ICompUIDescriptionProps extends /* @vue-ignore */ DescriptionsProps {
   items: ICompUIDescriptionsItem[]

@@ -2,5 +2,5 @@ export { default } from './index.vue'
 
 export interface ICompBusinessDictLabelProps {
   dictType: string
-  dictValue: StringOrNumber
+  dictValue: BaseDataType
 }

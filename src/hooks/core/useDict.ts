@@ -19,7 +19,7 @@ export function getDictDataFromMap(type: string) {
   return getDictFromMap(type)?.dictData
 }
 
-export function getDictTarget(type: string, value: StringOrNumber) {
+export function getDictTarget(type: string, value: BaseDataType) {
   return getDictDataFromMap(type)?.find(i => i.value === value)
 }
 
@@ -38,12 +38,12 @@ export async function initDict(types: string | string[]): Promise<void> {
     setDictIntoMap(types, res[0])
   }
   else {
-    await Promise.allSettled(types.map(async (type) => {
-      if (AppStoreMapDict.value.has(type))
-        return
-      const res = await getDictByType(type)
-      setDictIntoMap(type, res.find(i => i.type === type)!)
-    }))
+    const nonExistedDictTypes = types.filter(type => !Array.from(AppStoreMapDict.value.keys()).includes(type))
+    if (!nonExistedDictTypes.length) {
+      return
+    }
+    const res = await getDictByType(nonExistedDictTypes)
+    nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)))
   }
 }
 
@@ -90,7 +90,7 @@ export function useDict(types: string | string[]) {
           return getDictDataFromTypes(types)
         }
         const res = await getDictByType(nonExistedDictTypes)
-        nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)!))
+        nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)))
         return getDictDataFromTypes(types)
       }
     }
