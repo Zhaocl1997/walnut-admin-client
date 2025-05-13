@@ -36,9 +36,8 @@ watch(
   { immediate: true },
 )
 
-function onKeyup(e: KeyboardEvent) {
-  if (e.code === 'Enter' || e.code === 'NumpadEnter')
-    emits('submit')
+function onKeyup() {
+  emits('submit')
 }
 </script>
 
@@ -57,7 +56,7 @@ function onKeyup(e: KeyboardEvent) {
           :input-props="{
             autocomplete: 'current-password',
           }"
-          @keyup="onKeyup"
+          @keyup.enter="onKeyup"
           @focus="onTargetFocus"
           @blur="onTargetBlur"
         />

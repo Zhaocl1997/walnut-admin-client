@@ -55,15 +55,13 @@ const rule: FormItemRule = {
   },
 }
 
-function onKeyup(e: KeyboardEvent) {
-  if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-    if (inputValue.value !== props.value) {
-      inputValid.value = false
-      useAppMsgError(t('app.authorize.iptc.error'))
-    }
-    else {
-      onSuccess()
-    }
+function onKeyup() {
+  if (inputValue.value !== props.value) {
+    inputValid.value = false
+    useAppMsgError(t('app.authorize.iptc.error'))
+  }
+  else {
+    onSuccess()
   }
 }
 </script>
@@ -90,7 +88,7 @@ function onKeyup(e: KeyboardEvent) {
           clearable
           type="password"
           :status="inputValid ? 'success' : 'warning'"
-          @keyup="onKeyup"
+          @keyup.enter="onKeyup"
           @clear="inputValid = true"
         />
       </n-form-item>
