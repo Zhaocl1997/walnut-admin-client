@@ -106,8 +106,8 @@ export declare namespace WForm {
       onYes?: (
         apiHandler: (apiFn: Fn, params: Recordable) => Promise<void>,
         done: () => void
-      ) => void
-      onNo?: (close: Fn) => void
+      ) => void | Promise<void>
+      onNo?: (close: Fn) => void | Promise<void>
     }
 
     }
