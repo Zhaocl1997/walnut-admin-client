@@ -102,7 +102,6 @@ export declare namespace WForm {
       // rewrite
       validate: (fields?: (keyof T)[]) => Promise<boolean>
 
-      // TODO wtf
       onYes?: (
         apiHandler: (apiFn: Fn, params: Recordable) => Promise<void>,
         done: () => void
@@ -214,7 +213,7 @@ export declare namespace WForm {
       /**
        * @description description props
        */
-      descriptionProps?: ICompUIDescriptionProps
+      descriptionProps?: Omit<ICompUIDescriptionProps, 'items'>
     }
 
     /**

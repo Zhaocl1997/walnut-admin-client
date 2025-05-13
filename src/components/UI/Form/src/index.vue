@@ -4,8 +4,6 @@ import type { WForm } from './types'
 import { omit } from 'lodash-es'
 
 import WFormItem from '../src/components/FormItem/index.vue'
-import WFormItemExtendDivider from './components/Extend/Divider'
-import WFormItemExtendQuery from './components/Extend/Query'
 
 import { setFormContext } from './hooks/useFormContext'
 
@@ -19,7 +17,6 @@ import { calculateRemainingSpans, extendedFormPropKeys, formItemUtils as FIU, ge
 defineOptions({
   name: 'WCompUIForm',
 })
-
 const props = withDefaults(defineProps<WForm.Props<T> & { class?: string }>(), {
   labelAlign: 'right',
   labelPlacement: 'left',
@@ -35,8 +32,10 @@ const props = withDefaults(defineProps<WForm.Props<T> & { class?: string }>(), {
   baseRules: false,
   visibleMode: 'auto-forward',
 })
-
 const emits = defineEmits<WForm.Emits<T>>()
+const WFormItemExtendDivider = createAsyncComponent(() => import('./components/Extend/Divider'))
+const WFormItemExtendQuery = createAsyncComponent(() => import('./components/Extend/Query'))
+const WFormExtendDesc = createAsyncComponent(() => import('./components/Extend/Desc'))
 
 const { t } = useAppI18n()
 
@@ -133,7 +132,8 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
 
 <template>
   <DefineForm>
-    <n-form ref="formRef" v-bind="getFormProps" :rules="getFormRules">
+    <WFormExtendDesc v-if="getProps.useDescription" />
+    <n-form v-else ref="formRef" v-bind="getFormProps" :rules="getFormRules">
       <div
         class="relative grid"
         :style="{
