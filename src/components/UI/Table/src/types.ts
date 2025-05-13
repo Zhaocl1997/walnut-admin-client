@@ -298,7 +298,7 @@ export declare namespace WTable {
       /**
        * @description builtIn button, support `create` / `read` / `delete` / `detail`
        */
-      _builtInType: ColumnActionType
+      _builtInType: ColumnActionType | string
 
       /**
        * @description click event, do not use buttonProps.onClick
@@ -385,10 +385,14 @@ export declare namespace WTable {
     type Action<T = Recordable> = BaseExtend<T, 'action'> & {
 
       /**
-       * @description action column button config
+       * @description built in action buttons
        */
-      actionButtons: ActionButtons<T>[]
+      columnBuiltInActions: ActionButtons<T>[]
+
+      /**
+       * @description extra action buttons
+       */
+      columnExtraActions: ActionButtons<T>[]
     }
   }
-
 }

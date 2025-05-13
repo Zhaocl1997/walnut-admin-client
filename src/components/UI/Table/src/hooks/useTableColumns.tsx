@@ -1,10 +1,10 @@
 import type { DropdownOption } from 'naive-ui'
 import type { FilterOption } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
+import WAppNotAuthorized from '@/components/App/AppNotAuthorized'
 // TODO 111
 import WDictLabel from '@/components/Business/DictLabel'
 import WMessage from '@/components/Extra/Message'
-import WButton from '@/components/UI/Button'
 import WIcon from '@/components/UI/Icon'
 import WIconButton from '@/components/UI/IconButton'
 import { omit } from 'lodash-es'
@@ -187,7 +187,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             },
           ]
 
-          const bs = toRaw(tItem.actionButtons)
+          const bs = toRaw(tItem.columnBuiltInActions.concat(toRaw(tItem?.columnExtraActions ?? [])))
             .sort((a, b) => getBoolean(a._dropdown, false) - getBoolean(b._dropdown, false))
             .map((item) => {
               const button = defaultBuiltInButtons.find(b => b._builtInType === item._builtInType)
@@ -199,6 +199,16 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             target && target.onPresetClick(rowData, rowIndex)
           }
 
+          const renderDropdownEmpty: DropdownOption[] = [
+            {
+              type: 'render',
+              key: 'empty',
+              render: () => {
+                return <div class="scale-80 px-2"><WAppNotAuthorized preset-width="100%" perset-height="100px"></WAppNotAuthorized></div>
+              },
+            },
+          ]
+
           return {
             ...tItem,
 
@@ -207,10 +217,11 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               const isDisabled = (i: WTable.ExtendType.ActionButtons<T>) => getFunctionBoolean(i._disabled, rowData, false)
 
               const visibleButtons = bs.filter(i => isShow(i)).map(i => omit(i, '_show'))
+
               const normalButtons = visibleButtons.filter(i => !i._dropdown).map(i => omit(i, '_dropdown'))
               const dropdownButtons = visibleButtons.filter(i => i._dropdown).map(i => omit(i, '_dropdown'))
 
-              const renderButton = i => (
+              const renderButton = (i: WTable.ExtendType.ActionButtons<T>) => (
                 <WIconButton
                   button-props={{
                     ...i.buttonProps,
@@ -226,36 +237,31 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
               const renderNormalButtons = normalButtons.map(renderButton)
 
-              const dropdownOptions: DropdownOption[] = dropdownButtons.map(i => i.iconProps?.icon
-                ? {
-                    type: 'render',
-                    key: i._builtInType,
-                    disabled: isDisabled(i),
-                    // the show below is actually used for permission
-                    // the button that do not shown has been filtered early
-                    show: userPermission.hasPermission(i.buttonProps.auth),
-                    render: i?.iconProps?.icon ? () => <div class="mx-2">{renderButton(i)}</div> : undefined,
-                  }
-                : {
-                    key: i._builtInType,
-                    label: i.buttonProps.textProp,
-                    disabled: isDisabled(i),
-                    // the show below is actually used for permission
-                    // the button that do not shown has been filtered early
-                    show: userPermission.hasPermission(i.buttonProps.auth),
-                  })
+              const dropdownOptions: DropdownOption[]
+              = dropdownButtons
+                .filter(i => userPermission.hasPermission(i.buttonProps?.auth))
+                .map(i => i.iconProps?.icon
+                  ? {
+                      type: 'render',
+                      key: i._builtInType,
+                      disabled: isDisabled(i),
+                      render: i?.iconProps?.icon ? () => <div class="mx-2">{renderButton(i)}</div> : undefined,
+                    }
+                  : {
+                      key: i._builtInType,
+                      label: i.buttonProps.textProp,
+                      disabled: isDisabled(i),
+                    })
 
               return (
                 <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">
                   {renderNormalButtons}
 
-                  {dropdownButtons.length !== 0 && (
-                    <NDropdown size="small" trigger="click" options={dropdownOptions} onSelect={key => onDropdownSelect(key, rowData, rowIndex)}>
-                      <div>
-                        <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: false }}></WIconButton>
-                      </div>
-                    </NDropdown>
-                  )}
+                  <NDropdown size="small" trigger="click" options={dropdownOptions.length ? dropdownOptions : renderDropdownEmpty} onSelect={key => onDropdownSelect(key, rowData, rowIndex)}>
+                    <div>
+                      <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: false }}></WIconButton>
+                    </div>
+                  </NDropdown>
                 </div>
               )
             },
