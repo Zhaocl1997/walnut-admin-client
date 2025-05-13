@@ -335,11 +335,6 @@ function onRenderSuffix({ option }: TreeRenderProps) {
 
 async function onFeedback() {
   if (getProps.value.multiple && Array.isArray(value.value)) {
-    if (!value.value || !value.value.length) {
-      checkedKeys.value = []
-      return
-    }
-
     if (cascade.value) {
       checkedKeys.value = (value.value)?.filter(i => getBottomChildKeys.value.includes(i))
       indeterminateKeys.value = (value.value)?.filter(i => !getBottomChildKeys.value.includes(i))
@@ -364,11 +359,6 @@ async function onFeedback() {
     }
   }
   else {
-    if (!value.value) {
-      selectedKeys.value = []
-      return
-    }
-
     selectedKeys.value = [value.value] as TreeKey[]
 
     if (getTreeData.value) {
@@ -379,14 +369,60 @@ async function onFeedback() {
   }
 }
 
-watch(
+// multiple feedback
+const { stop: stopMultiple } = watch(
   () => value.value,
   async () => {
-    await nextTick()
-    await onFeedback()
+    if (getProps.value.multiple && Array.isArray(value.value)) {
+      if (value.value.length) {
+        await nextTick()
+        await onFeedback()
+        stopMultiple()
+      }
+    }
   },
   {
     immediate: true,
+    deep: true,
+  },
+)
+
+// single feedback
+const { stop: stopSingle } = watch(
+  () => value.value,
+  async () => {
+    if (!getProps.value.multiple) {
+      if (value.value) {
+        await nextTick()
+        await onFeedback()
+        stopSingle()
+      }
+    }
+  },
+  {
+    immediate: true,
+    deep: true,
+  },
+)
+
+// empty watch only
+watch(
+  () => value.value,
+  (v) => {
+    if (getProps.value.multiple) {
+      if (!v || !(v as []).length) {
+        checkedKeys.value = []
+      }
+    }
+    else {
+      if (!v) {
+        selectedKeys.value = []
+      }
+    }
+  },
+  {
+    immediate: true,
+    deep: true,
   },
 )
 
