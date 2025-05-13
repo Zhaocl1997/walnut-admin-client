@@ -66,7 +66,6 @@ const [
     onApiList,
     onApiDelete,
     onApiDeleteMany,
-    onGetApiListParams,
   },
 ] = useTable<T>(getTableProps)
 
@@ -140,7 +139,7 @@ emit('hook', {
   onGetFormData: () => formData,
   onGetActionType: () => actionType,
 
-  // onApiList,
+  onApiList,
   // onApiDelete,
   // onApiDeleteMany,
   // onGetApiListParams: () => onGetApiListParams(),

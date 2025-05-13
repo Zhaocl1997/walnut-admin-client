@@ -23,9 +23,9 @@ export function useCRUD<T>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.Use
       await wCrudRef.value?.onDeleteManyConfirm(),
     onGetFormData: () => wCrudRef.value?.onGetFormData(),
     onGetActionType: () => wCrudRef.value?.onGetActionType(),
+    onApiList: async () => await wCrudRef.value?.onApiList(),
     // onGetApiTableListParams: () => wCrudRef.value?.onGetApiTableListParams()!,
     // onApiTableCloseForm: () => wCrudRef.value?.onApiTableCloseForm()!,
-    // onApiTableList: async () => await wCrudRef.value?.onApiTableList(),
   }
 
   return [register, methods]

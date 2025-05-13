@@ -42,10 +42,10 @@ export declare namespace WCrud {
       onDeleteManyConfirm: () => Promise<T[]>
       onGetFormData: () => Ref<T>
       onGetActionType: () => Ref<IActionType>
+      onApiList: () => Promise<void>
 
       // onApiTableDeleteMany: () => Promise<void>
       // onGetApiTableListParams: () => Ref<WalnutBaseListParams<T>>
-      // onApiTableList: () => Promise<void>
       // onApiTableCloseForm: Fn
     }
   }
