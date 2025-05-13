@@ -10,7 +10,7 @@ export const userAPI = new BaseAPI<AppSystemUser>({
  */
 export function resetPassowrd(data: { userId: string }) {
   return AppAxios.patch<boolean>({
-    url: '/system/user/password/reset',
+    url: `/system/user/password/reset/${data.userId}`,
     data,
   })
 }
@@ -20,8 +20,10 @@ export function resetPassowrd(data: { userId: string }) {
  */
 export function updatePassowrd(data: { userId: string, newPassword: string }) {
   return AppAxios.patch<boolean>({
-    url: '/system/user/password/update',
-    data,
+    url: `/system/user/password/update/${data.userId}`,
+    data: {
+      newPassword: data.newPassword,
+    },
     _autoEncryptRequestDataFields: ['newPassword'],
   })
 }
