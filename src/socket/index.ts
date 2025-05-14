@@ -32,6 +32,6 @@ export function setupSocket() {
   AppSocket.on(AppSocketEvents.FORCE_QUIT, async (fingerprint) => {
     const userAuth = useAppStoreUserAuth()
 
-    await userAuth.Signout(true, fingerprint)
+    await userAuth.Signout(fingerprint)
   })
 }

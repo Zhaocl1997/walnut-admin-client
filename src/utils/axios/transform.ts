@@ -44,10 +44,6 @@ export const transform: WalnutAxiosTransform = {
     if (config._sleep)
       config.headers['x-sleep'] = config._sleep
 
-    // scoped permission in header
-    if (config._scoped_permission)
-      config.headers['x-scoped-permission'] = config._scoped_permission
-
     // carry token
     if (getBoolean(config._carryToken))
       userAuth.accessToken && setTokenHeader(config, userAuth.accessToken)
@@ -114,7 +110,7 @@ export const transform: WalnutAxiosTransform = {
 
     // refresh token is expired, so this user need to signout and re-signin
     if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
-      await userAuth.Signout(false)
+      await userAuth.Signout()
       return Promise.reject(new Error('Error'))
     }
 

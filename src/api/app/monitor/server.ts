@@ -74,11 +74,10 @@ export function getOSInfo() {
   })
 }
 
-export function getSysInfo(scopePermission?: string) {
+export function getSysInfo() {
   return AppAxios.get<IServerInfo.System>(
     {
       url: '/app/monitor/server/sys',
-      _scoped_permission: scopePermission,
     },
   )
 }
@@ -101,11 +100,10 @@ export function getTimeInfo() {
   })
 }
 
-export function getNetworkInfo(scopePermission?: string) {
+export function getNetworkInfo() {
   return AppAxios.get<IServerInfo.Network>(
     {
       url: '/app/monitor/server/network',
-      _scoped_permission: scopePermission,
     },
   )
 }

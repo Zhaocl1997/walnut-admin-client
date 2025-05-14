@@ -9,8 +9,6 @@ defineOptions({
   defaultView: false,
 })
 
-const props = defineProps<{ networkPermission: string }>()
-
 const { t } = useAppI18n()
 
 const info = ref<IServerInfo.Network>()
@@ -27,7 +25,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getNetworkInfo(props.networkPermission)
+    const res = await getNetworkInfo()
 
     info.value = res
   }

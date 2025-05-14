@@ -35,11 +35,6 @@ declare module 'axios' {
     _transformStringBoolean?: boolean
 
     /**
-     * scoped permissions usage, need endpoint support
-     */
-    _scoped_permission?: string
-
-    /**
      * auto decrypt response data with `crypto-js`
      */
     _autoDecryptResponseData?: booloean

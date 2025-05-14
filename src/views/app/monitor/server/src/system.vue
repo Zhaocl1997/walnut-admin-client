@@ -9,8 +9,6 @@ defineOptions({
   defaultView: false,
 })
 
-const props = defineProps<{ systemPermission: string }>()
-
 const { t } = useAppI18n()
 
 const info = ref<IServerInfo.System>()
@@ -27,7 +25,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getSysInfo(props.systemPermission)
+    const res = await getSysInfo()
 
     info.value = res
   }

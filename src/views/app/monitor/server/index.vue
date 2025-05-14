@@ -11,17 +11,6 @@ import AppMonitorServerTime from './src/time.vue'
 defineOptions({
   name: 'AppMonitorServer',
 })
-
-const systemPermission = ref()
-const networkPermission = ref()
-
-function onSystemAuthorizeSuccess(p: string) {
-  systemPermission.value = p
-}
-
-function onNetworkAuthorizeSuccess(p: string) {
-  networkPermission.value = p
-}
 </script>
 
 <template>
@@ -40,7 +29,7 @@ function onNetworkAuthorizeSuccess(p: string) {
         </n-grid-item>
 
         <n-grid-item>
-          <w-app-authorize
+          <WAppAuthorize
             value="app:monitor:server:memory"
             preset="tip"
             preset-width="100%"
@@ -49,7 +38,7 @@ function onNetworkAuthorizeSuccess(p: string) {
             <WTransition transition-name="fade-down" appear :duration="400">
               <AppMonitorServerMem />
             </WTransition>
-          </w-app-authorize>
+          </WAppAuthorize>
         </n-grid-item>
 
         <n-grid-item>
@@ -59,19 +48,16 @@ function onNetworkAuthorizeSuccess(p: string) {
         </n-grid-item>
 
         <n-grid-item>
-          <w-app-authorize
+          <WAppAuthorize
             value="app:monitor:server:system"
-            preset="IPTC"
+            preset="tip"
             preset-width="100%"
             preset-height="230px"
-            @iptc-success="onSystemAuthorizeSuccess"
           >
             <WTransition transition-name="fade-down" appear :duration="600">
-              <AppMonitorServerSystem
-                :system-permission="systemPermission"
-              />
+              <AppMonitorServerSystem />
             </WTransition>
-          </w-app-authorize>
+          </WAppAuthorize>
         </n-grid-item>
       </n-grid>
     </n-grid-item>
@@ -97,19 +83,16 @@ function onNetworkAuthorizeSuccess(p: string) {
         </n-grid-item>
 
         <n-grid-item>
-          <w-app-authorize
+          <WAppAuthorize
             value="app:monitor:server:network"
-            preset="IPTC"
+            preset="tip"
             preset-width="100%"
             preset-height="230px"
-            @iptc-success="onNetworkAuthorizeSuccess"
           >
             <WTransition transition-name="fade-down" appear :duration="1000">
-              <AppMonitorServerNetwork
-                :network-permission="networkPermission"
-              />
+              <AppMonitorServerNetwork />
             </WTransition>
-          </w-app-authorize>
+          </WAppAuthorize>
         </n-grid-item>
       </n-grid>
     </n-grid-item>
