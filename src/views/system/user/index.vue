@@ -176,7 +176,6 @@ const [
       {
         ...WTablePresetStatusColumn,
         sorter: {
-          // @ts-expect-error fk sort
           multiple: 3,
         },
       },
@@ -184,7 +183,6 @@ const [
       {
         ...WTablePresetCreatedAtColumn,
         sorter: {
-          // @ts-expect-error fk sort
           multiple: 1,
         },
       },
@@ -192,7 +190,6 @@ const [
       {
         ...WTablePresetUpdatedAtColumn,
         sorter: {
-          // @ts-expect-error fk sort
           multiple: 2,
         },
       },

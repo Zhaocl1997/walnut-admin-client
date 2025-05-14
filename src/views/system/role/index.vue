@@ -88,7 +88,6 @@ const [
         key: 'roleName',
         width: 200,
         sorter: {
-          // @ts-expect-error fk sort
           multiple: 5,
         },
       },
@@ -109,7 +108,6 @@ const [
       {
         ...WTablePresetOrderColumn,
         sorter: {
-          // @ts-expect-error fk sort
           multiple: 4,
         },
       },
@@ -117,7 +115,6 @@ const [
       {
         ...WTablePresetStatusColumn,
         sorter: {
-          // @ts-expect-error fk sort
           multiple: 3,
         },
       },
@@ -125,7 +122,6 @@ const [
       {
         ...WTablePresetCreatedAtColumn,
         sorter: {
-          // @ts-expect-error fk sort
           multiple: 2,
         },
       },
@@ -133,7 +129,6 @@ const [
       {
         ...WTablePresetUpdatedAtColumn,
         sorter: {
-          // @ts-expect-error fk sort
           multiple: 1,
         },
       },

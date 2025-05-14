@@ -117,7 +117,6 @@ const [
       {
         key: 'key',
         width: 300,
-        // @ts-expect-error fk sort
         sorter: true,
         fixed: 'left',
       },
@@ -131,13 +130,11 @@ const [
 
       {
         ...WTablePresetCreatedAtColumn,
-        // @ts-expect-error fk sort
         sorter: true,
       },
 
       {
         ...WTablePresetUpdatedAtColumn,
-        // @ts-expect-error fk sort
         sorter: true,
       },
 
