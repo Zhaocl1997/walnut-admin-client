@@ -47,16 +47,16 @@ const getPercentLevel = computed(() => level.value * 100)
 
 @for $i from 0 through 15 {
   li:nth-child(#{$i}) {
-    $width: 15 + random(15) + px;
-    left: 15 + random(70) + px;
+    $width: 15 + math.random(15) + px;
+    left: 15 + math.random(70) + px;
     top: 50%;
     transform: translate(-50%, -50%);
     width: $width;
     height: $width;
     animation: moveToTop
-      #{random(6) +
+      #{math.random(6) +
       3}s
-      ease-in-out -#{math.div(random(5000), 1000)}s
+      ease-in-out -#{math.div(math.random(5000), 1000)}s
       infinite;
   }
 }
