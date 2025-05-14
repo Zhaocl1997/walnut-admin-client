@@ -32,9 +32,6 @@ export function RefreshTokenLogic(config: AxiosRequestConfig) {
 
         return AppAxios.request(Object.assign(config, { _request_after_refresh_token: true }))
       })
-      .catch(() => {
-        userAuth.Signout(false)
-      })
       .finally(() => {
         isRefreshing = false
       })
