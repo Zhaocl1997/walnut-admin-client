@@ -5,7 +5,7 @@ export const logOperateAPI = new BaseAPI<AppSystemLogOperate>({
   section: 'log/operate',
 })
 
-export const logAuthAPI = new BaseAPI<AppSystemLogSignin>({
+export const logAuthAPI = new BaseAPI<AppSystemLogAuth>({
   model: 'system',
   section: 'log/auth',
 })

@@ -41,10 +41,7 @@ const [
 
     auths: {
       list: `system:${authKey}:list`,
-      create: `system:${authKey}:create`,
       read: `system:${authKey}:read`,
-      update: `system:${authKey}:update`,
-      delete: `system:${authKey}:delete`,
       deleteMany: `system:${authKey}:deleteMany`,
     },
 

@@ -235,7 +235,7 @@ declare global {
   }
 
   // system signin log
-  interface AppSystemLogSignin extends AppBaseModel {
+  interface AppSystemLogAuth extends AppBaseModel {
     ip?: string
     location?: string
     os?: string

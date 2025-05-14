@@ -7,35 +7,37 @@ defineOptions({
 
 // locale unique key
 const localeKey = 'log.auth'
+// auth key
 const authKey = 'log:auth'
+const keyField = '_id'
 
-const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
+const [register, {
+  onDeleteManyConfirm,
+  onApiList,
+  onGetApiListParams,
+}] = useCRUD<AppSystemLogAuth>({
   baseAPI: logAuthAPI,
 
   tableProps: {
     localeUniqueKey: localeKey,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
 
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'delete',
+        onPresetClick() {
+          onDeleteManyConfirm()
+        },
+      },
+    ],
+
     auths: {
       list: `system:${authKey}:list`,
       deleteMany: `system:${authKey}:deleteMany`,
-    },
-
-    headerActions: ['delete'],
-
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'delete':
-          onApiTableDeleteMany()
-          break
-
-        default:
-          break
-      }
     },
 
     queryFormProps: {
@@ -45,6 +47,7 @@ const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
       showFeedback: false,
       labelWidth: 80,
       yGap: 10,
+      // query form schemas
       schemas: [
         {
           type: 'Base:Input',
@@ -53,6 +56,9 @@ const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -63,6 +69,9 @@ const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -73,19 +82,27 @@ const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
         {
           type: 'Base:DatePicker',
           formProp: {
-            path: 'authTime',
+            path: 'authenticatedAt',
           },
           componentProp: {
             type: 'daterange',
             clearable: true,
             format: 'yyyy-MM-dd',
+            // TODO valueFormat seem not work in daterange
             valueFormat: 'yyyy-MM-dd',
+            onUpdateFormattedValue(v) {
+              const queryFormData = onGetApiListParams()
+              queryFormData.value.query.authenticatedAt = v
+            },
           },
         },
 
@@ -182,7 +199,7 @@ const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
       },
 
       {
-        key: 'authTime',
+        key: 'authenticatedAt',
         width: 200,
         sorter: true,
         defaultSortOrder: 'descend',
@@ -194,6 +211,7 @@ const [register, { onApiTableDeleteMany }] = useCRUD<AppSystemLogSignin>({
 
 <template>
   <div>
+    <!-- @vue-generic {AppSystemLogAuth} -->
     <WCRUD @hook="register" />
   </div>
 </template>
