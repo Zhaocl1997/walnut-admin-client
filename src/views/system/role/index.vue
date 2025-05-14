@@ -108,7 +108,7 @@ const [
 
       {
         ...WTablePresetOrderColumn,
-        defaultSortOrder: 'descend',
+        defaultSortOrder: 'ascend',
         sorter: {
           multiple: 4,
           compare: 'default',

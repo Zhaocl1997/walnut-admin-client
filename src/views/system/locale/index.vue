@@ -141,6 +141,7 @@ const [
 
       {
         ...WTablePresetUpdatedAtColumn,
+        defaultSortOrder: 'descend',
         sorter: {
           multiple: 3,
           compare: 'default',
