@@ -24,7 +24,7 @@ export function useCRUD<T>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.Use
     onGetFormData: () => wCrudRef.value?.onGetFormData(),
     onGetActionType: () => wCrudRef.value?.onGetActionType(),
     onApiList: async () => await wCrudRef.value?.onApiList(),
-    // onGetApiTableListParams: () => wCrudRef.value?.onGetApiTableListParams()!,
+    onGetApiListParams: () => wCrudRef.value?.onGetApiListParams(),
     // onApiTableCloseForm: () => wCrudRef.value?.onApiTableCloseForm()!,
   }
 

@@ -109,7 +109,7 @@ emits('hook', {
   onApiList,
   onApiDelete,
   onApiDeleteMany,
-  onGetApiListParams: () => listParams.apiListParams.value,
+  onGetApiListParams: () => listParams.apiListParams,
 })
 </script>
 

@@ -62,7 +62,7 @@ export declare namespace WTable {
       /**
        * @description get list params
        */
-      onGetApiListParams: () => WalnutBaseListParams<T>
+      onGetApiListParams: () => Ref<WalnutBaseListParams<T>>
 
     }
 
