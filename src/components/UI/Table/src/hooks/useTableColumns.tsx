@@ -52,6 +52,14 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
         const tItem = props.value.localeUniqueKey ? transformColumn(item) : item
 
+        // sorter in control
+        if (tItem.sorter) {
+          const sortOrder = apiListParams.value.sort.find(i => i.field === tItem.key)?.order
+          if (sortOrder) {
+            tItem.sortOrder = sortOrder
+          }
+        }
+
         // formatter
         if (tItem.extendType === 'formatter') {
           return {

@@ -139,7 +139,10 @@ const [
       {
         key: 'title',
         width: 100,
-        sorter: true,
+        sorter: {
+          multiple: 1,
+          compare: 'default',
+        },
       },
 
       {
@@ -147,14 +150,20 @@ const [
         width: 140,
         extendType: 'dict',
         dictType: 'sys_operate_type',
-        sorter: true,
+        sorter: {
+          multiple: 2,
+          compare: 'default',
+        },
         filter: true,
       },
 
       {
         key: 'method',
         width: 120,
-        sorter: true,
+        sorter: {
+          multiple: 3,
+          compare: 'default',
+        },
         filter: true,
         filterOptions: ['GET', 'POST', 'PUT', 'DELETE'].map(i => ({
           value: i,
@@ -165,7 +174,10 @@ const [
       {
         key: 'userName',
         width: 120,
-        sorter: true,
+        sorter: {
+          multiple: 4,
+          compare: 'default',
+        },
       },
 
       {
@@ -176,7 +188,10 @@ const [
       {
         key: 'success',
         width: 120,
-        sorter: true,
+        sorter: {
+          multiple: 5,
+          compare: 'default',
+        },
         extendType: 'dict',
         dictType: 'sys_shared_success',
         filter: true,
@@ -186,7 +201,10 @@ const [
       {
         key: 'operatedAt',
         width: 200,
-        sorter: true,
+        sorter: {
+          multiple: 6,
+          compare: 'default',
+        },
         defaultSortOrder: 'descend',
       },
 

@@ -138,6 +138,7 @@ const [
         ...WTablePresetOrderColumn,
         sorter: {
           multiple: 1,
+          compare: 'default',
         },
       },
 
@@ -161,6 +162,7 @@ const [
         ...WTablePresetStatusColumn,
         sorter: {
           multiple: 2,
+          compare: 'default',
         },
       },
 
@@ -168,6 +170,7 @@ const [
         ...WTablePresetCreatedAtColumn,
         sorter: {
           multiple: 3,
+          compare: 'default',
         },
       },
 
@@ -175,6 +178,7 @@ const [
         ...WTablePresetUpdatedAtColumn,
         sorter: {
           multiple: 4,
+          compare: 'default',
         },
       },
 

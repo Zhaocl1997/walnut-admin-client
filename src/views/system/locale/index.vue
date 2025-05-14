@@ -117,7 +117,10 @@ const [
       {
         key: 'key',
         width: 300,
-        sorter: true,
+        sorter: {
+          multiple: 1,
+          compare: 'default',
+        },
         fixed: 'left',
       },
 
@@ -130,12 +133,18 @@ const [
 
       {
         ...WTablePresetCreatedAtColumn,
-        sorter: true,
+        sorter: {
+          multiple: 2,
+          compare: 'default',
+        },
       },
 
       {
         ...WTablePresetUpdatedAtColumn,
-        sorter: true,
+        sorter: {
+          multiple: 3,
+          compare: 'default',
+        },
       },
 
       {

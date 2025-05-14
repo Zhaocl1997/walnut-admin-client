@@ -85,7 +85,10 @@ const [
       {
         key: 'key',
         minWidth: 250,
-        sorter: true,
+        sorter: {
+          multiple: 1,
+          compare: 'default',
+        },
       },
 
       {
@@ -100,25 +103,37 @@ const [
       {
         key: 'valueBytes',
         width: 140,
-        sorter: true,
+        sorter: {
+          multiple: 2,
+          compare: 'default',
+        },
       },
 
       {
         key: 'expire',
         width: 100,
-        sorter: true,
+        sorter: {
+          multiple: 3,
+          compare: 'default',
+        },
       },
 
       {
         key: 'startTime',
         width: 200,
-        sorter: true,
+        sorter: {
+          multiple: 4,
+          compare: 'default',
+        },
       },
 
       {
         key: 'expireTime',
         width: 200,
-        sorter: true,
+        sorter: {
+          multiple: 5,
+          compare: 'default',
+        },
       },
 
       {

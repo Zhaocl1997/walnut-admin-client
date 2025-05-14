@@ -168,9 +168,7 @@ export function useTableAPI<T>(
 
   // sorter
   const onSorter = () => {
-    if (
-      columns.value?.some(i => i.sorter === true || isNumber((i.sorter as SorterMultiple)?.multiple))
-    ) {
+    if (columns.value?.some(i => isNumber((i.sorter as SorterMultiple)?.multiple))) {
       setProps({
         onUpdateSorter: async (sorts) => {
           if (!sorts)

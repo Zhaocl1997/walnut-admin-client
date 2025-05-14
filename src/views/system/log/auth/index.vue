@@ -134,13 +134,19 @@ const [register, {
       {
         key: 'userName',
         width: 120,
-        sorter: true,
+        sorter: {
+          multiple: 2,
+          compare: 'default',
+        },
       },
 
       {
         key: 'success',
         width: 140,
-        sorter: true,
+        sorter: {
+          multiple: 3,
+          compare: 'default',
+        },
         extendType: 'dict',
         dictType: 'sys_shared_success',
         filter: true,
@@ -150,7 +156,10 @@ const [register, {
       {
         key: 'type',
         width: 160,
-        sorter: true,
+        sorter: {
+          multiple: 4,
+          compare: 'default',
+        },
         extendType: 'dict',
         dictType: 'sys_auth_type',
         filter: true,
@@ -201,7 +210,10 @@ const [register, {
       {
         key: 'authenticatedAt',
         width: 200,
-        sorter: true,
+        sorter: {
+          multiple: 1,
+          compare: 'default',
+        },
         defaultSortOrder: 'descend',
       },
     ],
