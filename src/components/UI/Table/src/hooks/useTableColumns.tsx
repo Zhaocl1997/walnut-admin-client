@@ -120,9 +120,6 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                 : [],
             ),
 
-            filterOptionValue:
-              apiListParams.value.query[tItem.key] ?? null,
-
             render(p) {
               return <WDictLabel dictType={tItem.dictType} dictValue={p[tItem.key]}></WDictLabel>
             },

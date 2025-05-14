@@ -267,7 +267,7 @@ export declare namespace WTable {
       | ExtendType.Dictionary<T>
       | ExtendType.Tag<T>
       | ExtendType.Index<T>)
-    & (Partial<DataTableSelectionColumn<T>>
+    & (Partial<Omit<DataTableSelectionColumn<T>, 'sorter' | 'filter' | 'filterOptions'>>
       | Partial<DataTableExpandColumn<T>>)
 
   namespace ExtendType {

@@ -55,7 +55,7 @@ export declare namespace WCrud {
    */
   namespace Hooks {
     namespace UseCRUD {
-      type Props<T> = WCrud.Props<T> | ComputedRef<WCrud.Props<T>> | IDeepMaybeRef<WCrud.Props<T>>
+      type Props<T> = WCrud.Props<T> | IDeepMaybeRef<WCrud.Props<T>>
 
       type Methods<T> = Omit<Inst.WCrudInst<T>, 'setProps'>
 
