@@ -38,7 +38,7 @@ export async function initDict(types: string | string[]): Promise<void> {
     setDictIntoMap(types, res[0])
   }
   else {
-    const nonExistedDictTypes = types.filter(type => !Array.from(AppStoreMapDict.value.keys()).includes(type))
+    const nonExistedDictTypes = types.filter(type => !AppStoreMapDict.value.has(type))
     if (!nonExistedDictTypes.length) {
       return
     }
@@ -85,7 +85,7 @@ export function useDict(types: string | string[]) {
         return res
       }
       else {
-        const nonExistedDictTypes = types.filter(type => !Array.from(AppStoreMapDict.value.keys()).includes(type))
+        const nonExistedDictTypes = types.filter(type => !AppStoreMapDict.value.has(type))
         if (!nonExistedDictTypes.length) {
           return getDictDataFromTypes(types)
         }

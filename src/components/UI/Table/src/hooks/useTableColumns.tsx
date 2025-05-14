@@ -332,9 +332,10 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
     }
   }
 
-  const onDictData = async () => {
+  const onInitDict = async () => {
     if (props.value.columns.some(i => i.extendType === 'dict')) {
       const usedDictTypes = props.value.columns?.filter(i => i.extendType === 'dict')?.map(i => i.dictType).filter(Boolean)
+      console.log('WTable Dict Init', { usedDictTypes })
       await initDict(usedDictTypes)
     }
   }
@@ -342,11 +343,9 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
   onMounted(() => {
     // auto handle scrollX
     onScrollX()
-  })
 
-  onBeforeMount(async () => {
-    // init dict data
-    await onDictData()
+    // init dict
+    onInitDict()
   })
 
   return columns

@@ -27,8 +27,9 @@ function onFormat(item: ICompUIDescriptionsItem) {
 const showDict = ref(false)
 onBeforeMount(async () => {
   if (items.some(i => i.type === 'dict')) {
-    const dictTypes = items.filter(i => i.type === 'dict').map(i => i.typeProps.dictType)
-    await initDict(dictTypes)
+    const usedDictTypes = items.filter(i => i.type === 'dict').map(i => i.typeProps.dictType)
+    console.log('WDesc Dict Init', { usedDictTypes })
+    await initDict(usedDictTypes)
     showDict.value = true
   }
 })
