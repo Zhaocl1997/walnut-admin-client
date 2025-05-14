@@ -229,7 +229,7 @@ declare global {
     userName?: string
     ip?: string
     invokingMethod?: string
-    operatedAt?: Date
+    operatedAt?: Date | string | [string, string]
     os?: string
     browser?: string
   }

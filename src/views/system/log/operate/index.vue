@@ -5,44 +5,47 @@ defineOptions({
   name: 'LogOperate',
 })
 
+// locale unique key
 const localeKey = 'log.operate'
+// auth key
 const authKey = 'log:operate'
+const keyField = '_id'
 
 const [
   register,
   {
-    onApiTableReadAndOpenUpdateForm,
-    onApiTableDeleteMany,
-    onGetApiTableListParams,
+    onReadAndOpenUpdateForm,
+    onDeleteManyConfirm,
+    onApiList,
+    onGetApiListParams,
   },
 ] = useCRUD<AppSystemLogOperate>({
   baseAPI: logOperateAPI,
 
   tableProps: {
     localeUniqueKey: localeKey,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
 
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'delete',
+        onPresetClick() {
+          onDeleteManyConfirm()
+        },
+      },
+    ],
+
     auths: {
       list: `system:${authKey}:list`,
+      create: `system:${authKey}:create`,
       read: `system:${authKey}:read`,
+      update: `system:${authKey}:update`,
+      delete: `system:${authKey}:delete`,
       deleteMany: `system:${authKey}:deleteMany`,
-    },
-
-    headerActions: ['delete'],
-
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'delete':
-          onApiTableDeleteMany()
-          break
-
-        default:
-          break
-      }
     },
 
     queryFormProps: {
@@ -52,6 +55,7 @@ const [
       showFeedback: false,
       labelWidth: 80,
       yGap: 10,
+      // query form schemas
       schemas: [
         {
           type: 'Base:Input',
@@ -60,6 +64,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -70,6 +77,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -80,6 +90,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -92,7 +105,12 @@ const [
             type: 'daterange',
             clearable: true,
             format: 'yyyy-MM-dd',
+            // TODO valueFormat seem not work in daterange
             valueFormat: 'yyyy-MM-dd',
+            onUpdateFormattedValue(v) {
+              const queryFormData = onGetApiListParams()
+              queryFormData.value.query.operatedAt = v
+            },
           },
         },
 
@@ -145,13 +163,6 @@ const [
           value: i,
           label: i,
         })),
-        filterOptionValues: computed((): string[] => {
-          const listParams = onGetApiTableListParams()
-
-          return listParams.value.query?.method
-            ? [listParams.value.query?.method]
-            : []
-        }) as unknown as string[],
       },
 
       {
@@ -190,18 +201,11 @@ const [
         columnBuiltInActions: [
           {
             _builtInType: 'detail',
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField])
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'detail':
-              await onApiTableReadAndOpenUpdateForm(rowData._id!)
-              break
-
-            default:
-              break
-          }
-        },
       },
     ],
   },
@@ -209,20 +213,18 @@ const [
   formProps: {
     localeUniqueKey: localeKey,
     localeWithTable: true,
-    preset: 'drawer',
+    dialogPreset: 'drawer',
     baseRules: true,
     labelWidth: 140,
     xGap: 0,
 
-    useDescription: true,
     descriptionProps: {
       bordered: true,
       column: 2,
       colon: true,
-      labelPlacement: 'left',
     },
 
-    advancedProps: {
+    dialogProps: {
       defaultButton: false,
       width: '40%',
       closable: true,
@@ -241,14 +243,16 @@ const [
       },
 
       {
-        type: 'Base:Input',
+        type: 'business:Dict',
         formProp: {
           path: 'actionType',
         },
         descriptionProp: {
           span: 1,
           type: 'dict',
-          dictType: 'sys_operate_type',
+          typeProps: {
+            dictType: 'sys_operate_type',
+          },
         },
       },
 
@@ -280,7 +284,9 @@ const [
         descriptionProp: {
           span: 1,
           type: 'dict',
-          dictType: 'sys_shared_success',
+          typeProps: {
+            dictType: 'sys_shared_success',
+          },
         },
       },
 
@@ -348,6 +354,9 @@ const [
         },
         descriptionProp: {
           type: 'json',
+          typeProps: {
+            height: '200px',
+          },
         },
       },
 
@@ -358,6 +367,9 @@ const [
         },
         descriptionProp: {
           type: 'json',
+          typeProps: {
+            height: '200px',
+          },
         },
       },
 
@@ -374,6 +386,7 @@ const [
 
 <template>
   <div>
+    <!-- @vue-generic {AppSystemLogOperate} -->
     <WCRUD @hook="register" />
   </div>
 </template>
