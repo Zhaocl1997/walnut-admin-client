@@ -230,7 +230,7 @@ const [
             data: getLeftMenu,
             blockLine: true,
             blockNode: true,
-            keyField: '_id',
+            keyField,
             labelField: 'title',
             disabled: computed((): boolean => {
               const formData = onGetFormData()

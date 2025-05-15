@@ -8,38 +8,36 @@ defineOptions({
 // locale unique key
 const localeKey = 'appSetting'
 const authKey = 'app:setting'
+const keyField = '_id'
 
 const [
   register,
-  { onTableOpenCreateForm, onApiTableReadAndOpenUpdateForm, onGetActionType },
+  { onOpenCreateForm, onApiList, onReadAndOpenUpdateForm, onGetActionType },
 ] = useCRUD<AppSettingsModel>({
   baseAPI: appSettingAPI,
 
   tableProps: {
     localeUniqueKey: localeKey,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
-    headerActions: ['create'],
+
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'create',
+        onPresetClick() {
+          onOpenCreateForm()
+        },
+      },
+    ],
 
     auths: {
       list: `${authKey}:list`,
       create: `${authKey}:create`,
       read: `${authKey}:read`,
       update: `${authKey}:update`,
-    },
-
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onTableOpenCreateForm()
-          break
-
-        default:
-          break
-      }
     },
 
     queryFormProps: {
@@ -57,6 +55,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -67,6 +68,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -77,6 +81,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -86,6 +93,7 @@ const [
       ],
     },
 
+    // table columns
     columns: [
       {
         key: 'index',
@@ -152,18 +160,12 @@ const [
         columnBuiltInActions: [
           {
             _builtInType: 'read',
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'read':
-              await onApiTableReadAndOpenUpdateForm(rowData._id!)
-              break
 
-            default:
-              break
-          }
-        },
       },
     ],
   },
@@ -171,7 +173,7 @@ const [
   formProps: {
     localeUniqueKey: localeKey,
     localeWithTable: true,
-    preset: 'modal',
+    dialogPreset: 'modal',
     baseRules: true,
     labelWidth: 100,
     xGap: 0,
@@ -194,9 +196,7 @@ const [
         },
         componentProp: {
           clearable: true,
-          disabled: computed(
-            (): boolean => onGetActionType().value === 'update',
-          ) as unknown as boolean,
+          disabled: computed((): boolean => onGetActionType().value === 'update'),
         },
       },
 
@@ -240,7 +240,8 @@ const [
 </script>
 
 <template>
-  <WCRUD @hook="register" />
+  <div>
+    <!-- @vue-generic {AppSettingsModel} -->
+    <WCRUD @hook="register" />
+  </div>
 </template>
-
-<style lang="scss" scoped></style>
