@@ -162,7 +162,6 @@ const [
       {
         key: 'nickName',
         width: 100,
-        extendType: 'formatter',
         formatter(rowData, _rowIndex) {
           return rowData.nickName ?? '-'
         },

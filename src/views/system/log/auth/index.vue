@@ -176,7 +176,6 @@ const [register, {
       {
         key: 'location',
         width: 160,
-        extendType: 'formatter',
         formatter: row => row.location || '-',
         ellipsis: {
           tooltip: true,

@@ -262,7 +262,6 @@ export declare namespace WTable {
   type Column<T> =
     | (ExtendType.Action<T>
       | ExtendType.Icon<T>
-      | ExtendType.Formatter<T>
       | ExtendType.Link<T>
       | ExtendType.Dictionary<T>
       | ExtendType.Tag<T>
@@ -327,6 +326,11 @@ export declare namespace WTable {
       locale?: boolean
 
       /**
+       * @description basic formatter
+       */
+      formatter?: TableFnCallback<T, string>
+
+      /**
        * @description internal show flag
        */
       _internalShow?: boolean
@@ -336,13 +340,6 @@ export declare namespace WTable {
      * @description preset index column, default is used for api table with pageNum and pageSize
      */
     type Index<T = Recordable> = BaseExtend<T, 'index'>
-
-    /**
-     * @description preset formatter column, used for just some text transform
-     */
-    type Formatter<T = Recordable> = BaseExtend<T, 'formatter'> & {
-      formatter?: TableFnCallback<T, string>
-    }
 
     /**
      * @description preset icon column, use `WIcon`by default
@@ -356,7 +353,6 @@ export declare namespace WTable {
      */
     type Link<T = Recordable> = BaseExtend<T, 'link'> & {
       onClick?: TableFnCallback<T, any>
-      formatter?: TableFnCallback<T, string>
     }
 
     /**
@@ -372,11 +368,10 @@ export declare namespace WTable {
     }
 
     /**
-     * @description normal tag render, provide a tagProps to config. Also provide formatter function
+     * @description normal tag render, provide a tagProps to config
      */
     type Tag<T = Recordable> = BaseExtend<T, 'tag'> & {
       tagProps?: TableFnCallback<T, TagProps>
-      formatter?: TableFnCallback<T, string>
     }
 
     /**

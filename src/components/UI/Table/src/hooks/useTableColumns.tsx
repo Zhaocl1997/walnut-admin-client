@@ -57,16 +57,6 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
           }
         }
 
-        // formatter
-        if (tItem.extendType === 'formatter') {
-          return {
-            ...tItem,
-            render(p) {
-              return tItem.formatter ? tItem.formatter(p) : p
-            },
-          }
-        }
-
         // index based on apiListParams
         if (tItem.extendType === 'index') {
           return {
@@ -291,6 +281,16 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                 >
                 </WIcon>
               )
+            },
+          }
+        }
+
+        // formatter
+        if (tItem?.formatter) {
+          return {
+            ...tItem,
+            render(p) {
+              return tItem.formatter ? tItem.formatter(p) : p
             },
           }
         }

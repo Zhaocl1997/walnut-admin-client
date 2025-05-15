@@ -113,7 +113,6 @@ const [
         key: 'name',
         width: 120,
         titleHelpMessage: true,
-        extendType: 'formatter',
         formatter: row => t(row.name!),
       },
 

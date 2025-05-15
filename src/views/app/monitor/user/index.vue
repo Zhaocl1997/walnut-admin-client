@@ -123,7 +123,6 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
       {
         key: 'location',
         width: 160,
-        extendType: 'formatter',
         formatter: row => row.city || '-',
         ellipsis: {
           tooltip: true,

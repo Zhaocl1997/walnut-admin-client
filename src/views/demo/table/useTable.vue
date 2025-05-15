@@ -78,7 +78,6 @@ const [register] = useTable<DemoData>({
       title: 'Tags',
       key: 'tags',
       minWidth: 150,
-      extendType: 'formatter',
       formatter(rowData) {
         return rowData.tags.join(',')
       },
