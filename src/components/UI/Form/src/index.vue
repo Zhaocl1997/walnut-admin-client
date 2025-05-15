@@ -49,7 +49,7 @@ const { setProps, getProps } = formPropsCtx
 
 const getFormProps = computed(() => omit(getProps.value, extendedFormPropKeys))
 
-const formItemIdCtx = useFormItemId()
+const formItemIdCtx = useFormItemId<T>()
 
 const dialogFormRef = useTemplateRef<WForm.Inst.DialogInst>('dialogFormRef')
 const DialogWrapper = useFormDialog(getProps, formRef)

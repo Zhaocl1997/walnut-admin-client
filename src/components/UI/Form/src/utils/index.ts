@@ -135,7 +135,7 @@ export function generateRuleMessage<T>(t: Fn, i: WForm.Schema.Item<T>, p: Comput
  */
 export function generateBaseRules<T>(t: Fn, schemas: Ref<WForm.Schema.Item<T>[]>, props: ComputedRef<WForm.Props<T>>): FormRules {
   const getBaseRuleObj = (
-    i: WForm.Schema.Item,
+    i: WForm.Schema.Item<T>,
     extra?: FormItemRule[],
   ): FormItemRule[] => {
     const base: FormItemRule[] = [
