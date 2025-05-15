@@ -110,7 +110,7 @@ export const transform: WalnutAxiosTransform = {
 
     // refresh token is expired, so this user need to signout and re-signin
     if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
-      await userAuth.Signout()
+      await userAuth.Signout(false)
       return Promise.reject(new Error('Error'))
     }
 
