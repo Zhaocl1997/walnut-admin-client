@@ -9,6 +9,7 @@ defineOptions({
 
 const { langList } = useLangList()
 const localeKey = useRouterQuery('localeKey')
+const langId = useRouterQuery('langId')
 
 // locale unique key
 const key = 'locale'
@@ -67,6 +68,19 @@ const [
       labelWidth: 90,
       // query form schemas
       schemas: [
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'langId',
+          },
+          componentProp: {
+            defaultValue: langId,
+          },
+          visibleProp: {
+            vIf: false,
+          },
+        },
+
         {
           type: 'Base:Select',
           formProp: {
@@ -131,7 +145,6 @@ const [
       {
         key: 'process',
         width: 100,
-        extendType: 'formatter',
         formatter: row => `${(row.process! * 100).toFixed(2)}%`,
       },
 
