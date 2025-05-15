@@ -257,7 +257,7 @@ export declare namespace WForm {
      */
     namespace Schema {
       interface DomProps {
-        style?: Partial<CSSStyleDeclaration>
+        style?: CSSProperties
         class?: string
       }
 

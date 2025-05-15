@@ -43,7 +43,7 @@ export async function initDict(types: string | string[]): Promise<void> {
       return
     }
     const res = await getDictByType(nonExistedDictTypes)
-    nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)))
+    nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)!))
   }
 }
 
@@ -90,7 +90,7 @@ export function useDict(types: string | string[]) {
           return getDictDataFromTypes(types)
         }
         const res = await getDictByType(nonExistedDictTypes)
-        nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)))
+        nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)!))
         return getDictDataFromTypes(types)
       }
     }

@@ -22,7 +22,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
   const builtInType = ['expand', 'selection']
 
   const transformColumn = (item: WTable.Column<T>) => {
-    if (builtInType.includes(item.type))
+    if (builtInType.includes(item.type!))
       return item
 
     return {
@@ -54,7 +54,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
         // sorter in control
         if (tItem.sorter) {
-          const sortOrder = apiListParams.value.sort.find(i => i.field === tItem.key)?.order
+          const sortOrder = apiListParams.value.sort?.find(i => i.field === tItem.key)?.order
           if (sortOrder) {
             tItem.sortOrder = sortOrder
           }
@@ -78,8 +78,8 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             width: 70,
             render(_, index) {
               return (
-                (apiListParams.value.page?.page - 1)
-                * apiListParams.value.page?.pageSize
+                ((apiListParams.value.page?.page as number) - 1)
+                * (apiListParams.value.page?.pageSize as number)
                 + index
                 + 1
               )
@@ -92,7 +92,8 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
           return {
             ...tItem,
             render(p) {
-              return <span onClick={() => tItem.onClick(p)}><NA>{tItem.formatter ? tItem.formatter(p) : p[tItem.key]}</NA></span>
+              // @ts-expect-error any index
+              return <span onClick={() => tItem.onClick(p)}><NA>{tItem.formatter ? tItem.formatter(p) : p[tItem.key] }</NA></span>
             },
           }
         }
@@ -103,7 +104,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             ...tItem,
             render(p) {
               return (
-                <NTag {...(tItem.tagProps(p) as TagProps)}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
+                <NTag {...(tItem.tagProps!(p) as TagProps)}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
               )
             },
           }
@@ -119,16 +120,17 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               ? () => t(`dict.name.${tItem.dictType}`)
               : tItem.title,
 
-            filterOptions: computed<FilterOption[]>(() =>
+            filterOptions: computed((): FilterOption[] =>
               tItem.filter
                 ? getDictDataFromMap(tItem.dictType)?.map(i => ({
                   value: i.value,
-                  label: t(i.label),
-                }))
+                  label: t(i.label!),
+                })) as FilterOption[]
                 : [],
             ),
 
             render(p) {
+              // @ts-expect-error any index
               return <WDictLabel dictType={tItem.dictType} dictValue={p[tItem.key]}></WDictLabel>
             },
           }
@@ -199,9 +201,9 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               return button ? Object.assign(button, item) : item
             })
 
-          const onDropdownSelect = (key: WTable.ColumnActionType, rowData, rowIndex) => {
+          const onDropdownSelect = (key: WTable.ColumnActionType, rowData: T, rowIndex: number) => {
             const target = bs.find(i => i._builtInType === key)
-            target && target.onPresetClick(rowData, rowIndex)
+            target && target.onPresetClick!(rowData, rowIndex)
           }
 
           const renderDropdownEmpty: DropdownOption[] = [
@@ -233,11 +235,11 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                   button-props={{
                     ...i.buttonProps,
                     disabled: isDisabled(i),
-                    onClick: !i.confirm ? () => i.onPresetClick(rowData, rowIndex) : null,
+                    onClick: !i.confirm ? () => i.onPresetClick!(rowData, rowIndex) : null,
                   }}
                   icon-props={i.iconProps}
                   confirm={i.confirm}
-                  onConfirm={() => i.onPresetClick(rowData, rowIndex)}
+                  onConfirm={() => i.onPresetClick!(rowData, rowIndex)}
                 >
                 </WIconButton>
               )
@@ -256,7 +258,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                     }
                   : {
                       key: i._builtInType,
-                      label: i.buttonProps.textProp,
+                      label: i.buttonProps?.textProp,
                       disabled: isDisabled(i),
                     })
 
@@ -338,8 +340,8 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
   }
 
   const onInitDict = async () => {
-    if (props.value.columns.some(i => i.extendType === 'dict')) {
-      const usedDictTypes = props.value.columns?.filter(i => i.extendType === 'dict')?.map(i => i.dictType).filter(Boolean)
+    if (props.value.columns?.some(i => i.extendType === 'dict')) {
+      const usedDictTypes = props.value.columns?.filter(i => i.extendType === 'dict')?.map(i => (i as WTable.ExtendType.Dictionary<T>).dictType).filter(Boolean)
       console.log('WTable Dict Init', { usedDictTypes })
       await initDict(usedDictTypes)
     }

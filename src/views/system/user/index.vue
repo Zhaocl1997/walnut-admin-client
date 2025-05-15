@@ -11,7 +11,7 @@ const { t } = useAppI18n()
 const key = 'user'
 const keyField = '_id'
 
-const { stateRef: updatePasswordFormData, resetState: resetPasswordFormData } = useState({ userId: null, newPassword: null })
+const { stateRef: updatePasswordFormData, resetState: resetPasswordFormData } = useState({ userId: '', newPassword: '' })
 
 const [registerUpdatePassword, { onOpen }] = useForm<typeof updatePasswordFormData.value>({
   dialogPreset: 'modal',
@@ -207,7 +207,7 @@ const [
           {
             _builtInType: 'read',
             async onPresetClick(rowData) {
-              await onReadAndOpenUpdateForm(rowData[keyField])
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
             },
           },
           {
@@ -215,7 +215,7 @@ const [
             _dropdown: true,
             _show: row => row.userName !== AppConstRoles.ADMIN,
             async onPresetClick(rowData) {
-              await onDeleteConfirm(rowData[keyField])
+              await onDeleteConfirm(rowData[keyField]!)
             },
           },
         ],
@@ -225,7 +225,7 @@ const [
             _dropdown: true,
             _show: row => row.userName !== AppConstRoles.ADMIN,
             async onPresetClick(rowData) {
-              updatePasswordFormData.value.userId = rowData[keyField]
+              updatePasswordFormData.value.userId = rowData[keyField]!
               onOpen()
             },
             buttonProps: {
@@ -246,7 +246,7 @@ const [
               const confirm = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
 
               if (confirm) {
-                const res = await resetPassowrd({ userId: rowData[keyField] })
+                const res = await resetPassowrd({ userId: rowData[keyField]! })
 
                 if (res) {
                   useAppMsgSuccess()
@@ -318,7 +318,7 @@ const [
   },
 })
 
-async function onYes(_, done) {
+async function onYes(_: any, done: () => void) {
   try {
     await updatePassowrd(updatePasswordFormData.value)
     useAppMsgSuccess()
@@ -333,6 +333,7 @@ async function onYes(_, done) {
 
 <template>
   <div>
+    <!-- @vue-generic {AppSystemUser} -->
     <WCRUD @hook="register" />
 
     <WForm :model="updatePasswordFormData" @hook="registerUpdatePassword" />

@@ -1,5 +1,5 @@
 <script lang="tsx" setup  generic="T">
-import type { ICompUIDescriptionProps, ICompUIDescriptionsItem, ICompUIDescTypeLink } from '.'
+import type { ICompUIDescriptionProps, ICompUIDescriptionsItem, ICompUIDescTypeDict, ICompUIDescTypeLink } from '.'
 import { omit } from 'lodash-es'
 
 defineOptions({
@@ -15,7 +15,7 @@ const getData = computed(() => Object.fromEntries<BaseDataType>(items.map<[strin
 const getShowItem = computed<ICompUIDescriptionsItem[]>(() => items.filter(i => getBoolean(i.show)))
 
 function onClickText(item: ICompUIDescriptionsItem) {
-  openExternalLink((item as ICompUIDescTypeLink<T>).typeProps!.link)
+  openExternalLink((item as ICompUIDescTypeLink<T>).typeProps?.link as string)
 }
 
 function onFormat(item: ICompUIDescriptionsItem) {
@@ -27,7 +27,7 @@ function onFormat(item: ICompUIDescriptionsItem) {
 const showDict = ref(false)
 onBeforeMount(async () => {
   if (items.some(i => i.type === 'dict')) {
-    const usedDictTypes = items.filter(i => i.type === 'dict').map(i => i.typeProps.dictType)
+    const usedDictTypes = items.filter(i => i.type === 'dict').map(i => (i as ICompUIDescTypeDict<T>).typeProps?.dictType as string)
     console.log('WDesc Dict Init', { usedDictTypes })
     await initDict(usedDictTypes)
     showDict.value = true
@@ -68,7 +68,7 @@ onBeforeMount(async () => {
 
           <WDictLabel
             v-else-if="showDict && item.type === 'dict'"
-            :dict-type="item.typeProps.dictType"
+            :dict-type="(item.typeProps?.dictType as string)"
             :dict-value="item.value"
           />
 

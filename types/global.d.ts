@@ -16,6 +16,7 @@ declare type ITargetContext = '_self' | '_blank'
 
 declare type ValueOf<T> = T[keyof T]
 
+// LINKS https://medium.com/@an.chmelev/typescript-performance-and-type-optimization-in-large-scale-projects-18e62bd37cfb
 // thanks to deepseek R1
 type IDeepMaybeRef<T> =
   // 处理函数类型（禁用分发）

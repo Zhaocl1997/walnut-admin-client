@@ -28,7 +28,7 @@ export declare namespace WTable {
   /**
    * @description callback function
    */
-  type TableFnCallback<T, R = void> = (rowData: T, rowIndex?: number) => Promise<T> | Promise<R> | R
+  type TableFnCallback<T, R = void> = (rowData: T, rowIndex?: number) => Promise<T> | Promise<R> | R | any
 
   /**
    * @description set table props
@@ -268,7 +268,7 @@ export declare namespace WTable {
       | ExtendType.Tag<T>
       | ExtendType.Index<T>)
     & (Partial<Omit<DataTableSelectionColumn<T>, 'sorter' | 'filter' | 'filterOptions'>>
-      | Partial<DataTableExpandColumn<T>>)
+      | Partial<Omit<DataTableExpandColumn<T>, 'sorter' | 'filter' | 'filterOptions'>>)
 
   namespace ExtendType {
     /**
@@ -341,7 +341,7 @@ export declare namespace WTable {
      * @description preset formatter column, used for just some text transform
      */
     type Formatter<T = Recordable> = BaseExtend<T, 'formatter'> & {
-      formatter: TableFnCallback<T, string>
+      formatter?: TableFnCallback<T, string>
     }
 
     /**
@@ -355,8 +355,8 @@ export declare namespace WTable {
      * @description preset link column, used for a link redirect
      */
     type Link<T = Recordable> = BaseExtend<T, 'link'> & {
-      onClick: TableFnCallback<T>
-      formatter: TableFnCallback<T, string>
+      onClick?: TableFnCallback<T, any>
+      formatter?: TableFnCallback<T, string>
     }
 
     /**
@@ -376,7 +376,7 @@ export declare namespace WTable {
      */
     type Tag<T = Recordable> = BaseExtend<T, 'tag'> & {
       tagProps?: TableFnCallback<T, TagProps>
-      formatter: TableFnCallback<T, string>
+      formatter?: TableFnCallback<T, string>
     }
 
     /**

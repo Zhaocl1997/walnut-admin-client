@@ -129,7 +129,7 @@ const [
           {
             _builtInType: 'read',
             async onPresetClick(rowData) {
-              await onReadAndOpenUpdateForm(rowData[keyField])
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
             },
           },
         ],

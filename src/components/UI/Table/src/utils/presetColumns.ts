@@ -1,12 +1,11 @@
-import type { TableBaseColumn } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
 
-export const WTablePresetOrderColumn: WTable.Column<any> = {
+export const WTablePresetOrderColumn: Pick<WTable.Column<any>, 'key' | 'width'> = {
   key: 'order',
   width: 100,
 }
 
-export const WTablePresetStatusColumn: WTable.Column<any> = {
+export const WTablePresetStatusColumn: Pick<WTable.ExtendType.Dictionary<any>, 'key' | 'width' | 'extendType' | 'dictType' | 'filter' | 'filterMultiple'> = {
   key: 'status',
   width: 120,
   extendType: 'dict',
@@ -15,12 +14,12 @@ export const WTablePresetStatusColumn: WTable.Column<any> = {
   filterMultiple: false,
 }
 
-export const WTablePresetCreatedAtColumn: WTable.Column<any> = {
+export const WTablePresetCreatedAtColumn: Pick<WTable.Column<any>, 'key' | 'width'> = {
   key: 'createdAt',
   width: 200,
 }
 
-export const WTablePresetUpdatedAtColumn: WTable.Column<any> = {
+export const WTablePresetUpdatedAtColumn: Pick<WTable.Column<any>, 'key' | 'width'> = {
   key: 'updatedAt',
   width: 200,
 }

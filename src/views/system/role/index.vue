@@ -148,7 +148,7 @@ const [
           {
             _builtInType: 'read',
             async onPresetClick(rowData) {
-              await onReadAndOpenUpdateForm(rowData[keyField])
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
             },
           },
         ],
@@ -173,7 +173,7 @@ const [
         },
         componentProp: {
           clearable: true,
-          disabled: computed(() => onGetActionType().value === 'update'),
+          disabled: computed((): boolean => onGetActionType().value === 'update'),
         },
       },
       {
@@ -232,7 +232,7 @@ const [
             blockNode: true,
             keyField: '_id',
             labelField: 'title',
-            disabled: computed(() => {
+            disabled: computed((): boolean => {
               const formData = onGetFormData()
               const roleName = formData.value.roleName
               return roleName === AppConstRoles.ADMIN

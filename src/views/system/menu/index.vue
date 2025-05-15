@@ -18,7 +18,7 @@ const { t } = useAppI18n()
 
 // ref
 const actionType = ref<IActionType>('create')
-const targetTreeItem = ref<string>()
+const targetTreeItem = ref<string>('')
 
 const loading = ref(false)
 
@@ -27,25 +27,25 @@ const { stateRef: formData, resetState: resetFormData, commit } = useState<AppSy
   type: 'catalog',
   status: true,
 
-  path: null,
-  name: null,
-  component: null,
+  path: '',
+  name: '',
+  component: '',
 
-  title: null,
-  icon: null,
+  title: '',
+  icon: '',
   order: 0,
   ternal: 'none',
-  url: null,
+  url: '',
   cache: true,
   show: true,
   affix: false,
-  permission: null,
-  menuActiveName: null,
+  permission: '',
+  menuActiveName: '',
   menuActiveSameTab: false,
 
-  activeIcon: null,
-  badge: null,
-  animationName: null,
+  activeIcon: '',
+  badge: '',
+  animationName: '',
 })
 
 commit()
@@ -66,11 +66,11 @@ const [registerTree] = useTree<AppSystemMenu>({
   },
 
   onTreeNodeItemDelete: async (deleted) => {
-    await menuAPI.delete(deleted[keyField])
+    await menuAPI.delete(deleted[keyField]!)
     useAppMsgSuccess()
     resetFormData()
     await onInit()
-    targetTreeItem.value = undefined
+    targetTreeItem.value = ''
   },
 
   onPaste(copy, current) {
@@ -158,7 +158,7 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
                 useAppMsgSuccess()
                 resetFormData()
                 await onInit()
-                targetTreeItem.value = undefined
+                targetTreeItem.value = ''
               }
               finally {
                 loading.value = false
@@ -173,7 +173,7 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
             onClick: async () => {
               await restoreValidation()
               resetFormData()
-              targetTreeItem.value = undefined
+              targetTreeItem.value = ''
               actionType.value = 'create'
             },
           },

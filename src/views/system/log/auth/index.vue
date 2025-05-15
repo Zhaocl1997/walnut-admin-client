@@ -101,7 +101,7 @@ const [register, {
             valueFormat: 'yyyy-MM-dd',
             onUpdateFormattedValue(v) {
               const queryFormData = onGetApiListParams()
-              queryFormData.value.query.authenticatedAt = v
+              queryFormData.value.query = Object.assign(queryFormData.value.query!, { authenticated: v })
             },
           },
         },

@@ -22,6 +22,7 @@ const [
     onDeleteConfirm,
     onDeleteManyConfirm,
     onGetFormData,
+    onApiList,
   },
 ] = useCRUD<AppSystemLocale & { oldKey?: string }>({
   baseAPI: localeAPI,
@@ -91,6 +92,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -159,13 +163,13 @@ const [
             async onPresetClick(rowData) {
               const formData = onGetFormData()
               formData.value = Object.assign(formData.value, { oldKey: rowData.key })
-              await onReadAndOpenUpdateForm(rowData[keyField])
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
             },
           },
           {
             _builtInType: 'delete',
             async onPresetClick(rowData) {
-              await onDeleteConfirm(rowData[keyField])
+              await onDeleteConfirm(rowData[keyField]!)
             },
           },
         ],

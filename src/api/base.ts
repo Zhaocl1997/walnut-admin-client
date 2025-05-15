@@ -1,6 +1,6 @@
 import { omit } from 'lodash-es'
 
-export type BaseAPIType<T> = BaseAPI<T>
+export type BaseAPIType<T extends AppBaseModel> = InstanceType<typeof BaseAPI<T>>
 
 const { demo } = useAppEnv('build')
 
@@ -41,7 +41,6 @@ export class BaseAPI<T extends AppBaseModel> {
   update(data: T) {
     return AppAxios.put<T>(
       {
-        // TODO update
         url: `${this.baseAPI}/${data._id}`,
         data: omitUnnecessaryFields<T>(data),
         _demonstrate: demo,

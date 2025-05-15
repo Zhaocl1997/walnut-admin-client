@@ -9,7 +9,7 @@ import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 export function useMenuFormSchema(
   actionType: Ref<IActionType>,
   formData: Ref<AppSystemMenu>,
-  treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[]>,
+  treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[] | undefined>,
   menuActiveNamesOptions: Ref<{ name: string, title: string }[]>,
 ) {
   // get view options and name options

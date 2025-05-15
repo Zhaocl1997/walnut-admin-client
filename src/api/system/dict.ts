@@ -15,13 +15,13 @@ export type IAppDictDataPicked = Pick<
   'value' | 'label' | 'description' | 'order' | 'tagType'
 >
 
-export type IAppStoreMapDictValue = ({ dictData: IAppDictDataPicked[] } & Pick<AppSystemDictType, 'type' | 'name'>)
+export type IAppStoreMapDictValue = (Pick<AppSystemDictType, 'type' | 'name'> & { dictData: IAppDictDataPicked[] })
 
 // default all dict will cacahed for 10 minutes
 export function getDictByType(types: string | string[]) {
   return AppAxios.get<IAppStoreMapDictValue[]>(
     {
-      url: '/system/dict/data/s',
+      url: '/system/dict/type/s',
       params: { types },
       _throttle: 500,
       _cache: true,

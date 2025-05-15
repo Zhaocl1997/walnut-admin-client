@@ -106,7 +106,7 @@ const [
             valueFormat: 'yyyy-MM-dd',
             onUpdateFormattedValue(v) {
               const queryFormData = onGetApiListParams()
-              queryFormData.value.query.operatedAt = v
+              queryFormData.value.query = Object.assign(queryFormData.value.query!, { operatedAt: v })
             },
           },
         },
@@ -217,7 +217,7 @@ const [
           {
             _builtInType: 'detail',
             async onPresetClick(rowData) {
-              await onReadAndOpenUpdateForm(rowData[keyField])
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
             },
           },
         ],

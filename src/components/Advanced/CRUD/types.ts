@@ -9,7 +9,8 @@ export declare namespace WCrud {
    * @description Props
    */
   interface Props<T> {
-    baseAPI?: BaseAPIType<T>
+    // TODO type optimise {BaseAPIType}
+    baseAPI?: unknown
     onBeforeRequest?: (data: T) => T
     tableProps?: Omit<WTable.Props<T>, 'apiProps'>
     formProps?: Partial<WForm.Props<T>>

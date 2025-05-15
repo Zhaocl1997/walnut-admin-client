@@ -10,7 +10,7 @@ export function useMenuTree() {
   const menuActiveNamesOptions = ref<{ name: string, title: string }[]>([])
 
   // left menu tree data, do not need root node
-  const getLeftMenu = computed<TreeNodeItem<AppSystemMenu>[]>(() => {
+  const getLeftMenu = computed((): TreeNodeItem<AppSystemMenu>[] | undefined => {
     if (menuDataRef.value.length !== 0 && menuDataRef.value[0]) {
       return formatTree<AppSystemMenu>(menuDataRef.value[0].children!, {
         format: node => ({
@@ -22,7 +22,7 @@ export function useMenuTree() {
   })
 
   // tree select data option, the data source has been filtered with `ELEMENT` menu
-  const getTreeSelect = computed<TreeNodeItem<AppSystemMenu>[]>(() => {
+  const getTreeSelect = computed((): TreeNodeItem<AppSystemMenu>[] | undefined => {
     if (treeSelectDataRef.value.length !== 0) {
       return formatTree<AppSystemMenu>(treeSelectDataRef.value, {
         format: node => ({

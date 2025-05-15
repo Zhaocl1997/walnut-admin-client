@@ -10,46 +10,42 @@ const { t } = useAppI18n()
 // locale unique key
 const localeKey = 'dictType'
 const authKey = 'dict:type'
+const keyField = '_id'
 
 const [
   register,
   {
-    onTableOpenCreateForm,
-    onApiTableReadAndOpenUpdateForm,
-    onApiTableDelete,
+    onOpenCreateForm,
+    onApiList,
+    onReadAndOpenUpdateForm,
+    onDeleteConfirm,
     onGetFormData,
   },
-  // @ts-expect-error
 ] = useCRUD<AppSystemDictType>({
   baseAPI: dictTypeAPI,
 
   tableProps: {
     localeUniqueKey: localeKey,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
-    headerActions: ['create'],
+
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'create',
+        onPresetClick() {
+          onOpenCreateForm()
+        },
+      },
+    ],
 
     auths: {
       list: `system:${authKey}:list`,
       create: `system:${authKey}:create`,
       read: `system:${authKey}:read`,
       update: `system:${authKey}:update`,
-      delete: `system:${authKey}:delete`,
-      deleteMany: `system:${authKey}:deleteMany`,
-    },
-
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onTableOpenCreateForm()
-          break
-
-        default:
-          break
-      }
     },
 
     queryFormProps: {
@@ -67,6 +63,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -77,6 +76,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -87,6 +89,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -96,6 +101,7 @@ const [
       ],
     },
 
+    // table columns
     columns: [
       {
         key: 'index',
@@ -118,7 +124,7 @@ const [
         onClick: async (p) => {
           await useAppRouterPush({
             name: 'DictDetail',
-            params: { id: p._id },
+            params: { id: p[keyField] },
             query: { name: p.name },
           })
         },
@@ -128,7 +134,7 @@ const [
       },
 
       {
-        key: 'dictDataCount',
+        key: 'populated_dictDataCount',
         width: 100,
       },
 
@@ -172,25 +178,18 @@ const [
         columnBuiltInActions: [
           {
             _builtInType: 'read',
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
+            },
           },
           {
             _builtInType: 'delete',
+            async onPresetClick(rowData) {
+              await onDeleteConfirm(rowData[keyField]!)
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'read':
-              await onApiTableReadAndOpenUpdateForm(rowData._id!)
-              break
 
-            case 'delete':
-              await onApiTableDelete(rowData._id!)
-              break
-
-            default:
-              break
-          }
-        },
       },
     ],
   },
@@ -198,7 +197,7 @@ const [
   formProps: {
     localeUniqueKey: localeKey,
     localeWithTable: true,
-    preset: 'modal',
+    dialogPreset: 'modal',
     baseRules: true,
     labelWidth: 100,
     xGap: 0,
@@ -211,9 +210,8 @@ const [
         },
         componentProp: {
           prefix: 'dict.name.',
-          presetKey: computed(() => {
-            // TODO ts-error
-            const formData = onGetFormData() as Ref<AppSystemDictType>
+          presetKey: computed((): string => {
+            const formData = onGetFormData()
 
             const type = formData.value.type
 
@@ -268,10 +266,7 @@ const [
 
 <template>
   <div>
+    <!-- @vue-generic {AppSystemDictType} -->
     <WCRUD @hook="register" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-
-</style>
