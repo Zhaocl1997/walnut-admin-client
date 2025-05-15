@@ -6,44 +6,48 @@ defineOptions({
 })
 
 const { t } = useAppI18n()
-const { currentRoute } = useAppRouter()
+
+const title = useRouterQuery('name')
+const typeId = useRouterParam('id')
 
 // locale unique key
 const localeKey = 'dictData'
 const authKey = 'dict:data'
+const keyField = '_id'
 
 async function onBack() {
   await useAppRouterPush({ name: 'Dict', replace: true })
 }
 
-const title = computed(
-  () =>
-    (currentRoute.value.query?.name
-      && t(currentRoute.value.query.name as string)) as string,
-)
-
-const getLocalePrefix = computed(() => `dict.${(currentRoute.value.query?.name as string)?.split('.').slice(-1)}.`)
+const getLocalePrefix = computed(() => `dict.${title.value?.split('.').slice(-1)}.`)
 
 const [
   register,
   {
-    onTableOpenCreateForm,
-    onApiTableReadAndOpenUpdateForm,
-    onApiTableDelete,
+    onOpenCreateForm,
+    onReadAndOpenUpdateForm,
+    onDeleteConfirm,
     onGetFormData,
   },
-  // @ts-expect-error
 ] = useCRUD<AppSystemDictData>({
   baseAPI: dictDataAPI,
 
   tableProps: {
     localeUniqueKey: localeKey,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
-    headerActions: ['create'],
+
+    headerLeftBuiltInActions: [
+      {
+        _builtInType: 'create',
+        onPresetClick() {
+          onOpenCreateForm()
+        },
+      },
+    ],
 
     auths: {
       list: `system:${authKey}:list`,
@@ -52,17 +56,6 @@ const [
       update: `system:${authKey}:update`,
       delete: `system:${authKey}:delete`,
       deleteMany: `system:${authKey}:deleteMany`,
-    },
-
-    onTableHeaderActions: ({ type }) => {
-      switch (type) {
-        case 'create':
-          onTableOpenCreateForm()
-          break
-
-        default:
-          break
-      }
     },
 
     queryFormProps: {
@@ -79,7 +72,7 @@ const [
             path: 'typeId',
           },
           componentProp: {
-            defaultValue: currentRoute.value.params.id as string,
+            defaultValue: typeId,
           },
           visibleProp: {
             vIf: false,
@@ -112,6 +105,7 @@ const [
       ],
     },
 
+    // table columns
     columns: [
       {
         key: 'index',
@@ -184,31 +178,24 @@ const [
 
       {
         key: 'action',
-        width: 80,
+        width: 160,
         extendType: 'action',
         fixed: 'right',
         columnBuiltInActions: [
           {
             _builtInType: 'read',
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
+            },
           },
           {
             _builtInType: 'delete',
+            async onPresetClick(rowData) {
+              await onDeleteConfirm(rowData[keyField]!)
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'read':
-              await onApiTableReadAndOpenUpdateForm(rowData._id!)
-              break
 
-            case 'delete':
-              await onApiTableDelete(rowData._id!)
-              break
-
-            default:
-              break
-          }
-        },
       },
     ],
   },
@@ -216,9 +203,9 @@ const [
   formProps: {
     localeUniqueKey: localeKey,
     localeWithTable: true,
-    preset: 'modal',
+    dialogPreset: 'modal',
     baseRules: true,
-    labelWidth: 100,
+    labelWidth: 120,
     xGap: 0,
 
     // create/update form schemas
@@ -230,7 +217,7 @@ const [
         },
         componentProp: {
           clearable: true,
-          defaultValue: currentRoute.value.params.id as string,
+          defaultValue: typeId,
         },
         visibleProp: {
           vShow: false,
@@ -244,13 +231,12 @@ const [
         },
         componentProp: {
           prefix: getLocalePrefix,
-          presetKey: computed(() => {
-            // TODO ts-error
-            const formData = onGetFormData() as Ref<AppSystemDictData>
+          presetKey: computed((): string => {
+            const formData = onGetFormData()
 
             const val = formData.value.value
 
-            const key = (currentRoute.value.query.name as string)?.split('.')[2]
+            const key = title.value?.split('.')[2]
 
             if (val)
               return `dict.${key}.${val}`
@@ -348,12 +334,9 @@ const [
 <template>
   <div>
     <n-card>
-      <n-page-header :title="title" @back="onBack" />
+      <n-page-header v-if="title" :title="$t(title)" @back="onBack" />
     </n-card>
+    <!-- @vue-generic {AppSystemDictData} -->
     <WCRUD @hook="register" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-
-</style>

@@ -172,7 +172,7 @@ const [
 
       {
         key: 'action',
-        width: 80,
+        width: 160,
         extendType: 'action',
         fixed: 'right',
         columnBuiltInActions: [
@@ -189,7 +189,6 @@ const [
             },
           },
         ],
-
       },
     ],
   },
