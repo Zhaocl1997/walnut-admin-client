@@ -28,16 +28,13 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
     return {
       ...item,
       title: () => (
-        <>
+        <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">
           {getTableTranslated(props, item)}
           {item.titleHelpMessage && (
-            <WMessage
-              msg={getTableTranslated(props, item, true)}
-              class="inline"
-            >
+            <WMessage msg={getTableTranslated(props, item, true)}>
             </WMessage>
           )}
-        </>
+        </div>
       ),
     }
   }
