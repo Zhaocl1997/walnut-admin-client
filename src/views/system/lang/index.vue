@@ -88,6 +88,19 @@ const [
       },
 
       {
+        key: 'localePercentage',
+        width: 100,
+        extendType: 'link',
+        formatter: row => `${row.process}%`,
+        onClick: async (p) => {
+          await useAppRouterPush({
+            name: 'Locale',
+            query: { langId: p._id },
+          })
+        },
+      },
+
+      {
         ...WTablePresetOrderColumn,
         defaultSortOrder: 'ascend',
         sorter: {

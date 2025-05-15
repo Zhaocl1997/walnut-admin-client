@@ -186,6 +186,9 @@ declare global {
     description?: string
     order?: number
     status?: boolean
+
+    // translate process, calculated in backend
+    process?: number
   }
 
   // system locale
