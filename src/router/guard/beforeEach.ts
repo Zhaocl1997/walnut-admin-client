@@ -21,7 +21,8 @@ export function createBeforeEachGuard(router: Router) {
     const appCachedViews = useAppStoreCachedViews()
 
     // if the target is not cached before, start loadingbar
-    if (!appCachedViews.hasCached(to.name)) {
+    // also when from do not want leave tip, start loadingbar
+    if (!appCachedViews.hasCached(to.name) && !from.meta.leaveTip) {
       window.$loadingBar.start()
     }
 
@@ -79,6 +80,7 @@ export function createBeforeEachGuard(router: Router) {
         return { ...from, replace: true }
 
       _confirm_leave_map_.set(from.name, true)
+      window.$loadingBar.start()
       removeEvent()
     }
 
