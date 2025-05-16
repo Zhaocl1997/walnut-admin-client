@@ -78,13 +78,12 @@ setTabsContext({
       :id="appSetting.getTabsId"
       bordered
       :inverted="appSetting.getTabsInverted"
-      :style="{ zIndex: 999, height: `${appSetting.getTabsHeight}px` }"
-      :class="{
-        'top-0': appSetting.getTabsFixed,
-        '!top-[48px]': appSetting.getHeaderShow && appSetting.getHeaderFixed,
-      }"
-      class="sticky left-0 flex-none"
+      :style="{ zIndex: 999, height: `${appSetting.tabs.height}px` }"
+      class="sticky left-0"
     >
+      <!-- :class="{
+        'top-0': !appSetting.getHeaderFixed && appSetting.getTabsFixed,
+      }" -->
       <div class="h-full hstack justify-between">
         <!-- left utils -->
         <WTransition appear transition-name="fade-left">

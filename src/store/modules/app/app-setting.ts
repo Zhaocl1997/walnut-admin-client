@@ -245,25 +245,6 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
       return 0
     },
-
-    getHeaderHeight(state): number {
-      return state.header.status ? state.header.height : 0
-    },
-
-    getTabsHeight(state): number {
-      return state.tabs.status ? state.tabs.height : 0
-    },
-
-    getFooterHeight(state): number {
-      return state.footer.status ? state.footer.height : 0
-    },
-
-    /**
-     * @description get calculated height
-     */
-    getCalcHeight() {
-      return +this.getHeaderHeight + +this.getTabsHeight + +this.getFooterHeight
-    },
   },
 
   actions: {

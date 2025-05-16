@@ -94,8 +94,10 @@ function onDynamicTitle(type: number, self = true) {
   }
 
   if (self)
+  // @ts-expect-error any index
     pool[type]()
   else
+  // @ts-expect-error any index
     pool2[type]()
 }
 
@@ -141,18 +143,11 @@ function onDynamicIcon(type: number, self = true) {
   }
 
   if (self)
+  // @ts-expect-error any index
     pool[type]()
   else
+  // @ts-expect-error any index
     pool2[type]()
-}
-
-function onDynamicQueryandParam(type: number) {
-  const pool = {
-    1: () => {},
-    2: () => {},
-  }
-
-  pool[type]()
 }
 </script>
 
@@ -161,7 +156,7 @@ function onDynamicQueryandParam(type: number) {
     <WDemoCard title="Demo for layout tab">
       <n-list>
         <n-list-item>
-          <WTitle prefix="bar">
+          <WTitle prefix="bar" class="mb-2">
             Basic create: {{ index }}
           </WTitle>
 
@@ -180,7 +175,7 @@ function onDynamicQueryandParam(type: number) {
         </n-list-item>
 
         <n-list-item>
-          <WTitle prefix="bar">
+          <WTitle prefix="bar" class="mb-2">
             Dynamic Title
           </WTitle>
 
@@ -199,7 +194,7 @@ function onDynamicQueryandParam(type: number) {
         </n-list-item>
 
         <n-list-item>
-          <WTitle prefix="bar">
+          <WTitle prefix="bar" class="mb-2">
             Other tab Title (Open the custom animation name page and then come back)
           </WTitle>
 
@@ -230,7 +225,7 @@ function onDynamicQueryandParam(type: number) {
         </n-list-item>
 
         <n-list-item>
-          <WTitle prefix="bar">
+          <WTitle prefix="bar" class="mb-2">
             Dynamic Icon
           </WTitle>
 
@@ -249,7 +244,7 @@ function onDynamicQueryandParam(type: number) {
         </n-list-item>
 
         <n-list-item>
-          <WTitle prefix="bar">
+          <WTitle prefix="bar" class="mb-2">
             Other tab Icon (Open the custom animation name page and then come back)
           </WTitle>
 

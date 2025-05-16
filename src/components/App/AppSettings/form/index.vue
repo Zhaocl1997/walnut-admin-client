@@ -34,13 +34,42 @@ const { copy, copied } = useClipboard({
   copiedDuring: 8000,
 })
 
+const show = ref(false)
+
+function onOpenSetting() {
+  show.value = true
+}
+
 function onReset() {
   window.location.reload()
 }
 </script>
 
 <template>
-  <div>
+  <WIconButton
+    :icon-props="{
+      height: '24',
+      icon: 'ant-design:setting-outlined',
+    }"
+    :button-props="{
+      onClick: onOpenSetting,
+    }"
+    tooltip
+    :tooltip-msg="$t('app.settings.tooltip.form')"
+    :tooltip-props="{
+      placement: 'left',
+    }"
+  />
+
+  <WDrawer
+    v-model:show="show"
+    :width="350"
+    display-directive="show"
+    :title="$t('app.settings.title')"
+    :default-button="false"
+    @yes="() => (show = false)"
+    @no="() => (show = false)"
+  >
     <SettingsFormApp />
     <SettingsFormLogo />
     <SettingsFormHeader />
@@ -68,5 +97,5 @@ function onReset() {
         {{ $t('form.app.settings.app.reset') }}
       </n-button>
     </div>
-  </div>
+  </WDrawer>
 </template>

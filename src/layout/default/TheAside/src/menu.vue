@@ -1,6 +1,11 @@
 <script lang="tsx">
 import type { MenuOption } from 'naive-ui'
+// TODO 111
+import WScrollbar from '@/components/Extra/Scrollbar'
+import WTransition from '@/components/Extra/Transition'
+import WIcon from '@/components/UI/Icon'
 import { findPath, formatTree } from 'easy-fns-ts'
+
 import { omit } from 'lodash-es'
 
 interface MenuMeta {
@@ -41,13 +46,13 @@ export default defineComponent({
             ) {
               return (
                 <WIcon
-                  icon={node.activeIcon ? node.activeIcon : node.icon}
+                  icon={node.activeIcon ? node.activeIcon : node.icon!}
                 >
                 </WIcon>
               )
             }
 
-            return <WIcon icon={node.icon}></WIcon>
+            return <WIcon icon={node.icon!}></WIcon>
           },
           meta: {
             type: node.type,
@@ -120,7 +125,7 @@ export default defineComponent({
             style={{
               paddingTop:
                   `${appSetting.getLogoShow && appSetting.getLogoFixed
-                    ? appSetting.getHeaderHeight
+                    ? appSetting.header.height
                     : 0}px`,
             }}
           >

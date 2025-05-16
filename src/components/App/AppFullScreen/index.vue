@@ -5,7 +5,7 @@ defineOptions({
   name: 'AppFullScreen',
 })
 
-const props = withDefaults(defineProps<WAppFullScreenProps>(), {
+withDefaults(defineProps<WAppFullScreenProps>(), {
   size: '24',
 })
 </script>

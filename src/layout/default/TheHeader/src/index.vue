@@ -25,10 +25,9 @@ function onShowAside() {
       :inverted="appSetting.getHeaderInverted"
       :style="{
         zIndex: 999,
-        height: `${appSetting.getHeaderHeight}px`,
+        height: `${appSetting.header.height}px`,
       }"
-      :class="{ 'top-0': appSetting.getHeaderFixed }"
-      class="sticky left-0 flex-none"
+      class="sticky left-0"
     >
       <div
         class="h-full h-full hstack select-none items-center justify-between px-2"

@@ -1,10 +1,6 @@
 <script lang="ts" setup>
-import TheExitFullContent from './exitFullContent.vue'
-
 const appMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
-
-const contentFull = useRouterQuery('full')
 
 const getKeepAliveInclude = computed(() => {
   if (!appSetting.app.keepAlive)
@@ -15,8 +11,6 @@ const getKeepAliveInclude = computed(() => {
 
 <template>
   <router-view v-slot="{ Component, route }">
-    <TheExitFullContent v-if="appSetting.getIsLayoutHidden && !contentFull" />
-
     <WTransition v-if="appSetting.getTransition" :transition-name="appSetting.getTransition" mode="out-in" appear>
       <keep-alive
         v-if="appSetting.app.keepAlive"

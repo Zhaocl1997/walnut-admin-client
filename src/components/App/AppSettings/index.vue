@@ -1,35 +1,37 @@
 <script lang="ts" setup>
+import AppSettingBackToTop from './backToTop.vue'
 import AppSettingsForm from './form/index.vue'
+import AppSettingExitFullContent from './fullContent.vue'
 
 defineOptions({
   name: 'AppSettings',
 })
 
-const show = ref(false)
+const appSetting = useAppStoreSetting()
+
+const contentFull = useRouterQuery('full')
 </script>
 
 <template>
-  <div
-    id="walnut-settings"
-    class="fixed bottom-20 right-20 cursor-pointer hover:text-primaryHover"
-    style="z-index: 1999"
-  >
+  <n-float-button position="fixed" bottom="60" right="60" menu-trigger="hover" style="z-index:9999">
     <WIcon
-      height="36"
+      id="walnut-settings"
+      height="24"
       icon="ant-design:setting-outlined"
-      @click="() => (show = true)"
     />
-  </div>
 
-  <w-drawer
-    v-model:show="show"
-    :width="350"
-    display-directive="show"
-    :title="$t('app.settings.title')"
-    :default-button="false"
-    @yes="() => (show = false)"
-    @no="() => (show = false)"
-  >
-    <AppSettingsForm />
-  </w-drawer>
+    <template #menu>
+      <n-float-button v-if="appSetting.getIsLayoutHidden && !contentFull">
+        <AppSettingExitFullContent />
+      </n-float-button>
+
+      <n-float-button>
+        <AppSettingsForm />
+      </n-float-button>
+
+      <n-float-button>
+        <AppSettingBackToTop />
+      </n-float-button>
+    </template>
+  </n-float-button>
 </template>

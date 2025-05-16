@@ -13,7 +13,7 @@ export function useStarOnGithub() {
     description:
       'Please give me a star if you like this project!! Your star means a lot to me!!!!',
     containerStyle: {
-      marginTop: `${appSetting.getHeaderHeight}px`,
+      marginTop: `${appSetting.header.height}px`,
     },
     content: () => {
       return (

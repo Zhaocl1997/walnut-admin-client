@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import TheIFrameWrapper from '../iframe/wrapper.vue'
 import TheAppBackToTop from './Features/backToTop.vue'
-import TheScrollWrapper from './Features/scrollWrapper.vue'
 import TheAppWatermark from './Features/watermark.vue'
 import TheAside from './TheAside'
 import TheContent from './TheContent'
@@ -9,11 +8,18 @@ import TheFooter from './TheFooter'
 
 import TheHeader from './TheHeader'
 import TheTabs from './TheTab'
+import { setLayoutContext } from './useLayoutContext'
 
 import { useStarOnGithub } from './useStarOnGithub'
 
 const appMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
+
+const scrollWrapper = useAppScroll()
+
+setLayoutContext({
+  scrollWrapper,
+})
 
 // TODO layout
 // watchEffect(() => {
@@ -72,31 +78,36 @@ if (!isDev()) {
         bordered
         :native-scrollbar="false"
         :content-style="{ height: '100%' }"
-        class="relative"
+        class="styled-scrollbars relative h-full w-full overflow-clip"
       >
-        <div
-          :id="String($route.name)"
-          class="styled-scrollbars relative h-full w-full overflow-hidden"
-        >
-          <TheHeader />
-          <TheTabs />
+        <div class="h-full w-full">
+          <div id="w-header" class="w-full" />
+          <div id="w-tabs" class="w-full" />
 
-          <TheScrollWrapper>
-            <TheContent
-              :style="{
-                padding: $route.meta.url
-                  ? 0
-                  : `${appSetting.app.contentPadding}px`,
-              }"
-            />
+          <div
+            :id="String($route.name)"
+            ref="scrollWrapper"
+            class="relative h-full overflow-auto transition-height transition-width"
+            :style="{
+              width: `calc(100vw - ${appSetting.getMenuWidth}px)`,
+              height: `calc(100vh - ${appSetting.header.fixed ? appSetting.header.height : 0}px - ${appSetting.tabs.fixed ? appSetting.tabs.height : 0}px - ${appSetting.footer.fixed ? appSetting.footer.height : 0}px)`,
+            }"
+          >
+            <Teleport defer to="#w-header" :disabled="!appSetting.getHeaderFixed">
+              <TheHeader />
+            </Teleport>
+            <Teleport defer to="#w-tabs" :disabled="!appSetting.getTabsFixed">
+              <TheTabs />
+            </Teleport>
 
+            <TheContent />
             <TheIFrameWrapper />
-          </TheScrollWrapper>
+          </div>
 
           <TheFooter />
-        </div>
 
-        <TheAppBackToTop />
+          <TheAppBackToTop />
+        </div>
       </n-layout-content>
 
       <WAppSettings />

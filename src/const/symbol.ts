@@ -3,6 +3,7 @@ export const AppConstSymbolKey = {
   TABLE_KEY: 'w-table',
   TABS_KEY: 'w-tabs',
   AUTH_KEY: 'w-auth',
+  LAYOUT_KEY: 'w-layout',
 }
 
 export type ValueOfAppConstSymbolKey = ValueOf<typeof AppConstSymbolKey>
