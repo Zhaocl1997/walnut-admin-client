@@ -154,14 +154,14 @@ declare global {
   /**
    * User profile state
    */
-  interface UserProfileState {
+  interface IUserStoreProfile {
     profile: Partial<AppSystemUser>
   }
 
   /**
    * User auth state
    */
-  interface UserAuthState {
+  interface IUserStoreAuth {
     accessToken?: RemovableRef<string>
     refreshToken?: RemovableRef<string>
     remember?: RemovableRef<Omit<AppPayloadAuth.Password, 'rememberMe'>>
@@ -170,11 +170,11 @@ declare global {
   /**
    * User permission state
    */
-  interface UserPermissionState {
+  interface IUserStorePermission {
     permissions: string[]
   }
 
-  interface UserScrollState {
+  interface IUserStoreScroll {
     scrollEntries: RemovableRef<[string, { top: number, left?: number }][]>
   }
 }

@@ -5,7 +5,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
-  state: (): UserProfileState => ({
+  state: (): IUserStoreProfile => ({
     profile: {},
   }),
 
@@ -15,6 +15,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
         return upperFirst(this.profile.nickName)
       if (this.profile.userName)
         return upperFirst(this.profile.userName)
+      return ''
     },
 
     getNameFirstLetter(): string {

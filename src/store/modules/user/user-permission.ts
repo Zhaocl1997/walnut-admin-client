@@ -3,7 +3,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
-  state: (): UserPermissionState => ({
+  state: (): IUserStorePermission => ({
     permissions: [],
   }),
 
