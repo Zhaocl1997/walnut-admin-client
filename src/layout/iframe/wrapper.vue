@@ -19,7 +19,7 @@ const getCachedIframeList = computed(() =>
     <template v-for="item in getCachedIframeList" :key="item.name">
       <WTransition v-if="appSetting.getTransition" :transition-name="appSetting.getTransition" mode="out-in" appear>
         <WIFrame
-          v-if="item.url && appTab.tabs.map((i) => i.name).includes(item.name!)"
+          v-if="item.url && appTab.getCurrentTab.name === item.name"
           v-show="item.name === $route.name"
           :frame-src="item.url"
         />
@@ -27,7 +27,7 @@ const getCachedIframeList = computed(() =>
 
       <template v-else>
         <WIFrame
-          v-if="item.url && appTab.tabs.map((i) => i.name).includes(item.name!)"
+          v-if="item.url && appTab.getCurrentTab.name === item.name"
           v-show="item.name === $route.name"
           :frame-src="item.url"
         />
