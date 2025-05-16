@@ -4,6 +4,6 @@ export function useAppContentFull() {
 
   watchEffect(() => {
     if (currentRoute.value.query.full)
-      appSetting.toggleLeftMenuLayout()
+      appSetting.toggleLayout(false)
   })
 }

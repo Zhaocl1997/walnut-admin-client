@@ -11,7 +11,6 @@ import { getTabsContext } from '../hooks/useTabsContext'
 
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
-const { enter } = useFullscreen()
 
 const appTab = useAppStoreTab()
 const appSetting = useAppStoreSetting()
@@ -76,8 +75,7 @@ async function onSelect(key: ValueOfAppConstTabDeleteType &
     await useRedirect()
 
   if (key === 'Screen Full') {
-    appSetting.toggleLeftMenuLayout()
-    enter()
+    appSetting.toggleLayout(false)
   }
 
   if (key === 'Fix') {
