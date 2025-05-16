@@ -55,6 +55,7 @@ export function getPermissions() {
     keepAliveNames: string[]
     indexMenuName: string
     affixedTabs: AppTab[]
+    internalIframeList: { name: string, url: string, cache: boolean }[]
   }>({
     url: AuthEnum.PERMISSION,
   })

@@ -22,6 +22,7 @@ export const _confirm_leave_map_ = new Map()
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
   state: (): IAppStoreTab => ({
     tabs: [],
+    iframeList: [],
     visitedTabs: new Map(),
   }),
 
@@ -513,6 +514,13 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      */
     setAffixedTabs(payload: AppTab[]) {
       payload.map(tab => this.createTabs(tab, 'unshift'))
+    },
+
+    /**
+     * @description set iframe list
+     */
+    setIframeList(payload: IAppTabIframe[]) {
+      this.iframeList = payload
     },
 
     /**

@@ -130,11 +130,14 @@ declare global {
     footer: AppSettingsForFooter
   }
 
+  type IAppTabIframe = Pick<AppSystemMenu, 'name' | 'cache' | 'url'>
+
   /**
    * App tab state
    */
   interface IAppStoreTab {
     tabs: AppTab[]
+    iframeList: IAppTabIframe[]
     visitedTabs: Map<string, string[]>
   }
 

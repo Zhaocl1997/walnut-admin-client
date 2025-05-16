@@ -18,7 +18,7 @@ export async function AppCoreFn1() {
     = getRoutes()[getRoutes().findIndex(i => i.path === AppRootPath)]
 
   // Here is where we request from back end to get login user permissions.
-  const { permissionMenuTree, permissionStrings, permissionRouteTree, keepAliveNames, indexMenuName, affixedTabs } = await getPermissions()
+  const { permissionMenuTree, permissionStrings, permissionRouteTree, keepAliveNames, indexMenuName, affixedTabs, internalIframeList } = await getPermissions()
 
   // set menu tree
   appMenu.setMenus(permissionMenuTree)
@@ -31,6 +31,9 @@ export async function AppCoreFn1() {
 
   // set affixed tabs
   appTab.setAffixedTabs(affixedTabs)
+
+  // set iframe list
+  appTab.setIframeList(internalIframeList)
 
   // set permission string array
   userPermission.setPermissions(permissionStrings)

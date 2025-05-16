@@ -16,6 +16,7 @@ declare module 'vue-router' {
     activeIcon?: string
     position?: boolean
     leaveTip?: boolean
+    ternal?: ValueOfAppConstMenuTernal
 
     /**
      * @description this is an option that only works for routes hard-coded in front-end code
