@@ -1,6 +1,7 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { WForm } from '@/components/UI/Form'
 import { localeAPI } from '@/api/system/locale'
+import WBussinessLangSelect from '@/components/Business/LangSelect'
 import { useLangList } from './useLangList'
 
 defineOptions({
@@ -69,15 +70,13 @@ const [
       // query form schemas
       schemas: [
         {
-          type: 'Base:Input',
+          type: 'Base:Render',
           formProp: {
             path: 'langId',
           },
           componentProp: {
             defaultValue: langId,
-          },
-          visibleProp: {
-            vIf: false,
+            render: () => (<WBussinessLangSelect v-model={[langId.value, 'value']}></WBussinessLangSelect>),
           },
         },
 
@@ -198,7 +197,7 @@ const [
     labelWidth: 100,
     xGap: 0,
     // @ts-expect-error create/update form schemas
-    schemas: computed<WForm.Schema.Item[]>(() => [
+    schemas: computed<WForm.Schema.Item<AppSystemLocale>[]>(() => [
       {
         type: 'Base:Input',
         formProp: {
@@ -210,7 +209,7 @@ const [
         },
       },
 
-      ...langList.value.map<WForm.Schema.Item>(i => ({
+      ...langList.value.map<WForm.Schema.Item<AppSystemLocale>>(i => ({
         type: 'Base:Input',
         formProp: {
           path: i.value as string,
