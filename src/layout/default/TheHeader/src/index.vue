@@ -25,7 +25,7 @@ function onShowAside() {
       :inverted="appSetting.getHeaderInverted"
       :style="{
         zIndex: 999,
-        height: `${appSetting.header.height}px`,
+        height: `${appSetting.getHeaderHeight}px`,
       }"
       :class="{ 'top-0': appSetting.getHeaderFixed }"
       class="sticky left-0 flex-none"

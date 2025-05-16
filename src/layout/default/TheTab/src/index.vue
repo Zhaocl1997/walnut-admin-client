@@ -74,11 +74,16 @@ setTabsContext({
 <template>
   <WTransition appear :transition-name="appSetting.getTabsTrasition">
     <n-layout-header
-      v-if="appSetting.getTabsShow" :id="appSetting.getTabsId" bordered
-      :inverted="appSetting.getTabsInverted" :style="{ zIndex: 999, height: `${appSetting.tabs.height}px` }" :class="{
+      v-if="appSetting.getTabsShow"
+      :id="appSetting.getTabsId"
+      bordered
+      :inverted="appSetting.getTabsInverted"
+      :style="{ zIndex: 999, height: `${appSetting.getTabsHeight}px` }"
+      :class="{
         'top-0': appSetting.getTabsFixed,
         '!top-[48px]': appSetting.getHeaderShow && appSetting.getHeaderFixed,
-      }" class="sticky left-0 flex-none"
+      }"
+      class="sticky left-0 flex-none"
     >
       <div class="h-full hstack justify-between">
         <!-- left utils -->
@@ -91,7 +96,7 @@ setTabsContext({
           :style="{
             width: appAdapter.isMobile
               ? '100vw'
-              : `calc(100vw - ${appSetting.menu.width}px - ${isOverflow ? '120px' : '0px'
+              : `calc(100vw - ${appSetting.getMenuWidth}px - ${isOverflow ? '120px' : '0px'
               })`,
           }"
         />

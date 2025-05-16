@@ -214,18 +214,55 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       return false
     },
 
-    getMenuAsideStatus(): boolean {
-      return this.getLogoShow || this.getMenuShow
-    },
-
+    /**
+     * @description get aside status, pc or mobile
+     */
     getMenuAdapterStatus(): boolean {
       const appAdapter = useAppStoreAdapter()
-
-      return !appAdapter.isMobile && this.getMenuAsideStatus
+      return !appAdapter.isMobile && (this.getLogoShow || this.getMenuShow)
     },
 
+    /**
+     * @description get is all layout hidden
+     */
     getIsLayoutHidden(): boolean {
       return !this.header.status && !this.logo.status && !this.menu.status && !this.tabs.status && !this.footer.status
+    },
+
+    /**
+     * @description get aside menu width based on menu config
+     */
+    getMenuWidth(state) {
+      const appMenu = useAppStoreMenu()
+
+      if (state.menu.status && !appMenu.collapse) {
+        return state.menu.width
+      }
+
+      if (state.menu.status && appMenu.collapse) {
+        return state.menu.collapsedWidth
+      }
+
+      return 0
+    },
+
+    getHeaderHeight(state): number {
+      return state.header.status ? state.header.height : 0
+    },
+
+    getTabsHeight(state): number {
+      return state.tabs.status ? state.tabs.height : 0
+    },
+
+    getFooterHeight(state): number {
+      return state.footer.status ? state.footer.height : 0
+    },
+
+    /**
+     * @description get calculated height
+     */
+    getCalcHeight() {
+      return +this.getHeaderHeight + +this.getTabsHeight + +this.getFooterHeight
     },
   },
 

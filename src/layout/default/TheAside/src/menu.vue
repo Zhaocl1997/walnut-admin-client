@@ -120,7 +120,7 @@ export default defineComponent({
             style={{
               paddingTop:
                   `${appSetting.getLogoShow && appSetting.getLogoFixed
-                    ? appSetting.header.height
+                    ? appSetting.getHeaderHeight
                     : 0}px`,
             }}
           >

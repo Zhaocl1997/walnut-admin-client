@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import TheIFrameWrapper from '../iframe/wrapper.vue'
 import TheAppBackToTop from './Features/backToTop.vue'
+import TheScrollWrapper from './Features/scrollWrapper.vue'
 import TheAppWatermark from './Features/watermark.vue'
 import TheAside from './TheAside'
 import TheContent from './TheContent'
@@ -13,8 +14,6 @@ import { useStarOnGithub } from './useStarOnGithub'
 
 const appMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
-
-const { scrollWrapper } = useAppScroll()
 
 // TODO layout
 // watchEffect(() => {
@@ -66,8 +65,8 @@ if (!isDev()) {
     </n-drawer>
 
     <div
-      class="h-screen vstack flex-1"
-      :style="{ width: `calc(100vw - ${appSetting.menu.width}px)` }"
+      class="h-screen vstack flex-1 overflow-hidden"
+      :style="{ width: `calc(100vw - ${appSetting.getMenuWidth}px)` }"
     >
       <n-layout-content
         bordered
@@ -76,30 +75,23 @@ if (!isDev()) {
         class="relative"
       >
         <div
-          :id="$route.name"
-          ref="scrollWrapper"
-          class="relative h-full flex flex-col" :class="[
-            {
-              'overflow-x-hidden styled-scrollbars': !$route.meta.url,
-            },
-          ]"
+          :id="String($route.name)"
+          class="styled-scrollbars relative h-full w-full overflow-hidden"
         >
           <TheHeader />
           <TheTabs />
 
-          <TheIFrameWrapper />
+          <TheScrollWrapper>
+            <TheContent
+              :style="{
+                padding: $route.meta.url
+                  ? 0
+                  : `${appSetting.app.contentPadding}px`,
+              }"
+            />
 
-          <TheContent
-            :class="{ 'min-w-fit': $route.meta.position }"
-            class="grow"
-            :style="{
-              padding: $route.meta.url
-                ? 0
-                : `${appSetting.app.contentPadding}px`,
-            }"
-          />
-
-          <WAppSettings />
+            <TheIFrameWrapper />
+          </TheScrollWrapper>
 
           <TheFooter />
         </div>
@@ -107,26 +99,8 @@ if (!isDev()) {
         <TheAppBackToTop />
       </n-layout-content>
 
+      <WAppSettings />
       <TheAppWatermark />
     </div>
   </n-layout>
 </template>
-
-<style>
-  .styled-scrollbars {
-  /* Foreground, Background */
-  scrollbar-color: #999 #333;
-}
-.styled-scrollbars::-webkit-scrollbar {
-  width: 8px; /* Mostly for vertical scrollbars */
-  height: 10px; /* Mostly for horizontal scrollbars */
-}
-.styled-scrollbars::-webkit-scrollbar-thumb {
-  /* Foreground */
-  background: #999;
-}
-.styled-scrollbars::-webkit-scrollbar-track {
-  /* Background */
-  background: #333;
-}
-</style>

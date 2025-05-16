@@ -1,3 +1,6 @@
+// TODO 111
+import WIcon from '@/components/UI/Icon'
+
 export function useStarOnGithub() {
   const appSetting = useAppStoreSetting()
 
@@ -10,7 +13,7 @@ export function useStarOnGithub() {
     description:
       'Please give me a star if you like this project!! Your star means a lot to me!!!!',
     containerStyle: {
-      marginTop: `${appSetting.header.height}px`,
+      marginTop: `${appSetting.getHeaderHeight}px`,
     },
     content: () => {
       return (

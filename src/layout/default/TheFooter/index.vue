@@ -11,7 +11,7 @@ const appSetting = useAppStoreSetting()
       :inverted="appSetting.getFooterInverted"
       :style="{
         zIndex: 999,
-        height: `${appSetting.footer.height}px`,
+        height: `${appSetting.getFooterHeight}px`,
       }"
       :class="{ 'bottom-0': appSetting.getFooterFixed }"
       class="sticky left-0 flex-none"

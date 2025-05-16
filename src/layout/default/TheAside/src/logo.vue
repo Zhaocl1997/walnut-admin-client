@@ -21,11 +21,8 @@ async function onGoIndex() {
         },
       ]"
       :style="{
-        height: `${appSetting.header.height}px`,
-        width:
-          `${appMenu.collapse
-            ? appSetting.menu.collapsedWidth
-            : appSetting.menu.width}px`,
+        height: `${appSetting.getHeaderHeight}px`,
+        width: `${appSetting.getMenuWidth}px`,
         zIndex: 999,
       }"
       @click="onGoIndex"

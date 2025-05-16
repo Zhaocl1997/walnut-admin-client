@@ -3,12 +3,13 @@ export function useAppScroll() {
 
   const { currentRoute } = useAppRouter()
 
-  const scrollWrapper = ref<HTMLElement>()
+  const scrollWrapper = useTemplateRef<HTMLElement>('scrollWrapper')
   const { x, y } = useScroll(scrollWrapper)
 
   debouncedWatch(
     () => [x.value, y.value] as const,
     ([x, y]) => {
+      console.log({ x, y })
       if (currentRoute.value.meta.position)
         userScroll.setScrollPosition(currentRoute.value.name as string, y, x)
     },
@@ -23,14 +24,13 @@ export function useAppScroll() {
           currentRoute.value.name as string,
         )
 
-        // TODO nextTick just do not work here
-        // so just use settimeout to scroll
-        setTimeout(() => {
+        const id = setTimeout(() => {
           scrollWrapper.value?.scrollTo({
             top: position.top,
             left: position.left,
             behavior: 'smooth',
           })
+          clearTimeout(id)
         }, 500)
       }
       else {
@@ -42,5 +42,5 @@ export function useAppScroll() {
     { immediate: true },
   )
 
-  return { scrollWrapper }
+  return scrollWrapper
 }
