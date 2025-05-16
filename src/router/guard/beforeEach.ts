@@ -12,15 +12,18 @@ export function createBeforeEachGuard(router: Router) {
   // TODO initial trigger twice
   // logic optimise, with next()
   router.beforeEach(async (to, from) => {
-    // start loadingbar
-    window.$loadingBar.start()
-
     if (to.fullPath)
       console.log('Route Guard', `Entering Route : ${to.fullPath}`)
 
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
+    const appCachedViews = useAppStoreCachedViews()
+
+    // if the target is not cached before, start loadingbar
+    if (!appCachedViews.hasCached(to.name)) {
+      window.$loadingBar.start()
+    }
 
     // Paths in `routeWhiteListPath` will enter directly
     if (routeWhiteListPath.includes(to.path)) {
@@ -65,6 +68,7 @@ export function createBeforeEachGuard(router: Router) {
       && (_confirm_leave_map_.get(from.name) === undefined
         || _confirm_leave_map_.get(from.name) === false)
     ) {
+      // @ts-expect-error fuck t
       const confirmed = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,
         closeOnEsc: false,

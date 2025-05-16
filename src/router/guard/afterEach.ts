@@ -5,6 +5,8 @@ export function createAfterEachGuard(router: Router) {
     // finish loadingbar
     window.$loadingBar.finish()
 
+    const appCachedViews = useAppStoreCachedViews()
+
     // if the route exists in tabs
     // and when going to the route, it carrys query
     // add the query to the tab for user experience
@@ -17,6 +19,12 @@ export function createAfterEachGuard(router: Router) {
     // since current page is not keep-alive, re-open current page will mount again
     if (!from.meta.cache) {
       removeCurrentPageRequests(from.path)
+    }
+
+    // if target is cacheable, set the name into cached name list
+    // then in beforeEach, it will not do the loadingbar stuff
+    if (to.meta.cache) {
+      appCachedViews.setCached(to.name)
     }
 
     return true

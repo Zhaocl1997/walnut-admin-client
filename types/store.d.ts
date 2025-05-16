@@ -3,6 +3,7 @@ import type {
   MessageReactive,
   NotificationReactive,
 } from 'naive-ui'
+import type { RouteRecordNameGeneric } from 'vue-router'
 import type {
   AppSettingsForApp,
   AppSettingsForBreadcrumb,
@@ -45,6 +46,13 @@ declare global {
    */
   interface AppAdapterState {
     device: ValueOfAppConstDevice
+  }
+
+  /**
+   * App cached views state
+   */
+  interface AppCachedViewsState {
+    cachedViewNameList: RouteRecordNameGeneric[]
   }
 
   /**
