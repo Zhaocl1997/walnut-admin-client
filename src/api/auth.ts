@@ -53,6 +53,8 @@ export function getPermissions() {
     permissionStrings: string[]
     permissionRouteTree: TreeNodeItem<RouteRecordRaw>[]
     keepAliveNames: string[]
+    indexMenuName: string
+    affixedTabs: AppTab[]
   }>({
     url: AuthEnum.PERMISSION,
   })

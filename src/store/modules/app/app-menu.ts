@@ -37,32 +37,6 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
     },
 
     /**
-     * @description create route object based on menu object
-     */
-    createRouteByMenu(node: AppSystemMenu): AppTab {
-      return {
-        path: node.path!,
-        name: node.name!,
-        meta: {
-          title: node.title,
-          icon: node.icon,
-          cache: node.cache,
-          url: node.url,
-          affix: node.affix,
-          type: node.type,
-          component: node.component,
-          menuActiveName: node.menuActiveName,
-          menuActiveSameTab: node.menuActiveSameTab,
-          animationName: node.animationName,
-          badge: node.badge,
-          activeIcon: node.activeIcon,
-          position: node.position,
-          leaveTip: node.leaveTip,
-        },
-      }
-    },
-
-    /**
      * @description clean all menu state
      */
     clearMenus() {

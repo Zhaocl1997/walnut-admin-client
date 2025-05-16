@@ -3,7 +3,7 @@ defineOptions({
   name: 'WIFrame',
 })
 
-const props = defineProps<{ frameSrc?: string }>()
+defineProps<{ frameSrc?: string }>()
 
 const show = ref(false)
 
@@ -28,7 +28,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-  :deep(.w-spin-content) {
+:deep(.w-spin-content) {
   height: 100%;
 }
 </style>
