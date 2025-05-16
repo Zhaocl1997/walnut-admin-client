@@ -44,35 +44,35 @@ declare global {
   /**
    * App adapter state
    */
-  interface AppAdapterState {
+  interface IAppStoreAdapter {
     device: ValueOfAppConstDevice
   }
 
   /**
    * App cached views state
    */
-  interface AppCachedViewsState {
+  interface IAppStoreCachedViews {
     cachedViewNameList: RouteRecordNameGeneric[]
   }
 
   /**
    * App secret key state
    */
-  interface AppKeyState {
+  interface IAppStoreKey {
     baiduAK?: string
   }
 
   /**
    * App locale state
    */
-  interface AppLocaleState {
+  interface IAppStoreLocale {
     locale: RemovableRef<ValueOfAppConstLocale>
   }
 
   /**
    * App lock state
    */
-  interface AppLockState {
+  interface IAppStoreLock {
     isLock: RemovableRef<boolean>
     lockRoute: RemovableRef<AppLockRoute>
   }
@@ -80,7 +80,7 @@ declare global {
   /**
    * App menu state
    */
-  interface AppMenuState {
+  interface IAppStoreMenu {
     collapse: boolean
     showAside: boolean
 
@@ -92,7 +92,7 @@ declare global {
   /**
    * App naive ui message/notificaiton placement state
    */
-  interface AppMsgState {
+  interface IAppStoreMsg {
     notiMax: number
     msgMax: number
     notiPlacement: NotificationPlacement
@@ -105,14 +105,14 @@ declare global {
   /**
    * App setting retrieved from backend state
    */
-  interface AppSettingBackendState {
+  interface IAppStoreSettingBackend {
     auth: Partial<AppPublicSettings.AuthSettings>
   }
 
   /**
    * App setting state
    */
-  interface AppSettingState {
+  interface IAppStoreSetting {
     themes: AppSettingsForTheme
 
     app: AppSettingsForApp
@@ -133,7 +133,7 @@ declare global {
   /**
    * App tab state
    */
-  interface AppTabState {
+  interface IAppStoreTab {
     tabs: AppTab[]
     visitedTabs: Map<string, string[]>
   }

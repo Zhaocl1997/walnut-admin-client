@@ -5,7 +5,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
-  state: (): AppLockState => ({
+  state: (): IAppStoreLock => ({
     isLock: useAppStorage(AppConstPersistKey.IS_LOCK, false, { expire: Infinity }),
     lockRoute: useAppStorage(AppConstPersistKey.LOCK_ROUTE, {}, { expire: Infinity }),
   }),

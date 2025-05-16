@@ -20,7 +20,7 @@ const _icon_map_ = new Map()
 export const _confirm_leave_map_ = new Map()
 
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
-  state: (): AppTabState => ({
+  state: (): IAppStoreTab => ({
     tabs: [],
     visitedTabs: new Map(),
   }),
@@ -347,47 +347,46 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
       switch (type) {
         case AppConstTabDeleteType.TAB_SINGLE:
-          {
-            // if close current tab, router push forward or backward
-            if (currentRouteName === name) {
-              if (currentTab.meta.leaveTip) {
-                const res = await useAppConfirm(
-                  AppI18n.global.t('app.base.leaveTip'),
-                  {
-                    closable: false,
-                    closeOnEsc: false,
-                    maskClosable: false,
-                  },
-                )
+          // if close current tab, router push forward or backward
+          if (currentRouteName === name) {
+            if (currentTab.meta.leaveTip) {
+              const res = await useAppConfirm(
+                // @ts-expect-error fuck t
+                AppI18n.global.t('app.base.leaveTip'),
+                {
+                  closable: false,
+                  closeOnEsc: false,
+                  maskClosable: false,
+                },
+              )
 
-                if (res) {
-                  _confirm_leave_map_.set(name, true)
-                  // simple splice
-                  this.tabs.splice(index, 1)
-
-                  // TODO bug
-                }
-              }
-              else {
+              if (res) {
+                _confirm_leave_map_.set(name, true)
                 // simple splice
                 this.tabs.splice(index, 1)
+
+                // TODO bug
               }
-
-              const next = this.tabs[index]
-              const previous = this.tabs[index - 1]
-
-              // Got next tab, push to next. Else push to previous one
-
-              await this.goTab(
-                next ? next.name : previous.name,
-                next ? next.query : previous.query,
-                next ? next.params : previous.params,
-              )
             }
             else {
               // simple splice
               this.tabs.splice(index, 1)
             }
+
+            const next = this.tabs[index]
+            const previous = this.tabs[index - 1]
+
+            // Got next tab, push to next. Else push to previous one
+
+            await this.goTab(
+              next ? next.name : previous.name,
+              next ? next.query : previous.query,
+              next ? next.params : previous.params,
+            )
+          }
+          else {
+            // simple splice
+            this.tabs.splice(index, 1)
           }
           break
 

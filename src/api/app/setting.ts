@@ -13,7 +13,7 @@ export const appSettingAPI = new BaseAPI<AppSettingsModel>({
  * @description get public settings
  */
 export function getPublicSettings() {
-  return AppAxios.get<AppSettingBackendState>({
+  return AppAxios.get<IAppStoreSettingBackend>({
     url: SettingEnum.PUBLIC,
   })
 }

@@ -6,7 +6,7 @@ import { store } from '../../pinia'
 const useAppStoreSettingBackendInside = defineStore(
   StoreKeys.APP_SETTING_BACKEND,
   {
-    state: (): AppSettingBackendState => ({
+    state: (): IAppStoreSettingBackend => ({
       auth: {},
     }),
 

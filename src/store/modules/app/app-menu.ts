@@ -4,7 +4,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
-  state: (): AppMenuState => ({
+  state: (): IAppStoreMenu => ({
     collapse: false,
     showAside: false,
 

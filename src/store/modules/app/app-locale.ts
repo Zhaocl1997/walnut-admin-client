@@ -5,7 +5,7 @@ import { store } from '../../pinia'
 const preferredLanguages = usePreferredLanguages()
 
 const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
-  state: (): AppLocaleState => ({
+  state: (): IAppStoreLocale => ({
     locale: useAppStorage(
       AppConstPersistKey.LOCALE,
       preferredLanguages.value[0] as ValueOfAppConstLocale,

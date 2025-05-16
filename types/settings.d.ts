@@ -162,10 +162,6 @@ interface AppSettingsForApp {
    * @default 16
    */
   // baseFontSize: number
-
-  // TODO
-  // iframe config
-  // hijack f5
 }
 
 interface AppSettingsForTheme {

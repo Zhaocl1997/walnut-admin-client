@@ -14,17 +14,8 @@ import { StoreKeys } from '../../constant'
 
 import { store } from '../../pinia'
 
-type SetWithKeyOptions =
-  | { key: 'app', value: AppSettingsForApp }
-  | { key: 'logo', value: AppSettingsForLogo }
-  | { key: 'header', value: AppSettingsForHeader }
-  | { key: 'tabs', value: AppSettingsForTabs }
-  | { key: 'breadcrumb', value: AppSettingsForBreadcrumb }
-  | { key: 'menu', value: AppSettingsForMenu }
-  | { key: 'footer', value: AppSettingsForFooter }
-
 const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
-  state: (): AppSettingState => ({
+  state: (): IAppStoreSetting => ({
     themes: settings.themes as AppSettingsForTheme,
 
     app: settings.app as AppSettingsForApp,
@@ -44,7 +35,7 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
   getters: {
     // app
-    getTransition(state): ValueOfAppConstTransitionName {
+    getTransition(state): ValueOfAppConstTransitionName | null {
       const { currentRoute } = useAppRouter()
 
       const setting = state.app
@@ -232,15 +223,19 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
       return !appAdapter.isMobile && this.getMenuAsideStatus
     },
+
+    getIsLayoutHidden(): boolean {
+      return !this.header.status && !this.logo.status && !this.menu.status && !this.tabs.status && !this.footer.status
+    },
   },
 
   actions: {
-    toggleLeftMenuLayout(val = false) {
-      // this.settings.app.showHeader = val
-      // this.settings.app.showLogo = val
-      // this.settings.app.showMenu = val
-      // this.settings.app.showTabs = val
-      // this.settings.app.showFooter = val
+    toggleLayout(val: boolean) {
+      this.header.status = val
+      this.logo.status = val
+      this.menu.status = val
+      this.tabs.status = val
+      this.footer.status = val
     },
   },
 })

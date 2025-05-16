@@ -4,7 +4,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreCachedViewsInside = defineStore(StoreKeys.APP_CACHED_VIEWS, {
-  state: (): AppCachedViewsState => ({
+  state: (): IAppStoreCachedViews => ({
     cachedViewNameList: [],
   }),
 
