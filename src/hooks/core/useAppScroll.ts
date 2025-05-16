@@ -4,7 +4,7 @@ export function useAppScroll() {
   const { currentRoute } = useAppRouter()
 
   const scrollWrapper = useTemplateRef<HTMLElement>('scrollWrapper')
-  const { x, y } = useScroll(scrollWrapper)
+  const { x, y } = useScroll(scrollWrapper, { behavior: 'smooth', throttle: 250 })
 
   debouncedWatch(
     () => [x.value, y.value] as const,
