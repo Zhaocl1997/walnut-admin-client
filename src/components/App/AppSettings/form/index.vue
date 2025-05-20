@@ -78,24 +78,26 @@ function onReset() {
     <SettingsFormMenu />
     <SettingsFormFooter />
 
-    <div class="sticky bottom-0 z-50" :style="{ background: modalColor }">
-      <n-button
-        type="primary"
-        class="w-full"
-        icon-placement="right"
-        :disabled="copied"
-        @click="copy()"
-      >
-        {{
-          copied
-            ? $t('form.app.settings.app.copy.helpMsg')
-            : $t('form.app.settings.app.copy')
-        }}
-      </n-button>
+    <template #footer>
+      <div class="w-full">
+        <n-button
+          type="primary"
+          class="w-full"
+          icon-placement="right"
+          :disabled="copied"
+          @click="copy()"
+        >
+          {{
+            copied
+              ? $t('form.app.settings.app.copy.helpMsg')
+              : $t('form.app.settings.app.copy')
+          }}
+        </n-button>
 
-      <n-button type="error" class="mt-2 w-full" @click="onReset">
-        {{ $t('form.app.settings.app.reset') }}
-      </n-button>
-    </div>
+        <n-button type="error" class="mt-2 w-full" @click="onReset">
+          {{ $t('form.app.settings.app.reset') }}
+        </n-button>
+      </div>
+    </template>
   </WDrawer>
 </template>

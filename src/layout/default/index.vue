@@ -89,6 +89,7 @@ if (!isDev()) {
             ref="scrollWrapper"
             class="relative h-full overflow-auto transition-height transition-width"
             :style="{
+              padding: `${appSetting.app.contentPadding}px`,
               width: `calc(100vw - ${appSetting.getMenuWidth}px)`,
               height: `calc(100vh - ${appSetting.header.fixed ? appSetting.header.height : 0}px - ${appSetting.tabs.fixed ? appSetting.tabs.height : 0}px - ${appSetting.footer.fixed ? appSetting.footer.height : 0}px)`,
             }"
