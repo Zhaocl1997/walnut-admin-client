@@ -34,7 +34,8 @@ function onYes() {
       </template>
 
       <template #footer>
-        <n-space v-if="defaultButton" size="small">
+        <slot v-if="$slots.footer" name="footer" />
+        <n-space v-else-if="defaultButton" size="small">
           <n-button
             size="small"
             :on-click="onNo"
