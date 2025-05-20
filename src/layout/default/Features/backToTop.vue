@@ -3,6 +3,8 @@ defineOptions({
   name: 'TheAppBackToTop',
 })
 
+const appSetting = useAppStoreSetting()
+
 const { currentRoute } = useAppRouter()
 
 const showBackToTop = ref(true)
@@ -23,7 +25,9 @@ watch(
 
 <template>
   <n-back-top
-    v-if="showBackToTop"
+    v-if="appSetting.getBackToTopIsStandalone && showBackToTop"
     :listen-to="`#${String($route.name)}`"
+    :bottom="40"
+    :right="15"
   />
 </template>

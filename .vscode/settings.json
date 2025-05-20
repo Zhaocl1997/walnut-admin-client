@@ -220,6 +220,11 @@
                 "type": "boolean",
                 "description": "UX config for those who cannot see animation viewing the internet",
                 "default": false
+              },
+              "backToTopMode": {
+                "$ref": "#/definitions/ValueOfAppConstBackToTopMode",
+                "description": "DX config standalone or built in float setting buttons",
+                "default": "builtin"
               }
             },
             "required": [
@@ -239,7 +244,8 @@
               "lockIdleSeconds",
               "hijackRefresh",
               "colorMode",
-              "reducedMotion"
+              "reducedMotion",
+              "backToTopMode"
             ],
             "additionalProperties": false
           },
@@ -331,6 +337,13 @@
               "grayscale",
               "grayscale-inverted",
               "inverted"
+            ]
+          },
+          "ValueOfAppConstBackToTopMode": {
+            "type": "string",
+            "enum": [
+              "standalone",
+              "builtin"
             ]
           },
           "AppSettingsForTheme": {

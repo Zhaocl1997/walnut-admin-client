@@ -29,7 +29,7 @@ const contentFull = useRouterQuery('full')
         <AppSettingsForm />
       </n-float-button>
 
-      <n-float-button>
+      <n-float-button v-if="!appSetting.getBackToTopIsStandalone">
         <AppSettingBackToTop />
       </n-float-button>
     </template>

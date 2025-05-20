@@ -179,13 +179,13 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
 </script>
 
 <template>
-  <w-form
+  <WForm
     v-if="isDark"
     :model="darkThemeRelatives"
     @hook="register"
   />
 
-  <w-form
+  <WForm
     v-if="!isDark"
     :model="lightThemeRelatives"
     @hook="register"

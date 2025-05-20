@@ -95,5 +95,5 @@ const [register] = useForm<typeof footerRelatives>({
 </script>
 
 <template>
-  <w-form :model="footerRelatives" @hook="register" />
+  <WForm :model="footerRelatives" @hook="register" />
 </template>

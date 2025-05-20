@@ -82,5 +82,5 @@ const [register4] = useForm<typeof breadcrumbRelatives>({
 </script>
 
 <template>
-  <w-form :model="breadcrumbRelatives" @hook="register4" />
+  <WForm :model="breadcrumbRelatives" @hook="register4" />
 </template>

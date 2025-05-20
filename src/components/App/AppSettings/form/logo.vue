@@ -69,5 +69,5 @@ const [register] = useForm<typeof logoRelatives>({
 </script>
 
 <template>
-  <w-form :model="logoRelatives" @hook="register" />
+  <WForm :model="logoRelatives" @hook="register" />
 </template>

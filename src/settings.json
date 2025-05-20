@@ -16,7 +16,8 @@
     "lockIdleSeconds": 5,
     "hijackRefresh": false,
     "colorMode": "default",
-    "reducedMotion": false
+    "reducedMotion": false,
+    "backToTopMode": "standalone"
   },
   "themes": {
     "light": {

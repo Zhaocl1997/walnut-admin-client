@@ -191,5 +191,5 @@ const [register] = useForm<typeof tabRelatives>({
 </script>
 
 <template>
-  <w-form :model="tabRelatives" @hook="register" />
+  <WForm :model="tabRelatives" @hook="register" />
 </template>

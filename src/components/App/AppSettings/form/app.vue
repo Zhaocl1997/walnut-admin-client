@@ -247,10 +247,24 @@ const [register] = useForm<typeof appRelatives>({
         disabled: isReducedMotion,
       },
     },
+
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'backToTopMode',
+      },
+      componentProp: {
+        clearable: true,
+        options: Object.values(AppConstBackToTopMode).map(i => ({
+          value: i,
+          label: i,
+        })),
+      },
+    },
   ],
 })
 </script>
 
 <template>
-  <w-form :model="appRelatives" @hook="register" />
+  <WForm :model="appRelatives" @hook="register" />
 </template>

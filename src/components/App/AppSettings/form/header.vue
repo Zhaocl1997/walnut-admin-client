@@ -114,5 +114,5 @@ const [register] = useForm<typeof headerRelatives>({
 </script>
 
 <template>
-  <w-form :model="headerRelatives" @hook="register" />
+  <WForm :model="headerRelatives" @hook="register" />
 </template>

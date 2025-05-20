@@ -34,6 +34,14 @@ export const AppConstLayoutMode = {
 export type ValueOfAppConstLayoutMode =
   typeof AppConstLayoutMode[keyof typeof AppConstLayoutMode]
 
+export const AppConstBackToTopMode = {
+  STANDALONE: 'standalone',
+  BUILTIN: 'builtin',
+} as const
+
+export type ValueOfAppConstBackToTopMode =
+  typeof AppConstBackToTopMode[keyof typeof AppConstBackToTopMode]
+
 export const AppConstLockMode = {
   DEFAULT: 'default',
   SECURITY: 'security',

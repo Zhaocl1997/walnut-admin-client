@@ -169,5 +169,5 @@ const [register] = useForm<typeof menuRelatives>({
 </script>
 
 <template>
-  <w-form :model="menuRelatives" @hook="register" />
+  <WForm :model="menuRelatives" @hook="register" />
 </template>

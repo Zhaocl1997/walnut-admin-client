@@ -70,6 +70,10 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       return state.app.lockStatus
     },
 
+    getBackToTopIsStandalone(state) {
+      return state.app.backToTopMode === AppConstBackToTopMode.STANDALONE
+    },
+
     // Logo
     getLogoId(state) {
       return state.logo.id
