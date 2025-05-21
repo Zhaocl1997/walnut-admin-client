@@ -63,6 +63,7 @@ defineExpose({ onScrollToTop })
         :style="{
           padding: `${appSetting.app.contentPadding}px`,
         }"
+        class="h-full w-full"
       />
       <TheIFrameWrapper />
     </div>
