@@ -25,6 +25,18 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
     getAvatar(): string {
       return this.profile.avatar!
     },
+
+    getRoleList(state) {
+      return state.profile.populated_rolesList
+    },
+
+    getCurrentRole(state) {
+      return state.profile.currentRole
+    },
+
+    getCurrentRoleModeIsSwitchable(state) {
+      return state.profile.roleMode === 'switchable'
+    },
   },
 
   actions: {

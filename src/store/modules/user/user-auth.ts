@@ -48,6 +48,17 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     },
 
     /**
+     * @description refresh AT and permission after switch role
+     */
+    async ExcuteAfterSwitchRole() {
+      const accessToken = await this.GetNewATWithRT()
+
+      this.setAccessToken(accessToken)
+
+      await this.ExcuteCoreFnAfterAuth(accessToken, this.refreshToken!)
+    },
+
+    /**
      * @description core function after signin to excute
      */
     async ExcuteCoreFnAfterAuth(at: string, rt: string) {

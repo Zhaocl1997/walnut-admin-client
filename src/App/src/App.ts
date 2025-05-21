@@ -31,7 +31,7 @@ export async function setupApp(app: App) {
 
   setupStore(app)
 
-  setupErrorhandler(app)
+  // setupErrorhandler(app)
 
   app.use(StarportPlugin())
 

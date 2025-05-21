@@ -6,7 +6,7 @@ import { merge } from 'lodash-es'
 
 import { AppRequestEncryption, AppResponseEncryption } from '../crypto'
 import { checkReponseErrorStatus } from './checkStatus'
-import { RefreshTokenLogic, setTokenHeader } from './refreshToken'
+import { RefreshTokenLogic, setTokenHeaderWithConfig } from './refreshToken'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
@@ -46,7 +46,7 @@ export const transform: WalnutAxiosTransform = {
 
     // carry token
     if (getBoolean(config._carryToken))
-      userAuth.accessToken && setTokenHeader(config, userAuth.accessToken)
+      userAuth.accessToken && setTokenHeaderWithConfig(config, userAuth.accessToken)
 
     // add timestamp
     if (config._timestamp && !isRequestAfterRefreshedToken) {

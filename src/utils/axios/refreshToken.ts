@@ -7,7 +7,7 @@ let requestsQueue: ((token: string) => void)[] = []
 
 const userAuth = useAppStoreUserAuth()
 
-export function setTokenHeader(config: AxiosRequestConfig, token: string) {
+export function setTokenHeaderWithConfig(config: AxiosRequestConfig, token: string) {
   if (getBoolean(config._carryToken))
     config.headers!.Authorization = `Bearer ${token}`
 }
@@ -23,7 +23,7 @@ export function RefreshTokenLogic(config: AxiosRequestConfig) {
         if (!newAccessToken)
           return
 
-        setTokenHeader(config, newAccessToken)
+        setTokenHeaderWithConfig(config, newAccessToken)
 
         // token already refreshed, call the waiting request
         requestsQueue.forEach(cb => cb(newAccessToken))
@@ -41,7 +41,7 @@ export function RefreshTokenLogic(config: AxiosRequestConfig) {
     return new Promise((resolve) => {
       // push resolve into queue, using an anonymous function to wrap it. ASAP token refresh is done, excute
       requestsQueue.push((t) => {
-        setTokenHeader(config, t)
+        setTokenHeaderWithConfig(config, t)
         resolve(AppAxios.request(config))
       })
     })

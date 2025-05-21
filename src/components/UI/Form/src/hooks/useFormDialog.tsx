@@ -111,6 +111,7 @@ export function useFormDialog<T>(props: ComputedRef<WForm.Props<T>>, formRef: Re
         const width = props.value.dialogProps?.width
         const height = props.value.dialogProps?.height
         const draggable = props.value.dialogProps?.draggable
+        const fullscreen = !loading.value && props.value.dialogProps?.fullscreen
         const maskClosable = !loading.value && props.value.dialogProps?.maskClosable
         const closable = !loading.value && props.value.dialogProps?.closable
         const defaultButton = getBoolean(props.value.dialogProps?.defaultButton, true)
@@ -135,6 +136,7 @@ export function useFormDialog<T>(props: ComputedRef<WForm.Props<T>>, formRef: Re
               autoFocus={autoFocus}
               display-directive={displayDirective}
               draggable={draggable}
+              fullscreen={fullscreen}
             >
               {slots?.default()}
             </WModal>

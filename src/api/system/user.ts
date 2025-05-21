@@ -27,3 +27,12 @@ export function updatePassowrd(data: { userId: string, newPassword: string }) {
     _autoEncryptRequestDataFields: ['newPassword'],
   })
 }
+
+/**
+ * @description switch role
+ */
+export function switchRoleAPI(roleId: string) {
+  return AppAxios.patch<boolean>({
+    url: `/auth/role/switch/${roleId}`,
+  })
+}

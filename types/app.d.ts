@@ -144,6 +144,10 @@ declare global {
     avatar?: string
     status?: boolean
     roles?: string[]
+    roleMode?: 'switchable' | 'combinable'
+    currentRole?: string
+
+    populated_rolesList?: AppSystemRole[]
   }
 
   // system device

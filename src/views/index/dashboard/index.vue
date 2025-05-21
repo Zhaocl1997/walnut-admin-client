@@ -18,7 +18,7 @@ const {
   ],
   {
     duration: 3000,
-    iterations: 3,
+    iterations: Infinity,
     direction: 'alternate',
     easing: 'cubic-bezier(0.46, 0.03, 0.52, 0.96)',
   },
@@ -28,7 +28,7 @@ play()
 </script>
 
 <template>
-  <div class="h-16" @click="play">
+  <div @click="play">
     <div ref="el" class="from-pink-500 via-red-500 to-yellow-500 bg-gradient-to-r bg-clip-text text-center text-[128px] text-transparent font-extrabold uppercase dark:(from-indigo-200 via-red-200 to-yellow-100 bg-gradient-to-r)">
       dashboard
     </div>
