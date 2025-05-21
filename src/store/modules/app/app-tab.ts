@@ -351,7 +351,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
           // if close current tab, router push forward or backward
           if (currentRouteName === name) {
             if (currentTab.meta.leaveTip) {
-              const res = await useAppConfirm(
+              const { confirmed } = await useAppConfirm(
                 // @ts-expect-error fuck t
                 AppI18n.global.t('app.base.leaveTip'),
                 {
@@ -361,7 +361,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
                 },
               )
 
-              if (res) {
+              if (confirmed) {
                 _confirm_leave_map_.set(name, true)
                 // simple splice
                 this.tabs.splice(index, 1)
@@ -513,6 +513,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      * @description set initial affixed tabs
      */
     setAffixedTabs(payload: AppTab[]) {
+      this.clearTabs()
       payload.map(tab => this.createTabs(tab, 'unshift'))
     },
 

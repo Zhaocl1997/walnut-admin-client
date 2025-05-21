@@ -3,9 +3,10 @@ import { authWithPwd, refreshToken, signout } from '@/api/auth'
 import { authWithEmail } from '@/api/auth/email'
 import { authWithPhoneNumber } from '@/api/auth/phone'
 import { AppCoreFn1 } from '@/core'
+import { AppRootRoute } from '@/router/routes/builtin'
 import { defineStore } from 'pinia'
-import { StoreKeys } from '../../constant'
 
+import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
@@ -53,7 +54,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     async ExcuteAfterSwitchRole() {
       const accessToken = await this.GetNewATWithRT()
 
-      this.setAccessToken(accessToken)
+      // remove root route will remove all it's children
+      AppRouter.removeRoute(AppRootRoute.name!)
+      AppRouter.addRoute(AppRootRoute)
 
       await this.ExcuteCoreFnAfterAuth(accessToken, this.refreshToken!)
     },
