@@ -17,7 +17,8 @@
     "hijackRefresh": false,
     "colorMode": "default",
     "reducedMotion": false,
-    "backToTopMode": "standalone"
+    "backToTopMode": "builtin",
+    "scrollMode": "wrapper"
   },
   "themes": {
     "light": {
@@ -53,7 +54,9 @@
     "transition": "slide-up",
     "height": 48,
     "fullscreen": true,
-    "search": true
+    "search": true,
+    "scrollUpShow": false,
+    "liveOnHover": false
   },
   "tabs": {
     "id": "walnut-tabs",
@@ -72,7 +75,9 @@
     "itemTransition": "fade-down",
     "persistent": true,
     "closeMode": "hover",
-    "affixMode": "icon"
+    "affixMode": "icon",
+    "scrollUpShow": false,
+    "liveOnHover": false
   },
   "breadcrumb": {
     "id": "walnut-breadcrumb",

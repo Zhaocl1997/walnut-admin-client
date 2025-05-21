@@ -5,10 +5,10 @@ defineOptions({
   name: 'AppSettingBackToTop',
 })
 
-const { scrollWrapper } = useLayoutContext()
+const layoutCtx = useLayoutContext()
 
 function onBackTopTop() {
-  scrollWrapper.value?.scrollTo({
+  layoutCtx?.scrollWrapper.value?.scrollTo({
     top: 0,
     behavior: 'smooth',
   })

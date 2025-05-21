@@ -261,6 +261,20 @@ const [register] = useForm<typeof appRelatives>({
         })),
       },
     },
+
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'scrollMode',
+      },
+      componentProp: {
+        clearable: true,
+        options: Object.values(AppConstScrollMode).map(i => ({
+          value: i,
+          label: i,
+        })),
+      },
+    },
   ],
 })
 </script>

@@ -51,6 +51,24 @@ const [register] = useForm<typeof headerRelatives>({
       },
     },
     {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'scrollUpShow',
+      },
+      componentProp: {
+        disabled: computed(() => headerRelatives.fixed),
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'liveOnHover',
+      },
+      componentProp: {
+        disabled: computed(() => headerRelatives.fixed || !headerRelatives.scrollUpShow),
+      },
+    },
+    {
       type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',
@@ -96,19 +114,6 @@ const [register] = useForm<typeof headerRelatives>({
         path: 'search',
       },
     },
-    // TODO below two should belong to system functionaility
-    // {
-    //   type: 'Base:Switch',
-    //   formProp: {
-    //     path: 'showLocale',
-    //   },
-    // },
-    // {
-    //   type: 'Base:Switch',
-    //   formProp: {
-    //     path: 'showDarkMode',
-    //   },
-    // },
   ],
 })
 </script>

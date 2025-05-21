@@ -79,7 +79,6 @@ setTabsContext({
       bordered
       :inverted="appSetting.getTabsInverted"
       :style="{ zIndex: 999, height: `${appSetting.tabs.height}px` }"
-      class="sticky left-0"
     >
       <!-- :class="{
         'top-0': !appSetting.getHeaderFixed && appSetting.getTabsFixed,

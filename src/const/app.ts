@@ -42,6 +42,14 @@ export const AppConstBackToTopMode = {
 export type ValueOfAppConstBackToTopMode =
   typeof AppConstBackToTopMode[keyof typeof AppConstBackToTopMode]
 
+export const AppConstScrollMode = {
+  CONTENT: 'content',
+  WRAPPER: 'wrapper',
+} as const
+
+export type ValueOfAppConstScrollMode =
+  typeof AppConstScrollMode[keyof typeof AppConstScrollMode]
+
 export const AppConstLockMode = {
   DEFAULT: 'default',
   SECURITY: 'security',

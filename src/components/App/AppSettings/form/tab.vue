@@ -51,6 +51,24 @@ const [register] = useForm<typeof tabRelatives>({
       },
     },
     {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'scrollUpShow',
+      },
+      componentProp: {
+        disabled: computed(() => tabRelatives.fixed),
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'liveOnHover',
+      },
+      componentProp: {
+        disabled: computed(() => tabRelatives.fixed || !tabRelatives.scrollUpShow),
+      },
+    },
+    {
       type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',

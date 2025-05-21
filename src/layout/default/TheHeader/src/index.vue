@@ -27,7 +27,6 @@ function onShowAside() {
         zIndex: 999,
         height: `${appSetting.header.height}px`,
       }"
-      class="sticky left-0"
     >
       <div
         class="h-full h-full hstack select-none items-center justify-between px-2"

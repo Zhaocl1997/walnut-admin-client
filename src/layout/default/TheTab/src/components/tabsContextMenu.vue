@@ -190,8 +190,8 @@ const options = computed<DropdownOption[]>(() => [
   {
     key: 'Fix',
     label: currentMouseTab.value?.meta.affix
-      ? t('app.tab.ctx.unfix')
-      : t('app.tab.ctx.fixed'),
+      ? t('app.base.unfixed')
+      : t('app.base.fixed'),
     icon: () => (
       <WIcon
         height="24"

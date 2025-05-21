@@ -7,6 +7,7 @@ import type {
   ValueOfAppConstLockMode,
   ValueOfAppConstRouteQueryEnhancedMode,
   ValueOfAppConstRouteQueryMode,
+  ValueOfAppConstScrollMode,
 } from '../src/const/app'
 import type {
   ValueOfAppConstTabAffixMode,
@@ -164,6 +165,13 @@ interface AppSettingsForApp {
   backToTopMode: ValueOfAppConstBackToTopMode
 
   /**
+   * DX config
+   * content or wrapper, scrollbar may have part covered in wrapper mode
+   * @default content
+   */
+  scrollMode: ValueOfAppConstScrollMode
+
+  /**
    * TODO
    * UX config
    * should provide several configs like 10px/12px/14px/16px/18px/20px
@@ -255,6 +263,18 @@ interface AppSettingsForHeader {
    * Header utils - search visibility
    */
   search: boolean
+
+  /**
+   * when header is not fixed, set true to show header when scroll up
+   * @default true
+   */
+  scrollUpShow: boolean
+
+  /**
+   * when header is not fixed and scrollUpShow is true, set true to keep the header alive when hover
+   * @default true
+   */
+  liveOnHover: boolean
 }
 
 interface AppSettingsForTabs {
@@ -342,6 +362,18 @@ interface AppSettingsForTabs {
    * Tab affix mode
    */
   affixMode: ValueOfAppConstTabAffixMode
+
+  /**
+   * when header is not fixed, set true to show header when scroll up
+   * @default true
+   */
+  scrollUpShow: boolean
+
+  /**
+   * when header is not fixed and scrollUpShow is true, set true to keep the header alive when hover
+   * @default true
+   */
+  liveOnHover: boolean
 }
 
 interface AppSettingsForBreadcrumb {

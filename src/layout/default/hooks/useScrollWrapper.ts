@@ -1,15 +1,18 @@
-export function useAppScroll() {
+export function useScrollWrapper() {
   const userScroll = useAppStoreUserScroll()
 
   const { currentRoute } = useAppRouter()
 
   const scrollWrapper = useTemplateRef<HTMLElement>('scrollWrapper')
-  const { x, y } = useScroll(scrollWrapper, { behavior: 'smooth', throttle: 250 })
+  const { x, y, arrivedState, directions } = useScroll(scrollWrapper, { behavior: 'smooth', throttle: 250, idle: 1000 })
+
+  const { top: directionTop } = toRefs(directions)
+
+  const { top, bottom } = toRefs(arrivedState)
 
   debouncedWatch(
     () => [x.value, y.value] as const,
     ([x, y]) => {
-      console.log({ x, y })
       if (currentRoute.value.meta.position)
         userScroll.setScrollPosition(currentRoute.value.name as string, y, x)
     },
@@ -42,5 +45,5 @@ export function useAppScroll() {
     { immediate: true },
   )
 
-  return scrollWrapper
+  return { scrollWrapper, top, bottom, directionTop, y }
 }

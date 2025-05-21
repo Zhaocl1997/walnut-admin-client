@@ -23,4 +23,6 @@ export const defaultAppLocaleMessageKeys = [
   'inverted',
   'sr',
   'vp',
+  'scrollUpShow',
+  'liveOnHover',
 ]

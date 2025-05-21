@@ -225,6 +225,11 @@
                 "$ref": "#/definitions/ValueOfAppConstBackToTopMode",
                 "description": "DX config standalone or built in float setting buttons",
                 "default": "builtin"
+              },
+              "scrollMode": {
+                "$ref": "#/definitions/ValueOfAppConstScrollMode",
+                "description": "DX config content or wrapper, scrollbar may have part covered in wrapper mode",
+                "default": "content"
               }
             },
             "required": [
@@ -245,7 +250,8 @@
               "hijackRefresh",
               "colorMode",
               "reducedMotion",
-              "backToTopMode"
+              "backToTopMode",
+              "scrollMode"
             ],
             "additionalProperties": false
           },
@@ -344,6 +350,13 @@
             "enum": [
               "standalone",
               "builtin"
+            ]
+          },
+          "ValueOfAppConstScrollMode": {
+            "type": "string",
+            "enum": [
+              "content",
+              "wrapper"
             ]
           },
           "AppSettingsForTheme": {
@@ -490,6 +503,16 @@
               "search": {
                 "type": "boolean",
                 "description": "Header utils - search visibility"
+              },
+              "scrollUpShow": {
+                "type": "boolean",
+                "description": "when header is not fixed, set true to show header when scroll up",
+                "default": true
+              },
+              "liveOnHover": {
+                "type": "boolean",
+                "description": "when header is not fixed and scrollUpShow is true, set true to keep the header alive when hover",
+                "default": true
               }
             },
             "required": [
@@ -500,7 +523,9 @@
               "inverted",
               "height",
               "fullscreen",
-              "search"
+              "search",
+              "scrollUpShow",
+              "liveOnHover"
             ],
             "additionalProperties": false
           },
@@ -574,6 +599,16 @@
               "affixMode": {
                 "$ref": "#/definitions/ValueOfAppConstTabAffixMode",
                 "description": "Tab affix mode"
+              },
+              "scrollUpShow": {
+                "type": "boolean",
+                "description": "when header is not fixed, set true to show header when scroll up",
+                "default": true
+              },
+              "liveOnHover": {
+                "type": "boolean",
+                "description": "when header is not fixed and scrollUpShow is true, set true to keep the header alive when hover",
+                "default": true
               }
             },
             "required": [
@@ -593,7 +628,9 @@
               "persistent",
               "itemTransition",
               "closeMode",
-              "affixMode"
+              "affixMode",
+              "scrollUpShow",
+              "liveOnHover"
             ],
             "additionalProperties": false
           },
