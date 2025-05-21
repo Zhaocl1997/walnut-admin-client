@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import TheAppWatermark from './Features/watermark.vue'
+import { useStarOnGithub } from './hooks/useStarOnGithub'
 import TheScrollContent from './scrollContent.vue'
 import TheScrollWrapper from './scrollWrapper.vue'
-import TheAside from './TheAside'
 
-import { useStarOnGithub } from './useStarOnGithub'
+import TheAside from './TheAside'
 
 const appMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
@@ -37,6 +37,11 @@ if (!isDev()) {
     useStarOnGithub()
   }, 500)
 }
+
+const mainRef = useTemplateRef('mainRef')
+function onBackToTop() {
+  mainRef.value?.onScrollToTop()
+}
 </script>
 
 <template>
@@ -68,11 +73,11 @@ if (!isDev()) {
         :content-style="{ height: '100%' }"
         class="relative h-full w-full"
       >
-        <TheScrollContent v-if="appSetting.getScrollModeIsContent" />
-        <TheScrollWrapper v-else-if="appSetting.getScrollModeIsWrapper" />
+        <TheScrollContent v-if="appSetting.getScrollModeIsContent" ref="mainRef" />
+        <TheScrollWrapper v-else-if="appSetting.getScrollModeIsWrapper" ref="mainRef" />
       </n-layout-content>
 
-      <WAppSettings />
+      <WAppSettings @back-to-top="onBackToTop" />
       <TheAppWatermark />
     </div>
   </n-layout>

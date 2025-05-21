@@ -7,9 +7,15 @@ defineOptions({
   name: 'AppSettings',
 })
 
+const emits = defineEmits<{ backToTop: [] }>()
+
 const appSetting = useAppStoreSetting()
 
 const contentFull = useRouterQuery('full')
+
+function onBackToTop() {
+  emits('backToTop')
+}
 </script>
 
 <template>
@@ -30,7 +36,7 @@ const contentFull = useRouterQuery('full')
       </n-float-button>
 
       <n-float-button v-if="!appSetting.getBackToTopIsStandalone">
-        <AppSettingBackToTop />
+        <AppSettingBackToTop @back-to-top="onBackToTop" />
       </n-float-button>
     </template>
   </n-float-button>

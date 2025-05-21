@@ -1,17 +1,12 @@
 <script lang="ts" setup>
-import { useLayoutContext } from '@/layout/default/useLayoutContext'
-
 defineOptions({
   name: 'AppSettingBackToTop',
 })
 
-const layoutCtx = useLayoutContext()
+const emits = defineEmits<{ backToTop: [] }>()
 
 function onBackTopTop() {
-  layoutCtx?.scrollWrapper.value?.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  })
+  emits('backToTop')
 }
 </script>
 

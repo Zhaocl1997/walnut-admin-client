@@ -45,5 +45,12 @@ export function useScrollWrapper() {
     { immediate: true },
   )
 
-  return { scrollWrapper, top, bottom, directionTop, y }
+  function onScrollToTop() {
+    scrollWrapper.value?.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+
+  return { scrollWrapper, top, bottom, directionTop, y, onScrollToTop }
 }
