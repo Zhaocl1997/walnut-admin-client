@@ -32,8 +32,10 @@ export function useAppConfirm(msg: string, options?: DialogOptions) {
         inst.destroy()
       },
       onMaskClick: () => {
-        resolve({ confirmed: false, inst })
-        inst.destroy()
+        if (options?.maskClosable === undefined || options.maskClosable === true) {
+          resolve({ confirmed: false, inst })
+          inst.destroy()
+        }
       },
     })
   })

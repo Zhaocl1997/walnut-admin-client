@@ -26,6 +26,7 @@ const [register, { onOpen }] = useForm<typeof formData.value>({
     closable: true,
     autoFocus: false,
     fullscreen: false,
+    maskClosable: false,
     title: t('app.base.switchRole'),
     onYes: async (_, done) => {
       if (formData.value.roleId === userProfile.getCurrentRole) {
