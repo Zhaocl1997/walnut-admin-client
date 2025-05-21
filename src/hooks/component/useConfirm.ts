@@ -10,19 +10,30 @@ export function useAppDialog() {
 export function useAppConfirm(msg: string, options?: DialogOptions) {
   const dialog = useAppDialog()
 
-  return new Promise<boolean>((resolve) => {
-    dialog.warning({
+  return new Promise<{ confirmed: boolean, inst: ReturnType<typeof dialog.warning> }>((resolve) => {
+    const inst = dialog.warning({
+      // @ts-expect-error fuck t
       title: AppI18n.global?.t('app.base.warning'),
       content: msg,
+      // @ts-expect-error fuck t
       negativeText: AppI18n.global?.t('app.button.no'),
+      // @ts-expect-error fuck t
       positiveText: AppI18n.global?.t('app.button.yes'),
       autoFocus: false,
       ...options,
       onPositiveClick: () => {
-        resolve(true)
+        resolve({ confirmed: true, inst })
       },
       onNegativeClick: () => {
-        resolve(false)
+        resolve({ confirmed: false, inst })
+      },
+      onClose: () => {
+        resolve({ confirmed: false, inst })
+        inst.destroy()
+      },
+      onMaskClick: () => {
+        resolve({ confirmed: false, inst })
+        inst.destroy()
       },
     })
   })

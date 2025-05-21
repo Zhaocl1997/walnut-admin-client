@@ -26,100 +26,94 @@ export function useAppLock() {
             (lockMode) => {
               switch (lockMode) {
                 case AppConstLockMode.DEFAULT:
-                  {
-                    securityLockScope?.stop()
-                    idleLockScope?.stop()
-                  }
+                  securityLockScope?.stop()
+                  idleLockScope?.stop()
                   break
 
                 // idle lock mode
                 case AppConstLockMode.IDLE:
-                  {
-                    securityLockScope?.stop()
+                  securityLockScope?.stop()
 
-                    idleLockScope = effectScope()
-                    idleLockScope.run(() => {
-                      let idleSecondsScope: EffectScope
+                  idleLockScope = effectScope()
+                  idleLockScope.run(() => {
+                    let idleSecondsScope: EffectScope
 
-                      watch(
-                        () => appSetting.app.lockIdleSeconds,
-                        (v) => {
-                          if (!v)
-                            return
+                    watch(
+                      () => appSetting.app.lockIdleSeconds,
+                      (v) => {
+                        if (!v)
+                          return
 
-                          idleSecondsScope?.stop()
+                        idleSecondsScope?.stop()
 
-                          idleSecondsScope = effectScope()
+                        idleSecondsScope = effectScope()
 
-                          idleSecondsScope.run(() => {
-                            const { idle: isIdle } = useIdle(
-                              appSetting.app.lockIdleSeconds * 1000,
-                            )
+                        idleSecondsScope.run(() => {
+                          const { idle: isIdle } = useIdle(
+                            appSetting.app.lockIdleSeconds * 1000,
+                          )
 
-                            // detect user idle state
-                            watch(
-                              isIdle,
-                              async (v) => {
-                                if (v && appSetting.app.lockIdleSeconds !== 0)
-                                  await appLock.lock(currentRoute)
-                              },
-                              { immediate: true },
-                            )
-                          })
-                        },
-                        { immediate: true },
-                      )
-                    })
-                  }
+                          // detect user idle state
+                          watch(
+                            isIdle,
+                            async (v) => {
+                              if (v && appSetting.app.lockIdleSeconds !== 0)
+                                await appLock.lock(currentRoute)
+                            },
+                            { immediate: true },
+                          )
+                        })
+                      },
+                      { immediate: true },
+                    )
+                  })
                   break
 
                 // security lock mode
                 case AppConstLockMode.SECURITY:
-                  {
-                    idleLockScope?.stop()
+                  idleLockScope?.stop()
 
-                    securityLockScope = effectScope()
-                    securityLockScope.run(() => {
-                      const { idle: isIdle } = useIdle(15 * 1000)
-                      const isVisible = useSharedDocumentVisibility()
-                      const isPageLeave = useSharedPageLeave()
+                  securityLockScope = effectScope()
+                  securityLockScope.run(() => {
+                    const { idle: isIdle } = useIdle(15 * 1000)
+                    const isVisible = useSharedDocumentVisibility()
+                    const isPageLeave = useSharedPageLeave()
 
-                      // in security mode, idle for 15s the app will auto lock
-                      watch(
-                        isIdle,
-                        async (v) => {
-                          if (v)
-                            await appLock.lock(currentRoute)
-                        },
-                        { immediate: true },
-                      )
+                    // in security mode, idle for 15s the app will auto lock
+                    watch(
+                      isIdle,
+                      async (v) => {
+                        if (v)
+                          await appLock.lock(currentRoute)
+                      },
+                      { immediate: true },
+                    )
 
-                      // detect mouse leave page or not
-                      debouncedWatch(
-                        isPageLeave,
-                        async (v) => {
-                          if (v)
-                            await appLock.lock(currentRoute)
-                        },
-                        { debounce: 200, immediate: true },
-                      )
+                    // detect mouse leave page or not
+                    debouncedWatch(
+                      isPageLeave,
+                      async (v) => {
+                        if (v)
+                          await appLock.lock(currentRoute)
+                      },
+                      { debounce: 200, immediate: true },
+                    )
 
-                      // detect window visibility
-                      watch(
-                        isVisible,
-                        async (v) => {
-                          if (
-                            appSetting.app.lockMode
-                            === AppConstLockMode.SECURITY
-                            && !v
-                          ) {
-                            await appLock.lock(currentRoute)
-                          }
-                        },
-                        { immediate: true },
-                      )
-                    })
-                  }
+                    // detect window visibility
+                    watch(
+                      isVisible,
+                      async (v) => {
+                        if (
+                          appSetting.app.lockMode
+                          === AppConstLockMode.SECURITY
+                          && !v
+                        ) {
+                          await appLock.lock(currentRoute)
+                        }
+                      },
+                      { immediate: true },
+                    )
+                  })
                   break
 
                 default:

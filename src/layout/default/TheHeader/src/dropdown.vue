@@ -63,7 +63,7 @@ async function onSelect(val: string) {
     await useAppRouterPush({ name: 'AccountSetting' })
 
   if (val === '99') {
-    const confirmed = await useAppConfirm(t('app.user.signout.warning'))
+    const { confirmed } = await useAppConfirm(t('app.user.signout.warning'))
 
     if (confirmed)
       await userAuth.Signout()

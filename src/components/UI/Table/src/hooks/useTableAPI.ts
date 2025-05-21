@@ -96,7 +96,7 @@ export function useTableAPI<T>(
 
   // api deleteMany (default)
   const onApiDeleteMany = async () => {
-    const confirmed = await useAppConfirm(t('app.base.confirm'))
+    const { confirmed } = await useAppConfirm(t('app.base.confirm'))
 
     if (!confirmed)
       return

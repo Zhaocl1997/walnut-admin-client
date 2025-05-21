@@ -33,8 +33,7 @@ const [register, { onOpen }] = useForm<typeof formData.value>({
         return
       }
 
-      const confirmed = await useAppConfirm(t('app.base.switchRole.confirm', { roleName: getCurrentRoleName.value }))
-
+      const { confirmed, inst } = await useAppConfirm(t('app.base.switchRole.confirm', { roleName: getCurrentRoleName.value }), { maskClosable: false })
       if (confirmed) {
         try {
           await switchRoleAPI(formData.value.roleId!)
@@ -44,6 +43,11 @@ const [register, { onOpen }] = useForm<typeof formData.value>({
         finally {
           done()
         }
+      }
+      else {
+        inst.destroy()
+        // TODO onYes need to expose close fn
+        done()
       }
     },
     onNo: (close) => {
@@ -57,7 +61,7 @@ const [register, { onOpen }] = useForm<typeof formData.value>({
         path: 'roleId',
       },
       componentProp: {
-        options: computed(() => userProfile.getRoleList?.map(i => ({ label: i.roleName, value: i._id })!)),
+        options: userProfile.getRoleList?.map(i => ({ label: i.roleName!, value: i._id! })),
       },
     },
   ],

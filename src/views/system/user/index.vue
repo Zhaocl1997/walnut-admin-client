@@ -242,9 +242,9 @@ const [
             _dropdown: true,
             _show: row => row.userName !== AppConstRoles.ADMIN,
             async onPresetClick(rowData) {
-              const confirm = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
+              const { confirmed } = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
 
-              if (confirm) {
+              if (confirmed) {
                 const res = await resetPassowrd({ userId: rowData[keyField]! })
 
                 if (res) {

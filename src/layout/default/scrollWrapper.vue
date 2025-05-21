@@ -53,6 +53,7 @@ defineExpose({ onScrollToTop })
           width: `calc(100vw - ${appSetting.getMenuWidth}px)`,
           height: `calc(100vh - ${headerShow ? appSetting.header.height : 0}px - ${tabsShow ? appSetting.tabs.height : 0}px - ${appSetting.getFooterFixed ? appSetting.footer.height : 0}px)`,
         }"
+        class="overflow-y-auto"
       />
       <TheIFrameWrapper />
 

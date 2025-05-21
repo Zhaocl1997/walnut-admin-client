@@ -40,9 +40,9 @@ const [
         type: 'error',
         icon: 'ant-design:delete-outlined',
         onClick: async () => {
-          const res = await useAppConfirm(t('app.cache.clear.confirm'))
+          const { confirmed } = await useAppConfirm(t('app.cache.clear.confirm'))
 
-          if (res) {
+          if (confirmed) {
             await monitorCacheAPI.clear()
             useAppMsgSuccess()
             await onApiTableList()

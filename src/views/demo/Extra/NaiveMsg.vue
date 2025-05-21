@@ -32,9 +32,9 @@ function onOpenMsg(type: number) {
 }
 
 async function onOpenComfirm() {
-  const res = await useAppConfirm('Do you want to continue?')
+  const { confirmed } = await useAppConfirm('Do you want to continue?')
 
-  if (res)
+  if (confirmed)
     useAppMsgSuccess()
   else
     useAppMsgInfo('Canceled')
