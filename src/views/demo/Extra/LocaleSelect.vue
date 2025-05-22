@@ -5,11 +5,11 @@ defineOptions({
 })
 
 const state = reactive({
-  locale1: undefined,
+  locale1: '',
   locale2: 'app.button.yes',
-  locale3: undefined,
+  locale3: '',
   locale4: 'sys.menu.homepage',
-  locale5: undefined,
+  locale5: '',
 })
 </script>
 

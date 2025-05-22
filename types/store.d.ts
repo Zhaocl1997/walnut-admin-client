@@ -149,6 +149,7 @@ declare global {
     isp: string
     longitude?: number
     latitude?: number
+    country_code: string
   }
 
   /**

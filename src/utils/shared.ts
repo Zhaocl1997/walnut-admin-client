@@ -46,20 +46,6 @@ export function filterTree<T, R = T>(tree: TreeNodeItem<T>[], cb: (node: T) => b
   })
 }
 
-// get country code from online free api
-export function getCountryCodeOnline() {
-  return fetch(EXTERNAL_LINKS.IP)
-    .then(response => response.text())
-    .then((response) => {
-      const result = (response || '').toString()
-
-      if (!result || result[0] !== '1')
-        throw new Error('unable to fetch the country')
-
-      return result.substr(2, 2)
-    })
-}
-
 // easy detect device type
 export function detectDeviceType() {
   const userAgent = navigator.userAgent.toLowerCase()
@@ -100,7 +86,7 @@ export function getMemoryGB() {
 // get cpu archittecture
 export async function getGPUArchitecture() {
   if ('gpu' in navigator) {
-    // @ts-expect-error
+    // @ts-expect-error quite new API
     const adapter = await navigator.gpu.requestAdapter()
 
     if (!adapter) {

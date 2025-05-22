@@ -3,16 +3,15 @@ import type { ICompExtraFlipperProps } from '.'
 
 defineOptions({
   name: 'WCompExtraFlipper',
-  inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<ICompExtraFlipperProps>(), {
-  transitionTimingFunction: 'cubic-bezier(0.4, 0, 1, 1)',
-  trigger: 'click',
-  duration: '500ms',
-  height: '100%',
-  width: '100%',
-})
+const {
+  transitionTimingFunction = 'cubic-bezier(0.4, 0, 1, 1)',
+  trigger = 'click',
+  duration = '500ms',
+  height = '100%',
+  width = '100%',
+} = defineProps<ICompExtraFlipperProps>()
 
 const emits = defineEmits<{
   click: [e: MouseEvent]
@@ -21,25 +20,25 @@ const emits = defineEmits<{
 const flipped = ref(false)
 
 const getStyle = computed(() => ({
-  wrapper: { width: props.width, height: props.height } as CSSProperties,
+  wrapper: { width, height } as CSSProperties,
   face:
       {
-        transitionDuration: props.duration,
-        transitionTimingFunction: props.transitionTimingFunction,
+        transitionDuration: duration,
+        transitionTimingFunction,
         borderRadius: '20px',
         boxShadow: '0 3px 15px rgba(64, 64, 64, 0.45)',
       } as CSSProperties,
 }))
 
 function onClick(e: MouseEvent) {
-  if (props.trigger === 'click')
+  if (trigger === 'click')
     flipped.value = !flipped.value
 
   emits('click', e)
 }
 
 function onMouseEnterAndLeave() {
-  if (props.trigger === 'hover')
+  if (trigger === 'hover')
     flipped.value = !flipped.value
 }
 

@@ -5,15 +5,14 @@ import { checkStrStrong, statusTable } from './utils'
 
 defineOptions({
   name: 'WCompExtraPasswordInput',
-  inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<ICompExtraPasswordProps>(), {
-  maxlength: 80,
-  minlength: 8,
-  progress: false,
-  capslock: false,
-})
+const {
+  maxlength = 80,
+  minlength = 8,
+  progress = false,
+  capslock = false,
+} = defineProps<ICompExtraPasswordProps>()
 
 const emits = defineEmits<{ submit: [] }>()
 
@@ -25,7 +24,7 @@ const status = ref<ProgressStatus>('success')
 watch(
   () => value.value,
   (val) => {
-    if (!props.progress) {
+    if (!progress) {
       return
     }
     const strong: number = checkStrStrong(val!)

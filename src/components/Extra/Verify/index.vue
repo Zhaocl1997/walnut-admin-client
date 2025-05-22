@@ -7,23 +7,24 @@ defineOptions({
   name: 'WCompExtraVerify',
 })
 
-const props = withDefaults(defineProps<ICompExtraVerifyProps>(), {
-  canvasWidth: 310,
-  canvasHeight: 160,
-  puzzleScale: 1,
-  sliderSize: 36,
-  range: 5,
-})
+const {
+  canvasWidth = 310,
+  canvasHeight = 160,
+  puzzleScale = 1,
+  sliderSize = 36,
+  range = 5,
+  imgs,
+} = defineProps<ICompExtraVerifyProps>()
 
 const emits = defineEmits<{ success: [x: number], fail: [x: number] }>()
 
 const { t } = useAppI18n()
 
 const show = ref(false)
-const rangeSlider = shallowRef<HTMLDivElement>()
-const canvas1 = shallowRef<HTMLCanvasElement>()
-const canvas2 = shallowRef<HTMLCanvasElement>()
-const canvas3 = shallowRef<HTMLCanvasElement>()
+const rangeSlider = useTemplateRef<HTMLDivElement>('rangeSlider')
+const canvas1 = useTemplateRef<HTMLCanvasElement>('canvas1')
+const canvas2 = useTemplateRef<HTMLCanvasElement>('canvas2')
+const canvas3 = useTemplateRef<HTMLCanvasElement>('canvas3')
 
 const startWidth = ref(50) // 鼠标点下去时父级的width
 const startX = ref(0) // 鼠标按下时的X
@@ -45,8 +46,8 @@ const getInfoText = computed(() =>
 const getSliderBaseSize = computed(() =>
   Math.max(
     Math.min(
-      Math.round(props.sliderSize),
-      Math.round(props.canvasWidth * 0.5),
+      Math.round(sliderSize),
+      Math.round(canvasWidth * 0.5),
     ),
     10,
   ),
@@ -57,38 +58,38 @@ const getStyleWidth = computed(() => {
   const w = startWidth.value + newX.value - startX.value
   return w < getSliderBaseSize.value
     ? getSliderBaseSize.value
-    : w > props.canvasWidth
-      ? props.canvasWidth
+    : w > canvasWidth
+      ? canvasWidth
       : w
 })
 
 // 图中拼图块的60 * 用户设定的缩放比例计算之后的值 0.2~2
 const getPuzzleBaseSize = computed(() =>
-  Math.round(Math.max(Math.min(props.puzzleScale, 2), 0.2) * 52.5 + 6),
+  Math.round(Math.max(Math.min(puzzleScale, 2), 0.2) * 52.5 + 6),
 )
 
 // canvas的基本宽高样式
 const getCanvasBaseStyle = computed(() => ({
-  width: `${props.canvasWidth}px`,
-  height: `${props.canvasHeight}px`,
+  width: `${canvasWidth}px`,
+  height: `${canvasHeight}px`,
 }))
 
 // 缺口canvas的样式
 const getPuzzleCanvasStyle = computed(() => ({
   width: `${getPuzzleBaseSize.value}px`,
-  height: `${props.canvasHeight}px`,
+  height: `${canvasHeight}px`,
   transform: `translateX(${
     getStyleWidth.value
     - getSliderBaseSize.value
     - (getPuzzleBaseSize.value - getSliderBaseSize.value)
     * ((getStyleWidth.value - getSliderBaseSize.value)
-      / (props.canvasWidth - getSliderBaseSize.value))
+      / (canvasWidth - getSliderBaseSize.value))
   }px)`,
 }))
 
 // 绘制拼图块的路径
 function paintBrick(ctx: CanvasRenderingContext2D) {
-  return paintPuzzle(ctx, props.puzzleScale, pinX.value, pinY.value)
+  return paintPuzzle(ctx, puzzleScale, pinX.value, pinY.value)
 }
 
 // 初始化
@@ -116,20 +117,20 @@ function onInit(withCanvas = false) {
 
   ctx.fillStyle = 'rgba(255,255,255,1)'
   ctx3.fillStyle = 'rgba(255,255,255,1)'
-  ctx.clearRect(0, 0, props.canvasWidth, props.canvasHeight)
-  ctx2.clearRect(0, 0, props.canvasWidth, props.canvasHeight)
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+  ctx2.clearRect(0, 0, canvasWidth, canvasHeight)
 
   // 取一个随机坐标，作为拼图块的位置
   pinX.value = getRandomInt(
     getPuzzleBaseSize.value,
     // 留20的边距
-    props.canvasWidth - getPuzzleBaseSize.value - 20,
+    canvasWidth - getPuzzleBaseSize.value - 20,
   )
 
   // 主图高度 - 拼图块自身高度 - 20边距
   pinY.value = getRandomInt(
     20,
-    props.canvasHeight - getPuzzleBaseSize.value - 20,
+    canvasHeight - getPuzzleBaseSize.value - 20,
   )
 
   img.crossOrigin = 'anonymous' // 匿名，想要获取跨域的图片
@@ -137,8 +138,8 @@ function onInit(withCanvas = false) {
   img.onload = () => {
     const [x, y, w, h] = makeImgSize(
       img,
-      props.canvasWidth,
-      props.canvasHeight,
+      canvasWidth,
+      canvasHeight,
     )
 
     ctx.save()
@@ -166,7 +167,7 @@ function onInit(withCanvas = false) {
     }
 
     ctx.drawImage(img, x, y, w, h)
-    ctx3.fillRect(0, 0, props.canvasWidth, props.canvasHeight)
+    ctx3.fillRect(0, 0, canvasWidth, canvasHeight)
     ctx3.drawImage(img, x, y, w, h)
 
     // 设置小图的内阴影
@@ -186,7 +187,7 @@ function onInit(withCanvas = false) {
     ctx.shadowColor = 'rgba(255, 255, 255, .8)'
     ctx.shadowOffsetX = -1
     ctx.shadowOffsetY = -1
-    ctx.shadowBlur = Math.min(Math.ceil(8 * props.puzzleScale), 12)
+    ctx.shadowBlur = Math.min(Math.ceil(8 * puzzleScale), 12)
     ctx.fillStyle = '#ffffaa'
     ctx.fill()
 
@@ -201,7 +202,7 @@ function onInit(withCanvas = false) {
 
     // 清理
     ctx.restore()
-    ctx.clearRect(0, 0, props.canvasWidth, props.canvasHeight)
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
     // 画缺口
     ctx.save()
@@ -244,19 +245,19 @@ function onInit(withCanvas = false) {
     onInit(true) // 如果图片加载错误就重新来，并强制用canvas随机作图
   }
 
-  if (!withCanvas && props.imgs && props.imgs.length) {
-    let randomNum = getRandomInt(0, props.imgs.length - 1)
+  if (!withCanvas && imgs && imgs.length) {
+    let randomNum = getRandomInt(0, imgs.length - 1)
     if (randomNum === imgIndex.value) {
-      if (randomNum === props.imgs.length - 1)
+      if (randomNum === imgs.length - 1)
         randomNum = 0
       else
         randomNum++
     }
     imgIndex.value = randomNum
-    img.src = props.imgs[randomNum]
+    img.src = imgs[randomNum]
   }
   else {
-    img.src = makeImgWithCanvas(props.canvasWidth, props.canvasHeight)
+    img.src = makeImgWithCanvas(canvasWidth, canvasHeight)
   }
 }
 
@@ -298,11 +299,11 @@ function onVerify() {
     - (getStyleWidth.value - getSliderBaseSize.value)
     + (getPuzzleBaseSize.value - getSliderBaseSize.value)
     * ((getStyleWidth.value - getSliderBaseSize.value)
-      / (props.canvasWidth - getSliderBaseSize.value))
+      / (canvasWidth - getSliderBaseSize.value))
     - 3,
   )
 
-  if (x < props.range) {
+  if (x < range) {
     // 成功
     isSuccess.value = true
     emits('success', x)

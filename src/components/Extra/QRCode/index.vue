@@ -1,35 +1,28 @@
 <script lang="ts" setup>
 import type { ICompExtraQRCodeProps } from '.'
-import { useQRCode } from '@vueuse/integrations/useQRCode'
 
 defineOptions({
   name: 'WCompExtraQRCode',
-  inheritAttrs: false,
 })
 
-const props = defineProps<ICompExtraQRCodeProps>()
+const { expireSeconds, size = 100, padding = 12 } = defineProps<ICompExtraQRCodeProps>()
 
-const emits = defineEmits<{
-  refresh: [callback: Fn]
-}>()
+const emits = defineEmits<{ refresh: [callback: Fn] }>()
 
 const count = ref(0)
-const insideUrl = toRef(props, 'url')
-
-const qrcode = useQRCode(insideUrl)
 
 const { pause, isActive, resume } = useIntervalFn(
   () => {
     count.value++
 
-    if (count.value > props.expireSeconds!) {
+    if (count.value > expireSeconds!) {
       count.value = 0
       pause()
     }
   },
   1000,
   {
-    immediateCallback: props.expireSeconds !== undefined,
+    immediateCallback: expireSeconds !== undefined,
   },
 )
 
@@ -39,14 +32,18 @@ function onRefresh() {
 </script>
 
 <template>
-  <div class="relative w-min">
-    <img
-      :src="qrcode"
+  <div class="relative" :style="{ height: `${size + padding * 2}px`, width: `${size + padding * 2}px` }">
+    <n-qr-code
+      :value="url"
       alt="QR Code"
-      class="transition transition-all" :class="[
+      class="transition transition-all"
+      :class="[
         { 'blur-sm brightness-80 contrast-50': !isActive || success },
       ]"
-    >
+      :size="size"
+      :padding="padding"
+      :style="{ height: `${size + padding * 2}px`, width: `${size + padding * 2}px` }"
+    />
 
     <WTransition appear>
       <div class="abs-center">

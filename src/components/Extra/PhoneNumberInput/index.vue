@@ -10,15 +10,15 @@ defineOptions({
   name: 'WCompExtraPhoneNumberInput',
 })
 
-const props = withDefaults(defineProps<ICompExtraPhoneNumberInputProps>(), {
-  flag: true,
-  countrySelect: true,
-  preferred: false,
-  disabled: false,
-  example: false,
-  autoDefaultCountry: false,
-  autoFocusAfterCountrySelect: false,
-})
+const {
+  flag = true,
+  countrySelect = true,
+  preferred = false,
+  disabled = false,
+  example = false,
+  autoDefaultCountry = false,
+  autoFocusAfterCountrySelect = false,
+} = defineProps<ICompExtraPhoneNumberInputProps>()
 
 const emits = defineEmits<{ change: [params: ICompExtraPhoneNumberInputUpdateParams] }>()
 
@@ -27,17 +27,17 @@ const countryCode = defineModel<CountryCode>('countryCode', { default: 'CN' })
 
 const { t } = useAppI18n()
 
-const inputRef = shallowRef<InputInst>()
+const inputRef = useTemplateRef<InputInst>('inputRef')
 const inputFocus = ref(false)
 
 // loading example json and get input placeholder
-watch(() => props.example, async (v) => {
+watch(() => example, async (v) => {
   if (v) {
     await getExamplePhoneNumber()
   }
 }, { immediate: true })
 const getInputPlaceholder = computed(() => {
-  if (countryCode.value && props.example && phoneNumberExample.value) {
+  if (countryCode.value && example && phoneNumberExample.value) {
     const res = getExampleNumber(countryCode.value, phoneNumberExample.value)
     const formatted = parsePhoneNumberFromString(res!.nationalNumber, countryCode.value)
     return formatted?.formatNational()
@@ -59,16 +59,16 @@ const getInputStatus = computed<FormValidationStatus | undefined>(() => {
 })
 
 const getSelectSpan = computed(() => {
-  return props.countrySelect ? props.flag ? 10 : 8 : 0
+  return countrySelect ? flag ? 10 : 8 : 0
 })
 
 const getInputSpan = computed(() => {
-  return props.countrySelect ? props.flag ? 14 : 16 : 24
+  return countrySelect ? flag ? 14 : 16 : 24
 })
 
 function onUpdateSelectValue() {
   value.value = ''
-  if (props.autoFocusAfterCountrySelect) {
+  if (autoFocusAfterCountrySelect) {
     nextTick(() => {
       inputRef.value?.focus()
     })

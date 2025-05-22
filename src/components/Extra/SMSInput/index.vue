@@ -6,28 +6,26 @@ defineOptions({
   name: 'WCompExtraSMSInput',
 })
 
-const props = withDefaults(defineProps<ICompExtraSMSInputProps>(), {
-  retrySeconds: 60,
-})
+const { retrySeconds = 60, simpleVerify = false, onBeforeCountdown } = defineProps<ICompExtraSMSInputProps>()
 
 const emits = defineEmits<{ verifySuccess: [startCountdown: Fn] }>()
 
-const buttonRef = shallowRef()
-const verifyRef = shallowRef<WVerifyInst>()
+const buttonRef = useTemplateRef('buttonRef')
+const verifyRef = useTemplateRef<WVerifyInst>('verifyRef')
 
 function onVerify() {
-  if (props.simpleVerify)
+  if (simpleVerify)
     verifyRef.value?.onOpenModal()
   else
     buttonRef.value!.onStartCountdown()
 }
 
 async function onClick() {
-  if (!props.onBeforeCountdown) {
+  if (!onBeforeCountdown) {
     onVerify()
   }
   else {
-    const canVerify = await props.onBeforeCountdown()
+    const canVerify = await onBeforeCountdown()
 
     if (canVerify) {
       onVerify()
@@ -39,7 +37,7 @@ async function onClick() {
 }
 
 function onVerifySuccess() {
-  emits('verifySuccess', () => buttonRef.value!.onStartCountdown())
+  emits('verifySuccess', () => buttonRef.value?.onStartCountdown())
 }
 </script>
 
@@ -59,7 +57,7 @@ function onVerifySuccess() {
     </template>
   </n-input>
 
-  <!-- TODO this may not be a good design, need to pass `simple-verify` prop and `@verify-success` to start count down -->
+  <!-- TODO this may not be a good design -->
   <WVerify
     v-if="simpleVerify"
     ref="verifyRef"

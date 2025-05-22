@@ -33,7 +33,7 @@ function onRefresh(callback: Fn) {
           With specific expired seconds
         </WTitle>
 
-        <WQRCode :url="url2" :expire-seconds="3" @refresh="onRefresh" />
+        <WQRCode :url="url2" :expire-seconds="5" @refresh="onRefresh" />
       </n-list-item>
 
       <n-list-item>

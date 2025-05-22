@@ -3,21 +3,19 @@ import type { ICompExtraJSONProps } from '.'
 
 defineOptions({
   name: 'WCompExtraJSON',
-  inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<ICompExtraJSONProps>(), {
-  value: {},
-  height: '100px',
-  width: '100%',
-  copy: true,
-})
+const {
+  value = {},
+  height = '100px',
+  copy = true,
+} = defineProps<ICompExtraJSONProps>()
 
-const jsonRef = shallowRef()
+const jsonRef = useTemplateRef('jsonRef')
 const getJSON = computed(() =>
-  typeof props.value === 'string'
-    ? JSON.stringify(JSON.parse(props.value), null, 2)
-    : JSON.stringify(props.value, null, 2),
+  typeof value === 'string'
+    ? JSON.stringify(JSON.parse(value), null, 2)
+    : JSON.stringify(value, null, 2),
 )
 
 const isHovered = useElementHover(jsonRef)

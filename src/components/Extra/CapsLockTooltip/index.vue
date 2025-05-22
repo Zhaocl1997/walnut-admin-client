@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
   name: 'WCompExtraCapsLockToolTip',
-  inheritAttrs: false,
 })
 
 withDefaults(defineProps<{ lock: boolean }>(), { lock: false })

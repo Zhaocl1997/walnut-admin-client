@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'TextScrollHorizontal',
+  name: 'WCompExtraTextScrollHorizontal',
 })
 
 const props = withDefaults(defineProps<HorizontalProps>(), { speed: 10000, maxLength: 8 })
@@ -11,8 +11,8 @@ interface HorizontalProps {
   maxLength?: number
 }
 
-const containerRef = shallowRef<HTMLDivElement>()
-const wrapperRef = shallowRef<HTMLDivElement>()
+const containerRef = useTemplateRef<HTMLDivElement>('containerRef')
+const wrapperRef = useTemplateRef<HTMLDivElement>('wrapperRef')
 
 const durationRef = ref(5000)
 const wrapperWidthRef = ref(500)
@@ -26,9 +26,7 @@ const getWrapperStyle = computed<CSSProperties>(() => ({
   animationFillMode: 'forwards',
 }))
 
-const getTranslateX = computed(
-  () => `translateX(-${contentWidthRef.value}px)`,
-)
+const getTranslateX = computed(() => `translateX(-${contentWidthRef.value}px)`)
 
 onMounted(() => {
   if (!containerRef.value || !wrapperRef.value)

@@ -4,8 +4,10 @@ defineOptions({
   defaultView: false,
 })
 
-const state = ref<any>({
+const state = ref({
+  email1: '',
   email2: '674351624@qq.com',
+  email3: '',
 })
 </script>
 

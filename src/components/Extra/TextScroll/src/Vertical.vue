@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'TextScrollVertical',
+  name: 'WCompExtraTextScrollVertical',
 })
 
 const props = withDefaults(defineProps<VerticalProps>(), { lineHeight: 24, speed: 6000, maxLength: 8 })
@@ -18,7 +18,7 @@ let time = 1
 let position = 0
 
 const positionRef = ref(0)
-const wrapperRef = shallowRef()
+const wrapperRef = useTemplateRef('wrapperRef')
 const isHovered = useElementHover(wrapperRef)
 
 const total = computed(() => props.texts!.length)

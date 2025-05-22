@@ -5,22 +5,19 @@ defineOptions({
   name: 'WCompExtraCopy',
 })
 
-const props = withDefaults(
-  defineProps<ICompExtraCopyProps>(),
-  { copiedDuring: 3000, icon: false },
-)
+const { copiedDuring = 3000, icon = false, source } = defineProps<ICompExtraCopyProps>()
 
-const emits = defineEmits<{ click: [e: MouseEvent] }>()
+const emits = defineEmits<{ click: [e?: MouseEvent] }>()
 
 const { copy, copied } = useClipboard({
-  copiedDuring: props.copiedDuring,
+  copiedDuring,
   legacy: true,
 })
 
-async function onClick(e: MouseEvent) {
-  if (!props.source)
+async function onClick(e?: MouseEvent) {
+  if (!source)
     return
-  await copy(props.source)
+  await copy(source)
   emits('click', e)
 }
 </script>

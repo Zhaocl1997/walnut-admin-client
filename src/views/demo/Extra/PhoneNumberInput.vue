@@ -8,6 +8,14 @@ defineOptions({
 
 const state = ref<any>({
   phoneNumber1: '13866665555',
+  phoneNumber2: '',
+  phoneNumber3: '',
+  phoneNumber4: '',
+  phoneNumber5: '',
+  phoneNumber6: '',
+  phoneNumber7: '',
+  phoneNumber8: '',
+  phoneNumber9: '',
 })
 const updateParams1 = ref<ICompExtraPhoneNumberInputUpdateParams>()
 
@@ -31,7 +39,7 @@ function onUpdate(val: ICompExtraPhoneNumberInputUpdateParams) {
 
       <n-list-item>
         <WTitle prefix="bar" class="mb-2">
-          Auto get current user country code (if online get result from https://ip2c.org/s, otherwise use `new Intl.Locale(navigator.language).region` to get country cdoe)
+          Auto get current user country code (if online get result from {{ EXTERNAL_LINKS.GEOIP }}, otherwise use `new Intl.Locale(navigator.language).region` to get country cdoe)
         </WTitle>
 
         <WPhoneNumberInput v-model:value="state.phoneNumber2" class="w-80" auto-default-country />

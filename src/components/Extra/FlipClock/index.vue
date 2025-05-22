@@ -4,7 +4,6 @@ import FlipItem from './item.vue'
 
 defineOptions({
   name: 'WCompExtraFlipClock',
-  inheritAttrs: false,
 })
 
 const now = useNow()

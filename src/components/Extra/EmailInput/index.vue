@@ -4,7 +4,6 @@ import data, { defaultSuffix } from './data'
 
 defineOptions({
   name: 'WCompExtraEmailInput',
-  inheritAttrs: false,
 })
 
 defineProps<ICompExtraEmailInputProps>()
