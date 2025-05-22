@@ -18,24 +18,23 @@ declare type ValueOf<T> = T[keyof T]
 
 // LINKS https://medium.com/@an.chmelev/typescript-performance-and-type-optimization-in-large-scale-projects-18e62bd37cfb
 // thanks to deepseek R1
+// TODO render T
 type IDeepMaybeRef<T> =
   // 处理函数类型（禁用分发）
-  [T] extends [(...args: infer Args) => infer R] ? (
-    (...args: { [K in keyof Args]: IDeepMaybeRef<Args[K]> }) => IDeepMaybeRef<R>
-  ) :
-  // 优先处理精确基础类型（关键修改：使用 T extends 而非 extends T）
-    T extends boolean ? MaybeRefOrGetter<boolean> :
-      T extends number ? MaybeRefOrGetter<number> :
-        T extends string ? MaybeRefOrGetter<string> :
+  [T] extends [(...args: infer Args) => infer R]
+    ? (...args: { [K in keyof Args]: IDeepMaybeRef<Args[K]> }) => IDeepMaybeRef<R>
+  // 处理精确基础类型
+    : T extends boolean ? MaybeRefOrGetter<boolean>
+      : T extends number ? MaybeRefOrGetter<number>
+        : T extends string ? MaybeRefOrGetter<string>
         // 处理 Ref 类型
-          T extends Ref<infer V> ? MaybeRefOrGetter<V> :
-          // 处理数组类型（禁用分发）
-              [T] extends [Array<infer U>] ? Array<IDeepMaybeRef<U>> :
-              // 处理对象类型（禁用分发）
-                  [T] extends [object] ? { [K in keyof T]: IDeepMaybeRef<T[K]> } :
-                  // 处理联合类型（保持联合结构）
-                      [T] extends [unknown] ? MaybeRefOrGetter<T> :
-                        never
+          : T extends Ref<infer V> ? MaybeRefOrGetter<V>
+          // 处理数组（禁用分发）
+            : [T] extends [Array<infer U>] ? Array<IDeepMaybeRef<U>>
+              // 处理对象（禁用分发）
+                : [T] extends [object] ? { [K in keyof T]: IDeepMaybeRef<T[K]> }
+                  // 默认包装为 MaybeRefOrGetter
+                    : MaybeRefOrGetter<T>
 
 const __APP_INFO__: {
   name: string

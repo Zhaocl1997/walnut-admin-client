@@ -1,23 +1,22 @@
 <script lang="ts" setup>
-import { getCanAnimate, modalColor } from '../shared'
+import { getCanAnimate, modalColor } from '../../shared'
 
 const appSetting = useAppStoreSetting()
 
-const footerRelatives = appSetting.footer
+const logoRelatives = appSetting.logo
 
-const [register] = useForm<typeof footerRelatives>({
-  localeUniqueKey: 'app.settings.footer',
+const [register] = useForm<typeof logoRelatives>({
+  localeUniqueKey: 'app.settings',
   showFeedback: false,
   xGap: 0,
   formItemClass: 'flex flex-row justify-between mb-2',
   formItemComponentClass: '!w-32 flex justify-end',
   size: 'small',
-  disabled: computed(() => !footerRelatives.status),
   schemas: [
     {
       type: 'Extend:Divider',
       componentProp: {
-        title: 'app.settings.footer',
+        title: 'app.settings.logo',
         prefix: 'bar',
         titlePlacement: 'left',
         foldable: true,
@@ -34,20 +33,23 @@ const [register] = useForm<typeof footerRelatives>({
       formProp: {
         path: 'status',
       },
-      componentProp: {
-        disabled: false,
-      },
     },
     {
       type: 'Base:Input',
       formProp: {
         path: 'id',
       },
+      componentProp: {
+        disabled: computed(() => !logoRelatives.status),
+      },
     },
     {
       type: 'Base:Switch',
       formProp: {
         path: 'fixed',
+      },
+      componentProp: {
+        disabled: computed(() => !logoRelatives.status),
       },
     },
     {
@@ -57,37 +59,9 @@ const [register] = useForm<typeof footerRelatives>({
       },
       componentProp: {
         disabled: computed(
-          () => !footerRelatives.status || getCanAnimate.value,
+          () => !logoRelatives.status || getCanAnimate.value,
         ),
         tooltip: true,
-      },
-    },
-    {
-      type: 'Base:Switch',
-      formProp: {
-        path: 'inverted',
-      },
-      componentProp: {
-        disabled: computed(() => !footerRelatives.status || isDark.value),
-      },
-    },
-    {
-      type: 'Base:InputNumber',
-      formProp: {
-        path: 'height',
-      },
-      componentProp: {
-        step: 1,
-        min: 0,
-        suffix: 'px',
-        showButton: false,
-        precision: 0,
-      },
-    },
-    {
-      type: 'Base:Input',
-      formProp: {
-        path: 'content',
       },
     },
   ],
@@ -95,5 +69,5 @@ const [register] = useForm<typeof footerRelatives>({
 </script>
 
 <template>
-  <WForm :model="footerRelatives" @hook="register" />
+  <WForm :model="logoRelatives" @hook="register" />
 </template>

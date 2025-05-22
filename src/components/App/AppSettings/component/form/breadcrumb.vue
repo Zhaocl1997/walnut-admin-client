@@ -1,22 +1,23 @@
 <script lang="ts" setup>
-import { getCanAnimate, modalColor } from '../shared'
+import { getCanAnimate, modalColor } from '../../shared'
 
 const appSetting = useAppStoreSetting()
 
-const logoRelatives = appSetting.logo
+const breadcrumbRelatives = appSetting.breadcrumb
 
-const [register] = useForm<typeof logoRelatives>({
-  localeUniqueKey: 'app.settings',
+const [register4] = useForm<typeof breadcrumbRelatives>({
+  localeUniqueKey: 'app.settings.breadcrumb',
   showFeedback: false,
   xGap: 0,
   formItemClass: 'flex flex-row justify-between mb-2',
   formItemComponentClass: '!w-32 flex justify-end',
   size: 'small',
+  disabled: computed(() => !breadcrumbRelatives.status),
   schemas: [
     {
       type: 'Extend:Divider',
       componentProp: {
-        title: 'app.settings.logo',
+        title: 'app.settings.breadcrumb',
         prefix: 'bar',
         titlePlacement: 'left',
         foldable: true,
@@ -33,23 +34,14 @@ const [register] = useForm<typeof logoRelatives>({
       formProp: {
         path: 'status',
       },
+      componentProp: {
+        disabled: false,
+      },
     },
     {
       type: 'Base:Input',
       formProp: {
         path: 'id',
-      },
-      componentProp: {
-        disabled: computed(() => !logoRelatives.status),
-      },
-    },
-    {
-      type: 'Base:Switch',
-      formProp: {
-        path: 'fixed',
-      },
-      componentProp: {
-        disabled: computed(() => !logoRelatives.status),
       },
     },
     {
@@ -59,9 +51,30 @@ const [register] = useForm<typeof logoRelatives>({
       },
       componentProp: {
         disabled: computed(
-          () => !logoRelatives.status || getCanAnimate.value,
+          () => !breadcrumbRelatives.status || getCanAnimate.value,
         ),
         tooltip: true,
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'showIcon',
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'showDropdown',
+      },
+    },
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'separator',
+      },
+      componentProp: {
+        options: ['>', '/'].map(i => ({ value: i, label: i })),
       },
     },
   ],
@@ -69,5 +82,5 @@ const [register] = useForm<typeof logoRelatives>({
 </script>
 
 <template>
-  <WForm :model="logoRelatives" @hook="register" />
+  <WForm :model="breadcrumbRelatives" @hook="register4" />
 </template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getCanAnimate, modalColor } from '../shared'
+import { getCanAnimate, modalColor } from '../../shared'
 
 const appMenu = useAppStoreMenu()
 

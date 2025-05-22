@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'AppSettingExitFullContent',
+  name: 'WAppSettingsExitFullContent',
 })
 
 const appSetting = useAppStoreSetting()

@@ -1,11 +1,13 @@
 <script lang="tsx" setup>
-import AppColors from '../component/colors'
+import { modalColor } from '../../shared'
 
-import {
-  darkThemeRelatives,
-  lightThemeRelatives,
-  modalColor,
-} from '../shared'
+import AppSettingsColors from '../colors'
+
+const appSetting = useAppStoreSetting()
+const themeRelatives = appSetting.themes
+
+const lightThemeRelatives = ref(themeRelatives.light)
+const darkThemeRelatives = ref(themeRelatives.dark)
 
 const [register] = useForm<typeof lightThemeRelatives.value>({
   showFeedback: false,
@@ -45,7 +47,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppColors v-model={[formData.primaryColor]}></AppColors>
+          <AppSettingsColors v-model={[formData.primaryColor, 'value']}></AppSettingsColors>
         ),
       },
     },
@@ -65,7 +67,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppColors v-model={[formData.infoColor]}></AppColors>
+          <AppSettingsColors v-model={[formData.infoColor, 'value']}></AppSettingsColors>
         ),
       },
     },
@@ -85,7 +87,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppColors v-model={[formData.successColor]}></AppColors>
+          <AppSettingsColors v-model={[formData.successColor, 'value']}></AppSettingsColors>
         ),
       },
     },
@@ -105,7 +107,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppColors v-model={[formData.warningColor]}></AppColors>
+          <AppSettingsColors v-model={[formData.warningColor, 'value']}></AppSettingsColors>
         ),
       },
     },
@@ -125,7 +127,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppColors v-model={[formData.errorColor]}></AppColors>
+          <AppSettingsColors v-model={[formData.errorColor, 'value']}></AppSettingsColors>
         ),
       },
     },
@@ -145,7 +147,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppColors v-model={[formData.bodyColor]}></AppColors>
+          <AppSettingsColors v-model={[formData.bodyColor, 'value']}></AppSettingsColors>
         ),
       },
     },
@@ -166,11 +168,11 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppColors
-            v-model={[formData.invertedColor]}
+          <AppSettingsColors
+            v-model={[formData.invertedColor, 'value']}
             disabled={isDark.value}
           >
-          </AppColors>
+          </AppSettingsColors>
         ),
       },
     },
@@ -179,14 +181,16 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
 </script>
 
 <template>
+  <!-- @vue-generic {typeof darkThemeRelatives.value} -->
   <WForm
     v-if="isDark"
     :model="darkThemeRelatives"
     @hook="register"
   />
 
+  <!-- @vue-generic {typeof lightThemeRelatives.value} -->
   <WForm
-    v-if="!isDark"
+    v-else
     :model="lightThemeRelatives"
     @hook="register"
   />

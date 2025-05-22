@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import AppSettingBackToTop from './backToTop.vue'
-import AppSettingsForm from './form/index.vue'
-import AppSettingExitFullContent from './fullContent.vue'
+import AppSettingBackToTop from './component/backToTop.vue'
+import AppSettingsForm from './component/form/index.vue'
+import AppSettingExitFullContent from './component/fullContent.vue'
 
 defineOptions({
   name: 'AppSettings',

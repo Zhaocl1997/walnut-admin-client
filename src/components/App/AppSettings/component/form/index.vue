@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { modalColor } from '../shared'
-
 import SettingsFormApp from './app.vue'
 import SettingsFormBreadcrumb from './breadcrumb.vue'
 import SettingsFormFooter from './footer.vue'
@@ -8,9 +6,10 @@ import SettingsFormHeader from './header.vue'
 import SettingsFormLogo from './logo.vue'
 import SettingsFormMenu from './menu.vue'
 import SettingsFormTab from './tab.vue'
+import SettingsFormThemes from './theme.vue'
 
 defineOptions({
-  name: 'AppSettingsForm',
+  name: 'WAppSettingsForm',
 })
 
 const appSetting = useAppStoreSetting()
@@ -19,6 +18,7 @@ const { copy, copied } = useClipboard({
   source: computed(() =>
     JSON.stringify(
       {
+        themes: appSetting.themes,
         app: appSetting.app,
         logo: appSetting.logo,
         header: appSetting.header,
@@ -70,6 +70,7 @@ function onReset() {
     @yes="() => (show = false)"
     @no="() => (show = false)"
   >
+    <SettingsFormThemes />
     <SettingsFormApp />
     <SettingsFormLogo />
     <SettingsFormHeader />

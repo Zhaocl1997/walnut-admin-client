@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'AppSettingBackToTop',
+  name: 'WAppSettingsBackToTop',
 })
 
 const emits = defineEmits<{ backToTop: [] }>()

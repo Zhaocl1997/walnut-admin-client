@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import { getCanAnimate, modalColor } from '../shared'
+import { getCanAnimate, modalColor } from '../../shared'
 
 const appSetting = useAppStoreSetting()
 
-const breadcrumbRelatives = appSetting.breadcrumb
+const footerRelatives = appSetting.footer
 
-const [register4] = useForm<typeof breadcrumbRelatives>({
-  localeUniqueKey: 'app.settings.breadcrumb',
+const [register] = useForm<typeof footerRelatives>({
+  localeUniqueKey: 'app.settings.footer',
   showFeedback: false,
   xGap: 0,
   formItemClass: 'flex flex-row justify-between mb-2',
   formItemComponentClass: '!w-32 flex justify-end',
   size: 'small',
-  disabled: computed(() => !breadcrumbRelatives.status),
+  disabled: computed(() => !footerRelatives.status),
   schemas: [
     {
       type: 'Extend:Divider',
       componentProp: {
-        title: 'app.settings.breadcrumb',
+        title: 'app.settings.footer',
         prefix: 'bar',
         titlePlacement: 'left',
         foldable: true,
@@ -45,13 +45,19 @@ const [register4] = useForm<typeof breadcrumbRelatives>({
       },
     },
     {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'fixed',
+      },
+    },
+    {
       type: 'Extra:TransitionSelect',
       formProp: {
         path: 'transition',
       },
       componentProp: {
         disabled: computed(
-          () => !breadcrumbRelatives.status || getCanAnimate.value,
+          () => !footerRelatives.status || getCanAnimate.value,
         ),
         tooltip: true,
       },
@@ -59,22 +65,29 @@ const [register4] = useForm<typeof breadcrumbRelatives>({
     {
       type: 'Base:Switch',
       formProp: {
-        path: 'showIcon',
-      },
-    },
-    {
-      type: 'Base:Switch',
-      formProp: {
-        path: 'showDropdown',
-      },
-    },
-    {
-      type: 'Base:Select',
-      formProp: {
-        path: 'separator',
+        path: 'inverted',
       },
       componentProp: {
-        options: ['>', '/'].map(i => ({ value: i, label: i })),
+        disabled: computed(() => !footerRelatives.status || isDark.value),
+      },
+    },
+    {
+      type: 'Base:InputNumber',
+      formProp: {
+        path: 'height',
+      },
+      componentProp: {
+        step: 1,
+        min: 0,
+        suffix: 'px',
+        showButton: false,
+        precision: 0,
+      },
+    },
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'content',
       },
     },
   ],
@@ -82,5 +95,5 @@ const [register4] = useForm<typeof breadcrumbRelatives>({
 </script>
 
 <template>
-  <WForm :model="breadcrumbRelatives" @hook="register4" />
+  <WForm :model="footerRelatives" @hook="register" />
 </template>
