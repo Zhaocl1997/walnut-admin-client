@@ -246,6 +246,11 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
      */
     getMenuWidth(state) {
       const appMenu = useAppStoreMenu()
+      const appAdapter = useAppStoreAdapter()
+
+      if (appAdapter.isMobile) {
+        return 0
+      }
 
       if (state.menu.status && !appMenu.collapse) {
         return state.menu.width
