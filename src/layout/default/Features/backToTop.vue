@@ -27,7 +27,7 @@ watch(
   <n-back-top
     v-if="appSetting.getBackToTopIsStandalone && showBackToTop"
     :listen-to="`#${String($route.name)}`"
-    :bottom="40"
-    :right="15"
+    :bottom="80"
+    :right="40"
   />
 </template>

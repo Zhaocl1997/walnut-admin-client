@@ -1,5 +1,5 @@
-export function useDraggableElement() {
-  const el = ref<Nullable<HTMLElement>>(null)
+export function useDraggableElement(refString: string) {
+  const el = useTemplateRef<HTMLElement>(refString)
   const myX = ref()
   const myY = ref()
 
