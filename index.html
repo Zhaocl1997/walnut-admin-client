@@ -1,165 +1,159 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="pragram" content="no-cache" />
-    <meta
-      http-equiv="cache-control"
-      content="no-cache, no-store, must-revalidate"
-    />
-    <meta
-      name="keywords"
-      content="vue3,typescript,pinia,vite,naiveui,nestjs,mongodb,中后台,模板,开源,免费,全栈,管理平台"
-    />
-    <meta
-      name="description"
-      content="一款开源的全栈中后台管理平台模板，持续更新中"
-    />
-    <title>%VITE_APP_TITLE%</title>
-  </head>
-  <body>
-    <div id="app">
-      <style>
-        body {
-          margin: 0;
-        }
 
-        .app-loading {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 100vw;
-          height: 100vh;
-          background-color: #161616;
-        }
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="pragram" content="no-cache" />
+  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
+  <meta name="keywords" content="vue3,typescript,pinia,vite,naiveui,nestjs,mongodb,中后台,模板,开源,免费,全栈,管理平台" />
+  <meta name="description" content="一款开源的全栈中后台管理平台模板，持续更新中" />
+  <title>%VITE_APP_TITLE%</title>
+</head>
 
-        .app-loading .app-loading-wrap {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          transform: translate3d(-50%, -50%, 0);
-          transform: translate3d(-50%, -50%, 0);
-        }
+<body>
+  <div id="app">
+    <style>
+      body {
+        margin: 0;
+      }
 
-        .app-loading .dots {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 98px;
-        }
+      .app-loading {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: #161616;
+      }
 
-        .app-loading .app-loading-title {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 30px;
-          font-size: 30px;
-          color: rgba(240, 240, 240);
-          white-space: nowrap;
-        }
+      .app-loading .app-loading-wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translate3d(-50%, -50%, 0);
+        transform: translate3d(-50%, -50%, 0);
+      }
 
-        .app-loading .app-loading-logo {
-          display: block;
-          width: 90px;
-          margin: 0 auto;
-          margin-bottom: 20px;
-        }
+      .app-loading .dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 98px;
+      }
 
-        .dot {
-          position: relative;
-          display: inline-block;
-          box-sizing: border-box;
-          width: 48px;
-          height: 48px;
-          margin-top: 30px;
-          font-size: 32px;
-          transform: rotate(45deg);
-          animation: antRotate 1.2s infinite linear;
-        }
+      .app-loading .app-loading-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        font-size: 30px;
+        color: rgba(240, 240, 240);
+        white-space: nowrap;
+      }
 
-        .dot i {
-          position: absolute;
-          display: block;
-          width: 20px;
-          height: 20px;
-          border-radius: 100%;
-          background-color: #0065cc;
-          opacity: 0.3;
-          transform: scale(0.75);
-          transform-origin: 50% 50%;
-          animation: antSpinMove 1s infinite linear alternate;
-        }
+      .app-loading .app-loading-logo {
+        display: block;
+        width: 90px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+      }
 
-        .dot i:nth-child(1) {
-          top: 0;
-          left: 0;
-        }
+      .dot {
+        position: relative;
+        display: inline-block;
+        box-sizing: border-box;
+        width: 48px;
+        height: 48px;
+        margin-top: 30px;
+        font-size: 32px;
+        transform: rotate(45deg);
+        animation: antRotate 1.2s infinite linear;
+      }
 
-        .dot i:nth-child(2) {
-          top: 0;
-          right: 0;
-          animation-delay: 0.4s;
-          animation-delay: 0.4s;
-        }
+      .dot i {
+        position: absolute;
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        background-color: #0065cc;
+        opacity: 0.3;
+        transform: scale(0.75);
+        transform-origin: 50% 50%;
+        animation: antSpinMove 1s infinite linear alternate;
+      }
 
-        .dot i:nth-child(3) {
-          bottom: 0;
-          right: 0;
-          animation-delay: 0.8s;
-          animation-delay: 0.8s;
-        }
+      .dot i:nth-child(1) {
+        top: 0;
+        left: 0;
+      }
 
-        .dot i:nth-child(4) {
-          bottom: 0;
-          left: 0;
-          animation-delay: 1.2s;
-          animation-delay: 1.2s;
-        }
+      .dot i:nth-child(2) {
+        top: 0;
+        right: 0;
+        animation-delay: 0.4s;
+        animation-delay: 0.4s;
+      }
 
-        @keyframes antRotate {
-          to {
-            transform: rotate(405deg);
-            transform: rotate(405deg);
-          }
-        }
+      .dot i:nth-child(3) {
+        bottom: 0;
+        right: 0;
+        animation-delay: 0.8s;
+        animation-delay: 0.8s;
+      }
 
-        @-webkit-keyframes antRotate {
-          to {
-            transform: rotate(405deg);
-            transform: rotate(405deg);
-          }
-        }
+      .dot i:nth-child(4) {
+        bottom: 0;
+        left: 0;
+        animation-delay: 1.2s;
+        animation-delay: 1.2s;
+      }
 
-        @keyframes antSpinMove {
-          to {
-            opacity: 1;
-          }
+      @keyframes antRotate {
+        to {
+          transform: rotate(405deg);
+          transform: rotate(405deg);
         }
+      }
 
-        @-webkit-keyframes antSpinMove {
-          to {
-            opacity: 1;
-          }
+      @-webkit-keyframes antRotate {
+        to {
+          transform: rotate(405deg);
+          transform: rotate(405deg);
         }
-      </style>
+      }
 
-      <div class="app-loading">
-        <div class="app-loading-wrap">
-          <img src="/assets/logo.png" class="app-loading-logo" alt="Logo" />
-          <div class="app-loading-dots">
-            <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
-          </div>
-          <div class="app-loading-title">%VITE_APP_TITLE%</div>
+      @keyframes antSpinMove {
+        to {
+          opacity: 1;
+        }
+      }
+
+      @-webkit-keyframes antSpinMove {
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+
+    <div class="app-loading">
+      <div class="app-loading-wrap">
+        <img src="/assets/logo.png" class="app-loading-logo" alt="Logo" />
+        <div class="app-loading-dots">
+          <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
         </div>
+        <div class="app-loading-title">%VITE_APP_TITLE%</div>
       </div>
     </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
