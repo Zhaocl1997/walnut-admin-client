@@ -10,7 +10,7 @@ defineOptions({
 
 const { item } = defineProps<{ item: WForm.Schema.Item<T> }>()
 
-const { formPropsCtx } = useFormContext()
+const { formPropsCtx } = useFormContext<T>()
 const { getProps } = formPropsCtx
 
 const getFormItemDictLabel = computed(() => getDictNameFromMap((item as WForm.Schema.SchemaItem.DictSchema<T>).componentProp!.dictType) as string ?? '')
@@ -65,6 +65,7 @@ const getBuiltInComp = formItemUtils.getTargetComponent(item)
     <template #default>
       <FormItemRender v-if="item.type === 'Base:Render'" />
       <slot v-else-if="item.type === 'Base:Slot'" :name="item.formProp?.path" />
+      <!-- @vue-expect-error -->
       <component
         :is="getBuiltInComp"
         v-if="getBuiltInComp"

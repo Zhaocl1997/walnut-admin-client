@@ -4,7 +4,7 @@ import type { WForm } from '../types'
 import WDrawer from '@/components/UI/Drawer'
 import WModal from '@/components/UI/Modal'
 
-export function useFormDialog<T>(props: ComputedRef<WForm.Props<T>>, formRef: Ref<WForm.Inst.NFormInst>) {
+export function useFormDialog<T>(props: ComputedRef<WForm.Props<T>>, formRef: Ref<WForm.Inst.NFormInst | null>) {
   return defineComponent({
     setup(_, { slots, expose }) {
       const { t } = useAppI18n()

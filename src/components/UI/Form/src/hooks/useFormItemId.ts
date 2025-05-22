@@ -41,4 +41,4 @@ export function useFormItemId<T>() {
   }
 }
 
-export type ICompUIFormHooksItemId = ReturnType<typeof useFormItemId>
+export type ICompUIFormHooksItemId<T> = ReturnType<typeof useFormItemId<T>>

@@ -1,6 +1,6 @@
 import type { WForm } from '../types'
 
-export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst>) {
+export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst | null>) {
   function validate(fields?: (keyof T)[]) {
     if (!fields || fields.length === 0) {
       return new Promise<boolean>((resolve) => {

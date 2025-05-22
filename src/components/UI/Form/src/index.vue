@@ -59,14 +59,13 @@ const formSchemas = useFormSchemas<T>(getProps, formItemIdCtx)
 
 const formMethods = useFormMethods<T>(formRef)
 
-const getFormRules = computed<FormRules>(() =>
+const getFormRules = computed((): FormRules =>
   getProps.value.baseRules
-    // @ts-expect-error too deep
     ? generateBaseRules<T>(t, formSchemas, getProps)
-    : getProps.value.rules)
+    : getProps.value.rules!)
 
 // set context
-setFormContext({
+setFormContext<T>({
   formRef,
   formSchemas,
   formEvent: emits,
@@ -95,15 +94,14 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
   const span = getScopeOrGlobalProp(item, 'gridProp.span', getProps.value)
 
   if (mode === 'query') {
-    const avaiableSchemaLength = getProps.value.schemas
-      .filter(i => FIU.getIfOrShowBoolean(i, getProps.value, 'vIf'))
+    const avaiableSchemaLength = getProps.value.schemas?.filter(i => FIU.getIfOrShowBoolean(i, getProps.value, 'vIf'))
       .filter(i => FIU.getIfOrShowBoolean(i, getProps.value, 'vShow'))
       .filter((i, idx) => formItemIdCtx.getFormItemId(i, idx))
-      .length
+      .length as number
 
     const totalItem = queryActive.value ? avaiableSchemaLength : avaiableSchemaLength - 1
 
-    const remainSpan = calculateRemainingSpans(totalItem, 24, Array.from<number>({ length: totalItem }).fill(getProps.value.span))
+    const remainSpan = calculateRemainingSpans(totalItem, 24, Array.from<number>({ length: totalItem }).fill(getProps.value.span!))
 
     if (remainSpan > 6) {
       return {

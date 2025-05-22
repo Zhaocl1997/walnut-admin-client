@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
 import { useFormContext } from '../../../hooks/useFormContext'
 import { formItemUtils } from '../../../utils'
@@ -9,7 +9,7 @@ defineOptions({
 
 const { t } = useAppI18n()
 
-const { formSchemas, formPropsCtx } = useFormContext()
+const { formSchemas, formPropsCtx } = useFormContext<T>()
 
 const { getProps: formProps } = formPropsCtx
 
@@ -19,7 +19,8 @@ const getDescItems = computed(() => {
     .map(i => ({
       key: i.formProp?.path,
       show: i.descriptionProp?.show,
-      value: formProps.value.model[i.formProp?.path],
+      // @ts-expect-error any index
+      value: formProps.value.model![i.formProp?.path as string],
       formatter: i.descriptionProp?.formatter,
 
       type: i.descriptionProp?.type,

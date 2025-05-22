@@ -4,28 +4,31 @@ import { get } from 'lodash-es'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 import { componentMap } from '../components/FormItem/componentMap'
 
+type SchemaItem<T> = WForm.Schema.Item<T>
+type FormProps<T> = WForm.Props<T>
+
 /**
  * @description get scope or global prop
  */
-export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: 'transitionProp.transitionName', props: WForm.Props<T>): ValueOfAppConstTransitionName
-export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: 'visibleProp.visibleMode', props: WForm.Props<T>): WForm.FormVisibleMode
-export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: 'gridProp.span', props: WForm.Props<T>): number
-export function getScopeOrGlobalProp<T>(item: WForm.Schema.Item<T>, itemField: WForm.FormScopeGlobalFields, props: WForm.Props<T>) {
-  return get(item, itemField) ?? props[itemField.split('.')[1] as keyof WForm.Props<T>]
+export function getScopeOrGlobalProp<T>(item: SchemaItem<T>, itemField: 'transitionProp.transitionName', props: FormProps<T>): ValueOfAppConstTransitionName
+export function getScopeOrGlobalProp<T>(item: SchemaItem<T>, itemField: 'visibleProp.visibleMode', props: FormProps<T>): WForm.FormVisibleMode
+export function getScopeOrGlobalProp<T>(item: SchemaItem<T>, itemField: 'gridProp.span', props: FormProps<T>): number
+export function getScopeOrGlobalProp<T>(item: SchemaItem<T>, itemField: WForm.FormScopeGlobalFields, props: FormProps<T>) {
+  return get(item, itemField) ?? props[itemField.split('.')[1] as keyof FormProps<T>]
 }
 
 export const formItemUtils = {
   /**
    * @description get dynamic component from componentMap
    */
-  getTargetComponent<T>(item: WForm.Schema.Item<T>) {
+  getTargetComponent<T>(item: SchemaItem<T>) {
     return componentMap.get(item?.type.split(':')[1])
   },
 
   /**
    * @description get v-if/v-show boolean
    */
-  getIfOrShowBoolean<T>(item: WForm.Schema.Item<T>, props: WForm.Props<T>, field: WForm.MaybeBooleanField, defaultValue = true) {
+  getIfOrShowBoolean<T>(item: SchemaItem<T>, props: FormProps<T>, field: WForm.MaybeBooleanField, defaultValue = true) {
     const maybeBool = item?.visibleProp?.[field]
 
     if (typeof maybeBool === 'function')
@@ -37,14 +40,14 @@ export const formItemUtils = {
   /**
    * @description generate form item based on item & index
    */
-  generateFormItemId<T>(item: WForm.Schema.Item<T>, index: number) {
+  generateFormItemId<T>(item: SchemaItem<T>, index: number) {
     return wbtoa(`${item?.type}-${index}-${item?.formProp?.path}`)
   },
 
   /**
    * @description get translated string relatived with form
    */
-  getTranslatedString<T>(t: Fn, item: WForm.Schema.Item<T>, props: WForm.Props<T>, type: WForm.LocaleType = 'origin') {
+  getTranslatedString<T>(t: Fn, item: SchemaItem<T>, props: FormProps<T>, type: WForm.LocaleType = 'origin') {
     const itemFormProp = item.formProp!
 
     // used for dict form item
@@ -121,7 +124,7 @@ export const inputFormItemTypeList = [
 /**
  * generate different default rule message through based on `inputFormItemTypeList`
  */
-export function generateRuleMessage<T>(t: Fn, i: WForm.Schema.Item<T>, p: ComputedRef<WForm.Props<T>>) {
+export function generateRuleMessage<T>(t: Fn, i: SchemaItem<T>, p: ComputedRef<FormProps<T>>) {
   return t('comp.form.rule', {
     type: inputFormItemTypeList.includes(i.type)
       ? t('comp.base.input')
@@ -133,9 +136,9 @@ export function generateRuleMessage<T>(t: Fn, i: WForm.Schema.Item<T>, p: Comput
 /**
  * @description generate base rules based on schemas
  */
-export function generateBaseRules<T>(t: Fn, schemas: Ref<WForm.Schema.Item<T>[]>, props: ComputedRef<WForm.Props<T>>): FormRules {
+export function generateBaseRules<T>(t: typeof AppI18n['global']['t'], schemas: Ref<SchemaItem<T>[]>, props: ComputedRef<FormProps<T>>): FormRules {
   const getBaseRuleObj = (
-    i: WForm.Schema.Item<T>,
+    i: SchemaItem<T>,
     extra?: FormItemRule[],
   ): FormItemRule[] => {
     const base: FormItemRule[] = [
@@ -173,7 +176,7 @@ export function generateBaseRules<T>(t: Fn, schemas: Ref<WForm.Schema.Item<T>[]>
   )
 }
 
-export function extractDefaultFormDataFromSchemas<T>(schemas: WForm.Schema.Item<T>[]) {
+export function extractDefaultFormDataFromSchemas<T>(schemas: SchemaItem<T>[]) {
   if (!schemas)
     return {}
 
@@ -187,7 +190,7 @@ export function extractDefaultFormDataFromSchemas<T>(schemas: WForm.Schema.Item<
   )
 }
 
-export const extendedFormPropKeys: (keyof WForm.Props<Recordable>)[] = [
+export const extendedFormPropKeys: (keyof FormProps<Recordable>)[] = [
   'schemas',
   'cols',
   'span',

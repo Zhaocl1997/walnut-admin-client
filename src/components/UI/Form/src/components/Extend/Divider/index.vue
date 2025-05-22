@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
 import type { ICompUIFormItemExtendDividerProps } from '.'
 import { useFormContext } from '../../../hooks/useFormContext'
 
@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<ICompUIFormItemExtendDividerProps>(), {
 
 const active = ref(false)
 
-const { formSchemas, formItemIdCtx } = useFormContext()
+const { formSchemas, formItemIdCtx } = useFormContext<T>()
 
 const { t } = useAppI18n()
 

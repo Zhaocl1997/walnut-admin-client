@@ -42,7 +42,6 @@ import type { ICompUIRadioProps } from '../../Radio'
 import type { ICompUISelectProps } from '../../Select'
 
 import type { ICompUISwitchProps } from '../../Switch'
-import type { WTable } from '../../Table'
 import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'
 import type { ICompUITreeSelectProps } from '../../TreeSelect'
@@ -89,7 +88,7 @@ export declare namespace WForm {
     type NFormInst = FormInst
 
     interface DialogInst {
-      onOpen: (beforeHook?: (done: Fn) => void) => Promise<void>
+      onOpen: (beforeHook?: (done: Fn) => void) => Promise<void> | void
       onClose: Fn
     }
 
@@ -221,10 +220,10 @@ export declare namespace WForm {
    * @description Form context
    */
   interface Context<T> {
-    formRef: Ref<Inst.NFormInst>
+    formRef: Ref<Inst.NFormInst | null>
     formSchemas: Ref<Schema.Item<T>[]>
     formEvent: ShortEmits<Emits<T>>
-    formItemIdCtx: ICompUIFormHooksItemId
+    formItemIdCtx: ICompUIFormHooksItemId<T>
     formPropsCtx: IHooksUseProps<Props<T>>
   }
 
@@ -233,8 +232,8 @@ export declare namespace WForm {
    */
   interface Emits<T> {
     hook: [inst: Omit<Inst.WFormInst<T>, 'onYes' | 'onNo'> & Inst.DialogInst]
-    query?: [params: Params.Dialog.FinishLoading]
-    reset?: [params: Params.Dialog.FinishLoading]
+    query: [params: Params.Dialog.FinishLoading]
+    reset: [params: Params.Dialog.FinishLoading]
   }
 
   /**

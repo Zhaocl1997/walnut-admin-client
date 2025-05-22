@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
 import type { ICompUIFormItemExtendQueryProps } from '.'
 import { useFormContext } from '../../../hooks/useFormContext'
 
@@ -12,11 +12,9 @@ const { t } = useAppI18n()
 
 const active = defineModel<boolean>('active', { required: true })
 
-const getText = computed(() =>
-  active.value ? t('app.button.expand') : t('app.button.collapse'),
-)
+const getText = computed(() => active.value ? t('app.button.expand') : t('app.button.collapse'))
 
-const { formEvent, formSchemas, formItemIdCtx, formPropsCtx } = useFormContext()
+const { formEvent, formSchemas, formItemIdCtx, formPropsCtx } = useFormContext<T>()
 
 const { setProps, getProps } = formPropsCtx
 
@@ -37,7 +35,7 @@ function onQuery() {
 function onToggle() {
   active.value = !active.value
 
-  for (let i = props.countToFold; i < formSchemas.value.length; i++) {
+  for (let i = props.countToFold!; i < formSchemas.value.length; i++) {
     const item = formSchemas.value[i]
 
     formItemIdCtx.toggleFormItemId(item, i)

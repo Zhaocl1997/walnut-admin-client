@@ -6,5 +6,3 @@ export * from './src/types'
 
 // TODO tab form
 // TODO collpase form
-// TODO advanced form
-// TODO desc form
