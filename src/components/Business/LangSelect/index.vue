@@ -3,7 +3,7 @@ import { langAPI } from '@/api/system/lang'
 import ApiSelect from '@/components/Advanced/ApiSelect'
 
 defineOptions({
-  name: 'WBusinessLangSelect',
+  name: 'WCompBusinessLangSelect',
 })
 
 const listFn = langAPI.list.bind(langAPI)

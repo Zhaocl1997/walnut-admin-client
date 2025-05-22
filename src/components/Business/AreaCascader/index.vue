@@ -8,12 +8,11 @@ import {
 
 defineOptions({
   name: 'WCompBusinessAreaCascader',
-  inheritAttrs: false,
 })
 
-const { value = null, depth = 4, showPath = true, multiple = false } = defineProps<ICompBusinessAreaCascaderProps>()
+const { depth = 4, showPath = true, multiple = false } = defineProps<ICompBusinessAreaCascaderProps>()
 
-const emits = defineEmits<{ (e: 'update:value', value: string): void }>()
+const value = defineModel<string | string[]>('value', { required: true })
 
 const options = ref<TreeNodeItem<AppSharedArea>[]>([])
 
@@ -35,17 +34,13 @@ async function onInit() {
   }))
 }
 
-function onUpdateValue(value: string) {
-  emits('update:value', value)
-}
-
 async function onFeedback() {
-  if (!value || value.length === 0)
+  if (!value.value || value.value.length === 0)
     return
 
   // single feedback
-  if (!multiple && typeof value === 'string') {
-    const feedback = await getAreaFeedbackByCode(value)
+  if (!multiple && typeof value.value === 'string') {
+    const feedback = await getAreaFeedbackByCode(value.value)
 
     options.value = feedback
   }
@@ -53,9 +48,9 @@ async function onFeedback() {
   // multiple feedback
   if (
     multiple
-    && Array.isArray(value)
+    && Array.isArray(value.value)
   ) {
-    const feedbacks = await getAreaFeedbackByCode(value.join(','))
+    const feedbacks = await getAreaFeedbackByCode(value.value.join(','))
 
     options.value = feedbacks
   }
@@ -69,7 +64,7 @@ onBeforeMount(async () => {
 
 <template>
   <n-cascader
-    :value="value"
+    v-model:value="value"
     :options="options"
     :show-path="showPath"
     :multiple="multiple"
@@ -80,6 +75,5 @@ onBeforeMount(async () => {
     max-tag-count="responsive"
     check-strategy="child"
     :on-load="onLoad"
-    @update-value="onUpdateValue"
   />
 </template>
