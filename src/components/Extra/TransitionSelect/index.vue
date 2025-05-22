@@ -5,7 +5,7 @@ defineOptions({
   name: 'WCompExtraTransitionSelect',
 })
 
-const value = defineModel<string>('value', { required: true })
+const value = defineModel<string | null>('value', { required: true })
 
 function getChilren(group: string) {
   return Object.entries(AppConstTransitionName)
@@ -29,5 +29,5 @@ const options = ref<SelectMixedOption[]>(
 </script>
 
 <template>
-  <WSelect v-model:value="value" :options="options" filterable />
+  <WSelect v-model:value="value!" :options="options" filterable />
 </template>

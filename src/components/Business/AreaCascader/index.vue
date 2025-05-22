@@ -12,7 +12,7 @@ defineOptions({
 
 const { depth = 4, showPath = true, multiple = false } = defineProps<ICompBusinessAreaCascaderProps>()
 
-const value = defineModel<string | string[]>('value', { required: true })
+const value = defineModel<string | string[] | null>('value', { required: true })
 
 const options = ref<TreeNodeItem<AppSharedArea>[]>([])
 

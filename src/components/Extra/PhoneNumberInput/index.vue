@@ -22,7 +22,7 @@ const {
 
 const emits = defineEmits<{ change: [params: ICompExtraPhoneNumberInputUpdateParams] }>()
 
-const value = defineModel<string>('value', { required: true })
+const value = defineModel<string | null>('value', { required: true })
 const countryCode = defineModel<CountryCode>('countryCode', { default: 'CN' })
 
 const { t } = useAppI18n()
