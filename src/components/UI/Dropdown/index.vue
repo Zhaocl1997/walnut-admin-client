@@ -7,7 +7,7 @@ defineOptions({
 
 const props = defineProps<ICompUIDropdownProps>()
 
-const emit = defineEmits<{ hook: [inst: ICompUIDropdownInst] }>()
+const emits = defineEmits<{ hook: [inst: ICompUIDropdownInst] }>()
 
 const { setProps, getProps } = useProps<ICompUIDropdownProps>(props)
 
@@ -23,7 +23,7 @@ function openDropdown(e: MouseEvent) {
 
 const closeDropdown = () => (show.value = false)
 
-emit('hook', { setProps, openDropdown, closeDropdown })
+emits('hook', { setProps, openDropdown, closeDropdown })
 
 defineExpose({
   setProps,

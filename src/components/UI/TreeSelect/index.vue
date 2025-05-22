@@ -13,19 +13,22 @@ type TreeKey = StringOrNumber
 
 const value = defineModel<TreeKey | TreeKey[]>('value', { required: true })
 
-const internalValue = ref<TreeKey | TreeKey[]>()
+const internalValue = ref<TreeKey | TreeKey[] | null>()
 
 const nTreeSelctRef = useTemplateRef<TreeSelectInst>('nTreeSelctRef')
 
 const expandedKeys = ref<TreeKey[]>()
 const indeterminateKeys = ref<TreeKey[]>()
 
+const getTreeKeyField = computed(() => treeSelectProps?.keyField)
+const getTreeOptions = computed(() => treeSelectProps?.options)
+
 async function onUpdateValue(keys: TreeKey | TreeKey[]) {
   if (multiple && Array.isArray(keys)) {
     await nextTick()
 
     internalValue.value = keys
-    value.value = keys.concat(indeterminateKeys.value)
+    value.value = keys.concat(indeterminateKeys.value!)
   }
   else {
     internalValue.value = keys
@@ -44,13 +47,13 @@ async function onFeedback() {
     await nextTick()
 
     // expanded keys
-    const data = nTreeSelctRef.value.getCheckedData()
+    const data = nTreeSelctRef.value?.getCheckedData()
     // get no children node
-    const leafNodeKeyList = data.options.filter(i => !i.children || i.children.length === 0).map(i => i[treeSelectProps.keyField])
+    const leafNodeKeyList = data?.options.filter(i => !i!.children || i!.children.length === 0).map(i => i![getTreeKeyField.value!])
     const intersection = Array.from(new Set(leafNodeKeyList).intersection(new Set(internalValue.value)))
     internalValue.value = intersection
 
-    const allNodes = new Set<TreeKey>([...internalValue.value.map(i => findPath(treeSelectProps?.options, n => n[treeSelectProps.keyField] === i) ?? []).flat().map(i => i[treeSelectProps.keyField] as TreeKey)])
+    const allNodes = new Set<TreeKey>([...internalValue.value.map(i => findPath(getTreeOptions.value!, n => n[getTreeKeyField.value!] === i) ?? []).flat().map(i => i[getTreeKeyField.value!] as TreeKey)])
     expandedKeys.value = Array.from(allNodes)
   }
   else {
@@ -64,8 +67,8 @@ async function onFeedback() {
     internalValue.value = value.value
 
     // expanded keys
-    const targetNodeSingleTree = findPath(treeSelectProps?.options, n => n[treeSelectProps.keyField] === internalValue.value) as [] ?? []
-    expandedKeys.value = targetNodeSingleTree.map(i => i[treeSelectProps.keyField])
+    const targetNodeSingleTree = findPath(getTreeOptions.value!, n => n[getTreeKeyField.value!] === internalValue.value) as [] ?? []
+    expandedKeys.value = targetNodeSingleTree.map(i => i[getTreeKeyField.value!])
   }
 }
 

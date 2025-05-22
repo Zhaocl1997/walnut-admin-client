@@ -89,7 +89,8 @@ const getTitle = computed(() =>
     :style="{
       width: getShowTite ? `${appSetting.tabs.itemWidth}px` : 'max-content',
     }"
-    class="relative grid grid-cols-12 h-full cursor-pointer select-none items-center gap-1 px-2 py-1" :class="[
+    class="relative grid grid-cols-12 h-full cursor-pointer select-none items-center gap-1 px-2 py-1"
+    :class="[
       {
         'grid-cols-2': !getShowTite,
       },
@@ -113,7 +114,8 @@ const getTitle = computed(() =>
       v-if="getShowIcon"
       :icon="item.meta._icon ?? item.meta.icon"
       height="16"
-      class="col-span-2 flex items-center" :class="[
+      class="col-span-2 flex items-center"
+      :class="[
         { 'animate-bounce': item.meta._icon_animate },
         { 'animate-duration-1000': item.meta._icon_animate_duration === 1000 },
         { 'animate-duration-2000': item.meta._icon_animate_duration === 2000 },

@@ -9,5 +9,5 @@ export interface ICompUIButtonProps extends /* @vue-ignore */ ButtonProps {
   title?: string
   textProp?: string | Fn<VNodeChild>
   debounce?: number
-  onClick?: (e?: MouseEvent) => void | Promise<void>
+  onClick?: (e: MouseEvent) => void | Promise<void>
 }

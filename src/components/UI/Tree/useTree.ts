@@ -10,7 +10,7 @@ export function useTree<T = Recordable>(props: IDeepMaybeRef<ICompUITreeProps<T>
   }
 
   watchEffect(() => {
-    props && wTreeRef.value?.setProps(unref(props))
+    props && wTreeRef.value?.setProps(props)
   })
 
   const methods: ICompUITreeInst<T> = {

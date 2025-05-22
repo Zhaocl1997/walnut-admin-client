@@ -9,7 +9,7 @@ export interface ICompUIDropdownProps {
 }
 
 export interface ICompUIDropdownInst {
-  setProps: (p: IDeepMaybeRef<ICompUIDropdownProps> | ICompUIDropdownProps) => void
+  setProps: IHooksUseProps<ICompUIDropdownProps>['setProps']
 
   openDropdown: (e: MouseEvent) => void
 

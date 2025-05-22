@@ -7,11 +7,11 @@ export function useDropdown(props: IDeepMaybeRef<ICompUIDropdownProps> | ICompUI
 
   const register = (inst: ICompUIDropdownInst) => {
     wDropdownRef.value = inst
-
-    watchEffect(() => {
-      inst.setProps!(props)
-    })
   }
+
+  watchEffect(() => {
+    props && wDropdownRef.value?.setProps(props)
+  })
 
   const methods: ICompUIDropdownInst = {
     setProps: props => wDropdownRef.value?.setProps!(props),

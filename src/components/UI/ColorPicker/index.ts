@@ -4,6 +4,5 @@ export { default } from './index.vue'
 
 // TODO 000
 export interface ICompUIColorPickerProps extends /* @vue-ignore */ ColorPickerProps {
-  // TODO
   eyeDropper?: boolean
 }

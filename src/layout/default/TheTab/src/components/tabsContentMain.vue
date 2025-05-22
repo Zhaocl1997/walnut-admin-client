@@ -31,15 +31,9 @@ watchEffect(() => {
 
 const AppConstTabStyleModeInside = AppConstTabStyleMode
 
-const isCardType = computed(
-  () => appSetting.tabs.styleMode === AppConstTabStyleModeInside.CARD,
-)
-const isFlexType = computed(
-  () => appSetting.tabs.styleMode === AppConstTabStyleModeInside.FLEX,
-)
-const isRoundType = computed(
-  () => appSetting.tabs.styleMode === AppConstTabStyleModeInside.ROUND,
-)
+const isCardType = computed(() => appSetting.tabs.styleMode === AppConstTabStyleModeInside.CARD)
+const isFlexType = computed(() => appSetting.tabs.styleMode === AppConstTabStyleModeInside.FLEX)
+const isRoundType = computed(() => appSetting.tabs.styleMode === AppConstTabStyleModeInside.ROUND)
 
 const {
   scrollRef,

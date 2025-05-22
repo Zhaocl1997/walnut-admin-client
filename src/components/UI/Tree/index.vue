@@ -26,7 +26,7 @@ const emits = defineEmits<{ hook: [inst: ICompUITreeInst] }>()
 
 type TreeKey = StringOrNumber
 
-const value = defineModel<string | string[] | number | number[]>('value', { required: true })
+const value = defineModel<TreeKey | TreeKey[]>('value', { required: true })
 
 const { t } = useAppI18n()
 
@@ -121,7 +121,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
   },
 ])
 
-const getKeyField = computed(() => getProps.value.treeProps?.keyField)
+const getKeyField = computed((): string => getProps.value.treeProps?.keyField as string)
 const getTreeData = computed(() => getProps.value.treeProps?.data)
 
 const contextMenuOptions = computed<DropdownMixedOption[]>(() => [
@@ -188,13 +188,13 @@ function onSelectedKeys(keys: TreeKey[]) {
 function onCheckedKeys(keys: TreeKey[]) {
   checkedKeys.value = keys
   if (getProps.value.multiple)
-    value.value = getCombinedKeys.value
+    value.value = getCombinedKeys.value as TreeKey[]
 }
 
 function onUpdateIndeterminateKeys(keys: TreeKey[]) {
   indeterminateKeys.value = keys
   if (getProps.value.multiple)
-    value.value = getCombinedKeys.value
+    value.value = getCombinedKeys.value as TreeKey[]
 }
 
 function onToolbarSelect(key: string) {
@@ -350,11 +350,11 @@ async function onFeedback() {
 
     if (getTreeData.value) {
       // expanded keys
-      const data = nTreeRef.value.getCheckedData()
+      const data = nTreeRef.value?.getCheckedData()
       // get no children node
-      const leafNodeKeyList = data.options.filter(i => !i.children || i.children.length === 0).map(i => i[getKeyField.value])
+      const leafNodeKeyList = data?.options.filter(i => !i!.children || i!.children.length === 0).map(i => i![getKeyField.value])
       const intersection = Array.from(new Set(leafNodeKeyList).intersection(new Set(value.value)))
-      const allNodes = new Set<TreeKey>([...intersection.map(i => findPath(getTreeData.value, n => n[getKeyField.value] === i) ?? []).flat().map(i => i[getKeyField.value] as TreeKey)])
+      const allNodes = new Set<TreeKey>([...intersection.map(i => findPath(getTreeData.value!, n => n[getKeyField.value] === i) ?? []).flat().map(i => i[getKeyField.value] as TreeKey)])
       expandedKeys.value = Array.from(allNodes)
     }
   }
