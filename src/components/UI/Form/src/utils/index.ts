@@ -38,7 +38,7 @@ export const formItemUtils = {
    * @description generate form item based on item & index
    */
   generateFormItemId<T>(item: WForm.Schema.Item<T>, index: number) {
-    return wbtoa(`${item.type}-${index}-${item?.formProp?.path}`)
+    return wbtoa(`${item?.type}-${index}-${item?.formProp?.path}`)
   },
 
   /**
@@ -181,7 +181,7 @@ export function extractDefaultFormDataFromSchemas<T>(schemas: WForm.Schema.Item<
     unref(schemas)
       .filter(i => i.formProp?.path)
       .map<[string, WForm.DefaultValue]>(i => [
-        i.formProp.path,
+        i.formProp!.path as string,
         i?.componentProp?.defaultValue ?? null,
       ]),
   )
