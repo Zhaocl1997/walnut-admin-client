@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'WAppLockUnlockButton',
+})
+
 const appLock = useAppStoreLock()
 
 const loading = ref(false)
@@ -6,9 +10,10 @@ const loading = ref(false)
 function onUnlock() {
   loading.value = true
 
-  setTimeout(async () => {
+  const id = setTimeout(async () => {
     await appLock.unLock()
     loading.value = false
+    clearTimeout(id)
   }, 1000)
 }
 </script>

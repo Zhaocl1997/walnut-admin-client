@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  name: 'WAppLockFPS',
+})
+
 const fps = useFps()
 </script>
 

@@ -14,7 +14,7 @@ async function onGetLangList() {
   langLists.value = res
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   onGetLangList()
 })
 </script>

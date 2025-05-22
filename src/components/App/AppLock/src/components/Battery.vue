@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'Battery',
+  name: 'WAppLockBattery',
 })
 
 const { level, charging } = useSharedBattery()

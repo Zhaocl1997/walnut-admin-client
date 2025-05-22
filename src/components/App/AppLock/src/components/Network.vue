@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'Network',
+  name: 'WAppLockNetwork',
 })
 
 const { isOnline, downlink } = useSharedNetwork()

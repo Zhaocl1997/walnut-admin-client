@@ -30,7 +30,7 @@ const getPercentLevel = computed(() => level.value * 100)
     <div class="h-full w-full animate-hue-rotate overflow-hidden bg-bodyColor contrast-[10] hue-rotate-0">
       <div
         class="relative box-border h-full w-full blur-[8px]"
-        w:after="content-empty absolute top-1/2 left-1/2 w-[200px] h-[200px] rounded-[42%_38%_62%_49%/45%] bg-[#00ff6f] animate-wave-circle"
+        w:after="content-empty absolute top-1/2 left-1/2 -translate-1/2 w-[200px] h-[200px] rounded-[42%_38%_62%_49%/45%] bg-[#00ff6f] animate-wave-circle"
         w:before="content-empty absolute top-1/2 left-1/2 -translate-1/2 w-175px h-175px rounded-[50%] bg-black/95 z-10"
       />
       <ul class="g-bubbles absolute bottom-0 left-1/2 h-[40px] w-[100px] rounded-[100px_100px_0_0] bg-[#00ff6f] blur-[5px] -translate-x-1/2">
