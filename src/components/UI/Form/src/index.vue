@@ -6,17 +6,16 @@ import { omit } from 'lodash-es'
 import WFormItem from '../src/components/FormItem/index.vue'
 
 import { setFormContext } from './hooks/useFormContext'
-
-import { useFormDialog } from './hooks/useFormDialog'
 import { useFormItemId } from './hooks/useFormItemId'
-import { useFormMethods } from './hooks/useFormMethods'
 
+import { useFormMethods } from './hooks/useFormMethods'
 import { useFormSchemas } from './hooks/useFormSchemas'
 import { calculateRemainingSpans, extendedFormPropKeys, formItemUtils as FIU, generateBaseRules, getScopeOrGlobalProp } from './utils'
 
 defineOptions({
   name: 'WCompUIForm',
 })
+
 const props = withDefaults(defineProps<WForm.Props<T> & { class?: string }>(), {
   labelAlign: 'right',
   labelPlacement: 'left',
@@ -32,10 +31,13 @@ const props = withDefaults(defineProps<WForm.Props<T> & { class?: string }>(), {
   baseRules: false,
   visibleMode: 'auto-forward',
 })
+
 const emits = defineEmits<WForm.Emits<T>>()
+
 const WFormItemExtendDivider = createAsyncComponent(() => import('./components/Extend/Divider'))
 const WFormItemExtendQuery = createAsyncComponent(() => import('./components/Extend/Query'))
 const WFormExtendDesc = createAsyncComponent(() => import('./components/Extend/Desc'))
+const WFormExtendDialog = createAsyncComponent(() => import('./components/Extend/Dialog'))
 
 const { t } = useAppI18n()
 
@@ -52,7 +54,6 @@ const getFormProps = computed(() => omit(getProps.value, extendedFormPropKeys))
 const formItemIdCtx = useFormItemId<T>()
 
 const dialogFormRef = useTemplateRef<WForm.Inst.DialogInst>('dialogFormRef')
-const DialogWrapper = useFormDialog(getProps, formRef)
 const [DefineForm, ReuseForm] = createReusableTemplate()
 
 const formSchemas = useFormSchemas<T>(getProps, formItemIdCtx)
@@ -85,8 +86,8 @@ emits('hook', {
   onOpen: async (beforeHook?: (done: Fn) => void) => {
     await dialogFormRef.value?.onOpen(beforeHook)
   },
-  onClose: () => {
-    dialogFormRef.value?.onClose()
+  onClose: (close: Fn) => {
+    dialogFormRef.value?.onClose(close)
   },
 })
 
@@ -242,8 +243,8 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
     </n-form>
   </DefineForm>
 
-  <DialogWrapper v-if="getProps.dialogPreset" ref="dialogFormRef">
+  <WFormExtendDialog v-show="getProps.dialogPreset" ref="dialogFormRef">
     <ReuseForm />
-  </DialogWrapper>
-  <ReuseForm v-else />
+  </WFormExtendDialog>
+  <ReuseForm v-show="!getProps.dialogPreset" />
 </template>

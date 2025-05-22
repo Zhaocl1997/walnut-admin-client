@@ -179,7 +179,7 @@ export declare namespace WForm {
      * @description model/drawer props
      */
     dialogProps?: (ICompUIModalProps | ICompUIDrawerProps) &
-      Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
+      ICompUIModalProps & Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
         actionType?: IActionType
         defaultButton?: boolean
         detailTitle?: boolean
