@@ -243,8 +243,8 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
     </n-form>
   </DefineForm>
 
-  <WFormExtendDialog v-show="getProps.dialogPreset" ref="dialogFormRef">
+  <WFormExtendDialog v-if="getProps.dialogPreset" ref="dialogFormRef">
     <ReuseForm />
   </WFormExtendDialog>
-  <ReuseForm v-show="!getProps.dialogPreset" />
+  <ReuseForm v-else />
 </template>
