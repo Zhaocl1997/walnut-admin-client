@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
 import type { InputNumberInst } from 'naive-ui'
 import { useTableContext } from '../../../hooks/useTableContext'
 
@@ -6,16 +6,16 @@ defineOptions({
   name: 'WTableHeaderRightPolling',
 })
 
-const { tablePropsCtx, onApiList } = useTableContext()
+const { tablePropsCtx, onApiList } = useTableContext<T>()
 const { getProps: tableProps } = tablePropsCtx
 
 const popoverShow = ref(false)
 const inputNumberRef = useTemplateRef<InputNumberInst>('inputNumberRef')
 const insidePollingTime = ref<number>()
 
-const getPollingInterval = computed(() => insidePollingTime.value ?? tableProps.value.polling)
+const getPollingInterval = computed(() => insidePollingTime.value ?? tableProps.value.polling!)
 
-const getDefaultValue = computed(() => getPollingInterval.value / 1000)
+const getDefaultValue = computed(() => getPollingInterval.value! / 1000)
 
 const { current } = useMagicKeys()
 const keys = computed(() => Array.from(current))
@@ -53,7 +53,9 @@ function onPollingClick() {
   }
 }
 
-function onUpdatePolling(v: number) {
+function onUpdatePolling(v: number | null) {
+  if (!v)
+    return
   insidePollingTime.value = v * 1000
 }
 
@@ -64,7 +66,7 @@ function parseSeconds(input: string) {
   return nums === '' ? null : Number.NaN
 }
 
-function formatSeconds(value: number) {
+function formatSeconds(value: number | null) {
   if (value === null)
     return ''
   return `${value} s`

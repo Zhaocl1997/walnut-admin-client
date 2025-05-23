@@ -13,7 +13,7 @@ import {
 } from '../utils'
 
 export function useTableAPI<T>(
-  inst: Ref<WTable.Inst.NDataTableInst>,
+  inst: Ref<WTable.Inst.NDataTableInst | null>,
   propsCtx: IHooksUseProps<Partial<WTable.Props<T>>>,
   columns: Ref<WTable.Column<T>[]>,
   listParams: ICompUITableHooksAPIListParams<T>,
@@ -41,15 +41,15 @@ export function useTableAPI<T>(
     // won't commit this as default query form data
     const beforeRequestHook = props.value.apiProps?.onBeforeRequest
     if (isFunction(beforeRequestHook)) {
-      const beforeHookQuery = await beforeRequestHook(
-        cloneDeep(apiListParams.value.query),
+      const beforeHookQuery = await beforeRequestHook!(
+        cloneDeep(apiListParams.value.query!),
       )
 
-      apiListParams.value.query = Object.assign(apiListParams.value.query, beforeHookQuery)
+      apiListParams.value.query = Object.assign(apiListParams.value.query!, beforeHookQuery)
     }
 
     try {
-      const res = await props.value.apiProps?.listApi(apiListParams.value)
+      const res = await props.value.apiProps!.listApi!(apiListParams.value)
 
       setProps({
         // actually i'm thinking is this really a good choice? like mutate the proxyed props inside the component
@@ -64,12 +64,12 @@ export function useTableAPI<T>(
           pageSizes: [10, 30, 50],
           pageSlot: 7,
           onUpdatePage: async (p) => {
-            apiListParams.value.page.page = p
+            apiListParams.value.page!.page = p
             await onApiList()
           },
           onUpdatePageSize: async (p) => {
-            apiListParams.value.page.page = 1
-            apiListParams.value.page.pageSize = p
+            apiListParams.value.page!.page = 1
+            apiListParams.value.page!.pageSize = p
             await onApiList()
           },
           prefix: () => t('comp.pagination.total', { total: res.total }),
@@ -86,12 +86,10 @@ export function useTableAPI<T>(
 
   // api delete (default)
   const onApiDelete = async (id: StringOrNumber) => {
-    const res = await props.value.apiProps?.deleteApi!(id)
-    if (res) {
-      useAppMsgSuccess()
-      await onApiList()
-      return res
-    }
+    const res = await props.value.apiProps!.deleteApi!(id)
+    useAppMsgSuccess()
+    await onApiList()
+    return res
   }
 
   // api deleteMany (default)
@@ -101,25 +99,23 @@ export function useTableAPI<T>(
     if (!confirmed)
       return
 
-    const res = await props.value.apiProps?.deleteManyApi!(
+    const res = await props.value.apiProps!.deleteManyApi!(
       checkedRowKeys.value.join(','),
     )
 
-    if (res) {
-      useAppMsgSuccess()
+    useAppMsgSuccess()
 
-      await onApiList()
+    await onApiList()
 
-      // use `length = 0` can clear the arr
-      checkedRowKeys.value.length = 0
+    // use `length = 0` can clear the arr
+    checkedRowKeys.value.length = 0
 
-      return res
-    }
+    return res
   }
 
   // query event
   const onApiQuery: WTable.FinishLoadingCallback = async ({ done }) => {
-    apiListParams.value.page.page = 1
+    apiListParams.value.page!.page = 1
     await onApiList()
     done()
   }
@@ -147,8 +143,8 @@ export function useTableAPI<T>(
       && !isUndefined(props.value.queryFormProps?.schemas)
     ) {
       // set default value to query
-      apiListParams.value.query = Object.assign(apiListParams.value.query, extractDefaultFormDataFromSchemas(
-        props.value.queryFormProps?.schemas,
+      apiListParams.value.query = Object.assign(apiListParams.value.query!, extractDefaultFormDataFromSchemas(
+        props.value.queryFormProps!.schemas!,
       ))
 
       // commit change, make this version a default version
@@ -189,7 +185,7 @@ export function useTableAPI<T>(
         onUpdateFilters: async (filters) => {
           if (!filters)
             return
-          apiListParams.value.query = Object.assign(apiListParams.value.query, filters)
+          apiListParams.value.query = Object.assign(apiListParams.value.query!, filters)
           if (!isUndefined(props.value?.apiProps)) {
             await onApiList()
           }

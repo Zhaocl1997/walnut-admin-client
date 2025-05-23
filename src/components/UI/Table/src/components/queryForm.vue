@@ -1,8 +1,8 @@
-<script lang="ts" setup  generic="T">
+<script lang="ts" setup generic="T">
 import { useTableContext } from '../hooks/useTableContext'
 
 const { tablePropsCtx, apiListParams, onApiQuery, onApiReset }
-    = useTableContext()
+    = useTableContext<T>()
 
 const { getProps: tableProps } = tablePropsCtx
 

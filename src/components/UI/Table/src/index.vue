@@ -83,7 +83,7 @@ const {
 
 const tableMethods = useTableMethods<T>(tableRef)
 
-setTableContext({
+setTableContext<T>({
   tableRef,
   tableColumns,
   tableEvent: emits,
@@ -115,12 +115,15 @@ emits('hook', {
 
 <template>
   <n-card v-if="getProps.queryFormProps" class="mb-2">
+    <!-- @vue-generic {T} -->
     <QueryForm />
   </n-card>
 
   <n-card>
+    <!-- @vue-generic {T} -->
     <TableHeader />
 
+    <!-- @vue-expect-error -->
     <n-data-table
       ref="tableRef"
       v-bind="getTableProps"

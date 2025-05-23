@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
 import type { WTable } from '../../../types'
 import { sortBy } from 'lodash-es'
 
@@ -12,14 +12,14 @@ const { t } = useI18n()
 
 const userPermission = useAppStoreUserPermission()
 
-const { tablePropsCtx, checkedRowKeys } = useTableContext()
+const { tablePropsCtx, checkedRowKeys } = useTableContext<T>()
 
 const { getProps: tableProps } = tablePropsCtx
 
 const getDeleteDisabled = computed(() => checkedRowKeys.value.length === 0)
 
 function isShow(t: WTable.HeaderLeftBulitInActionType) {
-  return tableProps.value.headerLeftBuiltInActions.map(i => i._builtInType).includes(t)
+  return tableProps.value.headerLeftBuiltInActions?.map(i => i._builtInType).includes(t)
 }
 
 const options = computed<{
@@ -63,13 +63,13 @@ const options = computed<{
         auth: tableProps.value.auths?.export,
       },
     ],
-    i => tableProps.value.headerLeftBuiltInActions.map(i => i._builtInType).indexOf(i.type),
+    i => tableProps.value.headerLeftBuiltInActions?.map(i => i._builtInType).indexOf(i.type),
   ).filter(i => isShow(i.type)),
 )
 
 function onButtonClick(key: WTable.HeaderLeftBulitInActionType) {
-  const target = tableProps.value.headerLeftBuiltInActions.find(i => i._builtInType === key)
-  target && target.onPresetClick()
+  const target = tableProps.value.headerLeftBuiltInActions?.find(i => i._builtInType === key)
+  target && target.onPresetClick!()
 }
 </script>
 

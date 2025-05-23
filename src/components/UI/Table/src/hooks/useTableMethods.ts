@@ -1,6 +1,6 @@
 import type { WTable } from '../types'
 
-export function useTableMethods<T>(tableRef: Ref<WTable.Inst.NDataTableInst>) {
+export function useTableMethods<T>(tableRef: Ref<WTable.Inst.NDataTableInst | null>) {
   function clearFilters() {
     tableRef.value?.clearFilters()
   }

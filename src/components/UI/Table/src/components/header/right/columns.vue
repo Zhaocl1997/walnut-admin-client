@@ -12,7 +12,7 @@ defineOptions({
 
 const { t } = useAppI18n()
 
-const { tableColumns, tablePropsCtx } = useTableContext()
+const { tableColumns, tablePropsCtx } = useTableContext<T>()
 const { getProps: props } = tablePropsCtx
 
 const popoverShow = ref(false)
@@ -28,9 +28,9 @@ const { start, stop } = useSortable(tableColumnSettingRef, tableColumns, {
   onEnd: (evt) => {
     const { oldIndex, newIndex } = evt
 
-    const current = tableColumns.value[oldIndex]
-    tableColumns.value?.splice(oldIndex, 1)
-    tableColumns.value?.splice(newIndex, 0, current)
+    const current = tableColumns.value[oldIndex!]
+    tableColumns.value?.splice(oldIndex!, 1)
+    tableColumns.value?.splice(newIndex!, 0, current)
   },
 })
 

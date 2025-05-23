@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
 import { useTableContext } from '../../../hooks/useTableContext'
 import TableHeaderRightColumns from './columns.vue'
 import TableHeaderRightPolling from './polling.vue'
@@ -7,7 +7,7 @@ defineOptions({
   name: 'WTableHeaderRight',
 })
 
-const { onApiList, tablePropsCtx } = useTableContext()
+const { onApiList, tablePropsCtx } = useTableContext<T>()
 const { getProps: tableProps } = tablePropsCtx
 </script>
 
@@ -21,8 +21,10 @@ const { getProps: tableProps } = tablePropsCtx
       :tooltip-msg="$t('app.base.refresh')"
     />
 
+    <!-- @vue-generic {T} -->
     <TableHeaderRightPolling v-if="tableProps.polling && tableProps.polling > 3000" />
 
+    <!-- @vue-generic {T} -->
     <TableHeaderRightColumns />
   </div>
 </template>

@@ -1,4 +1,4 @@
-<script lang="ts" setup generic="T extends Recordable">
+<script lang="ts" setup generic="T">
 import type { FormRules } from 'naive-ui'
 import type { WForm } from './types'
 import { omit } from 'lodash-es'

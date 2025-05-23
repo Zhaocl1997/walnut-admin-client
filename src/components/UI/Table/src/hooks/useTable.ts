@@ -10,16 +10,16 @@ export function useTable<T>(props: WTable.Hooks.UseTable.Props<T>): WTable.Hooks
   }
 
   watchEffect(() => {
-    props && wTableRef.value?.setProps(unref(props) as WTable.Props<T>)
+    props && wTableRef.value!.setProps(unref(props) as WTable.Props<T>)
   })
 
   const methods: WTable.Hooks.UseTable.Methods<T> = {
-    clearFilters: () => wTableRef.value.clearFilters(),
-    clearSorter: () => wTableRef.value.clearSorter(),
-    onApiList: () => wTableRef.value.onApiList(),
-    onApiDelete: id => wTableRef.value.onApiDelete(id),
-    onApiDeleteMany: () => wTableRef.value.onApiDeleteMany(),
-    onGetApiListParams: () => wTableRef.value?.onGetApiListParams(),
+    clearFilters: () => wTableRef.value!.clearFilters!(),
+    clearSorter: () => wTableRef.value!.clearSorter!(),
+    onApiList: async () => await wTableRef.value!.onApiList(),
+    onApiDelete: async id => await wTableRef.value!.onApiDelete(id),
+    onApiDeleteMany: async () => await wTableRef.value!.onApiDeleteMany(),
+    onGetApiListParams: () => wTableRef.value!.onGetApiListParams(),
   }
 
   return [register, methods]

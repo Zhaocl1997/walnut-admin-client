@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
 import TableHeaderLeftActions from './actions.vue'
 
 defineOptions({
@@ -8,6 +8,7 @@ defineOptions({
 
 <template>
   <div>
+    <!-- @vue-generic {T} -->
     <TableHeaderLeftActions />
   </div>
 </template>
