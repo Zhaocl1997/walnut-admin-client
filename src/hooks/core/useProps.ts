@@ -6,7 +6,7 @@ export function useProps<T>(props: T) {
   /**
    * @description set props
    */
-  const setProps = (newProps: T) => {
+  const setProps = (newProps: T | IDeepMaybeRef<T>) => {
     propsRef.value = merge(unref(propsRef), newProps)
   }
 

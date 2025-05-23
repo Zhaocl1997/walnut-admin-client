@@ -10,7 +10,7 @@ export function useTable<T>(props: WTable.Hooks.UseTable.Props<T>): WTable.Hooks
   }
 
   watchEffect(() => {
-    props && wTableRef.value!.setProps(unref(props) as WTable.Props<T>)
+    props && wTableRef.value!.setProps(unref(props))
   })
 
   const methods: WTable.Hooks.UseTable.Methods<T> = {

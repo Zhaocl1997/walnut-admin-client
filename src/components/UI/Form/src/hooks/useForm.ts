@@ -10,7 +10,7 @@ export function useForm<T>(props: WForm.Hooks.UseForm.Props<T>): WForm.Hooks.Use
   }
 
   watchEffect(() => {
-    props && wFormRef.value?.setProps(unref(props) as WForm.Props<T>)
+    props && wFormRef.value?.setProps(unref(props))
   })
 
   const methods: WForm.Hooks.UseForm.Methods<T> = {
