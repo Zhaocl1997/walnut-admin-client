@@ -1,6 +1,6 @@
 import type { WCrud } from './types'
 
-export function useCRUD<T>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.UseCRUD.ReturnType<T> {
+export function useCRUD<T extends AppBaseModel>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.UseCRUD.ReturnType<T> {
   isInSetup()
 
   const wCrudRef = shallowRef<WCrud.Inst.WCrudInst<T>>()
@@ -14,18 +14,17 @@ export function useCRUD<T>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.Use
   })
 
   const methods: WCrud.Hooks.UseCRUD.Methods<T> = {
-    onOpenCreateForm: v => wCrudRef.value?.onOpenCreateForm(v),
+    onOpenCreateForm: v => wCrudRef.value!.onOpenCreateForm(v),
     onReadAndOpenUpdateForm: async (id: StringOrNumber) =>
-      await wCrudRef.value?.onReadAndOpenUpdateForm(id),
+      await wCrudRef.value!.onReadAndOpenUpdateForm(id),
     onDeleteConfirm: async (id: StringOrNumber) =>
-      await wCrudRef.value?.onDeleteConfirm(id),
+      await wCrudRef.value!.onDeleteConfirm(id),
     onDeleteManyConfirm: async () =>
-      await wCrudRef.value?.onDeleteManyConfirm(),
-    onGetFormData: () => wCrudRef.value?.onGetFormData(),
-    onGetActionType: () => wCrudRef.value?.onGetActionType(),
-    onApiList: async () => await wCrudRef.value?.onApiList(),
-    onGetApiListParams: () => wCrudRef.value?.onGetApiListParams(),
-    // onApiTableCloseForm: () => wCrudRef.value?.onApiTableCloseForm()!,
+      await wCrudRef.value!.onDeleteManyConfirm(),
+    onGetFormData: () => wCrudRef.value!.onGetFormData(),
+    onGetActionType: () => wCrudRef.value!.onGetActionType(),
+    onApiList: async () => await wCrudRef.value!.onApiList(),
+    onGetApiListParams: () => wCrudRef.value!.onGetApiListParams(),
   }
 
   return [register, methods]

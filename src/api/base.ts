@@ -49,7 +49,7 @@ export class BaseAPI<T extends AppBaseModel> {
   }
 
   delete(id: StringOrNumber) {
-    return AppAxios.delete(
+    return AppAxios.delete<T>(
       {
         url: `${this.baseAPI}/${id}`,
         _demonstrate: demo,
@@ -58,7 +58,7 @@ export class BaseAPI<T extends AppBaseModel> {
   }
 
   deleteMany(id: string) {
-    return AppAxios.delete(
+    return AppAxios.delete<T[]>(
       {
         url: `${this.baseAPI}/deleteMany/${id}`,
         _demonstrate: demo,
@@ -67,7 +67,7 @@ export class BaseAPI<T extends AppBaseModel> {
   }
 
   clear() {
-    return AppAxios.delete(
+    return AppAxios.delete<T>(
       {
         url: `${this.baseAPI}/clear`,
         _demonstrate: demo,

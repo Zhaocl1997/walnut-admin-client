@@ -3,14 +3,13 @@ import type { WForm } from '@/components/UI/Form'
 import type { WTable } from '@/components/UI/Table'
 
 export declare namespace WCrud {
-  type SetProps<T> = (p: Partial<Props<T>>) => void
+  type SetProps<T extends AppBaseModel> = (p: Partial<Props<T>>) => void
 
   /**
    * @description Props
    */
-  interface Props<T> {
-    // TODO type optimise {BaseAPIType}
-    baseAPI?: unknown
+  interface Props<T extends AppBaseModel> {
+    baseAPI?: BaseAPIType<T>
     onBeforeRequest?: (data: T) => T
     tableProps?: Omit<WTable.Props<T>, 'apiProps'>
     formProps?: Partial<WForm.Props<T>>
@@ -22,12 +21,34 @@ export declare namespace WCrud {
      * set true to pick fields that are declared in form schema, also concat with _id by default
      */
     strictFormData?: boolean
+
+    /**
+     * @default true
+     * @description show close confirm in dialog form when form is modified
+     */
+    safeForm?: boolean
+
+    /**
+     * @default true
+     * @description feedback form in create form action type
+     */
+    safeFormFeedback?: boolean
+
+    /**
+     * @description safe form map key, need to be unique
+     */
+    safeFormKey?: string
+
+    /**
+     * @description fields that do not want to listen change
+     */
+    safeFormUnwantedFields?: (keyof T)[]
   }
 
   /**
    * @description Emits
    */
-  interface Emits<T> {
+  interface Emits<T extends AppBaseModel> {
     hook: [inst: Inst.WCrudInst<T>]
   }
 
@@ -35,19 +56,16 @@ export declare namespace WCrud {
    * @description Inst
    */
   namespace Inst {
-    interface WCrudInst<T> {
+    interface WCrudInst<T extends AppBaseModel> {
       setProps: SetProps<T>
       onOpenCreateForm: (generateDefaultFormData?: boolean) => void
       onReadAndOpenUpdateForm: (id: StringOrNumber) => Promise<void>
       onDeleteConfirm: (id: StringOrNumber) => Promise<T>
-      onDeleteManyConfirm: () => Promise<T[]>
+      onDeleteManyConfirm: () => Promise<T[] | undefined>
       onGetFormData: () => Ref<T>
       onGetActionType: () => Ref<IActionType>
       onApiList: () => Promise<void>
       onGetApiListParams: () => Ref<WalnutBaseListParams<T>>
-
-      // onApiTableDeleteMany: () => Promise<void>
-      // onApiTableCloseForm: Fn
     }
   }
 
@@ -56,11 +74,11 @@ export declare namespace WCrud {
    */
   namespace Hooks {
     namespace UseCRUD {
-      type Props<T> = WCrud.Props<T> | IDeepMaybeRef<WCrud.Props<T>>
+      type Props<T extends AppBaseModel> = WCrud.Props<T> | ComputedRef<WCrud.Props<T>> | IDeepMaybeRef<WCrud.Props<T>>
 
-      type Methods<T> = Omit<Inst.WCrudInst<T>, 'setProps'>
+      type Methods<T extends AppBaseModel> = Omit<Inst.WCrudInst<T>, 'setProps'>
 
-      type ReturnType<T> = [
+      type ReturnType<T extends AppBaseModel> = [
         (instance: Inst.WCrudInst<T>) => void,
         Methods<T>,
       ]

@@ -1,9 +1,10 @@
-<script lang="ts" setup generic="T">
+<script lang="ts" setup generic="T extends AppBaseModel">
 import type { WForm } from '@/components/UI/Form'
 import type { WTable } from '@/components/UI/Table'
 import type { WCrud } from './types'
 import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
 import { pick } from 'lodash-es'
+import { useSafeForm } from './useSafeForm'
 
 const props = withDefaults(defineProps<WCrud.Props<T>>(), {
   strictFormData: false,
@@ -16,32 +17,37 @@ const crudPropsCtx = useProps<WCrud.Props<T>>(props)
 const { setProps, getProps } = crudPropsCtx
 
 // ref
-const actionType = ref<IActionType>()
+const actionType = ref<IActionType>('create')
 
 // create/update form data
 const { stateRef: formData, resetState: resetFormData, commit: commitFormData } = useState<T>({} as T)
 
+// safe form logic
+const { getIsFormModified, onClearStorage, onInitStorage } = useSafeForm(formData, getProps, actionType)
+
 const defaultFormDataGenerated = ref(false)
 // this is necessary, otherwise reset won't work
 function onInitFormData() {
-  if (!defaultFormDataGenerated.value) {
-    const initialFormData = extractDefaultFormDataFromSchemas(getProps.value.formProps?.schemas)
-    formData.value = Object.assign(formData.value, initialFormData)
-    // make this as default form data
-    commitFormData()
-    defaultFormDataGenerated.value = true
-    console.log('Default form data generated', formData.value)
-  }
+  if (defaultFormDataGenerated.value)
+    return
+  const initialFormData = extractDefaultFormDataFromSchemas(getProps.value.formProps!.schemas!)
+  formData.value = Object.assign(formData.value!, initialFormData)
+  // make this as default form data
+  commitFormData()
+  defaultFormDataGenerated.value = true
+  console.log('[CRUD] Default form data generated', formData.value)
 }
 
 // api
-const getBaseApi = computed(() => getProps.value.baseAPI)
+const getBaseApi = computed(() => getProps.value.baseAPI!)
 
 // get create/update form data
-const getFormData = computed(() => getProps.value.strictFormData ? pick(formData.value, getProps.value.formProps.schemas.filter(i => i.formProp?.path).map(i => i.formProp.path).concat('_id')) : formData.value)
+const getFormData = computed(() =>
+  getProps.value.strictFormData ? pick(formData.value, getProps.value.formProps?.schemas?.filter(i => i.formProp?.path).map(i => i.formProp?.path).concat('_id') as (keyof T)[]) : formData.value,
+)
 
 // get table props
-const getTableProps = computed<WTable.Props<T>>(() => ({
+const getTableProps = computed((): WTable.Props<T> => ({
   ...getProps.value.tableProps,
 
   apiProps: {
@@ -71,13 +77,14 @@ const [
 ] = useTable<T>(getTableProps)
 
 // get form props
-const getFormProps = computed<WForm.Props<T>>(() => ({
+const getFormProps = computed((): WForm.Props<T> => ({
   ...getProps.value.formProps,
 
   dialogProps: {
     ...getProps.value.formProps?.dialogProps,
     width: getProps.value.formProps?.dialogProps?.width ?? '500px',
     actionType: actionType.value,
+    closeConfirm: getIsFormModified.value,
 
     // create/update confirm
     onYes: async (apiHandler) => {
@@ -89,10 +96,13 @@ const getFormProps = computed<WForm.Props<T>>(() => ({
         getFormData.value,
       )
       resetFormData()
+      onClearStorage()
       await onApiList()
     },
     onNo: (done) => {
-      resetFormData()
+      if ((getProps.value.safeForm && !getProps.value.safeFormFeedback) || actionType.value === 'update') {
+        resetFormData()
+      }
       done()
     },
   },
@@ -110,17 +120,27 @@ function onOpenCreateForm(generateDefaultFormData = true) {
 
   actionType.value = 'create'
 
+  // feedback form
+  nextTick(() => {
+    onInitStorage()
+  })
+
   onOpen()
 }
 
 // open and read form
-async function onReadAndOpenUpdateForm(id: string) {
+async function onReadAndOpenUpdateForm(id: StringOrNumber) {
   actionType.value = 'update'
 
   onOpen(async (done) => {
     try {
       const res = await getBaseApi.value.read(id)
       formData.value = Object.assign(formData.value, res)
+
+      // feedback form
+      nextTick(() => {
+        onInitStorage()
+      })
     }
     finally {
       done()
@@ -142,10 +162,6 @@ emit('hook', {
 
   onApiList,
   onGetApiListParams: () => onGetApiListParams(),
-  // onApiDelete,
-  // onApiDeleteMany,
-  // onGetApiListParams: () => onGetApiListParams(),
-  // onApiTableCloseForm: () => onClose(),
 })
 </script>
 
