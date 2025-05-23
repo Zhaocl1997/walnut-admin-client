@@ -9,14 +9,22 @@ defineOptions({
 const configData = ref({
   preset: 'modal' as WForm.FormDialogPreset,
   maskClosable: true,
+  closable: true,
+  draggable: true,
+  fullscreen: true,
+  resizable: true,
+  showInContent: false,
+  closeConfirm: false,
   title: 'Title',
+  height: 40,
+  width: 40,
 })
 
 const formData = ref<Recordable>({})
 
 const [register1] = useForm<typeof configData.value>({
-  span: 12,
-  labelWidth: 80,
+  span: 8,
+  labelWidth: 100,
   schemas: [
     {
       type: 'Base:Radio',
@@ -40,6 +48,71 @@ const [register1] = useForm<typeof configData.value>({
       },
     },
     {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'closable',
+        label: 'Closable',
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'closeConfirm',
+        label: 'Confirm before close',
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'draggable',
+        label: 'Draggable',
+      },
+      visibleProp: {
+        vShow: computed(() => configData.value.preset === 'modal'),
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'fullscreen',
+        label: 'Fullscreen',
+      },
+      visibleProp: {
+        vShow: computed(() => configData.value.preset === 'modal'),
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'resizable',
+        label: 'Resizable',
+      },
+      visibleProp: {
+        vShow: computed(() => configData.value.preset === 'drawer'),
+      },
+    },
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'showInContent',
+        label: 'Only show in content',
+      },
+      visibleProp: {
+        vShow: computed(() => configData.value.preset === 'drawer'),
+      },
+    },
+    {
+      type: 'Raw:Slider',
+      formProp: {
+        path: 'width',
+        label: 'Width',
+      },
+      componentProp: {
+        min: 0,
+        max: 100,
+      },
+    },
+    {
       type: 'Base:Input',
       formProp: {
         path: 'title',
@@ -56,7 +129,15 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
   dialogPreset: computed(() => configData.value.preset),
   dialogProps: {
     maskClosable: computed(() => configData.value.maskClosable),
-    draggable: true,
+    closeConfirm: computed(() => configData.value.closeConfirm),
+    closable: computed(() => configData.value.closable),
+    draggable: computed(() => configData.value.draggable),
+    fullscreen: computed(() => configData.value.fullscreen),
+    resizable: computed(() => configData.value.resizable),
+    showInContent: computed(() => configData.value.showInContent),
+    defaultWidth: computed(() => `${configData.value.width}%`),
+    width: computed(() => `${configData.value.width}%`),
+    height: computed(() => `${configData.value.height}%`),
     title: computed(() => configData.value.title),
     onYes: (_, done) => {
       setTimeout(() => {
@@ -68,7 +149,6 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
     onNo: (close) => {
       close()
     },
-    width: '500px',
   },
   labelWidth: 80,
   schemas: Array.from({ length: 4 }, (v, k) => {
@@ -98,7 +178,7 @@ function onOpenAdvacned() {
 </script>
 
 <template>
-  <WDemoCard title="Dialog FOrm" description="Form implement with modal/drawer">
+  <WDemoCard title="Dialog Form" description="Form implement with modal/drawer">
     <WForm :model="configData" @hook="register1" />
 
     <WJSON :value="formData" />
