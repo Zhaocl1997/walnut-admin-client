@@ -9,4 +9,5 @@ export interface ICompUIDrawerProps extends /* @vue-ignore */ DrawerProps {
   loading?: boolean
   helpMessage?: string
   defaultButton?: boolean
+  showInContent?: boolean
 }

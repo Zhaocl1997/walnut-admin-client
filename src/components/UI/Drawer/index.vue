@@ -5,9 +5,11 @@ defineOptions({
   name: 'WCompUIDrawer',
 })
 
-const { closable = false, loading = false, defaultButton = true } = defineProps<ICompUIDrawerProps>()
+const { closable = false, loading = false, defaultButton = true, showInContent = false } = defineProps<ICompUIDrawerProps>()
 
 const emits = defineEmits<{ yes: [], no: [] }>()
+
+const { currentRoute } = useAppRouter()
 
 function onNo() {
   emits('no')
@@ -16,10 +18,22 @@ function onNo() {
 function onYes() {
   emits('yes')
 }
+
+const getShowInContentProps = computed(() => (showInContent
+  ? {
+      to: `#${String(currentRoute.value.name)}-content`,
+      trapFocus: false,
+      blockScroll: false,
+    }
+  : {}))
 </script>
 
 <template>
-  <n-drawer native-scrollbar :auto-focus="false">
+  <n-drawer
+    native-scrollbar
+    :auto-focus="false"
+    v-bind="getShowInContentProps"
+  >
     <n-drawer-content :native-scrollbar="false" :closable="closable">
       <template #header>
         <WTitle prefix="bar" :help-message="helpMessage">
