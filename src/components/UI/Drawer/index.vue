@@ -5,9 +5,11 @@ defineOptions({
   name: 'WCompUIDrawer',
 })
 
-const { closable = false, loading = false, defaultButton = true, showInContent = false } = defineProps<ICompUIDrawerProps>()
+const { closable = false, loading = false, defaultButton = true, showInContent = false, beforeClose } = defineProps<ICompUIDrawerProps>()
 
 const emits = defineEmits<{ yes: [], no: [] }>()
+
+const show = defineModel<boolean>('show', { required: true, default: false })
 
 const { currentRoute } = useAppRouter()
 
@@ -17,6 +19,23 @@ function onNo() {
 
 function onYes() {
   emits('yes')
+}
+
+async function onUpdateShow(v: boolean) {
+  if (beforeClose) {
+    const res = await beforeClose()
+    if (!res)
+      return
+
+    show.value = v
+    if (!v)
+      onNo()
+  }
+  else {
+    show.value = v
+    if (!v)
+      onNo()
+  }
 }
 
 const getShowInContentProps = computed(() => (showInContent
@@ -30,9 +49,11 @@ const getShowInContentProps = computed(() => (showInContent
 
 <template>
   <n-drawer
+    :show="show"
     native-scrollbar
     :auto-focus="false"
     v-bind="getShowInContentProps"
+    @update:show="onUpdateShow"
   >
     <n-drawer-content :native-scrollbar="false" :closable="closable">
       <template #header>
@@ -52,8 +73,8 @@ const getShowInContentProps = computed(() => (showInContent
         <n-space v-else-if="defaultButton" size="small">
           <n-button
             size="small"
-            :on-click="onNo"
             :disabled="loading"
+            @click="onUpdateShow(false)"
           >
             {{ $t('app.button.no') }}
           </n-button>
@@ -61,9 +82,9 @@ const getShowInContentProps = computed(() => (showInContent
           <n-button
             size="small"
             type="primary"
-            :on-click="onYes"
             :disabled="loading"
             :loading="loading"
+            @click="onYes"
           >
             {{ $t('app.button.yes') }}
           </n-button>

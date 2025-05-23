@@ -6,7 +6,7 @@ defineOptions({
   name: 'WCompUIModal',
 })
 
-withDefaults(defineProps<ICompUIModalProps>(), {
+const props = withDefaults(defineProps<ICompUIModalProps>(), {
   width: '25%',
   height: 'auto',
   draggable: true,
@@ -38,11 +38,21 @@ function onYes() {
   emits('yes')
 }
 
-function onUpdateShow(v: boolean) {
-  show.value = v
+async function onUpdateShow(v: boolean) {
+  if (props.beforeClose) {
+    const res = await props.beforeClose()
+    if (!res)
+      return
 
-  if (!v)
-    onNo()
+    show.value = v
+    if (!v)
+      onNo()
+  }
+  else {
+    show.value = v
+    if (!v)
+      onNo()
+  }
 }
 </script>
 
@@ -89,16 +99,16 @@ function onUpdateShow(v: boolean) {
 
     <template #action>
       <n-space v-if="defaultButton" size="small" class="float-right">
-        <n-button size="small" :on-click="onNo" :disabled="loading">
+        <n-button size="small" :disabled="loading" @click="onUpdateShow(false)">
           {{ $t('app.button.no') }}
         </n-button>
 
         <n-button
           size="small"
           type="primary"
-          :on-click="onYes"
           :disabled="loading"
           :loading="loading"
+          @click="onYes"
         >
           {{ $t('app.button.yes') }}
         </n-button>

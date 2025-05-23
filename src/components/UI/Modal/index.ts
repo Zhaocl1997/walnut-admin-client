@@ -13,4 +13,5 @@ export interface ICompUIModalProps extends /* @vue-ignore */ Omit<ModalProps, 's
   fullscreen?: boolean
   defaultButton?: boolean
   segmented?: boolean
+  beforeClose?: () => Promise<boolean>
 }

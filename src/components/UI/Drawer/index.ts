@@ -10,4 +10,5 @@ export interface ICompUIDrawerProps extends /* @vue-ignore */ DrawerProps {
   helpMessage?: string
   defaultButton?: boolean
   showInContent?: boolean
+  beforeClose?: () => Promise<boolean>
 }
