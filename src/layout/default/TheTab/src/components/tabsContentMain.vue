@@ -9,10 +9,8 @@ const appSetting = useAppStoreSetting()
 const sortableRef = ref()
 
 const { start, stop } = useSortable(sortableRef, appTab.tabs, {
-  animation: 150,
-  delay: 50,
-  delayOnTouchOnly: true,
-
+  animation: 500,
+  easing: 'linear',
   draggable: '.tab-draggable',
   onEnd: (evt) => {
     const { oldIndex, newIndex } = evt
@@ -72,13 +70,15 @@ function onMouseUp(e: MouseEvent, name: string) {
   <WScrollbar
     ref="scrollRef"
     x-scrollable
-    height="100%"
-    hide-scrollbar
+    :x-step="50"
+    :height="`${appSetting.tabs.height}px`"
+    :scrollbar="false"
     @scroll="onCloseCtxMenu"
   >
     <div
       ref="sortableRef"
-      class="h-full hstack" :class="[
+      class="h-full hstack items-center"
+      :class="[
         {
           'divide-x-1 divide-gray-400': isCardType,
           'gap-x-1': isRoundType,
@@ -89,7 +89,8 @@ function onMouseUp(e: MouseEvent, name: string) {
         <div
           v-for="(item, index) in appTab.tabs"
           :key="item.name"
-          class="my-1" :class="[
+          class="my-1 h-full"
+          :class="[
             $route.name === item.name && 'text-primary',
 
             /* card */

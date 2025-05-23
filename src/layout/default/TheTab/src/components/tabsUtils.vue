@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import type { AppTabUtilListItem } from '../types'
 
-defineProps({
-  lists: Array as PropType<AppTabUtilListItem[]>,
-})
+defineProps<{ lists: AppTabUtilListItem[] }>()
 </script>
 
 <template>

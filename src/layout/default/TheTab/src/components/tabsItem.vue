@@ -5,7 +5,7 @@ defineOptions({
   name: 'TabsItem',
 })
 
-const props = defineProps<{ item: AppTab, index: number }>()
+const { item } = defineProps<{ item: AppTab, index: number }>()
 
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
@@ -15,7 +15,7 @@ const appAdapter = useAppStoreAdapter()
 
 const tabsItem = ref()
 const isHovered = useElementHover(tabsItem)
-const getHovered = computed(() => isHovered.value || props.item.meta._hovered)
+const getHovered = computed(() => isHovered.value || item.meta._hovered)
 
 const { onTabRemove } = getTabsContext()
 
@@ -27,7 +27,7 @@ const { onTabRemove } = getTabsContext()
 const getShowAffixedPinIcon = computed(
   () =>
     !appAdapter.isMobile
-    && props.item.meta.affix
+    && item.meta.affix
     && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN,
 )
 
@@ -36,8 +36,8 @@ const getShowAffixedPinIcon = computed(
 // only show when tab is affixed and affix mode is icon
 const getShowIcon = computed(
   () =>
-    (!props.item.meta.affix && appSetting.tabs.showIcon)
-    || (props.item.meta.affix
+    (!item.meta.affix && appSetting.tabs.showIcon)
+    || (item.meta.affix
       && appSetting.tabs.affixMode === AppConstTabAffixMode.ICON),
 )
 
@@ -51,9 +51,9 @@ const getShowIcon = computed(
 const getShowDot = computed(
   () =>
     !appAdapter.isMobile
-    && !props.item.meta.affix
+    && !item.meta.affix
     && !appSetting.tabs.showIcon
-    && currentRoute.value.name === props.item.name,
+    && currentRoute.value.name === item.name,
 )
 
 // only show when tab is not affixed
@@ -61,7 +61,7 @@ const getShowDot = computed(
 // tab close mode is always or when close mode is hover and is hovered
 const getShowCloseIcon = computed(
   () =>
-    !props.item.meta.affix
+    !item.meta.affix
     && (appSetting.tabs.closeMode === AppConstTabCloseMode.ALWAYS
       || (appSetting.tabs.closeMode === AppConstTabCloseMode.HOVER
         && getHovered.value)),
@@ -72,14 +72,14 @@ const getShowCloseIcon = computed(
 // tab is affixed and affix mode is pin
 const getShowTite = computed(
   () =>
-    !props.item.meta.affix
-    || (props.item.meta.affix
+    !item.meta.affix
+    || (item.meta.affix
       && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN),
 )
 
 // scroll title and real title
 const getTitle = computed(() =>
-  t(props.item.meta._title! ?? props.item.meta.title!),
+  t(item.meta?._title ?? item.meta.title!),
 )
 </script>
 
@@ -92,7 +92,7 @@ const getTitle = computed(() =>
     class="relative grid grid-cols-12 h-full cursor-pointer select-none items-center gap-1 px-2 py-1"
     :class="[
       {
-        'grid-cols-2': !getShowTite,
+        '!grid-cols-2': !getShowTite,
       },
     ]"
   >
@@ -105,14 +105,15 @@ const getTitle = computed(() =>
 
     <div
       v-else-if="getShowDot"
-      class="col-span-2 h-4 w-4 flex items-center border-8 border-info rounded-full bg-info text-xl font-bold shadow-xl hover:border-infoHover" :class="[
+      class="col-span-2 h-4 w-4 flex items-center border-8 border-info rounded-full bg-info text-xl font-bold shadow-xl hover:border-infoHover"
+      :class="[
         { 'animate-bounce': getHovered },
       ]"
     />
 
     <WIcon
       v-if="getShowIcon"
-      :icon="item.meta._icon ?? item.meta.icon"
+      :icon="item.meta?._icon ?? item.meta.icon!"
       height="16"
       class="col-span-2 flex items-center"
       :class="[
@@ -125,9 +126,10 @@ const getTitle = computed(() =>
     />
 
     <WTransition appear transition-name="fade-left" :duration="100">
-      <w-text-scroll
+      <WTextScroll
         v-if="getShowTite"
-        class="col-span-10 truncate whitespace-nowrap text-sm" :class="[
+        class="col-span-10 truncate whitespace-nowrap text-sm"
+        :class="[
           { 'pr-4': getHovered },
         ]"
         :title="getTitle"
@@ -135,7 +137,7 @@ const getTitle = computed(() =>
         :speed="item.meta._title_speed"
       >
         {{ getTitle }}
-      </w-text-scroll>
+      </WTextScroll>
     </WTransition>
 
     <WTransition appear transition-name="fade-right">

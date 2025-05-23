@@ -214,7 +214,7 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       )
     },
 
-    getMenuCollapseBuiltInStatus(): boolean | string {
+    getMenuCollapseBuiltInStatus(): boolean | 'bar' | 'arrow-circle' {
       if (
         this.getMenuCollapseStatus
         && this.getMenuCollapseMode !== AppConstCollapseMode.ICON

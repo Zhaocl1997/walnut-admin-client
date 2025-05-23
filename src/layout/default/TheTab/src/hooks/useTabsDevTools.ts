@@ -1,3 +1,4 @@
+// @ts-expect-error generated file
 import { paths } from '/build/_generated/paths'
 
 export function useTabsDevTools() {

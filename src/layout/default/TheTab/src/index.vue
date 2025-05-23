@@ -80,9 +80,6 @@ setTabsContext({
       :inverted="appSetting.getTabsInverted"
       :style="{ zIndex: 999, height: `${appSetting.tabs.height}px` }"
     >
-      <!-- :class="{
-        'top-0': !appSetting.getHeaderFixed && appSetting.getTabsFixed,
-      }" -->
       <div class="h-full hstack justify-between">
         <!-- left utils -->
         <WTransition appear transition-name="fade-left">
@@ -94,7 +91,7 @@ setTabsContext({
           :style="{
             width: appAdapter.isMobile
               ? '100vw'
-              : `calc(100vw - ${appSetting.getMenuWidth}px - ${isOverflow ? '120px' : '0px'
+              : `calc(100vw - ${appSetting.getMenuWidth}px - ${isOverflow ? '140px' : '0px'
               })`,
           }"
         />

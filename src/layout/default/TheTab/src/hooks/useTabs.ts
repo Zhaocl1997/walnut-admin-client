@@ -18,19 +18,19 @@ export function useTabs() {
   )
 
   const onScrollToCurrentTab = async () => {
+    await nextTick()
+
     // scroll by index
-    await nextTick(() => {
-      // If is mobile, just scroll to current route tab index
-      scrollRef.value?.scrollToIndex(
-        appAdapter.isMobile
-          ? getCurrentRouteTabIndex.value
-          : appTab.leaveRoomForTabs(getCurrentRouteTabIndex.value),
-      )
-    })
+    // If is mobile, just scroll to current route tab index
+    scrollRef.value?.scrollToIndex(
+      appAdapter.isMobile
+        ? getCurrentRouteTabIndex.value
+        : appTab.leaveRoomForTabs(getCurrentRouteTabIndex.value),
+    )
   }
 
   const onUpdateOverflow = () => {
-    isOverflow.value = scrollRef.value?.getIsOverflow()!
+    isOverflow.value = scrollRef.value?.getIsOverflow() as boolean
   }
 
   watch(
@@ -50,13 +50,13 @@ export function useTabs() {
 
   watch(
     () => appTab.tabs,
-    () => {
+    async () => {
+      await nextTick()
       onUpdateOverflow()
     },
     {
       deep: true,
       immediate: true,
-      flush: 'post',
     },
   )
 
