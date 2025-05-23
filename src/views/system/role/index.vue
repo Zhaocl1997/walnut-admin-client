@@ -17,14 +17,19 @@ const [
   {
     onOpenCreateForm,
     onReadAndOpenUpdateForm,
-    // TODO why ts not work
     onGetActionType,
     onGetFormData,
+    onApiList,
   },
 ] = useCRUD<AppSystemRole>({
   baseAPI: roleAPI,
 
   strictFormData: true,
+
+  safeForm: true,
+  safeFormFeedback: true,
+  safeFormKey: key,
+  safeFormUnwantedFields: ['status'],
 
   tableProps: {
     localeUniqueKey: key,
@@ -48,8 +53,6 @@ const [
       create: `system:${key}:create`,
       read: `system:${key}:read`,
       update: `system:${key}:update`,
-      delete: `system:${key}:delete`,
-      deleteMany: `system:${key}:deleteMany`,
     },
 
     queryFormProps: {
@@ -67,6 +70,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 

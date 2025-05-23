@@ -29,6 +29,11 @@ const [
 ] = useCRUD<AppSystemLocale & { oldKey?: string }>({
   baseAPI: localeAPI,
 
+  safeForm: true,
+  safeFormFeedback: true,
+  safeFormKey: key,
+  safeFormUnwantedFields: ['status'],
+
   tableProps: {
     localeUniqueKey: key,
     rowKey: row => row[keyField]!,

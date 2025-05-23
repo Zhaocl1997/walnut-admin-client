@@ -69,6 +69,11 @@ const [
 
   strictFormData: true,
 
+  safeForm: true,
+  safeFormFeedback: true,
+  safeFormKey: key,
+  safeFormUnwantedFields: ['status'],
+
   tableProps: {
     localeUniqueKey: key,
     rowKey: row => row[keyField],
@@ -106,7 +111,7 @@ const [
       localeWithTable: true,
       span: 6,
       showFeedback: false,
-      labelWidth: 80,
+      labelWidth: 100,
       schemas: [
         {
           type: 'Base:Input',

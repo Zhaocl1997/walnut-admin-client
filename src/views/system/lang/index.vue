@@ -18,6 +18,11 @@ const [
 ] = useCRUD<AppSystemLang>({
   baseAPI: langAPI,
 
+  safeForm: true,
+  safeFormFeedback: true,
+  safeFormKey: key,
+  safeFormUnwantedFields: ['status'],
+
   tableProps: {
     localeUniqueKey: key,
     rowKey: row => row[keyField],

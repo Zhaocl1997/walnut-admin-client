@@ -32,6 +32,11 @@ const [
 ] = useCRUD<AppSystemDictData>({
   baseAPI: dictDataAPI,
 
+  safeForm: true,
+  safeFormFeedback: true,
+  safeFormKey: localeKey,
+  safeFormUnwantedFields: ['status'],
+
   tableProps: {
     localeUniqueKey: localeKey,
     rowKey: row => row[keyField],
@@ -310,6 +315,7 @@ const [
           defaultValue: true,
           componentProps: {
             button: true,
+            valueType: 'boolean',
           },
         },
       },

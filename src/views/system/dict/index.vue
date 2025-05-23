@@ -16,13 +16,18 @@ const [
   register,
   {
     onOpenCreateForm,
-    onApiList,
     onReadAndOpenUpdateForm,
     onDeleteConfirm,
     onGetFormData,
+    onApiList,
   },
 ] = useCRUD<AppSystemDictType>({
   baseAPI: dictTypeAPI,
+
+  safeForm: true,
+  safeFormFeedback: true,
+  safeFormKey: localeKey,
+  safeFormUnwantedFields: ['status'],
 
   tableProps: {
     localeUniqueKey: localeKey,
@@ -242,6 +247,7 @@ const [
           defaultValue: true,
           componentProps: {
             button: true,
+            valueType: 'boolean',
           },
         },
       },
