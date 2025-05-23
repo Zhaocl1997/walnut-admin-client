@@ -20,7 +20,7 @@ function onExitFullContent() {
   <WIconButton
     :icon-props="{
       height: '24',
-      icon: 'ant-design:setting-outlined',
+      icon: 'ant-design:fullscreen-exit-outlined',
     }"
     :button-props="{
       onClick: onExitFullContent,

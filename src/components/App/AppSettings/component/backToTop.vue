@@ -14,7 +14,7 @@ function onBackTopTop() {
   <WIconButton
     :icon-props="{
       height: '24',
-      icon: 'ant-design:setting-outlined',
+      icon: 'ant-design:arrow-up-outlined',
     }"
     :button-props="{
       onClick: onBackTopTop,
