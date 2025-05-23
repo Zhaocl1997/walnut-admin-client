@@ -15,6 +15,8 @@ const { t } = useAppI18n()
 const show = ref(false)
 const loading = ref(false)
 
+const getCloseConfirm = computed(() => formProps.value.dialogProps?.closeConfirm)
+
 const loadFinish = () => (loading.value = false)
 
 async function onOpen(beforeHook?: Fn) {
@@ -30,8 +32,18 @@ async function onOpen(beforeHook?: Fn) {
 
 function onClose() {
   show.value = false
-
   return false
+}
+
+async function onBeforeClose() {
+  if (getCloseConfirm.value) {
+    const { confirmed } = await useAppConfirm(t('comp.form.closeConfirm'))
+    return confirmed
+  }
+  else {
+    onClose()
+    return true
+  }
 }
 
 async function onYes() {
@@ -118,6 +130,7 @@ defineExpose({ onOpen, onClose })
       v-if="formProps.dialogPreset === 'modal'"
       v-bind="getBindProps"
       v-model:show="show"
+      :before-close="onBeforeClose"
       :loading="loading"
       :title="getTitle"
       :display-directive="formProps.dialogProps?.displayDirective ?? 'show'"
@@ -132,6 +145,7 @@ defineExpose({ onOpen, onClose })
       v-else-if="formProps.dialogPreset === 'drawer'"
       v-bind="getBindProps"
       v-model:show="show"
+      :before-close="onBeforeClose"
       :loading="loading"
       :title="getTitle"
       :display-directive="formProps.dialogProps?.displayDirective ?? 'show'"

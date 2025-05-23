@@ -180,6 +180,10 @@ export declare namespace WForm {
      */
     dialogProps?: (ICompUIModalProps | ICompUIDrawerProps) &
       ICompUIModalProps & Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
+
+        /**
+         * @description  used to show different dialog title
+         */
         actionType?: IActionType
         defaultButton?: boolean
         detailTitle?: boolean
@@ -188,6 +192,11 @@ export declare namespace WForm {
         defaultHeight?: string
         width?: string
         height?: string
+
+        /**
+         * @description confirm before dialog closed
+         */
+        closeConfirm?: boolean
       }
 
     /**
