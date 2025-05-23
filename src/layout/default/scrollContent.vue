@@ -60,10 +60,11 @@ defineExpose({ onScrollToTop })
       }"
     >
       <TheContent
+        :id="`${String($route.name)}-content`"
+        class="relative h-full w-full"
         :style="{
           padding: `${appSetting.app.contentPadding}px`,
         }"
-        class="h-full w-full"
       />
       <TheIFrameWrapper />
     </div>

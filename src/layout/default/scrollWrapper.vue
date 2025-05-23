@@ -48,6 +48,8 @@ defineExpose({ onScrollToTop })
       </div>
 
       <TheContent
+        :id="`${String($route.name)}-content`"
+        class="relative w-full"
         :style="{
           padding: `${appSetting.app.contentPadding}px`,
           minHeight: `calc(100vh - ${appSetting.header.height}px - ${appSetting.tabs.height}px - ${appSetting.footer.height}px)`,
