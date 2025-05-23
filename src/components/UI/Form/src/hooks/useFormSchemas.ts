@@ -13,7 +13,7 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
     () => formIdMap.value,
     () => {
       // do something here
-      console.log('WForm: formIdMap CHANGED')
+      // console.log('WForm: formIdMap CHANGED')
     },
     { immediate: true, deep: true },
   )
@@ -22,7 +22,7 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
     () => props.value.model,
     () => {
       // do something here
-      console.log('WForm: model CHANGED')
+      // console.log('WForm: model CHANGED')
     },
     { immediate: true, deep: true },
   )

@@ -42,6 +42,8 @@ export async function initDict(types: string | string[]): Promise<void> {
     if (!nonExistedDictTypes.length) {
       return
     }
+    console.log('[useDict] Un-hit dict', nonExistedDictTypes)
+
     const res = await getDictByType(nonExistedDictTypes)
     nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)!))
   }

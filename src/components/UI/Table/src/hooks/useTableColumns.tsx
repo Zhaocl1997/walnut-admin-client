@@ -339,7 +339,6 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
   const onInitDict = async () => {
     if (props.value.columns?.some(i => i.extendType === 'dict')) {
       const usedDictTypes = props.value.columns?.filter(i => i.extendType === 'dict')?.map(i => (i as WTable.ExtendType.Dictionary<T>).dictType).filter(Boolean)
-      console.log('WTable Dict Init', { usedDictTypes })
       await initDict(usedDictTypes)
     }
   }

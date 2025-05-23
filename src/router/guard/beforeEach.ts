@@ -12,9 +12,6 @@ export function createBeforeEachGuard(router: Router) {
   // TODO initial trigger twice
   // logic optimise, with next()
   router.beforeEach(async (to, from) => {
-    if (to.fullPath)
-      console.log('Route Guard', `Entering Route : ${to.fullPath}`)
-
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()

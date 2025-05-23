@@ -18,8 +18,6 @@ export function useSafeForm<T extends AppBaseModel>(
       return false
     const newData = getTempStorage.value
     const initData = toRaw(freezeInitStorageMap.value.get(getStorageKey.value))
-    console.log(987, { newData, initData })
-
     return !isEqual(newData, initData)
   })
 
