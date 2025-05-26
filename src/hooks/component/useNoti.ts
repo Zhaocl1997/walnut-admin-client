@@ -20,7 +20,7 @@ export function AppNoti(msg: string, options: AppNotiOptions) {
   appNaive.setNotiPlacement(options?.placement ?? 'top-right')
   appNaive.setNotiContainerStyle(options?.containerStyle ?? {})
 
-  const inst = useAppNotification().create({
+  const inst = useAppNotification()?.create({
     ...options,
     title: options.title ?? title,
     content: options.content ?? msg,
@@ -29,10 +29,12 @@ export function AppNoti(msg: string, options: AppNotiOptions) {
     meta: options.meta ?? formatTime(new Date()),
   })
 
-  inst.onClose = () => {
-    // recover the default placement and container style when current inst is closed
-    appNaive.setNotiPlacement('top-right')
-    appNaive.setNotiContainerStyle({})
+  if (inst) {
+    inst.onClose = () => {
+      // recover the default placement and container style when current inst is closed
+      appNaive.setNotiPlacement('top-right')
+      appNaive.setNotiContainerStyle({})
+    }
   }
 
   appNaive.setCurrentNotiInst(inst)

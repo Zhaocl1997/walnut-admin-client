@@ -8,7 +8,7 @@ import MsgProvider from './naive/MsgProvider.vue'
 import UIProvider from './naive/UIProvider.vue'
 
 (async function () {
-  await useAppMonitor()
+  await useAppUserMonitor()
 })()
 
 // P1 app level hook

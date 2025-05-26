@@ -158,6 +158,9 @@ declare global {
       os?: string
       browser?: string
       type?: string
+      netType?: string
+      platform?: string
+      isp?: string
     }
     hardwareInfo?: {
       cpuCores?: number
@@ -165,6 +168,10 @@ declare global {
       gpu?: string
     }
     sr?: {
+      height: number
+      width: number
+    }
+    vp?: {
       height: number
       width: number
     }

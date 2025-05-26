@@ -1,48 +1,27 @@
-export function onSocketStateHandle(data: Partial<AppMonitorUserModel>) {
-  if (!fpId.value)
-    return
-
-  AppSocket?.emit(AppSocketEvents.STATE, Object.assign(data, {
-    visitorId: fpId.value,
-  }))
-}
-
-function onInitialStateWithSendBeacon() {
+function sendUserMonitorBeacon(data: Partial<AppMonitorUserModel>) {
   const { httpUrl } = useAppEnv('proxy')
-  const userAuth = useAppStoreUserAuth()
 
   const blob = new Blob(
     [
-      // TODO
-      // JSON.stringify({
-      //   visitorId: fpId.value,
-      //   ip: GeoIPInfo.value.ip,
-      //   country: GeoIPInfo.value.country,
-      //   city: GeoIPInfo.value.city,
-      //   area: GeoIPInfo.value.area,
-      //   isp: GeoIPInfo.value.isp,
-      //   province: GeoIPInfo.value.province,
-      //   // @ts-expect-error
-      //   netType: navigator.connection.effectiveType,
-      //   platform: navigator.platform,
-      //   vp: `${window.innerWidth} * ${window.innerHeight}`,
-      //   sr: `${window.screen.width} * ${window.screen.height}`,
-      //   auth: !!userAuth.accessToken,
-      // }),
+      JSON.stringify({
+        ...data,
+        visitorId: fpId.value,
+      }),
     ],
     { type: 'application/json; charset=UTF-8' },
   )
 
-  navigator.sendBeacon(`${httpUrl}/app/monitor/user/initial`, blob)
+  navigator.sendBeacon(`${httpUrl}/app/monitor/user/state`, blob)
 }
 
-export function useAppMonitor() {
+export function useAppUserMonitor() {
   const isVisible = useSharedDocumentVisibility()
 
+  // route
   watch(
     () => AppRouter.currentRoute.value,
     (v) => {
-      onSocketStateHandle({
+      sendUserMonitorBeacon({
         currentRouter: v.fullPath,
       })
     },
@@ -56,7 +35,7 @@ export function useAppMonitor() {
   watch(
     () => isVisible.value,
     (v) => {
-      onSocketStateHandle({
+      sendUserMonitorBeacon({
         focus: v,
       })
     },
@@ -65,9 +44,20 @@ export function useAppMonitor() {
     },
   )
 
-  tryOnMounted(() => {
-    onInitialStateWithSendBeacon()
+  // close page
+  useEventListener('beforeunload', () => {
+    sendUserMonitorBeacon({
+      left: true,
+    })
+  })
 
-    onSocketStateHandle({ focus: true, left: false })
+  tryOnMounted(() => {
+    const userAuth = useAppStoreUserAuth()
+
+    sendUserMonitorBeacon({
+      auth: !!userAuth.accessToken,
+      focus: true,
+      left: false,
+    })
   })
 }
