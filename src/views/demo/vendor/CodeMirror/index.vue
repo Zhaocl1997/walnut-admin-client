@@ -6,7 +6,7 @@ defineOptions({
 const code1Raw = import.meta.glob(
   '@/hooks/vueuse/useDark.ts',
   {
-    as: 'raw',
+    query: 'raw',
     eager: true,
   },
 )
@@ -14,7 +14,7 @@ const code1Raw = import.meta.glob(
 const code2Raw = import.meta.glob(
   '@/components/App/AppLocalePicker/useAppLocale.ts',
   {
-    as: 'raw',
+    query: 'raw',
     eager: true,
   },
 )
