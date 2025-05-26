@@ -32,12 +32,17 @@ function onOpenPopover() {
   })
 }
 
-watch(keys, (v) => {
+watch(() => keys.value, (v) => {
   if (v.includes('f8')) {
-    if (isActive.value)
+    if (isActive.value) {
       pause()
-    else
+      nextTick(() => {
+        inputNumberRef.value?.focus()
+      })
+    }
+    else {
       resume()
+    }
   }
 })
 
@@ -90,7 +95,7 @@ function formatSeconds(value: number | null) {
             />
           </div> -->
 
-          <div class="h-4 w-4 flex items-center justify-center -mt-1.5" @click="onOpenPopover">
+          <div class="h-4 w-4 flex items-center justify-center" @click="onOpenPopover">
             <n-progress
               v-if="flag"
               type="circle"
@@ -114,13 +119,14 @@ function formatSeconds(value: number | null) {
 
             <n-input-number
               ref="inputNumberRef"
-              :min="3"
+              :min="5"
               :default-value="getDefaultValue"
               :parse="parseSeconds"
               :format="formatSeconds"
               style="width: 40px;"
               size="tiny"
               :show-button="false"
+              :disabled="isActive"
               @update:value="onUpdatePolling"
             />
           </div>

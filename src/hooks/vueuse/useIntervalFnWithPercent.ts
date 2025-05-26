@@ -20,14 +20,14 @@ export function useIntervalFnWithPercent(
   )
 
   // 监听百分比变化，当达到100%时重置
-  watchThrottled(() => percentage.value, async (newValue) => {
-    if (newValue >= 100) {
+  watchThrottled(() => percentage.value, async (v) => {
+    if (v >= 100) {
       flag.value = false
       await nextTick()
       reset()
       flag.value = true
     }
-  }, { throttle: 250 })
+  }, { throttle: 250, immediate: true })
 
   // 时间更新函数
   const updateTime = () => {
@@ -69,6 +69,7 @@ export function useIntervalFnWithPercent(
   function pause() {
     timeControls.pause()
     percentControls.pause()
+    startTime.value = undefined
   }
 
   // 重置计时器
@@ -79,20 +80,13 @@ export function useIntervalFnWithPercent(
     start()
   }
 
-  // 销毁计时器
-  function destroy() {
-    pause()
-    startTime.value = null
-  }
-
   onMounted(start)
 
-  onUnmounted(destroy)
+  onUnmounted(pause)
 
   return {
     start,
     pause,
-    reset,
     flag,
     percentage,
     elapsed,
