@@ -114,10 +114,10 @@ export function useTableAPI<T>(
   }
 
   // query event
-  const onApiQuery: WTable.FinishLoadingCallback = async ({ done }) => {
+  const onApiQuery: WTable.FinishLoadingCallback = async (params) => {
     apiListParams.value.page!.page = 1
     await onApiList()
-    done()
+    params?.done()
   }
 
   // reset event
@@ -187,7 +187,7 @@ export function useTableAPI<T>(
             return
           apiListParams.value.query = Object.assign(apiListParams.value.query!, filters)
           if (!isUndefined(props.value?.apiProps)) {
-            await onApiList()
+            await onApiQuery()
           }
         },
       })
