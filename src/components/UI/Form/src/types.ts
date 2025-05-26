@@ -270,7 +270,6 @@ export declare namespace WForm {
     }
 
     interface ComponentPropPool<D> {
-
       // base
       'Base:Render': {
         render: FormFnCallback<D, VNode | VNode[] | string>

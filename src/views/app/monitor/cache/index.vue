@@ -1,6 +1,9 @@
 <script lang="tsx" setup>
 import { monitorCacheAPI } from '@/api/app/monitor/cache'
 
+// TODO 111
+import WJSON from '@/components/Extra/JSON'
+
 defineOptions({
   name: 'AppMonitorCache',
 })
@@ -8,33 +11,31 @@ defineOptions({
 // locale unique key
 const localeKey = 'appCache'
 const authKey = 'cache'
+const keyField = 'key'
 
 const { t } = useAppI18n()
 
 const [
   register,
-  { onApiTableReadAndOpenUpdateForm, onApiTableDelete, onApiTableList },
+  { onReadAndOpenUpdateForm, onDeleteConfirm, onApiList },
 ] = useCRUD<AppMonitorCacheModel>({
+  // @ts-expect-error do not know why
   baseAPI: monitorCacheAPI,
 
   tableProps: {
     localeUniqueKey: localeKey,
-    rowKey: row => row.key!,
+    rowKey: row => row[keyField],
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
 
-    auths: {
-      list: `app:monitor:${authKey}:list`,
-      read: `app:monitor:${authKey}:read`,
-      delete: `app:monitor:${authKey}:delete`,
-    },
+    polling: 10000,
 
-    // clear default header actions
-    headerActions: [],
+    // clear default built in actions
+    headerLeftBuiltInActions: [],
 
-    extraHeaderActions: [
+    headerLeftExtraActions: [
       {
         textProp: () => t('app.cache.clear'),
         type: 'error',
@@ -45,11 +46,17 @@ const [
           if (confirmed) {
             await monitorCacheAPI.clear()
             useAppMsgSuccess()
-            await onApiTableList()
+            await onApiList()
           }
         },
       },
     ],
+
+    auths: {
+      list: `app:monitor:${authKey}:list`,
+      read: `app:monitor:${authKey}:read`,
+      delete: `app:monitor:${authKey}:delete`,
+    },
 
     queryFormProps: {
       localeUniqueKey: localeKey,
@@ -65,6 +72,9 @@ const [
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -138,31 +148,26 @@ const [
 
       {
         key: 'action',
-        width: 80,
+        width: 160,
         extendType: 'action',
         fixed: 'right',
         columnBuiltInActions: [
           {
             _builtInType: 'detail',
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
+            },
           },
           {
             _builtInType: 'delete',
+            _disabled(rowData) {
+              return ['built-in', 'auth-permissions', 'verify-code', 'sys-device-id-list'].includes(rowData.type!)
+            },
+            async onPresetClick(rowData) {
+              await onDeleteConfirm(rowData[keyField]!)
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          switch (type) {
-            case 'detail':
-              await onApiTableReadAndOpenUpdateForm(rowData.key!)
-              break
-
-            case 'delete':
-              await onApiTableDelete(rowData.key!)
-              break
-
-            default:
-              break
-          }
-        },
       },
     ],
   },
@@ -170,11 +175,11 @@ const [
   formProps: {
     localeUniqueKey: localeKey,
     localeWithTable: true,
-    preset: 'drawer',
+    dialogPreset: 'drawer',
     labelWidth: 0,
     xGap: 0,
 
-    advancedProps: {
+    dialogProps: {
       defaultButton: false,
       width: '40%',
       closable: true,
@@ -190,6 +195,7 @@ const [
           showLabel: false,
         },
         componentProp: {
+          // @ts-expect-error render T
           render({ formData }) {
             return <WJSON height="100%" value={formData.value}></WJSON>
           },
@@ -201,5 +207,8 @@ const [
 </script>
 
 <template>
-  <WCRUD @hook="register" />
+  <div>
+    <!-- @vue-generic {AppMonitorCacheModel} -->
+    <WCRUD @hook="register" />
+  </div>
 </template>

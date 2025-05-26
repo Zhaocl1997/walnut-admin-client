@@ -273,6 +273,7 @@ declare global {
   interface AppMonitorCacheModel extends AppBaseModel {
     key?: string
     value?: string
+    type?: 'built-in' | 'auth-permissions' | 'verify-code' | 'controller' | 'shared-area' | 'sys-locale-messages' | 'sys-lang-id-list' | 'sys-device-id-list'
     valueBytes?: string
     expire?: string
     startTime?: string
