@@ -15,7 +15,7 @@ const { getProps } = formPropsCtx
 
 const getFormItemDictLabel = computed(() => getDictNameFromMap((item as WForm.Schema.SchemaItem.DictSchema<T>).componentProp!.dictType) as string ?? '')
 
-const getFormProps = computed(() => {
+const getFormItemProps = computed(() => {
   if (isBoolean(item?.formProp?.rule) && isBoolean(item?.formProp?.label)) {
     return omit(clone(item?.formProp), 'rule', 'label')
   }
@@ -37,7 +37,7 @@ function FormItemRender() {
   return isFunction(_item.componentProp?.render)
     && _item!.componentProp?.render!({
       formData: getProps.value.model!,
-      formProps: getFormProps.value,
+      formProps: getFormItemProps.value,
     })
 }
 
@@ -47,7 +47,7 @@ const getBuiltInComp = formItemUtils.getTargetComponent(item)
 <template>
   <n-form-item
     :class="getProps.formItemClass"
-    v-bind="getFormProps"
+    v-bind="getFormItemProps"
   >
     <template #label>
       <div class="flex flex-row flex-nowrap items-center justify-end gap-x-1">

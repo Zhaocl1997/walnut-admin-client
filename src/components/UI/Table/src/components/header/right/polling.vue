@@ -76,6 +76,13 @@ function formatSeconds(value: number | null) {
     return ''
   return `${value} s`
 }
+
+onActivated(() => {
+  resume()
+})
+onDeactivated(() => {
+  pause()
+})
 </script>
 
 <template>
