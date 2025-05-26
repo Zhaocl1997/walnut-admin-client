@@ -104,7 +104,7 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
 
     const remainSpan = calculateRemainingSpans(totalItem, 24, Array.from<number>({ length: totalItem }).fill(getProps.value.span!))
 
-    if (remainSpan > 6) {
+    if (remainSpan >= 6) {
       return {
         gridColumn: `span ${remainSpan} / span ${remainSpan}`,
         justifySelf: 'end',
@@ -147,7 +147,7 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
         >
           <div
             v-if="item.type === 'Extend:Query' && FIU.getIfOrShowBoolean(item, getProps, 'vIf')"
-            v-show="item._internalShow && FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
+            v-show="FIU.getIfOrShowBoolean(item, getProps, 'vShow')"
             :style="Object.assign(getGridItemStyle(item, 'query'), item.gridProp?.style)"
             :class="item.gridProp?.class"
           >

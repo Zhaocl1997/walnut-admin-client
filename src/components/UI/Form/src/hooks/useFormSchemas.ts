@@ -9,11 +9,23 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
 
   const { formIdMap, getFormItemId, setFormItemId } = formItemIdCtx
 
+  function updateSchema(schema: WForm.Schema.Item<T>[]) {
+    formSchemas.value = schema.map((i, idx) => {
+      if (isUndefined(getFormItemId(i, idx)))
+        setFormItemId(i, idx, true)
+
+      return {
+        ...i,
+        _internalShow: getFormItemId(i, idx),
+      }
+    })
+  }
+
   watch(
     () => formIdMap.value,
     () => {
       // do something here
-      // console.log('WForm: formIdMap CHANGED')
+      updateSchema(formSchemas.value)
     },
     { immediate: true, deep: true },
   )
@@ -33,15 +45,7 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
       if (!v)
         return
 
-      formSchemas.value = v.map((i, idx) => {
-        if (isUndefined(getFormItemId(i, idx)))
-          setFormItemId(i, idx, true)
-
-        return {
-          ...i,
-          _internalShow: getFormItemId(i, idx),
-        }
-      })
+      updateSchema(v)
 
       useFormDict<T>(formSchemas.value)
     },
