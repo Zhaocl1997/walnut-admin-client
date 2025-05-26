@@ -232,6 +232,15 @@ const [
 })
 
 onMounted(() => {
+  const id = setTimeout(() => {
+    if (localeKey.value) {
+      onOpenCreateForm(false)
+    }
+    clearTimeout(id)
+  }, 1000)
+})
+
+onActivated(() => {
   if (localeKey.value) {
     onOpenCreateForm(false)
   }
