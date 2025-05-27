@@ -78,8 +78,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       // get menus/permissions/keys etc
       await AppCoreFn1()
 
-      // send socket state
-      AppSocket?.emit(AppSocketEvents.SIGNIN, { visitorId: fpId.value, userId: userProfile.profile._id, userName: userProfile.profile.userName })
+      // send beacon
+      sendUserMonitorBeacon({ userId: userProfile.profile._id, auth: true })
 
       // push to the index menu
       await appMenu.goIndex()
@@ -129,7 +129,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description signout, need to clean lots of state
      */
-    async Signout(callApi = true, fingerprint = fpId.value) {
+    async Signout(callApi = true) {
       const userProfile = useAppStoreUserProfile()
       const userPermission = useAppStoreUserPermission()
       const appMenu = useAppStoreMenu()
@@ -155,8 +155,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       // clear tab
       appTab.clearTabs()
 
-      // send socket state
-      AppSocket?.emit(AppSocketEvents.SIGNOUT, fingerprint)
+      // send beacon
+      sendUserMonitorBeacon({ userId: null, auth: false })
 
       setTimeout(async () => {
         // push to signin page

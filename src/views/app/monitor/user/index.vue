@@ -8,28 +8,30 @@ defineOptions({
 // locale unique key
 const localeKey = 'app.monitor.user'
 const authKey = 'user'
+const keyField = '_id'
 
 const { t } = useAppI18n()
 
-const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<AppMonitorUserModel>({
+const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUserModel>({
+  // @ts-expect-error do not know why
   baseAPI: monitorUserAPI,
 
   tableProps: {
     localeUniqueKey: localeKey,
-    rowKey: row => row._id!,
+    rowKey: row => row[keyField]!,
     maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
 
-    polling: 5000,
+    polling: 10000,
 
     auths: {
       read: `app:monitor:${authKey}:read`,
     },
 
-    // clear default header actions
-    headerActions: [],
+    // clear default built in actions
+    headerLeftBuiltInActions: [],
 
     queryFormProps: {
       localeUniqueKey: localeKey,
@@ -44,6 +46,9 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -54,6 +59,9 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -65,6 +73,9 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -75,6 +86,9 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -85,6 +99,9 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
           },
           componentProp: {
             clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
           },
         },
 
@@ -120,14 +137,14 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
         width: 160,
       },
 
-      {
-        key: 'location',
-        width: 160,
-        formatter: row => row.city || '-',
-        ellipsis: {
-          tooltip: true,
-        },
-      },
+      // {
+      //   key: 'location',
+      //   width: 160,
+      //   formatter: row => row.city || '-',
+      //   ellipsis: {
+      //     tooltip: true,
+      //   },
+      // },
 
       {
         key: 'browser',
@@ -231,29 +248,29 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
         columnBuiltInActions: [
           {
             _builtInType: 'detail',
+            async onPresetClick(rowData) {
+              await onReadAndOpenUpdateForm(rowData[keyField]!)
+            },
           },
           {
             _builtInType: 'force-quit',
-            icon: 'ant-design:logout-outlined',
-            type: 'error',
-            iconButton: true,
-            textProp: () => t('app.monitor.user.forceLogout'),
-            // TODO table action inside => `ButtonConfirm`
             confirm: true,
-            auth: 'app:monitor:user:forceQuit',
             _show: row => !row.left && row.auth,
+            iconProps: {
+              icon: 'ant-design:logout-outlined',
+            },
+            buttonProps: {
+              auth: 'app:monitor:user:forceQuit',
+              type: 'error',
+              textProp: () => t('app.monitor.user.forceLogout'),
+            },
+            async onPresetClick(rowData) {
+              await forceQuit(rowData[keyField]!)
+              useAppMsgSuccess()
+              await onApiList()
+            },
           },
         ],
-        onActionButtonsClick: async ({ type, rowData }) => {
-          if (type === 'detail')
-            await onApiTableReadAndOpenUpdateForm(rowData._id!)
-
-          if (type === 'force-quit') {
-            await forceQuit(rowData._id!)
-            useAppMsgSuccess()
-            await onApiTableList()
-          }
-        },
       },
     ],
   },
@@ -261,7 +278,7 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
   formProps: {
     localeUniqueKey: localeKey,
     localeWithTable: true,
-    preset: 'drawer',
+    dialogPreset: 'drawer',
     labelWidth: 140,
     xGap: 0,
 
@@ -275,7 +292,7 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
       },
     },
 
-    advancedProps: {
+    dialogProps: {
       defaultButton: false,
       width: '40%',
       closable: true,
@@ -391,18 +408,18 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
           show: false,
         },
       },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'location',
-        },
-        descriptionProp: {
-          span: 2,
-          formatter: (_, row) => {
-            return `${row?.country}/${row?.province}/${row?.city}/${row?.area}`
-          },
-        },
-      },
+      // {
+      //   type: 'Base:Input',
+      //   formProp: {
+      //     path: 'location',
+      //   },
+      //   descriptionProp: {
+      //     span: 2,
+      //     formatter: (_, row) => {
+      //       return `${row?.country}-${row?.city}`
+      //     },
+      //   },
+      // },
       {
         type: 'Base:Input',
         formProp: {
@@ -447,5 +464,8 @@ const [register, { onApiTableList, onApiTableReadAndOpenUpdateForm }] = useCRUD<
 </script>
 
 <template>
-  <WCRUD @hook="register" />
+  <div>
+    <!-- @vue-generic {AppMonitorUserModel} -->
+    <WCRUD @hook="register" />
+  </div>
 </template>

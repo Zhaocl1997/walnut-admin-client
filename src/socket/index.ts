@@ -1,7 +1,8 @@
 import type { Socket } from 'socket.io-client'
 import { io } from 'socket.io-client'
 
-export let AppSocket: Nullable<Socket> = null
+// eslint-disable-next-line import/no-mutable-exports
+export let AppSocket: Socket
 
 export function setupSocket() {
   // five params in config
@@ -29,9 +30,9 @@ export function setupSocket() {
   })
 
   // listen to force quit event, which could be excuted by admin
-  AppSocket.on(AppSocketEvents.FORCE_QUIT, async (fingerprint) => {
+  AppSocket.on(AppSocketEvents.FORCE_QUIT(), async () => {
     const userAuth = useAppStoreUserAuth()
 
-    await userAuth.Signout(fingerprint)
+    await userAuth.Signout()
   })
 }

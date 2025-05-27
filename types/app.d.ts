@@ -290,35 +290,14 @@ declare global {
   // app monitor user model
   interface AppMonitorUserModel extends Omit<AppBaseModel, 'createdAt' | 'updatedAt'> {
     visitorId: string
+    userId?: string | null
+    deviceId?: string
+
     auth: boolean
     focus: boolean
     left: boolean
     currentRouter: string
 
-    ip?: string
-    isp?: string
-    netType?: string
-
-    country?: string
-    province?: string
-    city?: string
-    area?: string
-
-    userAgent?: string
-    platform?: string
-    os?: string
-    browser?: string
-
-    vp?: string
-    sr?: string
-
-    device?: string
-    engine?: string
-
-    userId?: string
-    userName?: string
-
-    authTime: string
     firstVisitAt?: Date
     lastActiveAt?: Date
   }
