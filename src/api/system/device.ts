@@ -34,7 +34,7 @@ export async function initialDevice() {
       },
       deviceInfo: {
         // @ts-expect-error https://developer.mozilla.org/zh-CN/docs/Web/API/NetworkInformation/effectiveType
-        netType: navigator.connection.effectiveType,
+        netType: navigator.connection?.effectiveType,
         platform: navigator.platform,
         isp: GeoIPInfo.value.isp,
       },
