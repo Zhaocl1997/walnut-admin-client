@@ -53,6 +53,11 @@ export function generateSortParams<T>(sort: DataTableSortState | DataTableSortSt
 export function getTableTranslated<T>(props: ComputedRef<Partial<WTable.Props<T>>>, item: WTable.Column<T>, helpMsg = false): string {
   const { t } = useAppI18n()
 
+  // title is set has the highest priority
+  if (typeof item.title === 'string' && defaultAppLocaleMessageKeys.includes(item.title)) {
+    return t(`app.base.${item.title}`)
+  }
+
   const key = props.value.localeUniqueKey
 
   const isLocale = key && getBoolean(item.locale)

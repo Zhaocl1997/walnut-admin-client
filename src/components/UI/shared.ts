@@ -13,6 +13,7 @@ export const defaultAppLocaleMessageKeys = [
   'isp',
   'location',
   'city',
+  'country',
   'os',
   'browser',
   'userId',
