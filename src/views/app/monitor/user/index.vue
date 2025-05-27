@@ -425,18 +425,6 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
           show: false,
         },
       },
-      // {
-      //   type: 'Base:Input',
-      //   formProp: {
-      //     path: 'location',
-      //   },
-      //   descriptionProp: {
-      //     span: 2,
-      //     formatter: (_, row) => {
-      //       return `${row?.country}-${row?.city}`
-      //     },
-      //   },
-      // },
       {
         type: 'Base:Input',
         formProp: {

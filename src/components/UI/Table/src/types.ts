@@ -331,6 +331,11 @@ export declare namespace WTable {
       formatter?: TableFnCallback<T, string>
 
       /**
+       * @description raw title
+       */
+      _rawTitle?: string
+
+      /**
        * @description internal show flag
        */
       _internalShow?: boolean

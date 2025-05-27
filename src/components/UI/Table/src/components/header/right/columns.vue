@@ -10,8 +10,6 @@ defineOptions({
   name: 'WTableHeaderRightColumns',
 })
 
-const { t } = useAppI18n()
-
 const { tableColumns, tablePropsCtx } = useTableContext<T>()
 const { getProps: props } = tablePropsCtx
 
@@ -87,13 +85,6 @@ function onSetFix(item: WTable.Column<T>, position: 'left' | 'right') {
 }
 
 function getTitle(item: WTable.Column<T>) {
-  if (typeof item.title === 'string')
-    return item.title
-
-  // handle dict column title
-  if (item.extendType === 'dict' && item.useDictNameAsTitle)
-    return t(`dict.name.${item.dictType}`)
-
   return getTableTranslated(props, item)
 }
 </script>

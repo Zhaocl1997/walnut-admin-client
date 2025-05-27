@@ -27,6 +27,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
     return {
       ...item,
+      _rawTitle: item.title,
       title: () => (
         <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">
           {getTableTranslated(props, item)}
@@ -46,6 +47,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
       .map((item) => {
         // default value override
         item.align = item.align ?? 'center'
+        item._rawTitle = item.title as string
 
         const tItem = props.value.localeUniqueKey ? transformColumn(item) : item
 
