@@ -300,6 +300,9 @@ declare global {
 
     firstVisitAt?: Date
     lastActiveAt?: Date
+
+    populated_device?: AppSystemDevice
+    populated_user?: AppSystemUser
   }
 }
 

@@ -68,8 +68,20 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
         {
           type: 'Base:Input',
           formProp: {
-            path: 'city',
-            label: computed(() => t('app.base.location')),
+            path: 'country',
+          },
+          componentProp: {
+            clearable: true,
+            onKeyupEnter() {
+              onApiList()
+            },
+          },
+        },
+
+        {
+          type: 'Base:Input',
+          formProp: {
+            path: 'browser',
           },
           componentProp: {
             clearable: true,
@@ -95,7 +107,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
         {
           type: 'Base:Input',
           formProp: {
-            path: 'browser',
+            path: 'userName',
           },
           componentProp: {
             clearable: true,
@@ -133,21 +145,28 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
       },
 
       {
-        key: 'ip',
+        key: 'populated_device.ipHistory',
         width: 160,
+        title: 'ip',
+      },
+      {
+        key: 'populated_device.locationInfo.country',
+        width: 100,
+        title: 'country',
       },
 
-      // {
-      //   key: 'location',
-      //   width: 160,
-      //   formatter: row => row.city || '-',
-      //   ellipsis: {
-      //     tooltip: true,
-      //   },
-      // },
+      {
+        key: 'populated_device.deviceInfo.browser',
+        width: 160,
+        title: 'browser',
+        ellipsis: {
+          tooltip: true,
+        },
+      },
 
       {
-        key: 'browser',
+        key: 'populated_device.deviceInfo.os',
+        title: 'os',
         width: 160,
         ellipsis: {
           tooltip: true,
@@ -155,11 +174,9 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
       },
 
       {
-        key: 'os',
-        width: 160,
-        ellipsis: {
-          tooltip: true,
-        },
+        key: 'populated_user.userName',
+        title: 'userName',
+        width: 100,
       },
 
       {
@@ -242,7 +259,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
 
       {
         key: 'action',
-        width: 80,
+        width: 120,
         extendType: 'action',
         fixed: 'right',
         columnBuiltInActions: [
@@ -255,7 +272,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
           {
             _builtInType: 'force-quit',
             confirm: true,
-            _show: row => !row.left && row.auth,
+            _show: row => row.auth,
             iconProps: {
               icon: 'ant-design:logout-outlined',
             },

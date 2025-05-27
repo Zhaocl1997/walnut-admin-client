@@ -48,6 +48,7 @@ export function useAppUserMonitor() {
   useEventListener('beforeunload', () => {
     sendUserMonitorBeacon({
       left: true,
+      focus: false,
     })
   })
 

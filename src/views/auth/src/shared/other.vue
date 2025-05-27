@@ -64,6 +64,7 @@ async function onOAuth(type: string) {
     weibo: getWeiboUri,
   }
 
+  // @ts-expect-error any index
   const res = await api[type]()
 
   childWindow = openOAuthWindow(res)!
