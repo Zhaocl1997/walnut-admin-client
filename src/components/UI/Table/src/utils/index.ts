@@ -3,6 +3,7 @@ import type { DataTableSortState } from 'naive-ui'
 import type {
   SorterMultiple,
 } from 'naive-ui/lib/data-table/src/interface'
+import type { IDefaultAppLocaleMessage } from '../../../shared'
 import type { WTable } from '../types'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
 
@@ -58,7 +59,7 @@ export function getTableTranslated<T>(props: ComputedRef<Partial<WTable.Props<T>
     return t(`dict.name.${item.dictType}`)
 
   // title is set has the highest priority
-  if (typeof item._rawTitle === 'string' && defaultAppLocaleMessageKeys.includes(item._rawTitle!)) {
+  if (typeof item._rawTitle === 'string' && defaultAppLocaleMessageKeys.includes(item._rawTitle as IDefaultAppLocaleMessage)) {
     return t(`app.base.${item._rawTitle}`)
   }
 
@@ -71,7 +72,7 @@ export function getTableTranslated<T>(props: ComputedRef<Partial<WTable.Props<T>
   const path = item.key
 
   return isLocale && path
-    ? defaultAppLocaleMessageKeys.includes(String(path))
+    ? defaultAppLocaleMessageKeys.includes(path as IDefaultAppLocaleMessage)
       ? t(`app.base.${path}`)
       : t(isHelpMsg(`table.${key}.${path}`))
     : typeof item.title === 'string' ? item.title : 'RenderFn'
