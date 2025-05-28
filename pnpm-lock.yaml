@@ -316,8 +316,8 @@ importers:
         specifier: 6.3.2
         version: 6.3.2(@types/node@22.14.1)(jiti@2.4.2)(sass@1.86.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1)
       vite-plugin-banner:
-        specifier: 0.8.0
-        version: 0.8.0
+        specifier: 0.8.1
+        version: 0.8.1
       vite-plugin-cdn2:
         specifier: 1.1.0
         version: 1.1.0(rollup@4.40.0)
@@ -6658,8 +6658,8 @@ packages:
     peerDependencies:
       vite: ^2.6.0 || ^3.0.0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0
 
-  vite-plugin-banner@0.8.0:
-    resolution: {integrity: sha512-JpDWDYxtrsytuvUOJCgJcTkBb6XM8yPOidjRtB6F5SW1JSzDd/Y+PD/44wR6ovWKXhSUiyDRqPvx7mMf8+8ELg==}
+  vite-plugin-banner@0.8.1:
+    resolution: {integrity: sha512-0+gGguHk3MH0HvzMSOCJC6fGgH4+jtY9KlKVZh+hwwE+PBkGVzY8xe657JL74vEgbeUJD37XjVqTrmve8XvZBQ==}
 
   vite-plugin-cdn2@1.1.0:
     resolution: {integrity: sha512-mqz9frTLpwT7XVuJppb/OmsEaJOxcY5Xt/+VOeewQAJTsl91TZe1ySv+YyoQbVn+BQbamNHZbUteIuoQzRFdpQ==}
@@ -14098,7 +14098,7 @@ snapshots:
     dependencies:
       vite: 6.3.2(@types/node@22.14.1)(jiti@2.4.2)(sass@1.86.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1)
 
-  vite-plugin-banner@0.8.0: {}
+  vite-plugin-banner@0.8.1: {}
 
   vite-plugin-cdn2@1.1.0(rollup@4.40.0):
     dependencies:
