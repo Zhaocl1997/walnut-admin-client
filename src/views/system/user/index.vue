@@ -204,7 +204,7 @@ const [
 
       {
         key: 'action',
-        width: 80,
+        width: 100,
         extendType: 'action',
         fixed: 'right',
         columnBuiltInActions: [

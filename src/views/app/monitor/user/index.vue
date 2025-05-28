@@ -27,6 +27,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
     polling: 10000,
 
     auths: {
+      list: `app:monitor:${authKey}:list`,
       read: `app:monitor:${authKey}:read`,
     },
 
@@ -259,7 +260,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
 
       {
         key: 'action',
-        width: 120,
+        width: 200,
         extendType: 'action',
         fixed: 'right',
         columnBuiltInActions: [
@@ -269,15 +270,17 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
               await onReadAndOpenUpdateForm(rowData[keyField]!)
             },
           },
+        ],
+        columnExtraActions: [
           {
             _builtInType: 'force-quit',
             confirm: true,
-            _show: row => row.auth,
+            _disabled: row => !row.auth,
             iconProps: {
               icon: 'ant-design:logout-outlined',
             },
             buttonProps: {
-              auth: 'app:monitor:user:forceQuit',
+              auth: `app:monitor:${authKey}:forceQuit`,
               type: 'error',
               textProp: () => t('app.monitor.user.forceLogout'),
             },
@@ -302,10 +305,13 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
     useDescription: true,
     descriptionProps: {
       bordered: true,
-      column: 2,
+      column: 3,
       labelPlacement: 'left',
       labelStyle: {
         width: '100px',
+      },
+      contentStyle: {
+        minWidth: '300px',
       },
     },
 
@@ -323,7 +329,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
           path: 'visitorId',
         },
         descriptionProp: {
-          span: 2,
+          span: 3,
         },
       },
       {
@@ -332,52 +338,17 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
           path: 'userId',
         },
         descriptionProp: {
-          span: 2,
+          span: 3,
         },
       },
       {
         type: 'Base:Input',
         formProp: {
-          path: 'userName',
+          path: 'populated_user.userName',
+          label: 'userName',
         },
         descriptionProp: {
-          span: 2,
-        },
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'os',
-        },
-        descriptionProp: {
-          span: 2,
-        },
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'browser',
-        },
-        descriptionProp: {
-          span: 2,
-        },
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'ip',
-        },
-        descriptionProp: {
-          span: 2,
-        },
-      },
-      {
-        type: 'Base:Input',
-        formProp: {
-          path: 'isp',
-        },
-        descriptionProp: {
-          span: 2,
+          span: 3,
         },
       },
       {
@@ -386,81 +357,127 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
           path: 'currentRouter',
         },
         descriptionProp: {
-          span: 2,
+          span: 3,
         },
       },
       {
         type: 'Base:Input',
         formProp: {
-          path: 'country',
+          path: 'populated_device.ipHistory[0]',
+          label: 'ip',
         },
         descriptionProp: {
-          show: false,
+          span: 3,
         },
       },
       {
         type: 'Base:Input',
         formProp: {
-          path: 'province',
+          path: 'populated_device.deviceName',
+          label: 'deviceName',
         },
         descriptionProp: {
-          show: false,
+          span: 3,
         },
       },
       {
         type: 'Base:Input',
         formProp: {
-          path: 'city',
+          path: 'populated_device.deviceInfo.type',
+          label: 'deviceType',
         },
         descriptionProp: {
-          show: false,
+          span: 3,
         },
       },
       {
         type: 'Base:Input',
         formProp: {
-          path: 'area',
+          path: 'populated_device.deviceInfo.os',
+          label: 'os',
         },
         descriptionProp: {
-          show: false,
+          span: 3,
         },
       },
       {
         type: 'Base:Input',
         formProp: {
-          path: 'sr',
+          path: 'populated_device.deviceInfo.browser',
+          label: 'browser',
         },
         descriptionProp: {
-          span: 2,
+          span: 3,
         },
       },
       {
         type: 'Base:Input',
         formProp: {
-          path: 'vp',
+          path: 'populated_device.deviceInfo.isp',
+          label: 'isp',
         },
         descriptionProp: {
-          span: 2,
+          span: 3,
         },
       },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'populated_device.deviceInfo.platform',
+          label: 'platform',
+        },
+        descriptionProp: {
+          span: 3,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'populated_device.deviceInfo.netType',
+          label: 'netType',
+        },
+        descriptionProp: {
+          span: 3,
+        },
+      },
+
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'populated_device.locationInfo.country',
+          label: 'country',
+        },
+        descriptionProp: {
+          span: 3,
+        },
+      },
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'populated_device.locationInfo.city',
+          label: 'city',
+        },
+        descriptionProp: {
+          span: 3,
+        },
+      },
+
       {
         type: 'Base:Input',
         formProp: {
           path: 'firstVisitAt',
-          label: computed(() => t('table.app.monitor.user.firstVisitAt')),
         },
         descriptionProp: {
-          span: 2,
+          span: 3,
         },
       },
       {
         type: 'Base:Input',
         formProp: {
           path: 'lastActiveAt',
-          label: computed(() => t('table.app.monitor.user.lastActiveAt')),
         },
         descriptionProp: {
-          span: 2,
+          span: 3,
         },
       },
     ],
