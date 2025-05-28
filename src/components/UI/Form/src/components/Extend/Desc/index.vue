@@ -1,5 +1,6 @@
 <script lang="ts" setup generic="T">
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
+import { get } from 'lodash-es'
 import { useFormContext } from '../../../hooks/useFormContext'
 import { formItemUtils } from '../../../utils'
 
@@ -19,8 +20,7 @@ const getDescItems = computed(() => {
     .map(i => ({
       key: i.formProp?.path,
       show: i.descriptionProp?.show,
-      // @ts-expect-error any index
-      value: formProps.value.model![i.formProp?.path as string],
+      value: get(formProps.value.model!, i.formProp?.path as string),
       formatter: i.descriptionProp?.formatter,
 
       type: i.descriptionProp?.type,
