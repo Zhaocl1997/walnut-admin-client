@@ -12,12 +12,9 @@ export function useAppConfirm(msg: string, options?: DialogOptions) {
 
   return new Promise<{ confirmed: boolean, inst: ReturnType<typeof dialog.warning> }>((resolve) => {
     const inst = dialog.warning({
-      // @ts-expect-error fuck t
       title: AppI18n.global?.t('app.base.warning'),
       content: msg,
-      // @ts-expect-error fuck t
       negativeText: AppI18n.global?.t('app.button.no'),
-      // @ts-expect-error fuck t
       positiveText: AppI18n.global?.t('app.button.yes'),
       autoFocus: false,
       ...options,

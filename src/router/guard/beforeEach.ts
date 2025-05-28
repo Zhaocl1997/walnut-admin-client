@@ -66,7 +66,6 @@ export function createBeforeEachGuard(router: Router) {
       && (_confirm_leave_map_.get(from.name) === undefined
         || _confirm_leave_map_.get(from.name) === false)
     ) {
-      // @ts-expect-error fuck t
       const { confirmed } = await useAppConfirm(AppI18n.global.t('app.base.leaveTip'), {
         closable: false,
         closeOnEsc: false,

@@ -311,7 +311,6 @@ export function useMenuFormSchema(
         options: computed(() =>
           menuActiveNamesOptions.value.map(i => ({
             value: i.name,
-            // @ts-expect-error fuck t
             label: AppI18n.global.t(i.title),
           })),
         ),

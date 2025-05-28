@@ -1,4 +1,4 @@
-import type { I18nOptions } from 'vue-i18n'
+import type { I18n, I18nOptions, Locale } from 'vue-i18n'
 
 import { createI18n } from 'vue-i18n'
 
@@ -13,6 +13,8 @@ async function createI18nOptions(): Promise<I18nOptions> {
   const backendMsg = await AppI18nGetI18nMsg(locale)
 
   return {
+    legacy: false,
+
     locale,
 
     messages: {
@@ -22,11 +24,11 @@ async function createI18nOptions(): Promise<I18nOptions> {
 }
 
 // eslint-disable-next-line import/no-mutable-exports
-export let AppI18n: ReturnType<typeof createI18n>
+export let AppI18n: I18n<Record<string, unknown>, Record<string, unknown>, Record<string, unknown>, Locale, false>
 
 export async function setupI18n(app: App) {
   const options = await createI18nOptions()
-  AppI18n = createI18n(options)
+  AppI18n = createI18n<false>(options)
   app.use(AppI18n)
   console.info('I18n', 'Locale Initializing...')
 }

@@ -352,7 +352,6 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
           if (currentRouteName === name) {
             if (currentTab.meta.leaveTip) {
               const { confirmed } = await useAppConfirm(
-                // @ts-expect-error fuck t
                 AppI18n.global.t('app.base.leaveTip'),
                 {
                   closable: false,
