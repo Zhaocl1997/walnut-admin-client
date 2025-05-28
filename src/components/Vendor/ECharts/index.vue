@@ -31,7 +31,7 @@ useEventListener('resize', () => {
 function onDispose() {
   if (chartInst.value) {
     chartInst.value.dispose()
-    chartInst.value = null
+    chartInst.value = undefined
   }
 }
 

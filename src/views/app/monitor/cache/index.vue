@@ -19,12 +19,11 @@ const [
   register,
   { onReadAndOpenUpdateForm, onDeleteConfirm, onApiList },
 ] = useCRUD<AppMonitorCacheModel>({
-  // @ts-expect-error do not know why
   baseAPI: monitorCacheAPI,
 
   tableProps: {
     localeUniqueKey: localeKey,
-    rowKey: row => row[keyField],
+    rowKey: row => row[keyField]!,
     maxHeight: 600,
     striped: true,
     bordered: true,
@@ -195,7 +194,6 @@ const [
           showLabel: false,
         },
         componentProp: {
-          // @ts-expect-error render T
           render({ formData }) {
             return <WJSON height="100%" value={formData.value}></WJSON>
           },

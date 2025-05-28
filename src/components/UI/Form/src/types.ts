@@ -258,7 +258,6 @@ export declare namespace WForm {
     namespace Dialog {
       interface FinishLoading { done: Fn }
     }
-
   }
 
   /**

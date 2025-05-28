@@ -45,7 +45,7 @@ export async function generateSvgJSON(whiteList?: string[]) {
       // If icon is not monotone, remove this code
       await parseColors(svg, {
         defaultColor: 'currentColor',
-        callback: (attr, colorStr, color) => {
+        callback: (attr, colorStr, _color) => {
           // return !color || isEmptyColor(color) ? colorStr : 'currentColor'
           return colorStr || 'currentColor'
         },

@@ -7,7 +7,7 @@ const value = ref(
   '<p style="text-align: center;"><span style="color: rgb(224, 62, 45); font-size: 36pt;"><em><strong>This is default content</strong></em></span></p>',
 )
 
-const formData = ref({
+const _formData = ref({
   title: 'This is default title',
   content:
       '<p style="text-align: center;"><span style="color: rgb(224, 62, 45); font-size: 36pt;"><em><strong>This is default content</strong></em></span></p>',

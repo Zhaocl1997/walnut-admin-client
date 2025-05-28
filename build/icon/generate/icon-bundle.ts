@@ -135,7 +135,7 @@ export async function generateIconUsedBundle() {
       recursive: true,
     })
   }
-  catch (err) {
+  catch {
     //
   }
 

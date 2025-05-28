@@ -63,8 +63,8 @@ async function onReset() {
   cropperImageRef.value!.$center('cover')
 
   cropperSelectionRef.value!.$change(
-    initSelectionData.value?.x,
-    initSelectionData.value?.y,
+    initSelectionData.value?.x as number,
+    initSelectionData.value?.y as number,
     initSelectionData.value?.width,
     initSelectionData.value?.height,
   )
@@ -110,8 +110,8 @@ async function onUploadChange() {
 async function onGetCropperValue() {
   try {
     const canvas = await cropperSelectionRef.value?.$toCanvas()
-    const base64 = canvas.toDataURL('image/png')
-    const blob = await base64ToBlob(base64)
+    const base64 = canvas?.toDataURL('image/png')
+    const blob = await base64ToBlob(base64!)
     blobRef.value = blob
     await createBlobUrlCropper(blob)
     blobURL.value = tempBlobURLCropper.value

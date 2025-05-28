@@ -89,7 +89,7 @@ function onCustomRequest({
       if (index !== -1)
         fileList.value![index].url = AliOSSClient.instance.getFullUrl(_value)
 
-      value.value = fileList.value.filter(i => i.status === 'finished').map(item => item.name)
+      value.value = fileList.value?.filter(i => i.status === 'finished').map(item => item.name) as string[]
     })
     .catch(() => {
       onError()

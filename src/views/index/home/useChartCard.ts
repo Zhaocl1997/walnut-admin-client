@@ -275,12 +275,17 @@ export function useChartCard() {
       loading.value = true
       const res = await onCallApi()
 
+      // @ts-expect-error any index
       cards.value[0].option!.series![0].data = res.option1[0]
+      // @ts-expect-error any index
       cards.value[0].option!.series![1].data = res.option1[1]
+      // @ts-expect-error any index
       cards.value[0].option!.series![2].data = res.option1[2]
+      // @ts-expect-error any index
       cards.value[0].option!.series![3].data = res.option1[3]
+      // @ts-expect-error any index
       cards.value[0].option!.series![4].data = res.option1[4]
-
+      // @ts-expect-error any index
       cards.value[1].option!.series![0].data = [
         { value: res.option2[0], name: 'Search Engine' },
         { value: res.option2[1], name: 'Direct' },

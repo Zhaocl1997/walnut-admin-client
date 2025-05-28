@@ -392,7 +392,7 @@ export declare namespace WTable {
       /**
        * @description extra action buttons
        */
-      columnExtraActions: ActionButtons<T>[]
+      columnExtraActions?: ActionButtons<T>[]
     }
   }
 }
