@@ -295,7 +295,7 @@ export declare namespace WTable {
      */
     interface ActionButtons<T> extends ActionButtonsBasic<T>, ICompUIIconButtonProps {
       /**
-       * @description builtIn button, support `create` / `read` / `delete` / `detail`
+       * @description builtIn button, support {ColumnActionType}
        */
       _builtInType: ColumnActionType | string
 

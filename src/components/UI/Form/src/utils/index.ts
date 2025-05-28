@@ -1,4 +1,5 @@
 import type { FormItemRule, FormRules } from 'naive-ui'
+import type { IDefaultAppLocaleMessage } from '../../../shared'
 import type { WForm } from '../types'
 import { get } from 'lodash-es'
 import { defaultAppLocaleMessageKeys } from '../../../shared'
@@ -66,6 +67,12 @@ export const formItemUtils = {
     const path = itemFormProp?.path
     const label = itemFormProp?.label
 
+    // in default app locale messages keys
+    if (path && defaultAppLocaleMessageKeys.includes(path as IDefaultAppLocaleMessage))
+      return t(`app.base.${path}`)
+    if (label && defaultAppLocaleMessageKeys.includes(label as IDefaultAppLocaleMessage))
+      return t(`app.base.${label}`)
+
     // TODO for what??
     // got label, return label
     // if (label)
@@ -82,10 +89,6 @@ export const formItemUtils = {
         return item.componentProp?.placeholder
       return
     }
-
-    // in default app locale messages keys
-    if (defaultAppLocaleMessageKeys.includes(path))
-      return t(`app.base.${path}`)
 
     const isLocaleWithTable
       = getBoolean(itemFormProp?.localeWithTable)

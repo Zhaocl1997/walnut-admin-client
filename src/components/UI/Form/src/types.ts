@@ -41,6 +41,7 @@ import type { ICompUIModalProps } from '../../Modal'
 import type { ICompUIRadioProps } from '../../Radio'
 import type { ICompUISelectProps } from '../../Select'
 
+import type { IDefaultAppLocaleMessage } from '../../shared'
 import type { ICompUISwitchProps } from '../../Switch'
 import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'
@@ -337,7 +338,7 @@ export declare namespace WForm {
        * @description add boolean type to label
        * Used for dict form item label, set true to use dict type name as form label
        */
-      label?: string | boolean
+      label?: string | boolean | IDefaultAppLocaleMessage
 
       /**
        * @description when using `base-rules`, you can provide a `ruleType` to specific the value type, default would ba a `any`
