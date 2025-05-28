@@ -165,7 +165,7 @@
     "vite-plugin-progress": "0.0.7",
     "vite-plugin-restart": "0.4.2",
     "vite-plugin-vue-devtools": "7.7.5",
-    "vue-tsc": "2.2.8"
+    "vue-tsc": "2.2.10"
   },
   "config": {
     "commitizen": {
