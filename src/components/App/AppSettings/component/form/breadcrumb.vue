@@ -45,7 +45,6 @@ const [register4] = useForm<typeof breadcrumbRelatives>({
       },
     },
 
-    // @ts-expect-error weird
     {
       type: 'Extra:TransitionSelect',
       formProp: {

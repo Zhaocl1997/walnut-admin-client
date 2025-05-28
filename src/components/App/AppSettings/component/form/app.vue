@@ -123,7 +123,6 @@ const [register] = useForm<typeof appRelatives>({
       },
     },
 
-    // @ts-expect-error weird
     {
       type: 'Extra:TransitionSelect',
       formProp: {
