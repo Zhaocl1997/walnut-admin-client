@@ -1,5 +1,11 @@
 <script lang="tsx">
+// TODO rework
+
 import type { DropdownOption } from 'naive-ui'
+// TODO 111
+import WTransition from '@/components/Extra/Transition'
+import WIcon from '@/components/UI/Icon'
+
 import { findPath } from 'easy-fns-ts'
 import { darkTheme } from 'naive-ui'
 
@@ -11,7 +17,7 @@ export default defineComponent({
     const { t } = useAppI18n()
     const { currentRoute } = useAppRouter()
 
-    const getChildren = computed(() => {
+    const getChildren = computed((): AppSystemMenu[] => {
       // TODO 999
       const matched = findPath(
         toRaw(appMenu.menus),
@@ -31,14 +37,13 @@ export default defineComponent({
         })
       }
 
-      if (matched)
-        return matched.filter(item => item.title)
+      return matched.filter(item => item.title)
     })
 
     const renderBase = (item: AppSystemMenu) => (
       <div class="flex flex-row flex-nowrap items-center">
         {appSetting.breadcrumb.showIcon && (
-          <WIcon icon={item.icon} height="20" class="mr-1"></WIcon>
+          <WIcon icon={item.icon!} height="20" class="mr-1"></WIcon>
         )}
         <div style="line-height: normal">{t(item.title!)}</div>
       </div>
@@ -55,9 +60,9 @@ export default defineComponent({
           i =>
             ({
               key: i.name,
-              label: t(i?.title!),
+              label: t(i.title as string),
               icon: appSetting.breadcrumb.showIcon
-                ? () => <WIcon icon={i?.icon} height="20"></WIcon>
+                ? () => <WIcon icon={i.icon!} height="20"></WIcon>
                 : null,
               children: genOptions(i.children),
             } as DropdownOption),

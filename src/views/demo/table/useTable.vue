@@ -16,7 +16,7 @@ interface DemoData {
 const [register] = useTable<DemoData>({
   bordered: true,
   striped: true,
-  rowKey: row => row.key,
+  rowKey: row => row.key!,
   headerLeftBuiltInActions: [
     {
       _builtInType: 'create',
@@ -79,7 +79,7 @@ const [register] = useTable<DemoData>({
       key: 'tags',
       minWidth: 150,
       formatter(rowData) {
-        return rowData.tags.join(',')
+        return rowData.tags?.join(',')
       },
     },
     {
@@ -96,11 +96,11 @@ const [register] = useTable<DemoData>({
       minWidth: 200,
       extendType: 'link',
       formatter(rowData) {
-        return rowData.link.slice(8)
+        return rowData.link?.slice(8)
       },
       onClick(data) {
         console.log('link', data)
-        openExternalLink(data.link)
+        openExternalLink(data.link!)
       },
     },
     {
@@ -162,6 +162,7 @@ const [register] = useTable<DemoData>({
 
 <template>
   <WDemoCard title="useTable" description="Better typescript support.">
+    <!-- @vue-generic {DemoData} -->
     <WTable @hook="register" />
   </WDemoCard>
 </template>

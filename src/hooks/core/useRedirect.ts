@@ -4,7 +4,7 @@
 export function useRedirect(): Promise<boolean> {
   const { push, currentRoute } = AppRouter
 
-  const { query, params } = currentRoute.value
+  const { query } = currentRoute.value
 
   const path = AppRedirectPath + currentRoute.value.fullPath
 
@@ -12,7 +12,6 @@ export function useRedirect(): Promise<boolean> {
     push({
       path,
       query,
-      params,
       replace: true,
     }).then(() => resolve(true)),
   )

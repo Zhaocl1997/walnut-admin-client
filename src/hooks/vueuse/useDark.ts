@@ -22,7 +22,6 @@ export function toggleDark(e: MouseEvent) {
     return
   }
 
-  // @ts-expect-error: Transition API
   const transition = document.startViewTransition(async () => {
     isDark.value = !isDark.value
     await nextTick()

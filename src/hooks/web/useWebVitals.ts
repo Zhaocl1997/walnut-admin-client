@@ -1,7 +1,9 @@
+import type { Metric } from 'web-vitals/attribution'
 import { onCLS, onFCP, onFID, onINP, onLCP, onTTFB } from 'web-vitals/attribution'
 
-function logDelta({ name, delta, value, id, attribution }) {
+function logDelta({ name, delta, value, id }: Metric) {
   const eventParams = {
+    name,
     // Built-in params:
     value: delta, // Use `delta` so the value can be summed.
     // Custom params:
@@ -10,7 +12,7 @@ function logDelta({ name, delta, value, id, attribution }) {
     metric_delta: delta, // Optional.
   }
 
-  // console.log(eventParams);
+  console.log(eventParams)
 }
 
 export function reportWebVitals() {

@@ -46,8 +46,8 @@ export function imgUrlToBase64(url: string, mineType = 'image/png') {
     img.src = url
 
     img.onload = function () {
-      let canvas: HTMLCanvasElement = document.createElement('canvas')
-      const ctx = canvas!.getContext('2d')
+      let canvas: HTMLCanvasElement | null = document.createElement('canvas')!
+      const ctx = canvas.getContext('2d')!
       canvas.height = img.height
       canvas.width = img.width
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)

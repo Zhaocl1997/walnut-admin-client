@@ -24,6 +24,7 @@ const emailFormData = reactive<
 })
 
 async function onSubmit() {
+  // eslint-disable-next-line ts/no-use-before-define
   const valid = await validate()
 
   if (valid) {
@@ -146,6 +147,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
                 <NText
                   type="info"
                   strong
+                  // @ts-expect-error no onClick for NText
                   onClick={(e: MouseEvent) => {
                     e.stopPropagation()
                     openExternalLink(AppAuthServiceAgreementPath)
@@ -159,6 +161,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
                 <NText
                   type="info"
                   strong
+                  // @ts-expect-error no onClick for NText
                   onClick={(e: MouseEvent) => {
                     e.stopPropagation()
                     openExternalLink(AppAuthPrivacyPolicyPath)

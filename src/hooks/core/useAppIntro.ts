@@ -61,8 +61,6 @@ export function useAppIntro(delay = 1500) {
       },
     ],
 
-    // @ts-expect-error
-    // these three options exist but the `@types` not updated
     dontShowAgain: true,
     dontShowAgainLabel: t('app.intro.dontShowAgain'),
     dontShowAgainCookieDays: 7,

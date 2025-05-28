@@ -18,7 +18,7 @@ function onStart() {
   }, 1000)
 }
 
-const [register] = useForm({
+const [register] = useForm<typeof formData.value>({
   span: 12,
   schemas: [
     {

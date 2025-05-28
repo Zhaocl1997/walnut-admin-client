@@ -13,7 +13,6 @@ const keyField = '_id'
 const { t } = useAppI18n()
 
 const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUserModel>({
-  // @ts-expect-error do not know why
   baseAPI: monitorUserAPI,
 
   tableProps: {

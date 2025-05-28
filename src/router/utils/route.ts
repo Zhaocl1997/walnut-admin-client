@@ -104,6 +104,7 @@ function resolveViewModules(component: string) {
  */
 export function buildRoutes(payload: TreeNodeItem<RouteRecordRaw>[]) {
   const routesTree = formatTree<RouteRecordRaw, RouteRecordRaw>(payload, {
+    // @ts-expect-error need to declare a new type
     format: (node) => {
       // handle catelog
       if (node.meta!.type === AppConstMenuType.CATALOG) {

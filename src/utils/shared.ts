@@ -1,5 +1,5 @@
 import type { Slots } from 'vue'
-import { filter, isEmpty, isUndefined } from 'lodash-es'
+import { isUndefined } from 'lodash-es'
 import { renderSlot } from 'vue'
 
 export function getDefaultSlotText(slots: Slots): string {
@@ -29,22 +29,6 @@ export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
 
 // get boolean or return value is boolean
 export const getFunctionBoolean = <T>(val: any, cbParams: T, defaultVal = true) => (isUndefined(val) ? defaultVal : typeof val === 'boolean' ? val : val(cbParams))
-
-// filter tree deeply
-export function filterTree<T, R = T>(tree: TreeNodeItem<T>[], cb: (node: T) => boolean): TreeNodeItem<R>[] {
-  return filter(tree, (item) => {
-    if (cb(item)) {
-      if (item.children) {
-        item.children = filterTree(item.children, cb)
-      }
-      return true
-    }
-    else if (item.children) {
-      item.children = filterTree(item.children, cb)
-      return !isEmpty(item.children)
-    }
-  })
-}
 
 // easy detect device type
 export function detectDeviceType() {

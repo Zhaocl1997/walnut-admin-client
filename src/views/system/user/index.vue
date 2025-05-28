@@ -76,7 +76,7 @@ const [
 
   tableProps: {
     localeUniqueKey: key,
-    rowKey: row => row[keyField],
+    rowKey: row => row[keyField]!,
     maxHeight: 600,
     striped: true,
     bordered: true,

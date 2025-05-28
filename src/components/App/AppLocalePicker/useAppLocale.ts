@@ -23,10 +23,10 @@ export function useAppLocale() {
 
   const setI18nLanguage = (locale: ValueOfAppConstLocale) => {
     if (AppI18n.mode === 'legacy')
+      // @ts-expect-error TODO i18n legacy will remove in v12
       AppI18n.global.locale = locale
-
     else
-      (AppI18n.global.locale as Ref<string>).value = locale
+      AppI18n.global.locale.value = locale
 
     /**
      * NOTE:

@@ -15,12 +15,13 @@ const appNaive = useAppStoreNaive()
 const { loading } = useAuthContext()
 
 const accountFormData = ref<AppPayloadAuth.Password>({
-  userName: undefined,
-  password: undefined,
+  userName: '',
+  password: '',
   rememberMe: true,
 })
 
 async function onSubmit() {
+  // eslint-disable-next-line ts/no-use-before-define
   const valid = await validate()
 
   if (valid) {
@@ -88,7 +89,7 @@ const [register, { validate }] = useForm<typeof accountFormData.value>({
       componentProp: {
         render: ({ formData }) => (
           <div class="mb-2 w-full hstack justify-between">
-            <NCheckbox vModel={[formData.rememberMe, 'checked']}>
+            <NCheckbox v-model={[formData.rememberMe, 'checked']}>
               {t('form.app.auth.remember')}
             </NCheckbox>
 

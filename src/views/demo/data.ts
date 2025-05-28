@@ -26,6 +26,7 @@ export function getTreeData(): TreeNodeItem<{
   _id: number
   _label: string
   icon: string
+  _disabled?: boolean
 }>[] {
   return [
     {

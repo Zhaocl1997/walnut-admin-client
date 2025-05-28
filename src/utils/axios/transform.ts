@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios'
 import axios from 'axios'
 import {
   easyTransformObjectStringBoolean,
@@ -15,8 +16,6 @@ const appLocale = useAppStoreLocale()
 export const transform: WalnutAxiosTransform = {
   // Here handler request logic
   requestInterceptors: (config) => {
-    const userProfile = useAppStoreUserProfile()
-
     const isRequestAfterRefreshedToken = getBoolean(config._request_after_refresh_token, false)
 
     // avoid use ! below for ts
@@ -31,10 +30,6 @@ export const transform: WalnutAxiosTransform = {
     // custom headers
     config.headers['x-language'] = appLocale.locale
     config.headers['x-fingerprint'] = fpId.value
-
-    // location transform to base64
-    if (userProfile.info?.city)
-      config.headers['x-location'] = wbtoa(`${userProfile.info.country}-${userProfile.info.province}-${userProfile.info.city}-${userProfile.info.area}`)
 
     // a request doomed to fail
     if (config._error)
@@ -122,7 +117,7 @@ export const transform: WalnutAxiosTransform = {
   },
 
   // Here handle response error
-  responseInterceptorsCatch: async (err) => {
+  responseInterceptorsCatch: async (err: AxiosError) => {
     if (err.message === 'Network Error') {
       await useAppRouterPush({ name: '500' })
       return Promise.reject(err)
@@ -136,8 +131,11 @@ export const transform: WalnutAxiosTransform = {
     if (axios.isCancel(err))
       return Promise.reject(err)
 
-    const statusCode: number = (err.response?.data as any).statusCode
-    const msg: string = (err.response?.data as any).detail?.message
+    // TODO need to take a look
+    // @ts-expect-error response
+    const statusCode: number = err.response?.data.statusCode
+    // @ts-expect-error response
+    const msg: string = err.response?.data.detail?.message
     await checkReponseErrorStatus(statusCode, msg)
 
     return Promise.reject(err)

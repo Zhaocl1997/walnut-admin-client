@@ -9,17 +9,17 @@ async function onClick(type: number) {
 
   if (type === 2) {
     await AppRouter.replace({
-      query: { b: { b1: '123', b2: undefined, b3: false } },
+      query: { b: JSON.stringify({ b1: '123', b2: undefined, b3: false }) },
     })
   }
 
   if (type === 3) {
     await AppRouter.replace({
       query: {
-        c: [
+        c: JSON.stringify([
           { c1: '123', c2: 321, c3: true },
           { c1: '123', c2: 321, c3: true },
-        ],
+        ]),
       },
     })
   }

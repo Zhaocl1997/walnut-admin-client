@@ -24,6 +24,7 @@ const SMSFormData = reactive<AppPayloadAuth.PhoneNumber & { agree: string }>({
 })
 
 async function onSubmit() {
+  // eslint-disable-next-line ts/no-use-before-define
   const valid = await validate()
 
   if (valid) {
@@ -62,7 +63,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
             key: 'phoneNumber',
             type: 'string',
             trigger: ['change'],
-            validator: (rule, value) => {
+            validator: (_rule, value) => {
               // to call base rule
               if (!value)
                 return Promise.resolve()
@@ -151,7 +152,8 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
                 <NText
                   type="info"
                   strong
-                  onClick={(e: Event) => {
+                  // @ts-expect-error no onClick for NText
+                  onClick={(e: MouseEvent) => {
                     e.stopPropagation()
                     openExternalLink(AppAuthServiceAgreementPath)
                   }}
@@ -164,7 +166,8 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
                 <NText
                   type="info"
                   strong
-                  onClick={(e: Event) => {
+                  // @ts-expect-error no onClick for NText
+                  onClick={(e: MouseEvent) => {
                     e.stopPropagation()
                     openExternalLink(AppAuthPrivacyPolicyPath)
                   }}
