@@ -18,6 +18,8 @@ declare global {
 
     createdAt?: Date
     updatedAt?: Date
+
+    [key: string]: any
   }
 
   /**

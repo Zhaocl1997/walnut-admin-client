@@ -32,6 +32,7 @@ collections.forEach((item) => {
 export default ret
 `
 
+  const TSIgnore = '// @ts-nocheck \n'
   const addImport = 'import { addCollection } from \'@iconify/vue\';'
 
   const importString = `
@@ -43,8 +44,8 @@ import ${customJSONName} from '/${iconSVGPath}';
 addCollection(${customJSONName})`
 
   // addCollection bundle
-  await BuildUtilsWriteFile(iconBundlePath, addImport + importString + addCollection)
+  await BuildUtilsWriteFile(iconBundlePath, TSIgnore + addImport + importString + addCollection)
 
   // generate icon list
-  await BuildUtilsWriteFile(iconListPath, importString + generateListFromJSON)
+  await BuildUtilsWriteFile(iconListPath, TSIgnore + importString + generateListFromJSON)
 }

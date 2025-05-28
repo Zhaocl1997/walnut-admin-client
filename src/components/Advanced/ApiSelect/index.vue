@@ -2,6 +2,7 @@
 import { WithValueProps } from '@/components/HOC/WithValue'
 import { isFunction } from 'easy-fns-ts'
 
+// TODO rework
 defineOptions({
   name: 'WApiSelect',
   inheritAttrs: false,
@@ -54,18 +55,17 @@ async function onUpdateValue(val: StringOrNumber | StringOrNumber[]) {
     await onReset()
 
   // query is empty. reset to initial state
-  if (Object.keys(params.value.query).length !== 0)
+  if (Object.keys(params.value.query!).length !== 0)
     await onReset(false)
 }
 
-async function onScroll(e: Event) {
+async function onScroll(e: MouseEvent) {
+  if (!e || !e.target)
+    return
+
   // reach bottom
-  if (
-  // @ts-expect-error
-    e.target.firstElementChild.offsetHeight
-    // @ts-expect-error
-    === e.target.scrollTop + e.target.offsetHeight
-  ) {
+  // @ts-expect-error need to rework
+  if ((e.target as ParentNode).firstElementChild.offsetHeight! === (e.target as HTMLElement).scrollTop + (e.target as HTMLElement)?.offsetHeight) {
     if (params.value.page!.page! * 10 >= total.value) {
       useAppMessage().info('The End of the World')
       return
@@ -115,7 +115,7 @@ async function onSearch(query: string) {
   if (!props.multiple)
     valueOptions.value.length = 0
 
-  params.value.query[props.labelField ?? 'label'] = query
+  params.value.query![props.labelField ?? 'label'] = query
   await onApiSelectList(true)
 }
 
@@ -175,6 +175,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <!-- @vue-expect-error -->
   <WSelect
     :value="value"
     :options="getOptions"

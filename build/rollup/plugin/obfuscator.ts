@@ -2,7 +2,7 @@ import obfuscator from 'rollup-plugin-obfuscator'
 
 export function createRollupObfuscatorPlugin() {
   return obfuscator({
-    fileOptions: {
+    options: {
       optionsPreset: 'high-obfuscation',
 
       deadCodeInjection: false,
