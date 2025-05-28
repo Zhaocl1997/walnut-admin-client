@@ -22,7 +22,7 @@ const { getProps: tableProps } = tablePropsCtx
     />
 
     <!-- @vue-generic {T} -->
-    <TableHeaderRightPolling v-if="tableProps.polling && tableProps.polling > 3000" />
+    <TableHeaderRightPolling v-if="tableProps.polling && tableProps.polling > 5000" />
 
     <!-- @vue-generic {T} -->
     <TableHeaderRightColumns />
