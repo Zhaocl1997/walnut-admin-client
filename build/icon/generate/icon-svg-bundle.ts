@@ -3,13 +3,15 @@ import { iconBundlePath, iconListPath, IconLog, iconSVGPath, WSvgPrefix } from '
 import { generateSvgJSON } from './icon-svg-json'
 
 export async function writeSvgJSONBundle() {
+  const TSIgnore = '// @ts-nocheck \n'
+
   const result = `import { addCollection } from '@iconify/vue';
 import CustomSvgJson from '/${iconSVGPath}';
 addCollection(CustomSvgJson);`
 
   IconLog('Svg Bundle', `Bundle svg icons from ${iconSVGPath}`)
 
-  await BuildUtilsWriteFile(iconBundlePath, result)
+  await BuildUtilsWriteFile(iconBundlePath, TSIgnore + result)
 }
 
 export async function rewriteSvgJSON() {
