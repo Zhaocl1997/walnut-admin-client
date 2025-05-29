@@ -14,7 +14,7 @@ interface HorizontalProps {
 const containerRef = useTemplateRef<HTMLDivElement>('containerRef')
 const wrapperRef = useTemplateRef<HTMLDivElement>('wrapperRef')
 
-const durationRef = ref(5000)
+const durationRef = ref(5)
 const wrapperWidthRef = ref(500)
 const contentWidthRef = ref(500)
 
@@ -28,7 +28,7 @@ const getWrapperStyle = computed<CSSProperties>(() => ({
 
 const getTranslateX = computed(() => `translateX(-${contentWidthRef.value}px)`)
 
-onMounted(() => {
+watchEffect(() => {
   if (!containerRef.value || !wrapperRef.value)
     return
 

@@ -5,7 +5,7 @@ defineOptions({
 
 const appTab = useAppStoreTab()
 
-const index = ref(0)
+const count = ref(0)
 
 const otherName = 'FeatureAnimationName'
 
@@ -21,26 +21,26 @@ function onCreate(type: number) {
       = type === 2 ? { testParam1: 1, testParam2: 'abc', testParam3: false } : {}
 
   appTab.createTabs({
-    name: `name-${index.value}`,
-    path: `path-${index.value}`,
+    name: `name-${count.value}`,
+    path: `path-${count.value}`,
     meta: {
-      title: `demo-tab-${index.value}`,
+      title: `demo-tab-${count.value}`,
       icon: 'ant-design:home-outlined',
     },
     query,
     params,
   })
 
-  index.value++
+  count.value++
 }
 
 function onDelete() {
-  if (!index.value)
+  if (!count.value)
     return
 
-  index.value--
+  count.value--
 
-  appTab.deleteTabs(`name-${index.value}`)
+  appTab.deleteTabs(`name-${count.value}`)
 }
 
 function onDynamicTitle(type: number, self = true) {
@@ -152,128 +152,126 @@ function onDynamicIcon(type: number, self = true) {
 </script>
 
 <template>
-  <div class="m-4">
-    <WDemoCard title="Demo for layout tab">
-      <n-list>
-        <n-list-item>
-          <WTitle prefix="bar" class="mb-2">
-            Basic create: {{ index }}
-          </WTitle>
+  <WDemoCard title="Demo for layout tab">
+    <n-list>
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Basic create: {{ count }}
+        </WTitle>
 
-          <n-button @click="onCreate(0)">
-            Create
-          </n-button>
-          <n-button @click="onDelete">
-            Delete
-          </n-button>
-          <n-button @click="onCreate(1)">
-            Create with query
-          </n-button>
-          <n-button @click="onCreate(2)">
-            Create with params
-          </n-button>
-        </n-list-item>
+        <n-button @click="onCreate(0)">
+          Create
+        </n-button>
+        <n-button @click="onDelete">
+          Delete
+        </n-button>
+        <n-button @click="onCreate(1)">
+          Create with query
+        </n-button>
+        <n-button @click="onCreate(2)">
+          Create with params
+        </n-button>
+      </n-list-item>
 
-        <n-list-item>
-          <WTitle prefix="bar" class="mb-2">
-            Dynamic Title
-          </WTitle>
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Dynamic Title
+        </WTitle>
 
-          <n-button @click="onDynamicTitle(1)">
-            Set title(default 5s)
-          </n-button>
-          <n-button @click="onDynamicTitle(2)">
-            Set title with timeout limit(3s)
-          </n-button>
-          <n-button @click="onDynamicTitle(3)">
-            Set title with scrolling for 10s
-          </n-button>
-          <n-button @click="onDynamicTitle(4)">
-            Recovery
-          </n-button>
-        </n-list-item>
+        <n-button @click="onDynamicTitle(1)">
+          Set title
+        </n-button>
+        <n-button @click="onDynamicTitle(2)">
+          Set title with timeout limit(3s)
+        </n-button>
+        <n-button @click="onDynamicTitle(3)">
+          Set title with scrolling for 10s
+        </n-button>
+        <n-button @click="onDynamicTitle(4)">
+          Recovery
+        </n-button>
+      </n-list-item>
 
-        <n-list-item>
-          <WTitle prefix="bar" class="mb-2">
-            Other tab Title (Open the custom animation name page and then come back)
-          </WTitle>
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Other tab Title (Open the custom animation name page and then come back)
+        </WTitle>
 
-          <n-button
-            :disabled="getOtherTabButtonDisabled"
-            @click="onDynamicTitle(1, false)"
-          >
-            Set title(default 5s)
-          </n-button>
-          <n-button
-            :disabled="getOtherTabButtonDisabled"
-            @click="onDynamicTitle(2, false)"
-          >
-            Set title with timeout limit(3s)
-          </n-button>
-          <n-button
-            :disabled="getOtherTabButtonDisabled"
-            @click="onDynamicTitle(3, false)"
-          >
-            Set title with scrolling for 10s
-          </n-button>
-          <n-button
-            :disabled="getOtherTabButtonDisabled"
-            @click="onDynamicTitle(4, false)"
-          >
-            Recovery
-          </n-button>
-        </n-list-item>
+        <n-button
+          :disabled="getOtherTabButtonDisabled"
+          @click="onDynamicTitle(1, false)"
+        >
+          Set title
+        </n-button>
+        <n-button
+          :disabled="getOtherTabButtonDisabled"
+          @click="onDynamicTitle(2, false)"
+        >
+          Set title with timeout limit(3s)
+        </n-button>
+        <n-button
+          :disabled="getOtherTabButtonDisabled"
+          @click="onDynamicTitle(3, false)"
+        >
+          Set title with scrolling for 10s
+        </n-button>
+        <n-button
+          :disabled="getOtherTabButtonDisabled"
+          @click="onDynamicTitle(4, false)"
+        >
+          Recovery
+        </n-button>
+      </n-list-item>
 
-        <n-list-item>
-          <WTitle prefix="bar" class="mb-2">
-            Dynamic Icon
-          </WTitle>
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Dynamic Icon
+        </WTitle>
 
-          <n-button @click="onDynamicIcon(1)">
-            Set Icon(default 5s)
-          </n-button>
-          <n-button @click="onDynamicIcon(2)">
-            Set icon with timeout limit(3s)
-          </n-button>
-          <n-button @click="onDynamicIcon(3)">
-            Set icon with animate
-          </n-button>
-          <n-button @click="onDynamicIcon(4)">
-            Recovery
-          </n-button>
-        </n-list-item>
+        <n-button @click="onDynamicIcon(1)">
+          Set Icon
+        </n-button>
+        <n-button @click="onDynamicIcon(2)">
+          Set icon with timeout limit(3s)
+        </n-button>
+        <n-button @click="onDynamicIcon(3)">
+          Set icon with animate
+        </n-button>
+        <n-button @click="onDynamicIcon(4)">
+          Recovery
+        </n-button>
+      </n-list-item>
 
-        <n-list-item>
-          <WTitle prefix="bar" class="mb-2">
-            Other tab Icon (Open the custom animation name page and then come back)
-          </WTitle>
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Other tab Icon (Open the custom animation name page and then come back)
+        </WTitle>
 
-          <n-button
-            :disabled="getOtherTabButtonDisabled"
-            @click="onDynamicIcon(1, false)"
-          >
-            Set Icon(default 5s)
-          </n-button>
-          <n-button
-            :disabled="getOtherTabButtonDisabled"
-            @click="onDynamicIcon(2, false)"
-          >
-            Set icon with timeout limit(3s)
-          </n-button>
-          <n-button
-            :disabled="getOtherTabButtonDisabled"
-            @click="onDynamicIcon(3, false)"
-          >
-            Set icon with animate
-          </n-button>
-          <n-button
-            :disabled="getOtherTabButtonDisabled"
-            @click="onDynamicIcon(4, false)"
-          >
-            Recovery
-          </n-button>
-        </n-list-item>
-      </n-list>
-    </WDemoCard>
-  </div>
+        <n-button
+          :disabled="getOtherTabButtonDisabled"
+          @click="onDynamicIcon(1, false)"
+        >
+          Set Icon
+        </n-button>
+        <n-button
+          :disabled="getOtherTabButtonDisabled"
+          @click="onDynamicIcon(2, false)"
+        >
+          Set icon with timeout limit(3s)
+        </n-button>
+        <n-button
+          :disabled="getOtherTabButtonDisabled"
+          @click="onDynamicIcon(3, false)"
+        >
+          Set icon with animate
+        </n-button>
+        <n-button
+          :disabled="getOtherTabButtonDisabled"
+          @click="onDynamicIcon(4, false)"
+        >
+          Recovery
+        </n-button>
+      </n-list-item>
+    </n-list>
+  </WDemoCard>
 </template>

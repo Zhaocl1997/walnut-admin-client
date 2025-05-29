@@ -96,33 +96,27 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     setTabTitle(
       name: string,
       title: string,
-      options: AppTabExtendTitleOptions = {
-        timeout: 5000,
-        maxLength: 10,
-        speed: 5000,
-      },
+      options?: AppTabExtendTitleOptions,
     ) {
       const index = this.tabs.findIndex(i => i.name === name)
 
       if (index === -1)
         return
 
-      const { timeout = 5000, maxLength = 10, speed = timeout } = options
-
       this.setTabByIndex(index, {
         meta: {
           _title: title,
-          _title_maxLength: maxLength,
-          _title_speed: speed,
+          _title_maxLength: options?.maxLength,
+          _title_speed: options?.speed,
         },
       })
 
-      if (timeout) {
+      if (options?.timeout) {
         const name = this.tabs[index].name
 
         const { stop } = useTimeoutFn(() => {
           this.recoverTabTitle(name)
-        }, timeout)
+        }, options.timeout)
 
         _title_map_.set(name, stop)
       }
@@ -153,11 +147,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      */
     setCurrentTabTitle(
       title: string,
-      options: AppTabExtendTitleOptions = {
-        timeout: 5000,
-        maxLength: 10,
-        speed: 5000,
-      },
+      options?: AppTabExtendTitleOptions,
     ) {
       this.setTabTitle(this.tabs[this.getCurrentIndex].name, title, options)
     },
@@ -176,33 +166,27 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     setTabIcon(
       name: string,
       icon: string,
-      options: AppTabExtendIconOptions = {
-        timeout: 5000,
-        animate: false,
-        duration: 1000,
-      },
+      options?: AppTabExtendIconOptions,
     ) {
       const index = this.tabs.findIndex(i => i.name === name)
 
       if (index === -1)
         return
 
-      const { timeout = 5000, animate = false, duration = 1000 } = options
-
       this.setTabByIndex(index, {
         meta: {
           _icon: icon,
-          _icon_animate: animate,
-          _icon_animate_duration: duration,
+          _icon_animate: options?.animate,
+          _icon_animate_duration: options?.duration,
         },
       })
 
-      if (timeout) {
+      if (options?.timeout) {
         const name = this.tabs[index].name
 
         const { stop } = useTimeoutFn(() => {
           this.recoverTabIcon(name)
-        }, timeout)
+        }, options.timeout)
 
         _icon_map_.set(name, stop)
       }
@@ -234,11 +218,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      */
     setCurrentTabIcon(
       icon: string,
-      options: AppTabExtendIconOptions = {
-        timeout: 5000,
-        animate: false,
-        duration: 1000,
-      },
+      options?: AppTabExtendIconOptions,
     ) {
       this.setTabIcon(this.tabs[this.getCurrentIndex].name, icon, options)
     },

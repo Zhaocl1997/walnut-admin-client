@@ -13,7 +13,7 @@ const { currentRoute } = useAppRouter()
 const appSetting = useAppStoreSetting()
 const appAdapter = useAppStoreAdapter()
 
-const tabsItem = ref()
+const tabsItem = useTemplateRef('tabsItem')
 const isHovered = useElementHover(tabsItem)
 const getHovered = computed(() => isHovered.value || item.meta._hovered)
 
@@ -89,7 +89,7 @@ const getTitle = computed(() =>
     :style="{
       width: getShowTite ? `${appSetting.tabs.itemWidth}px` : 'max-content',
     }"
-    class="relative grid grid-cols-12 h-full cursor-pointer select-none items-center gap-1 px-2 py-1"
+    class="relative grid grid-cols-12 h-full cursor-pointer select-none items-center gap-1 gap-x-2 px-2 py-1"
     :class="[
       {
         '!grid-cols-2': !getShowTite,
@@ -114,8 +114,8 @@ const getTitle = computed(() =>
     <WIcon
       v-if="getShowIcon"
       :icon="item.meta?._icon ?? item.meta.icon!"
-      height="16"
       class="col-span-2 flex items-center"
+      height="16"
       :class="[
         { 'animate-bounce': item.meta._icon_animate },
         { 'animate-duration-1000': item.meta._icon_animate_duration === 1000 },
@@ -125,26 +125,29 @@ const getTitle = computed(() =>
       ]"
     />
 
+    <!-- main text -->
     <WTransition appear transition-name="fade-left" :duration="100">
-      <WTextScroll
+      <div
         v-if="getShowTite"
         class="col-span-10 truncate whitespace-nowrap text-sm"
         :class="[
-          { 'pr-4': getHovered },
+          { 'pr-4': getShowCloseIcon },
         ]"
-        :title="getTitle"
-        :max-length="item.meta._title_maxLength ?? 16"
-        :speed="item.meta._title_speed"
       >
-        {{ getTitle }}
-      </WTextScroll>
+        <WTextScroll
+          :texts="[getTitle]"
+          :max-length="item.meta._title_maxLength ?? 16"
+          :speed="item.meta._title_speed"
+        />
+      </div>
     </WTransition>
 
+    <!-- close -->
     <WTransition appear transition-name="fade-right">
       <WIcon
         v-if="getShowCloseIcon"
-        icon="ant-design:close-outlined"
         height="16"
+        icon="ant-design:close-outlined"
         class="absolute right-1 hover:(scale-125 transform rounded-full text-error)"
         @click.prevent.stop="onTabRemove(item.name)"
       />
