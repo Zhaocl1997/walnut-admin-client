@@ -10,7 +10,6 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
   const { formIdMap, getFormItemId, setFormItemId } = formItemIdCtx
 
   function updateSchema(schema: WForm.Schema.Item<T>[]) {
-    // @ts-expect-error too deep
     formSchemas.value = schema.map((i, idx) => {
       if (isUndefined(getFormItemId(i, idx)))
         setFormItemId(i, idx, true)
