@@ -90,7 +90,7 @@ export class Encryption {
 
       return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8))
     }
-    catch (error) {
+    catch {
       return null
     }
   }

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 tinymce.addI18n('en-US', {
   'Cut': 'Cut',
   'Heading 5': 'Heading 5',

@@ -5,15 +5,15 @@ import { setupSocket } from '@/socket'
 import { setupStore } from '@/store/pinia'
 import StarportPlugin from 'vue-starport'
 
-function setupErrorhandler(app: App) {
-  app.config.errorHandler = (error) => {
-    console.error('AppErrorHandler', error)
-  }
+// function setupErrorhandler(app: App) {
+//   app.config.errorHandler = (error) => {
+//     console.error('AppErrorHandler', error)
+//   }
 
-  app.config.warnHandler = (warn) => {
-    console.warn('AppWarnHandler', warn)
-  }
-}
+//   app.config.warnHandler = (warn) => {
+//     console.warn('AppWarnHandler', warn)
+//   }
+// }
 
 /**
  * @description Entry to set up Vue App

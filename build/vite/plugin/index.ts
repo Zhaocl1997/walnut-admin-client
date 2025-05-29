@@ -38,9 +38,8 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     // https://github.com/unocss/unocss
     createUnoCSSPlugin(),
 
-    // TODO when no ts error, use this plugin
     // https://github.com/fi3ework/vite-plugin-checker
-    // createCheckerPlugin(),
+    createCheckerPlugin(),
 
     // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
     // {

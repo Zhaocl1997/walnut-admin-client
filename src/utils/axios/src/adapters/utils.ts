@@ -1,4 +1,4 @@
-// @ts-expect-error
+// @ts-expect-error ts path error
 import buildURL from 'axios/lib/helpers/buildURL'
 
 export function buildSortedURL(...args: any[]) {

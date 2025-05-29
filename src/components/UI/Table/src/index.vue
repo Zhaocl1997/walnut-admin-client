@@ -81,7 +81,7 @@ const {
   checkedRowKeys,
 } = useTableAPI<T>(tableRef, tablePropsCtx, tableColumns, listParams)
 
-const tableMethods = useTableMethods<T>(tableRef)
+const tableMethods = useTableMethods(tableRef)
 
 setTableContext<T>({
   tableRef,

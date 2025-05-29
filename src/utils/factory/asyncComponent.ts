@@ -19,20 +19,19 @@ type ComponentProps<T> =
       ? P
       : object
 type AsyncComponentWithJSX<T extends Component> =
-  T extends ComponentOptionsBase<any, any, any, any, any, any, any, any> | DefineComponent<any, any, any, any, any, any, any, any>
-    ? DefineComponent<
-      ComponentProps<T>,
-      any,
-      any,
-      any,
-      any,
-      any,
-      any,
-      any
-    > & {
-      (props: ComponentProps<T>): JSX.Element
-      new (): ComponentPublicInstance<ComponentProps<T>>
-    }
+  T extends ComponentOptionsBase<any, any, any, any, any, any, any, any> | DefineComponent<any, any, any, any, any, any, any, any> ? DefineComponent<
+    ComponentProps<T>,
+    any,
+    any,
+    any,
+    any,
+    any,
+    any,
+    any
+  > & {
+    (props: ComponentProps<T>): JSX.Element
+    new (): ComponentPublicInstance<ComponentProps<T>>
+  }
     : T
 
 // Used 1: w-form async component

@@ -76,7 +76,7 @@ export declare namespace WTable {
     namespace UseTable {
       type Props<T> = WTable.Props<T> | ComputedRef<WTable.Props<T>> | IDeepMaybeRef<WTable.Props<T>>
 
-      type Methods<T> = ICompUITableHooksMethods<T> & Omit<Inst.WTableInst<T>, 'setProps'>
+      type Methods<T> = ICompUITableHooksMethods & Omit<Inst.WTableInst<T>, 'setProps'>
 
       type ReturnType<T> = [
         (instance: Inst.WTableInst<T>) => void,

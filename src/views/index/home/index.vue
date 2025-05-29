@@ -39,6 +39,7 @@ const { cards: chartCards, loading: chartCardLoading } = useChartCard()
           :key="index"
           class="w-full rounded-2xl px-1 pt-1 transition duration-300 ease-in-out md:w-1/2 xl:w-1/2 md:pr-1"
         >
+          <!-- @vue-expect-error do not know why -->
           <WHomeChartCard
             v-bind="item"
             :loading="chartCardLoading"

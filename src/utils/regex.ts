@@ -1,7 +1,5 @@
 /**
- * Curries a predicate function to check if value matches pattern.
- * @param {RegExp} pattern
- * @returns {(value: string) => boolean}
+ * @description Curries a predicate function to check if value matches pattern.
  */
 const isPattern = (pattern: RegExp) => (value: string) => pattern.test(value)
 

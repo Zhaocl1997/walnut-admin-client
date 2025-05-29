@@ -7,7 +7,7 @@ defineOptions({
   defaultView: false,
 })
 
-const state = ref({
+const state = ref<Recordable>({
   tree1: undefined,
   tree2: [],
   tree3: undefined,

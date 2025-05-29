@@ -21,7 +21,7 @@ export function useAppTitle() {
           title.value = `${translateTitle} - ${envTitle}`
         }
       }
-      catch (error) {
+      catch {
         title.value = `${envTitle}`
       }
     },

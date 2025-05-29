@@ -1,5 +1,6 @@
 import cp from 'node:child_process'
 import fs from 'node:fs'
+import process from 'node:process'
 import chalk from 'chalk'
 
 import { getNow } from 'easy-fns-ts/dist/lib'

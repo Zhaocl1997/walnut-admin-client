@@ -1,6 +1,6 @@
 import type { WTable } from '../types'
 
-export function useTableMethods<T>(tableRef: Ref<WTable.Inst.NDataTableInst | null>) {
+export function useTableMethods(tableRef: Ref<WTable.Inst.NDataTableInst | null>) {
   function clearFilters() {
     tableRef.value?.clearFilters()
   }
@@ -14,4 +14,4 @@ export function useTableMethods<T>(tableRef: Ref<WTable.Inst.NDataTableInst | nu
   }
 }
 
-export type ICompUITableHooksMethods<T> = ReturnType<typeof useTableMethods<T>>
+export type ICompUITableHooksMethods = ReturnType<typeof useTableMethods>

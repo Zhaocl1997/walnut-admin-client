@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { BuildUtilsWarn } from '../../utils'
 import { generateIconUsedBundle } from '../generate/icon-bundle'
 import { generateIconDev } from '../generate/icon-dev'

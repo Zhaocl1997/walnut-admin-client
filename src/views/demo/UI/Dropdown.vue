@@ -1,13 +1,16 @@
 <script lang="tsx" setup>
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
+
 import { useDropdown } from '@/components/UI/Dropdown'
+// TODO 111
+import WIcon from '@/components/UI/Icon'
 
 defineOptions({
   name: 'DropdownDemo',
   defaultView: false,
 })
 
-const contextMenuOptions = computed<Partial<DropdownMixedOption>[]>(() => [
+const contextMenuOptions = computed((): DropdownMixedOption[] => [
   {
     key: '1',
     label: 'New York City',
@@ -38,7 +41,7 @@ const contextMenuOptions = computed<Partial<DropdownMixedOption>[]>(() => [
 
 const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
   dropdownProps: {
-    options: contextMenuOptions,
+    options: contextMenuOptions.value,
     onSelect: (key) => {
       console.log('DEMO', key)
       closeDropdown()

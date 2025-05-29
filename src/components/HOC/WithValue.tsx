@@ -1,8 +1,8 @@
 import { omit } from 'lodash-es'
 
 export const WithValueProps = {
-  value: [String, Number, Boolean, Array] as PropType<
-    string | number | boolean | string[] | number[] | (string & number)[]
+  value: [String, Number, Boolean] as PropType<
+    string | number | boolean | string[] | number[] | boolean[] | BaseDataType[]
   >,
 
   multiple: Boolean as PropType<boolean>,

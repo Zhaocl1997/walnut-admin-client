@@ -89,7 +89,7 @@ async function onInitMap() {
   baiduMapAutoComplete.value = new BMap.Autocomplete({
     input: acId.value,
     location: map,
-    onSearchComplete(data: any) {},
+    onSearchComplete(_data: any) {},
   })
 
   baiduMapAutoComplete.value.addEventListener('onconfirm', (e: any) => {
@@ -149,7 +149,6 @@ onMounted(() => {
   <n-popover v-model:show="show" trigger="click" display-directive="show">
     <template #trigger>
       <n-input
-        ref="inputRef"
         :value="filter"
         readonly
         @click="onOpenPopover"
@@ -173,7 +172,7 @@ onMounted(() => {
 </template>
 
 <style>
-  .tangram-suggestion-main {
+.tangram-suggestion-main {
   z-index: 9999999999;
 }
 </style>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
-  total: number
-  current: number
+  total?: number
+  current?: number
 }>(), {
   total: 9,
   current: -1,

@@ -3,7 +3,7 @@ defineOptions({
   name: 'WCompExtraCapsLockToolTip',
 })
 
-withDefaults(defineProps<{ lock: boolean }>(), { lock: false })
+withDefaults(defineProps<{ lock?: boolean }>(), { lock: false })
 
 const tooltipShow = ref(false)
 const isFocus = ref(false)

@@ -77,9 +77,8 @@ function onUpdateSelectValue() {
 
 // only number input
 function onAllowInput(v: string) {
-  // TODO make this built inside input => only number
-  const r1 = /[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]+$/g
-  const r2 = /[a-z]+$/gi
+  const r1 = /[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]+$/
+  const r2 = /[a-z]+$/i
 
   if (r1.test(v) || r2.test(v))
     return false

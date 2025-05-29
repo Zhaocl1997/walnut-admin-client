@@ -6,7 +6,7 @@ defineOptions({
   defaultView: false,
 })
 
-const state = reactive({
+const state = ref<Recordable>({
   checkbox1: [],
   checkbox2: [1, 4],
   checkbox3: ['1', '4'],
