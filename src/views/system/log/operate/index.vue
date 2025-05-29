@@ -258,7 +258,7 @@ const [
       },
 
       {
-        type: 'business:Dict',
+        type: 'Business:Dict',
         formProp: {
           path: 'actionType',
         },

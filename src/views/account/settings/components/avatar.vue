@@ -4,7 +4,7 @@ defineOptions({
   defaultView: false,
 })
 
-const props = withDefaults(defineProps<{ value?: string, size?: number }>(), {
+withDefaults(defineProps<{ value?: string, size?: number }>(), {
   size: 24,
 })
 
