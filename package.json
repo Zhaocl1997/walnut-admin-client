@@ -146,7 +146,6 @@
     "sharp": "0.34.1",
     "simple-git-hooks": "2.12.1",
     "standard-version": "9.5.0",
-    "terser": "5.39.0",
     "ts-json-schema-generator": "2.4.0",
     "typescript": "5.8.3",
     "unocss": "66.0.0",

@@ -285,9 +285,6 @@ importers:
       standard-version:
         specifier: 9.5.0
         version: 9.5.0
-      terser:
-        specifier: 5.39.0
-        version: 5.39.0
       ts-json-schema-generator:
         specifier: 2.4.0
         version: 2.4.0
