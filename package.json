@@ -120,7 +120,6 @@
     "@vitejs/plugin-legacy": "6.1.0",
     "@vitejs/plugin-vue": "5.2.3",
     "@vitejs/plugin-vue-jsx": "4.1.2",
-    "@vue/compiler-sfc": "3.5.13",
     "case-police": "2.0.0",
     "chalk": "5.4.1",
     "commitizen": "4.3.1",
