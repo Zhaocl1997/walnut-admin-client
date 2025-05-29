@@ -65,7 +65,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     css: { },
 
     esbuild: {
-      pure: processedEnv.dropConsole ? ['console.log', 'debugger'] : [],
+      drop: processedEnv.dropConsole ? ['console', 'debugger'] : [],
+      legalComments: 'none',
     },
 
     server: {
