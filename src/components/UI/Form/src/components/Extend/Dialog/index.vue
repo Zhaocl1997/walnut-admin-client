@@ -124,8 +124,8 @@ defineExpose({ onOpen, onClose })
 </script>
 
 <template>
+  <!-- @vue-skip -->
   <div>
-    <!-- @vue-expect-error -->
     <WModal
       v-if="formProps.dialogPreset === 'modal'"
       v-bind="getBindProps"
@@ -140,7 +140,6 @@ defineExpose({ onOpen, onClose })
       <slot />
     </WModal>
 
-    <!-- @vue-expect-error -->
     <WDrawer
       v-else-if="formProps.dialogPreset === 'drawer'"
       v-bind="getBindProps"

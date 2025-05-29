@@ -9,8 +9,8 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
 
   const { formIdMap, getFormItemId, setFormItemId } = formItemIdCtx
 
-  function updateSchema(schema: WForm.Schema.Item<T>[]) {
-    // @ts-expect-error too deep
+  // TODO too deep
+  function updateSchema(schema: any[]) {
     formSchemas.value = schema.map((i, idx) => {
       if (isUndefined(getFormItemId(i, idx)))
         setFormItemId(i, idx, true)
@@ -19,7 +19,7 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
         ...i,
         _internalShow: getFormItemId(i, idx),
       }
-    })
+    }) as WForm.Schema.Item<T>[]
   }
 
   watch(

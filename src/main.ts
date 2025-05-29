@@ -8,7 +8,7 @@ import 'virtual:uno.css'
 import '@unocss/reset/tailwind-compat.css'
 
 // LINK https://utc.yuy1n.io/features/highlight.html#options-1
-import '~console/theme-detect'
+// import '~console/theme-detect'
 
 // animate
 import 'animate.css'

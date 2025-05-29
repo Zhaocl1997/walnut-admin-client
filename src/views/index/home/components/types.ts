@@ -8,8 +8,8 @@ export interface WHomeNumberCardProps {
   }
   loading?: boolean
 
-  number: number
-  icon: string
+  number?: number
+  icon?: string
 }
 
 export interface WHomeChartCardProps {

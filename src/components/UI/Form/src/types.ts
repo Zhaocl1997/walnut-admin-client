@@ -55,7 +55,6 @@ import type { ICompUIFormHooksMethods } from './hooks/useFormMethods'
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 
 export declare namespace WForm {
-
   type FormDialogPreset = 'modal' | 'drawer'
 
   type LocaleType = 'origin' | 'helpMsg' | 'rule' | 'placeholder'
@@ -108,14 +107,12 @@ export declare namespace WForm {
       ) => void | Promise<void>
       onNo?: (close: Fn) => void | Promise<void>
     }
-
   }
 
   /**
    * @description Hooks
    */
   namespace Hooks {
-
     namespace UseForm {
       type Props<T> = WForm.Props<T> | ComputedRef<WForm.Props<T>> | IDeepMaybeRef<WForm.Props<T>>
 
