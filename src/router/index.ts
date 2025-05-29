@@ -32,7 +32,7 @@ export function useAppRouterPush(info: RouteLocationRaw) {
   try {
     return AppRouter.push(info).catch(() => {
       // maybe error
-      useAppMessage().warning(AppI18n.global.t('app.menu.error'))
+      useAppMessage().warning(AppI18n().global.t('app.menu.error'))
 
       // finish the loadingbar
       window.$loadingBar.finish()
@@ -42,6 +42,6 @@ export function useAppRouterPush(info: RouteLocationRaw) {
     console.error('Router push', error)
 
     // maybe error
-    useAppMessage().warning(AppI18n.global.t('app.menu.error'))
+    useAppMessage().warning(AppI18n().global.t('app.menu.error'))
   }
 }

@@ -6,23 +6,19 @@ export function useAppLocale() {
 
   const loadLocaleMessages = async (locale: ValueOfAppConstLocale) => {
     // Don't load again if has been loaded
-    if (
-      Object.keys(
-        (AppI18n.global?.messages as unknown as Ref<string[]>).value,
-      ).includes(locale)
-    ) {
+    if (Object.keys(AppI18n().global?.messages.value).includes(locale)) {
       return
     }
 
     const backendMsg = await AppI18nGetI18nMsg(locale)
 
-    AppI18n.global.setLocaleMessage(locale, backendMsg)
+    AppI18n().global.setLocaleMessage(locale, backendMsg)
 
     return nextTick()
   }
 
   const setI18nLanguage = (locale: ValueOfAppConstLocale) => {
-    AppI18n.global.locale.value = locale
+    AppI18n().global.locale.value = locale
 
     /**
      * NOTE:

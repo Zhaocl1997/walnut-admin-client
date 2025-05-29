@@ -27,7 +27,7 @@ export function AppMsg(msg: string, options: AppMessageOptions) {
 }
 
 export function useAppMsgSuccess(msg?: string, options?: Omit<AppMessageOptions, 'type'>) {
-  return AppMsg(msg ?? AppI18n.global?.t('app.base.operation.success'), {
+  return AppMsg(msg ?? AppI18n().global?.t('app.base.operation.success'), {
     ...options,
     type: 'success',
   })

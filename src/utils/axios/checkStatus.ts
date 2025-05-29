@@ -1,6 +1,6 @@
 function responseError(msg: string) {
   // TODO 93
-  useAppNotiError(AppI18n.global?.t(msg))
+  useAppNotiError(AppI18n().global?.t(msg))
 }
 
 export async function checkReponseErrorStatus(status?: number, msg?: string) {

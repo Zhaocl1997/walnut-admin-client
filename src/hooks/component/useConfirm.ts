@@ -12,10 +12,10 @@ export function useAppConfirm(msg: string, options?: DialogOptions) {
 
   return new Promise<{ confirmed: boolean, inst: ReturnType<typeof dialog.warning> }>((resolve) => {
     const inst = dialog.warning({
-      title: AppI18n.global?.t('app.base.warning'),
+      title: AppI18n().global?.t('app.base.warning'),
       content: msg,
-      negativeText: AppI18n.global?.t('app.button.no'),
-      positiveText: AppI18n.global?.t('app.button.yes'),
+      negativeText: AppI18n().global?.t('app.button.no'),
+      positiveText: AppI18n().global?.t('app.button.yes'),
       autoFocus: false,
       ...options,
       onPositiveClick: () => {

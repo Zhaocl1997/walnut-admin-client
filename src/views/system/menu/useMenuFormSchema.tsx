@@ -311,7 +311,7 @@ export function useMenuFormSchema(
         options: computed(() =>
           menuActiveNamesOptions.value.map(i => ({
             value: i.name,
-            label: AppI18n.global.t(i.title),
+            label: AppI18n().global.t(i.title),
           })),
         ),
         filterable: true,

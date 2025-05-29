@@ -139,7 +139,7 @@ export function generateRuleMessage<T>(t: Fn, i: SchemaItem<T>, p: ComputedRef<F
 /**
  * @description generate base rules based on schemas
  */
-export function generateBaseRules<T>(t: typeof AppI18n['global']['t'], schemas: Ref<SchemaItem<T>[]>, props: ComputedRef<FormProps<T>>): FormRules {
+export function generateBaseRules<T>(t: ReturnType<typeof AppI18n>['global']['t'], schemas: Ref<SchemaItem<T>[]>, props: ComputedRef<FormProps<T>>): FormRules {
   const getBaseRuleObj = (
     i: SchemaItem<T>,
     extra?: FormItemRule[],

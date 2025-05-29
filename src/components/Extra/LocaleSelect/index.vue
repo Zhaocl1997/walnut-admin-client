@@ -45,7 +45,7 @@ async function onRefresh() {
 
     const res = await AppI18nGetI18nMsg(locale, 0)
 
-    AppI18n.global.setLocaleMessage(locale, res)
+    AppI18n().global.setLocaleMessage(locale, res)
   }
   finally {
     loading.value = false

@@ -124,7 +124,7 @@ export const transform: WalnutAxiosTransform = {
     }
 
     if (err.message === 'Demonstrate') {
-      useAppNotiError(AppI18n.global.t('app.base.demonstrate'))
+      useAppNotiError(AppI18n().global.t('app.base.demonstrate'))
       return Promise.reject(err)
     }
 
