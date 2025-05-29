@@ -77,13 +77,13 @@ async function onOAuth(type: string) {
       loading.value = false
 
       // remove current socket listener
-      AppSocket!.removeListener(socketPath)
+      AppSocket().removeListener(socketPath)
 
       clearInterval(intervelID)
     }
   }, 200)
 
-  AppSocket!.on(socketPath, async (data) => {
+  AppSocket().on(socketPath, async (data) => {
     // close the opened window
     childWindow.close()
 
@@ -97,7 +97,7 @@ async function onOAuth(type: string) {
     loading.value = false
 
     // remove current socket listener
-    AppSocket!.removeListener(socketPath)
+    AppSocket().removeListener(socketPath)
   })
 }
 
