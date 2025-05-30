@@ -27,8 +27,19 @@ export const testFrontAuthRoute: RouteRecordRaw = {
   },
 }
 
+// for fun
+export const splashCursorRoute: RouteRecordRaw = {
+  name: 'SplashCursor',
+  path: '/splash-cursor',
+  component: () => import('../../views/features/splash-cursor.vue'),
+  meta: {
+    _auth: false,
+  },
+}
+
 export const mainoutRoutes: RouteRecordRaw[] = [
   testMainoutRoute,
   externalLinkRoute,
   testFrontAuthRoute,
+  splashCursorRoute,
 ]
