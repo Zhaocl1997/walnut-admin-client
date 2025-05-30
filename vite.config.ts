@@ -32,7 +32,7 @@ const __APP_INFO__ = {
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = cwd()
 
-  const env = loadEnv(mode, pathResolve(envDir)) as unknown as ImportMetaEnv
+  const env = loadEnv(mode, pathResolve(envDir)) as ImportMetaEnv
 
   const processedEnv = useBuildEnv(env)
 
@@ -82,8 +82,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         overlay: false,
       },
     },
-
-    envPrefix: 'VITE_',
 
     preview: {
       port: 8080,
