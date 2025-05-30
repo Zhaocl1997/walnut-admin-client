@@ -34,7 +34,7 @@
     "prebuild": "esno build/generate/index.ts && npm run icon:prod",
     "build": "vite build",
     "build:stage": "esno build/stage.ts",
-    "preview": "vite preview --mode prod",
+    "preview": "vite preview --mode production",
     "preview:stage": "vite preview --mode staging",
     "release": "standard-version && git push --follow-tags origin naive-ui",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
@@ -47,7 +47,7 @@
     "check:deps:update": "npx npm-check-updates -i",
     "check:nm": "node-modules-inspector",
     "deploy:stage": "deploy-cli-service deploy --mode staging",
-    "deploy:prod": "deploy-cli-service deploy --mode prod",
+    "deploy:prod": "deploy-cli-service deploy --mode production",
     "icon:dev": "esno build/icon dev",
     "icon:prod": "esno build/icon prod"
   },
