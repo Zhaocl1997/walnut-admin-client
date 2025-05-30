@@ -28,13 +28,15 @@
   - [ ] 页面中的错误模拟 demo
   - [ ] rrweb
   - [ ] pdf/word/excel/print.js plugin
-  - [ ] error monitor (femonitor-web)
+  - [ ] error monitor (sentry?)
   - [x] untyper
   - [ ] closure-compiler (尝试搞过，难搞)
   - [ ] markdown (vditor)
   - [ ] fullcalendar
   - [ ] 拆分面板 splitpanes
   - [ ] tiptap 替代 tinymce?
+  - [ ] cdn/混淆
+  - [ ] vite-plugin-csp-guard
 
 - 不重要不紧急
 
@@ -44,7 +46,7 @@
   - [x] 菜单 自定义动画/记住滚动位置/页面离开提示(路由和全局)
   - [x] 动态设置tab的名称，图标，badge, 进入之前的路由钩子处理
   - [x] 输入框的定制插槽 - 复制
-  - [ ] vue-tsc 错误全部消除
+  - [x] vue-tsc 错误全部消除（至少是真的全部消除过一次了
   - [ ] layout 扩展
   - [ ] 主题扩展
   - [x] 手机号组件，邮箱填充组件，身份证组件
