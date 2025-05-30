@@ -174,9 +174,6 @@ importers:
       '@types/qs':
         specifier: 6.9.18
         version: 6.9.18
-      '@types/rollup-plugin-visualizer':
-        specifier: 5.0.3
-        version: 5.0.3(rollup@4.40.0)
       '@types/signature_pad':
         specifier: 4.0.0
         version: 4.0.0
@@ -271,8 +268,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(javascript-obfuscator@4.1.1)(rollup@4.40.0)
       rollup-plugin-visualizer:
-        specifier: 5.14.0
-        version: 5.14.0(rollup@4.40.0)
+        specifier: 6.0.1
+        version: 6.0.1(rollup@4.40.0)
       sass:
         specifier: 1.86.3
         version: 1.86.3
@@ -1985,10 +1982,6 @@ packages:
 
   '@types/qs@6.9.18':
     resolution: {integrity: sha512-kK7dgTYDyGqS+e2Q4aK9X3D7q234CIZ1Bv0q/7Z5IwRDoADNU81xXJK/YVyLbLTZCoIwUoDoffFeF+p/eIklAA==}
-
-  '@types/rollup-plugin-visualizer@5.0.3':
-    resolution: {integrity: sha512-eqlnKXp1TvvlUVPd+cBrTfD4v7TyshgoCT3ao490fkJdR6M8CPjZLc+MFBmXZjCRXk30yKAyZ2n381fXafAQOg==}
-    deprecated: This is a stub types definition. rollup-plugin-visualizer provides its own type definitions, so you do not need this installed.
 
   '@types/semver@7.7.0':
     resolution: {integrity: sha512-k107IF4+Xr7UHjwDc7Cfd6PRQfbdkiRabXGRjo07b4WyPahFBZCZ1sE+BNxYIJPPg73UkfOsVOLwqVc/6ETrIA==}
@@ -5811,8 +5804,8 @@ packages:
       javascript-obfuscator: '*'
       rollup: ^2.56.3||^3.0.0||^4.0.0
 
-  rollup-plugin-visualizer@5.14.0:
-    resolution: {integrity: sha512-VlDXneTDaKsHIw8yzJAFWtrzguoJ/LnQ+lMpoVfYJ3jJF4Ihe5oYLAqLklIK/35lgUY+1yEzCkHyZ1j4A5w5fA==}
+  rollup-plugin-visualizer@6.0.1:
+    resolution: {integrity: sha512-NjlGElvLXCSZSAi3gNRZbfX3qlQbQcJ9TW97c5JpqfVwMhttj9YwEdPwcvbKj91RnMX2PWAjonvSEv6UEYtnRQ==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -8776,13 +8769,6 @@ snapshots:
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/qs@6.9.18': {}
-
-  '@types/rollup-plugin-visualizer@5.0.3(rollup@4.40.0)':
-    dependencies:
-      rollup-plugin-visualizer: 5.14.0(rollup@4.40.0)
-    transitivePeerDependencies:
-      - rolldown
-      - rollup
 
   '@types/semver@7.7.0': {}
 
@@ -13202,7 +13188,7 @@ snapshots:
       javascript-obfuscator: 4.1.1
       rollup: 4.40.0
 
-  rollup-plugin-visualizer@5.14.0(rollup@4.40.0):
+  rollup-plugin-visualizer@6.0.1(rollup@4.40.0):
     dependencies:
       open: 8.4.2
       picomatch: 4.0.2
