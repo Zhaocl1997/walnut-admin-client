@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { ScrollbarInst } from 'naive-ui'
 import type { ICompExtraScrollbarInst, ICompExtraScrollbarProps } from '.'
-import { nanoid } from 'nanoid'
 
 defineOptions({
   name: 'WCompExtraScrollbar',
@@ -18,8 +17,6 @@ const {
 
 const emits = defineEmits<{ scroll: [] }>()
 const value = defineModel<number>('value', { default: 0 })
-
-const id = nanoid(16)
 
 const appSettings = useAppStoreSetting()
 
@@ -38,38 +35,39 @@ function onScroll(e: Event) {
 }
 
 function onInitXScrollHijack() {
-  if (xScrollable) {
-    useEventListener(wrapperRef, 'wheel', (e: WheelEvent) => {
-      if (!isHovered.value)
-        return
+  if (!xScrollable)
+    return
 
-      e.preventDefault()
+  useEventListener(wrapperRef, 'wheel', (e: WheelEvent) => {
+    if (!isHovered.value)
+      return
 
-      const node = scrollRef.value?.scrollbarInstRef?.containerRef
+    e.preventDefault()
 
-      if (e.deltaY > 0) {
-        scrollRef.value!.scrollTo({
-          left: node.scrollLeft + xStep,
-          behavior: 'instant',
-        })
-      }
-      else {
-        scrollRef.value!.scrollTo({
-          left: node.scrollLeft - xStep,
-          behavior: 'instant',
-        })
-      }
+    const node = scrollRef.value?.scrollbarInstRef?.containerRef
 
-      onScroll(e)
-    })
-  }
+    if (e.deltaY > 0) {
+      scrollRef.value!.scrollTo({
+        left: node.scrollLeft + xStep,
+        behavior: 'instant',
+      })
+    }
+    else {
+      scrollRef.value!.scrollTo({
+        left: node.scrollLeft - xStep,
+        behavior: 'instant',
+      })
+    }
+
+    onScroll(e)
+  })
 }
 
 function onInitScrollbar() {
   if (!scrollbar) {
     const target = wrapperRef.value?.querySelector(
       `.w-scrollbar-rail--${
-        xScrollable ? 'horizontal' : 'vertical'
+        !xScrollable ? 'horizontal' : 'vertical'
       }`,
     ) as HTMLElement
 
@@ -158,7 +156,6 @@ onMounted(() => {
 <template>
   <div ref="wrapperRef" class="h-full w-full">
     <n-scrollbar
-      :id="id"
       ref="scrollRef"
       :container-style="{
         height,
