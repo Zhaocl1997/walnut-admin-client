@@ -12,6 +12,7 @@ const {
   behavior = 'smooth',
   scrollbar = true,
   xScrollable = false,
+  hijackXScrollbar = true,
   xStep = 250,
 } = defineProps<ICompExtraScrollbarProps>()
 
@@ -36,6 +37,9 @@ function onScroll(e: Event) {
 
 function onInitXScrollHijack() {
   if (!xScrollable)
+    return
+
+  if (!hijackXScrollbar)
     return
 
   useEventListener(wrapperRef, 'wheel', (e: WheelEvent) => {

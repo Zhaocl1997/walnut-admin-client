@@ -2,6 +2,7 @@ import type { ScrollTo } from 'naive-ui/lib/_internal/scrollbar/src/ScrollBar'
 
 export interface ICompExtraScrollbarProps {
   xScrollable?: boolean
+  hijackXScrollbar?: boolean
   height?: string
   width?: string
   behavior?: ScrollBehavior
