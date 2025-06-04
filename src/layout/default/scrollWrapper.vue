@@ -28,28 +28,27 @@ defineExpose({ onScrollToTop })
 </script>
 
 <template>
-  <div class="relative h-full w-full">
-    <div
+  <div ref="scrollWrapper" class="relative h-full">
+    <n-scrollbar
       :id="String($route.name)"
-      ref="scrollWrapper"
-      class="relative h-full w-full overflow-auto transition-height transition-width"
+      x-scrollable
     >
       <!-- TODO top change no animation -->
-      <div class="transion sticky left-0 z-99" :class="[{ 'top-0': headerShow }]">
+      <div class="sticky left-0 z-99 transition-top" :class="[{ 'top-0': headerShow }]" :style="{ width: appSetting.getCalcContentWidth }">
         <TheHeader ref="headerRef" />
       </div>
 
       <div
-        class="sticky left-0 z-98"
+        class="sticky left-0 z-98 transition-top"
         :class="[{ 'top-0': tabsShow }]"
-        :style="{ top: headerShow ? `${appSetting.header.height}px` : '' }"
+        :style="{ top: headerShow && appSetting.getTabsFixed ? `${appSetting.header.height}px` : '', width: appSetting.getCalcContentWidth }"
       >
         <TheTabs ref="tabsRef" />
       </div>
 
       <TheContent
         :id="`${String($route.name)}-content`"
-        class="relative w-full"
+        class="relative"
         :style="{
           padding: `${appSetting.app.contentPadding}px`,
           minHeight: `calc(100vh - ${appSetting.header.height}px - ${appSetting.tabs.height}px - ${appSetting.footer.height}px)`,
@@ -57,10 +56,10 @@ defineExpose({ onScrollToTop })
       />
       <TheIFrameWrapper />
 
-      <div class="sticky left-0 z-99" :class="[{ 'bottom-0': appSetting.getFooterFixed }]">
+      <div class="sticky left-0" :class="[{ 'bottom-0': appSetting.getFooterFixed }]" :style="{ width: appSetting.getCalcContentWidth }">
         <TheFooter />
       </div>
-    </div>
+    </n-scrollbar>
 
     <TheAppBackToTop />
   </div>

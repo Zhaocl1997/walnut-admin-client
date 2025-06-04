@@ -262,6 +262,13 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
       return 0
     },
+
+    /**
+     * @description get calc main content width
+     */
+    getCalcContentWidth() {
+      return `calc(100vw - ${this.getMenuWidth}px)`
+    },
   },
 
   actions: {
