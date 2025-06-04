@@ -263,10 +263,6 @@ function nodeProps({ option }: { option: TreeOption }): ReturnType<TreeNodeProps
     onContextmenu: getProps.value.presetContextMenu
       ? (e: MouseEvent) => {
           e.preventDefault()
-
-          if (!getProps.value.multiple)
-            value.value = option[getKeyField.value] as TreeKey
-
           currentTarget.value = option
           openDropdown(e)
         }
