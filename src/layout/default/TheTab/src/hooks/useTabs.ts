@@ -22,11 +22,9 @@ export function useTabs() {
 
     // scroll by index
     // If is mobile, just scroll to current route tab index
-    scrollRef.value?.scrollToIndex(
-      appAdapter.isMobile
-        ? getCurrentRouteTabIndex.value
-        : appTab.leaveRoomForTabs(getCurrentRouteTabIndex.value),
-    )
+    scrollRef.value?.scrollToIndex(appAdapter.isMobile
+      ? getCurrentRouteTabIndex.value
+      : appTab.leaveRoomForTabs(getCurrentRouteTabIndex.value))
   }
 
   const onUpdateOverflow = () => {
@@ -34,10 +32,12 @@ export function useTabs() {
   }
 
   watch(
-    route,
-    async () => {
+    () => route,
+    async (v) => {
       // Build tab
-      appTab.createTabs(appTab.createTabByRoute(route))
+      appTab.createTabs(appTab.createTabByRoute(v))
+
+      await nextTick()
 
       // use device to trigger Scroll
       appAdapter.device && await onScrollToCurrentTab()

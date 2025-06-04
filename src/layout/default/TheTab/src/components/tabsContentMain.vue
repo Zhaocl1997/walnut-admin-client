@@ -6,7 +6,7 @@ import TabsItem from './tabsItem.vue'
 const appTab = useAppStoreTab()
 const appSetting = useAppStoreSetting()
 
-const sortableRef = ref()
+const sortableRef = useTemplateRef<HTMLDivElement>('sortableRef')
 
 const { start, stop } = useSortable(sortableRef, appTab.tabs, {
   animation: 500,
@@ -42,6 +42,7 @@ const {
 
   currentMouseTab,
   currentMouseTabIndex,
+  getTabsWidth,
 } = getTabsContext()
 
 function onOpenContextMenu(e: MouseEvent, item: AppTab, index: number) {
@@ -73,6 +74,7 @@ function onMouseUp(e: MouseEvent, name: string) {
     :x-step="50"
     :height="`${appSetting.tabs.height}px`"
     :scrollbar="false"
+    :width="getTabsWidth"
     @scroll="onCloseCtxMenu"
   >
     <div

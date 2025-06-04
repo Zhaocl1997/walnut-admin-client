@@ -508,8 +508,12 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      */
     leaveRoomForTabs(index: number) {
       // to keep current tab close to center
-      if (index > 5)
+      if (index > 5) {
+        if (index + 3 > this.tabs.length) {
+          return index
+        }
         return index - 4
+      }
 
       // first ten tabs just don't scroll anyway
       if (index < 10)

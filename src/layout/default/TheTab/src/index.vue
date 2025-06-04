@@ -28,6 +28,12 @@ const getShowUtils = computed(
         && isOverflow.value)),
 )
 
+const getTabsWidth = computed(() =>
+  appAdapter.isMobile
+    ? '100vw'
+    : `calc(100vw - ${appSetting.getMenuWidth}px - ${getShowUtils.value ? '120px' : ''})`,
+)
+
 const {
   devToolShow,
   currentMouseTab,
@@ -68,6 +74,7 @@ setTabsContext({
   currentMouseTabIndex,
   onOpenDevTool,
   onOpenFile,
+  getTabsWidth,
 })
 </script>
 
@@ -86,15 +93,8 @@ setTabsContext({
           <TabsUtils v-if="getShowUtils" class="hstack flex-none justify-start" :lists="leftUtils" />
         </WTransition>
 
-        <TabsContentMain
-          class="mx-1 flex-grow"
-          :style="{
-            width: appAdapter.isMobile
-              ? '100vw'
-              : `calc(100vw - ${appSetting.getMenuWidth}px - ${isOverflow ? '140px' : '0px'
-              })`,
-          }"
-        />
+        <!-- main tab content -->
+        <TabsContentMain />
 
         <!-- right utils -->
         <WTransition appear transition-name="fade-right">

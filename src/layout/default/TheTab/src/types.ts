@@ -25,4 +25,5 @@ export interface AppTabContext {
   currentMouseTabIndex: Ref<number>
   onOpenDevTool: Fn
   onOpenFile: Fn
+  getTabsWidth: ComputedRef<string>
 }
