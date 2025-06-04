@@ -50,5 +50,5 @@ export function useAppResize() {
 
   useWindowResize(handler)
 
-  tryOnMounted(() => handler())
+  tryOnBeforeMount(() => handler())
 }
