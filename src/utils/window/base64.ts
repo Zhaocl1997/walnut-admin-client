@@ -1,2 +1,16 @@
-export const wbtoa = (a: string) => window.btoa(unescape(encodeURIComponent(a)))
-export const watob = (a: any) => decodeURIComponent(escape(window.atob(a)))
+export function wbtoa(a: string) {
+  try {
+    return window.btoa(unescape(encodeURIComponent(a)))
+  }
+  catch {
+    return a
+  }
+}
+export function watob(a: any) {
+  try {
+    return decodeURIComponent(escape(window.atob(a)))
+  }
+  catch {
+    return a
+  }
+}
