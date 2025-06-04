@@ -13,6 +13,7 @@ const { t } = useAppI18n()
 
 const info = ref<IServerInfo.Network>()
 const loading = ref(false)
+const empty = ref(false)
 
 const items = computed<ICompUIDescriptionsItem[]>(() =>
   Object.entries(info.value ?? {}).map(([k, v]) => ({
@@ -27,14 +28,19 @@ async function onInit() {
   try {
     const res = await getNetworkInfo()
 
-    info.value = res
+    if (Object.values(res).length) {
+      info.value = res
+    }
+    else {
+      empty.value = true
+    }
   }
   finally {
     loading.value = false
   }
 }
 
-onMounted(onInit)
+onBeforeMount(onInit)
 </script>
 
 <template>
@@ -49,25 +55,31 @@ onMounted(onInit)
     :loading="loading"
     @refresh="onInit"
   >
-    <WDescriptions
-      v-if="!loading"
-      size="small"
-      label-placement="left"
-      bordered
-      :column="1"
-      :items="items"
-      :label-style="{ width: '45%' }"
-    />
-
-    <n-space v-else vertical size="small">
-      <n-skeleton
-        v-for="i in 4"
-        :key="i"
+    <template v-if="!empty">
+      <WDescriptions
+        v-if="!loading"
         size="small"
-        height="36px"
-        width="100%"
-        :sharp="false"
+        label-placement="left"
+        bordered
+        :column="1"
+        :items="items"
+        :label-style="{ width: '45%' }"
       />
-    </n-space>
+
+      <n-space v-else vertical size="small">
+        <n-skeleton
+          v-for="i in 4"
+          :key="i"
+          size="small"
+          height="36px"
+          width="100%"
+          :sharp="false"
+        />
+      </n-space>
+    </template>
+
+    <div v-else class="h-full flex items-center justify-center">
+      <n-empty />
+    </div>
   </WCard>
 </template>
