@@ -10,14 +10,14 @@ const { retrySeconds = 60, simpleVerify = false, onBeforeCountdown } = definePro
 
 const emits = defineEmits<{ verifySuccess: [startCountdown: Fn] }>()
 
-const buttonRef = useTemplateRef('buttonRef')
+const buttonRef = useTemplateRef<{ onStartCountdown: Fn }>('buttonRef')
 const verifyRef = useTemplateRef<WVerifyInst>('verifyRef')
 
 function onVerify() {
   if (simpleVerify)
     verifyRef.value?.onOpenModal()
   else
-    buttonRef.value!.onStartCountdown()
+    buttonRef.value?.onStartCountdown()
 }
 
 async function onClick() {
