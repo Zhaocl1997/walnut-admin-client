@@ -30,14 +30,14 @@ export default defineComponent({
 
       // handle menuActiveName
       if (currentRoute.value.meta.menuActiveName) {
-        matched.push({
+        matched?.push({
           name: currentRoute.value.name as string,
           path: currentRoute.value.path,
           ...currentRoute.value.meta,
         })
       }
 
-      return matched.filter(item => item.title)
+      return matched?.filter(item => item.title)
     })
 
     const renderBase = (item: AppSystemMenu) => (
