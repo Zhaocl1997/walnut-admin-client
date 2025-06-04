@@ -61,3 +61,9 @@ onUnmounted(() => {
   />
   <Icon v-else v-bind="props" />
 </template>
+
+<style scoped>
+svg {
+  outline: none !important;
+}
+</style>
