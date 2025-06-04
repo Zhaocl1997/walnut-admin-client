@@ -149,6 +149,11 @@ function onDynamicIcon(type: number, self = true) {
   // @ts-expect-error any index
     pool2[type]()
 }
+
+onMounted(() => {
+  const oldCount = appTab.tabs.filter(i => i.name.startsWith('name-')).length
+  count.value = oldCount < 0 ? 0 : oldCount
+})
 </script>
 
 <template>

@@ -5,18 +5,18 @@ defineOptions({
 
 async function onClick(type: number) {
   if (type === 1)
-    await AppRouter.replace({ query: { a: 1 } })
+    await AppRouter.replace({ query: { q: JSON.stringify({ a: 1 }) } })
 
   if (type === 2) {
     await AppRouter.replace({
-      query: { b: JSON.stringify({ b1: '123', b2: undefined, b3: false }) },
+      query: { q: JSON.stringify({ b1: '123', b2: undefined, b3: false }) },
     })
   }
 
   if (type === 3) {
     await AppRouter.replace({
       query: {
-        c: JSON.stringify([
+        q: JSON.stringify([
           { c1: '123', c2: 321, c3: true },
           { c1: '123', c2: 321, c3: true },
         ]),
@@ -27,7 +27,7 @@ async function onClick(type: number) {
 </script>
 
 <template>
-  <div class="m-8 children:mb-2">
+  <div class="children:mb-2 !p-8">
     <n-alert title="Route Query Enhance" type="info">
       This is global settings, see app settings for more.
       Watch the query changes.
@@ -52,8 +52,9 @@ async function onClick(type: number) {
     <div>
       <WJSON
         :value="{
-          query: $route.query,
-        }" height="auto"
+          query: $route.query.q ? JSON.parse($route.query.q as string) : {},
+        }"
+        height="auto"
       />
     </div>
   </div>

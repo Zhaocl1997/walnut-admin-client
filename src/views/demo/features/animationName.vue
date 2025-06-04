@@ -5,7 +5,7 @@ defineOptions({
 </script>
 
 <template>
-  <div class="m-8">
+  <div class="!p-8">
     <n-alert title="Global Config" type="warning">
       There is global config to limit. Only when `transitionStatus` is true and
       `transitionMode` is `scope`, this feature can work correctly.

@@ -5,7 +5,7 @@ defineOptions({
 </script>
 
 <template>
-  <div class="relative m-4 h-fit w-fit">
+  <div class="relative !p-8">
     <n-alert title="Remember Scroll Position" type="info">
       Can be enabled in
       <router-link to="/system/menu" #="{ navigate, href }" custom>

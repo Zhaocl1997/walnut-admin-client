@@ -5,7 +5,7 @@ defineOptions({
 </script>
 
 <template>
-  <div class="m-8">
+  <div class="!p-8">
     <n-alert title="Custom Active Icon" type="info">
       Can be enabled in
       <router-link to="/system/menu" #="{ navigate, href }" custom>
