@@ -68,18 +68,22 @@ const [registerTree] = useTree<AppSystemMenu>({
   onTreeNodeItemDelete: async (deleted) => {
     await menuAPI.delete(deleted[keyField]!)
     useAppMsgSuccess()
-    resetFormData()
     await onInit()
     targetTreeItem.value = ''
+    resetFormData()
   },
 
   onPaste(copy, current) {
     // paste is just reset the pid, also need to remove some fields
 
+    resetFormData()
+
     formData.value = {
       ...omit(copy, [keyField, 'createdAt', 'updatedAt']),
       pid: current[keyField],
     }
+
+    targetTreeItem.value = ''
     actionType.value = 'create'
   },
 
@@ -156,9 +160,9 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
               try {
                 await menuAPI[actionType.value](omit(formData.value, 'children'))
                 useAppMsgSuccess()
-                resetFormData()
                 await onInit()
                 targetTreeItem.value = ''
+                resetFormData()
               }
               finally {
                 loading.value = false
@@ -172,9 +176,8 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
             disabled: loading,
             onClick: async () => {
               await restoreValidation()
-              resetFormData()
               targetTreeItem.value = ''
-              actionType.value = 'create'
+              resetFormData()
             },
           },
         ],
@@ -193,7 +196,6 @@ watch(
     }
     else {
       actionType.value = 'create'
-      resetFormData()
     }
 
     restoreValidation()
