@@ -22,7 +22,7 @@ const { nTriggerFormInput, mergedDisabledRef, mergedStatusRef, mergedSizeRef } =
 
 const ALL = 'All'
 
-const value = defineModel<string>('value', { default: 'ant-design:home-outlined' })
+const value = defineModel<string>('value', { })
 
 const rootInputRef = useTemplateRef<InputInst>('rootInputRef')
 
@@ -189,7 +189,7 @@ onBeforeMount(() => {
   <WIcon
     v-if="preset === 'icon'"
     class="mr-2 h-auto cursor-pointer"
-    :icon="value"
+    :icon="value!"
     width="24"
     @click="onOpenPopover"
   />
