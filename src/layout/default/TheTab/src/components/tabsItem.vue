@@ -78,9 +78,15 @@ const getShowTite = computed(
 )
 
 // scroll title and real title
-const getTitle = computed(() =>
-  t(item.meta?._title ?? item.meta.title!),
-)
+const getTitle = computed(() => {
+  const title = item.meta?._title ?? item.meta?.title as string
+  return title ? t(title) : ''
+})
+
+const getIcon = computed(() => {
+  const icon = item.meta?._icon ?? item.meta?.icon as string
+  return icon ? t(icon) : ''
+})
 </script>
 
 <template>
@@ -112,8 +118,8 @@ const getTitle = computed(() =>
     />
 
     <WIcon
-      v-if="getShowIcon"
-      :icon="item.meta?._icon ?? item.meta.icon!"
+      v-if="getIcon && getShowIcon"
+      :icon="getIcon"
       class="col-span-2 flex items-center"
       height="16"
       :class="[
