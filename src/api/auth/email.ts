@@ -1,14 +1,14 @@
-enum EmailEnum {
-  AUTH_EMAIL = '/auth/email',
-  AUTH_EMAIL_SEND = '/auth/email/send',
-}
+const authEmail = {
+  AUTH_EMAIL: '/auth/email',
+  AUTH_EMAIL_SEND: '/auth/email/send',
+} as const
 
 /**
  * @description auth with email
  */
-export function authWithEmail(data: AppPayloadAuth.EmailAddress) {
+export function authWithEmailAPI(data: AppPayloadAuth.EmailAddress) {
   return AppAxios.post<AppPayloadAuth.TokenPayload>({
-    url: EmailEnum.AUTH_EMAIL,
+    url: authEmail.AUTH_EMAIL,
     data,
   })
 }
@@ -16,9 +16,9 @@ export function authWithEmail(data: AppPayloadAuth.EmailAddress) {
 /**
  * @description send verify code email
  */
-export function sendAuthEmail(data: AppPayloadAuth.EmailAddress) {
+export function sendAuthEmailAPI(data: AppPayloadAuth.EmailAddress) {
   return AppAxios.post<boolean>({
-    url: EmailEnum.AUTH_EMAIL_SEND,
+    url: authEmail.AUTH_EMAIL_SEND,
     data,
   })
 }

@@ -13,7 +13,7 @@ enum AuthEnum {
 /**
  * @description auth with pwd
  */
-export function authWithPwd(data: AppPayloadAuth.Password) {
+export function authWithPwdAPI(data: AppPayloadAuth.Password) {
   return AppAxios.post<AppPayloadAuth.TokenPayload>(
     {
       url: AuthEnum.PWD,
@@ -26,7 +26,7 @@ export function authWithPwd(data: AppPayloadAuth.Password) {
 /**
  * @description Sign out
  */
-export function signout() {
+export function signoutAPI() {
   return AppAxios.post({
     url: AuthEnum.SIGNOUT,
   })
@@ -35,7 +35,7 @@ export function signout() {
 /**
  * @description Refresh accessToken use refreshToken
  */
-export function refreshToken(data: { refreshToken: string }) {
+export function refreshTokenAPI(data: { refreshToken: string }) {
   return AppAxios.post<{
     accessToken: string
   }>({
@@ -47,7 +47,7 @@ export function refreshToken(data: { refreshToken: string }) {
 /**
  * @description Signin user permissions api
  */
-export function getPermissions() {
+export function getPermissionsAPI() {
   return AppAxios.get<{
     permissionMenuTree: TreeNodeItem<Pick<AppSystemMenu, '_id' | 'pid' | 'show' | 'type' | 'title' | 'order' | 'path' | 'ternal' | 'name' | 'icon' | 'url' | 'menuActiveName' | 'badge' | 'activeIcon'>>[]
     permissionStrings: string[]
@@ -64,7 +64,7 @@ export function getPermissions() {
 /**
  * @description Signin user detail info api
  */
-export function getUserInfo() {
+export function getUserInfoAPI() {
   return AppAxios.get<{ user: AppSystemUser, roleNames: string[] }>({
     url: AuthEnum.PROFILE,
   })
@@ -73,7 +73,7 @@ export function getUserInfo() {
 /**
  * @description get baidu ak from backend
  */
-export function getBaiduKey() {
+export function getBaiduKeyAPI() {
   return AppAxios.get<AppSecretKeysInterface>(
     {
       url: AuthEnum.KEYS,

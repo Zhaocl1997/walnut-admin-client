@@ -56,25 +56,25 @@ export namespace IServerInfo {
   }
 }
 
-export function getCpuInfo() {
+export function getCpuInfoAPI() {
   return AppAxios.get<IServerInfo.CPU>({
     url: '/app/monitor/server/cpu',
   })
 }
 
-export function getMemInfo() {
+export function getMemInfoAPI() {
   return AppAxios.get<IServerInfo.Mem>({
     url: '/app/monitor/server/mem',
   })
 }
 
-export function getOSInfo() {
+export function getOSInfoAPI() {
   return AppAxios.get<IServerInfo.OS>({
     url: '/app/monitor/server/os',
   })
 }
 
-export function getSysInfo() {
+export function getSysInfoAPI() {
   return AppAxios.get<IServerInfo.System>(
     {
       url: '/app/monitor/server/sys',
@@ -82,25 +82,25 @@ export function getSysInfo() {
   )
 }
 
-export function getDiskInfo() {
+export function getDiskInfoAPI() {
   return AppAxios.get<IServerInfo.Disk[]>({
     url: '/app/monitor/server/disk',
   })
 }
 
-export function getBatteryInfo() {
+export function getBatteryInfoAPI() {
   return AppAxios.get<IServerInfo.Battery>({
     url: '/app/monitor/server/battery',
   })
 }
 
-export function getTimeInfo() {
+export function getTimeInfoAPI() {
   return AppAxios.get<IServerInfo.Time>({
     url: '/app/monitor/server/time',
   })
 }
 
-export function getNetworkInfo() {
+export function getNetworkInfoAPI() {
   return AppAxios.get<IServerInfo.Network>(
     {
       url: '/app/monitor/server/network',

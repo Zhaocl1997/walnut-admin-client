@@ -1,5 +1,5 @@
 import type { UploadFileInfo } from 'naive-ui'
-import { getAliSTSToken } from '@/api/shared/ali'
+import { getAliSTSTokenAPI } from '@/api/shared/ali'
 import OSS from 'ali-oss'
 import { omit } from 'lodash-es'
 
@@ -27,12 +27,12 @@ export class AliOSSClient {
   public async getConfig() {
     if (AliOSSClient.config)
       return AliOSSClient.config
-    const config = await getAliSTSToken()
+    const config = await getAliSTSTokenAPI()
     AliOSSClient.config = {
       ...config,
       refreshSTSTokenInterval: 5 * 60 * 1000, // 5 min
       refreshSTSToken: async () => {
-        const newConfig = await getAliSTSToken()
+        const newConfig = await getAliSTSTokenAPI()
         return omit(newConfig, ['bucket', 'region'])
       },
     }

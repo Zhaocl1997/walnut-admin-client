@@ -8,7 +8,7 @@ export const deviceAPI = new BaseAPI<AppSystemDictType>({
 /**
  * @description initial device
  */
-export async function initialDevice() {
+export async function initialDeviceAPI() {
   return AppAxios.post<{ deviceId: string }>({
     url: '/system/device/initial',
     data: {

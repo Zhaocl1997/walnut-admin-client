@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { AxiosRequestConfig } from 'axios'
-import { HelloAPI, HelloAPIWithToken } from '@/api'
+import { HelloAPI, HelloWithTokenAPI } from '@/api'
 import { removeAllCancel, removeLatestRequest } from '@/utils/axios/src/adapters'
 
 defineOptions({
@@ -12,7 +12,7 @@ const withToken = ref(true)
 
 async function _request(payload?: AxiosRequestConfig) {
   if (withToken.value) {
-    const res = await HelloAPIWithToken(payload!)
+    const res = await HelloWithTokenAPI(payload!)
     useAppMsgSuccess(res)
   }
   else {

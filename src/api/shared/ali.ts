@@ -1,7 +1,7 @@
 /**
  * @description get ali oss sts token from backend
  */
-export function getAliSTSToken() {
+export function getAliSTSTokenAPI() {
   return AppAxios.get<{
     accessKeyId: string
     accessKeySecret: string

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { forceQuit, monitorUserAPI } from '@/api/app/monitor/user'
+import { forceQuitAPI, monitorUserAPI } from '@/api/app/monitor/user'
 
 defineOptions({
   name: 'AppMonitorUser',
@@ -284,7 +284,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
               textProp: () => t('app.monitor.user.forceLogout'),
             },
             async onPresetClick(rowData) {
-              await forceQuit(rowData[keyField]!)
+              await forceQuitAPI(rowData[keyField]!)
               useAppMsgSuccess()
               await onApiList()
             },

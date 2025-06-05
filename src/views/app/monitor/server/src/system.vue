@@ -2,7 +2,7 @@
 import type { IServerInfo } from '@/api/app/monitor/server'
 
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
-import { getSysInfo } from '@/api/app/monitor/server'
+import { getSysInfoAPI } from '@/api/app/monitor/server'
 
 defineOptions({
   name: 'AppMonitorServerSystem',
@@ -26,7 +26,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getSysInfo()
+    const res = await getSysInfoAPI()
 
     if (Object.values(res).length) {
       info.value = res

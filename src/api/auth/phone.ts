@@ -1,14 +1,14 @@
-enum PhoneEnum {
-  AUTH_PHONE = '/auth/phone',
-  AUTH_EMAIL_TEXT_MESSAGE = '/auth/phone/send',
-}
+const authPhone = {
+  AUTH_PHONE: '/auth/phone',
+  AUTH_EMAIL_TEXT_MESSAGE: '/auth/phone/send',
+} as const
 
 /**
  * @description auth with text message
  */
-export function authWithPhoneNumber(data: AppPayloadAuth.PhoneNumber) {
+export function authWithPhoneNumberAPI(data: AppPayloadAuth.PhoneNumber) {
   return AppAxios.post<AppPayloadAuth.TokenPayload>({
-    url: PhoneEnum.AUTH_PHONE,
+    url: authPhone.AUTH_PHONE,
     data,
   })
 }
@@ -16,9 +16,9 @@ export function authWithPhoneNumber(data: AppPayloadAuth.PhoneNumber) {
 /**
  * @description send verify code text message
  */
-export function sendAuthTextMsg(data: AppPayloadAuth.PhoneNumber) {
+export function sendAuthTextMsgAPI(data: AppPayloadAuth.PhoneNumber) {
   return AppAxios.post<boolean>({
-    url: PhoneEnum.AUTH_EMAIL_TEXT_MESSAGE,
+    url: authPhone.AUTH_EMAIL_TEXT_MESSAGE,
     data,
   })
 }

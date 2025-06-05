@@ -2,7 +2,7 @@
 import type { IServerInfo } from '@/api/app/monitor/server'
 
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
-import { getBatteryInfo } from '@/api/app/monitor/server'
+import { getBatteryInfoAPI } from '@/api/app/monitor/server'
 
 defineOptions({
   name: 'AppMonitorServerBattery',
@@ -26,7 +26,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getBatteryInfo()
+    const res = await getBatteryInfoAPI()
 
     if (Object.values(res).length) {
       info.value = res

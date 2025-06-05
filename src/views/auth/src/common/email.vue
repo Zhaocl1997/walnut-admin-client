@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-import { sendAuthEmail } from '@/api/auth/email'
+import { sendAuthEmailAPI } from '@/api/auth/email'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -108,7 +108,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
 
         onSuccess: async (startCountdown) => {
           // here to call emailAddress endpoint
-          await sendAuthEmail(emailFormData)
+          await sendAuthEmailAPI(emailFormData)
 
           useAppMsgSuccess()
 

@@ -2,7 +2,7 @@
 import type { IServerInfo } from '@/api/app/monitor/server'
 
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
-import { getDiskInfo } from '@/api/app/monitor/server'
+import { getDiskInfoAPI } from '@/api/app/monitor/server'
 
 defineOptions({
   name: 'AppMonitorServerDisk',
@@ -26,7 +26,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getDiskInfo()
+    const res = await getDiskInfoAPI()
 
     if (Object.values(res[0]).length) {
       info.value = res[0]

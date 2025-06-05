@@ -7,7 +7,7 @@ export const monitorUserAPI = new BaseAPI<AppMonitorUserModel>({
   section: 'monitor/user',
 })
 
-export function forceQuit(id: string) {
+export function forceQuitAPI(id: string) {
   return AppAxios.delete({
     url: `/app/monitor/user/force-quit/${id}`,
     _demonstrate: demo,

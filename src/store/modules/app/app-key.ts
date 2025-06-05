@@ -1,4 +1,4 @@
-import { getBaiduKey } from '@/api/auth'
+import { getBaiduKeyAPI } from '@/api/auth'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
@@ -14,7 +14,7 @@ const useAppStoreSecretKeyInside = defineStore(StoreKeys.APP_KEY, {
     },
 
     async initBaiduKey() {
-      const res = await getBaiduKey()
+      const res = await getBaiduKeyAPI()
 
       this.setBaiduAK(res.B!)
     },

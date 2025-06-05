@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { resetPassowrd, updatePassowrd, userAPI } from '@/api/system/user'
+import { resetPassowrdAPI, updatePassowrdAPI, userAPI } from '@/api/system/user'
 
 defineOptions({
   name: 'User',
@@ -250,7 +250,7 @@ const [
               const { confirmed } = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
 
               if (confirmed) {
-                const res = await resetPassowrd({ userId: rowData[keyField]! })
+                const res = await resetPassowrdAPI({ userId: rowData[keyField]! })
 
                 if (res) {
                   useAppMsgSuccess()
@@ -324,7 +324,7 @@ const [
 
 async function onYes(_: any, done: () => void) {
   try {
-    await updatePassowrd(updatePasswordFormData.value)
+    await updatePassowrdAPI(updatePasswordFormData.value)
     useAppMsgSuccess()
     resetPasswordFormData()
     await onApiList()

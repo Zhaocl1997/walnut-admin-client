@@ -1,4 +1,4 @@
-import { getUserInfo } from '@/api/auth'
+import { getUserInfoAPI } from '@/api/auth'
 import { upperFirst } from 'easy-fns-ts'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
@@ -45,7 +45,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
     },
 
     async getProfile() {
-      const res = await getUserInfo()
+      const res = await getUserInfoAPI()
       this.setProfile(res?.user)
     },
 

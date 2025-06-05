@@ -1,5 +1,5 @@
 import type { BuiltinComponents, UnknownComponents } from '@fingerprintjs/fingerprintjs'
-import { initialDevice } from '@/api/system/device'
+import { initialDeviceAPI } from '@/api/system/device'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { pick } from 'lodash-es'
 
@@ -70,5 +70,5 @@ export async function useFingerprint() {
   fpId.value = visiterId
 
   // initial device id after fingerprint is generated
-  await initialDevice()
+  await initialDeviceAPI()
 }

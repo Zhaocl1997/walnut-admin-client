@@ -1,4 +1,4 @@
-import { getPermissions } from '@/api/auth'
+import { getPermissionsAPI } from '@/api/auth'
 import { buildRoutes } from '@/router/utils/route'
 
 /**
@@ -18,7 +18,7 @@ export async function AppCoreFn1() {
     = getRoutes()[getRoutes().findIndex(i => i.path === AppRootPath)]
 
   // Here is where we request from back end to get login user permissions.
-  const { permissionMenuTree, permissionStrings, permissionRouteTree, keepAliveNames, indexMenuName, affixedTabs, internalIframeList } = await getPermissions()
+  const { permissionMenuTree, permissionStrings, permissionRouteTree, keepAliveNames, indexMenuName, affixedTabs, internalIframeList } = await getPermissionsAPI()
 
   // set menu tree
   appMenu.setMenus(permissionMenuTree)

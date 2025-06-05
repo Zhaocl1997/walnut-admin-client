@@ -2,7 +2,7 @@
 import type { IServerInfo } from '@/api/app/monitor/server'
 
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
-import { getCpuInfo } from '@/api/app/monitor/server'
+import { getCpuInfoAPI } from '@/api/app/monitor/server'
 
 defineOptions({
   name: 'AppMonitorServerCPU',
@@ -26,7 +26,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getCpuInfo()
+    const res = await getCpuInfoAPI()
 
     if (Object.values(res).length) {
       info.value = res

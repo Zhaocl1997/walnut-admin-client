@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getGiteeUri, getGithubUri, getWeiboUri } from '@/api/auth/third'
+import { getGiteeURIAPI, getGitHubURIAPI, getWeiboURIAPI } from '@/api/auth/third'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({
@@ -59,9 +59,9 @@ async function onOAuth(type: string) {
   loading.value = true
 
   const api = {
-    gitee: getGiteeUri,
-    github: getGithubUri,
-    weibo: getWeiboUri,
+    gitee: getGiteeURIAPI,
+    github: getGitHubURIAPI,
+    weibo: getWeiboURIAPI,
   }
 
   // @ts-expect-error any index

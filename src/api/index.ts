@@ -9,7 +9,7 @@ export function HelloAPI(config: AxiosRequestConfig) {
   )
 }
 
-export function HelloAPIWithToken(config: AxiosRequestConfig) {
+export function HelloWithTokenAPI(config: AxiosRequestConfig) {
   return AppAxios.get<string>(
     {
       url: '/auth',

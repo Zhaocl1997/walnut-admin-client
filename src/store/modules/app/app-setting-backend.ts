@@ -1,4 +1,4 @@
-import { getPublicSettings } from '@/api/app/setting'
+import { getPublicSettingsAPI } from '@/api/app/setting'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
@@ -54,7 +54,7 @@ const useAppStoreSettingBackendInside = defineStore(
 
     actions: {
       async getAppAuthSettings() {
-        const res = await getPublicSettings()
+        const res = await getPublicSettingsAPI()
 
         this.auth = res.auth
       },

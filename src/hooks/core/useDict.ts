@@ -1,5 +1,5 @@
 import type { IAppStoreMapDictValue } from '@/api/system/dict'
-import { getDictByType } from '@/api/system/dict'
+import { getDictByTypeAPI } from '@/api/system/dict'
 
 const AppStoreMapDict = ref(new Map<string, IAppStoreMapDictValue>())
 
@@ -34,7 +34,7 @@ export async function initDict(types: string | string[]): Promise<void> {
   if (typeof types === 'string') {
     if (AppStoreMapDict.value.has(types))
       return
-    const res = await getDictByType(types)
+    const res = await getDictByTypeAPI(types)
     setDictIntoMap(types, res[0])
   }
   else {
@@ -44,7 +44,7 @@ export async function initDict(types: string | string[]): Promise<void> {
     }
     console.log('[useDict] Un-hit dict', nonExistedDictTypes)
 
-    const res = await getDictByType(nonExistedDictTypes)
+    const res = await getDictByTypeAPI(nonExistedDictTypes)
     nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)!))
   }
 }
@@ -82,7 +82,7 @@ export function useDict(types: string | string[]) {
     loading.value = true
     try {
       if (isStringType) {
-        const res = await getDictByType(types)
+        const res = await getDictByTypeAPI(types)
         setDictIntoMap(types, res[0])
         return res
       }
@@ -91,7 +91,7 @@ export function useDict(types: string | string[]) {
         if (!nonExistedDictTypes.length) {
           return getDictDataFromTypes(types)
         }
-        const res = await getDictByType(nonExistedDictTypes)
+        const res = await getDictByTypeAPI(nonExistedDictTypes)
         nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)!))
         return getDictDataFromTypes(types)
       }

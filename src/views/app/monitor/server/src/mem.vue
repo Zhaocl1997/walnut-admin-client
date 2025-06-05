@@ -2,7 +2,7 @@
 import type { IServerInfo } from '@/api/app/monitor/server'
 
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
-import { getMemInfo } from '@/api/app/monitor/server'
+import { getMemInfoAPI } from '@/api/app/monitor/server'
 
 defineOptions({
   name: 'AppMonitorServerMem',
@@ -26,7 +26,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getMemInfo()
+    const res = await getMemInfoAPI()
 
     if (Object.values(res).length) {
       info.value = res

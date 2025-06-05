@@ -2,7 +2,7 @@
 import type { IServerInfo } from '@/api/app/monitor/server'
 
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
-import { getTimeInfo } from '@/api/app/monitor/server'
+import { getTimeInfoAPI } from '@/api/app/monitor/server'
 
 defineOptions({
   name: 'AppMonitorServerTime',
@@ -26,7 +26,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getTimeInfo()
+    const res = await getTimeInfoAPI()
 
     if (Object.values(res).length) {
       info.value = res

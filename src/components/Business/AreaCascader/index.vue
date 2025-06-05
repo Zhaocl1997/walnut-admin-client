@@ -2,8 +2,8 @@
 import type { CascaderOption } from 'naive-ui'
 import type { ICompBusinessAreaCascaderProps } from '.'
 import {
-  getAreaChildrenByPcode,
-  getAreaFeedbackByCode,
+  getAreaChildrenByPcodeAPI,
+  getAreaFeedbackByCodeAPI,
 } from '@/api/shared/area'
 
 defineOptions({
@@ -17,7 +17,7 @@ const value = defineModel<string | string[] | null>('value', { required: true })
 const options = ref<TreeNodeItem<AppSharedArea>[]>([])
 
 async function onLoad(option: CascaderOption) {
-  const res = await getAreaChildrenByPcode(option.code as string)
+  const res = await getAreaChildrenByPcodeAPI(option.code as string)
   option.children = res.map(i => ({
     ...i,
     depth: (option.depth as number) + 1,
@@ -26,7 +26,7 @@ async function onLoad(option: CascaderOption) {
 }
 
 async function onInit() {
-  const res = await getAreaChildrenByPcode()
+  const res = await getAreaChildrenByPcodeAPI()
   options.value = res.map(i => ({
     ...i,
     isLeaf: depth === 0,
@@ -40,7 +40,7 @@ async function onFeedback() {
 
   // single feedback
   if (!multiple && typeof value.value === 'string') {
-    const feedback = await getAreaFeedbackByCode(value.value)
+    const feedback = await getAreaFeedbackByCodeAPI(value.value)
 
     options.value = feedback
   }
@@ -50,7 +50,7 @@ async function onFeedback() {
     multiple
     && Array.isArray(value.value)
   ) {
-    const feedbacks = await getAreaFeedbackByCode(value.value.join(','))
+    const feedbacks = await getAreaFeedbackByCodeAPI(value.value.join(','))
 
     options.value = feedbacks
   }

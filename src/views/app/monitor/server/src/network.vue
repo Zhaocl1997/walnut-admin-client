@@ -2,7 +2,7 @@
 import type { IServerInfo } from '@/api/app/monitor/server'
 
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
-import { getNetworkInfo } from '@/api/app/monitor/server'
+import { getNetworkInfoAPI } from '@/api/app/monitor/server'
 
 defineOptions({
   name: 'AppMonitorServerNetwork',
@@ -26,7 +26,7 @@ async function onInit() {
   loading.value = true
 
   try {
-    const res = await getNetworkInfo()
+    const res = await getNetworkInfoAPI()
 
     if (Object.values(res).length) {
       info.value = res

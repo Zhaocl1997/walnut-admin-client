@@ -1,6 +1,6 @@
 <script lang="tsx" setup>
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
-import { sendAuthTextMsg } from '@/api/auth/phone'
+import { sendAuthTextMsgAPI } from '@/api/auth/phone'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -112,7 +112,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
 
         onSuccess: async (startCountdown) => {
           // here to call phone number text message endpoint
-          await sendAuthTextMsg(SMSFormData)
+          await sendAuthTextMsgAPI(SMSFormData)
 
           useAppMsgSuccess()
 
