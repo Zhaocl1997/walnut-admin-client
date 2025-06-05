@@ -6,9 +6,7 @@ export function useRouterParam(path: string) {
   const routeParam = computed({
     get() {
       if (appSetting.app.routeQueryMode === AppConstRouteQueryMode.ENHANCED) {
-        if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.BASE64) {
-          return (route.meta?._resolvedParams ?? {})[path]
-        }
+        return (route.meta?._resolvedParams ?? {})[path]
       }
       return route.params[path] as string ?? undefined
     },
