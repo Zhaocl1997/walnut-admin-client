@@ -1,15 +1,12 @@
 import { AppCoreFn1 } from '@/core'
 
-import { _confirm_leave_map_ } from '@/store/modules/app/app-tab'
 import { isEmpty, isUndefined } from 'lodash-es'
-
-let removeEvent: Fn
 
 export function createBeforeEachGuard(router: Router) {
   // TODO beforeResolve
   // TODO initial trigger twice
   // logic optimise, with next()
-  router.beforeEach(async (to, from) => {
+  router.beforeEach(async (to, _from) => {
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
@@ -32,45 +29,6 @@ export function createBeforeEachGuard(router: Router) {
     // No token, next to auth page and return
     if (!userAuth.accessToken)
       return { path: AppAuthPath, replace: true }
-
-    // enter the `leaveTip` page, hang on the unload event
-    if (to.meta.leaveTip) {
-      // set the confirm map
-      _confirm_leave_map_.set(to.name, false)
-
-      // if the old event listener not removed, remove it
-      if (removeEvent)
-        removeEvent()
-
-      removeEvent = useEventListener('beforeunload', (e) => {
-        e.preventDefault()
-        e.returnValue = '关闭提示'
-        return '关闭提示'
-      })
-    }
-
-    // when leaving from the `leaveTip` page
-    // ask user for confirm
-    // also remember to remove the unload event to make sure this only work on the `leaveTip` page
-    if (
-      from.meta.leaveTip
-      && to.name !== from.name
-      && (_confirm_leave_map_.get(from.name) === undefined
-        || _confirm_leave_map_.get(from.name) === false)
-    ) {
-      const { confirmed } = await useAppConfirm(AppI18n().global.t('app.base.leaveTip'), {
-        closable: false,
-        closeOnEsc: false,
-        maskClosable: false,
-      })
-
-      if (!confirmed)
-        return { ...from, replace: true }
-
-      _confirm_leave_map_.set(from.name, true)
-      window.$loadingBar.start()
-      removeEvent()
-    }
 
     // handle lock logic
     if (

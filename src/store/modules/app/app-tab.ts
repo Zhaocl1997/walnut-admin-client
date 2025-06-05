@@ -9,16 +9,6 @@ import { store } from '../../pinia'
 const _title_map_ = new Map()
 const _icon_map_ = new Map()
 
-/**
- * only serve for one purpose
- * when manually close the `leaveTip` tab, it would trigger twice
- * first in tab close event(has to do it, otherwise the tab will disappear first and popup the confirm)
- * second in route guard
- * to fix trigger twice problem, i implement the map to record the `leaveTip` route confirmed state
- * and with the new logic in route guard, it will work fine for once in tab close event
- */
-export const _confirm_leave_map_ = new Map()
-
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
   state: (): IAppStoreTab => ({
     tabs: [],
@@ -341,11 +331,8 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
               )
 
               if (confirmed) {
-                _confirm_leave_map_.set(name, true)
                 // simple splice
                 this.tabs.splice(index, 1)
-
-                // TODO bug
               }
             }
             else {
