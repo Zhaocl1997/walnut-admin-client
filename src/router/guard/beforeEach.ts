@@ -13,14 +13,7 @@ export function createBeforeEachGuard(router: Router) {
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
-    const appCachedViews = useAppStoreCachedViews()
     const appLock = useAppStoreLock()
-
-    // if the target is not cached before, start loadingbar
-    // also when from do not want leave tip, start loadingbar
-    if (!appCachedViews.hasCached(to.name) && !from.meta.leaveTip) {
-      window.$loadingBar.start()
-    }
 
     // Paths in `routeWhiteListPath` will enter directly
     if (routeWhiteListPath.includes(to.path)) {

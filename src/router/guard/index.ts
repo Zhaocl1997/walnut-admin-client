@@ -1,5 +1,6 @@
 import { createAfterEachGuard } from './afterEach'
 import { createBeforeEachGuard } from './beforeEach'
+import { createLoadingbarGuard } from './modules/loadingbar'
 import { createRouteParamsEnhancedGuard } from './modules/paramsEnhanced'
 
 // https://router.vuejs.org/guide/advanced/navigation-guards#The-Full-Navigation-Resolution-Flow
@@ -17,6 +18,7 @@ import { createRouteParamsEnhancedGuard } from './modules/paramsEnhanced'
 // 11. DOM updates triggered.
 // 12. Call callbacks passed to next in beforeRouteEnter guards with instantiated instances.
 export function createRouterGuard(router: Router) {
+  createLoadingbarGuard(router)
   createRouteParamsEnhancedGuard(router)
   createBeforeEachGuard(router)
   createAfterEachGuard(router)

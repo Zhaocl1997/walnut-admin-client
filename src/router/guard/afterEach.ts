@@ -2,9 +2,6 @@ const appTab = useAppStoreTab()
 
 export function createAfterEachGuard(router: Router) {
   router.afterEach((to, from) => {
-    // finish loadingbar
-    window.$loadingBar.finish()
-
     const appCachedViews = useAppStoreCachedViews()
 
     // if the route exists in tabs
