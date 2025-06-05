@@ -1,13 +1,25 @@
-import type { AxiosRequestConfig } from 'axios'
+import type { AxiosAdapter, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import qs from 'qs'
-import { cacheAdapterEnhancer, cancelAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer } from './src/adapters'
+import { cacheAdapterEnhancer, cancelAdapterEnhancer, mergeAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer } from './src/adapters'
 
 const { axiosTimeout } = useAppEnv('seconds')
 
 const { httpUrl } = useAppEnv('proxy')
 
 const adapter = axios.getAdapter('fetch')
+
+const adapterEnhancers: Array<(adapter: AxiosAdapter) => AxiosAdapter> = [
+  cancelAdapterEnhancer,
+  cacheAdapterEnhancer,
+  throttleAdapterEnhancer,
+  retryAdapterEnhancer,
+  mergeAdapterEnhancer,
+]
+
+export function composeAdapters(adapter: AxiosAdapter): AxiosAdapter {
+  return adapterEnhancers.reduceRight((acc, enhancer) => enhancer(acc), adapter)
+}
 
 export const originalConfig: AxiosRequestConfig = {
   baseURL: httpUrl,
@@ -23,8 +35,8 @@ export const originalConfig: AxiosRequestConfig = {
   // time out, default is 10s
   timeout: Number(axiosTimeout) * 1000,
 
-  // TODO so fucking ugly
-  adapter: [retryAdapterEnhancer(throttleAdapterEnhancer(cacheAdapterEnhancer(cancelAdapterEnhancer(adapter))))],
+  // adapter
+  adapter: composeAdapters(adapter),
 
   // default transform "true"/"false" to true/false
   _transformStringBoolean: true,

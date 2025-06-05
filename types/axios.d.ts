@@ -71,6 +71,11 @@ declare module 'axios' {
     _throttle?: number
 
     /**
+     * merge same get request with different querys, mostly used for dict data API
+     */
+    _mergeRequest?: boolean
+
+    /**
      * flag for the request(s) after excute the refresh token
      * mostly adapt for transformed request data/params
      * which should not excute part of the request interceptor again

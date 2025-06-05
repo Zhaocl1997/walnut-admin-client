@@ -14,7 +14,7 @@ defineOptions({
         This is a title with a help message.
       </WTitle>
 
-      <WTitle prefix="bar">
+      <WTitle prefix="bar" class="mb-2">
         This is a title with state.
       </WTitle>
       <WTitle prefix="bar" type="info">

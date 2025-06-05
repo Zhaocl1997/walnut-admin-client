@@ -69,6 +69,16 @@ const pool: Record<number, Fn> = {
       clearTimeout(id)
     }, 2500)
   },
+  11: () => {
+    _request({ _mergeRequest: true, params: { t: 1, q: 1 } })
+    _request({ _mergeRequest: true, params: { t: 2, q: 2 } })
+    _request({ _mergeRequest: true, params: { t: 3, q: 3 } })
+    _request({ _mergeRequest: true, params: { t: 4, q: 4 } })
+    _request({ _mergeRequest: true, params: { t: 5, q: 5 } })
+    _request({ _mergeRequest: true, params: { t: 6, q: 6 } })
+    _request({ _mergeRequest: true, params: { t: 7, q: 7 } })
+    _request({ _mergeRequest: true, params: { t: 8, q: 8 } })
+  },
 }
 
 function onSend(type: number) {
@@ -91,7 +101,7 @@ const items = [
   <WDemoCard title="Axios (See network tab)">
     <n-list>
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Send request with custum config
         </WTitle>
 
@@ -103,7 +113,9 @@ const items = [
           </n-space>
         </n-radio-group>
 
-        <n-space size="small" class="mt-2">
+        <br>
+
+        <n-button-group vertical size="large">
           <n-button @click="onSend(1)">
             Send Request normally
           </n-button>
@@ -134,7 +146,10 @@ const items = [
           <n-button @click="onSend(10)">
             Send Request with batch cancel support
           </n-button>
-        </n-space>
+          <n-button @click="onSend(11)">
+            Send Same Request Same time
+          </n-button>
+        </n-button-group>
       </n-list-item>
     </n-list>
   </WDemoCard>

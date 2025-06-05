@@ -40,7 +40,7 @@ const _formData = ref({
   <WDemoCard title="Tinymce Demo">
     <n-list>
       <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Basic usage
         </WTitle>
 
@@ -52,7 +52,7 @@ const _formData = ref({
       </n-list-item>
 
       <!-- <n-list-item>
-        <WTitle prefix="bar">
+        <WTitle prefix="bar" class="mb-2">
           Form usage
         </WTitle>
 

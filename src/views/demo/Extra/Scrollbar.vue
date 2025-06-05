@@ -34,7 +34,7 @@ watch(
 
 <template>
   <WDemoCard title="Scrollbar">
-    <WTitle prefix="bar">
+    <WTitle prefix="bar" class="mb-2">
       Vertical Position: {{ position }} || Overflow: {{ overflow }}
     </WTitle>
 
@@ -77,7 +77,7 @@ watch(
 
     <n-divider />
 
-    <WTitle prefix="bar">
+    <WTitle prefix="bar" class="mb-2">
       Horizontal Position: {{ positionHorizontal }} || Overflow:
       {{ overflowHorizontal }}
     </WTitle>
