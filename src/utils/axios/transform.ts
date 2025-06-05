@@ -1,10 +1,11 @@
 import type { AxiosError } from 'axios'
+import { AppNotAllowedName } from '@/router/constant'
 import axios from 'axios'
 import {
   easyTransformObjectStringBoolean,
 } from 'easy-fns-ts'
-import { merge } from 'lodash-es'
 
+import { merge } from 'lodash-es'
 import { AppRequestEncryption, AppResponseEncryption } from '../crypto'
 import { checkReponseErrorStatus } from './checkStatus'
 import { RefreshTokenLogic, setTokenHeaderWithConfig } from './refreshToken'
@@ -111,8 +112,17 @@ export const transform: WalnutAxiosTransform = {
 
     // custom error cdoe
     if (errorCodeList.includes(code)) {
-      useAppNotiError(msg)
-      return Promise.reject(new Error('Error'))
+      // device not allowed
+      if (code === BussinessCodeConst.DEVICE_NOT_ALLOWED) {
+        // not actually working, but sometimes it can cancel some requests
+        removeCurrentPageRequests(AppRouter.currentRoute.value.path)
+        await AppRouter.replace({ name: AppNotAllowedName, query: { type: 'device' } })
+        return Promise.reject(new Error('Device Not Allowed'))
+      }
+      else {
+        useAppNotiError(msg)
+        return Promise.reject(new Error('Error'))
+      }
     }
   },
 

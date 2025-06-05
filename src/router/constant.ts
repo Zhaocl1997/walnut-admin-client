@@ -22,6 +22,9 @@ export const App404Name = 'App404'
 export const App500Path = '/500'
 export const App500Name = 'App500'
 
+export const AppNotAllowedPath = '/device-not-allowed'
+export const AppNotAllowedName = 'AppDeviceNotAllowed'
+
 export const AppTestMainoutPath = '/test-mainout'
 export const AppTestMainoutName = 'TestMainout'
 
@@ -38,4 +41,5 @@ export const routeWhiteListPath: string[] = [
   AppAuthPath,
   AppAuthPrivacyPolicyPath,
   AppAuthServiceAgreementPath,
+  AppNotAllowedPath,
 ]

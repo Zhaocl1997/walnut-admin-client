@@ -6,6 +6,8 @@ export const BussinessCodeConst = {
   REFRESH_TOKEN_EXPIRED: 40102,
 
   PERMISSION_DENIED: 40105,
+
+  DEVICE_NOT_ALLOWED: 40605,
 } as const
 
 // see more in backend nestjs project `reponseCode` const

@@ -2,6 +2,8 @@ import type { AxiosAdapter, AxiosRequestConfig, Canceler } from 'axios'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
 
+// TODO AbortController redo
+
 const CancelToken = axios.CancelToken
 
 interface IAxiosCancelPoolItem {

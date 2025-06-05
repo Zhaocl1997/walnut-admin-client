@@ -67,10 +67,17 @@ export const App500Route: RouteRecordRaw = {
   component: () => import('../../views/error/500/index.vue'),
 }
 
+export const AppNotAllowedRoute: RouteRecordRaw = {
+  name: constant.AppNotAllowedName,
+  path: constant.AppNotAllowedPath,
+  component: () => import('../../views/error/NotAllowed/index.vue'),
+}
+
 export const builtinRoutes: RouteRecordRaw[] = [
   AppAuthRoute,
   AppAuthPrivacyPolicyRoute,
   AppAuthServiceAgreementRoute,
   AppRootRoute,
   AppRedirectRoute,
+  AppNotAllowedRoute,
 ]
