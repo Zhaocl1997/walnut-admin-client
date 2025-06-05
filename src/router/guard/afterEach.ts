@@ -1,5 +1,3 @@
-import { isEnhancing } from './beforeEach'
-
 const appTab = useAppStoreTab()
 
 export function createAfterEachGuard(router: Router) {
@@ -28,8 +26,6 @@ export function createAfterEachGuard(router: Router) {
     if (to.meta.cache) {
       appCachedViews.setCached(to.name)
     }
-
-    isEnhancing.value = false
 
     return true
   })

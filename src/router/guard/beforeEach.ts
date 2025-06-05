@@ -4,9 +4,6 @@ import { _confirm_leave_map_ } from '@/store/modules/app/app-tab'
 import { isEmpty, isUndefined } from 'lodash-es'
 
 let removeEvent: Fn
-export const isEnhancing = ref(false)
-
-export const ENHANCED_PREFIX = 'enhanced_'
 
 export function createBeforeEachGuard(router: Router) {
   // TODO beforeResolve
@@ -17,7 +14,6 @@ export function createBeforeEachGuard(router: Router) {
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
     const appCachedViews = useAppStoreCachedViews()
-    const appSetting = useAppStoreSetting()
     const appLock = useAppStoreLock()
 
     // if the target is not cached before, start loadingbar
@@ -43,33 +39,6 @@ export function createBeforeEachGuard(router: Router) {
     // No token, next to auth page and return
     if (!userAuth.accessToken)
       return { path: AppAuthPath, replace: true }
-
-    // enhanced params handle
-    if (router.currentRoute.value.name) {
-      if (to.name !== AppRedirectName && !isEnhancing.value && appSetting.app.routeQueryMode === AppConstRouteQueryMode.ENHANCED) {
-        // 检查是否有未加密的参数
-        const hasUnenhancedParams = Object.keys(to.params).some((key) => {
-          const value = to.params[key]
-          return value && typeof value === 'string' && !value.startsWith(ENHANCED_PREFIX)
-        })
-
-        if (!hasUnenhancedParams)
-          return true
-
-        if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.BASE64) {
-          isEnhancing.value = true
-          const encryptedParams = { ...to.params }
-          Object.keys(encryptedParams).forEach((key) => {
-            const value = encryptedParams[key]
-            if (value && typeof value === 'string' && !value.startsWith(ENHANCED_PREFIX)) {
-              // 添加前缀并加密
-              encryptedParams[key] = ENHANCED_PREFIX + wbtoa(value)
-            }
-          })
-          return { ...to, params: encryptedParams, replace: true }
-        }
-      }
-    }
 
     // enter the `leaveTip` page, hang on the unload event
     if (to.meta.leaveTip) {
