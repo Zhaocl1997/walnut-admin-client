@@ -16,6 +16,7 @@ export function createBeforeEachGuard(router: Router) {
       // Login and push to auth page, will go index menu
       if (userAuth.accessToken && to.path === AppAuthPath)
         return { name: appMenu.indexMenuName }
+      return true
     }
 
     // since almost all the routes are fetch from backend
