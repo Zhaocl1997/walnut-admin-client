@@ -44,11 +44,11 @@ const pool: Record<number, Fn> = {
     _request({ _demonstrate: true })
   },
   8: () => {
-    _request({ _sleep: 5000 })
+    _request({ _sleep: 2000 })
   },
   9: () => {
-    _request({ _sleep: 5000 })
-    _request({ _sleep: 5000 })
+    _request({ _sleep: 1000 })
+    _request({ _sleep: 3000 })
     _request({ _sleep: 5000 })
 
     const id = setTimeout(() => {
@@ -59,7 +59,7 @@ const pool: Record<number, Fn> = {
   10: () => {
     for (let i = 0; i < 10; i++) {
       const id = setTimeout(async () => {
-        await _request({ _sleep: 10000, _timestamp: true })
+        await _request({ _sleep: i * 1000, _timestamp: true })
         clearTimeout(id)
       }, i * 100)
     }
@@ -74,6 +74,17 @@ const pool: Record<number, Fn> = {
 function onSend(type: number) {
   pool[type]()
 }
+
+const items = [
+  {
+    value: true,
+    label: 'Auth Needed',
+  },
+  {
+    value: false,
+    label: 'Public API',
+  },
+]
 </script>
 
 <template>
@@ -84,14 +95,13 @@ function onSend(type: number) {
           Send request with custum config
         </WTitle>
 
-        <n-switch v-model:value="withToken">
-          <template #checked>
-            Endpoint need token
-          </template>
-          <template #unchecked>
-            Endpoint public
-          </template>
-        </n-switch>
+        <n-radio-group v-model:value="withToken" name="radiogroup">
+          <n-space>
+            <n-radio v-for="item in items" :key="`${item.value}`" :value="item.value">
+              {{ item.label }}
+            </n-radio>
+          </n-space>
+        </n-radio-group>
 
         <n-space size="small" class="mt-2">
           <n-button @click="onSend(1)">
