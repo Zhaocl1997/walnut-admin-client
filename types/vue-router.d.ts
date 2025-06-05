@@ -1,4 +1,4 @@
-export {}
+export { }
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -23,5 +23,10 @@ declare module 'vue-router' {
      * for those routes that do not need to fetch permissions from backend
      */
     _auth?: boolean
+
+    /**
+     * @description used for enhanced params, to temp save resolved params
+     */
+    _resolvedParams?: Recordable
   }
 }
