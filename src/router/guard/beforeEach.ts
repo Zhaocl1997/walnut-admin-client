@@ -10,7 +10,6 @@ export function createBeforeEachGuard(router: Router) {
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()
     const appMenu = useAppStoreMenu()
-    const appLock = useAppStoreLock()
 
     // Paths in `routeWhiteListPath` will enter directly
     if (routeWhiteListPath.includes(to.path)) {
@@ -29,16 +28,6 @@ export function createBeforeEachGuard(router: Router) {
     // No token, next to auth page and return
     if (!userAuth.accessToken)
       return { path: AppAuthPath, replace: true }
-
-    // handle lock logic
-    if (
-      AppRouter.hasRoute(AppLockName)
-      && appLock.isLock
-      && appLock.lockRoute
-    ) {
-      if (to.name !== AppLockName)
-        return { name: AppLockName }
-    }
 
     // no menus, means no permission or profile etc
     if (appMenu.menus.length === 0) {

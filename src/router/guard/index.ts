@@ -2,6 +2,7 @@ import { createAfterEachGuard } from './afterEach'
 import { createBeforeEachGuard } from './beforeEach'
 import { createLeaveTipGuard } from './modules/leaveTip'
 import { createLoadingbarGuard } from './modules/loadingbar'
+import { createLockGuard } from './modules/lock'
 import { createRouteParamsEnhancedGuard } from './modules/paramsEnhanced'
 
 // https://router.vuejs.org/guide/advanced/navigation-guards#The-Full-Navigation-Resolution-Flow
@@ -21,6 +22,7 @@ import { createRouteParamsEnhancedGuard } from './modules/paramsEnhanced'
 export function createRouterGuard(router: Router) {
   createLoadingbarGuard(router)
   createLeaveTipGuard(router)
+  createLockGuard(router)
   createRouteParamsEnhancedGuard(router)
   createBeforeEachGuard(router)
   createAfterEachGuard(router)
