@@ -1,64 +1,75 @@
-const isRouteParamsEnhancing = ref(false)
 const ENHANCED_ROUTE_PARAMS_PREFIX = 'ep_'
 
 export function createRouteParamsEnhancedGuard(router: Router) {
   const appSetting = useAppStoreSetting()
 
+  const enhancedFn = {
+    [AppConstRouteQueryEnhancedMode.BASE64]: wbtoa,
+    [AppConstRouteQueryEnhancedMode.CRYPTOJS]: AppPersistEncryption.encrypt.bind(AppPersistEncryption),
+  }
+
+  const resolvedFn = {
+    [AppConstRouteQueryEnhancedMode.BASE64]: watob,
+    [AppConstRouteQueryEnhancedMode.CRYPTOJS]: AppPersistEncryption.decrypt.bind(AppPersistEncryption),
+  }
+
   // beforeEach
   router.beforeEach((to, _from) => {
-    if (!router.currentRoute.value.name)
+    // normal params
+    if (appSetting.app.routeQueryMode === AppConstRouteQueryMode.NORMAL) {
+      return true
+    }
+
+    // no name => refresh page
+    // to.name redirect
+    // route params enhancing
+    if (!router.currentRoute.value.name || to.name === AppRedirectName)
       return true
 
-    if (to.name !== AppRedirectName && !isRouteParamsEnhancing.value && appSetting.app.routeQueryMode === AppConstRouteQueryMode.ENHANCED) {
-      const hasUnenhancedParams = Object.keys(to.params).some((key) => {
-        const value = to.params[key]
-        return value && typeof value === 'string' && !value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)
-      })
+    const hasUnenhancedParams = Object.keys(to.params).some((key) => {
+      const value = to.params[key]
+      return value && typeof value === 'string' && !value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)
+    })
 
-      if (!hasUnenhancedParams)
-        return true
+    if (!hasUnenhancedParams)
+      return true
 
-      if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.BASE64) {
-        isRouteParamsEnhancing.value = true
-        const encryptedParams = { ...to.params }
-        Object.keys(encryptedParams).forEach((key) => {
-          const value = encryptedParams[key]
-          if (value && typeof value === 'string' && !value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)) {
-            encryptedParams[key] = ENHANCED_ROUTE_PARAMS_PREFIX + wbtoa(value)
-          }
-        })
-        return { ...to, params: encryptedParams, replace: true }
+    const encryptedParams = { ...to.params }
+    Object.keys(encryptedParams).forEach((key) => {
+      const value = encryptedParams[key]
+      if (value && typeof value === 'string' && !value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)) {
+        encryptedParams[key] = ENHANCED_ROUTE_PARAMS_PREFIX + enhancedFn[appSetting.app.routeQueryEnhancedMode](value)
       }
-    }
+    })
+    return { ...to, params: encryptedParams, replace: true }
   })
 
   // beforeResolve
   router.beforeResolve((to) => {
-    if (to.name !== AppRedirectName && appSetting.app.routeQueryMode === AppConstRouteQueryMode.ENHANCED) {
-      const hasEncryptedParams = Object.keys(to.params).some((key) => {
-        const value = to.params[key]
-        return value && typeof value === 'string' && value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)
-      })
-
-      if (!hasEncryptedParams)
-        return
-
-      if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.BASE64) {
-        const resolvedParams = { ...to.params }
-
-        Object.keys(resolvedParams).forEach((key) => {
-          const value = resolvedParams[key]
-          if (value && typeof value === 'string' && value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)) {
-            resolvedParams[key] = watob(value.replace(ENHANCED_ROUTE_PARAMS_PREFIX, ''))
-          }
-        })
-        to.meta._resolvedParams = resolvedParams
-      }
+    // normal params
+    if (appSetting.app.routeQueryMode === AppConstRouteQueryMode.NORMAL) {
+      return true
     }
-  })
 
-  // afterEach
-  router.afterEach(() => {
-    isRouteParamsEnhancing.value = false
+    // to.name redirect
+    if (to.name === AppRedirectName)
+      return true
+
+    const hasEncryptedParams = Object.keys(to.params).some((key) => {
+      const value = to.params[key]
+      return value && typeof value === 'string' && value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)
+    })
+
+    if (!hasEncryptedParams)
+      return true
+
+    const resolvedParams = { ...to.params }
+    Object.keys(resolvedParams).forEach((key) => {
+      const value = resolvedParams[key]
+      if (value && typeof value === 'string' && value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)) {
+        resolvedParams[key] = resolvedFn[appSetting.app.routeQueryEnhancedMode](value.replace(ENHANCED_ROUTE_PARAMS_PREFIX, ''))
+      }
+    })
+    to.meta._resolvedParams = resolvedParams
   })
 }
