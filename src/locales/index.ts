@@ -35,6 +35,7 @@ class I18nService {
 
   public async init(app: App): Promise<void> {
     if (this._i18n) {
+      // turbo-console-disable-next-line
       console.info('I18n', 'Already initialized')
       return
     }
@@ -42,6 +43,7 @@ class I18nService {
     const options = await this.createI18nOptions()
     this._i18n = createI18n<false>(options)
     app.use(this._i18n)
+    // turbo-console-disable-next-line
     console.info('I18n', 'Locale initialized successfully')
   }
 

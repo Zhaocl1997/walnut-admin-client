@@ -38,6 +38,7 @@ export function cacheAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
         return responsePromise
       }
 
+      // turbo-console-disable-next-line
       console.info('Axios Cache', `Axios HIT CACHE: key => ${index}`)
 
       return responsePromise

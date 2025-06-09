@@ -15,6 +15,7 @@ export const AppRouter = createRouter({
 export function setupRouter(app: App) {
   app.use(AppRouter)
   createRouterGuard(AppRouter)
+  // turbo-console-disable-next-line
   console.info('Router', 'Router Initializing...')
 }
 
@@ -39,6 +40,7 @@ export function useAppRouterPush(info: RouteLocationRaw) {
     })
   }
   catch (error) {
+    // turbo-console-disable-next-line
     console.error('Router push', error)
 
     // maybe error

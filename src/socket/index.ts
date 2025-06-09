@@ -34,6 +34,7 @@ class SocketService {
     })
 
     this._socket.on('connect', () => {
+      // turbo-console-disable-next-line
       console.info('Socket', 'Socket connected.')
     })
 
@@ -46,6 +47,7 @@ class SocketService {
       await userAuth.Signout()
     })
 
+    // turbo-console-disable-next-line
     console.info('Socket', 'Socket initialized successfully')
   }
 

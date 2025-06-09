@@ -40,5 +40,6 @@ export async function setupApp(app: App) {
   if (isDev())
     app.config.performance = true
 
+  // turbo-console-disable-next-line
   console.info('setupApp', 'App Initializing...')
 }
