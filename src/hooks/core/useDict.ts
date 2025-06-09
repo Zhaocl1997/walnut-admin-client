@@ -25,28 +25,22 @@ export function getDictTarget(type: string, value: BaseDataType) {
 
 // init dict, no return value, just set dict data into dict map
 // used for form/table/desc init
-export async function initDict(types: string | string[]): Promise<void> {
-  if (!types || types.length === 0) {
-    console.warn('useDict', 'Need to provide dict `types` to get dicts')
+export async function initDict(types: string[]) {
+  if (types.length === 0) {
+    // turbo-console-disable-next-line
+    console.warn('[initDict]', 'Need to provide dict `types` to get dicts')
     return
   }
 
-  if (typeof types === 'string') {
-    if (AppStoreMapDict.value.has(types))
-      return
-    const res = await getDictByTypeAPI(types)
-    setDictIntoMap(types, res[0])
+  const nonExistedDictTypes = types.filter(type => !AppStoreMapDict.value.has(type))
+  if (!nonExistedDictTypes.length) {
+    return
   }
-  else {
-    const nonExistedDictTypes = types.filter(type => !AppStoreMapDict.value.has(type))
-    if (!nonExistedDictTypes.length) {
-      return
-    }
-    console.log('[useDict] Un-hit dict', nonExistedDictTypes)
+  // turbo-console-disable-next-line
+  console.log('[initDict] Un-hit dict', nonExistedDictTypes)
 
-    const res = await getDictByTypeAPI(nonExistedDictTypes)
-    nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)!))
-  }
+  const res = await getDictByTypeAPI(nonExistedDictTypes)
+  nonExistedDictTypes.map(type => setDictIntoMap(type, res.find(i => i.type === type)!))
 }
 
 // typescript overload
@@ -55,7 +49,8 @@ export function useDict(types: string[]): { loading: Ref<boolean>, execDict: () 
 export function useDict(types: string | string[]): void
 export function useDict(types: string | string[]) {
   if (!types || types.length === 0) {
-    console.warn('useDict', 'Need to provide dict `types` to get dicts')
+    // turbo-console-disable-next-line
+    console.warn('[useDict]', 'Need to provide dict `types` to get dicts')
     return
   }
 
