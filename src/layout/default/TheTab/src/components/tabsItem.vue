@@ -85,7 +85,7 @@ const getTitle = computed(() => {
 
 const getIcon = computed(() => {
   const icon = item.meta?._icon ?? item.meta?.icon as string
-  return icon ? t(icon) : ''
+  return icon || ''
 })
 </script>
 
