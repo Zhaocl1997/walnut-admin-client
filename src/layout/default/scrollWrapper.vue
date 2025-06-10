@@ -56,7 +56,7 @@ defineExpose({ onScrollToTop })
       />
       <TheIFrameWrapper />
 
-      <div class="sticky left-0" :class="[{ 'bottom-0': appSetting.getFooterFixed }]" :style="{ width: appSetting.getCalcContentWidth }">
+      <div class="sticky left-0 z-1" :class="[{ 'bottom-0': appSetting.getFooterFixed }]" :style="{ width: appSetting.getCalcContentWidth }">
         <TheFooter />
       </div>
     </n-scrollbar>

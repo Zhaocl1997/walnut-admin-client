@@ -20,8 +20,15 @@ const { targetRef: headerRef, targetShow: headerShow } = useFixedTopScroll('head
 const { targetRef: tabsRef, targetShow: tabsShow } = useFixedTopScroll('tabsRef', toRefs(appSetting.tabs), { top, y, directionTop })
 
 watchEffect(() => {
-  headerShow.value = top.value || appSetting.getHeaderFixed
-  tabsShow.value = top.value || appSetting.getTabsFixed
+  headerShow.value = appSetting.getHeaderShow
+    ? top.value || appSetting.getHeaderFixed
+    : false
+})
+
+watchEffect(() => {
+  tabsShow.value = appSetting.getTabsShow
+    ? top.value || appSetting.getTabsFixed
+    : false
 })
 
 const getFooterShow = computed(() => bottom.value || appSetting.getFooterFixed)
@@ -50,23 +57,24 @@ defineExpose({ onScrollToTop })
       <TheTabs v-show="tabsShow" ref="tabsRef" />
     </div>
 
-    <div
-      :id="String($route.name)"
-      ref="scrollWrapper"
-      class="relative h-full overflow-auto"
-      :style="{
-        width: `calc(100vw - ${appSetting.getMenuWidth}px)`,
-        height: `calc(100vh - ${headerShow ? appSetting.header.height : 0}px - ${tabsShow ? appSetting.tabs.height : 0}px - ${getFooterShow ? appSetting.footer.height : 0}px)`,
-      }"
-    >
-      <TheContent
-        :id="`${String($route.name)}-content`"
-        class="relative h-full w-full"
+    <div ref="scrollWrapper">
+      <n-scrollbar
+        :id="String($route.name)"
+        x-scrollable
         :style="{
-          padding: `${appSetting.app.contentPadding}px`,
+          width: appSetting.getCalcContentWidth,
+          height: `calc(100vh - ${headerShow ? appSetting.header.height : 0}px - ${tabsShow ? appSetting.tabs.height : 0}px - ${getFooterShow ? appSetting.footer.height : 0}px)`,
         }"
-      />
-      <TheIFrameWrapper />
+      >
+        <TheContent
+          :id="`${String($route.name)}-content`"
+          class="relative h-full w-full"
+          :style="{
+            padding: `${appSetting.app.contentPadding}px`,
+          }"
+        />
+        <TheIFrameWrapper />
+      </n-scrollbar>
     </div>
 
     <div class="sticky bottom-0 left-0 z-99">
