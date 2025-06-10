@@ -19,11 +19,11 @@ const emits = defineEmits<{ yes: [], no: [] }>()
 
 const show = defineModel<boolean>('show', { required: true, default: false })
 
-const modelRef = shallowRef()
+const modalRef = useTemplateRef<any>('modalRef')
 const isFullscreen = ref(false)
 
 function onFullScreen() {
-  const dragDom = modelRef.value?.containerRef.querySelector('.w-modal')
+  const dragDom = modalRef.value?.containerRef.querySelector('.w-modal')
 
   isFullscreen.value = !isFullscreen.value
 
@@ -58,7 +58,7 @@ async function onUpdateShow(v: boolean) {
 
 <template>
   <n-modal
-    ref="modelRef"
+    ref="modalRef"
     preset="card"
     :show="show"
     :show-icon="false"

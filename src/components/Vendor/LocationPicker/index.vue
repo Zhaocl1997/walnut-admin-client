@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// TODO rework
 import type { IWCompVendorLocationPickerProps } from '.'
 import { genString } from 'easy-fns-ts'
 
