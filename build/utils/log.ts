@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import process from 'node:process'
 import chalk from 'chalk'
 
-import { getNow } from 'easy-fns-ts/dist/lib'
+import { getNow } from 'easy-fns-ts'
 import pkg from '../../package.json'
 
 function title(stage: string) {
