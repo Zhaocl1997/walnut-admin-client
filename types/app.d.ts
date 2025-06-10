@@ -10,16 +10,8 @@ declare global {
    */
   interface AppBaseModel {
     _id?: string
-
-    /**
-     * @deprecated
-     */
-    deleted?: boolean
-
     createdAt?: Date
     updatedAt?: Date
-
-    [key: string]: any
   }
 
   /**
@@ -98,15 +90,8 @@ declare global {
     params?: Recordable
   }
 
-  // system menu
-  interface AppSystemMenu extends AppBaseModel {
-    pid?: string
-    type?: ValueOfAppConstMenuType
-    path?: string
-    name?: string
-    component?: any
-    title?: string
-    icon?: string
+  // system menu meta
+  interface AppSystemMenuMeta {
     order?: number
     ternal?: ValueOfAppConstMenuTernal
     url?: string
@@ -118,11 +103,23 @@ declare global {
     badge?: string
     menuActiveName?: string
     menuActiveSameTab?: boolean
-    badge?: string
     animationName?: string
     activeIcon?: string
     position?: boolean
     leaveTip?: boolean
+  }
+
+  // system menu
+  interface AppSystemMenu extends AppBaseModel {
+    pid?: string
+    type?: ValueOfAppConstMenuType
+    path?: string
+    name?: string
+    component?: string | PromiseFn
+    title?: string
+    icon?: string
+
+    meta: AppSystemMenuMeta
   }
 
   // system role
@@ -307,5 +304,3 @@ declare global {
     populated_user?: AppSystemUser
   }
 }
-
-export { }

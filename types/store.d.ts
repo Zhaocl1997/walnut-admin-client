@@ -130,7 +130,7 @@ declare global {
     footer: AppSettingsForFooter
   }
 
-  type IAppTabIframe = Pick<AppSystemMenu, 'name' | 'cache' | 'url'>
+  type IAppTabIframe = Pick<AppSystemMenu, 'name'> & Pick<AppSystemMenuMeta, 'cache' | 'url'>
 
   /**
    * App tab state

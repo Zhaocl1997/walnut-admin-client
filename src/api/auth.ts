@@ -1,14 +1,14 @@
-enum AuthEnum {
-  PWD = '/auth/pwd',
+const Auth = {
+  PWD: '/auth/pwd',
 
-  SIGNOUT = '/auth/signout',
+  SIGNOUT: '/auth/signout',
 
-  REFRESH_TOKEN = '/auth/refresh',
+  REFRESH_TOKEN: '/auth/refresh',
 
-  PERMISSION = '/auth/permissions',
-  PROFILE = '/auth/profile',
-  KEYS = '/auth/keys',
-}
+  PERMISSION: '/auth/permissions',
+  PROFILE: '/auth/profile',
+  KEYS: '/auth/keys',
+} as const
 
 /**
  * @description auth with pwd
@@ -16,7 +16,7 @@ enum AuthEnum {
 export function authWithPwdAPI(data: AppPayloadAuth.Password) {
   return AppAxios.post<AppPayloadAuth.TokenPayload>(
     {
-      url: AuthEnum.PWD,
+      url: Auth.PWD,
       data,
       _autoEncryptRequestDataFields: ['password'],
     },
@@ -28,7 +28,7 @@ export function authWithPwdAPI(data: AppPayloadAuth.Password) {
  */
 export function signoutAPI() {
   return AppAxios.post({
-    url: AuthEnum.SIGNOUT,
+    url: Auth.SIGNOUT,
   })
 }
 
@@ -39,7 +39,7 @@ export function refreshTokenAPI(data: { refreshToken: string }) {
   return AppAxios.post<{
     accessToken: string
   }>({
-    url: AuthEnum.REFRESH_TOKEN,
+    url: Auth.REFRESH_TOKEN,
     data,
   })
 }
@@ -49,15 +49,15 @@ export function refreshTokenAPI(data: { refreshToken: string }) {
  */
 export function getPermissionsAPI() {
   return AppAxios.get<{
-    permissionMenuTree: TreeNodeItem<Pick<AppSystemMenu, '_id' | 'pid' | 'show' | 'type' | 'title' | 'order' | 'path' | 'ternal' | 'name' | 'icon' | 'url' | 'menuActiveName' | 'badge' | 'activeIcon'>>[]
+    permissionMenuTree: TreeNodeItem<AppSystemMenu>[]
+    permissionRouteTree: RouteRecordRaw[]
     permissionStrings: string[]
-    permissionRouteTree: TreeNodeItem<RouteRecordRaw>[]
     keepAliveNames: string[]
     indexMenuName: string
     affixedTabs: AppTab[]
     internalIframeList: { name: string, url: string, cache: boolean }[]
   }>({
-    url: AuthEnum.PERMISSION,
+    url: Auth.PERMISSION,
   })
 }
 
@@ -66,7 +66,7 @@ export function getPermissionsAPI() {
  */
 export function getUserInfoAPI() {
   return AppAxios.get<{ user: AppSystemUser, roleNames: string[] }>({
-    url: AuthEnum.PROFILE,
+    url: Auth.PROFILE,
   })
 }
 
@@ -76,7 +76,7 @@ export function getUserInfoAPI() {
 export function getBaiduKeyAPI() {
   return AppAxios.get<AppSecretKeysInterface>(
     {
-      url: AuthEnum.KEYS,
+      url: Auth.KEYS,
       _autoDecryptResponseData: true,
       _cache: true,
     },

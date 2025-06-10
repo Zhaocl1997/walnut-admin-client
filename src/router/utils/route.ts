@@ -1,53 +1,10 @@
-import type { RouteRecordNameGeneric } from 'vue-router'
+import type { RouteRecordMultipleViewsWithChildren, RouteRecordNameGeneric } from 'vue-router'
 
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
 import IFrameReal from '@/layout/iframe/index.vue'
 import { findPath, formatTree } from 'easy-fns-ts'
 import { App404Route, App500Route } from '../routes/builtin'
-
-/**
- * @description flat tree route into two level route
- * @link https://github.com/vuejs/vue-router-next/issues/626
- */
-function transformToTwoLevelRouteTree(routes: RouteRecordRaw[]) {
-  const ret: RouteRecordRaw[] = []
-
-  formatTree(routes, {
-    format: (node) => {
-      // findPath, it's an array
-      const paths = findPath(
-        routes,
-        n => n.name === node.name,
-      ) as RouteRecordRaw[]
-
-      // only handle menu
-      if (node.meta?.type === AppConstMenuType.MENU) {
-        if (paths.length > 1) {
-          const newNode = paths.reduce(
-            (prev, next) =>
-              ({
-                name: next.name,
-                path: prev.path.startsWith('/')
-                  ? `${prev.path}/${next.path}`
-                  : `/${prev.path}/${next.path}`,
-                meta: next.meta,
-                component: next.component,
-              } as RouteRecordRaw),
-          )
-
-          ret.push(newNode)
-        }
-        else if (!node.children) {
-          // add `/` prefix when no children
-          ret.push({ ...node, path: `/${node.path}` })
-        }
-      }
-    },
-  })
-
-  return ret
-}
 
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
@@ -102,39 +59,41 @@ function resolveViewModules(component: string) {
 /**
  * @description Build Routes Core Function
  */
-export function buildRoutes(payload: TreeNodeItem<RouteRecordRaw>[]) {
-  const routesTree = formatTree<RouteRecordRaw, RouteRecordRaw>(payload, {
-    // @ts-expect-error need to declare a new type
-    format: (node) => {
-      // handle catelog
-      if (node.meta!.type === AppConstMenuType.CATALOG) {
+export function buildRoutes(payload: RouteRecordRaw[]) {
+  const data = payload as TreeNodeItem<RouteRecordMultipleViewsWithChildren>[]
+
+  // @ts-expect-error easy-fns-ts
+  const routesTree = formatTree(data, (node) => {
+    // handle catelog
+    if (node.meta?.type === AppConstMenuType.CATALOG) {
+      return {
+        ...node,
+        component: resolveParentComponent(node.name),
+      }
+    }
+
+    // handle menu
+    if (node.meta!.type === AppConstMenuType.MENU) {
+      // handle internal menu
+      if (node.meta!.ternal === AppConstMenuTernal.INTERNAL) {
         return {
           ...node,
-          component: resolveParentComponent(node.name),
+          component: resolveIFrameComponent(node.name, node.meta!.cache),
         }
       }
 
-      // handle menu
-      if (node.meta!.type === AppConstMenuType.MENU) {
-        // handle internal menu
-        if (node.meta!.ternal === AppConstMenuTernal.INTERNAL) {
-          return {
-            ...node,
-            component: resolveIFrameComponent(node.name, node.meta!.cache),
-          }
-        }
+      // ...
+      // no need to handle with extenal menu
+      // ...
 
-        // ...
-        // no need to handle with extenal menu
-        // ...
-
-        // common view route
-        return {
-          ...node,
-          component: resolveViewModules(node.component as unknown as string),
-        }
+      // common view route
+      return {
+        ...node,
+        component: resolveViewModules(node.component as unknown as string),
       }
-    },
+    }
+
+    return node
   })
 
   // I have decided to make this into a final solution, not for temporarily anymore
@@ -144,6 +103,47 @@ export function buildRoutes(payload: TreeNodeItem<RouteRecordRaw>[]) {
   // finally push the 404/500
   transformedRouteTree.push(App404Route)
   transformedRouteTree.push(App500Route)
+
+  return transformedRouteTree
+}
+
+/**
+ * @description flat tree route into two level route
+ * @link https://github.com/vuejs/vue-router-next/issues/626
+ */
+function transformToTwoLevelRouteTree(routes: TreeNodeItem<RouteRecordMultipleViewsWithChildren>[]) {
+  const transformedRouteTree: RouteRecordRaw[] = []
+
+  formatTree(routes, (node) => {
+    // findPath, it's an array
+    const paths = findPath(
+      routes,
+      n => n.name === node.name,
+    ) as RouteRecordRaw[]
+
+    // only handle menu
+    if (node.meta?.type === AppConstMenuType.MENU) {
+      if (paths.length > 1) {
+        const newNode = paths.reduce(
+          (prev, next) =>
+            ({
+              name: next.name,
+              path: prev.path.startsWith('/')
+                ? `${prev.path}/${next.path}`
+                : `/${prev.path}/${next.path}`,
+              meta: next.meta,
+              component: next.component,
+            } as RouteRecordRaw),
+        )
+
+        transformedRouteTree.push(newNode)
+      }
+      else if (!node.children) {
+        // add `/` prefix when no children
+        transformedRouteTree.push({ ...node, path: `/${node.path}` })
+      }
+    }
+  })
 
   return transformedRouteTree
 }

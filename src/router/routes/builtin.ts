@@ -1,6 +1,7 @@
+import type { RouteRecordSingleView, RouteRecordSingleViewWithChildren } from 'vue-router'
 import * as constant from '../constant'
 
-export const AppAuthRoute: RouteRecordRaw = {
+export const AppAuthRoute: RouteRecordSingleView = {
   name: constant.AppAuthName,
   path: constant.AppAuthPath,
   component: () => import('../../views/auth/index.vue'),
@@ -10,7 +11,7 @@ export const AppAuthRoute: RouteRecordRaw = {
   },
 }
 
-export const AppAuthPrivacyPolicyRoute: RouteRecordRaw = {
+export const AppAuthPrivacyPolicyRoute: RouteRecordSingleView = {
   name: constant.AppAuthPrivacyPolicyName,
   path: constant.AppAuthPrivacyPolicyPath,
   component: () => import('../../views/auth/privacy-policy.vue'),
@@ -20,7 +21,7 @@ export const AppAuthPrivacyPolicyRoute: RouteRecordRaw = {
   },
 }
 
-export const AppAuthServiceAgreementRoute: RouteRecordRaw = {
+export const AppAuthServiceAgreementRoute: RouteRecordSingleView = {
   name: constant.AppAuthServiceAgreementName,
   path: constant.AppAuthServiceAgreementPath,
   component: () => import('../../views/auth/service-agreement.vue'),
@@ -30,7 +31,7 @@ export const AppAuthServiceAgreementRoute: RouteRecordRaw = {
   },
 }
 
-export const AppRootRoute: RouteRecordRaw = {
+export const AppRootRoute: RouteRecordSingleViewWithChildren = {
   name: constant.AppRootName,
   path: constant.AppRootPath,
   component: () => import('../../layout/default'),
@@ -38,14 +39,14 @@ export const AppRootRoute: RouteRecordRaw = {
   children: [],
 }
 
-export const AppRedirectRoute: RouteRecordRaw = {
+export const AppRedirectRoute: RouteRecordSingleView = {
   name: constant.AppRedirectName,
   path: `${constant.AppRedirectPath}/:path(.*)`,
   component: () => import('../../layout/default/TheRedirect/index.vue'),
 }
 
 // this is added dynamically base on the app setting
-export const AppLockRoute: RouteRecordRaw = {
+export const AppLockRoute: RouteRecordSingleView = {
   name: constant.AppLockName,
   path: constant.AppLockPath,
   component: () => import('../../components/App/AppLock/lock.vue'),
@@ -55,19 +56,19 @@ export const AppLockRoute: RouteRecordRaw = {
 }
 
 // below 404/500 routes are added after permission routes loaded
-export const App404Route: RouteRecordRaw = {
+export const App404Route: RouteRecordSingleView = {
   name: constant.App404Name,
   path: constant.App404Path,
   component: () => import('../../views/error/404/index.vue'),
 }
 
-export const App500Route: RouteRecordRaw = {
+export const App500Route: RouteRecordSingleView = {
   name: constant.App500Name,
   path: constant.App500Path,
   component: () => import('../../views/error/500/index.vue'),
 }
 
-export const AppNotAllowedRoute: RouteRecordRaw = {
+export const AppNotAllowedRoute: RouteRecordSingleView = {
   name: constant.AppNotAllowedName,
   path: constant.AppNotAllowedPath,
   component: () => import('../../views/error/NotAllowed/index.vue'),
