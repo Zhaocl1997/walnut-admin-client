@@ -1,9 +1,9 @@
 // business
 import type { ICompBusinessAreaCascaderProps } from '@/components/Business/AreaCascader'
 import type { ICompBusinessDictProps } from '@/components/Business/Dict'
-
 // extra
 import type { ICompExtraEmailInputProps } from '@/components/Extra/EmailInput'
+
 import type { ICompExtraIconPickerProps } from '@/components/Extra/IconPicker'
 import type { ICompExtraLocaleSelectProps } from '@/components/Extra/LocaleSelect'
 import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
@@ -11,8 +11,9 @@ import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNu
 import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
 import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
-
 import type { IHooksUseProps } from '@/hooks/core/useProps'
+
+import type { DeepKeyOf } from 'easy-fns-ts'
 // raw
 import type {
   DynamicInputProps,
@@ -74,7 +75,7 @@ export declare namespace WForm {
   /**
    * @description callback function
    */
-  type FormFnCallback<T = any, R = void> = ({ formData, formProps }: { formData: T, formProps?: Schema.SchemaItemFormProps }) => R
+  type FormFnCallback<T = any, R = void> = ({ formData, formProps }: { formData: T, formProps?: Schema.SchemaItemFormProps<T> }) => R
 
   /**
    * @description set table props
@@ -249,7 +250,7 @@ export declare namespace WForm {
   namespace Params {
     interface Callback<T = any> {
       formData: T
-      formProps?: Schema.SchemaItemFormProps
+      formProps?: Schema.SchemaItemFormProps<T>
     }
 
     namespace Dialog {
@@ -321,7 +322,7 @@ export declare namespace WForm {
       'Vendor:Tinymce': ICompVendorTinymceProps
     }
 
-    type SchemaItemFormProps = Omit<FormItemProps, 'rule' | 'label'> & {
+    type SchemaItemFormProps<T> = Omit<FormItemProps, 'rule' | 'label' | 'path'> & {
       /**
        * @override
        * @description add boolean type to rule
@@ -335,6 +336,12 @@ export declare namespace WForm {
        * Used for dict form item label, set true to use dict type name as form label
        */
       label?: string | boolean | IDefaultAppLocaleMessage
+
+      /**
+       * @override
+       * @description path typescript support
+       */
+      path?: DeepKeyOf<T>
 
       /**
        * @description when using `base-rules`, you can provide a `ruleType` to specific the value type, default would ba a `any`
@@ -388,7 +395,7 @@ export declare namespace WForm {
           placeholder?: string
         }
 
-      formProp?: SchemaItemFormProps
+      formProp?: SchemaItemFormProps<D>
 
       /**
        * @description grid prop
