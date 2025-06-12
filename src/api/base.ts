@@ -38,6 +38,9 @@ export class BaseAPI<T extends AppBaseModel> {
     })
   }
 
+  // fix src/components/Advanced/CRUD/index.vue onYes
+  detail() {}
+
   update(data: T) {
     return AppAxios.put<T>(
       {

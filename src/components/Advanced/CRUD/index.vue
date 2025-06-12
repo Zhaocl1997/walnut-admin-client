@@ -3,7 +3,7 @@ import type { WForm } from '@/components/UI/Form'
 import type { WTable } from '@/components/UI/Table'
 import type { WCrud } from './types'
 import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
-import { pick } from 'lodash-es'
+import { isEmpty, pick } from 'lodash-es'
 import { useSafeForm } from './useSafeForm'
 
 const props = withDefaults(defineProps<WCrud.Props<T>>(), {
@@ -131,6 +131,10 @@ function onOpenCreateForm(generateDefaultFormData = true) {
 // open and read form
 async function onReadAndOpenUpdateForm(id: StringOrNumber) {
   actionType.value = 'update'
+
+  if (!isEmpty(getFormProps.value.descriptionProps)) {
+    actionType.value = 'detail'
+  }
 
   onOpen(async (done) => {
     try {
