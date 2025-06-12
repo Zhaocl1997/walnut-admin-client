@@ -260,6 +260,16 @@ declare global {
     authTime?: Date
   }
 
+  // system delete
+  interface AppSystemDeleted extends Omit<AppBaseModel, 'updatedAt'> {
+    content?: string
+    modelName?: string
+    collectionName?: string
+    deletedId?: string
+    deletedAt?: Date
+    deletedBy?: string
+  }
+
   // shared area
   interface AppSharedArea {
     code?: string

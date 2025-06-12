@@ -5,6 +5,7 @@ export const defaultAppLocaleMessageKeys = [
   'createdAt',
   'updatedAt',
 
+  'title',
   'action',
   'icon',
   'order',
@@ -41,6 +42,9 @@ export const defaultAppLocaleMessageKeys = [
   'lastActiveAt',
   'firstVisitAt',
   'currentRouter',
+
+  'modelName',
+  'collectionName',
 ] as const
 
 export type IDefaultAppLocaleMessage = typeof defaultAppLocaleMessageKeys[number]
