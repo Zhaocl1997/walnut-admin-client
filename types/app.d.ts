@@ -207,6 +207,7 @@ declare global {
     key?: string
     value?: string
     process?: number
+    oldKey?: string
   }
 
   // system dict type

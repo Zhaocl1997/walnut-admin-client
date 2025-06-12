@@ -26,7 +26,7 @@ const [
     onGetFormData,
     onApiList,
   },
-] = useCRUD<AppSystemLocale & { oldKey?: string }>({
+] = useCRUD<AppSystemLocale>({
   baseAPI: localeAPI,
 
   safeForm: true,
