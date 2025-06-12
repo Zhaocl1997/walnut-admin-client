@@ -111,12 +111,12 @@ export function objectToPaths<T>(obj: T) {
   return result
 }
 
-export function pathsToObject<T extends object>(pathsObj: T) {
+export function pathsToObject<T extends object, R extends Recordable = T>(pathsObj: T): R {
   const result: Recordable = {}
 
   forEach(pathsObj, (value, path) => {
     set(result, path, value)
   })
 
-  return result
+  return result as R
 }

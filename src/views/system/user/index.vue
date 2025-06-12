@@ -236,7 +236,7 @@ const [
               textProp: () => t('app.base.pass.update'),
               type: 'info',
               size: 'small',
-              auth: 'system:user:pass:update',
+              auth: `system:${key}:pass:update`,
             },
             iconProps: {
               icon: 'mdi:update',
@@ -262,7 +262,7 @@ const [
               textProp: () => t('app.base.pass.reset'),
               type: 'warning',
               size: 'small',
-              auth: 'system:user:pass:reset',
+              auth: `system:${key}:pass:reset`,
             },
             iconProps: {
               icon: 'mdi:lock-reset',

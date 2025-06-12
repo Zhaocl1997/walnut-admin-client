@@ -132,7 +132,8 @@ function onOpenCreateForm(generateDefaultFormData = true) {
 async function onReadAndOpenUpdateForm(id: StringOrNumber) {
   actionType.value = 'update'
 
-  if (!isEmpty(getFormProps.value.descriptionProps)) {
+  const isDetail = !isEmpty(getFormProps.value.descriptionProps)
+  if (isDetail) {
     actionType.value = 'detail'
   }
 
@@ -141,10 +142,12 @@ async function onReadAndOpenUpdateForm(id: StringOrNumber) {
       const res = await getBaseApi.value.read(id)
       formData.value = Object.assign(formData.value, res)
 
-      // feedback form
-      nextTick(() => {
-        onInitStorage()
-      })
+      if (!isDetail) {
+        // feedback form
+        nextTick(() => {
+          onInitStorage()
+        })
+      }
     }
     finally {
       done()
