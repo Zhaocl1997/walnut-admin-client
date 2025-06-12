@@ -103,7 +103,6 @@ const [
       read: `system:${key}:read`,
       update: `system:${key}:update`,
       delete: `system:${key}:delete`,
-      deleteMany: `system:${key}:deleteMany`,
     },
 
     queryFormProps: {
@@ -147,12 +146,6 @@ const [
 
     // table columns
     columns: [
-      {
-        key: 'selection',
-        type: 'selection',
-        fixed: 'left',
-      },
-
       {
         key: 'index',
         extendType: 'index',
