@@ -47,6 +47,7 @@ export const formItemUtils = {
 
   /**
    * @description get translated string relatived with form
+   * TODO i think this need to redesign
    */
   getTranslatedString<T>(t: Fn, item: SchemaItem<T>, props: FormProps<T>, type: WForm.LocaleType = 'origin') {
     const itemFormProp = item.formProp!
@@ -67,16 +68,32 @@ export const formItemUtils = {
     const path = itemFormProp?.path
     const label = itemFormProp?.label
 
+    const format = (key: string) => {
+      if (type === 'origin')
+        return key
+      if (type === 'helpMsg')
+        return `${key}.helpMsg`
+      if (type === 'placeholder')
+        return `${key}.PH`
+      if (type === 'rule')
+        return `${key}.rule`
+    }
+
+    // system menu => title field
+    if (path && itemFormProp?.labelHelpMessage && type === 'helpMsg') {
+      return t(`form.${format(`${key}.${path}`)}`)
+    }
+
     // in default app locale messages keys
     if (path && defaultAppLocaleMessageKeys.includes(path as IDefaultAppLocaleMessage))
       return t(`app.base.${path}`)
     if (label && defaultAppLocaleMessageKeys.includes(label as IDefaultAppLocaleMessage))
       return t(`app.base.${label}`)
 
-    // TODO for what??
-    // got label, return label
-    // if (label)
-    //   return unref(label)
+    // custom i18n key label passed in
+    if (!needLocale && label) {
+      return t(label)
+    }
 
     // no locale nor no path
     // just return target field
@@ -93,17 +110,6 @@ export const formItemUtils = {
     const isLocaleWithTable
       = getBoolean(itemFormProp?.localeWithTable)
         && getBoolean(props.localeWithTable)
-
-    const format = (key: string) => {
-      if (type === 'origin')
-        return key
-      if (type === 'helpMsg')
-        return `${key}.helpMsg`
-      if (type === 'placeholder')
-        return `${key}.PH`
-      if (type === 'rule')
-        return `${key}.rule`
-    }
 
     // locale with table, means locale key startsWith `table` insteadof `form`
     if (isLocaleWithTable)
@@ -146,7 +152,7 @@ export function generateBaseRules<T>(t: ReturnType<typeof AppI18n>['global']['t'
   ): FormItemRule[] => {
     const base: FormItemRule[] = [
       {
-        key: i?.formProp?.path,
+        key: i?.formProp?.path as string,
         type: i.formProp?.ruleType || 'any',
         trigger: ['change', 'input'],
         required: true,
@@ -208,7 +214,6 @@ export const extendedFormPropKeys: (keyof FormProps<Recordable>)[] = [
   'dialogProps',
   'localeUniqueKey',
   'localeWithTable',
-  'useDescription',
   'descriptionProps',
 ]
 
