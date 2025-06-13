@@ -15,12 +15,22 @@ const getData = computed(() => Object.fromEntries<BaseDataType>(items.map<[strin
 const getShowItem = computed<ICompUIDescriptionsItem[]>(() => items.filter(i => getBoolean(i.show)))
 
 function onClickText(item: ICompUIDescriptionsItem) {
-  openExternalLink((item as ICompUIDescTypeLink<T>).typeProps?.link as string)
+  const LinkItem = item as ICompUIDescTypeLink<T>
+  const link = LinkItem.typeProps?.link
+  const clickEvent = LinkItem.typeProps?.onLinkClick
+
+  if (link) {
+    openExternalLink(link)
+  }
+
+  if (clickEvent) {
+    clickEvent(item.value, getData.value as T)
+  }
 }
 
 function onFormat(item: ICompUIDescriptionsItem) {
   return (typeof item.formatter === 'function'
-    ? item.formatter(item.value, getData)
+    ? item.formatter(item.value, getData.value)
     : item.value) || t('app.base.none')
 }
 

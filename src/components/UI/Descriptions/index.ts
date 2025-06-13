@@ -9,6 +9,7 @@ export interface ICompUIDescTypeTag<T> extends ICompUIDescItemExtend<T, TagProps
 
 export interface ICompUIDescTypeLink<T> extends ICompUIDescItemExtend<T, TextProps & {
   link?: string
+  onLinkClick?: (val: BaseDataType, record?: T) => void
 }> {
   type?: 'link'
 }
