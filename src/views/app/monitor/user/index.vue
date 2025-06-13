@@ -301,7 +301,6 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
     labelWidth: 140,
     xGap: 0,
 
-    useDescription: true,
     descriptionProps: {
       bordered: true,
       column: 3,

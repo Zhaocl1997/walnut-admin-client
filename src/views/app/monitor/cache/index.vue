@@ -183,7 +183,7 @@ const [
       width: '40%',
       closable: true,
       autoFocus: false,
-      detailTitle: true,
+      actionType: 'detail',
     },
 
     schemas: [

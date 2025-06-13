@@ -90,20 +90,13 @@ function onNo() {
   if (!formProps.value.descriptionProps)
     formRef.value!.restoreValidation()
 
-  formProps.value.dialogProps?.onNo!(onClose)
+  if (formProps.value.dialogProps?.onNo) {
+    formProps.value.dialogProps?.onNo(onClose)
+  }
 }
 
 function onGetTitle(title: string) {
   const uniqueKey = formProps.value.localeUniqueKey
-
-  if (
-    uniqueKey
-    && (formProps.value.useDescription || formProps.value.dialogProps?.detailTitle)
-  ) {
-    return (
-      `${t(`table.${uniqueKey}.advancedTitle`)} ${t('app.button.detail')}`
-    )
-  }
 
   const actionType = unref(formProps.value?.dialogProps?.actionType)
 

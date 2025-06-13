@@ -185,7 +185,6 @@ export declare namespace WForm {
          */
         actionType?: IActionType
         defaultButton?: boolean
-        detailTitle?: boolean
         resizable?: boolean
         defaultWidth?: string
         defaultHeight?: string
@@ -211,12 +210,6 @@ export declare namespace WForm {
      * @description Used for form related to a localed table
      */
     localeWithTable?: boolean
-
-    /**
-     * @description display in descrition mode
-     * @deprecated
-     */
-    useDescription?: boolean
 
     /**
      * @description description props
