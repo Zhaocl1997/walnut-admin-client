@@ -100,7 +100,7 @@ const getFormProps = computed((): WForm.Props<T> => ({
       await onApiList()
     },
     onNo: (done) => {
-      if ((getProps.value.safeForm && !getProps.value.safeFormFeedback) || actionType.value === 'update') {
+      if ((getProps.value.safeForm && !getProps.value.safeFormFeedback) || actionType.value !== 'create') {
         resetFormData()
       }
       done()
