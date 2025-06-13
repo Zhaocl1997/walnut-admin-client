@@ -1,8 +1,7 @@
 import type { FormItemRule, FormRules } from 'naive-ui'
-import type { IDefaultAppLocaleMessage } from '../../../shared'
 import type { WForm } from '../types'
 import { get } from 'lodash-es'
-import { defaultAppLocaleMessageKeys } from '../../../shared'
+import { isBaseI18nKey } from '../../../shared'
 import { componentMap } from '../components/FormItem/componentMap'
 
 type SchemaItem<T> = WForm.Schema.Item<T>
@@ -85,9 +84,9 @@ export const formItemUtils = {
     }
 
     // in default app locale messages keys
-    if (path && defaultAppLocaleMessageKeys.includes(path as IDefaultAppLocaleMessage))
+    if (path && isBaseI18nKey(path as string))
       return t(`app.base.${path}`)
-    if (label && defaultAppLocaleMessageKeys.includes(label as IDefaultAppLocaleMessage))
+    if (label && isBaseI18nKey(label))
       return t(`app.base.${label}`)
 
     // custom i18n key label passed in
