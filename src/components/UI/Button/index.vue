@@ -23,7 +23,7 @@ const ButtonText = () => textProp && (typeof textProp === 'string' ? textProp : 
 </script>
 
 <template>
-  <n-button v-if="userPermission.hasPermission(auth)" @click="onFinalClick">
+  <n-button v-if="!auth || auth && userPermission.hasPermission(auth)" @click="onFinalClick">
     <template #default>
       <ButtonText v-if="textProp" />
       <slot v-else name="default" />

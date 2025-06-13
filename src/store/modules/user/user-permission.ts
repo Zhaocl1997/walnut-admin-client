@@ -36,9 +36,9 @@ const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
         this.permissions.push(payload)
     },
 
-    hasPermission(payload?: string) {
+    hasPermission(payload: string) {
       if (!payload)
-        return true
+        return false
 
       return this.permissions.includes(payload)
     },

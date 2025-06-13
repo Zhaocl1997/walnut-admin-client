@@ -35,32 +35,32 @@ const options = computed<{
         type: 'create' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app.button.create'),
-        auth: tableProps.value.auths?.create,
+        auth: tableProps.value.auths?.create ?? 'force-auth',
       },
       {
         type: 'update' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:edit-outlined',
         text: t('app.button.read'),
-        auth: tableProps.value.auths?.update,
+        auth: tableProps.value.auths?.update ?? 'force-auth',
       },
       {
         type: 'delete' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:delete-outlined',
         text: t('app.button.delete'),
         disabled: getDeleteDisabled.value,
-        auth: tableProps.value.auths?.deleteMany,
+        auth: tableProps.value.auths?.deleteMany ?? 'force-auth',
       },
       {
         type: 'import' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app.button.import'),
-        auth: tableProps.value.auths?.import,
+        auth: tableProps.value.auths?.import ?? 'force-auth',
       },
       {
         type: 'export' as WTable.HeaderLeftBulitInActionType,
         icon: 'ant-design:plus-outlined',
         text: t('app.button.export'),
-        auth: tableProps.value.auths?.export,
+        auth: tableProps.value.auths?.export ?? 'force-auth',
       },
     ],
     i => tableProps.value.headerLeftBuiltInActions?.map(i => i._builtInType).indexOf(i.type),
@@ -95,7 +95,7 @@ function onButtonClick(key: WTable.HeaderLeftBulitInActionType) {
     <n-text
       v-if="
         isShow('delete')
-          && userPermission.hasPermission(tableProps.auths?.deleteMany)
+          && userPermission.hasPermission(tableProps.auths?.deleteMany ?? 'force-auth')
       "
       type="warning"
     >
