@@ -54,7 +54,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
     children: [
       {
         key: 'expand',
-        label: t('app.button.expand'),
+        label: t('app.base.expand'),
         icon: () => (
           <WIcon height="20" icon="mdi:arrow-expand-vertical"></WIcon>
         ),
@@ -63,7 +63,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
 
       {
         key: 'collapse',
-        label: t('app.button.collapse'),
+        label: t('app.base.collapse'),
         icon: () => (
           <WIcon height="20" icon="mdi:arrow-collapse-vertical"></WIcon>
         ),
@@ -80,13 +80,13 @@ const getToolBarOptions = computed((): DropdownOption[] => [
     children: [
       {
         key: 'check',
-        label: t('app.button.check'),
+        label: t('app.base.check'),
         icon: () => <WIcon height="20" icon="mdi:select-all"></WIcon>,
         disabled: checkAll.value || !getProps.value.multiple,
       },
       {
         key: 'inverse',
-        label: t('app.button.inverse'),
+        label: t('app.base.inverse'),
         icon: () => <WIcon height="20" icon="mdi:select-inverse"></WIcon>,
         disabled: !checkAll.value || !getProps.value.multiple,
       },
@@ -101,7 +101,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
     children: [
       {
         key: 'cascade',
-        label: t('app.button.cascade'),
+        label: t('app.base.cascade'),
         icon: () => (
           <WIcon height="20" icon="carbon:checkbox-indeterminate"></WIcon>
         ),
@@ -110,7 +110,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
       },
       {
         key: 'independent',
-        label: t('app.button.independent'),
+        label: t('app.base.independent'),
         icon: () => (
           <WIcon height="20" icon="carbon:checkbox-checked"></WIcon>
         ),
@@ -127,13 +127,13 @@ const getTreeData = computed(() => getProps.value.treeProps?.data)
 const contextMenuOptions = computed<DropdownMixedOption[]>(() => [
   {
     key: 'copy',
-    label: t('app.button.copy'),
+    label: t('app.base.copy'),
     disabled: !!copyTarget.value[getKeyField.value],
     icon: () => <WIcon height="20" icon="mdi:content-copy"></WIcon>,
   },
   {
     key: 'paste',
-    label: t('app.button.paste'),
+    label: t('app.base.paste'),
     disabled: !copyTarget.value[getKeyField.value],
     icon: () => <WIcon height="20" icon="mdi:content-paste"></WIcon>,
   },
@@ -312,7 +312,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
                   disabled: getProps.value.treeProps?.disabled,
                 }}
                 tooltip
-                tooltipMsg={t('app.button.delete')}
+                tooltipMsg={t('app.base.delete')}
                 confirm
                 onConfirm={() => {
                   getProps.value.onTreeNodeItemDelete!(toRaw(option))

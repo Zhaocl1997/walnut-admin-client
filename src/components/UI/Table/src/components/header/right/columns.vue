@@ -102,7 +102,7 @@ function getTitle(item: WTable.Column<T>) {
 
         <template #header>
           <n-checkbox :checked="getChecked" :indeterminate="getIndeterminate" @update-checked="onUpdateCheckAllChecked">
-            {{ $t('app.button.check') }}
+            {{ $t('app.base.check') }}
           </n-checkbox>
         </template>
 

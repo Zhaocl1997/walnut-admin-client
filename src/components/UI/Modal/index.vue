@@ -100,7 +100,7 @@ async function onUpdateShow(v: boolean) {
     <template #action>
       <n-space v-if="defaultButton" size="small" class="float-right">
         <n-button size="small" :disabled="loading" @click="onUpdateShow(false)">
-          {{ $t('app.button.no') }}
+          {{ $t('app.base.no') }}
         </n-button>
 
         <n-button
@@ -110,7 +110,7 @@ async function onUpdateShow(v: boolean) {
           :loading="loading"
           @click="onYes"
         >
-          {{ $t('app.button.yes') }}
+          {{ $t('app.base.yes') }}
         </n-button>
       </n-space>
 

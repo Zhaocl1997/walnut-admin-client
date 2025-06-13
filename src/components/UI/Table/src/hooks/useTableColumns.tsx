@@ -135,7 +135,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                 type: 'success',
                 size: 'small',
                 text: true,
-                textProp: () => t('app.button.create'),
+                textProp: () => t('app.base.create'),
               },
               iconProps: {
                 icon: 'ant-design:plus-outlined',
@@ -148,7 +148,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                 type: 'info',
                 size: 'small',
                 text: true,
-                textProp: () => t('app.button.read'),
+                textProp: () => t('app.base.read'),
               },
               iconProps: {
                 icon: 'ant-design:edit-outlined',
@@ -161,7 +161,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                 type: 'error',
                 size: 'small',
                 text: true,
-                textProp: () => t('app.button.delete'),
+                textProp: () => t('app.base.delete'),
               },
               iconProps: {
                 icon: 'ant-design:delete-outlined',
@@ -175,7 +175,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                 type: 'success',
                 size: 'small',
                 text: true,
-                textProp: () => t('app.button.detail'),
+                textProp: () => t('app.base.detail'),
               },
               iconProps: {
                 icon: 'ant-design:eye-outlined',
@@ -237,7 +237,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
               const dropdownOptions: DropdownOption[]
               = dropdownButtons
-                .filter(i => userPermission.hasPermission(i.buttonProps?.auth))
+                .filter(i => userPermission.hasPermission(i.buttonProps?.auth as string))
                 .map(i => i.iconProps?.icon
                   ? {
                       type: 'render',

@@ -146,13 +146,13 @@ function onSearch() {
     <div class="h-8 w-full hstack justify-between bg-bodyColor px-2 text-xs">
       <div class="hstack items-center justify-end gap-4">
         <n-button text size="small" class="text-xs" @click="onUndo">
-          {{ t('app.button.undo') }}
+          {{ t('app.base.undo') }}
         </n-button>
         <n-button text size="small" class="text-xs" @click="onRedo">
-          {{ t('app.button.redo') }}
+          {{ t('app.base.redo') }}
         </n-button>
         <n-button text size="small" class="text-xs" @click="onSearch">
-          {{ t('app.button.search') }}
+          {{ t('app.base.search') }}
         </n-button>
       </div>
 

@@ -62,10 +62,9 @@ onDeactivated(() => {
     v-model:show="show"
     v-model:value="value!"
     :options="options"
-    clearable
-    filterable
+
     :render-label="onRenderLabel"
-    tooltip
+    clearable tooltip filterable
     :tooltip-props="{
       placement: 'right',
     }"
@@ -73,7 +72,7 @@ onDeactivated(() => {
     <template #action>
       <n-space>
         <WButton v-if="creatable" size="small" icon="ant-design:plus-outlined" @click="onNewLocale">
-          {{ $t('app.button.create') }}
+          {{ $t('app.base.create') }}
         </WButton>
 
         <WButton

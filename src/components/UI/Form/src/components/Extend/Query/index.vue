@@ -12,7 +12,7 @@ const { t } = useAppI18n()
 
 const active = defineModel<boolean>('active', { required: true })
 
-const getText = computed(() => active.value ? t('app.button.expand') : t('app.button.collapse'))
+const getText = computed(() => active.value ? t('app.base.expand') : t('app.base.collapse'))
 
 const { formEvent, formSchemas, formItemIdCtx, formPropsCtx } = useFormContext<T>()
 
@@ -58,7 +58,7 @@ onMounted(() => {
       @click="onQuery"
     >
       <template #default>
-        {{ t('app.button.search') }}
+        {{ t('app.base.search') }}
       </template>
       <template #icon>
         <WIcon icon="ant-design:search-outlined" />
@@ -72,7 +72,7 @@ onMounted(() => {
       @click="onFormReset"
     >
       <template #default>
-        {{ t('app.button.reset') }}
+        {{ t('app.base.reset') }}
       </template>
       <template #icon>
         <WIcon icon="carbon:reset" />

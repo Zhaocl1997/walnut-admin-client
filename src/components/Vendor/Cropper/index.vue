@@ -155,12 +155,12 @@ const buttons = [
   {
     icon: 'ant-design:reload-outlined',
     event: () => onReset(),
-    helpMessage: t('app.button.reset'),
+    helpMessage: t('app.base.reset'),
   },
   {
     icon: 'ant-design:download-outlined',
     event: () => onDownload(),
-    helpMessage: t('app.button.download'),
+    helpMessage: t('app.base.download'),
   },
 ]
 

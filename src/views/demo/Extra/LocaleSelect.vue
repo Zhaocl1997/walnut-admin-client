@@ -6,7 +6,7 @@ defineOptions({
 
 const state = reactive({
   locale1: '',
-  locale2: 'app.button.yes',
+  locale2: 'app.base.yes',
   locale3: '',
   locale4: 'sys.menu.homepage',
   locale5: '',

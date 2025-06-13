@@ -31,7 +31,7 @@ async function onClick(e?: MouseEvent) {
     :disabled="!source"
     @click.stop="onClick"
   >
-    {{ copied ? $t('app.base.success') : $t('app.button.copy') }}
+    {{ copied ? $t('app.base.success') : $t('app.base.copy') }}
   </n-button>
 
   <WIconButton

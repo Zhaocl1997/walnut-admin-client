@@ -76,7 +76,7 @@ const getShowInContentProps = computed(() => (showInContent
             :disabled="loading"
             @click="onUpdateShow(false)"
           >
-            {{ $t('app.button.no') }}
+            {{ $t('app.base.no') }}
           </n-button>
 
           <n-button
@@ -86,7 +86,7 @@ const getShowInContentProps = computed(() => (showInContent
             :loading="loading"
             @click="onYes"
           >
-            {{ $t('app.button.yes') }}
+            {{ $t('app.base.yes') }}
           </n-button>
         </n-space>
       </template>

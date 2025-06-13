@@ -14,7 +14,7 @@ withDefaults(defineProps<WAppFullScreenProps>(), {
   <div>
     <n-tooltip trigger="hover">
       <template #default>
-        {{ isFullscreen ? $t('app.button.minimize') : $t('app.button.maximize') }}
+        {{ isFullscreen ? $t('app.base.minimize') : $t('app.base.maximize') }}
       </template>
 
       <template #trigger>
