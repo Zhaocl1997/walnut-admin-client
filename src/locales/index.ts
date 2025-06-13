@@ -12,6 +12,8 @@ class I18nService {
 
   private constructor() {}
 
+  public baseI18nKeyList: string[] = []
+
   public static getInstance(): I18nService {
     if (!I18nService.instance) {
       I18nService.instance = new I18nService()
@@ -19,10 +21,12 @@ class I18nService {
     return I18nService.instance
   }
 
-  private async createI18nOptions(): Promise<I18nOptions> {
+  public async createI18nOptions(): Promise<I18nOptions> {
     const appLocale = useAppStoreLocale()
     const locale = appLocale.locale
     const backendMsg = await AppI18nGetI18nMsg(locale)
+
+    this.baseI18nKeyList = Object.keys(backendMsg).filter(i => i.startsWith('app.base'))
 
     return {
       legacy: false,
@@ -55,7 +59,7 @@ class I18nService {
   }
 }
 
-const i18nService = I18nService.getInstance()
+export const i18nService = I18nService.getInstance()
 
 export async function setupI18n(app: App) {
   await i18nService.init(app)
