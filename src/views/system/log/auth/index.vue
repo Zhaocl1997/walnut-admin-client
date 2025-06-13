@@ -13,6 +13,7 @@ const keyField = '_id'
 
 const [register, {
   onDeleteManyConfirm,
+  onDeleteConfirm,
   onApiList,
   onGetApiListParams,
 }] = useCRUD<AppSystemLogAuth>({
@@ -214,6 +215,21 @@ const [register, {
           compare: 'default',
         },
         defaultSortOrder: 'descend',
+      },
+
+      {
+        key: 'action',
+        width: 160,
+        extendType: 'action',
+        fixed: 'right',
+        columnBuiltInActions: [
+          {
+            _builtInType: 'delete',
+            async onPresetClick(rowData) {
+              await onDeleteConfirm(rowData[keyField]!)
+            },
+          },
+        ],
       },
     ],
   },
