@@ -12,7 +12,6 @@ import { createDevtoolsPlugin } from './devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createLegacyPlugin } from './legacy'
-import { createBuildProgressPlugin } from './progress'
 import { createRestartPlugin } from './restart'
 import { createTurboConsolePlugin } from './turbo-console'
 import { createUnoCSSPlugin } from './unocss'
@@ -39,7 +38,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     createUnoCSSPlugin(),
 
     // https://github.com/fi3ework/vite-plugin-checker
-    createCheckerPlugin(),
+    // createCheckerPlugin(),
 
     // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
     // {
@@ -75,16 +74,8 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     env.https && vitePlugins.push(createHttpsPlugin())
   }
 
-  if (stage) {
-    // https://github.com/btd/rollup-plugin-visualizer
-    vitePlugins.push(createVisualizerPlugin(env.title))
-  }
-
   // not develop environment
   if (!dev) {
-    // https://github.com/jeddygong/vite-plugin-progress
-    vitePlugins.push(createBuildProgressPlugin())
-
     // https://github.com/FatehAK/vite-plugin-image-optimizer
     vitePlugins.push(createImageOptimizerPlugin())
 
@@ -99,6 +90,11 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/chengpeiquan/vite-plugin-banner
     vitePlugins.push(createBannerPlugin(env.outDir))
+  }
+
+  if (stage) {
+    // https://github.com/btd/rollup-plugin-visualizer
+    vitePlugins.push(createVisualizerPlugin(env.title))
   }
 
   return vitePlugins
