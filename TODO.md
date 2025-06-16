@@ -4,7 +4,7 @@
 
   - [x] 弹出类的form做表单内容改变关闭提示
   - [ ] menu字段：usedDicts/usedLocales/watermark/watermarkconfig/queryEnhanced/queryEnhancedMode/paramsEnhanced/paramsEnhancedMode，menu表把乱七八糟的字段都塞进meta里，不要平铺字段
-  - [ ] form支持嵌套字段
+  - [x] form支持嵌套字段
   - [x] 移除所有eslint/ts error
   - [x] 已经缓存了的页面不要loadingbar
   - [ ] 示例模块，设备模块，删除模块，认证模块
@@ -13,7 +13,7 @@
   - [ ] 个人信息页面
   - [ ] 强退在线用户(修改密码/重置密码都会提出当前在线的用户)
   - [x] ~~~vue3-mindmap，能帮忙捋捋思路~~~
-  - [ ] 菜单内嵌params和query，以及手动跳转的query的留存(param设计的就是刷新就没有，所以这里就不做存留了)
+  - [ ] 菜单内嵌query，以及手动跳转的query的留存
   - [x] 用户表加一个字段，角色是分开模式还是合并模式，都可以自定义，同时如果是分开模式，右上角配合选择切换权限
   - [ ] 用户查看，完善抽屉，同时手机号/邮箱作为敏感信息，都需要单独处理
   - [x] 路由加密，单独指query，param感觉没有加密的必要?（query和params的加密解密都完成了，但配置需要进一步细化）
@@ -30,7 +30,6 @@
   - [ ] 111 tsx explict import
   - [x] axios config demo
   - [ ] 页面中的错误模拟 demo
-  - [ ] rrweb
   - [ ] pdf/word/excel/print.js plugin
   - [ ] error monitor (sentry?)
   - [x] untyper
@@ -41,10 +40,6 @@
   - [ ] tiptap 替代 tinymce?
   - [ ] cdn/混淆
   - [ ] vite-plugin-csp-guard/vite-plugin-istanbul
-  - [ ] cap https://github.com/tiagorangel1/cap
-  - [ ] https://github.com/zumerlab/snapdom instead of html-to-image ?
-  - [ ] https://github.com/yjl9903/unplugin-info
-  - [ ] https://github.com/SSShooter/mind-elixir-core instead of vue3-mindmap
 
 - 不重要不紧急
 
@@ -58,6 +53,13 @@
   - [ ] layout 扩展
   - [ ] 主题扩展
   - [x] 手机号组件，邮箱填充组件，身份证组件
+  - [ ] https://github.com/theajack/disable-devtool
+  - [ ] https://github.com/rrweb-io/rrweb
+  - [ ] https://github.com/hrynko/vue-pdf-embed
+  - [ ] cap https://github.com/tiagorangel1/cap
+  - [ ] https://github.com/zumerlab/snapdom instead of html-to-image ?
+  - [ ] https://github.com/yjl9903/unplugin-info
+  - [ ] https://github.com/SSShooter/mind-elixir-core instead of vue3-mindmap
 
 - 不重要紧急
 
