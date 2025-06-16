@@ -1,3 +1,4 @@
+import type { OptionDataItem } from 'easy-fns-ts'
 import { langAPI } from '@/api/system/lang'
 
 export function useLangList() {

@@ -1,8 +1,9 @@
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 
+import type { StringOrNumber } from 'easy-fns-ts'
 import type { SorterMultiple } from 'naive-ui/es/data-table/src/interface'
-import type { WTable } from '../types'
 
+import type { WTable } from '../types'
 import type { ICompUITableHooksAPIListParams } from './useTableAPIListParams'
 import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
@@ -29,7 +30,7 @@ export function useTableAPI<T>(
   // api list
   const onApiList = async () => {
     // no list auth, return
-    if (!userPermission.hasPermission(props.value.auths?.list)) {
+    if (!userPermission.hasPermission(props.value.auths?.list as string)) {
       useAppNotiError(t('sys.msg.noAuthority'))
       return
     }

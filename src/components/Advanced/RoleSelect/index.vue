@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { StringOrNumber } from 'easy-fns-ts'
 import { roleAPI } from '@/api/system/role'
 import { WithValueProps } from '@/components/HOC/WithValue'
 import ApiSelect from '../ApiSelect'

@@ -1,3 +1,6 @@
+import type { TreeNodeItem } from 'easy-fns-ts'
+import type { RouteRecordRaw } from 'vue-router'
+
 const Auth = {
   PWD: '/auth/pwd',
 

@@ -1,3 +1,4 @@
+import type { StringOrNumber } from 'easy-fns-ts'
 import { omit } from 'lodash-es'
 
 export type BaseAPIType<T extends AppBaseModel> = InstanceType<typeof BaseAPI<T>>

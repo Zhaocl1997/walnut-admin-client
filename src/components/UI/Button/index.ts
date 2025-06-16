@@ -1,4 +1,5 @@
 import type { ButtonProps } from 'naive-ui'
+import type { VNodeChild } from 'vue'
 
 export { default } from './index.vue'
 

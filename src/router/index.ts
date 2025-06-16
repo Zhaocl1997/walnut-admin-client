@@ -1,5 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import type { App } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
 
+import { createRouter, createWebHistory } from 'vue-router'
 import { createRouterGuard } from './guard'
 import { routes } from './routes'
 import { parseQuery, stringifyQuery } from './utils/query'

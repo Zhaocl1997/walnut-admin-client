@@ -1,11 +1,9 @@
-import { AppCoreFn1 } from '@/core'
+import type { Router } from 'vue-router'
 
+import { AppCoreFn1 } from '@/core'
 import { isEmpty, isUndefined } from 'lodash-es'
 
 export function createBeforeEachGuard(router: Router) {
-  // TODO beforeResolve
-  // TODO initial trigger twice
-  // logic optimise, with next()
   router.beforeEach(async (to, _from) => {
     const userAuth = useAppStoreUserAuth()
     const userProfile = useAppStoreUserProfile()

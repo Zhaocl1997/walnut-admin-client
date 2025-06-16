@@ -1,4 +1,5 @@
 <script lang="tsx" setup  generic="T">
+import type { BaseDataType } from 'easy-fns-ts'
 import type { ICompUIDescriptionProps, ICompUIDescriptionsItem, ICompUIDescTypeDict, ICompUIDescTypeLink } from '.'
 import { omit } from 'lodash-es'
 

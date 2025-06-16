@@ -1,5 +1,6 @@
-import { setupI18n } from '@/locales'
+import type { App } from 'vue'
 
+import { setupI18n } from '@/locales'
 import { setupRouter } from '@/router'
 import { setupSocket } from '@/socket'
 import { setupStore } from '@/store/pinia'

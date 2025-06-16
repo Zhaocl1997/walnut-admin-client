@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { CSSProperties } from 'vue'
 import type { ICompExtraFlipperProps } from '.'
 
 defineOptions({

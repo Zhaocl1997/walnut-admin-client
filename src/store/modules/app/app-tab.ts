@@ -1,3 +1,4 @@
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { merge } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { StoreKeys, tabBlackListName } from '../../constant'

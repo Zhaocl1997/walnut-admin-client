@@ -1,3 +1,5 @@
+import type { Router } from 'vue-router'
+
 let removeEvent: Fn
 
 export function createLeaveTipGuard(router: Router) {

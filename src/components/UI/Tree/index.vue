@@ -1,16 +1,17 @@
 <script lang="tsx" setup>
+import type { StringOrNumber } from 'easy-fns-ts'
 import type { DropdownOption, TreeInst, TreeOption } from 'naive-ui'
+
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
-
 import type { TreeNodeProps, TreeRenderProps } from 'naive-ui/es/tree/src/interface'
-import type { ICompUITreeInst, ICompUITreeProps } from '.'
 
+import type { ICompUITreeInst, ICompUITreeProps } from '.'
 // TODO 111
 import WTransition from '@/components/Extra/Transition'
 import { useDropdown } from '@/components/UI/Dropdown'
 import WIcon from '@/components/UI/Icon'
-import WIconButton from '@/components/UI/IconButton'
 
+import WIconButton from '@/components/UI/IconButton'
 import { findPath, formatTree, treeToArr } from 'easy-fns-ts'
 
 import { cloneDeep } from 'lodash-es'

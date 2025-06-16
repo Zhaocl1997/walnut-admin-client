@@ -1,3 +1,5 @@
+import type { Router } from 'vue-router'
+
 const appTab = useAppStoreTab()
 
 export function createAfterEachGuard(router: Router) {

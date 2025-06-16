@@ -1,4 +1,4 @@
-import type { RouteRecordSingleView, RouteRecordSingleViewWithChildren } from 'vue-router'
+import type { RouteRecordRaw, RouteRecordSingleView, RouteRecordSingleViewWithChildren } from 'vue-router'
 import * as constant from '../constant'
 
 export const AppAuthRoute: RouteRecordSingleView = {

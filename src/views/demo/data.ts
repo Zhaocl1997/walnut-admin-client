@@ -1,3 +1,5 @@
+import type { TreeNodeItem } from 'easy-fns-ts'
+
 export const options = [
   {
     value: 1,

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { CSSProperties } from 'vue'
+
 defineOptions({
   name: 'WCompExtraTextScrollHorizontal',
 })

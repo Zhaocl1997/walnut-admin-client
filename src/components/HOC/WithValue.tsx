@@ -1,3 +1,5 @@
+import type { BaseDataType, StringOrNumber } from 'easy-fns-ts'
+import type { ExtractPropTypes } from 'vue'
 import { omit } from 'lodash-es'
 
 export const WithValueProps = {

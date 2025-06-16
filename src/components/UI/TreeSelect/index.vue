@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { StringOrNumber } from 'easy-fns-ts'
 import type { TreeSelectInst } from 'naive-ui'
 import type { ICompUITreeSelectProps } from '.'
 import { findPath } from 'easy-fns-ts'

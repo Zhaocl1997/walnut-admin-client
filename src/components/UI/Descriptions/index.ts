@@ -1,4 +1,5 @@
 import type { ICompExtraJSONProps } from '@/components/Extra/JSON'
+import type { BaseDataType } from 'easy-fns-ts'
 import type { DescriptionItemProps, DescriptionsProps, TagProps, TextProps } from 'naive-ui'
 
 export { default } from './index.vue'

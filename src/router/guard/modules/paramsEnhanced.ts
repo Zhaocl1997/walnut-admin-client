@@ -1,3 +1,5 @@
+import type { Router } from 'vue-router'
+
 const ENHANCED_ROUTE_PARAMS_PREFIX = 'ep_'
 
 export function createRouteParamsEnhancedGuard(router: Router) {

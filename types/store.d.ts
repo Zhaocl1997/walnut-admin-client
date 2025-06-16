@@ -1,8 +1,10 @@
 import type { RemovableRef } from '@vueuse/core'
+import type { Nullable } from 'easy-fns-ts'
 import type {
   MessageReactive,
   NotificationReactive,
 } from 'naive-ui'
+import type { CSSProperties } from 'vue'
 import type { RouteRecordNameGeneric } from 'vue-router'
 import type {
   AppSettingsForApp,

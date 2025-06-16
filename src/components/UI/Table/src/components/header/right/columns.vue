@@ -1,7 +1,8 @@
 <script lang="ts" setup  generic="T">
+import type { StringOrNumber } from 'easy-fns-ts'
 import type { WTable } from '../../../types'
-import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 
+import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import { useTableContext } from '../../../hooks/useTableContext'
 import { getTableTranslated } from '../../../utils'

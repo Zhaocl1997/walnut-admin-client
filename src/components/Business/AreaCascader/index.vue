@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { TreeNodeItem } from 'easy-fns-ts'
 import type { CascaderOption } from 'naive-ui'
 import type { ICompBusinessAreaCascaderProps } from '.'
 import {

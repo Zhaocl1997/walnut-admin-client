@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { OptionDataItem, StringOrNumber } from 'easy-fns-ts'
 import { WithValueProps } from '@/components/HOC/WithValue'
 import { isFunction } from 'easy-fns-ts'
 

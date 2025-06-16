@@ -1,4 +1,5 @@
 import type { NotificationOptions } from 'naive-ui'
+import type { CSSProperties } from 'vue'
 import { formatTime } from 'easy-fns-ts'
 
 export function useAppNotification() {

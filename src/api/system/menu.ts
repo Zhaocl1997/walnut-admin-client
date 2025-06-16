@@ -1,3 +1,4 @@
+import type { TreeNodeItem } from 'easy-fns-ts'
 import { BaseAPI } from '../base'
 
 export const menuAPI = new BaseAPI<AppSystemMenu>({

@@ -1,3 +1,4 @@
+import type { Nullable } from 'easy-fns-ts'
 import { isProd } from '../constant/vue'
 import { Cookie } from './src/Cookie'
 

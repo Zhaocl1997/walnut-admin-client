@@ -1,3 +1,4 @@
+import type { Router } from 'vue-router'
 import { createAfterEachGuard } from './afterEach'
 import { createBeforeEachGuard } from './beforeEach'
 import { createLeaveTipGuard } from './modules/leaveTip'

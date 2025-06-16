@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import type { Nullable } from 'easy-fns-ts'
 import type { RawEditorOptions } from 'tinymce'
-import type { ICompVendorTinymceProps } from '.'
 
+import type { ICompVendorTinymceProps } from '.'
 import TinymceEditor from '@tinymce/tinymce-vue'
 import { genString } from 'easy-fns-ts'
 import tinymce from 'tinymce/tinymce'

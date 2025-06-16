@@ -1,3 +1,4 @@
+import type { RouteRecordRaw } from 'vue-router'
 import * as constant from '../constant'
 
 export const testMainoutRoute: RouteRecordRaw = {

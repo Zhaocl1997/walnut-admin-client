@@ -13,7 +13,7 @@ import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 
-import type { DeepKeyOf } from 'easy-fns-ts'
+import type { BaseDataType, DeepKeyOf, StringOrNumber } from 'easy-fns-ts'
 // raw
 import type {
   DynamicInputProps,
@@ -25,6 +25,7 @@ import type {
 } from 'naive-ui'
 
 import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
+import type { CSSProperties } from 'vue'
 // ui types
 import type { ICompUIButtonProps } from '../../Button'
 import type { ICompUIButtonConfirmProps } from '../../ButtonConfirm'
@@ -40,8 +41,8 @@ import type { ICompUIInputProps } from '../../Input'
 import type { ICompUIInputNumberProps } from '../../InputNumber'
 import type { ICompUIModalProps } from '../../Modal'
 import type { ICompUIRadioProps } from '../../Radio'
-import type { ICompUISelectProps } from '../../Select'
 
+import type { ICompUISelectProps } from '../../Select'
 import type { ICompUISwitchProps } from '../../Switch'
 import type { ICompUITimePickerProps } from '../../TimePicker'
 import type { ICompUITreeProps } from '../../Tree'

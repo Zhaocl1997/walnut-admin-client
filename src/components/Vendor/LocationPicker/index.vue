@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { Nullable } from 'easy-fns-ts'
 // TODO rework
 import type { IWCompVendorLocationPickerProps } from '.'
 import { genString } from 'easy-fns-ts'

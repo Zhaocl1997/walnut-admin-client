@@ -1,4 +1,5 @@
 import type { NotificationReactive } from 'naive-ui'
+import type { CSSProperties } from 'vue'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
