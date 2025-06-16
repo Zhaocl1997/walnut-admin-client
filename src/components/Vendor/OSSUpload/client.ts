@@ -30,7 +30,7 @@ export class AliOSSClient {
     const config = await getAliSTSTokenAPI()
     AliOSSClient.config = {
       ...config,
-      refreshSTSTokenInterval: 5 * 60 * 1000, // 5 min
+      refreshSTSTokenInterval: 30 * 60 * 1000, // 30 min
       refreshSTSToken: async () => {
         const newConfig = await getAliSTSTokenAPI()
         return omit(newConfig, ['bucket', 'region'])
@@ -194,6 +194,6 @@ export class AliOSSClient {
   }
 }
 
-// ;(async () => {
-//   await AliOSSClient.instance.getConfig()
-// })()
+;(async () => {
+  await AliOSSClient.instance.getConfig()
+})()

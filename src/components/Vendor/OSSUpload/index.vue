@@ -137,7 +137,6 @@ function onBeforeUpload(data: {
 watch(
   () => value.value,
   async (v) => {
-    await AliOSSClient.instance.getConfig()
     if (v && v.length) {
       fileList.value = v.map(i => ({
         id: genString(8),

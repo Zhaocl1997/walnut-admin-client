@@ -1,3 +1,5 @@
+import './client'
+
 export { default } from './index.vue'
 
 export interface ICompVendorOSSUploadProps {
