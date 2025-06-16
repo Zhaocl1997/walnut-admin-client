@@ -33,7 +33,7 @@
     "postinstall": "npx simple-git-hooks",
     "prebuild": "esno build/generate/index.ts && npm run icon:prod",
     "build": "vite build",
-    "build:stage": "esno build/stage.ts",
+    "build:stage": "vite build --mode staging",
     "preview": "vite preview --mode production",
     "preview:stage": "vite preview --mode staging",
     "release": "standard-version && git push --follow-tags origin naive-ui",
