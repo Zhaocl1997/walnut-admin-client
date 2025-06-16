@@ -1,3 +1,5 @@
+import type { OptionDataItem } from 'easy-fns-ts'
+
 /**
  * @link https://stackoverflow.com/questions/47062922/how-to-get-all-keys-with-values-from-nested-objects
  */

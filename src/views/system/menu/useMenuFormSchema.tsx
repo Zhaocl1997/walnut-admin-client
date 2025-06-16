@@ -1,16 +1,18 @@
 import type { WForm } from '@/components/UI/Form'
+
+import type { TreeNodeItem } from 'easy-fns-ts'
+import type { IAppSystemMenuForm } from './types'
+
 // TODO 111
 import WRadio from '@/components/UI/Radio'
-
 import { findPath } from 'easy-fns-ts'
-
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 
 export function useMenuFormSchema(
   actionType: Ref<IActionType>,
-  formData: Ref<AppSystemMenu>,
+  formData: Ref<IAppSystemMenuForm>,
   treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[] | undefined>,
-  menuActiveNamesOptions: Ref<{ name: string, title: string }[]>,
+  menuActiveNamesOptions: Ref<Pick<AppSystemMenu, 'title' | 'name'>[]>,
 ) {
   // get view options and name options
   const { viewOptions, nameOptions } = getViewsOptions()
@@ -19,7 +21,7 @@ export function useMenuFormSchema(
   const getCurrentNode = computed(
     () =>
       treeData.value
-      && findPath<AppSystemMenu>(
+      && findPath<IAppSystemMenuForm>(
         treeData.value,
         n => n._id === formData.value.pid,
       ),
@@ -29,7 +31,7 @@ export function useMenuFormSchema(
   const getRoutePathPrefix = computed(() =>
     !getCurrentNode.value
       ? '/'
-      : `${(getCurrentNode.value as AppSystemMenu[])
+      : `${(getCurrentNode.value as IAppSystemMenuForm[])
         .map(item => item.path)
         .join('/')}/`,
   )
@@ -76,7 +78,8 @@ export function useMenuFormSchema(
     {
       type: 'Business:Dict',
       formProp: {
-        path: 'status',
+        path: 'meta.status',
+        label: 'status',
       },
       componentProp: {
         dictType: 'sys_shared_status',
@@ -132,7 +135,7 @@ export function useMenuFormSchema(
       },
       visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT
-          && (formData.type === AppConstMenuType.CATALOG || formData.ternal !== AppConstMenuTernal.NONE),
+          && (formData.type === AppConstMenuType.CATALOG || formData['meta.ternal'] !== AppConstMenuTernal.NONE),
       },
     },
 
@@ -151,7 +154,7 @@ export function useMenuFormSchema(
       },
       visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT
-          && (formData.type === AppConstMenuType.MENU && formData.ternal === AppConstMenuTernal.NONE),
+          && (formData.type === AppConstMenuType.MENU && formData['meta.ternal'] === AppConstMenuTernal.NONE),
       },
     },
 
@@ -175,7 +178,7 @@ export function useMenuFormSchema(
         },
       },
       visibleProp: {
-        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU && formData.ternal === AppConstMenuTernal.NONE,
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU && formData['meta.ternal'] === AppConstMenuTernal.NONE,
       },
     },
 
@@ -190,6 +193,7 @@ export function useMenuFormSchema(
       type: 'Extra:LocaleSelect',
       formProp: {
         path: 'title',
+        label: 'title',
         labelHelpMessage: true,
       },
       componentProp: {
@@ -215,7 +219,8 @@ export function useMenuFormSchema(
     {
       type: 'Base:InputNumber',
       formProp: {
-        path: 'order',
+        path: 'meta.order',
+        label: 'order',
       },
       componentProp: {
         clearable: true,
@@ -225,7 +230,7 @@ export function useMenuFormSchema(
     {
       type: 'Base:Radio',
       formProp: {
-        path: 'ternal',
+        path: 'meta.ternal',
       },
       componentProp: {
         options: menuTernalOptions,
@@ -240,7 +245,7 @@ export function useMenuFormSchema(
     {
       type: 'Base:Input',
       formProp: {
-        path: 'url',
+        path: 'meta.url',
       },
       componentProp: {
         clearable: true,
@@ -248,28 +253,28 @@ export function useMenuFormSchema(
       visibleProp: {
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU
-          && formData.ternal !== AppConstMenuTernal.NONE,
+          && formData['meta.ternal'] !== AppConstMenuTernal.NONE,
       },
     },
 
     {
       type: 'Base:Switch',
       formProp: {
-        path: 'cache',
+        path: 'meta.cache',
         labelHelpMessage: true,
         rule: false,
       },
       visibleProp: {
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU
-          && formData.ternal !== AppConstMenuTernal.EXTERNAL,
+          && formData['meta.ternal'] !== AppConstMenuTernal.EXTERNAL,
       },
     },
 
     {
       type: 'Base:Switch',
       formProp: {
-        path: 'show',
+        path: 'meta.show',
         labelHelpMessage: true,
         rule: false,
       },
@@ -281,7 +286,7 @@ export function useMenuFormSchema(
     {
       type: 'Base:Switch',
       formProp: {
-        path: 'affix',
+        path: 'meta.affix',
         labelHelpMessage: true,
         rule: false,
       },
@@ -293,7 +298,7 @@ export function useMenuFormSchema(
     {
       type: 'Base:Input',
       formProp: {
-        path: 'permission',
+        path: 'meta.permission',
         rule: false,
       },
       visibleProp: {
@@ -304,14 +309,14 @@ export function useMenuFormSchema(
     {
       type: 'Base:Select',
       formProp: {
-        path: 'menuActiveName',
+        path: 'meta.menuActiveName',
         rule: false,
       },
       componentProp: {
         options: computed(() =>
           menuActiveNamesOptions.value.map(i => ({
             value: i.name,
-            label: AppI18n().global.t(i.title),
+            label: AppI18n().global.t(i.title!),
           })),
         ),
         filterable: true,
@@ -325,19 +330,19 @@ export function useMenuFormSchema(
     {
       type: 'Base:Switch',
       formProp: {
-        path: 'menuActiveSameTab',
+        path: 'meta.menuActiveSameTab',
         rule: false,
       },
       visibleProp: {
         vIf: ({ formData }) =>
-          formData.type === AppConstMenuType.MENU && !!formData.menuActiveName,
+          formData.type === AppConstMenuType.MENU && !!formData['meta.menuActiveName'],
       },
     },
 
     {
       type: 'Extra:TransitionSelect',
       formProp: {
-        path: 'animationName',
+        path: 'meta.animationName',
         rule: false,
       },
       componentProp: {
@@ -351,7 +356,7 @@ export function useMenuFormSchema(
     {
       type: 'Extra:IconPicker',
       formProp: {
-        path: 'activeIcon',
+        path: 'meta.activeIcon',
         rule: false,
       },
       visibleProp: {
@@ -362,7 +367,7 @@ export function useMenuFormSchema(
     {
       type: 'Base:Input',
       formProp: {
-        path: 'badge',
+        path: 'meta.badge',
         rule: false,
       },
       componentProp: {
@@ -376,7 +381,7 @@ export function useMenuFormSchema(
     {
       type: 'Base:Switch',
       formProp: {
-        path: 'position',
+        path: 'meta.position',
         rule: false,
       },
       visibleProp: {
@@ -387,12 +392,12 @@ export function useMenuFormSchema(
     {
       type: 'Base:Switch',
       formProp: {
-        path: 'leaveTip',
+        path: 'meta.leaveTip',
         rule: false,
       },
       visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
       },
     },
-  ] as WForm.Schema.Item<AppSystemMenu>[]
+  ] as WForm.Schema.Item<IAppSystemMenuForm>[]
 }

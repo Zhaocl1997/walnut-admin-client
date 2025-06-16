@@ -1,3 +1,4 @@
+import type { TreeNodeItem } from 'easy-fns-ts'
 import { getMenuTreeAPI } from '@/api/system/menu'
 import { formatTree } from 'easy-fns-ts'
 
@@ -23,6 +24,10 @@ export function useMenuTree() {
   })
 
   const onInit = async () => {
+    menuDataRef.value.length = 0
+    treeSelectDataRef.value.length = 0
+    menuActiveNamesOptions.value.length = 0
+
     const res = await getMenuTreeAPI()
 
     menuDataRef.value = res.fullTree

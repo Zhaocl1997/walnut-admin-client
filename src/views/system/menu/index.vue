@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { WForm } from '@/components/UI/Form'
 
+import type { StringOrNumber } from 'easy-fns-ts'
+import type { IAppSystemMenuForm } from './types'
 import { menuAPI } from '@/api/system/menu'
 import { useTree } from '@/components/UI/Tree'
 import { omit } from 'lodash-es'
@@ -23,29 +25,28 @@ const targetTreeItem = ref<string>('')
 const loading = ref(false)
 
 // state
-const { stateRef: formData, resetState: resetFormData, commit } = useState<AppSystemMenu>({
-  type: 'catalog',
-  status: true,
+const { stateRef: formData, resetState: resetFormData, commit } = useState<IAppSystemMenuForm>({
+  'type': 'catalog',
 
-  path: '',
-  name: '',
-  component: '',
+  'path': null,
+  'name': null,
+  'component': null,
+  'title': null,
+  'icon': null,
 
-  title: '',
-  icon: '',
-  order: 0,
-  ternal: 'none',
-  url: '',
-  cache: true,
-  show: true,
-  affix: false,
-  permission: '',
-  menuActiveName: '',
-  menuActiveSameTab: false,
-
-  activeIcon: '',
-  badge: '',
-  animationName: '',
+  'meta.status': true,
+  'meta.order': 0,
+  'meta.ternal': 'none',
+  'meta.url': null,
+  'meta.cache': true,
+  'meta.show': true,
+  'meta.affix': false,
+  'meta.permission': null,
+  'meta.menuActiveName': null,
+  'meta.menuActiveSameTab': false,
+  'meta.activeIcon': null,
+  'meta.badge': null,
+  'meta.animationName': null,
 })
 
 commit()
@@ -75,13 +76,14 @@ const [registerTree] = useTree<AppSystemMenu>({
 
   onPaste(copy, current) {
     // paste is just reset the pid, also need to remove some fields
-
     resetFormData()
 
-    formData.value = {
-      ...omit(copy, [keyField, 'createdAt', 'updatedAt']),
+    const safeCopy = omit(copy, [keyField, 'children'])
+
+    formData.value = objectToPaths({
+      ...safeCopy,
       pid: current[keyField],
-    }
+    })
 
     targetTreeItem.value = ''
     actionType.value = 'create'
@@ -144,7 +146,7 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
       componentProp: {
         groups: [
           {
-            textProp: () => t('app.button.save'),
+            textProp: () => t('app.base.save'),
             type: 'primary',
             auth: computed(() => `system:menu:${actionType.value}`),
             loading,
@@ -158,7 +160,7 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
               loading.value = true
 
               try {
-                await menuAPI[actionType.value](omit(formData.value, 'children'))
+                await menuAPI[actionType.value](pathsToObject<typeof formData.value, AppSystemMenu>(formData.value))
                 useAppMsgSuccess()
                 await onInit()
                 targetTreeItem.value = ''
@@ -170,7 +172,7 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
             },
           },
           {
-            textProp: () => t('app.button.reset'),
+            textProp: () => t('app.base.reset'),
             auth: computed(() => `system:menu:${actionType.value}`),
             loading,
             disabled: loading,
@@ -186,21 +188,19 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
   ] as IDeepMaybeRef<WForm.Schema.Item<AppSystemMenu>>[],
 })
 
-watch(
-  () => targetTreeItem.value,
-  async () => {
-    if (targetTreeItem.value) {
-      const res = await menuAPI.read(targetTreeItem.value)
-      actionType.value = 'update'
-      formData.value = Object.assign(formData.value, res)
-    }
-    else {
-      actionType.value = 'create'
-    }
+async function onUpdateTreeValue(v: StringOrNumber | StringOrNumber[]) {
+  if (!v) {
+    actionType.value = 'create'
+    resetFormData()
+  }
+  else {
+    const res = await menuAPI.read(v as string)
+    actionType.value = 'update'
+    formData.value = objectToPaths(res)
+  }
 
-    restoreValidation()
-  },
-)
+  restoreValidation()
+}
 </script>
 
 <template>
@@ -213,7 +213,7 @@ watch(
         }"
       >
         <template #default>
-          <WTree v-model:value="targetTreeItem" @hook="registerTree" />
+          <WTree v-model:value="targetTreeItem" @hook="registerTree" @update:value="onUpdateTreeValue" />
         </template>
       </n-card>
     </n-gi>
