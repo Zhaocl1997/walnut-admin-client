@@ -59,7 +59,7 @@ const [registerTree] = useTree<AppSystemMenu>({
   presetContextMenu: true,
   deletable: true,
   toolbar: true,
-  maxHeight: '600px',
+  maxHeight: '75vh',
 
   auths: {
     delete: 'system:menu:delete',
@@ -98,10 +98,11 @@ const [registerTree] = useTree<AppSystemMenu>({
     disabled: computed(() => loading.value),
 
     filter: (pattern, node) => {
-      if (
-        node.title
-        && (node.title as string).toLowerCase().includes(pattern)
-      ) {
+      const text = node.type === AppConstMenuType.ELEMENT
+        ? ((node as unknown as AppSystemMenu).meta.permission as string)
+        : (node.title as string)
+
+      if (text && (text as string).toLowerCase().includes(pattern)) {
         return true
       }
 
@@ -110,7 +111,7 @@ const [registerTree] = useTree<AppSystemMenu>({
 
     renderLabel: ({ option }) =>
       option.type === AppConstMenuType.ELEMENT
-        ? (option.permission as string)
+        ? ((option as unknown as AppSystemMenu).meta.permission as string)
         : (option.title as string),
   },
 })
@@ -226,7 +227,7 @@ async function onUpdateTreeValue(v: StringOrNumber | StringOrNumber[]) {
         }"
       >
         <template #default>
-          <n-alert :title="t('page.menu.alert')" type="info" class="mb-4" />
+          <n-alert v-if="!targetTreeItem" :title="t('page.menu.alert')" type="info" class="mb-4" />
 
           <div v-show="actionType">
             <WForm
