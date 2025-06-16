@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { deletedAPI, recoverAPI } from '@/api/system/deleted'
+import { logOperateAPI } from '@/api/system/log'
+import { logOperateFormSchema } from '../log/operate/schema'
 
 defineOptions({
   name: 'Deleted',
@@ -12,6 +14,36 @@ const authKey = 'deleted'
 const keyField = '_id'
 
 const { t } = useAppI18n()
+
+const logOperateFormData = ref<AppSystemLogOperate>({})
+
+const [registerLogOperate, { onOpen }] = useForm<AppSystemLogOperate>({
+  localeUniqueKey: 'log.operate',
+  localeWithTable: true,
+  dialogPreset: 'drawer',
+  baseRules: true,
+  labelWidth: 140,
+  xGap: 0,
+
+  descriptionProps: {
+    bordered: true,
+    column: 2,
+    colon: true,
+  },
+
+  dialogProps: {
+    defaultButton: false,
+    width: '40%',
+    closable: true,
+    autoFocus: false,
+    actionType: 'detail',
+    onNo() {
+      logOperateFormData.value = {}
+    },
+  },
+
+  schemas: logOperateFormSchema,
+})
 
 const [
   register,
@@ -157,6 +189,17 @@ const [
       },
 
       {
+        key: 'populated_user.userName',
+        title: 'table.deleted.deletedBy',
+        locale: false,
+        width: 120,
+        sorter: {
+          multiple: 3,
+          compare: 'default',
+        },
+      },
+
+      {
         key: 'deletedAt',
         width: 200,
         sorter: {
@@ -219,7 +262,7 @@ const [
 
     dialogProps: {
       defaultButton: false,
-      width: '40%',
+      width: '45%',
       closable: true,
       autoFocus: false,
     },
@@ -231,7 +274,7 @@ const [
           path: 'modelName',
         },
         descriptionProp: {
-          span: 1,
+          span: 2,
         },
       },
 
@@ -241,7 +284,7 @@ const [
           path: 'collectionName',
         },
         descriptionProp: {
-          span: 1,
+          span: 2,
         },
       },
 
@@ -251,17 +294,55 @@ const [
           path: 'content',
         },
         descriptionProp: {
-          span: 1,
+          span: 2,
+          type: 'json',
+          typeProps: {
+            height: '300px',
+          },
         },
       },
 
       {
         type: 'Base:Input',
         formProp: {
-          path: 'deletedBy',
+          path: 'populated_user.userName',
+          label: 'table.deleted.deletedBy',
+          locale: false,
         },
         descriptionProp: {
-          span: 1,
+          span: 2,
+        },
+      },
+
+      {
+        type: 'Base:Input',
+        formProp: {
+          path: 'logOperateId',
+          label: computed(() => t('app.base.relativeLog')),
+          locale: false,
+        },
+        descriptionProp: {
+          span: 2,
+          type: 'link',
+          formatter: () => t('app.base.detail'),
+          typeProps: {
+            type: 'primary',
+            onLinkClick(value) {
+              if (!value) {
+                useAppMsgWarning(t('app.base.none'))
+                return
+              }
+              onOpen(async (done) => {
+                try {
+                  const res = await logOperateAPI.read(`${value}`)
+                  logOperateFormData.value = Object.assign(logOperateFormData.value, res)
+                }
+                finally {
+                  done()
+                }
+              })
+            },
+          },
         },
       },
 
@@ -280,5 +361,8 @@ const [
   <div>
     <!-- @vue-generic {AppSystemDeleted} -->
     <WCRUD @hook="register" />
+
+    <!-- @vue-generic {AppSystemLogOperate} -->
+    <WForm :model="logOperateFormData" @hook="registerLogOperate" />
   </div>
 </template>

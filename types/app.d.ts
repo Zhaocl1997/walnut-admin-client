@@ -232,7 +232,7 @@ declare global {
   // system operate log
   interface AppSystemLogOperate extends AppBaseModel {
     title?: string
-    action?: string
+    actionType?: string
     method?: string
     url?: string
     heepVersion?: string
@@ -246,6 +246,9 @@ declare global {
     operatedAt?: Date | string | [string, string]
     os?: string
     browser?: string
+    success?: boolean
+    location?: string
+    correspondingMS?: number
   }
 
   // system signin log
@@ -269,6 +272,9 @@ declare global {
     deletedId?: string
     deletedAt?: Date
     deletedBy?: string
+    logOperateId?: string
+
+    populated_user?: AppSystemUser
   }
 
   // shared area
