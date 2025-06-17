@@ -89,25 +89,27 @@ async function onSelect(key: ValueOfAppConstTabDeleteType &
   }
 
   if (key === 'Snapshot') {
-    const target = document.getElementById(currentMouseTab.value?.name as string)
+    try {
+      const target = document.getElementById(currentRoute.value.name as string)
 
-    const padding = appSetting.app.contentPadding
+      const padding = appSetting.app.contentPadding
 
-    toJpeg(target!, {
-      width: target?.scrollWidth as number + padding * 2,
-      height: target?.scrollHeight as number + padding * 2,
-      canvasWidth: target?.scrollWidth as number + padding * 2,
-      canvasHeight: target?.scrollHeight as number + padding * 2,
-      backgroundColor: getThemeOverridesCommon.value.bodyColor,
-      style: {
-        margin: `${padding}px`,
-      },
-    }).then((dataUrl) => {
-      const windowOpen = window.open('about:blank', 'image from canvas')
-      windowOpen!.document.write(
-        `<img src='${dataUrl}' alt='${currentMouseTab.value?.name}'>`,
-      )
-    })
+      const dataUrl = await toJpeg(target!, {
+        width: target?.scrollWidth as number + padding * 2,
+        height: target?.scrollHeight as number + padding * 2,
+        canvasWidth: target?.scrollWidth as number + padding * 2,
+        canvasHeight: target?.scrollHeight as number + padding * 2,
+        backgroundColor: getThemeOverridesCommon.value.bodyColor,
+        style: {
+          margin: `${padding}px`,
+        },
+      })
+
+      await downloadByBase64(dataUrl, `${currentRoute.value.name as string}-${appSetting.app.scrollMode}`)
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 
   if (key === 'NewWindow')

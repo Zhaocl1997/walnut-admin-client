@@ -57,9 +57,12 @@
   - [ ] https://github.com/rrweb-io/rrweb
   - [ ] https://github.com/hrynko/vue-pdf-embed
   - [ ] cap https://github.com/tiagorangel1/cap
-  - [ ] https://github.com/zumerlab/snapdom instead of html-to-image ?
+  - [x] https://github.com/zumerlab/snapdom https://github.com/sindresorhus/capture-website still use html-to-image
   - [ ] https://github.com/yjl9903/unplugin-info
   - [ ] https://github.com/SSShooter/mind-elixir-core instead of vue3-mindmap
+  - [ ] https://github.com/vite-pwa/vite-plugin-pwa
+  - [ ] https://github.com/antfu/case-police
+  - [ ] https://github.com/sindresorhus/capture-website
 
 - 不重要紧急
 
@@ -72,3 +75,8 @@
   - [x] 劫持F5事件
   - [ ] 搜索组件
   - [ ] 99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)
+
+- 不知道如何解决的问题
+
+1. - Q: tab右键快照在特定页面特定滚动模式下会报错，报错还一点详细都没有，不知道什么导致的错误 [issue](https://github.com/bubkoo/html-to-image/issues/314)
+   - A: 发现了，是css的 w: 属性导致的错误 就是 unocss的attribute 用法 去掉吧 确实很hack的写法 还会导致报错

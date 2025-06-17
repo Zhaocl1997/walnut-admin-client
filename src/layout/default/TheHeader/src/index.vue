@@ -60,10 +60,10 @@ function onShowAside() {
 
         <!-- right -->
         <div
-          class="h-full hstack justify-end space-x-2" :class="[
+          class="h-full hstack justify-end children:(h-full flex cursor-pointer items-center px-0.5) space-x-2"
+          :class="[
             { 'space-x-1': appAdapter.isMobile },
           ]"
-          w:children="cursor-pointer flex items-center px-0.5 h-full"
         >
           <WAppFullScreen
             v-if="!appAdapter.isMobile && appSetting.header.fullscreen"
