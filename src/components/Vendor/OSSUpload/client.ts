@@ -3,7 +3,7 @@ import { getAliSTSTokenAPI } from '@/api/shared/ali'
 import OSS from 'ali-oss'
 import { omit } from 'lodash-es'
 
-const { demo } = useAppEnv('build')
+const { demo } = useAppEnvBuild()
 
 export class AliOSSClient {
   private static _instance: AliOSSClient

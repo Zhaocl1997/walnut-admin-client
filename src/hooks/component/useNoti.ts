@@ -16,7 +16,7 @@ interface AppNotiOptions extends NotificationOptions {
  */
 export function AppNoti(msg: string, options: AppNotiOptions) {
   const appNaive = useAppStoreNaive()
-  const { title } = useAppEnv('title')
+  const { title } = useAppEnvTitle()
 
   appNaive.setNotiPlacement(options?.placement ?? 'top-right')
   appNaive.setNotiContainerStyle(options?.containerStyle ?? {})

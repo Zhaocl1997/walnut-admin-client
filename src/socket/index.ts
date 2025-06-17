@@ -23,7 +23,7 @@ class SocketService {
       return
     }
 
-    const { ws } = useAppEnv('proxy')
+    const { ws } = useAppEnvProxy()
     const useProxy = +ws[0] === 1
     const url = useProxy ? `/${ws[4]}` : `${ws[2]}/${ws[4]}`
     const path = useProxy ? ws[1] : ws[3]

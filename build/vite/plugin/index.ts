@@ -16,6 +16,7 @@ import { createObfuscatorPlugin } from './obfuscator'
 import { createRestartPlugin } from './restart'
 import { createTurboConsolePlugin } from './turbo-console'
 import { createUnoCSSPlugin } from './unocss'
+import { creatValidateEnvPlugin } from './validate-env'
 import { createVisualizerPlugin } from './visualizer'
 
 export function createVitePlugins(mode: string, env: IViteEnv) {
@@ -28,6 +29,9 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
       },
     }),
     vueJsx(),
+
+    // https://github.com/Julien-R44/vite-plugin-validate-env
+    creatValidateEnvPlugin(mode),
 
     // https://github.com/antfu/unplugin-auto-import
     creatAutoImportPlugin(),

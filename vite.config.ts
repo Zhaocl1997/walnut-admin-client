@@ -1,31 +1,38 @@
 import type { ConfigEnv, UserConfig } from 'vite'
 import { resolve } from 'node:path'
 import { cwd } from 'node:process'
-
 import { loadEnv } from 'vite'
 
 import { envDir, publicDir } from './build/constant'
-
-import { createRollupObfuscatorPlugin } from './build/rollup'
 import { createVitePlugins } from './build/vite/plugin'
 import { createViteProxy } from './build/vite/proxy'
-import { author, dependencies, devDependencies, name, repository, urls, version } from './package.json'
 
-function useBuildEnv(env: ImportMetaEnv) {
-  return {
-    title: env.VITE_APP_TITLE,
-    obfuscator: +env.VITE_BUILD_OBFUSCATOR === 1,
-    dropConsole: +env.VITE_BUILD_DROP_CONSOLE === 1,
-    compression: +env.VITE_BUILD_COMPRESSION === 1,
-    https: +env.VITE_DEV_HTTPS === 1,
-    cdn: +env.VITE_BUILD_CDN === 1,
-    outDir: env.VITE_BUILD_OUT_DIR,
-    publicPath: env.VITE_PUBLIC_PATH,
-  }
-}
+import { author, dependencies, devDependencies, name, repository, urls, version } from './package.json'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
+}
+
+function useBuildEnv(env: Record<keyof ImportMetaEnv, string>): IViteEnv {
+  return {
+    port: +env.VITE_PORT,
+    host: env.VITE_HOST,
+    title: env.VITE_APP_TITLE,
+    publicPath: env.VITE_PUBLIC_PATH,
+    proxy: JSON.parse(env.VITE_PROXY as string),
+
+    // dev
+    https: env.VITE_DEV_HTTPS === 'true',
+
+    // staging/prod
+    outDir: env.VITE_BUILD_OUT_DIR,
+    obfuscator: env.VITE_BUILD_OBFUSCATOR === 'true',
+    dropConsole: env.VITE_BUILD_DROP_CONSOLE === 'true',
+    compression: env.VITE_BUILD_COMPRESSION === 'true',
+    analyzer: env.VITE_BUILD_ANALYZER === 'true',
+    banner: env.VITE_BUILD_BANNER === 'true',
+    cdn: env.VITE_BUILD_CDN === 'true',
+  }
 }
 
 const __APP_INFO__ = {
@@ -44,9 +51,11 @@ const __APP_INFO__ = {
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = cwd()
 
-  const env = loadEnv(mode, pathResolve(envDir)) as ImportMetaEnv
+  const env = loadEnv(mode, envDir) as Record<keyof ImportMetaEnv, string>
 
   const processedEnv = useBuildEnv(env)
+
+  console.log({ processedEnv })
 
   return {
     root,
@@ -82,11 +91,11 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
 
     server: {
-      host: env.VITE_HOST,
+      host: processedEnv.host,
 
-      port: env.VITE_PORT,
+      port: processedEnv.port,
 
-      proxy: createViteProxy(env),
+      proxy: createViteProxy(processedEnv),
 
       open: '/',
 
@@ -110,30 +119,39 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       chunkSizeWarningLimit: 600,
 
       rollupOptions: {
-        external: ['chalk', /^node:.*/],
         output: {
+          format: 'es',
           chunkFileNames: 'static/js/[name]-[hash].js',
           entryFileNames: 'static/js/[name]-[hash].js',
           assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
 
-          // https://rollupjs.org/guide/en/#outputmanualchunks
-          manualChunks: {
-            'lodash-es': ['lodash-es'],
-            // 'naive-ui': ['naive-ui'],
-            // 'ali-oss': ['ali-oss'],
-            // 'echarts': ['echarts'],
-            'tinymce': ['tinymce'],
-            'sortablejs': ['sortablejs'],
-            'axios': ['axios'],
-            'signature_pad': ['signature_pad'],
-            'vue-i18n': ['vue-i18n'],
-            'highlight.js': ['highlight.js'],
-            'intro.js': ['intro.js'],
-            'codemirror': ['codemirror'],
-            'cropperjs': ['cropperjs'],
-          },
+          // https://github.com/vitejs/vite/discussions/9440#discussioncomment-8358001
+          manualChunks(id: string) {
+            // List of modules that rollup sometimes bundles with manual chunks, causing those chunks to be eager-loaded
+            const ROLLUP_COMMON_MODULES = [
+              'vite/preload-helper',
+              'vite/modulepreload-polyfill',
+              'vite/dynamic-import-helper',
+              'commonjsHelpers',
+              'commonjs-dynamic-modules',
+              '__vite-browser-external',
+            ]
 
-          plugins: [processedEnv.obfuscator ? createRollupObfuscatorPlugin() : undefined],
+            // https://github.com/vitejs/vite/issues/5189#issuecomment-2175410148
+            if (ROLLUP_COMMON_MODULES.some(commonModule => id.includes(commonModule))) {
+              return 'fuck'
+            }
+
+            if (id.includes('node_modules')) {
+              const basic = id.toString().split('node_modules/')[1]
+              const sub1 = basic.split('/')[0]
+              if (sub1 !== '.pnpm') {
+                return sub1.toString()
+              }
+              const name2 = basic.split('/')[1]
+              return name2.split('@')[name2[0] === '@' ? 1 : 0].toString()
+            }
+          },
         },
       },
     },

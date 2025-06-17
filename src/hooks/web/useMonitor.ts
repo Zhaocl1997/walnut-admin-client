@@ -1,5 +1,5 @@
 export function sendUserMonitorBeacon(data: Partial<AppMonitorUserModel>) {
-  const { httpUrl } = useAppEnv('proxy')
+  const { httpUrl } = useAppEnvProxy()
 
   const blob = new Blob(
     [

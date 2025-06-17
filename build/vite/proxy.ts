@@ -1,10 +1,10 @@
 import type { ProxyOptions } from 'vite'
-import { useLoadEnv } from '../../src/hooks/core/useLoadEnv'
 
-export function createViteProxy(env: ImportMetaEnv) {
+export function createViteProxy(env: IViteEnv) {
   const ret: Record<string, ProxyOptions> = {}
 
-  const { api, ws } = useLoadEnv('proxy', env)
+  const api = env.proxy[0]
+  const ws = env.proxy[1]
 
   if (+api[0] === 1) {
     const prefix = api[1]

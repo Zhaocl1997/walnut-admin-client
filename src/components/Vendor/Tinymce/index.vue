@@ -68,7 +68,7 @@ const editorRef = shallowRef<Nullable<TinymceVueInstance>>(null)
 const loading = ref(false)
 
 const appLocale = useAppStoreLocale()
-const { publicPath } = useAppEnv('build')
+const { publicPath } = useAppEnvBuild()
 
 const getSkinName = computed(() =>
   isDark.value ? 'tinymce-5-dark' : 'tinymce-5',

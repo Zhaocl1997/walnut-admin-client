@@ -2,7 +2,7 @@
 const appMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
 
-const { title: AppTitle } = useAppEnv('title')
+const { title: AppTitle } = useAppEnvTitle()
 
 async function onGoIndex() {
   await appMenu.goIndex()

@@ -3,9 +3,9 @@ import axios from 'axios'
 import qs from 'qs'
 import { cacheAdapterEnhancer, cancelAdapterEnhancer, mergeAdapterEnhancer, retryAdapterEnhancer, throttleAdapterEnhancer } from './src/adapters'
 
-const { axiosTimeout } = useAppEnv('seconds')
+const { axiosTimeout: axiosTimeoutSeconds } = useAppEnvSeconds()
 
-const { httpUrl } = useAppEnv('proxy')
+const { httpUrl } = useAppEnvProxy()
 
 const adapter = axios.getAdapter('fetch')
 
@@ -33,7 +33,7 @@ export const originalConfig: AxiosRequestConfig = {
   },
 
   // time out, default is 10s
-  timeout: Number(axiosTimeout) * 1000,
+  timeout: Number(axiosTimeoutSeconds) * 1000,
 
   // adapter
   adapter: composeAdapters(adapter),

@@ -9,7 +9,7 @@ defineOptions({
 })
 
 const { t, locale } = useAppI18n()
-const { title: envTitle } = useAppEnv('title')
+const { title: envTitle } = useAppEnvTitle()
 
 const { signInRef } = useDemonstrate()
 

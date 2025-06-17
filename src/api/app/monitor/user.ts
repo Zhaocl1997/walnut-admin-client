@@ -1,6 +1,6 @@
 import { BaseAPI } from '../../base'
 
-const { demo } = useAppEnv('build')
+const { demo } = useAppEnvBuild()
 
 export const monitorUserAPI = new BaseAPI<AppMonitorUserModel>({
   model: 'app',

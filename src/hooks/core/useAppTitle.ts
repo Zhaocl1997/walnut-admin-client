@@ -7,7 +7,7 @@ export function useAppTitle() {
   const isVisible = useSharedDocumentVisibility()
   const { t, locale } = useAppI18n()
   const { currentRoute } = useAppRouter()
-  const { title: envTitle } = useAppEnv('title')
+  const { title: envTitle } = useAppEnvTitle()
 
   watch(
     () => [currentRoute.value.path, locale, isVisible] as const,

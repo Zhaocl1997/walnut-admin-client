@@ -1,6 +1,6 @@
 import { isString } from 'easy-fns-ts'
 
-const { persist } = useAppEnv('seconds')
+const { persist } = useAppEnvSeconds()
 
 export interface CookieOptions {
   prefixKey?: string

@@ -1,9 +1,9 @@
 import type { AxiosAdapter, AxiosPromise } from 'axios'
 import { LRUCache } from 'lru-cache'
 
-const { axiosCache: cacheMinute = 5 } = useAppEnv('seconds')
+const { axiosCache: cacheSeconds } = useAppEnvSeconds()
 
-const CACHE_MINUTE = 1000 * 60 * cacheMinute
+const CACHE_MINUTE = 1000 * cacheSeconds
 const CAPACITY = 100
 const cacheAdapterEnhancerCache = new LRUCache<string, AxiosPromise>({ ttl: CACHE_MINUTE, max: CAPACITY })
 

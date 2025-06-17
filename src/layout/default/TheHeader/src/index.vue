@@ -7,7 +7,7 @@ const appSetting = useAppStoreSetting()
 const appAdapter = useAppStoreAdapter()
 const appMenu = useAppStoreMenu()
 
-const { title: AppTitle } = useAppEnv('title')
+const { title: AppTitle } = useAppEnvTitle()
 
 const { isFullscreen, toggle } = useFullscreen()
 

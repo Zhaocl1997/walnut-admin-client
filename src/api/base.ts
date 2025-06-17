@@ -3,7 +3,7 @@ import { omit } from 'lodash-es'
 
 export type BaseAPIType<T extends AppBaseModel> = InstanceType<typeof BaseAPI<T>>
 
-const { demo } = useAppEnv('build')
+const { demo } = useAppEnvBuild()
 
 function omitUnnecessaryFields<T extends AppBaseModel>(data: T) {
   return omit(data, ['_id', 'createdAt', 'updatedAt'])

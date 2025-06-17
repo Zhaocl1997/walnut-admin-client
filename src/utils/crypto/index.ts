@@ -1,28 +1,18 @@
 import { Encryption } from './Crypto'
 
-const [cryptoPersistKey, cryptoPersistIV] = JSON.parse(
-  import.meta.env.VITE_CRYPTO_PERSIST,
-)
-
-const [cryptoRequestKey, cryptoRequestIV] = JSON.parse(
-  import.meta.env.VITE_CRYPTO_REQUEST,
-)
-
-const [cryptoResponseKey, cryptoResponseIV] = JSON.parse(
-  import.meta.env.VITE_CRYPTO_RESPONSE,
-)
+const { persist, request, response } = useAppEnvCrypto()
 
 export const AppPersistEncryption = new Encryption({
-  key: cryptoPersistKey,
-  iv: cryptoPersistIV,
+  key: persist[0],
+  iv: persist[1],
 })
 
 export const AppRequestEncryption = new Encryption({
-  key: cryptoRequestKey,
-  iv: cryptoRequestIV,
+  key: request[0],
+  iv: request[1],
 })
 
 export const AppResponseEncryption = new Encryption({
-  key: cryptoResponseKey,
-  iv: cryptoResponseIV,
+  key: response[0],
+  iv: response[1],
 })
