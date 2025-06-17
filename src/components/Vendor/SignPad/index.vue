@@ -191,7 +191,7 @@ defineExpose({
 
       <!-- left utils -->
       <div
-        class="signpad-utils absolute left-4 top-1/2 z-[9999] -translate-y-1/2"
+        class="signpad-utils absolute left-4 top-1/2 z-1 -translate-y-1/2"
       >
         <n-space vertical>
           <n-tooltip :disabled="disabled" trigger="click" placement="right">
