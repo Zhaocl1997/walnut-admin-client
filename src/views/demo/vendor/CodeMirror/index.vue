@@ -8,6 +8,7 @@ const code1Raw = import.meta.glob(
   {
     query: 'raw',
     eager: true,
+    import: 'default',
   },
 )
 
@@ -16,6 +17,7 @@ const code2Raw = import.meta.glob(
   {
     query: 'raw',
     eager: true,
+    import: 'default',
   },
 )
 
