@@ -171,10 +171,12 @@ emit('hook', {
   onApiList,
   onGetApiListParams: () => onGetApiListParams(),
 })
+
+const appSetting = useAppStoreSetting()
 </script>
 
 <template>
-  <div>
+  <div :style="{ width: appSetting.getCalcContentWidthWithPadding }">
     <!-- @vue-generic {T} -->
     <WTable @hook="registerTable" />
 

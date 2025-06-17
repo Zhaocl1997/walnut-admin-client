@@ -269,6 +269,13 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
     getCalcContentWidth() {
       return `calc(100vw - ${this.getMenuWidth}px)`
     },
+
+    /**
+     * @description get calc main content width with padding
+     */
+    getCalcContentWidthWithPadding(): string {
+      return `calc(100vw - ${this.getMenuWidth}px - ${this.app.contentPadding * 2}px)`
+    },
   },
 
   actions: {

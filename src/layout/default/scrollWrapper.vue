@@ -32,6 +32,7 @@ defineExpose({ onScrollToTop })
     <n-scrollbar
       :id="String($route.name)"
       x-scrollable
+      content-class="grid grid-rows-1"
     >
       <!-- TODO top change no animation -->
       <div class="sticky left-0 z-99 transition-top" :class="[{ 'top-0': headerShow }]" :style="{ width: appSetting.getCalcContentWidth }">
