@@ -4,10 +4,6 @@ import type { ICompVendorCropperProps } from '.'
 import { CropperCanvas, CropperCrosshair, CropperGrid, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
 import { customAlphabet } from 'nanoid'
 
-// TODO
-// 1. shade style error
-// 2. onGetCropperValue error
-
 defineOptions({
   name: 'WCompVendorCropper',
 })

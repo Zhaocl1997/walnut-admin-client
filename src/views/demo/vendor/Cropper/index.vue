@@ -23,8 +23,10 @@ const cropperValue = ref<string>()
         <div class="mb-2">
           <WJSON :value="{ srcValue, cropperValue }" />
 
-          <img :src="srcValue" alt="cropper demo" class="mr-4 h-48 w-auto">
-          <img :src="cropperValue" alt="cropper demo" class="h-48 w-auto">
+          <div class="flex flex-nowrap">
+            <img :src="srcValue" alt="cropper demo" class="mr-4 h-48 w-auto">
+            <img :src="cropperValue" alt="cropper demo" class="h-48 w-auto">
+          </div>
         </div>
 
         <WCropper
