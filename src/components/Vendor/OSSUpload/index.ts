@@ -1,6 +1,9 @@
-import './client'
+import { AliOSSClient } from './client'
 
-export { default } from './index.vue'
+export default createAsyncComponent(async () => {
+  await AliOSSClient.instance.getConfig()
+  return import('./index.vue')
+})
 
 export interface ICompVendorOSSUploadProps {
   region?: string

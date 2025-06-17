@@ -193,7 +193,3 @@ export class AliOSSClient {
     }
   }
 }
-
-;(async () => {
-  await AliOSSClient.instance.getConfig()
-})()
