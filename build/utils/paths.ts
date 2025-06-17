@@ -1,5 +1,4 @@
 export const typesCheckLogPath = 'report/tsc.log'
-export const bundleSizeStatsLogPath = 'report/stats.html'
 
 // paths.ts
 export const generatedPathsFilePath = 'build/_generated/paths.ts'

@@ -1,14 +1,7 @@
-import { visualizer } from 'rollup-plugin-visualizer'
-
-import { bundleSizeStatsLogPath } from '../../utils/paths'
+import { analyzer } from 'vite-bundle-analyzer'
 
 export function createVisualizerPlugin(title: string) {
-  return visualizer({
-    filename: bundleSizeStatsLogPath,
-    title: `${title} Bundle Stats`,
-    open: true,
-    template: 'treemap',
-    gzipSize: true,
-    brotliSize: true,
+  return analyzer({
+    reportTitle: `${title} Bundle Analyzer`,
   })
 }

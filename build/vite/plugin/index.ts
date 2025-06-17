@@ -12,6 +12,7 @@ import { createDevtoolsPlugin } from './devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createLegacyPlugin } from './legacy'
+import { createObfuscatorPlugin } from './obfuscator'
 import { createRestartPlugin } from './restart'
 import { createTurboConsolePlugin } from './turbo-console'
 import { createUnoCSSPlugin } from './unocss'
@@ -55,8 +56,6 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   ]
 
   const dev = mode === 'development'
-  const stage = mode === 'staging'
-  const _prod = mode === 'production'
 
   // I'm pretty sure packages below will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
@@ -86,13 +85,14 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     // https://github.com/nonzzz/vite-plugin-compression
     env.compression && vitePlugins.push(createCompressionPlugin())
 
-    // https://github.com/chengpeiquan/vite-plugin-banner
-    vitePlugins.push(createBannerPlugin(env.outDir))
-  }
+    // https://github.com/z0ffy/vite-plugin-bundle-obfuscator
+    env.obfuscator && vitePlugins.push(createObfuscatorPlugin())
 
-  if (stage) {
+    // https://github.com/chengpeiquan/vite-plugin-banner
+    env.banner && vitePlugins.push(createBannerPlugin(env.outDir))
+
     // https://github.com/btd/rollup-plugin-visualizer
-    vitePlugins.push(createVisualizerPlugin(env.title))
+    env.analyzer && vitePlugins.push(createVisualizerPlugin(env.title))
   }
 
   return vitePlugins
