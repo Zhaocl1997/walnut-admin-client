@@ -9,8 +9,8 @@ export type ValueOfAppConstDevice =
   typeof AppConstDevice[keyof typeof AppConstDevice]
 
 export const AppConstLocale = {
-  EN_US: 'en-US',
-  ZH_CN: 'zh-CN',
+  EN_US: 'en_US',
+  ZH_CN: 'zh_CN',
 } as const
 
 export type ValueOfAppConstLocale =
