@@ -45,10 +45,7 @@ const _formData = ref({
         </WTitle>
 
         <pre class="whitespace-pre-wrap">Value: {{ value }}</pre>
-        <WTinymce
-          v-model:value="value"
-          disabled
-        />
+        <WTinymce v-model:value="value" />
       </n-list-item>
 
       <!-- <n-list-item>

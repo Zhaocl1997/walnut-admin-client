@@ -31,7 +31,7 @@ importers:
         version: 4.6.2
       '@tinymce/tinymce-vue':
         specifier: 6.1.0
-        version: 6.1.0(tinymce@7.8.0)(vue@3.5.13(typescript@5.8.3))
+        version: 6.1.0(tinymce@7.9.1)(vue@3.5.13(typescript@5.8.3))
       '@vueuse/core':
         specifier: 13.1.0
         version: 13.1.0(vue@3.5.13(typescript@5.8.3))
@@ -101,9 +101,6 @@ importers:
       sortablejs:
         specifier: 1.15.6
         version: 1.15.6
-      tinymce:
-        specifier: 7.8.0
-        version: 7.8.0
       ua-parser-js:
         specifier: 2.0.3
         version: 2.0.3
@@ -279,6 +276,9 @@ importers:
       taze:
         specifier: 19.1.0
         version: 19.1.0
+      tinymce:
+        specifier: 7.9.1
+        version: 7.9.1
       ts-json-schema-generator:
         specifier: 2.4.0
         version: 2.4.0
@@ -6168,8 +6168,8 @@ packages:
     resolution: {integrity: sha512-mEwzpUgrLySlveBwEVDMKk5B57bhLPYovRfPAXD5gA/98Opn0rCDj3GtLwFvCvH5RK9uPCExUROW5NjDwvqkxw==}
     engines: {node: '>=12.0.0'}
 
-  tinymce@7.8.0:
-    resolution: {integrity: sha512-MUER5MWV9mkOB4expgbWknh/C5ZJvOXQlMVSx4tJxTuYtcUCDB6bMZ34fWNOIc8LvrnXmGHGj0eGQuxjQyRgrA==}
+  tinymce@7.9.1:
+    resolution: {integrity: sha512-zaOHwmiP1EqTeLRXAvVriDb00JYnfEjWGPdKEuac7MiZJ5aiDMZ4Unc98Gmajn+PBljOmO1GKV6G0KwWn3+k8A==}
 
   tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
@@ -8624,11 +8624,11 @@ snapshots:
       - supports-color
       - typescript
 
-  '@tinymce/tinymce-vue@6.1.0(tinymce@7.8.0)(vue@3.5.13(typescript@5.8.3))':
+  '@tinymce/tinymce-vue@6.1.0(tinymce@7.9.1)(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       vue: 3.5.13(typescript@5.8.3)
     optionalDependencies:
-      tinymce: 7.8.0
+      tinymce: 7.9.1
 
   '@trysound/sax@0.2.0': {}
 
@@ -13567,7 +13567,7 @@ snapshots:
       fdir: 6.4.4(picomatch@4.0.2)
       picomatch: 4.0.2
 
-  tinymce@7.8.0: {}
+  tinymce@7.9.1: {}
 
   tmp@0.0.33:
     dependencies:
