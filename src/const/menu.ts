@@ -1,3 +1,5 @@
+import type { ValueOf } from 'easy-fns-ts'
+
 export const AppConstMenuType = {
   CATALOG: 'catalog',
   MENU: 'menu',

@@ -1,5 +1,5 @@
 <script lang="ts" setup generic="T">
-import type { StringOrNumber, TreeNodeItem } from 'easy-fns-ts'
+import type { Recordable, StringOrNumber, TreeNodeItem } from 'easy-fns-ts'
 import type { TreeSelectInst } from 'naive-ui'
 import type { ICompUITreeSelectProps } from '.'
 import { findPath } from 'easy-fns-ts'

@@ -1,4 +1,5 @@
 <script lang="ts" setup  generic="T">
+import type { Recordable } from 'easy-fns-ts'
 import { omit } from 'lodash-es'
 import { useFormContext } from '../../../hooks/useFormContext'
 

@@ -1,3 +1,5 @@
+import type { Recordable } from 'easy-fns-ts'
+
 /**
  * @description get language lists from back end, used for language change
  * This should only called once in AppLocalePicker component

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { Recordable } from 'easy-fns-ts'
 import type { ScrollbarInst } from 'naive-ui'
 import type { ICompExtraScrollbarInst, ICompExtraScrollbarProps } from '.'
 

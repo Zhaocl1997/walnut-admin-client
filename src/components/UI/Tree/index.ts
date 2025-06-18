@@ -1,3 +1,4 @@
+import type { Recordable } from 'easy-fns-ts'
 import type { TreeInst, TreeProps } from 'naive-ui'
 
 export { default } from './index.vue'

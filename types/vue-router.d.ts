@@ -1,3 +1,5 @@
+import type { Recordable } from 'easy-fns-ts'
+
 export { }
 
 declare module 'vue-router' {

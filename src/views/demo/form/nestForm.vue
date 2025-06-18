@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { Recordable } from 'easy-fns-ts'
+
 defineOptions({
   name: 'NestForm',
   defaultView: false,

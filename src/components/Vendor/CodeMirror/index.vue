@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { EditorView, ViewUpdate } from '@codemirror/view'
 
+import type { Recordable } from 'easy-fns-ts'
 import type { ICompVendorCodeMirrorProps } from '.'
 import { redo, undo } from '@codemirror/commands'
 import { closeSearchPanel, openSearchPanel } from '@codemirror/search'
-import { oneDark } from '@codemirror/theme-one-dark'
 
+import { oneDark } from '@codemirror/theme-one-dark'
 // TODO not update any more, move the code to this folder
 // https://github.com/surmon-china/vue-codemirror/blob/main/src/codemirror.ts
 import { Codemirror } from 'vue-codemirror'

@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-import type { StringOrNumber } from 'easy-fns-ts'
+import type { Recordable, StringOrNumber } from 'easy-fns-ts'
 import type { DropdownOption, TreeInst, TreeOption } from 'naive-ui'
 
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'

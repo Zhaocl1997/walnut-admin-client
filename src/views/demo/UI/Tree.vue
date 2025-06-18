@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { Recordable } from 'easy-fns-ts'
 import { useTree } from '@/components/UI/Tree'
 import { getTreeData } from '../data'
 

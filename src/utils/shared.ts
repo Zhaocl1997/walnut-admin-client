@@ -1,3 +1,4 @@
+import type { Recordable } from 'easy-fns-ts'
 import type { Slots } from 'vue'
 import { forEach, isArray, isPlainObject, isUndefined, set } from 'lodash-es'
 import { renderSlot } from 'vue'

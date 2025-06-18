@@ -1,3 +1,4 @@
+import type { Recordable } from 'easy-fns-ts'
 import type { ICompUITreeInst, ICompUITreeProps } from '.'
 
 export function useTree<T = Recordable>(props: IDeepMaybeRef<ICompUITreeProps<T>> | ICompUITreeProps<T>): [(inst: ICompUITreeInst<T>) => void, ICompUITreeInst<T>] {

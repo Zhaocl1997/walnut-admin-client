@@ -1,6 +1,6 @@
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 
-import type { StringOrNumber } from 'easy-fns-ts'
+import type { Recordable, StringOrNumber } from 'easy-fns-ts'
 import type { DataTableBaseColumn, DataTableColumn, DataTableCreateRowKey, DataTableCreateSummary, DataTableExpandColumn, DataTableFilterState, DataTableInst, DataTableSelectionColumn, DataTableSortState, PaginationProps, PopoverProps, ScrollbarProps, TagProps } from 'naive-ui'
 import type { HTMLAttributes, VNodeChild } from 'vue'
 import type { ICompUIButtonProps } from '../../Button'

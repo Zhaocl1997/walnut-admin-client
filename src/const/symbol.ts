@@ -1,3 +1,5 @@
+import type { ValueOf } from 'easy-fns-ts'
+
 export const AppConstSymbolKey = {
   FORM_KEY: 'w-form',
   TABLE_KEY: 'w-table',

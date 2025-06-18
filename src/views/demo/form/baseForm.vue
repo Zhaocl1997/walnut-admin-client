@@ -1,5 +1,6 @@
 <script lang="tsx" setup>
 import type { WForm } from '@/components/UI/Form'
+import type { Recordable } from 'easy-fns-ts'
 import { getTreeData, options } from '../data'
 
 defineOptions({

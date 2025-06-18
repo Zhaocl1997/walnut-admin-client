@@ -1,3 +1,4 @@
+import type { Recordable } from 'easy-fns-ts'
 import type { FormItemRule, FormRules } from 'naive-ui'
 import type { WForm } from '../types'
 import { get } from 'lodash-es'

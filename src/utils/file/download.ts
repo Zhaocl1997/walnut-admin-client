@@ -1,7 +1,7 @@
 /**
  * @description Download url resources
  */
-export function downloadByUrl(url: string, fileName?: string, target: ITargetContext = '_blank') {
+export function downloadByUrl(url: string, fileName?: string, target: '_self' | '_blank' = '_blank') {
   return new Promise<boolean>((resolve, reject) => {
     if (/(iP)/.test(window.navigator.userAgent))
       reject(new Error('Your browser does not support download!'))

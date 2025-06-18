@@ -1,3 +1,4 @@
+import type { Recordable } from 'easy-fns-ts'
 import type { RouteMeta } from 'vue-router'
 
 declare global {

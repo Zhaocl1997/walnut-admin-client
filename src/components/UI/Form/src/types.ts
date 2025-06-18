@@ -13,7 +13,7 @@ import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 
-import type { BaseDataType, DeepKeyOf, StringOrNumber } from 'easy-fns-ts'
+import type { BaseDataType, DeepKeyOf, Recordable, StringOrNumber } from 'easy-fns-ts'
 // raw
 import type {
   DynamicInputProps,
