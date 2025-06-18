@@ -1,225 +1,279 @@
 <script lang="ts" setup>
-import Mindmap from 'vue3-mindmap'
-import 'vue3-mindmap/dist/style.css'
+import type { MindElixirData, Options } from 'mind-elixir'
+import { getRandomInt } from 'easy-fns-ts'
 
 defineOptions({
   name: 'MindmapDemo',
 })
 
+const appSettings = useAppStoreSetting()
+
 const { urls } = __APP_INFO__
 
-const data = ref([
-  {
-    name: 'Walnut Admin',
+const options: Omit<Options, 'el'> = {
+  editable: true,
+}
+
+const data: MindElixirData = {
+  nodeData: {
+    id: 'root',
+    topic: 'walnut-admin',
     children: [
       {
-        name: '前端',
+        id: `${getRandomInt(0, 999999)}`,
+        topic: '前端',
         children: [
           {
-            name: `仓库地址：${urls.github}`,
+            id: `${getRandomInt(0, 999999)}`,
+            topic: `仓库地址：${urls.github}`,
           },
           {
-            name: `预览地址：${urls.demo}`,
-            left: false,
+            id: `${getRandomInt(0, 999999)}`,
+            topic: `预览地址：${urls.demo}`,
           },
           {
-            name: '所涉及的知识',
+            id: `${getRandomInt(0, 999999)}`,
+            topic: '所涉及的知识',
             children: [
               {
-                name: '基础',
+                id: `${getRandomInt(0, 999999)}`,
+                topic: '基础',
                 children: [
                   {
-                    name: 'HTML',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'HTML',
                   },
                   {
-                    name: 'CSS',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'CSS',
                   },
                   {
-                    name: 'JS',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'JS',
                   },
                   {
-                    name: 'TS',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'TS',
                   },
                 ],
               },
               {
-                name: '框架',
+                id: `${getRandomInt(0, 999999)}`,
+                topic: '框架',
                 children: [
                   {
-                    name: 'Vue',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'Vue',
                   },
                   {
-                    name: 'Vue Router',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'Vue Router',
                   },
                   {
-                    name: 'Pinia',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'Pinia',
                   },
                   {
-                    name: 'Vue I18n',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'Vue I18n',
                   },
                 ],
               },
               {
-                name: '工具库\n',
+                id: `${getRandomInt(0, 999999)}`,
+                topic: '工具库\n',
                 children: [
                   {
-                    name: 'vueuse',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'vueuse',
                   },
                   {
-                    name: 'lodash-es',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'lodash-es',
                   },
                   {
-                    name: 'axios',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'axios',
                   },
                 ],
               },
               {
-                name: '第三方插件',
+                id: `${getRandomInt(0, 999999)}`,
+                topic: '第三方插件',
                 children: [
                   {
-                    name: 'echarts',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'echarts',
                   },
                   {
-                    name: 'cropperjs',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'cropperjs',
                   },
                   {
-                    name: 'tinymce',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'tinymce',
                   },
                   {
-                    name: 'signature_pad',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'signature_pad',
                   },
                   {
-                    name: 'codemirror',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'codemirror',
                   },
                   {
-                    name: 'intro.js',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'intro.js',
                   },
                   {
-                    name: 'sortablejs',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'sortablejs',
                   },
                   {
-                    name: 'qrcode',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'qrcode',
                   },
                   {
-                    name: 'crypto-js',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'crypto-js',
                   },
                 ],
               },
               {
-                name: 'css',
-                left: false,
+                id: `${getRandomInt(0, 999999)}`,
+                topic: 'css',
                 children: [
                   {
-                    name: 'unocss',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'unocss',
                   },
                   {
-                    name: 'animate.css',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'animate.css',
                   },
                   {
-                    name: 'hover.css',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'hover.css',
                   },
                 ],
               },
               {
-                name: 'socket',
+                id: `${getRandomInt(0, 999999)}`,
+                topic: 'socket',
                 children: [
                   {
-                    name: 'socket.io-client',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'socket.io-client',
                   },
                 ],
               },
               {
-                name: 'vite',
+                id: `${getRandomInt(0, 999999)}`,
+                topic: 'vite',
                 children: [
                   {
-                    name: 'plugin',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'plugin',
                     children: [
                       {
-                        name: '基础插件',
+                        id: `${getRandomInt(0, 999999)}`,
+                        topic: '基础插件',
                         children: [
                           {
-                            name: '@vitejs/plugin-vue',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: '@vitejs/plugin-vue',
                           },
                           {
-                            name: '@vitejs/plugin-vue-jsx',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: '@vitejs/plugin-vue-jsx',
                           },
                         ],
                       },
                       {
-                        name: '开发插件',
-                        left: false,
+                        id: `${getRandomInt(0, 999999)}`,
+                        topic: '开发插件',
                         children: [
                           {
-                            name: 'vite-plugin-mkcert',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: 'vite-plugin-mkcert',
                           },
                           {
-                            name: 'vite-plugin-restart',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: 'vite-plugin-restart',
                           },
                         ],
                       },
                       {
-                        name: '通用插件',
+                        id: `${getRandomInt(0, 999999)}`,
+                        topic: '通用插件',
                         children: [
                           {
-                            name: 'unplugin-auto-import/vite',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: 'unplugin-auto-import/vite',
                           },
                           {
-                            name: 'unplugin-vue-components/vite',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: 'unplugin-vue-components/vite',
                           },
                           {
-                            name: 'unocss/vite',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: 'unocss/vite',
                           },
                         ],
                       },
                       {
-                        name: '打包插件',
+                        id: `${getRandomInt(0, 999999)}`,
+                        topic: '打包插件',
                         children: [
                           {
-                            name: 'rollup-plugin-visualizer',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: 'rollup-plugin-visualizer',
                           },
                           {
-                            name: '@vitejs/plugin-legacy',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: '@vitejs/plugin-legacy',
                           },
                           {
-                            name: 'vite-plugin-compression',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: 'vite-plugin-compression',
                           },
                           {
-                            name: 'vite-plugin-banner',
+                            id: `${getRandomInt(0, 999999)}`,
+                            topic: 'vite-plugin-banner',
                           },
                         ],
                       },
                     ],
                   },
                   {
-                    name: 'devServer',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'devServer',
                   },
                   {
-                    name: 'alias',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'alias',
                   },
                   {
-                    name: 'env',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'env',
                   },
                   {
-                    name: 'preview',
+                    id: `${getRandomInt(0, 999999)}`,
+                    topic: 'preview',
                   },
                 ],
               },
             ],
-            collapse: true,
           },
         ],
       },
     ],
   },
-])
+}
 </script>
 
 <template>
   <div>
-    <Mindmap v-model="data" center-btn fit-btn download-btn add-node-btn timetravel zoom drag edit ctm />
+    <WMindmap :data="data" :options="options" :style="{ width: appSettings.getCalcContentWidthWithPadding, height: appSettings.getCalcContentHeightWithPadding }" />
   </div>
 </template>
-
-<style lang="less" scoped>
-
-</style>
