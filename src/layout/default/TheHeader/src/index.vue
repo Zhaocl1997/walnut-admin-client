@@ -46,16 +46,6 @@ function onShowAside() {
 
             <HeaderBreadCrumb />
           </template>
-
-          <!-- <WTransition transition-name="slide-up">
-              <div
-                v-if="appSetting.app.layout === 'top-menu'"
-                class="hstack items-center justify-between"
-              >
-                <TheLogo class="mr-16"></TheLogo>
-                <TheMenu></TheMenu>
-              </div>
-            </WTransition> -->
         </div>
 
         <!-- right -->

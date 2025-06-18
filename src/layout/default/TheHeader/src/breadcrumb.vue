@@ -1,112 +1,105 @@
-<script lang="tsx">
-// TODO rework
-
+<script lang="tsx" setup>
+import type { TreeNodeItem } from 'easy-fns-ts'
 import type { DropdownOption } from 'naive-ui'
-// TODO 111
-import WTransition from '@/components/Extra/Transition'
-import WIcon from '@/components/UI/Icon'
 
+import { getTheme } from '@/App/src/naive/src/theme'
+
+// TODO 111
+import WIcon from '@/components/UI/Icon'
 import { findPath } from 'easy-fns-ts'
+import { isEmpty } from 'lodash-es'
 import { darkTheme } from 'naive-ui'
 
-export default defineComponent({
-  setup() {
-    const appMenu = useAppStoreMenu()
-    const appSetting = useAppStoreSetting()
+const appMenu = useAppStoreMenu()
+const appSetting = useAppStoreSetting()
 
-    const { t } = useAppI18n()
-    const { currentRoute } = useAppRouter()
+const { t } = useAppI18n()
+const { currentRoute } = useAppRouter()
 
-    const getChildren = computed((): AppSystemMenu[] => {
-      // TODO 999
-      const matched = findPath(
-        toRaw(appMenu.menus),
-        n =>
-          n.name
-          === (currentRoute.value.meta.menuActiveName
-            ? currentRoute.value.meta.menuActiveName
-            : currentRoute.value.name),
-      ) as AppSystemMenu[]
+const [DefineBase, ReuseBase] = createReusableTemplate()
 
-      // handle menuActiveName
-      if (currentRoute.value.meta.menuActiveName) {
-        matched?.push({
-          name: currentRoute.value.name as string,
-          path: currentRoute.value.path,
-          ...currentRoute.value.meta,
-        })
-      }
+const getChildren = computed((): TreeNodeItem<AppSystemMenu>[] | undefined => {
+  const matched = findPath<AppSystemMenu>(
+    appMenu.menus,
+    n =>
+      n.name
+      === (currentRoute.value.meta.menuActiveName
+        ? currentRoute.value.meta.menuActiveName
+        : currentRoute.value.name),
+  )
 
-      return matched?.filter(item => item.title)
+  // handle menuActiveName
+  if (currentRoute.value.meta.menuActiveName) {
+    matched?.push({
+      name: currentRoute.value.name as string,
+      path: currentRoute.value.path,
+      meta: {
+        ...currentRoute.value.meta,
+      },
     })
+  }
 
-    const renderBase = (item: AppSystemMenu) => (
-      <div class="flex flex-row flex-nowrap items-center">
-        {appSetting.breadcrumb.showIcon && (
-          <WIcon icon={item.icon!} height="20" class="mr-1"></WIcon>
-        )}
-        <div style="line-height: normal">{t(item.title!)}</div>
-      </div>
-    )
-
-    const genOptions = (
-      arr?: TreeNodeItem<AppSystemMenu>[],
-    ): DropdownOption[] | undefined => {
-      if (!arr || arr?.length === 0) {
-        return undefined
-      }
-      else {
-        return arr?.map(
-          i =>
-            ({
-              key: i.name,
-              label: t(i.title as string),
-              icon: appSetting.breadcrumb.showIcon
-                ? () => <WIcon icon={i.icon!} height="20"></WIcon>
-                : null,
-              children: genOptions(i.children),
-            } as DropdownOption),
-        )
-      }
-    }
-
-    const renderDropdown = (item: TreeNodeItem<AppSystemMenu>) => (
-      <n-dropdown
-        onSelect={async (key: string) => {
-          await useAppRouterPush({ name: key })
-        }}
-        show-arrow
-        options={genOptions(item.children)}
-      >
-        {renderBase(item)}
-      </n-dropdown>
-    )
-
-    return () => (
-      <WTransition appear transition-name={appSetting.getBreadcrumbTransition}>
-        {appSetting.getBreadcrumbShow && (
-          <n-config-provider
-            id={appSetting.getBreadcrumbId}
-            theme={
-              (!isDark.value && appSetting.header.inverted)
-              || isDark.value
-                ? darkTheme
-                : null
-            }
-          >
-            <n-breadcrumb separator={appSetting.breadcrumb.separator}>
-              {getChildren.value?.map(item => (
-                <n-breadcrumb-item>
-                  {appSetting.breadcrumb.showDropdown
-                    ? renderDropdown(item)
-                    : renderBase(item)}
-                </n-breadcrumb-item>
-              ))}
-            </n-breadcrumb>
-          </n-config-provider>
-        )}
-      </WTransition>
-    )
-  },
+  return matched?.filter(item => item.title)
 })
+
+function getDropdownOptions(arr?: TreeNodeItem<AppSystemMenu>[]): DropdownOption[] | undefined {
+  if (isEmpty(arr)) {
+    return undefined
+  }
+
+  return arr?.map(
+    i =>
+      ({
+        key: i.name,
+        label: t(i.title as string),
+        icon: appSetting.breadcrumb.showIcon
+          ? () => <WIcon icon={currentRoute.value.name === i.name ? i.meta?.activeIcon ?? i.icon! : i.icon!} height="20"></WIcon>
+          : null,
+        children: getDropdownOptions(i.children),
+      } as DropdownOption),
+  )
+}
+
+async function onDropdownSelect(key: string) {
+  await useAppRouterPush({ name: key })
+}
 </script>
+
+<template>
+  <DefineBase v-slot="{ item }">
+    <div class="flex flex-row flex-nowrap items-center">
+      <WIcon v-if="appSetting.breadcrumb.showIcon" :icon="item.meta?.activeIcon ?? item.icon!" height="20" class="mr-1" />
+
+      {{ $t(item.title!) }}
+    </div>
+  </DefineBase>
+
+  <WTransition appear :transition-name="appSetting.getBreadcrumbTransition">
+    <n-config-provider
+      :theme="(!isDark && appSetting.header.inverted)
+        || isDark
+        ? darkTheme
+        : null"
+    >
+      <n-breadcrumb
+        v-if="appSetting.getBreadcrumbShow"
+        :id="appSetting.getBreadcrumbId" :separator="appSetting.breadcrumb.separator"
+      >
+        <n-breadcrumb-item v-for="item in getChildren" :key="item._id">
+          <n-config-provider
+            v-if="appSetting.breadcrumb.showDropdown"
+            :theme="getTheme"
+          >
+            <n-dropdown show-arrow :options="getDropdownOptions(item.children)" @select="onDropdownSelect">
+              <ReuseBase :item="item" />
+            </n-dropdown>
+          </n-config-provider>
+
+          <WTransition v-else appear :transition-name="appSetting.getBreadcrumbTransition" :duration="500">
+            <ReuseBase :item="item" />
+          </WTransition>
+        </n-breadcrumb-item>
+      </n-breadcrumb>
+    </n-config-provider>
+  </WTransition>
+</template>

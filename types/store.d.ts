@@ -1,5 +1,5 @@
 import type { RemovableRef } from '@vueuse/core'
-import type { Nullable } from 'easy-fns-ts'
+import type { Nullable, TreeNodeItem } from 'easy-fns-ts'
 import type {
   MessageReactive,
   NotificationReactive,
@@ -86,7 +86,7 @@ declare global {
     collapse: boolean
     showAside: boolean
 
-    menus: AppSystemMenu[]
+    menus: TreeNodeItem<AppSystemMenu>[]
     keepAliveRouteNames: string[]
     indexMenuName?: string
   }
