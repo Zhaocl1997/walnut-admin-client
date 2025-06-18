@@ -8,6 +8,7 @@ import { createCdnImportPlugin } from './cdn-import'
 import { createCheckerPlugin } from './checker'
 import { createComponentPlugin } from './component'
 import { createCompressionPlugin } from './compression'
+import { createCSPPlugin } from './csp'
 import { createDevtoolsPlugin } from './devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
@@ -41,6 +42,9 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/unocss/unocss
     createUnoCSSPlugin(),
+
+    // https://github.com/tsotimus/vite-plugin-csp-guard
+    createCSPPlugin(),
 
     // https://github.com/fi3ework/vite-plugin-checker
     // createCheckerPlugin(),
