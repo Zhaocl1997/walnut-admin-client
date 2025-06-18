@@ -52,7 +52,7 @@ defineExpose({ onScrollToTop })
         class="relative"
         :style="{
           padding: `${appSetting.app.contentPadding}px`,
-          minHeight: `calc(100vh - ${appSetting.header.height}px - ${appSetting.tabs.height}px - ${appSetting.footer.height}px)`,
+          minHeight: appSetting.getCalcContentHeight,
         }"
       />
       <TheIFrameWrapper />

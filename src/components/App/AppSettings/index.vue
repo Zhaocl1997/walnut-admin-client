@@ -19,7 +19,7 @@ function onBackToTop() {
 </script>
 
 <template>
-  <n-float-button position="fixed" bottom="60" right="60" menu-trigger="hover" style="z-index:9999">
+  <n-float-button position="fixed" bottom="120" right="60" menu-trigger="hover" style="z-index:9999">
     <WIcon
       id="walnut-settings"
       height="24"
