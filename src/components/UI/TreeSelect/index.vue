@@ -1,5 +1,5 @@
-<script lang="ts" setup>
-import type { StringOrNumber } from 'easy-fns-ts'
+<script lang="ts" setup generic="T">
+import type { StringOrNumber, TreeNodeItem } from 'easy-fns-ts'
 import type { TreeSelectInst } from 'naive-ui'
 import type { ICompUITreeSelectProps } from '.'
 import { findPath } from 'easy-fns-ts'
@@ -12,7 +12,7 @@ const { treeSelectProps, multiple = false } = defineProps<ICompUITreeSelectProps
 
 type TreeKey = StringOrNumber
 
-const value = defineModel<TreeKey | TreeKey[]>('value', { required: true })
+const value = defineModel<TreeKey | TreeKey[]>('value')
 
 const internalValue = ref<TreeKey | TreeKey[] | null>()
 
@@ -22,7 +22,7 @@ const expandedKeys = ref<TreeKey[]>()
 const indeterminateKeys = ref<TreeKey[]>()
 
 const getTreeKeyField = computed(() => treeSelectProps?.keyField)
-const getTreeOptions = computed(() => treeSelectProps?.options)
+const getTreeOptions = computed((): TreeNodeItem<T>[] => treeSelectProps?.options as unknown as TreeNodeItem<T>[])
 
 async function onUpdateValue(keys: TreeKey | TreeKey[]) {
   if (multiple && Array.isArray(keys)) {
@@ -54,7 +54,7 @@ async function onFeedback() {
     const intersection = Array.from(new Set(leafNodeKeyList).intersection(new Set(internalValue.value)))
     internalValue.value = intersection
 
-    const allNodes = new Set<TreeKey>([...internalValue.value.map(i => findPath(getTreeOptions.value!, n => n[getTreeKeyField.value!] === i) ?? []).flat().map(i => i[getTreeKeyField.value!] as TreeKey)])
+    const allNodes = new Set<TreeKey>([...internalValue.value.map(i => findPath(getTreeOptions.value!, (n: Recordable) => n[getTreeKeyField.value!] === i) ?? []).flat().map(i => i[getTreeKeyField.value!])])
     expandedKeys.value = Array.from(allNodes)
   }
   else {
@@ -68,7 +68,7 @@ async function onFeedback() {
     internalValue.value = value.value
 
     // expanded keys
-    const targetNodeSingleTree = findPath(getTreeOptions.value!, n => n[getTreeKeyField.value!] === internalValue.value) as [] ?? []
+    const targetNodeSingleTree = findPath(getTreeOptions.value!, (n: Recordable) => n[getTreeKeyField.value!] === internalValue.value) as [] ?? []
     expandedKeys.value = targetNodeSingleTree.map(i => i[getTreeKeyField.value!])
   }
 }
