@@ -8,6 +8,7 @@ export function createObfuscatorPlugin() {
     threadPool: true,
     autoExcludeNodeModules: {
       enable: true,
+      // https://github.com/z0ffy/vite-plugin-bundle-obfuscator/issues/122#issuecomment-2568652367
       manualChunks: Object.keys(pkg.dependencies),
     },
     options: {
