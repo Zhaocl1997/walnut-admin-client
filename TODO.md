@@ -20,7 +20,7 @@
   - [ ] 找回密码
   - [ ] dev setting / features / user settings 急需分离，现在都耦合在appsettings里了
   - [x] api 函数重命名 结尾都以API结束 好区分是请求函数
-  - [ ] ~~merge request的axios adapter完成了，字典数据接口需要重新梳理一下，可以不用initDict在form/table/desc组件里了~~
+  - [x] ~~merge request的axios adapter完成了，字典数据接口需要重新梳理一下，可以不用initDict在form/table/desc组件里了~~
 
 - 重要不紧急
 
@@ -33,13 +33,13 @@
   - [ ] pdf/word/excel/print.js plugin
   - [ ] error monitor (sentry?)
   - [x] untyper
-  - [ ] closure-compiler (尝试搞过，难搞)
+  - [x] closure-compiler (尝试搞过，难搞)
   - [ ] markdown (vditor)
   - [ ] fullcalendar
   - [ ] 拆分面板 splitpanes
-  - [ ] tiptap 替代 tinymce?
+  - [x] tiptap 替代 tinymce? A: 不用tiptap替换了，直接self host了，也可以用
   - [ ] cdn/混淆
-  - [ ] vite-plugin-csp-guard/vite-plugin-istanbul
+  - [x] vite-plugin-csp-guard/vite-plugin-istanbul
 
 - 不重要不紧急
 
@@ -59,10 +59,10 @@
   - [ ] cap https://github.com/tiagorangel1/cap
   - [x] https://github.com/zumerlab/snapdom https://github.com/sindresorhus/capture-website still use html-to-image
   - [ ] https://github.com/yjl9903/unplugin-info
-  - [ ] https://github.com/SSShooter/mind-elixir-core instead of vue3-mindmap
-  - [ ] https://github.com/vite-pwa/vite-plugin-pwa
+  - [x] https://github.com/SSShooter/mind-elixir-core instead of vue3-mindmap
+  - [x] https://github.com/vite-pwa/vite-plugin-pwa
   - [ ] https://github.com/antfu/case-police
-  - [ ] https://github.com/sindresorhus/capture-website
+  - [x] https://github.com/sindresorhus/capture-website
 
 - 不重要紧急
 

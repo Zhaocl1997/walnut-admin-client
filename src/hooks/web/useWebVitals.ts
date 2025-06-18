@@ -12,6 +12,7 @@ function logDelta({ name, delta, value, id }: Metric) {
     metric_delta: delta, // Optional.
   }
 
+  // turbo-console-disable-next-line
   console.log(eventParams)
 }
 
