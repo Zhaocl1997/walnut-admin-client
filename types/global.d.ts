@@ -1,6 +1,7 @@
 // https://jkchao.github.io/typescript-book-chinese/
 /// <reference types="vite/client" />
 /// <reference types="unplugin-turbo-console/client" />
+/// <reference types="vite-plugin-pwa/client" />
 
 declare interface Fn<T = any, R = T> {
   (...arg: T[]): R

@@ -16,3 +16,4 @@ env-local
 *.zip
 deploy.config.*
 tsconfig.tsbuildinfo
+dev-dist

@@ -49,7 +49,8 @@
     "deploy:stage": "deploy-cli-service deploy --mode staging",
     "deploy:prod": "deploy-cli-service deploy --mode production",
     "icon:dev": "esno build/icon dev",
-    "icon:prod": "esno build/icon prod"
+    "icon:prod": "esno build/icon prod",
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
     "@codemirror/autocomplete": "6.18.6",
@@ -109,13 +110,13 @@
     "@types/lodash-es": "4.17.12",
     "@types/node": "22.14.1",
     "@types/qs": "6.9.18",
-    "@types/signature_pad": "4.0.0",
     "@types/sortablejs": "1.15.8",
     "@unocss/eslint-config": "66.0.0",
     "@unocss/eslint-plugin": "66.0.0",
     "@unocss/preset-icons": "66.0.0",
     "@unocss/reset": "66.0.0",
     "@unocss/transformer-variant-group": "66.0.0",
+    "@vite-pwa/assets-generator": "1.0.0",
     "@vitejs/plugin-legacy": "6.1.0",
     "@vitejs/plugin-vue": "5.2.3",
     "@vitejs/plugin-vue-jsx": "4.1.2",
@@ -161,9 +162,11 @@
     "vite-plugin-csp-guard": "2.1.1",
     "vite-plugin-image-optimizer": "1.1.8",
     "vite-plugin-mkcert": "1.17.8",
+    "vite-plugin-pwa": "1.0.0",
     "vite-plugin-restart": "0.4.2",
     "vite-plugin-vue-devtools": "7.7.5",
     "vue-tsc": "2.2.10",
+    "workbox-window": "^7.3.0",
     "zod": "3.25.67"
   },
   "config": {

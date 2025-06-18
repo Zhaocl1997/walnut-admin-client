@@ -14,6 +14,7 @@ import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createLegacyPlugin } from './legacy'
 import { createObfuscatorPlugin } from './obfuscator'
+import { createPWAPlugin } from './pwa'
 import { createRestartPlugin } from './restart'
 import { createTurboConsolePlugin } from './turbo-console'
 import { createUnoCSSPlugin } from './unocss'
@@ -21,6 +22,8 @@ import { creatValidateEnvPlugin } from './validate-env'
 import { createVisualizerPlugin } from './visualizer'
 
 export function createVitePlugins(mode: string, env: IViteEnv) {
+  const dev = mode === 'development'
+
   const vitePlugins: PluginOption = [
     vue({
       template: {
@@ -44,10 +47,14 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     createUnoCSSPlugin(),
 
     // https://github.com/tsotimus/vite-plugin-csp-guard
-    createCSPPlugin(),
+    // https://github.com/tsotimus/vite-plugin-csp-guard/issues/265
+    !dev && createCSPPlugin(),
 
     // https://github.com/fi3ework/vite-plugin-checker
     // createCheckerPlugin(),
+
+    // https://github.com/vite-pwa/vite-plugin-pwa
+    createPWAPlugin(),
 
     // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
     // {
@@ -62,8 +69,6 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     //   },
     // },
   ]
-
-  const dev = mode === 'development'
 
   // I'm pretty sure packages below will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
