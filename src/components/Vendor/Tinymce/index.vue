@@ -80,6 +80,8 @@ watch(
     immediate: true,
   },
 )
+
+const { httpUrl } = useAppEnvProxy()
 </script>
 
 <template>
@@ -88,7 +90,7 @@ watch(
       :id="editorId"
       ref="editorRef"
       v-model="value"
-      tinymce-script-src="/assets/js/tinymce/tinymce.min.js"
+      :tinymce-script-src="`${httpUrl}/static/js/tinymce/tinymce.min.js`"
       api-key="no-api-key"
       license-key="gpl"
       :init="tinymceOptions"
