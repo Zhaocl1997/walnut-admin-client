@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="">
-    <img src="https://github.com/Zhaocl1997/walnut-admin-client/blob/main/public/assets/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/Zhaocl1997/walnut-admin-client/blob/main/public/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h1 align="center">Walnut Admin</h1>

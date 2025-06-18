@@ -55,8 +55,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
   const processedEnv = useBuildEnv(env)
 
-  console.log({ processedEnv })
-
   return {
     root,
 

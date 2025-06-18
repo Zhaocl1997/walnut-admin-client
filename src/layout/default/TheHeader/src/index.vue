@@ -35,7 +35,7 @@ function onShowAside() {
         <div class="hstack items-center justify-between space-x-2">
           <img
             v-if="appAdapter.isMobile"
-            src="/assets/logo.png"
+            src="/logo.png"
             :alt="`${AppTitle} Logo`"
             class="m-1 h-9 w-9"
             @click="onShowAside"
