@@ -22,6 +22,7 @@ export function createCSPPlugin(env: IViteEnv) {
       'font-src': ['\'self\'', 'data:', 'https://fonts.gstatic.com'],
       'script-src-elem': ['\'self\'', 'https:'],
       'style-src-elem': ['\'self\'', '\'unsafe-inline\''],
+      'worker-src': ['\'self\'', 'blob:'],
     },
     build: {
       // https://github.com/vitejs/vite/issues/2377#issuecomment-2571422093
