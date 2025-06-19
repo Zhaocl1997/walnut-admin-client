@@ -141,13 +141,14 @@ export default ({ mode }: ConfigEnv): UserConfig => {
             }
 
             if (id.includes('node_modules')) {
-              const basic = id.toString().split('node_modules/')[1]
-              const sub1 = basic.split('/')[0]
-              if (sub1 !== '.pnpm') {
-                return sub1.toString()
+              const modulePath = id.split('node_modules/')[1]
+              const topLevelFolder = modulePath.split('/')[0]
+              if (topLevelFolder !== '.pnpm') {
+                return topLevelFolder
               }
-              const name2 = basic.split('/')[1]
-              return name2.split('@')[name2[0] === '@' ? 1 : 0].toString()
+              const scopedPackageName = modulePath.split('/')[1]
+              const chunkName = scopedPackageName.split('@')[scopedPackageName.startsWith('@') ? 1 : 0]
+              return chunkName
             }
           },
         },
