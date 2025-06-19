@@ -18,9 +18,9 @@ import 'animate.css'
 // custom scss
 import './assets/styles/main.scss'
 
-registerSW({ immediate: true })
+;
 
-;(async () => {
+(async () => {
   const app = createApp(App)
 
   await setupApp(app)
@@ -28,4 +28,6 @@ registerSW({ immediate: true })
   app.mount('#app')
 
   reportWebVitals()
+
+  registerSW({ immediate: true })
 })()

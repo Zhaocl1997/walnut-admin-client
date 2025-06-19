@@ -23,13 +23,20 @@ interface IViteEnv {
   publicPath: string
   proxy: [[number, string, string], [number, string, string, string, string]]
 
-  https: boolean
+  dev: {
+    https: boolean
+    csp: boolean
+    pwa: boolean
+  }
 
-  outDir: string
-  obfuscator: boolean
-  dropConsole: boolean
-  compression: boolean
-  analyzer: boolean
-  banner: boolean
-  cdn: boolean
+  build: {
+    outDir: string
+    obfuscator: boolean
+    dropConsole: boolean
+    compression: boolean
+    analyzer: boolean
+    banner: boolean
+    cdn: boolean
+    disableBrowserDevtool: boolean
+  }
 }

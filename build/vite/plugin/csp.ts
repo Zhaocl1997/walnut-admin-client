@@ -1,6 +1,6 @@
 import csp from 'vite-plugin-csp-guard'
 
-export function createCSPPlugin() {
+export function createCSPPlugin(env: IViteEnv) {
   return csp({
     features: {
       cssInJs: true,
@@ -11,7 +11,7 @@ export function createCSPPlugin() {
     type: 'SPA',
     algorithm: 'sha256',
     dev: {
-      run: true, // Run the plugin in dev mode
+      run: env.dev.csp, // Run the plugin in dev mode
       outlierSupport: ['vue', 'tailwind', 'scss'],
     },
     policy: {

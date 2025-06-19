@@ -22,4 +22,5 @@ export default defineConfig({
   VITE_BUILD_COMPRESSION: z.coerce.boolean(),
   VITE_BUILD_ANALYZER: z.coerce.boolean(),
   VITE_BUILD_BANNER: z.coerce.boolean(),
+  VITE_BUILD_DISABLE_BROWSER_DEVTOOL: z.coerce.boolean(),
 })

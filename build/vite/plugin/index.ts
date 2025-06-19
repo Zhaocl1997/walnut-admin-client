@@ -49,9 +49,6 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     // https://github.com/fi3ework/vite-plugin-checker
     // createCheckerPlugin(),
 
-    // https://github.com/vite-pwa/vite-plugin-pwa
-    createPWAPlugin(),
-
     // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
     // {
     //   name: 'singleHMR',
@@ -79,7 +76,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     vitePlugins.push(createRestartPlugin())
 
     // https://github.com/liuweiGL/vite-plugin-mkcert
-    env.https && vitePlugins.push(createHttpsPlugin())
+    env.dev.https && vitePlugins.push(createHttpsPlugin())
   }
   else {
     // https://github.com/FatehAK/vite-plugin-image-optimizer
@@ -89,25 +86,28 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     vitePlugins.push(createLegacyPlugin())
 
     // https://github.com/nonzzz/vite-plugin-cdn
-    env.cdn && vitePlugins.push(createCdnImportPlugin())
+    env.build.cdn && vitePlugins.push(createCdnImportPlugin())
 
     // https://github.com/nonzzz/vite-plugin-compression
-    env.compression && vitePlugins.push(createCompressionPlugin())
+    env.build.compression && vitePlugins.push(createCompressionPlugin())
 
     // https://github.com/z0ffy/vite-plugin-bundle-obfuscator
-    env.obfuscator && vitePlugins.push(createObfuscatorPlugin())
+    env.build.obfuscator && vitePlugins.push(createObfuscatorPlugin())
 
     // https://github.com/chengpeiquan/vite-plugin-banner
-    env.banner && vitePlugins.push(createBannerPlugin(env.outDir))
+    env.build.banner && vitePlugins.push(createBannerPlugin(env.build.outDir))
 
     // https://github.com/btd/rollup-plugin-visualizer
-    env.analyzer && vitePlugins.push(createVisualizerPlugin(env.title))
-
-    // https://github.com/tsotimus/vite-plugin-csp-guard
-    // https://github.com/tsotimus/vite-plugin-csp-guard/issues/265
-    // https://github.com/vitejs/vite/issues/2377#issuecomment-2571422093
-    vitePlugins.push(createCSPPlugin())
+    env.build.analyzer && vitePlugins.push(createVisualizerPlugin(env.title))
   }
+
+  // https://github.com/vite-pwa/vite-plugin-pwa
+  vitePlugins.push(createPWAPlugin(env))
+
+  // https://github.com/tsotimus/vite-plugin-csp-guard
+  // https://github.com/tsotimus/vite-plugin-csp-guard/issues/265
+  // https://github.com/vitejs/vite/issues/2377#issuecomment-2571422093
+  vitePlugins.push(createCSPPlugin(env))
 
   return vitePlugins
 }

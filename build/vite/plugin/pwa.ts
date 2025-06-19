@@ -1,8 +1,9 @@
 import { VitePWA } from 'vite-plugin-pwa'
+import pkg from '../../../package.json'
 
 // https://alexop.dev/posts/create-pwa-vue3-vite-4-steps/
 // still got problems, but offline mode seem to work in dev mode
-export function createPWAPlugin() {
+export function createPWAPlugin(env: IViteEnv) {
   return VitePWA({
     registerType: 'autoUpdate',
     strategies: 'generateSW',
@@ -13,10 +14,10 @@ export function createPWAPlugin() {
       overrideManifestIcons: true,
     },
     manifest: {
-      id: 'walnut-admin',
-      name: 'My Awesome PWA',
-      short_name: 'MyPWA',
-      description: 'A PWA built with Vue 3',
+      id: pkg.name,
+      name: pkg.name,
+      short_name: pkg.name,
+      description: pkg.description,
       theme_color: '#ffffff',
       icons: [
         {
@@ -43,6 +44,7 @@ export function createPWAPlugin() {
       ],
     },
     workbox: {
+      disableDevLogs: true,
       cleanupOutdatedCaches: true,
       runtimeCaching: [
         {
@@ -71,7 +73,7 @@ export function createPWAPlugin() {
       ],
     },
     devOptions: {
-      enabled: true,
+      enabled: env.dev.pwa,
       type: 'module',
       navigateFallback: 'index.html',
       suppressWarnings: true,

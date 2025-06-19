@@ -21,17 +21,22 @@ function useBuildEnv(env: Record<keyof ImportMetaEnv, string>): IViteEnv {
     publicPath: env.VITE_PUBLIC_PATH,
     proxy: JSON.parse(env.VITE_PROXY as string),
 
-    // dev
-    https: env.VITE_DEV_HTTPS === 'true',
+    dev: {
+      https: env.VITE_DEV_HTTPS === 'true',
+      csp: env.VITE_DEV_CSP === 'true',
+      pwa: env.VITE_DEV_PWA === 'true',
+    },
 
-    // staging/prod
-    outDir: env.VITE_BUILD_OUT_DIR,
-    obfuscator: env.VITE_BUILD_OBFUSCATOR === 'true',
-    dropConsole: env.VITE_BUILD_DROP_CONSOLE === 'true',
-    compression: env.VITE_BUILD_COMPRESSION === 'true',
-    analyzer: env.VITE_BUILD_ANALYZER === 'true',
-    banner: env.VITE_BUILD_BANNER === 'true',
-    cdn: env.VITE_BUILD_CDN === 'true',
+    build: {
+      outDir: env.VITE_BUILD_OUT_DIR,
+      obfuscator: env.VITE_BUILD_OBFUSCATOR === 'true',
+      dropConsole: env.VITE_BUILD_DROP_CONSOLE === 'true',
+      compression: env.VITE_BUILD_COMPRESSION === 'true',
+      analyzer: env.VITE_BUILD_ANALYZER === 'true',
+      banner: env.VITE_BUILD_BANNER === 'true',
+      cdn: env.VITE_BUILD_CDN === 'true',
+      disableBrowserDevtool: env.VITE_BUILD_DISABLE_BROWSER_DEVTOOL === 'true',
+    },
   }
 }
 
@@ -84,7 +89,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     css: {},
 
     esbuild: {
-      drop: processedEnv.dropConsole ? ['console', 'debugger'] : [],
+      drop: processedEnv.build.dropConsole ? ['console', 'debugger'] : [],
       legalComments: 'none',
     },
 
@@ -111,7 +116,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
     build: {
       minify: 'esbuild',
-      outDir: processedEnv.outDir,
+      outDir: processedEnv.build.outDir,
       reportCompressedSize: false,
 
       chunkSizeWarningLimit: 600,
