@@ -86,6 +86,9 @@ importers:
       mind-elixir:
         specifier: 4.6.1
         version: 4.6.1
+      naive-ui:
+        specifier: 2.42.0
+        version: 2.42.0(vue@3.5.13(typescript@5.8.3))
       nanoid:
         specifier: 5.1.5
         version: 5.1.5
@@ -252,9 +255,6 @@ importers:
       mockjs:
         specifier: 1.1.0
         version: 1.1.0
-      naive-ui:
-        specifier: 2.41.0
-        version: 2.41.0(vue@3.5.13(typescript@5.8.3))
       node-modules-inspector:
         specifier: 0.6.6
         version: 0.6.6
@@ -5450,8 +5450,8 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
-  naive-ui@2.41.0:
-    resolution: {integrity: sha512-KnmLg+xPLwXV8QVR7ZZ69eCjvel7R5vru8+eFe4VoAJHEgqAJgVph6Zno9K2IVQRpSF3GBGea3tjavslOR4FAA==}
+  naive-ui@2.42.0:
+    resolution: {integrity: sha512-c7cXR2YgOjgtBadXHwiWL4Y0tpGLAI5W5QzzHksOi22iuHXoSGMAzdkVTGVPE/PM0MSGQ/JtUIzCx2Y0hU0vTQ==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -13354,7 +13354,7 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
-  naive-ui@2.41.0(vue@3.5.13(typescript@5.8.3)):
+  naive-ui@2.42.0(vue@3.5.13(typescript@5.8.3)):
     dependencies:
       '@css-render/plugin-bem': 0.15.14(css-render@0.15.14)
       '@css-render/vue3-ssr': 0.15.14(vue@3.5.13(typescript@5.8.3))
