@@ -46,10 +46,6 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     // https://github.com/unocss/unocss
     createUnoCSSPlugin(),
 
-    // https://github.com/tsotimus/vite-plugin-csp-guard
-    // https://github.com/tsotimus/vite-plugin-csp-guard/issues/265
-    !dev && createCSPPlugin(),
-
     // https://github.com/fi3ework/vite-plugin-checker
     // createCheckerPlugin(),
 
@@ -106,6 +102,11 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/btd/rollup-plugin-visualizer
     env.analyzer && vitePlugins.push(createVisualizerPlugin(env.title))
+
+    // https://github.com/tsotimus/vite-plugin-csp-guard
+    // https://github.com/tsotimus/vite-plugin-csp-guard/issues/265
+    // https://github.com/vitejs/vite/issues/2377#issuecomment-2571422093
+    vitePlugins.push(createCSPPlugin())
   }
 
   return vitePlugins

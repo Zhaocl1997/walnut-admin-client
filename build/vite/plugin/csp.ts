@@ -7,11 +7,12 @@ export function createCSPPlugin() {
       mpa: false,
     },
     debug: true,
-    override: true,
+    override: false,
     type: 'SPA',
+    algorithm: 'sha256',
     dev: {
       run: true, // Run the plugin in dev mode
-      outlierSupport: ['vue', 'tailwind'],
+      outlierSupport: ['vue', 'tailwind', 'scss'],
     },
     policy: {
       'default-src': ['\'self\'', 'https:'],
@@ -23,7 +24,8 @@ export function createCSPPlugin() {
       'style-src-elem': ['\'self\'', '\'unsafe-inline\''],
     },
     build: {
-      sri: true,
+      // https://github.com/vitejs/vite/issues/2377#issuecomment-2571422093
+      sri: false,
       outlierSupport: ['vue-router'],
     },
   })
