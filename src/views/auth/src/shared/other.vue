@@ -124,12 +124,16 @@ useEventListener('beforeunload', () => {
       </n-divider>
 
       <div class="w-full hstack justify-evenly children:cursor-pointer hover:children:text-primary">
-        <WIconButton
+        <span
           v-for="item in iconArr"
           :key="item.key"
-          :button-props="{ text: true, disabled: loading, onClick: () => onClick(item.key), title: item.title }"
-          :icon-props="{ icon: item.icon, width: '20' }"
-        />
+          :title="item.title"
+        >
+          <WIconButton
+            :button-props="{ text: true, disabled: loading, onClick: () => onClick(item.key) }"
+            :icon-props="{ icon: item.icon, width: '20' }"
+          />
+        </span>
       </div>
     </WTransition>
   </div>

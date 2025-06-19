@@ -67,16 +67,16 @@ watch(locale, () => {
         <n-card style="z-index: 100" hoverable class="relative rounded-3xl light:shadow-2xl">
           <div class="vstack items-center justify-center">
             <h1 class="mb-4 hstack items-center justify-center">
-              <img src="/logo.png" :alt="envTitle" class="w-16 2xl:w-16 lg:w-16 md:w-16 sm:w-12 xl:w-16">
-              <span class="ml-4 whitespace-nowrap 2xl:text-3xl lg:text-2xl md:text-2xl xl:text-3xl">
+              <img src="/logo.png" :alt="envTitle" class="w-16">
+              <span class="ml-4 whitespace-nowrap text-2xl">
                 {{ envTitle }}
               </span>
             </h1>
 
             <div class="w-full">
-              <AuthFormTab ref="signInRef" />
-
-              <WTransition transition-name="fade-left-big" appear :duration="1700" />
+              <WTransition transition-name="fade-right" appear :duration="500">
+                <AuthFormTab ref="signInRef" />
+              </WTransition>
             </div>
           </div>
         </n-card>
