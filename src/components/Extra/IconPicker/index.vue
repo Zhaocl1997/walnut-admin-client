@@ -239,20 +239,22 @@ onBeforeMount(() => {
           </div>
 
           <div class="col-span-9 h-60">
-            <span v-for="icon in getLists" :key="icon" :title="icon">
-              <WIcon
-                :icon="icon"
-                width="32"
-                class="m-0.5 inline border-2 border-gray-700 rounded border-solid hover:cursor-pointer" :class="[
-                  {
-                    'bg-light-blue-300': icon === value,
-                    'hover:bg-warm-gray-300': icon !== value,
-                  },
-                ]"
-                @click="onChooseIcon(icon)"
-                @mouseenter="onMouseEnter(icon)"
-              />
-            </span>
+            <div class="grid grid-cols-10 mt-4 gap-1">
+              <div v-for="icon in getLists" :key="icon" :title="icon">
+                <WIcon
+                  :icon="icon"
+                  width="32"
+                  class="inline border-2 border-gray-700 rounded border-solid hover:cursor-pointer" :class="[
+                    {
+                      'bg-light-blue-300': icon === value,
+                      'hover:bg-warm-gray-300': icon !== value,
+                    },
+                  ]"
+                  @click="onChooseIcon(icon)"
+                  @mouseenter="onMouseEnter(icon)"
+                />
+              </div>
+            </div>
 
             <div class="h-full flex items-center justify-center">
               <n-empty v-show="getLists.length === 0" />
