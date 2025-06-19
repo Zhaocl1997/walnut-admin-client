@@ -127,7 +127,7 @@ export const inputFormItemTypeList = [
   'Base:Input',
   'Base:InputNumber',
   'Extra:Password',
-  'Extra:SMSInput',
+  'Extra:VerifyCode',
   'Extra:EmailInput',
 ]
 

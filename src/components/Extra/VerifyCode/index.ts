@@ -1,9 +1,9 @@
+import type { InputOtpProps } from 'naive-ui'
+
 export { default } from './index.vue'
 
-export interface ICompExtraSMSInputProps {
+export interface ICompExtraVerifyCodeProps extends /* @vue-ignore */ InputOtpProps {
   retrySeconds?: number
   retryKey?: string
-  simpleVerify?: boolean
   onBeforeCountdown?: (startLoading?: Fn, stopLoading?: Fn) => Promise<boolean>
-  onSuccess?: (startCountdown: () => void) => Promise<void>
 }

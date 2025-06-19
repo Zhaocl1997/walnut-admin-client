@@ -367,7 +367,7 @@ const schemas: WForm.Schema.Item<typeof formData.value>[] = [
     },
   },
   {
-    type: 'Extra:SMSInput',
+    type: 'Extra:VerifyCode',
     formProp: {
       label: 'SMS Input',
       path: 'formSMSInput',

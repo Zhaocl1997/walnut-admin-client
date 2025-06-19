@@ -26,7 +26,7 @@ const BUILT_IN_FORM_ITEM_TYPE_EXTRA = [
   'LocaleSelect',
   'Password',
   'PhoneNumberInput',
-  'SMSInput',
+  'VerifyCode',
   'TransitionSelect',
 ] as const
 

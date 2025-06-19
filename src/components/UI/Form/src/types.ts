@@ -8,8 +8,8 @@ import type { ICompExtraIconPickerProps } from '@/components/Extra/IconPicker'
 import type { ICompExtraLocaleSelectProps } from '@/components/Extra/LocaleSelect'
 import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
 import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
-import type { ICompExtraSMSInputProps } from '@/components/Extra/SMSInput'
 import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
+import type { ICompExtraVerifyCodeProps } from '@/components/Extra/VerifyCode'
 import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 
@@ -291,7 +291,7 @@ export declare namespace WForm {
       'Extra:LocaleSelect': ICompExtraLocaleSelectProps
       'Extra:Password': ICompExtraPasswordProps
       'Extra:PhoneNumberInput': ICompExtraPhoneNumberInputProps
-      'Extra:SMSInput': ICompExtraSMSInputProps
+      'Extra:VerifyCode': ICompExtraVerifyCodeProps
       'Extra:TransitionSelect': ICompExtraTransitionProps
 
       // raw
@@ -470,7 +470,7 @@ export declare namespace WForm {
       type LocaleSchema<D> = DynamicSchemaItemProps<'Extra:LocaleSelect', D>
       type PasswordSchema<D> = DynamicSchemaItemProps<'Extra:Password', D>
       type PhoneNumberInputSchema<D> = DynamicSchemaItemProps<'Extra:PhoneNumberInput', D>
-      type SMSInputSchema<D> = DynamicSchemaItemProps<'Extra:SMSInput', D>
+      type VerifyCodeSchema<D> = DynamicSchemaItemProps<'Extra:VerifyCode', D>
       type TransitionSelectSchema<D> = DynamicSchemaItemProps<'Extra:TransitionSelect', D>
 
       // raw
@@ -524,7 +524,7 @@ export declare namespace WForm {
       | SchemaItem.LocaleSchema<D>
       | SchemaItem.PasswordSchema<D>
       | SchemaItem.PhoneNumberInputSchema<D>
-      | SchemaItem.SMSInputSchema<D>
+      | SchemaItem.VerifyCodeSchema<D>
       | SchemaItem.TransitionSelectSchema<D>
 
       // raw
