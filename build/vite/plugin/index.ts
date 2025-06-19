@@ -28,7 +28,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: tag => tag.startsWith('cropper-'),
+          isCustomElement: tag => tag.startsWith('cropper-') || tag === 'cap-widget',
         },
       },
     }),
