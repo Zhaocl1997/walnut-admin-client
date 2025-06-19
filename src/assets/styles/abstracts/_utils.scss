@@ -4,3 +4,16 @@
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
 }
+
+.bigger-click {
+  &::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+    z-index: 10;
+    border-radius: 0.75rem;
+  }
+}
