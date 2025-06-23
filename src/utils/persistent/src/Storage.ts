@@ -2,6 +2,10 @@ import type { Serializer } from '@vueuse/core'
 
 interface IAppStorageOptions<T> {
   storage?: typeof localStorage | typeof sessionStorage
+
+  /**
+   * @description milliseconds
+   */
   expire?: number
   encrypt?: boolean
   usePresetKey?: boolean

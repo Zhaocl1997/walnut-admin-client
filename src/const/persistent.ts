@@ -12,6 +12,7 @@ export const AppConstPersistKey = {
   LOCK_ROUTE: 'LOCK_ROUTE',
 
   LOCALE: 'LOCALE',
+  CAPJS_TOKEN: 'CAPJS_TOKEN',
 
   TABS: 'TABS',
 

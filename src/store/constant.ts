@@ -3,6 +3,7 @@ export const StoreKeys = {
   APP_DARK: 'APP_DARK',
   APP_KEY: 'APP_KEY',
   APP_LOCALE: 'APP_LOCALE',
+  APP_CAPJS_TOKEN: 'APP_CAPJS_TOKEN',
   APP_LOCK: 'APP_LOCK',
   APP_MENU: 'APP_MENU',
   APP_MSG: 'APP_MSG',

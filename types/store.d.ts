@@ -72,6 +72,13 @@ declare global {
   }
 
   /**
+   * App capjs token state
+   */
+  interface IAppCapJSTokenLocale {
+    capJSToken: RemovableRef<string>
+  }
+
+  /**
    * App lock state
    */
   interface IAppStoreLock {

@@ -12,6 +12,7 @@ import { RefreshTokenLogic, setTokenHeaderWithConfig } from './refreshToken'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
+const appCapJSToken = useAppStoreCapJSToken()
 
 // custom transform for req and res interceptors
 export const transform: WalnutAxiosTransform = {
@@ -31,6 +32,7 @@ export const transform: WalnutAxiosTransform = {
     // custom headers
     config.headers['x-language'] = appLocale.locale
     config.headers['x-fingerprint'] = fpId.value
+    config.headers['x-capjs-token'] = appCapJSToken.capJSToken
 
     // a request doomed to fail
     if (config._error)
