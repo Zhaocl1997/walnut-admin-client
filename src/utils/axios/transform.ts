@@ -7,6 +7,7 @@ import {
 
 import { merge } from 'lodash-es'
 import { AppRequestEncryption, AppResponseEncryption } from '../crypto'
+import { RefreshCapJSTokenLogic } from './capJSToken'
 import { checkReponseErrorStatus } from './checkStatus'
 import { RefreshTokenLogic, setTokenHeaderWithConfig } from './refreshToken'
 
@@ -97,13 +98,18 @@ export const transform: WalnutAxiosTransform = {
       return Promise.resolve(data)
     }
 
+    // cap js token refresh (front end only and invisible mode)
+    // https://capjs.js.org/guide/invisible.html
+    if (code === BussinessCodeConst.CAPJS_TOKEN_EXPIRED) {
+      const config = res.config
+      return await RefreshCapJSTokenLogic(config)
+    }
+
     // when access token is expired, call refresh token api to get new token
     if (code === BussinessCodeConst.ACCESS_TOKEN_EXPIRED) {
       const config = res.config
-
-      // TODO bug
-      // router push too fast, which means last page going on requesting, then go to another page, will cause fake death of page
-      return RefreshTokenLogic(config)
+      // TODO router push too fast, which means last page going on requesting, then go to another page, will cause fake death of page
+      return await RefreshTokenLogic(config)
     }
 
     // refresh token is expired, so this user need to signout and re-signin

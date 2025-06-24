@@ -17,7 +17,7 @@ const adapterEnhancers: Array<(adapter: AxiosAdapter) => AxiosAdapter> = [
   mergeAdapterEnhancer,
 ]
 
-export function composeAdapters(adapter: AxiosAdapter): AxiosAdapter {
+function composeAdapters(adapter: AxiosAdapter): AxiosAdapter {
   return adapterEnhancers.reduceRight((acc, enhancer) => enhancer(acc), adapter)
 }
 

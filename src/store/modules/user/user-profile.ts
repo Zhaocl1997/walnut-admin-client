@@ -49,10 +49,6 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
       this.setProfile(res?.user)
     },
 
-    clearProfile() {
-      this.setProfile({})
-    },
-
     setAvatar(newAvatar: string) {
       this.setProfile(Object.assign(this.profile, { avatar: newAvatar }))
     },

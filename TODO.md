@@ -80,3 +80,5 @@
 
 1. - Q: tab右键快照在特定页面特定滚动模式下会报错，报错还一点详细都没有，不知道什么导致的错误 [issue](https://github.com/bubkoo/html-to-image/issues/314)
    - A: 发现了，是css的 w: 属性导致的错误 就是 unocss的attribute 用法 去掉吧 确实很hack的写法 还会导致报错
+2. - Q: cap token也做到axios的响应拦截器了，逻辑类似refresh token，但在access token 和 cap token都失效时，调用多个接口会导致多次触发刷新逻辑
+   - A:

@@ -14,10 +14,6 @@ const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
       this.permissions = payload
     },
 
-    clearPermissions() {
-      this.setPermissions([])
-    },
-
     deletePermission(payload?: string) {
       if (!payload)
         return true

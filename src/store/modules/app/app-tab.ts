@@ -440,14 +440,6 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     },
 
     /**
-     * @description clear all tabs and visitedTabs
-     */
-    clearTabs() {
-      this.setTabs([])
-      this.visitedTabs.clear()
-    },
-
-    /**
      * @description change two tabs position by index
      */
     changeTabOrder(oldIndex: number, newIndex: number) {
@@ -480,7 +472,6 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      * @description set initial affixed tabs
      */
     setAffixedTabs(payload: AppTab[]) {
-      this.clearTabs()
       payload.map(tab => this.createTabs(tab, 'unshift'))
     },
 

@@ -41,11 +41,11 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description get new access token use refresh token
      */
     async GetNewATWithRT(): Promise<string> {
-      const res = await refreshTokenAPI({ refreshToken: this.refreshToken! })
+      const { accessToken } = await refreshTokenAPI({ refreshToken: this.refreshToken! })
 
-      this.setAccessToken(res?.accessToken)
+      this.setAccessToken(accessToken)
 
-      return res?.accessToken
+      return accessToken
     },
 
     /**
@@ -134,6 +134,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const userPermission = useAppStoreUserPermission()
       const appMenu = useAppStoreMenu()
       const appTab = useAppStoreTab()
+      const appCapJSToken = useAppStoreCapJSToken()
 
       // call signout to remove refresh_token
       if (callApi) {
@@ -143,17 +144,20 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       // clear tokens
       this.clearTokens()
 
+      // clear capjs token
+      appCapJSToken.$reset()
+
       // clear user profile
-      userProfile.clearProfile()
+      userProfile.$reset()
 
       // clear menus
-      appMenu.clearMenus()
+      appMenu.$reset()
 
       // clear permissions
-      userPermission.clearPermissions()
+      userPermission.$reset()
 
       // clear tab
-      appTab.clearTabs()
+      appTab.$reset()
 
       // send beacon
       sendUserMonitorBeacon({ userId: null, auth: false })

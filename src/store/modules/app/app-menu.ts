@@ -37,17 +37,6 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
     },
 
     /**
-     * @description clean all menu state
-     */
-    clearMenus() {
-      this.setMenus([])
-      this.setKeepAliveRouteNames([])
-      this.setIndexMenuName('')
-      this.setCollapse(false)
-      this.setShowAside(false)
-    },
-
-    /**
      * @description Generate keep-alive component name lists based on `menu`
      * Need to mention, when nested routes wants to be kept-alive, it's parent name also need to be in the `include` array as well
      * Since we flat routes, so need to add root route name finally
