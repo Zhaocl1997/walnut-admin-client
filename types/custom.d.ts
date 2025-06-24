@@ -14,6 +14,10 @@ declare global {
   // echarts option
   type EChartsOption = import('echarts').EChartsOption
 
+  interface ICapInst {
+    new ({ apiEndpoint: string }, el?: HTMLElement): { solve: () => Promise<{ token: string }> }
+  }
+
   const __APP_INFO__: {
     name: string
     version: string

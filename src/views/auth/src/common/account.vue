@@ -1,4 +1,5 @@
 <script lang="tsx" setup>
+import { getNeedCapByUserName } from '@/api/app/capjs'
 // TODO 111
 import { NButton, NCheckbox } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -11,6 +12,7 @@ defineOptions({
 const { t } = useAppI18n()
 const appAuth = useAppStoreUserAuth()
 const appNaive = useAppStoreNaive()
+const appCapJSToken = useAppStoreCapJSToken()
 
 const { loading } = useAuthContext()
 
@@ -20,22 +22,36 @@ const accountFormData = ref<AppPayloadAuth.Password>({
   rememberMe: true,
 })
 
+async function onSignIn() {
+  loading.value = true
+
+  try {
+    await appAuth.AuthWithBasicPassword(accountFormData.value)
+
+    // close demonstrate notification
+    appNaive.destroyAllNotiInst()
+  }
+  finally {
+    loading.value = false
+  }
+}
+
 async function onSubmit() {
   // eslint-disable-next-line ts/no-use-before-define
   const valid = await validate()
 
-  if (valid) {
-    loading.value = true
+  if (!valid)
+    return
 
-    try {
-      await appAuth.AuthWithBasicPassword(accountFormData.value)
+  const needCap = await getNeedCapByUserName(accountFormData.value.userName)
 
-      // close demonstrate notification
-      appNaive.destroyAllNotiInst()
-    }
-    finally {
-      loading.value = false
-    }
+  if (needCap) {
+    await appCapJSToken.onOpenCapModal(async () => {
+      await onSignIn()
+    })
+  }
+  else {
+    await onSignIn()
   }
 }
 

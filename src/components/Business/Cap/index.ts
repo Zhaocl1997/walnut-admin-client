@@ -1,5 +1,6 @@
-export default createAsyncComponent(async () => {
-  useScriptTag('https://cdn.jsdelivr.net/npm/@cap.js/widget@0.1.20')
+const appCapJSToken = useAppStoreCapJSToken()
 
+export default createAsyncComponent(async () => {
+  await appCapJSToken.loadCap()
   return import('./index.vue')
 })

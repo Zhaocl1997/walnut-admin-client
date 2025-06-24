@@ -1,39 +1,34 @@
 <script lang="ts" setup>
+import { authCapApiEndpoint } from '@/api/app/capjs'
+
 defineOptions({
   name: 'WCompBusinessCap',
   inheritAttrs: false,
 })
 
-const emits = defineEmits<{ success: [token: string] }>()
-
-const { httpUrl } = useAppEnvProxy()
-
-const show = ref(false)
+const appCapJSToken = useAppStoreCapJSToken()
 
 function onCapSolve(e: { detail: { token: string } }) {
   const token = e.detail.token
 
-  emits('success', token)
+  appCapJSToken.setCapJSToken(token)
+  appCapJSToken.onCloseCapModal()
+  appCapJSToken.onCapSuccess!(token)
 }
-
-defineExpose({
-  onStartCap: () => {
-    show.value = true
-  },
-})
 </script>
 
 <template>
   <WModal
-    v-model:show="show"
+    v-model:show="appCapJSToken.capShow"
     :close-on-esc="false"
     :closable="false"
     :mask-closable="false"
     :default-button="false"
     :fullscreen="false"
+    display-directive="show"
     :title="$t('app.base.cap')"
     width="330px"
   >
-    <cap-widget id="cap" :data-cap-api-endpoint="`${httpUrl}/auth/cap/`" @solve="onCapSolve" />
+    <cap-widget id="walnut-admin-cap" :data-cap-api-endpoint="authCapApiEndpoint" @solve="onCapSolve" />
   </WModal>
 </template>

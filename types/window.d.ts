@@ -10,6 +10,9 @@ declare global {
     // Global vue app instance
     __APP__: App<Element>
 
+    // capjs
+    Cap: ICapInst
+
     // naive relative
     $loadingBar: LoadingBarApiInjection
     $message: MessageApiInjection

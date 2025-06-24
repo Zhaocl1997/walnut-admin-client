@@ -2,8 +2,8 @@
 import { useAppLocale } from '@/components/App/AppLocalePicker/useAppLocale'
 import { useAppLock } from '@/components/App/AppLock/useAppLock'
 
+import GlobalComponents from './global/index.vue'
 import ThemeProvider from './naive/AppTheme.vue'
-
 import MsgProvider from './naive/MsgProvider.vue'
 import UIProvider from './naive/UIProvider.vue'
 
@@ -24,6 +24,7 @@ useAppReducedMotion()
     <UIProvider>
       <ThemeProvider>
         <MsgProvider>
+          <GlobalComponents />
           <RouterView />
         </MsgProvider>
       </ThemeProvider>
