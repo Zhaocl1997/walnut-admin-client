@@ -69,36 +69,34 @@ async function onOAuth(type: string) {
 
   childWindow = openOAuthWindow(res)!
 
-  const socketPath = AppSocketEvents.OAUTH()
+  const { httpUrl } = useAppEnvProxy()
 
-  // use interval to check child window closed or not
-  const intervelID = setInterval(() => {
-    if (childWindow.closed) {
-      loading.value = false
+  const eventSource = new EventSource(
+    `${httpUrl}/auth/oauth/${type}/sse/${fpId.value}`,
+  )
 
-      // remove current socket listener
-      AppSocket().removeListener(socketPath)
+  eventSource.onmessage = async ({ data }) => {
+    const res = JSON.parse(data)
 
-      clearInterval(intervelID)
-    }
-  }, 200)
+    if (res.event === `token:${type}`) {
+      // close the opened window
+      childWindow.close()
 
-  AppSocket().on(socketPath, async (data) => {
-    // close the opened window
-    childWindow.close()
-
-    // oauth success
-    if (data.success) {
       useAppMsgSuccess(t('app.oauth.success'))
-
-      await userAuth.ExcuteCoreFnAfterAuth(data.tokens.accessToken, data.tokens.refreshToken)
+      await userAuth.ExcuteCoreFnAfterAuth(res.data.accessToken, res.data.refreshToken)
     }
 
     loading.value = false
+    eventSource.close()
+  }
 
-    // remove current socket listener
-    AppSocket().removeListener(socketPath)
-  })
+  const id = setInterval(() => {
+    if (childWindow.closed) {
+      loading.value = false
+      eventSource.close()
+      clearInterval(id)
+    }
+  }, 250)
 }
 
 async function onClick(key: string) {
@@ -110,8 +108,10 @@ async function onClick(key: string) {
   onOAuth(key)
 }
 
-// parent window closed, child window close as well
 useEventListener('beforeunload', () => {
+  childWindow?.close()
+})
+onUnmounted(() => {
   childWindow?.close()
 })
 </script>
