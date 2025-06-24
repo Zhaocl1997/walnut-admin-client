@@ -3,15 +3,15 @@ const { httpUrl } = useAppEnvProxy()
 export const authCapApiEndpoint = `${httpUrl}/auth/cap/`
 
 const authCap = {
-  USERNAME: '/auth/cap/need/userName',
+  NEED: '/auth/cap/need',
 } as const
 
 /**
  * @description get need to implement capjs component to validate bot
  */
-export function getNeedCapByUserName(userName: string) {
+export function getNeedCapAPI(field: 'userName' | 'emailAddress' | 'phoneNumber', value: string) {
   return AppAxios.get<boolean>({
-    url: authCap.USERNAME,
-    params: { userName },
+    url: authCap.NEED,
+    params: { field, value },
   })
 }

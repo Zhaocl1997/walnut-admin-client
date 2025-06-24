@@ -1,4 +1,6 @@
 <script lang="tsx" setup>
+import type { NullableRecord } from 'easy-fns-ts'
+import { getNeedCapAPI } from '@/api/app/capjs'
 import { sendAuthEmailAPI } from '@/api/auth/email'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
@@ -12,36 +14,46 @@ defineOptions({
 const { t } = useAppI18n()
 const appAuth = useAppStoreUserAuth()
 const appNaive = useAppStoreNaive()
+const appCapJSToken = useAppStoreCapJSToken()
 
 const { loading } = useAuthContext()
 
-const emailFormData = reactive<
-    AppPayloadAuth.EmailAddress & { agree: string }
->({
-  emailAddress: '',
-  verifyCode: '',
-  agree: '',
+const emailFormData = reactive<NullableRecord<AppPayloadAuth.EmailAddress & { agree: string }>>({
+  emailAddress: null,
+  verifyCode: null,
+  agree: null,
 })
+
+async function onSignIn() {
+  loading.value = true
+
+  try {
+    await appAuth.AuthWithEmailAddress({
+      emailAddress: emailFormData.emailAddress!,
+      verifyCode: +emailFormData.verifyCode!,
+    })
+
+    // close demonstrate notification
+    appNaive.destroyAllNotiInst()
+  }
+  finally {
+    loading.value = false
+  }
+}
 
 async function onSubmit() {
   // eslint-disable-next-line ts/no-use-before-define
   const valid = await validate()
 
-  if (valid) {
-    loading.value = true
+  if (!valid)
+    return
 
-    try {
-      await appAuth.AuthWithEmailAddress(emailFormData)
-
-      loading.value = false
-
-      // close demonstrate notification
-      appNaive.destroyCurrentNotiInst()
-    }
-    finally {
-      loading.value = false
-    }
+  if (!emailFormData.agree) {
+    useAppMsgWarning(t('app.auth.service.warning'))
+    return
   }
+
+  await onSignIn()
 }
 
 const [register, { validate }] = useForm<typeof emailFormData>({
@@ -86,7 +98,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       },
     },
     {
-      type: 'Extra:SMSInput',
+      type: 'Extra:VerifyCode',
       formProp: {
         path: 'verifyCode',
         ruleType: 'string',
@@ -94,29 +106,34 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         locale: false,
       },
       componentProp: {
-        clearable: true,
+        retryKey: 'auth-email',
 
         onBeforeCountdown: async () => {
           // valid emailAddress before count down
           const valid = await validate(['emailAddress'])
 
           if (!valid)
-            return false
+            return Promise.reject(new Error('EmailAddress Invalid'))
 
-          return true
+          const needCap = await getNeedCapAPI('emailAddress', emailFormData.emailAddress!)
+
+          if (needCap) {
+            return new Promise<boolean>((resolve) => {
+              appCapJSToken.onOpenCapModal(async () => {
+                await sendAuthEmailAPI({
+                  emailAddress: emailFormData.emailAddress!,
+                })
+                return resolve(true)
+              })
+            })
+          }
+          else {
+            await sendAuthEmailAPI({
+              emailAddress: emailFormData.emailAddress!,
+            })
+            return Promise.resolve(true)
+          }
         },
-
-        onSuccess: async (startCountdown) => {
-          // here to call emailAddress endpoint
-          await sendAuthEmailAPI(emailFormData)
-
-          useAppMsgSuccess()
-
-          startCountdown()
-        },
-
-        // use simple canvas verify, no endpopint support
-        simpleVerify: true,
       },
       transitionProp: {
         transitionName: 'fade-up-big',
@@ -133,6 +150,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         render({ formData }) {
           return (
             <div
+              class="bigger-click cursor-pointer"
               onClick={() => (formData.agree = formData.agree ? '' : 'agree')}
             >
               <NRadio
@@ -140,38 +158,37 @@ const [register, { validate }] = useForm<typeof emailFormData>({
                 checked={formData.agree === 'agree'}
                 size="small"
               >
+                <span class="ml-2 cursor-pointer break-all text-xs text-gray-500">
+                  {t('form.app.auth.continue')}
+                  <NText
+                    type="info"
+                    strong
+                    // @ts-expect-error no onClick for NText
+                    onClick={(e: MouseEvent) => {
+                      e.stopPropagation()
+                      openExternalLink(AppAuthServiceAgreementPath)
+                    }}
+                  >
+                    {' '}
+                    {t('form.app.auth.sa')}
+                    {' '}
+                  </NText>
+                  、
+                  <NText
+                    type="info"
+                    strong
+                    // @ts-expect-error no onClick for NText
+                    onClick={(e: MouseEvent) => {
+                      e.stopPropagation()
+                      openExternalLink(AppAuthPrivacyPolicyPath)
+                    }}
+                  >
+                    {' '}
+                    {t('form.app.auth.pp')}
+                    {' '}
+                  </NText>
+                </span>
               </NRadio>
-
-              <span class="ml-2 cursor-pointer break-all text-xs text-gray-500">
-                {t('form.app.auth.continue')}
-                <NText
-                  type="info"
-                  strong
-                  // @ts-expect-error no onClick for NText
-                  onClick={(e: MouseEvent) => {
-                    e.stopPropagation()
-                    openExternalLink(AppAuthServiceAgreementPath)
-                  }}
-                >
-                  {' '}
-                  {t('form.app.auth.sa')}
-                  {' '}
-                </NText>
-                、
-                <NText
-                  type="info"
-                  strong
-                  // @ts-expect-error no onClick for NText
-                  onClick={(e: MouseEvent) => {
-                    e.stopPropagation()
-                    openExternalLink(AppAuthPrivacyPolicyPath)
-                  }}
-                >
-                  {' '}
-                  {t('form.app.auth.pp')}
-                  {' '}
-                </NText>
-              </span>
             </div>
           )
         },

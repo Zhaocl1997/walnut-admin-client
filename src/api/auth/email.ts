@@ -16,7 +16,7 @@ export function authWithEmailAPI(data: AppPayloadAuth.EmailAddress) {
 /**
  * @description send verify code email
  */
-export function sendAuthEmailAPI(data: AppPayloadAuth.EmailAddress) {
+export function sendAuthEmailAPI(data: Pick<AppPayloadAuth.EmailAddress, 'emailAddress'>) {
   return AppAxios.post<boolean>({
     url: authEmail.AUTH_EMAIL_SEND,
     data,

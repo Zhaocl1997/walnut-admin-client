@@ -1,5 +1,7 @@
 <script lang="tsx" setup>
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
+import type { NullableRecord } from 'easy-fns-ts'
+import { getNeedCapAPI } from '@/api/app/capjs'
 import { sendAuthTextMsgAPI } from '@/api/auth/phone'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
@@ -13,35 +15,47 @@ defineOptions({
 const { t } = useAppI18n()
 const appAuth = useAppStoreUserAuth()
 const appNaive = useAppStoreNaive()
+const appCapJSToken = useAppStoreCapJSToken()
 
 const { loading } = useAuthContext()
 
 const countryCallingCode = ref()
-const SMSFormData = reactive<AppPayloadAuth.PhoneNumber & { agree: string }>({
-  phoneNumber: '',
-  verifyCode: '',
-  agree: '',
+const SMSFormData = reactive<NullableRecord<AppPayloadAuth.PhoneNumber & { agree: string }>>({
+  phoneNumber: null,
+  verifyCode: null,
+  agree: null,
 })
+
+async function onSignIn() {
+  loading.value = true
+
+  try {
+    await appAuth.AuthWithPhoneNumber({
+      phoneNumber: SMSFormData.phoneNumber!,
+      verifyCode: SMSFormData.verifyCode!,
+    })
+
+    // close demonstrate notification
+    appNaive.destroyAllNotiInst()
+  }
+  finally {
+    loading.value = false
+  }
+}
 
 async function onSubmit() {
   // eslint-disable-next-line ts/no-use-before-define
   const valid = await validate()
 
-  if (valid) {
-    loading.value = true
+  if (!valid)
+    return
 
-    try {
-      await appAuth.AuthWithPhoneNumber(SMSFormData)
-
-      loading.value = false
-
-      // close demonstrate notification
-      appNaive.destroyCurrentNotiInst()
-    }
-    finally {
-      loading.value = false
-    }
+  if (!SMSFormData.agree) {
+    useAppMsgWarning(t('app.auth.service.warning'))
+    return
   }
+
+  await onSignIn()
 }
 
 const [register, { validate }] = useForm<typeof SMSFormData>({
@@ -90,7 +104,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
       },
     },
     {
-      type: 'Extra:SMSInput',
+      type: 'Extra:VerifyCode',
       formProp: {
         path: 'verifyCode',
         ruleType: 'string',
@@ -98,29 +112,35 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         locale: false,
       },
       componentProp: {
-        clearable: true,
+        retryKey: 'auth-sms',
 
         onBeforeCountdown: async () => {
           // valid phoneNumber before count down
           const valid = await validate(['phoneNumber'])
 
-          if (!valid || !SMSFormData.phoneNumber)
+          if (!valid)
             return false
 
-          return true
+          const needCap = await getNeedCapAPI('phoneNumber', SMSFormData.phoneNumber!)
+
+          if (needCap) {
+            return new Promise<boolean>((resolve) => {
+              appCapJSToken.onOpenCapModal(async () => {
+                await sendAuthTextMsgAPI({
+                  phoneNumber: SMSFormData.phoneNumber!,
+                })
+                return resolve(true)
+              })
+            })
+          }
+          else {
+            await sendAuthTextMsgAPI({
+              phoneNumber: SMSFormData.phoneNumber!,
+            })
+            return Promise.resolve(true)
+          }
         },
 
-        onSuccess: async (startCountdown) => {
-          // here to call phone number text message endpoint
-          await sendAuthTextMsgAPI(SMSFormData)
-
-          useAppMsgSuccess()
-
-          startCountdown()
-        },
-
-        // use simple canvas verify, no endpopint support
-        simpleVerify: true,
       },
       transitionProp: {
         transitionName: 'fade-down-big',
@@ -137,46 +157,46 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         render({ formData }) {
           return (
             <div
-              onClick={() =>
-                (SMSFormData.agree = SMSFormData.agree ? '' : 'agree')}
+              class="bigger-click cursor-pointer"
+              onClick={() => (SMSFormData.agree = SMSFormData.agree ? '' : 'agree')}
             >
               <NRadio
                 value="agree"
                 checked={formData.agree === 'agree'}
                 size="small"
               >
+                <span class="ml-2 cursor-pointer break-all text-xs text-gray-500">
+                  {t('form.app.auth.continue')}
+                  <NText
+                    type="info"
+                    strong
+                    // @ts-expect-error no onClick for NText
+                    onClick={(e: MouseEvent) => {
+                      e.stopPropagation()
+                      openExternalLink(AppAuthServiceAgreementPath)
+                    }}
+                  >
+                    {' '}
+                    {t('form.app.auth.sa')}
+                    {' '}
+                  </NText>
+                  、
+                  <NText
+                    type="info"
+                    strong
+                    // @ts-expect-error no onClick for NText
+                    onClick={(e: MouseEvent) => {
+                      e.stopPropagation()
+                      openExternalLink(AppAuthPrivacyPolicyPath)
+                    }}
+                  >
+                    {' '}
+                    {t('form.app.auth.pp')}
+                    {' '}
+                  </NText>
+                </span>
               </NRadio>
 
-              <span class="ml-2 cursor-pointer break-all text-xs text-gray-500">
-                {t('form.app.auth.continue')}
-                <NText
-                  type="info"
-                  strong
-                  // @ts-expect-error no onClick for NText
-                  onClick={(e: MouseEvent) => {
-                    e.stopPropagation()
-                    openExternalLink(AppAuthServiceAgreementPath)
-                  }}
-                >
-                  {' '}
-                  {t('form.app.auth.sa')}
-                  {' '}
-                </NText>
-                、
-                <NText
-                  type="info"
-                  strong
-                  // @ts-expect-error no onClick for NText
-                  onClick={(e: MouseEvent) => {
-                    e.stopPropagation()
-                    openExternalLink(AppAuthPrivacyPolicyPath)
-                  }}
-                >
-                  {' '}
-                  {t('form.app.auth.pp')}
-                  {' '}
-                </NText>
-              </span>
             </div>
           )
         },

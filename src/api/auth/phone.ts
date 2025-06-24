@@ -16,7 +16,7 @@ export function authWithPhoneNumberAPI(data: AppPayloadAuth.PhoneNumber) {
 /**
  * @description send verify code text message
  */
-export function sendAuthTextMsgAPI(data: AppPayloadAuth.PhoneNumber) {
+export function sendAuthTextMsgAPI(data: Pick<AppPayloadAuth.PhoneNumber, 'phoneNumber'>) {
   return AppAxios.post<boolean>({
     url: authPhone.AUTH_EMAIL_TEXT_MESSAGE,
     data,

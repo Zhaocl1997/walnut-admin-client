@@ -12,8 +12,8 @@ function onCapSolve(e: { detail: { token: string } }) {
   const token = e.detail.token
 
   appCapJSToken.setCapJSToken(token)
-  appCapJSToken.onCloseCapModal()
   appCapJSToken.onCapSuccess!(token)
+  appCapJSToken.onCloseCapModal()
 }
 </script>
 

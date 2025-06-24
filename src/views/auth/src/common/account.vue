@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-import { getNeedCapByUserName } from '@/api/app/capjs'
+import { getNeedCapAPI } from '@/api/app/capjs'
 // TODO 111
 import { NButton, NCheckbox } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -43,7 +43,7 @@ async function onSubmit() {
   if (!valid)
     return
 
-  const needCap = await getNeedCapByUserName(accountFormData.value.userName)
+  const needCap = await getNeedCapAPI('userName', accountFormData.value.userName)
 
   if (needCap) {
     await appCapJSToken.onOpenCapModal(async () => {

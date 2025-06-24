@@ -10,13 +10,13 @@ declare global {
     // email address payload
     interface EmailAddress {
       emailAddress: string
-      verifyCode: string
+      verifyCode: number
     }
 
     // phone number payload
     interface PhoneNumber {
       phoneNumber: string
-      verifyCode: string
+      verifyCode: number
     }
 
     interface TokenPayload {
