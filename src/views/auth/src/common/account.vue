@@ -114,7 +114,6 @@ const [register, { validate }] = useForm<typeof accountFormData.value>({
               size="small"
               type="tertiary"
               onClick={onForgetPassword}
-              loading={loading.value}
               disabled={loading.value}
             >
               {t('form.app.auth.forget')}
