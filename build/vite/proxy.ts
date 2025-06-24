@@ -15,6 +15,7 @@ export function createViteProxy(env: IViteEnv) {
       changeOrigin: true,
       rewrite: (path: string) => path.replace(new RegExp(`^${prefix}`), ''),
       secure: false,
+      ws: true,
     }
   }
 
