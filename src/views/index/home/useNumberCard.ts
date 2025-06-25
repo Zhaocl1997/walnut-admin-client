@@ -92,8 +92,9 @@ export function useNumberCard() {
 
   const onCallApi = (): Promise<number[]> => {
     return new Promise((resolve) => {
-      setTimeout(() => {
+      const id = setTimeout(() => {
         resolve([n(6), n(3), n(4), n(5), n(2), n(7)])
+        clearTimeout(id)
       }, 500)
     })
   }

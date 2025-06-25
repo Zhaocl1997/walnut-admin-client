@@ -141,10 +141,11 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
     height: computed(() => `${configData.value.height}%`),
     title: computed(() => configData.value.title),
     onYes: (_, done) => {
-      setTimeout(() => {
+      const id = setTimeout(() => {
         useAppMessage().success('Success')
         done()
         formData.value = {}
+        clearTimeout(id)
       }, 2000)
     },
     onNo: (close) => {
@@ -168,12 +169,14 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
 })
 
 function onOpenAdvacned() {
-  setTimeout(() => {
+  const id = setTimeout(() => {
     onOpen((done) => {
-      setTimeout(() => {
+      const id2 = setTimeout(() => {
         done()
+        clearTimeout(id2)
       }, 2000)
     })
+    clearTimeout(id)
   }, 500)
 }
 </script>

@@ -117,17 +117,19 @@ const [register2] = useForm<typeof formData.value>({
 function onQuery({ done }: WForm.Params.Dialog.FinishLoading) {
   console.log('query')
 
-  setTimeout(() => {
+  const id = setTimeout(() => {
     done()
+    clearTimeout(id)
   }, 2000)
 }
 
 function onReset({ done }: WForm.Params.Dialog.FinishLoading) {
   console.log('reset')
 
-  setTimeout(() => {
+  const id = setTimeout(() => {
     done()
     resetFormData()
+    clearTimeout(id)
   }, 2000)
 }
 </script>

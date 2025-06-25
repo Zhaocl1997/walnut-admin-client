@@ -162,9 +162,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       // send beacon
       sendUserMonitorBeacon({ userId: null, auth: false })
 
-      setTimeout(async () => {
+      const id = setTimeout(async () => {
         // push to signin page
         await useAppRouterPush({ name: AppAuthName, replace: true, force: true })
+        clearTimeout(id)
       }, 200)
     },
   },

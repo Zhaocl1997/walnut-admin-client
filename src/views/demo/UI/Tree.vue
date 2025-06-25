@@ -15,9 +15,10 @@ const state = ref<Recordable>({
   tree4: [],
 })
 
-setTimeout(() => {
+const id = setTimeout(() => {
   state.value.tree3 = 9
   state.value.tree4 = [1, 4, 9, 11, 12]
+  clearTimeout(id)
 }, 2000)
 
 const [register1] = useTree({

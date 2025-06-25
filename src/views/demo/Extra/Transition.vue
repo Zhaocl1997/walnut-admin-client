@@ -13,8 +13,9 @@ const formData = ref({
 
 function onStart() {
   show.value = false
-  setTimeout(() => {
+  const id = setTimeout(() => {
     show.value = true
+    clearTimeout(id)
   }, 1000)
 }
 

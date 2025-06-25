@@ -13,8 +13,9 @@ watch(
   () => currentRoute.value.name,
   () => {
     showBackToTop.value = false
-    setTimeout(() => {
+    const id = setTimeout(() => {
       showBackToTop.value = true
+      clearTimeout(id)
     }, 1000)
   },
   {

@@ -11,6 +11,8 @@ export function useAppIntro(delay = 1500) {
     nextLabel: t('app.intro.next'),
     prevLabel: t('app.intro.prev'),
     exitOnOverlayClick: false,
+    autoPosition: true,
+    overlayOpacity: 0.9,
 
     steps: [
       {
@@ -66,7 +68,8 @@ export function useAppIntro(delay = 1500) {
     dontShowAgainCookieDays: 7,
   })
 
-  setTimeout(() => {
+  const id = setTimeout(() => {
     intro.start()
+    clearTimeout(id)
   }, delay)
 }

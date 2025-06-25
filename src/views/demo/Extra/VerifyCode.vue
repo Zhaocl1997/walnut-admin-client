@@ -14,9 +14,12 @@ const state = ref<Recordable>({
 
 async function onBeforeCountdown() {
   console.log('VerifyCode Demo', 'do something before count down start, need to return boolean')
-  await new Promise(res => setTimeout(() => {
-    res(true)
-  }, 1000))
+  await new Promise((res) => {
+    const id = setTimeout(() => {
+      res(true)
+      clearTimeout(id)
+    }, 1000)
+  })
   return Promise.resolve(true)
 }
 </script>

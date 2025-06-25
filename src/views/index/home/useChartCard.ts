@@ -260,12 +260,13 @@ export function useChartCard() {
 
   const onCallApi = (): Promise<any> => {
     return new Promise((resolve) => {
-      setTimeout(() => {
+      const id = setTimeout(() => {
         resolve({
           option1: Array.from({ length: 5 }, () =>
             Array.from({ length: 7 }, () => getRandomInt(0, 300))),
           option2: Array.from({ length: 5 }, () => getRandomInt(300, 1000)),
         })
+        clearTimeout(id)
       }, 500)
     })
   }
