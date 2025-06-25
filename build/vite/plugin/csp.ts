@@ -20,7 +20,7 @@ export function createCSPPlugin(env: IViteEnv) {
       'style-src': ['\'self\'', '\'unsafe-inline\''],
       'img-src': ['\'self\'', 'data:', 'https:', 'blob:'],
       'font-src': ['\'self\'', 'data:', 'https://fonts.gstatic.com'],
-      'script-src-elem': ['\'self\'', '\'unsafe-inline\''],
+      'script-src-elem': ['\'self\'', 'https:', '\'unsafe-inline\''],
       'style-src-elem': ['\'self\'', '\'unsafe-inline\''],
       'worker-src': ['\'self\'', 'blob:'],
     },
