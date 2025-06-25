@@ -27,7 +27,7 @@ const emits = defineEmits<{ hook: [inst: ICompUITreeInst] }>()
 
 type TreeKey = StringOrNumber
 
-const value = defineModel<TreeKey | TreeKey[]>('value', { required: true })
+const value = defineModel<TreeKey | TreeKey[]>('value')
 
 const { t } = useAppI18n()
 

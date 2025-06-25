@@ -23,10 +23,8 @@ useAppReducedMotion()
   <UIProvider>
     <ThemeProvider>
       <MsgProvider>
-        <div>
-          <GlobalComponents />
-          <RouterView />
-        </div>
+        <GlobalComponents />
+        <RouterView />
       </MsgProvider>
     </ThemeProvider>
   </UIProvider>
