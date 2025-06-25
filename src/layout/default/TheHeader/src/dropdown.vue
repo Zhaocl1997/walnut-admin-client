@@ -80,13 +80,10 @@ async function onSelect(val: string) {
   >
     <div class="hstack items-center justify-center">
       <div style="height: 32px; width: 32px">
-        <Starport
+        <WAvatar
           v-if="$route.name !== 'AccountSetting'"
-          port="w-avatar"
-          style="height: 32px; width: 32px"
-        >
-          <WAvatar :size="32" />
-        </Starport>
+          :size="32"
+        />
       </div>
 
       <div class="my-auto pl-1 text-base font-semibold">

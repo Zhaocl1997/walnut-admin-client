@@ -20,14 +20,14 @@ useAppReducedMotion()
 </script>
 
 <template>
-  <StarportCarrier>
-    <UIProvider>
-      <ThemeProvider>
-        <MsgProvider>
+  <UIProvider>
+    <ThemeProvider>
+      <MsgProvider>
+        <div>
           <GlobalComponents />
           <RouterView />
-        </MsgProvider>
-      </ThemeProvider>
-    </UIProvider>
-  </StarportCarrier>
+        </div>
+      </MsgProvider>
+    </ThemeProvider>
+  </UIProvider>
 </template>

@@ -140,13 +140,10 @@ const [register] = useForm<typeof formData.value>({
 
     <n-gi>
       <div class="vstack items-center justify-center">
-        <Starport
+        <WAvatar
           v-if="$route.name === 'AccountSetting'"
-          port="w-avatar"
-          style="height: 240px; width: 240px"
-        >
-          <WAvatar :value="tempSrcUrl ?? formData.avatar" :size="240" />
-        </Starport>
+          :value="tempSrcUrl ?? formData.avatar" :size="240"
+        />
 
         <w-avatar-upload
           ref="avatarUploadRef"
