@@ -25,6 +25,11 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   const dev = mode === 'development'
 
   const vitePlugins: PluginOption = [
+    // https://github.com/tsotimus/vite-plugin-csp-guard
+    // https://github.com/tsotimus/vite-plugin-csp-guard/issues/265
+    // https://github.com/vitejs/vite/issues/2377#issuecomment-2571422093
+    // createCSPPlugin(env),
+
     vue({
       template: {
         compilerOptions: {
@@ -103,11 +108,6 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
   // https://github.com/vite-pwa/vite-plugin-pwa
   vitePlugins.push(createPWAPlugin(env))
-
-  // https://github.com/tsotimus/vite-plugin-csp-guard
-  // https://github.com/tsotimus/vite-plugin-csp-guard/issues/265
-  // https://github.com/vitejs/vite/issues/2377#issuecomment-2571422093
-  vitePlugins.push(createCSPPlugin(env))
 
   return vitePlugins
 }
