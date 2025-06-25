@@ -61,6 +61,10 @@ const tinymceOptions = computed((): RawEditorOptions => {
     plugins,
     menubar,
     toolbar,
+
+    init_instance_callback() {
+      loading.value = false
+    },
   }
 })
 
@@ -70,10 +74,6 @@ watch(
     loading.value = true
 
     await editorRef.value?.rerender(tinymceOptions.value)
-
-    await nextTick()
-
-    loading.value = false
   },
   {
     deep: true,
