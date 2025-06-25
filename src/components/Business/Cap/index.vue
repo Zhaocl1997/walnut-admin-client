@@ -11,7 +11,6 @@ const appCapJSToken = useAppStoreCapJSToken()
 function onCapSolve(e: { detail: { token: string } }) {
   const token = e.detail.token
 
-  appCapJSToken.setCapJSToken(token)
   appCapJSToken.onCapSuccess!(token)
   appCapJSToken.onCloseCapModal()
 }

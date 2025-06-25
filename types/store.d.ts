@@ -78,7 +78,6 @@ declare global {
     capJSInst: null | ICapInst
     capShow: boolean
     capComponent: null | string
-    capJSToken: RemovableRef<string>
     onCapSuccess: null | ((token: string) => void)
   }
 

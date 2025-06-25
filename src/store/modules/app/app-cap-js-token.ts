@@ -9,11 +9,6 @@ const useAppStoreCapJSTokenInside = defineStore(StoreKeys.APP_CAPJS_TOKEN, {
     capComponent: null,
     capShow: false,
     onCapSuccess: null,
-    capJSToken: useAppStorage(
-      AppConstPersistKey.CAPJS_TOKEN,
-      '',
-      { expire: 1 * 60 * 1000 },
-    ),
   }),
 
   getters: {},
@@ -33,10 +28,6 @@ const useAppStoreCapJSTokenInside = defineStore(StoreKeys.APP_CAPJS_TOKEN, {
       })
     },
 
-    setCapJSToken(payload: string) {
-      this.capJSToken = payload
-    },
-
     async refreshCapJSToken() {
       const CapInst = await this.loadCap()
 
@@ -44,8 +35,6 @@ const useAppStoreCapJSTokenInside = defineStore(StoreKeys.APP_CAPJS_TOKEN, {
         apiEndpoint: authCapApiEndpoint,
       }, document.getElementById('walnut-admin-cap')!)
       const { token } = await cap.solve()
-
-      this.setCapJSToken(token)
 
       return token
     },

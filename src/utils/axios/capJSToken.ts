@@ -7,10 +7,6 @@ let capJSTokenRequestsQueue: ((token: string) => void)[] = []
 
 const appCapJSToken = useAppStoreCapJSToken()
 
-function setCapJSTokenHeaderWithConfig(config: AxiosRequestConfig, token: string) {
-  config.headers!['x-capjs-token'] = token
-}
-
 export function RefreshCapJSTokenLogic(config: AxiosRequestConfig) {
   // not requesting for new access token
   if (!isCapJSTokenRefreshing) {
@@ -23,8 +19,6 @@ export function RefreshCapJSTokenLogic(config: AxiosRequestConfig) {
           capJSTokenRequestsQueue = []
           return
         }
-
-        setCapJSTokenHeaderWithConfig(config, newCapJSToken)
 
         // token already refreshed, call the waiting request
         await Promise.all(capJSTokenRequestsQueue.map(cb => cb(newCapJSToken)))
@@ -42,8 +36,7 @@ export function RefreshCapJSTokenLogic(config: AxiosRequestConfig) {
     // when refreshing token, return a promise that haven't called resolve
     return new Promise((resolve) => {
       // push resolve into queue, using an anonymous function to wrap it. ASAP token refresh is done, excute
-      capJSTokenRequestsQueue.push((t) => {
-        setCapJSTokenHeaderWithConfig(config, t)
+      capJSTokenRequestsQueue.push(() => {
         resolve(AppAxios.request(config))
       })
     })
