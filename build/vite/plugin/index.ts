@@ -107,7 +107,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   }
 
   // https://github.com/vite-pwa/vite-plugin-pwa
-  vitePlugins.push(createPWAPlugin(env))
+  // vitePlugins.push(createPWAPlugin(env))
 
   return vitePlugins
 }

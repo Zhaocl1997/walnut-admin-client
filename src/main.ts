@@ -1,5 +1,5 @@
 import { reportWebVitals } from '@/hooks/web/useWebVitals'
-import { registerSW } from 'virtual:pwa-register'
+// import { registerSW } from 'virtual:pwa-register'
 
 import { App, setupApp } from './App'
 
@@ -29,5 +29,5 @@ import './assets/styles/main.scss'
 
   reportWebVitals()
 
-  registerSW({ immediate: true })
+  // registerSW({ immediate: true })
 })()
