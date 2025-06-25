@@ -7,7 +7,7 @@ export function useRouterQuery(path: string) {
       return route.query[path] as string ?? undefined
     },
     set(val) {
-      router.replace({ query: { ...router.currentRoute.value.query, [path]: val } })
+      router.replace({ ...router.currentRoute.value, query: { ...router.currentRoute.value.query, [path]: val } })
     },
   })
 

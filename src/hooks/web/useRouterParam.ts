@@ -1,3 +1,5 @@
+import type { RouteLocationRaw } from 'vue-router'
+
 export function useRouterParam(path: string) {
   const router = useAppRouter()
   const route = useAppRoute()
@@ -11,7 +13,7 @@ export function useRouterParam(path: string) {
       return route.params[path] as string ?? undefined
     },
     set(val) {
-      router.replace({ params: { [path]: val } })
+      router.replace({ ...router.currentRoute.value, params: { [path]: val } } as RouteLocationRaw)
     },
   })
 
