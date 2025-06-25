@@ -21,13 +21,13 @@ export class Cookie {
   }
 
   // default 7 days
-  set(key: string, value: any, expire = +persist! * 1000, path = '/') {
+  set(key: string, value: any, expire = +persist!, path = '/') {
     value = isString(value) ? value : JSON.stringify(value)
     const finalValue = this.encrypt
       ? AppPersistEncryption.encrypt(value)
       : value
     const exp = new Date()
-    exp.setTime(exp.getTime() + expire)
+    exp.setTime(exp.getTime() + expire * 1000)
     document.cookie = `${this.getKey(key)}=${escape(
       finalValue,
     )};path=${path};expires=${exp.toUTCString()}`

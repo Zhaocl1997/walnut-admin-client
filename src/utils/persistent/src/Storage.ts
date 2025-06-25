@@ -20,7 +20,7 @@ export const getStorageKey = (key: string) => `${storagePrefix}__${key.replaceAl
 // map/set need to pass `serializer`, and no more expire nor encrypt
 export function useAppStorage<T>(key: string, initialValue: MaybeRef<T>, options: IAppStorageOptions<T> = {}) {
   const { persist: persistSeconds } = useAppEnvSeconds()
-  const { storage = localStorage, expire = persistSeconds * 1000, encrypt = isProd(), usePresetKey = true, serializer } = options
+  const { storage = localStorage, expire = persistSeconds, encrypt = isProd(), usePresetKey = true, serializer } = options
 
   const getKey = usePresetKey
     ? getStorageKey(key)
@@ -66,7 +66,7 @@ export function useAppStorage<T>(key: string, initialValue: MaybeRef<T>, options
 
         const str = JSON.stringify({
           v: val,
-          e: expire === Infinity ? null : ex ?? new Date().getTime() + expire,
+          e: expire === Infinity ? null : ex ?? new Date().getTime() + expire * 1000,
         })
 
         return encrypt ? AppPersistEncryption.encrypt(str)! : str
