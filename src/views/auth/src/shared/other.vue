@@ -73,6 +73,7 @@ async function onOAuth(type: string) {
 
   const eventSource = new EventSource(
     `${httpUrl}/auth/oauth/${type}/sse/${fpId.value}`,
+    { withCredentials: true },
   )
 
   eventSource.onmessage = async ({ data }) => {
