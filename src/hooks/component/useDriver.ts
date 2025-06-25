@@ -1,8 +1,10 @@
 import type { Driver, DriveStep } from 'driver.js'
 import { driver } from 'driver.js'
 
-export function useDriver(steps: DriveStep[]) {
+export function useDriver(key: string, steps: DriveStep[]) {
   const driverInst = shallowRef<Driver>()
+
+  const cookieKey = `driver-${key}`
 
   const { t } = useAppI18n()
 
@@ -18,6 +20,14 @@ export function useDriver(steps: DriveStep[]) {
   driverInst.value = driver({
     animate: true,
     showProgress: true,
+    disableActiveInteraction: true,
+    allowClose: false,
+    onNextClick() {
+      if (!driverInst.value?.hasNextStep()) {
+        setCookie(cookieKey, true, 60 * 60 * 24 * 30)
+      }
+      driverInst.value?.moveNext()
+    },
     doneBtnText: t('app.intro.done'),
     nextBtnText: t('app.intro.next'),
     prevBtnText: t('app.intro.prev'),
@@ -25,7 +35,10 @@ export function useDriver(steps: DriveStep[]) {
   })
 
   function onDrive() {
-    driverInst.value?.drive()
+    const showDriver = getCookie(cookieKey)
+    if (!showDriver) {
+      driverInst.value?.drive()
+    }
   }
 
   function onDestory() {

@@ -2,7 +2,7 @@ export function useAppIntro(delay = 1500) {
   const { t } = useAppI18n()
   const appSetting = useAppStoreSetting()
 
-  const { onDrive } = useDriver([
+  const { onDrive } = useDriver('app-intro', [
     {
       element: `#${appSetting.menu.id}`,
       popover: {
