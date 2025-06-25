@@ -23,7 +23,7 @@ const { currentRoute } = useAppRouter()
 
 const expandedKeys = ref<string[]>()
 
-const getMenuValue = computed((): string =>
+const getCurrentMenuName = computed((): string =>
   currentRoute.value.meta?.menuActiveName ?? currentRoute.value.name as string,
 )
 
@@ -36,7 +36,7 @@ const getMenuOptions = computed(() =>
       if (
         (node.type === AppConstMenuType.CATALOG
           && expandedKeys.value?.includes(node.name!))
-        || node.name === getMenuValue.value
+        || node.name === getCurrentMenuName.value
       ) {
         return (
           <WIcon
@@ -61,26 +61,34 @@ const getMenuOptions = computed(() =>
 
 // handle expanded-keys logic
 watch(
-  () => getMenuValue.value,
-  async (v) => {
-    await nextTick()
-
-    const target = document.getElementById(`${currentRoute.value.name as string}-menu-item`)
-    target?.scrollIntoView({ behavior: 'smooth' })
-
+  () => getCurrentMenuName.value,
+  async (v, oldV) => {
     const paths = findPath<AppSystemMenu>(
-      toRaw(appMenu.menus),
+      appMenu.menus,
       n => n.name === v,
     )
 
-    if (paths) {
-      if (appSetting.menu.accordion) {
-        expandedKeys.value = (paths as AppSystemMenu[]).map(i => i.name!)
-      }
+    if (!paths)
+      return
+
+    if (appSetting.menu.accordion) {
+      expandedKeys.value = (paths as AppSystemMenu[]).map(i => i.name!)
     }
-  },
-  {
-    immediate: true,
+    else {
+      const oldPaths = findPath<AppSystemMenu>(
+        appMenu.menus,
+        n => n.name === oldV,
+      )
+
+      if (!oldPaths)
+        return
+
+      expandedKeys.value = [...(oldPaths as AppSystemMenu[]).map(i => i.name!), ...(paths as AppSystemMenu[]).map(i => i.name!)]
+    }
+
+    await nextTick()
+    const target = document.getElementById(`${currentRoute.value.name as string}-menu-item`)
+    target?.scrollIntoView({ behavior: 'smooth' })
   },
 )
 
@@ -119,10 +127,10 @@ function onNodeProps(option: MenuOption) {
 </script>
 
 <template>
-  <WTransition appear :transition-name="appSetting.getMenuTransition">
+  <WTransition ap-ppear :transition-name="appSetting.getMenuTransition">
     <WScrollbar
       v-if="appSetting.getMenuShow"
-      height="100%"
+      :height="`calc(100vh - ${appSetting.header.height})`"
       class="transition-all"
       :class="[{
         'pb-8': appSetting.getMenuCollapseButtonStatus,
@@ -146,7 +154,7 @@ function onNodeProps(option: MenuOption) {
         :indent="appSetting.menu.indent"
         :options="getMenuOptions"
         :collapsed="appMenu.collapse"
-        :value="getMenuValue"
+        :value="getCurrentMenuName"
         :node-props="onNodeProps"
         @update:value="onUpdateValue"
       />
