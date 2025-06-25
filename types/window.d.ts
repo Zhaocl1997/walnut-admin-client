@@ -22,6 +22,9 @@ declare global {
     // echarts
     echarts: ECharts
 
+    // google analytics
+    gtag: any
+
     // baidu map
     BMap: any
     HOST_TYPE: string
