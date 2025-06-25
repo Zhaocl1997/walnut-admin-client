@@ -130,7 +130,7 @@ function onNodeProps(option: MenuOption) {
   <WTransition ap-ppear :transition-name="appSetting.getMenuTransition">
     <WScrollbar
       v-if="appSetting.getMenuShow"
-      :height="`calc(100vh - ${appSetting.header.height})`"
+      height="100%"
       class="transition-all"
       :class="[{
         'pb-8': appSetting.getMenuCollapseButtonStatus,

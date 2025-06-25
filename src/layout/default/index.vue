@@ -46,15 +46,10 @@ function onBackToTop() {
 
 <template>
   <n-layout has-sider>
-    <WTransition appear transition-name="slide-left">
-      <TheAside
-        v-if="appSetting.getMenuAdapterStatus"
-        class="walnut-aside"
-      />
-    </WTransition>
+    <TheAside v-if="appSetting.getMenuAdapterStatus" />
 
     <n-drawer
-      v-if="!appSetting.getMenuAdapterStatus"
+      v-else
       v-model:show="appMenu.showAside"
       :width="`${appSetting.menu.width}px`"
       placement="left"

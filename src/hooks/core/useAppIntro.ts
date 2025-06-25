@@ -6,6 +6,26 @@ export function useAppIntro(delay = 1500) {
   const { t } = useAppI18n()
   const appSetting = useAppStoreSetting()
 
+  intro.onafterchange((_targetElement) => {
+    // adjust step 1 style
+    if (intro._currentStep === 0) {
+      const t1 = document.querySelector('.introjs-tooltipReferenceLayer')! as HTMLElement
+      const t2 = document.querySelector('.introjs-helperLayer')! as HTMLElement
+      t1.style.height = `calc(100vh - ${appSetting.header.height}px)`
+      t2.style.height = `calc(100vh - ${appSetting.header.height}px)`
+    }
+
+    // adjust step 6 style
+    if (intro._currentStep === 7) {
+      const t1 = document.querySelector('.introjs-tooltipReferenceLayer')! as HTMLElement
+      const t2 = document.querySelector('.introjs-helperLayer')! as HTMLElement
+      t1.style.height = `calc(${t1.style.height} - 6px)`
+      t1.style.width = `calc(${t1.style.width} - 6px)`
+      t2.style.height = `calc(${t2.style.height} - 6px)`
+      t2.style.width = `calc(${t2.style.width} - 6px)`
+    }
+  })
+
   intro.setOptions({
     doneLabel: t('app.intro.done'),
     nextLabel: t('app.intro.next'),
