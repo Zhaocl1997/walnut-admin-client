@@ -115,7 +115,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
 
     optimizeDeps: {
-      include: ['vue', 'vue-router', 'pinia', 'lodash-es', 'driver.js', 'naive-ui', 'ali-oss', 'libphonenumber-js', 'crypto-js', 'axios/lib/helpers/buildURL'],
+      include: Object.keys(dependencies),
     },
 
     build: {
