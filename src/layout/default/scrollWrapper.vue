@@ -34,28 +34,33 @@ defineExpose({ onScrollToTop })
       x-scrollable
       content-class="grid grid-rows-1"
     >
-      <!-- TODO top change no animation -->
-      <div class="sticky left-0 z-99 transition-top" :class="[{ 'top-0': headerShow }]" :style="{ width: appSetting.getCalcContentWidth }">
+      <div
+        class="sticky left-0 top-0 z-99 transition-transform duration-300 ease-in-out -translate-y-[100%]"
+        :class="[{ 'translate-y-0': headerShow }]"
+        :style="{ width: appSetting.getCalcContentWidth }"
+      >
         <TheHeader ref="headerRef" />
       </div>
 
       <div
-        class="sticky left-0 z-98 transition-top"
-        :class="[{ 'top-0': tabsShow }]"
-        :style="{ top: headerShow && appSetting.getTabsFixed ? `${appSetting.header.height}px` : '', width: appSetting.getCalcContentWidth }"
+        class="sticky left-0 top-0 z-98 transition-transform duration-500 ease-in-out -translate-y-[100%]"
+        :class="[{ 'translate-y-0': tabsShow }]"
+        :style="{ top: appSetting.header.status && (headerShow && tabsShow || headerShow && appSetting.getTabsFixed) ? `${appSetting.header.height}px` : '', width: appSetting.getCalcContentWidth }"
       >
         <TheTabs ref="tabsRef" />
       </div>
 
-      <TheContent
+      <div
         :id="`${String($route.name)}-content`"
         class="relative"
         :style="{
-          padding: `${appSetting.app.contentPadding}px`,
           minHeight: appSetting.getCalcContentHeight,
+          padding: $route.meta.ternal === 'internal' ? 0 : `${appSetting.app.contentPadding}px`,
         }"
-      />
-      <TheIFrameWrapper />
+      >
+        <TheContent />
+        <TheIFrameWrapper />
+      </div>
 
       <div class="sticky left-0 z-1" :class="[{ 'bottom-0': appSetting.getFooterFixed }]" :style="{ width: appSetting.getCalcContentWidth }">
         <TheFooter />

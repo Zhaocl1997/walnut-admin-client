@@ -66,14 +66,17 @@ defineExpose({ onScrollToTop })
           height: `calc(100vh - ${headerShow ? appSetting.header.height : 0}px - ${tabsShow ? appSetting.tabs.height : 0}px - ${getFooterShow ? appSetting.footer.height : 0}px)`,
         }"
       >
-        <TheContent
+        <div
           :id="`${String($route.name)}-content`"
           class="relative h-full w-full"
           :style="{
-            padding: `${appSetting.app.contentPadding}px`,
+            padding: $route.meta.ternal === 'internal' ? 0 : `${appSetting.app.contentPadding}px`,
+            height: $route.meta.ternal === 'internal' ? appSetting.getCalcContentHeight : 'initial',
           }"
-        />
-        <TheIFrameWrapper />
+        >
+          <TheContent />
+          <TheIFrameWrapper />
+        </div>
       </n-scrollbar>
     </div>
 
