@@ -267,14 +267,14 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
      * @description get calc main content height
      */
     getCalcContentHeight(): string {
-      return `calc(100vh - ${this.header.height}px - ${this.tabs.height}px - ${this.footer.height}px)`
+      return `calc(100vh - ${this.header.status ? this.header.height : 0}px - ${this.tabs.status ? this.tabs.height : 0}px - ${this.footer.status ? this.footer.height : 0}px)`
     },
 
     /**
      * @description get calc main content height with padding
      */
     getCalcContentHeightWithPadding(): string {
-      return `calc(100vh - ${this.header.height}px - ${this.tabs.height}px - ${this.footer.height}px - ${this.app.contentPadding * 2}px)`
+      return `calc(100vh - ${this.header.status ? this.header.height : 0}px - ${this.tabs.status ? this.tabs.height : 0}px - ${this.footer.status ? this.footer.height : 0}px - ${this.app.contentPadding * 2}px)`
     },
 
     /**
