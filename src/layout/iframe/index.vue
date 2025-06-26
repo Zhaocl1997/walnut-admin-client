@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 defineOptions({
   name: 'WIFrame',
+  inheritAttrs: false,
 })
 
 defineProps<{ frameSrc?: string }>()

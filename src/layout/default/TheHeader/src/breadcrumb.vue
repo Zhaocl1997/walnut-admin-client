@@ -16,7 +16,7 @@ const appSetting = useAppStoreSetting()
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
 
-const [DefineBase, ReuseBase] = createReusableTemplate()
+const [DefineBase, ReuseBase] = createReusableTemplate<{ item: TreeNodeItem<AppSystemMenu> }>()
 
 const getChildren = computed((): TreeNodeItem<AppSystemMenu>[] | undefined => {
   const matched = findPath<AppSystemMenu>(

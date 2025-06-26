@@ -3,7 +3,6 @@ import type { TreeNodeItem } from 'easy-fns-ts'
 import type { RouteRecordMultipleViewsWithChildren, RouteRecordNameGeneric, RouteRecordRaw } from 'vue-router'
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
-import IFrameReal from '@/layout/iframe/index.vue'
 import { findPath, formatTree } from 'easy-fns-ts'
 import { App404Route, App500Route } from '../routes/builtin'
 
@@ -23,18 +22,13 @@ function resolveParentComponent(name: RouteRecordNameGeneric) {
 /**
  * @description Util Function 3 - Resolve `menu` type menu which is internal with self name
  */
-function resolveIFrameComponent(name: RouteRecordNameGeneric, cache?: boolean) {
+function resolveIFrameComponent(name: RouteRecordNameGeneric) {
   return () =>
     new Promise((resolve) => {
-      cache
-        ? resolve({
-            ...IFrameFaker,
-            name,
-          })
-        : resolve({
-            ...IFrameReal,
-            name,
-          })
+      resolve({
+        ...IFrameFaker,
+        name,
+      })
     })
 }
 
@@ -79,13 +73,11 @@ export function buildRoutes(payload: RouteRecordRaw[]) {
       if (node.meta!.ternal === AppConstMenuTernal.INTERNAL) {
         return {
           ...node,
-          component: resolveIFrameComponent(node.name, node.meta!.cache),
+          // need component field
+          // or [Vue Router warn]: Record with path "/demo/link/internal/iconify" is either missing a "component(s)" or "children" property.
+          component: resolveIFrameComponent(node.name),
         }
       }
-
-      // ...
-      // no need to handle with extenal menu
-      // ...
 
       // common view route
       return {
@@ -115,6 +107,7 @@ export function buildRoutes(payload: RouteRecordRaw[]) {
 function transformToTwoLevelRouteTree(routes: TreeNodeItem<RouteRecordMultipleViewsWithChildren>[]) {
   const transformedRouteTree: RouteRecordRaw[] = []
 
+  // TODO mapTree
   formatTree(routes, (node) => {
     // findPath, it's an array
     const paths = findPath(
@@ -144,6 +137,8 @@ function transformToTwoLevelRouteTree(routes: TreeNodeItem<RouteRecordMultipleVi
         transformedRouteTree.push({ ...node, path: `/${node.path}` })
       }
     }
+
+    return true
   })
 
   return transformedRouteTree
