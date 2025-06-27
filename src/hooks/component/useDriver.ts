@@ -7,10 +7,11 @@ export function useDriver(key: string, steps: DriveStep[]) {
   const cookieKey = `driver-${key}`
 
   const { t } = useAppI18n()
+  const { toggleLink } = useLinkTag('/assets/css/driver-dark.css')
 
-  watch(() => isDark.value, (v) => {
+  watch(() => isDark.value, async (v) => {
     if (v) {
-      import('./driver-dark.css')
+      await toggleLink()
     }
     else {
       import('driver.js/dist/driver.css')
