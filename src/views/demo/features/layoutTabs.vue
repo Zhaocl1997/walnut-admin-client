@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { Recordable } from 'easy-fns-ts'
+
 defineOptions({
   name: 'FeatureLayoutTabs',
 })
@@ -44,7 +46,7 @@ function onDelete() {
 }
 
 function onDynamicTitle(type: number, self = true) {
-  const pool = {
+  const pool: Recordable = {
     1: () => {
       appTab.setCurrentTabTitle('Title ?')
     },
@@ -68,7 +70,7 @@ function onDynamicTitle(type: number, self = true) {
     },
   }
 
-  const pool2 = {
+  const pool2: Recordable = {
     1: () => {
       appTab.setTabTitle(otherName, 'Title ?')
     },
@@ -94,15 +96,13 @@ function onDynamicTitle(type: number, self = true) {
   }
 
   if (self)
-  // @ts-expect-error any index
     pool[type]()
   else
-  // @ts-expect-error any index
     pool2[type]()
 }
 
 function onDynamicIcon(type: number, self = true) {
-  const pool = {
+  const pool: Recordable = {
     1: () => {
       appTab.setCurrentTabIcon('ant-design:android-filled')
     },
@@ -122,7 +122,7 @@ function onDynamicIcon(type: number, self = true) {
     },
   }
 
-  const pool2 = {
+  const pool2: Recordable = {
     1: () => {
       appTab.setTabIcon(otherName, 'ant-design:android-filled')
     },
@@ -143,10 +143,8 @@ function onDynamicIcon(type: number, self = true) {
   }
 
   if (self)
-  // @ts-expect-error any index
     pool[type]()
   else
-  // @ts-expect-error any index
     pool2[type]()
 }
 

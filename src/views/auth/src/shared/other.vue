@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { Recordable } from 'easy-fns-ts'
 import { getGiteeURIAPI, getGitHubURIAPI, getWeiboURIAPI } from '@/api/auth/third'
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -58,13 +59,12 @@ const iconArr = computed(() =>
 async function onOAuth(type: string) {
   loading.value = true
 
-  const api = {
+  const api: Recordable = {
     gitee: getGiteeURIAPI,
     github: getGitHubURIAPI,
     weibo: getWeiboURIAPI,
   }
 
-  // @ts-expect-error any index
   const res = await api[type]()
 
   childWindow = openOAuthWindow(res)!

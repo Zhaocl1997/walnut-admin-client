@@ -27,7 +27,7 @@ function onSuccess() {
 watch(
   () => props.value,
   (v) => {
-    if (userPermission.hasPermission(v))
+    if (v && userPermission.hasPermission(v))
       onSuccess()
   },
   {

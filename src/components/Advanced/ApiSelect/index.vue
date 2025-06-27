@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { OptionDataItem, StringOrNumber } from 'easy-fns-ts'
+import type { OptionDataItem, Recordable, StringOrNumber } from 'easy-fns-ts'
 import { WithValueProps } from '@/components/HOC/WithValue'
 import { isFunction } from 'easy-fns-ts'
 
@@ -34,7 +34,7 @@ const total = ref(0)
 const options = ref<OptionDataItem[]>([])
 const valueOptions = ref<OptionDataItem[]>([])
 
-const { stateRef: params, resetState } = useState<WalnutBaseListParams>({
+const { stateRef: params, resetState } = useState<WalnutBaseListParams<Recordable>>({
   page: { page: 1, pageSize: 10 },
   query: {},
 })

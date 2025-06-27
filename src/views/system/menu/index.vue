@@ -125,7 +125,7 @@ const schemas = useMenuFormSchema(
 )
 
 // form
-const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
+const [register, { validate, restoreValidation }] = useForm<IAppSystemMenuForm>({
   localeUniqueKey: 'menu',
 
   labelWidth: 140,
@@ -186,10 +186,10 @@ const [register, { validate, restoreValidation }] = useForm<AppSystemMenu>({
         ],
       },
     },
-  ] as IDeepMaybeRef<WForm.Schema.Item<AppSystemMenu>>[],
+  ] as WForm.Schema.Item<IAppSystemMenuForm>[],
 })
 
-async function onUpdateTreeValue(v: StringOrNumber | StringOrNumber[]) {
+async function onUpdateTreeValue(v?: StringOrNumber | StringOrNumber[]) {
   if (!v) {
     actionType.value = 'create'
     resetFormData()
@@ -214,6 +214,7 @@ async function onUpdateTreeValue(v: StringOrNumber | StringOrNumber[]) {
         }"
       >
         <template #default>
+          <!-- @vue-generic {AppSystemMenu} -->
           <WTree v-model:value="targetTreeItem" @hook="registerTree" @update:value="onUpdateTreeValue" />
         </template>
       </n-card>
@@ -230,10 +231,8 @@ async function onUpdateTreeValue(v: StringOrNumber | StringOrNumber[]) {
           <n-alert v-if="!targetTreeItem" :title="t('page.menu.alert')" type="info" class="mb-4" />
 
           <div v-show="actionType">
-            <WForm
-              :model="formData"
-              @hook="register"
-            />
+            <!-- @vue-generic {IAppSystemMenuForm} -->
+            <WForm :model="formData" @hook="register" />
           </div>
         </template>
       </n-card>

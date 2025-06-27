@@ -1,3 +1,4 @@
+import type { Recordable } from 'easy-fns-ts'
 import type { DropdownOption, TagProps } from 'naive-ui'
 import type { FilterOption } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
@@ -8,8 +9,8 @@ import WMessage from '@/components/Extra/Message'
 import WIcon from '@/components/UI/Icon'
 import WIconButton from '@/components/UI/IconButton'
 import { omit } from 'lodash-es'
-import { NA, NDropdown, NTag } from 'naive-ui'
 
+import { NA, NDropdown, NTag } from 'naive-ui'
 import { getTableTranslated } from '../utils'
 
 // Extend Naive UI columns
@@ -81,8 +82,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
           return {
             ...tItem,
             render(p) {
-              // @ts-expect-error any index
-              return <span onClick={() => tItem.onClick(p)}><NA>{tItem.formatter ? tItem.formatter(p) : p[tItem.key] }</NA></span>
+              return <span onClick={() => tItem?.onClick!(p)}><NA>{tItem.formatter ? tItem.formatter(p) : (p as Recordable)[tItem.key] }</NA></span>
             },
           }
         }
@@ -119,8 +119,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             ),
 
             render(p) {
-              // @ts-expect-error any index
-              return <WDictLabel dictType={tItem.dictType} dictValue={p[tItem.key]}></WDictLabel>
+              return <WDictLabel dictType={tItem.dictType} dictValue={(p as Recordable)[tItem.key]}></WDictLabel>
             },
           }
         }

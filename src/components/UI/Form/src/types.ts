@@ -13,7 +13,7 @@ import type { ICompExtraVerifyCodeProps } from '@/components/Extra/VerifyCode'
 import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 
-import type { BaseDataType, DeepKeyOf, Recordable, StringOrNumber } from 'easy-fns-ts'
+import type { BaseDataType, Recordable, StringOrNumber } from 'easy-fns-ts'
 // raw
 import type {
   DynamicInputProps,
@@ -282,7 +282,7 @@ export declare namespace WForm {
       'Base:Select': ICompUISelectProps
       'Base:Switch': ICompUISwitchProps
       'Base:TimePicker': ICompUITimePickerProps
-      'Base:Tree': ICompUITreeProps
+      'Base:Tree': ICompUITreeProps<D>
       'Base:TreeSelect': ICompUITreeSelectProps
 
       // @/components/Extra

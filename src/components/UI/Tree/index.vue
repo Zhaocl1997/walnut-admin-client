@@ -1,5 +1,5 @@
-<script lang="tsx" setup>
-import type { Recordable, StringOrNumber } from 'easy-fns-ts'
+<script lang="tsx" setup generic="T extends Record<string, any>">
+import type { StringOrNumber, TreeNodeItem } from 'easy-fns-ts'
 import type { DropdownOption, TreeInst, TreeOption } from 'naive-ui'
 
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
@@ -21,9 +21,9 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = defineProps<ICompUITreeProps>()
+const props = defineProps<ICompUITreeProps<T>>()
 
-const emits = defineEmits<{ hook: [inst: ICompUITreeInst] }>()
+const emits = defineEmits<{ hook: [inst: ICompUITreeInst<T>] }>()
 
 type TreeKey = StringOrNumber
 
@@ -31,7 +31,7 @@ const value = defineModel<TreeKey | TreeKey[]>('value')
 
 const { t } = useAppI18n()
 
-const { setProps, getProps } = useProps<ICompUITreeProps>(props)
+const { setProps, getProps } = useProps<ICompUITreeProps<T>>(props)
 
 const userPermission = useAppStoreUserPermission()
 
@@ -44,8 +44,8 @@ const pattern = ref<string>()
 const expandAll = ref<boolean>(false)
 const checkAll = ref<boolean>(false)
 const cascade = ref<boolean>(true)
-const copyTarget = ref<Recordable>({})
-const currentTarget = ref<Recordable>({})
+const copyTarget = ref<T>({} as T)
+const currentTarget = ref<T>({} as T)
 
 const getToolBarOptions = computed((): DropdownOption[] => [
   {
@@ -123,7 +123,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
 ])
 
 const getKeyField = computed((): string => getProps.value.treeProps?.keyField as string)
-const getTreeData = computed(() => getProps.value.treeProps?.data)
+const getTreeData = computed((): TreeNodeItem<T>[] => getProps.value.treeProps?.data as TreeNodeItem<T>[])
 
 const contextMenuOptions = computed<DropdownMixedOption[]>(() => [
   {
@@ -145,11 +145,10 @@ const getCombinedKeys = computed(() => checkedKeys.value.concat(indeterminateKey
 const getBottomChildKeys = computed(() => {
   const res: TreeKey[] = []
 
-  formatTree(getProps.value.treeProps!.data!, {
-    format: (node) => {
-      if (!node[getProps.value.treeProps?.childrenField || 'children'])
-        res.push(node[getKeyField.value] as string)
-    },
+  formatTree(getTreeData.value, (node) => {
+    if (!node[getProps.value.treeProps?.childrenField || 'children'])
+      res.push(node[getKeyField.value] as string)
+    return true
   })
 
   return res
@@ -201,7 +200,7 @@ function onUpdateIndeterminateKeys(keys: TreeKey[]) {
 function onToolbarSelect(key: string) {
   if (key === 'expand') {
     expandedKeys.value = treeToArr(
-      cloneDeep(getProps.value.treeProps!.data!),
+      getTreeData.value,
     ).map(i => i[getKeyField.value]) as string[]
 
     expandAll.value = true
@@ -215,7 +214,7 @@ function onToolbarSelect(key: string) {
 
   if (key === 'check') {
     checkedKeys.value = treeToArr(
-      cloneDeep(getProps.value.treeProps!.data!),
+      getTreeData.value,
     ).map(i => i[getKeyField.value]) as string[]
 
     checkAll.value = true
@@ -293,7 +292,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
             }}
           >
             {getProps.value.treeProps!.draggable
-              && userPermission.hasPermission(getProps.value.auths?.update) && (
+              && userPermission.hasPermission(getProps.value.auths?.update as string) && (
               <WIcon
                 height="18"
                 class="cursor-move"
@@ -303,7 +302,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
             )}
 
             {getProps.value.deletable
-              && userPermission.hasPermission(getProps.value.auths?.delete) && (
+              && userPermission.hasPermission(getProps.value.auths?.delete as string) && (
               <WIconButton
                 icon-props={{
                   icon: 'ant-design:delete-outlined',
@@ -316,7 +315,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
                 tooltipMsg={t('app.base.delete')}
                 confirm
                 onConfirm={() => {
-                  getProps.value.onTreeNodeItemDelete!(toRaw(option))
+                  getProps.value.onTreeNodeItemDelete!(toRaw(option) as T)
                   if (getProps.value.multiple) {
                     selectedKeys.value = []
                   }

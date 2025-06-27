@@ -1,11 +1,10 @@
-import type { Recordable } from 'easy-fns-ts'
 import type { TreeInst, TreeProps } from 'naive-ui'
 
 export { default } from './index.vue'
 
 export * from './useTree'
 
-export interface ICompUITreeProps<T = Recordable> {
+export interface ICompUITreeProps<T> {
   /**
    * @description NTree original props
    */
@@ -61,6 +60,6 @@ export interface ICompUITreeProps<T = Recordable> {
   }
 }
 
-export type ICompUITreeInst<T = Recordable> = Partial<TreeInst & {
+export type ICompUITreeInst<T> = Partial<TreeInst & {
   setProps: (p: IDeepMaybeRef<ICompUITreeProps<T>> | ICompUITreeProps<T>) => void
 }>

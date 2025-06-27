@@ -31,7 +31,7 @@ function onSuccess() {
   >
     <slot />
   </AppAuthorizeIPTC>
-  <slot v-else-if="userPermission.hasPermission(value)" />
+  <slot v-else-if="value && userPermission.hasPermission(value)" />
   <div v-else-if="preset === 'null'" />
   <AppNotAuthorized
     v-else-if="preset === 'tip'"

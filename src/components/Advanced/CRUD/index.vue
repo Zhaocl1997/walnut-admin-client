@@ -44,7 +44,7 @@ const getBaseApi = computed(() => getProps.value.baseAPI!)
 
 // get create/update form data
 const getFormData = computed(() =>
-  getProps.value.strictFormData ? pick(formData.value, getProps.value.formProps?.schemas?.filter(i => i.formProp?.path).map(i => i.formProp?.path).concat('_id') as (keyof T)[]) : formData.value,
+  getProps.value.strictFormData ? pick(formData.value, ([...getProps.value.formProps?.schemas?.filter(i => i.formProp?.path).map(i => i.formProp?.path) as (keyof T)[], '_id'])) : formData.value,
 )
 
 // get table props

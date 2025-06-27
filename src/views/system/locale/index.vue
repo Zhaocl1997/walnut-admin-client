@@ -217,7 +217,7 @@ const [
       ...langList.value.map<WForm.Schema.Item<AppSystemLocale>>(i => ({
         type: 'Base:Input',
         formProp: {
-          path: i.value as string,
+          path: i.value as keyof AppSystemLocale,
           label: i.label,
           locale: false,
           rule: false,

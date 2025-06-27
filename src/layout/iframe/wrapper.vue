@@ -38,16 +38,16 @@ const TransitionWrapper = defineComponent({
 </script>
 
 <template>
-  <DefineIframe v-slot="{ item }">
+  <DefineIframe v-slot="{ item: i }">
     <WIFrame
-      v-show="item.cache ? item.name === $route.name : true"
-      v-if="!item.cache ? item.name === $route.name : true"
-      :key="item.cache ? `cache_${item.name}` : item.name"
-      :frame-src="item.url"
+      v-show="i.cache ? i.name === $route.name : true"
+      v-if="!i.cache ? i.name === $route.name : true"
+      :key="i.cache ? `cache_${i.name}` : i.name"
+      :frame-src="i.url"
     />
   </DefineIframe>
 
-  <template v-for="item in getIframeList" :key="item.name">
-    <TransitionWrapper :item="item" />
+  <template v-for="iframeItem in getIframeList" :key="iframeItem.name">
+    <TransitionWrapper :item="iframeItem" />
   </template>
 </template>

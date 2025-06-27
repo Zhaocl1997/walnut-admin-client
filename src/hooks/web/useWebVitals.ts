@@ -1,4 +1,4 @@
-import { onCLS, onFCP, onFID, onINP, onLCP, onTTFB } from 'web-vitals/attribution'
+import { onCLS, onINP, onLCP } from 'web-vitals/attribution'
 
 function getDebugInfo(name: string, attribution: any) {
   // In some cases there won't be any entries (e.g. if CLS is 0,

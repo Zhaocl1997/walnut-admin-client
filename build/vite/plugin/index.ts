@@ -8,13 +8,13 @@ import { createCdnImportPlugin } from './cdn-import'
 import { createCheckerPlugin } from './checker'
 import { createComponentPlugin } from './component'
 import { createCompressionPlugin } from './compression'
-import { createCSPPlugin } from './csp'
 import { createDevtoolsPlugin } from './devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createLegacyPlugin } from './legacy'
 import { createObfuscatorPlugin } from './obfuscator'
-import { createPWAPlugin } from './pwa'
+// import { createPWAPlugin } from './pwa'
+// import { createCSPPlugin } from './csp'
 import { createRestartPlugin } from './restart'
 import { createTurboConsolePlugin } from './turbo-console'
 import { createUnoCSSPlugin } from './unocss'
@@ -52,7 +52,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     createUnoCSSPlugin(),
 
     // https://github.com/fi3ework/vite-plugin-checker
-    // createCheckerPlugin(),
+    createCheckerPlugin(),
 
     // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
     // {
