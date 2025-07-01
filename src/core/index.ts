@@ -6,13 +6,14 @@ import { buildRoutes } from '@/router/utils/route'
  * Used in two places
  * 1. sign in operation
  * 2. route guard protection
+ * 3. called after refresh token
  */
 export async function AppCoreFn1() {
   const appMenu = useAppStoreMenu()
   const appTab = useAppStoreTab()
   const userPermission = useAppStoreUserPermission()
 
-  const { addRoute, getRoutes } = AppRouter
+  const { addRoute, getRoutes, hasRoute } = AppRouter
 
   const rootRoute
     = getRoutes()[getRoutes().findIndex(i => i.path === AppRootPath)]
@@ -42,7 +43,9 @@ export async function AppCoreFn1() {
   const routes = buildRoutes(permissionRouteTree)
 
   routes.forEach((route) => {
-    addRoute(AppRootName, route)
+    if (!hasRoute(route.name as string)) {
+      addRoute(AppRootName, route)
+    }
   })
 
   // set root redirect since we do not prepare root page

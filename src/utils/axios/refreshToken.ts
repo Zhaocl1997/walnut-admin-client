@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
+import { AppCoreFn1 } from '@/core'
 
 // flag to judge if calling refreshing token api
 let isRefreshTokenRefreshing = false
@@ -26,6 +27,9 @@ export function RefreshTokenLogic(config: AxiosRequestConfig) {
         }
 
         setTokenHeaderWithConfig(config, newAccessToken)
+
+        // Authentication and Authorization should seperate, so when new access token is get, need to call permisison endpoint again
+        await AppCoreFn1()
 
         // token already refreshed, call the waiting request
         await Promise.all(refreshTokenRequestsQueue.map(cb => cb(newAccessToken)))
