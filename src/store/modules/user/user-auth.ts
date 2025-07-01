@@ -159,6 +159,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       // clear tab
       appTab.$reset()
 
+      // disconnect socket
+      socketService.destroy()
+
       // send beacon
       sendUserMonitorBeacon({ userId: null, auth: false })
 

@@ -1,3 +1,4 @@
+import type { Recordable } from 'easy-fns-ts'
 import type { Socket } from 'socket.io-client'
 import { io } from 'socket.io-client'
 
@@ -43,9 +44,23 @@ class SocketService {
       console.error('Socket', e)
     })
 
-    this._socket.on(AppSocketEvents.FORCE_QUIT(), async () => {
-      const userAuth = useAppStoreUserAuth()
-      await userAuth.Signout()
+    this._socket.on(AppSocketEvents.FORCE_QUIT(), async (payload: { visitor: string, strategy: string }) => {
+      const ForceQuitMap: Recordable = {
+        FORCE_IMMEDIATE_SIGNOUT: async () => {
+          const userAuth = useAppStoreUserAuth()
+          await userAuth.Signout()
+        },
+        FORCE_COUNTDOWN_MODAL: () => {
+          const appForcequit = useAppStoreForceQuit()
+          appForcequit.onOpenForceQuitModal()
+        },
+        MANUAL_COUNTDOWN_MODAL: () => {
+          const appForcequit = useAppStoreForceQuit()
+          appForcequit.onOpenForceQuitModal(true)
+        },
+      }
+
+      ForceQuitMap[payload.strategy]()
     })
 
     // turbo-console-disable-next-line
@@ -68,10 +83,8 @@ class SocketService {
   }
 }
 
-const socketService = SocketService.getInstance()
+export const socketService = SocketService.getInstance()
 
 export function setupSocket() {
   socketService.init()
 }
-
-export const AppSocket = () => socketService.socket
