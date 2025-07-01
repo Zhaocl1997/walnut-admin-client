@@ -2,23 +2,23 @@
 
 - 重要紧急
 
+  - [ ] dev setting / features / user settings 急需分离，现在都耦合在appsettings里了
+  - [ ] menu字段：usedDicts/usedLocales/watermark/watermarkconfig/queryEnhanced/queryEnhancedMode/paramsEnhanced/paramsEnhancedMode/full/query，menu表把乱七八糟的字段都塞进meta里，不要平铺字段
   - [x] 弹出类的form做表单内容改变关闭提示
-  - [ ] menu字段：usedDicts/usedLocales/watermark/watermarkconfig/queryEnhanced/queryEnhancedMode/paramsEnhanced/paramsEnhancedMode，menu表把乱七八糟的字段都塞进meta里，不要平铺字段
   - [x] form支持嵌套字段
   - [x] 移除所有eslint/ts error
   - [x] 已经缓存了的页面不要loadingbar
-  - [ ] 示例模块，设备模块，删除模块，认证模块
   - [x] lock security 有问题
-  - [ ] 修改密码功能
-  - [ ] 个人信息页面
+  - [ ] 示例模块，设备模块，删除模块，认证模块
   - [ ] 强退在线用户(修改密码/重置密码都会提出当前在线的用户)
   - [x] ~~~vue3-mindmap，能帮忙捋捋思路~~~
   - [ ] 菜单内嵌query，以及手动跳转的query的留存
   - [x] 用户表加一个字段，角色是分开模式还是合并模式，都可以自定义，同时如果是分开模式，右上角配合选择切换权限
-  - [ ] 用户查看，完善抽屉，同时手机号/邮箱作为敏感信息，都需要单独处理
   - [x] 路由加密，单独指query，param感觉没有加密的必要?（query和params的加密解密都完成了，但配置需要进一步细化）
+  - [ ] 修改密码功能
+  - [ ] 个人信息页面
+  - [ ] 用户查看，完善抽屉，同时手机号/邮箱作为敏感信息，都需要单独处理
   - [ ] 找回密码
-  - [ ] dev setting / features / user settings 急需分离，现在都耦合在appsettings里了
   - [x] api 函数重命名 结尾都以API结束 好区分是请求函数
   - [x] ~~merge request的axios adapter完成了，字典数据接口需要重新梳理一下，可以不用initDict在form/table/desc组件里了~~
 
@@ -33,12 +33,11 @@
   - [ ] pdf/word/excel/print.js plugin
   - [ ] error monitor (sentry?)
   - [x] untyper
-  - [x] closure-compiler (尝试搞过，难搞)
+  - [ ] cdn/混淆
+  - [ ] 拆分面板 splitpanes
   - [ ] markdown (vditor)
   - [ ] fullcalendar
-  - [ ] 拆分面板 splitpanes
   - [x] tiptap 替代 tinymce? A: 不用tiptap替换了，直接self host了，也可以用
-  - [ ] cdn/混淆
   - [x] vite-plugin-csp-guard/vite-plugin-istanbul
 
 - 不重要不紧急
@@ -56,13 +55,14 @@
   - [ ] https://github.com/theajack/disable-devtool
   - [ ] https://github.com/rrweb-io/rrweb
   - [ ] https://github.com/hrynko/vue-pdf-embed
-  - [ ] cap https://github.com/tiagorangel1/cap
+  - [x] cap https://github.com/tiagorangel1/cap
   - [x] https://github.com/zumerlab/snapdom https://github.com/sindresorhus/capture-website still use html-to-image
   - [ ] https://github.com/yjl9903/unplugin-info
   - [x] https://github.com/SSShooter/mind-elixir-core instead of vue3-mindmap
   - [x] https://github.com/vite-pwa/vite-plugin-pwa
   - [ ] https://github.com/antfu/case-police
   - [x] https://github.com/sindresorhus/capture-website
+  - [x] closure-compiler (尝试搞过，难搞)
 
 - 不重要紧急
 
