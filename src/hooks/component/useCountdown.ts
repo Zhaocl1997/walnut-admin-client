@@ -2,7 +2,7 @@ import { StorageSerializers } from '@vueuse/core'
 
 const buttonRetryMapPersistent = useAppStorage<Map<string, number>>(AppConstPersistKey.COUNTDOWN, new Map<string, number>(), { serializer: StorageSerializers.map })
 
-export function usePersistCountdown(persistKey?: string, persistSeconds = 60) {
+export function useCountdown({ persistKey, persistSeconds = 60, onCountdownComplete }: { persistKey?: string, persistSeconds?: number, onCountdownComplete?: () => void }) {
   const { t } = useAppI18n()
 
   const retryText = ref<string>()
@@ -42,6 +42,10 @@ export function usePersistCountdown(persistKey?: string, persistSeconds = 60) {
       }
       else {
         _intervalSeconds.value = persistSeconds
+      }
+
+      if (onCountdownComplete) {
+        onCountdownComplete()
       }
     }
   }, 1000, { immediate: false, immediateCallback: true })
