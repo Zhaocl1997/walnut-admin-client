@@ -31,6 +31,7 @@ useAppContentFull()
 useAppTextSelection()
 useAppColorMode()
 useAppHijackF5()
+setupSocket()
 
 if (!isDev()) {
   useTimeoutFn(() => {

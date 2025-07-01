@@ -2,7 +2,6 @@ import type { App } from 'vue'
 
 import { setupI18n } from '@/locales'
 import { setupRouter } from '@/router'
-import { setupSocket } from '@/socket'
 import { setupStore } from '@/store/pinia'
 
 // function setupErrorhandler(app: App) {
@@ -22,8 +21,6 @@ export async function setupApp(app: App) {
   await useExternalGeoIP()
 
   await useFingerprint()
-
-  setupSocket()
 
   await setupI18n(app)
 

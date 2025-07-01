@@ -24,13 +24,14 @@ class SocketService {
     }
 
     const { ws } = useAppEnvProxy()
+    const userAuth = useAppStoreUserAuth()
     const useProxy = +ws[0] === 1
     const url = useProxy ? `/${ws[4]}` : `${ws[2]}/${ws[4]}`
     const path = useProxy ? ws[1] : ws[3]
 
     this._socket = io(url, {
       path,
-      query: { fingerprint: fpId.value },
+      query: { fingerprint: fpId.value, accessToken: userAuth.accessToken },
     })
 
     this._socket.on('connect', () => {
