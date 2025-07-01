@@ -18,7 +18,6 @@ const [
     onOpenCreateForm,
     onReadAndOpenUpdateForm,
     onGetActionType,
-    onGetFormData,
     onApiList,
   },
 ] = useCRUD<AppSystemRole>({
@@ -153,6 +152,7 @@ const [
         columnBuiltInActions: [
           {
             _builtInType: 'read',
+            _show: row => row.roleName !== AppConstRoles.ROOT,
             async onPresetClick(rowData) {
               await onReadAndOpenUpdateForm(rowData[keyField]!)
             },
@@ -238,14 +238,9 @@ const [
             blockNode: true,
             keyField,
             labelField: 'title',
-            disabled: computed((): boolean => {
-              const formData = onGetFormData()
-              const roleName = formData.value.roleName
-              return roleName === AppConstRoles.ADMIN
-            }),
             renderLabel: ({ option }) =>
               option.type === AppConstMenuType.ELEMENT
-                ? (option.permission as string)
+                ? ((option as unknown as AppSystemMenu).meta.permission as string)
                 : (option.title as string),
           },
         },

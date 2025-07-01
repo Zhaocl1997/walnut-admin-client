@@ -203,6 +203,7 @@ const [
         columnBuiltInActions: [
           {
             _builtInType: 'read',
+            _show: row => !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.ROOT) && !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.DEVELOPER),
             async onPresetClick(rowData) {
               await onReadAndOpenUpdateForm(rowData[keyField]!)
             },
@@ -210,7 +211,7 @@ const [
           {
             _builtInType: 'delete',
             _dropdown: true,
-            _show: row => row.userName !== AppConstRoles.ADMIN,
+            _show: row => !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.ROOT) && !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.DEVELOPER),
             async onPresetClick(rowData) {
               await onDeleteConfirm(rowData[keyField]!)
             },
@@ -220,7 +221,7 @@ const [
           {
             _builtInType: 'updatePass',
             _dropdown: true,
-            _show: row => row.userName !== AppConstRoles.ADMIN,
+            _show: row => !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.ROOT) && !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.DEVELOPER),
             async onPresetClick(rowData) {
               updatePasswordFormData.value.userId = rowData[keyField]!
               onOpen()
@@ -238,7 +239,7 @@ const [
           {
             _builtInType: 'resetPass',
             _dropdown: true,
-            _show: row => row.userName !== AppConstRoles.ADMIN,
+            _show: row => !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.ROOT) && !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.DEVELOPER),
             async onPresetClick(rowData) {
               const { confirmed } = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
 
