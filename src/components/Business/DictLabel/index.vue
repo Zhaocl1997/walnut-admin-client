@@ -9,7 +9,7 @@ const { dictType, dictValue } = defineProps<ICompBusinessDictLabelProps>()
 
 const { loading, execDict } = useDict(dictType)
 
-const target = computed(() => getDictTarget(dictType, dictValue))
+const target = computed(() => getDictTarget(dictType, dictValue as string))
 
 async function onInit() {
   if (!dictType) {
