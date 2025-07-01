@@ -90,9 +90,9 @@ export const formItemUtils = {
     if (label && isBaseI18nKey(label))
       return t(`app.base.${label}`)
 
-    // custom i18n key label passed in
+    // no need to translate
     if (!needLocale && label) {
-      return t(label)
+      return label
     }
 
     // no locale nor no path
