@@ -28,16 +28,19 @@ export function createBeforeEachGuard(router: Router) {
     if (!userAuth.accessToken)
       return { path: AppAuthPath, replace: true }
 
-    // no menus, means no permission or profile etc
-    if (appMenu.menus.length === 0) {
-      // Get user info
-      if (isEmpty(userProfile.profile))
-        await userProfile.getProfile()
+    // Get user info
+    if (isEmpty(userProfile.profile)) {
+      // fetch profile
+      await userProfile.getProfile()
+      // LINK https://router.vuejs.org/guide/advanced/dynamic-routing.html#adding-routes-inside-navigation-guards
+      return to.fullPath
+    }
 
+    // Get permission
+    if (isEmpty((appMenu.menus))) {
       // At this step, user has login but didn't got dynamic routes generated
       // Below we call app core fn1 to handle logic
       await AppCoreFn1()
-
       // LINK https://router.vuejs.org/guide/advanced/dynamic-routing.html#adding-routes-inside-navigation-guards
       return to.fullPath
     }
