@@ -207,6 +207,11 @@ const [
         },
         componentProp: {
           clearable: true,
+          type: 'textarea',
+          autosize: {
+            minRows: 3,
+            maxRows: 8,
+          },
         },
       },
 

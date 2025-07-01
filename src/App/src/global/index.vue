@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import WAppGlobalComponentCap from './cap.vue'
+import WAppGlobalComponentForceQuit from './forceQuit.vue'
 
 defineOptions({
   name: 'WAppGlobalComponents',
@@ -8,4 +9,5 @@ defineOptions({
 
 <template>
   <WAppGlobalComponentCap />
+  <WAppGlobalComponentForceQuit />
 </template>

@@ -4,7 +4,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreCapJSTokenInside = defineStore(StoreKeys.APP_CAPJS_TOKEN, {
-  state: (): IAppCapJSTokenLocale => ({
+  state: (): IAppStoreCapJSToken => ({
     capJSInst: null,
     capComponent: null,
     capShow: false,

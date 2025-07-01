@@ -13,6 +13,7 @@ export const AppConstPersistKey = {
 
   LOCALE: 'LOCALE',
   CAPJS_TOKEN: 'CAPJS_TOKEN',
+  FORCE_QUIT_SHOW: 'FORCE_QUIT_SHOW',
 
   TABS: 'TABS',
 

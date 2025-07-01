@@ -74,11 +74,20 @@ declare global {
   /**
    * App capjs token state
    */
-  interface IAppCapJSTokenLocale {
+  interface IAppStoreCapJSToken {
     capJSInst: null | ICapInst
     capShow: boolean
     capComponent: null | string
     onCapSuccess: null | ((token: string) => void)
+  }
+
+  /**
+   * App force quit state
+   */
+  interface IAppStoreForceQuit {
+    modalShow: RemovableRef<boolean>
+    forceQuitComponent: null | string
+    quitButton: boolean
   }
 
   /**
