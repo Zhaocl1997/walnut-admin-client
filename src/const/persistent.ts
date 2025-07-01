@@ -24,8 +24,8 @@ export const AppConstPersistKey = {
   // geo ip info, fetch from EXTERNAL_LINKS.GEOIP
   GEO_IP_INFO: 'GEO_IP_INFO',
 
-  // button retry keep after refresh map
-  BUTTON_RETRY: 'BUTTON_RETRY_MAP',
+  // count down
+  COUNTDOWN: 'COUNTDOWN_MAP',
 } as const
 
 export const AppConstStorageType = {
