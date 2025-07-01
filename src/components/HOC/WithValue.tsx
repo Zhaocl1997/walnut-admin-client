@@ -3,7 +3,7 @@ import type { ExtractPropTypes } from 'vue'
 import { omit } from 'lodash-es'
 
 export const WithValueProps = {
-  value: [String, Number, Boolean] as PropType<
+  value: [String, Number, Boolean, Array] as PropType<
     string | number | boolean | string[] | number[] | boolean[] | BaseDataType[]
   >,
 
