@@ -73,5 +73,5 @@ export function getTableTranslated<T>(props: ComputedRef<Partial<WTable.Props<T>
     ? isBaseI18nKey(path as string)
       ? t(`app.base.${path}`)
       : t(isHelpMsg(`table.${key}.${path}`))
-    : typeof item.title === 'string' ? t(item.title) : 'RenderFn'
+    : typeof item.title === 'string' ? t(item.title) : t(item._rawTitle!)
 }
