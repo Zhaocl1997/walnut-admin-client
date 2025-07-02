@@ -306,7 +306,7 @@ const [
         type: 'Base:Input',
         formProp: {
           path: 'populated_user.userName',
-          label: 'table.deleted.deletedBy',
+          label: computed(() => t('table.deleted.deletedBy')),
           locale: false,
         },
         descriptionProp: {
