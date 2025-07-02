@@ -2,6 +2,7 @@ import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import devtoolsJson from 'vite-plugin-devtools-json'
 import { creatAutoImportPlugin } from './auto-import'
 import { createBannerPlugin } from './banner'
 import { createCdnImportPlugin } from './cdn-import'
@@ -71,6 +72,9 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   // I'm pretty sure packages below will be removed when build
   // It's just a symbol to tell you that when this plugin will be used
   if (dev) {
+    // https://github.com/ChromeDevTools/vite-plugin-devtools-json
+    vitePlugins.push(devtoolsJson())
+
     // https://github.com/vuejs/devtools
     vitePlugins.push(createDevtoolsPlugin())
 
