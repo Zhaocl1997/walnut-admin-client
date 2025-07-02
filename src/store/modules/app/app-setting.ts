@@ -120,6 +120,10 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       return state.header.transition
     },
 
+    getHeaderHeight(state) {
+      return state.header.status ? state.header.height : 0
+    },
+
     // Breadcrumb
     getBreadcrumbId(state) {
       return state.breadcrumb.id
@@ -154,6 +158,10 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       return state.tabs.transition
     },
 
+    getTabsHeight(state) {
+      return state.tabs.status ? state.tabs.height : 0
+    },
+
     // Footer
     getFooterId(state) {
       return state.footer.id
@@ -173,6 +181,10 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
     getFooterTransition(state) {
       return state.footer.transition
+    },
+
+    getFooterHeight(state) {
+      return state.footer.status ? state.footer.height : 0
     },
 
     // Menu
@@ -267,14 +279,14 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
      * @description get calc main content height
      */
     getCalcContentHeight(): string {
-      return `calc(100vh - ${this.header.status ? this.header.height : 0}px - ${this.tabs.status ? this.tabs.height : 0}px - ${this.footer.status ? this.footer.height : 0}px)`
+      return `calc(100vh - ${this.getHeaderHeight}px - ${this.getTabsHeight}px - ${this.getFooterHeight}px)`
     },
 
     /**
      * @description get calc main content height with padding
      */
     getCalcContentHeightWithPadding(): string {
-      return `calc(100vh - ${this.header.status ? this.header.height : 0}px - ${this.tabs.status ? this.tabs.height : 0}px - ${this.footer.status ? this.footer.height : 0}px - ${this.app.contentPadding * 2}px)`
+      return `calc(100vh - ${this.getHeaderHeight}px - ${this.getTabsHeight}px - ${this.getFooterHeight}px - ${this.app.contentPadding * 2}px)`
     },
 
     /**
