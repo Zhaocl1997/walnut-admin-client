@@ -365,56 +365,10 @@ async function onFeedback() {
   }
 }
 
-// multiple feedback
-const { stop: stopMultiple } = watch(
-  () => value.value,
-  async () => {
-    if (getProps.value.multiple && Array.isArray(value.value)) {
-      if (value.value.length) {
-        await nextTick()
-        await onFeedback()
-        stopMultiple()
-      }
-    }
-  },
-  {
-    immediate: true,
-    deep: true,
-  },
-)
-
-// single feedback
-const { stop: stopSingle } = watch(
-  () => value.value,
-  async () => {
-    if (!getProps.value.multiple) {
-      if (value.value) {
-        await nextTick()
-        await onFeedback()
-        stopSingle()
-      }
-    }
-  },
-  {
-    immediate: true,
-    deep: true,
-  },
-)
-
-// empty watch only
 watch(
   () => value.value,
-  (v) => {
-    if (getProps.value.multiple) {
-      if (!v || !(v as []).length) {
-        checkedKeys.value = []
-      }
-    }
-    else {
-      if (!v) {
-        selectedKeys.value = []
-      }
-    }
+  async () => {
+    await onFeedback()
   },
   {
     immediate: true,
