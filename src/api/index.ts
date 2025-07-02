@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
+import type { Recordable } from 'easy-fns-ts'
 
 export function HelloAPI(config: AxiosRequestConfig) {
   return AppAxios.get<string>(
@@ -14,6 +15,14 @@ export function HelloWithTokenAPI(config: AxiosRequestConfig) {
     {
       url: '/auth',
       ...config,
+    },
+  )
+}
+
+export function BackendDepsAPI() {
+  return AppAxios.get<{ dependencies: Recordable, devDependencies: Recordable }>(
+    {
+      url: '/deps',
     },
   )
 }

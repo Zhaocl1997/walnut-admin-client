@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
+import { BackendDepsAPI } from '@/api'
 
 defineOptions({
   name: 'About',
@@ -58,7 +59,7 @@ const infoItems = computed<ICompUIDescriptionsItem[]>(
     ],
 )
 
-const DepItems = ref<ICompUIDescriptionsItem[]>(
+const frontendDeps = ref<ICompUIDescriptionsItem[]>(
   Object.entries(deps).map(([k, v]) => ({
     label: k,
     value: v,
@@ -66,8 +67,7 @@ const DepItems = ref<ICompUIDescriptionsItem[]>(
     typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
   })),
 )
-
-const DevDepItems = ref<ICompUIDescriptionsItem[]>(
+const frontendDevDeps = ref<ICompUIDescriptionsItem[]>(
   Object.entries(devDeps).map(([k, v]) => ({
     label: k,
     value: v,
@@ -75,6 +75,28 @@ const DevDepItems = ref<ICompUIDescriptionsItem[]>(
     typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
   })),
 )
+const backendDeps = ref()
+const backendDevDeps = ref()
+
+async function onGetBackendDeps() {
+  const res = await BackendDepsAPI()
+
+  backendDeps.value = Object.entries(res.dependencies).map(([k, v]) => ({
+    label: k,
+    value: v,
+    type: 'link',
+    typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
+  }))
+
+  backendDevDeps.value = Object.entries(res.devDependencies).map(([k, v]) => ({
+    label: k,
+    value: v,
+    type: 'link',
+    typeProps: { type: 'info', link: `https://www.npmjs.com/package/${k}` },
+  }))
+}
+
+onBeforeMount(onGetBackendDeps)
 </script>
 
 <template>
@@ -99,44 +121,90 @@ const DevDepItems = ref<ICompUIDescriptionsItem[]>(
       />
     </WCard>
 
-    <WCard
-      :title="t('about.title.deps')"
-      size="small"
-      :segmented="{
-        content: true,
-        footer: 'soft',
-      }"
-      header-preset="collapse"
-    >
-      <WDescriptions
-        size="small"
-        label-placement="left"
-        bordered
-        :column="2"
-        :items="DepItems"
-        :label-style="{ width: '30%' }"
-        :content-style="{ width: '20%' }"
-      />
-    </WCard>
+    <n-tabs type="segment" animated>
+      <n-tab-pane name="front" tab="Frontend" display-directive="show:lazy">
+        <WCard
+          :title="`${t('about.title.deps')}(${Object.keys(frontendDeps).length})`"
+          size="small"
+          :segmented="{
+            content: true,
+            footer: 'soft',
+          }"
+          header-preset="collapse"
+        >
+          <WDescriptions
+            size="small"
+            label-placement="left"
+            bordered
+            :column="2"
+            :items="frontendDeps"
+            :label-style="{ width: '30%' }"
+            :content-style="{ width: '20%' }"
+          />
+        </WCard>
 
-    <WCard
-      :title="t('about.title.devdeps')"
-      size="small"
-      :segmented="{
-        content: true,
-        footer: 'soft',
-      }"
-      header-preset="collapse"
-    >
-      <WDescriptions
-        size="small"
-        label-placement="left"
-        bordered
-        :column="2"
-        :items="DevDepItems"
-        :label-style="{ width: '30%' }"
-        :content-style="{ width: '20%' }"
-      />
-    </WCard>
+        <WCard
+          :title="`${t('about.title.devdeps')}(${Object.keys(frontendDevDeps).length})`"
+          size="small"
+          :segmented="{
+            content: true,
+            footer: 'soft',
+          }"
+          header-preset="collapse"
+        >
+          <WDescriptions
+            size="small"
+            label-placement="left"
+            bordered
+            :column="2"
+            :items="frontendDevDeps"
+            :label-style="{ width: '30%' }"
+            :content-style="{ width: '20%' }"
+          />
+        </WCard>
+      </n-tab-pane>
+
+      <n-tab-pane name="back" tab="Backend" display-directive="show:lazy">
+        <WCard
+          :title="`${t('about.title.deps')}(${Object.keys(backendDeps).length})`"
+          size="small"
+          :segmented="{
+            content: true,
+            footer: 'soft',
+          }"
+          header-preset="collapse"
+        >
+          <WDescriptions
+            size="small"
+            label-placement="left"
+            bordered
+            :column="2"
+            :items="backendDeps"
+            :label-style="{ width: '30%' }"
+            :content-style="{ width: '20%' }"
+          />
+        </WCard>
+
+        <WCard
+          :title="`${t('about.title.devdeps')}(${Object.keys(backendDevDeps).length})`"
+          size="small"
+          :segmented="{
+            content: true,
+            footer: 'soft',
+          }"
+          header-preset="collapse"
+        >
+          <WDescriptions
+            size="small"
+            label-placement="left"
+            bordered
+            :column="2"
+            :items="backendDevDeps"
+            :label-style="{ width: '30%' }"
+            :content-style="{ width: '20%' }"
+          />
+        </WCard>
+      </n-tab-pane>
+    </n-tabs>
   </div>
 </template>
