@@ -18,7 +18,6 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
   tableProps: {
     localeUniqueKey: localeKey,
     rowKey: row => row[keyField]!,
-    maxHeight: 600,
     striped: true,
     bordered: true,
     singleLine: false,
