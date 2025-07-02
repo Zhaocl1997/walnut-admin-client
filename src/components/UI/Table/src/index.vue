@@ -111,10 +111,16 @@ emits('hook', {
   onApiDeleteMany,
   onGetApiListParams: () => listParams.apiListParams,
 })
+
+// min/max height
+const appSetting = useAppStoreSetting()
+const formCardRef = useTemplateRef<HTMLDivElement>('formCardRef')
+const { height } = useElementSize(formCardRef)
+const getTableHeight = computed(() => `calc(${appSetting.getCalcContentHeightWithPadding} - ${height.value}px - 185px)`)
 </script>
 
 <template>
-  <n-card v-if="getProps.queryFormProps" class="mb-2">
+  <n-card v-if="getProps.queryFormProps" ref="formCardRef" class="mb-2">
     <!-- @vue-generic {T} -->
     <QueryForm />
   </n-card>
@@ -127,6 +133,8 @@ emits('hook', {
     <n-data-table
       ref="tableRef"
       v-bind="getTableProps"
+      :min-height="getTableHeight"
+      :max-height="getTableHeight"
       :columns="tableColumns.filter(i => i._internalShow)"
     />
   </n-card>
