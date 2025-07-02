@@ -16,42 +16,42 @@ const { cards: chartCards, loading: chartCardLoading } = useChartCard()
 <template>
   <div>
     <!-- number -->
-    <div class="mb-2 flex flex-wrap">
-      <WTransition appear transition-name="fade-down" group>
-        <div
-          v-for="(item, index) in numberCards"
-          :key="index"
-          class="w-full rounded-2xl px-1 pt-1 transition duration-300 ease-in-out md:w-1/2 xl:w-1/3 md:pr-1"
-        >
+    <div class="flex flex-wrap">
+      <div
+        v-for="(item, index) in numberCards"
+        :key="index"
+        class="w-full rounded-2xl p-1 md:w-1/2 xl:w-1/3 md:pr-1"
+      >
+        <WTransition appear transition-name="fade-down" :duration="(index + 1) * 200">
           <WHomeNumberCard
             v-bind="item"
             :loading="numberCardLoading"
           />
-        </div>
-      </WTransition>
+        </WTransition>
+      </div>
     </div>
 
     <!-- chart -->
     <div class="flex flex-wrap">
-      <WTransition appear transition-name="fade-down" group>
-        <div
-          v-for="(item, index) in chartCards"
-          :key="index"
-          class="w-full rounded-2xl px-1 pt-1 transition duration-300 ease-in-out md:w-1/2 xl:w-1/2 md:pr-1"
-        >
+      <div
+        v-for="(item, index) in chartCards"
+        :key="index"
+        class="w-full rounded-2xl p-1 md:w-1/2 xl:w-1/2 md:pr-1"
+      >
+        <WTransition appear transition-name="fade-down" :duration="(index + 1) * 500">
           <!-- @vue-expect-error do not know why -->
           <WHomeChartCard
             v-bind="item"
             :loading="chartCardLoading"
           />
-        </div>
-      </WTransition>
+        </WTransition>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-  :deep(.w-card > .w-card-header) {
+:deep(.w-card > .w-card-header) {
   padding: 12px 16px !important;
 }
 
