@@ -93,6 +93,13 @@ export function buildRoutes(payload: RouteRecordRaw[]) {
   // see https://github.com/vuejs/vue-router-next/issues/626
   const transformedRouteTree = transformToTwoLevelRouteTree(routesTree)
 
+  // fix router warning
+  // remove first cause initial builtin in builtinRoutes
+  const { removeRoute, hasRoute } = AppRouter
+  if (hasRoute(App404Name)) {
+    removeRoute(App404Name)
+  }
+
   // finally push the 404/500
   transformedRouteTree.push(App404Route)
   transformedRouteTree.push(App500Route)
