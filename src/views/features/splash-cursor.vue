@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 /**
- * @description source code: https://21st.dev/DavidHDev/splash-cursor/default
+ * @description source code: https://21st.dev/davidhzdev/splash-cursor/default
  * Transformed to vue3 code by deepseek
  * Optimised by me
  */

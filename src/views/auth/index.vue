@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { UnTyper } from 'untyper'
+import AuthBg from './authBg.vue'
 import AuthFormTab from './src/index.vue'
 import { useDemonstrate } from './useDemonstrate'
 
@@ -44,24 +45,18 @@ watch(locale, () => {
       </n-button>
     </div>
 
-    <div
-      class="relative hidden w-1/2 items-center bg-cover bg-no-repeat lg:flex"
-      style="background-image: url('/assets/auth_bg.jpg')"
-    >
-      <div class="absolute inset-0 z-0 bg-black opacity-60" />
-      <div class="z-10 w-full px-24">
+    <div class="relative hidden w-1/2 items-center bg-cover bg-no-repeat lg:flex">
+      <div class="abs-center z-10 w-full px-24">
         <h1 id="untyper1" class="text-left text-5xl text-gray-50 font-bold tracking-wide" />
         <p id="untyper2" class="my-4 text-3xl text-gray-50" />
       </div>
+      <AuthBg />
     </div>
 
-    <div class="relative w-full flex items-center justify-center bg-bodyColor text-center lg:w-1/2">
+    <div class="relative w-full flex items-center justify-center overflow-hidden bg-bodyColor text-center lg:w-1/2">
       <div>
-        <div
-          class="absolute inset-0 z-10 items-center bg-cover bg-no-repeat lg:hidden"
-          style="background-image: url('/assets/auth_bg.jpg')"
-        >
-          <div class="absolute inset-0 z-0 bg-black opacity-60" />
+        <div class="absolute inset-0 z-10 items-center bg-cover bg-no-repeat lg:hidden">
+          <AuthBg />
         </div>
 
         <n-card style="z-index: 100" hoverable class="relative rounded-3xl light:shadow-2xl">
