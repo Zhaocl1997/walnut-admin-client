@@ -46,11 +46,11 @@ async function prepareRelease(version: string): Promise<void> {
     const releaseNotes = extractReleaseNotes(changelog, version)
     console.log(`📝 提取到发布说明：\n${releaseNotes}`)
 
-    // 保存发布说明到临时文件（供CI使用）
+    // 保存发布说明到临时文件
     await fs.writeFile('release-notes.md', releaseNotes)
     console.log('💾 保存发布说明到 release-notes.md')
 
-    // 创建 Git 提交
+    // 创建 Git 提交（包含 release-notes.md）
     console.log('💾 创建 Git 提交')
     execSync(`git add ${packageJsonPath} ${changelogPath} release-notes.md`)
     execSync(`git commit -m "chore: release v${version}"`)
@@ -59,6 +59,13 @@ async function prepareRelease(version: string): Promise<void> {
     const tagName = `v${version}`
     console.log(`🏷️ 创建 Git 标签: ${tagName}`)
     execSync(`git tag -a ${tagName} -m "Release ${tagName}"`)
+
+    // 删除 release-notes.md（不在 Git 中）
+    console.log('🧹 清理本地 release-notes.md 文件')
+    await fs.unlink('release-notes.md')
+
+    // 创建删除文件的提交
+    execSync(`git commit -am "chore: remove release-notes.md after release"`)
 
     console.log('✅ 本地发布准备完成')
     console.log('📤 请执行以下命令推送到远程仓库：')

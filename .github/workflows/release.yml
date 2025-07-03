@@ -61,18 +61,3 @@ jobs:
           generate_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Clean up release notes
-        run: |
-          # 配置Git用户信息
-          git config --global user.name "Zhaocl1997"
-          git config --global user.email "falling9712@gmail.com"
-
-          # 删除release-notes.md文件
-          git rm release-notes.md
-
-          # 创建新提交
-          git commit -m "chore: remove release-notes.md after release [skip ci]"
-
-          # 使用安全的推送方式
-          git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
