@@ -9,13 +9,13 @@
     "url": "https://github.com/Zhaocl1997"
   },
   "license": "MIT",
-  "homepage": "https://github.com/Zhaocl1997/walnut-admin-client",
+  "homepage": "https://github.com/walnut-admin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Zhaocl1997/walnut-admin-client.git"
+    "url": "https://github.com/walnut-admin/walnut-admin-client.git"
   },
   "bugs": {
-    "url": "https://github.com/Zhaocl1997/walnut-admin-client/issues"
+    "url": "https://github.com/walnut-admin/walnut-admin-client/issues"
   },
   "engines": {
     "node": ">=16.0.0",

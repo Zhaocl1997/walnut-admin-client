@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="">
-    <img src="https://github.com/Zhaocl1997/walnut-admin-client/blob/main/public/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/walnut-admin/walnut-admin-client/blob/main/public/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h1 align="center">Walnut Admin</h1>
@@ -13,9 +13,9 @@
     <br />
     <a target="_blank" href="https://www.walnut-admin.com">查看Demo</a>
     ·
-    <a target="_blank" href="https://github.com/Zhaocl1997/walnut-admin-client/issues">报告Bug</a>
+    <a target="_blank" href="https://github.com/walnut-admin/walnut-admin-client/issues">报告Bug</a>
     ·
-    <a target="_blank" href="https://github.com/Zhaocl1997/walnut-admin-client/issues">提出新特性</a>
+    <a target="_blank" href="https://github.com/walnut-admin/walnut-admin-client/issues">提出新特性</a>
   </p>
 
 </p>
@@ -49,8 +49,8 @@ Walnut Admin, 一个开源的、持续优化的中后台管理系统模板。项
 <!-- links -->
 
 [author-url]: https://github.com/Zhaocl1997
-[walnut-admin-client]: https://github.com/Zhaocl1997/walnut-admin-client
-[walnut-admin-server]: https://github.com/Zhaocl1997/walnut-admin-server
+[walnut-admin-client]: https://github.com/walnut-admin/walnut-admin-client
+[walnut-admin-server]: https://github.com/walnut-admin/walnut-admin-server
 [walnut-admin-doc]: https://walnut-admin-doc.netlify.app/
-[license-url]: https://github.com/Zhaocl1997/walnut-admin-client/blob/main/LICENSE
+[license-url]: https://github.com/walnut-admin/walnut-admin-client/blob/main/LICENSE
 [nestjs-url]: https://docs.nestjs.com/
