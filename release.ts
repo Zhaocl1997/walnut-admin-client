@@ -9,6 +9,12 @@ interface PackageJson {
   [key: string]: any
 }
 
+// 新增类型定义
+interface GitConfig {
+  remote: string
+  branch: string
+}
+
 async function prepareRelease(version: string): Promise<void> {
   try {
     console.log(`🚀 开始准备发布版本 v${version}`)
@@ -50,7 +56,11 @@ async function prepareRelease(version: string): Promise<void> {
     await fs.writeFile('release-notes.md', releaseNotes)
     console.log('💾 保存发布说明到 release-notes.md')
 
-    // 创建 Git 提交（包含 release-notes.md）
+    // 获取 Git 配置
+    const gitConfig = getGitConfig()
+    console.log(`🌐 使用远程仓库: ${gitConfig.remote}, 分支: ${gitConfig.branch}`)
+
+    // 创建 Git 提交
     console.log('💾 创建 Git 提交')
     execSync(`git add ${packageJsonPath} ${changelogPath} release-notes.md`)
     execSync(`git commit -m "chore: release v${version}"`)
@@ -60,21 +70,39 @@ async function prepareRelease(version: string): Promise<void> {
     console.log(`🏷️ 创建 Git 标签: ${tagName}`)
     execSync(`git tag -a ${tagName} -m "Release ${tagName}"`)
 
-    // 删除 release-notes.md（不在 Git 中）
-    console.log('🧹 清理本地 release-notes.md 文件')
-    await fs.unlink('release-notes.md')
+    // 自动推送代码和标签
+    console.log('📤 推送代码和标签到远程仓库')
+    execSync(`git push ${gitConfig.remote} ${gitConfig.branch}`)
+    execSync(`git push ${gitConfig.remote} ${tagName}`)
 
-    // 创建删除文件的提交
-    execSync(`git commit -am "chore: remove release-notes.md after release"`)
-
-    console.log('✅ 本地发布准备完成')
-    console.log('📤 请执行以下命令推送到远程仓库：')
-    console.log(`git push origin main && git push origin ${tagName}`)
+    console.log('✅ 发布准备完成，已推送到远程仓库')
+    console.log('⏳ GitHub Actions 将自动创建 Release...')
   }
   catch (error: any) {
     console.error('❌ 发布过程中出错:', error.message)
     process.exit(1)
   }
+}
+
+// 获取 Git 配置
+function getGitConfig(): GitConfig {
+  // 获取当前分支
+  const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim()
+
+  // 获取远程仓库名称
+  let remote = 'origin'
+  try {
+    const remoteOutput = execSync('git remote').toString().trim()
+    if (remoteOutput) {
+      // 使用第一个远程仓库
+      remote = remoteOutput.split('\n')[0]
+    }
+  }
+  catch (error) {
+    console.warn('⚠️ 无法获取远程仓库信息，使用默认值 \'origin\'', error)
+  }
+
+  return { remote, branch }
 }
 
 // 从 changelog-latest.md 中提取指定版本的发布说明
@@ -110,6 +138,14 @@ function getVersionFromArgs(): string {
 
 // 执行发布准备
 (async () => {
+  // 检查是否有未提交的更改
+  const statusOutput = execSync('git status --porcelain').toString().trim()
+  if (statusOutput) {
+    console.error('❌ 存在未提交的更改，请先提交或暂存更改')
+    console.error(`未提交的文件:\n${statusOutput}`)
+    process.exit(1)
+  }
+
   const version = getVersionFromArgs()
   await prepareRelease(version)
 })()
