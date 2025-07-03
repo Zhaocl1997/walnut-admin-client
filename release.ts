@@ -138,14 +138,6 @@ function getVersionFromArgs(): string {
 
 // 执行发布准备
 (async () => {
-  // 检查是否有未提交的更改
-  const statusOutput = execSync('git status --porcelain').toString().trim()
-  if (statusOutput) {
-    console.error('❌ 存在未提交的更改，请先提交或暂存更改')
-    console.error(`未提交的文件:\n${statusOutput}`)
-    process.exit(1)
-  }
-
   const version = getVersionFromArgs()
   await prepareRelease(version)
 })()
