@@ -12,18 +12,40 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 需要获取完整历史记录才能访问标签
+          fetch-depth: 0 # 获取完整提交历史
 
-      - name: Verify release notes file
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Verify release notes
+        id: verify-notes
         run: |
+          # 检查changelog-latest.md是否存在
           if [ ! -f "changelog-latest.md" ]; then
             echo "❌ 错误：未找到 changelog-latest.md 文件"
             exit 1
           fi
 
-          # 验证发布说明内容
-          if [ $(wc -l < changelog-latest.md) -lt 3 ]; then
-            echo "⚠️ 警告：发布说明内容可能过短"
+          # 检查文件内容是否有效
+          NOTE_COUNT=$(wc -l < changelog-latest.md | tr -d ' ')
+          if [ $NOTE_COUNT -lt 3 ]; then
+            echo "⚠️ 警告：发布说明内容可能过短（只有 $NOTE_COUNT 行）"
+            echo "::warning::发布说明内容可能过短"
+          else
+            echo "✅ 发布说明验证通过（$NOTE_COUNT 行）"
+          fi
+
+          # 提取标签版本
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_ENV
+
+          # 验证标签版本与package.json一致
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          if [ "$TAG_VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "❌ 错误: 标签版本 ($TAG_VERSION) 与 package.json 版本 ($PACKAGE_VERSION) 不匹配"
+            exit 1
           fi
 
       - name: Create GitHub Release
@@ -38,9 +60,17 @@ jobs:
 
       - name: Clean up release notes
         run: |
-          # 提交中移除 changelog-latest.md 文件
+          # 配置Git用户信息
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+
+          # 删除changelog-latest.md文件
           git rm changelog-latest.md
-          git commit -m "chore: remove changelog-latest.md after release"
+
+          # 创建新提交
+          git commit -m "chore: remove changelog-latest.md after release [skip ci]"
+
+          # 推送更改
           git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
