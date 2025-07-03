@@ -32,14 +32,14 @@ async function prepareRelease(version: string): Promise<void> {
       `${JSON.stringify(packageJson, null, 2)}\n`,
     )
 
-    // 读取 CHANGELOG.md
-    const changelogPath = path.join(process.cwd(), 'CHANGELOG.md')
+    // 读取 changelog-latest.md
+    const changelogPath = path.join(process.cwd(), 'changelog-latest.md')
     const changelog = await fs.readFile(changelogPath, 'utf-8')
 
     // 验证CHANGELOG中是否有该版本的日志
     const versionHeader = `## [${version}]`
     if (!changelog.includes(versionHeader)) {
-      throw new Error(`在 CHANGELOG.md 中找不到版本 ${version} 的发布说明。请确保格式为：\n## [${version}]`)
+      throw new Error(`在 changelog-latest.md 中找不到版本 ${version} 的发布说明。请确保格式为：\n## [${version}]`)
     }
 
     // 提取当前版本的变更日志
@@ -70,14 +70,14 @@ async function prepareRelease(version: string): Promise<void> {
   }
 }
 
-// 从 CHANGELOG.md 中提取指定版本的发布说明
+// 从 changelog-latest.md 中提取指定版本的发布说明
 function extractReleaseNotes(changelog: string, version: string): string {
   const versionHeader = `## [${version}]`
   const startIndex = changelog.indexOf(versionHeader)
 
   if (startIndex === -1) {
     throw new Error(
-      `在 CHANGELOG.md 中找不到版本 ${version} 的发布说明。请确保格式为：\n## [${version}]`,
+      `在 changelog-latest.md 中找不到版本 ${version} 的发布说明。请确保格式为：\n## [${version}]`,
     )
   }
 

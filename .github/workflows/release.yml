@@ -1,5 +1,9 @@
 name: Create Release
 
+# 添加权限配置
+permissions:
+  contents: write # 允许创建 Release 和推送代码
+
 on:
   push:
     tags:
@@ -22,14 +26,14 @@ jobs:
       - name: Verify release notes
         id: verify-notes
         run: |
-          # 检查changelog-latest.md是否存在
-          if [ ! -f "changelog-latest.md" ]; then
-            echo "❌ 错误：未找到 changelog-latest.md 文件"
+          # 检查release-notes.md是否存在
+          if [ ! -f "release-notes.md" ]; then
+            echo "❌ 错误：未找到 release-notes.md 文件"
             exit 1
           fi
 
           # 检查文件内容是否有效
-          NOTE_COUNT=$(wc -l < changelog-latest.md | tr -d ' ')
+          NOTE_COUNT=$(wc -l < release-notes.md | tr -d ' ')
           if [ $NOTE_COUNT -lt 3 ]; then
             echo "⚠️ 警告：发布说明内容可能过短（只有 $NOTE_COUNT 行）"
             echo "::warning::发布说明内容可能过短"
@@ -53,7 +57,7 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body_path: changelog-latest.md
+          body_path: release-notes.md
           generate_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -64,13 +68,11 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          # 删除changelog-latest.md文件
-          git rm changelog-latest.md
+          # 删除release-notes.md文件
+          git rm release-notes.md
 
           # 创建新提交
-          git commit -m "chore: remove changelog-latest.md after release [skip ci]"
+          git commit -m "chore: remove release-notes.md after release [skip ci]"
 
-          # 推送更改
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 使用安全的推送方式
+          git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
