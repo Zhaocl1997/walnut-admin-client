@@ -16,13 +16,13 @@ jobs:
 
       - name: Verify release notes file
         run: |
-          if [ ! -f "release-notes.md" ]; then
-            echo "❌ 错误：未找到 release-notes.md 文件"
+          if [ ! -f "changelog-latest.md" ]; then
+            echo "❌ 错误：未找到 changelog-latest.md 文件"
             exit 1
           fi
 
           # 验证发布说明内容
-          if [ $(wc -l < release-notes.md) -lt 3 ]; then
+          if [ $(wc -l < changelog-latest.md) -lt 3 ]; then
             echo "⚠️ 警告：发布说明内容可能过短"
           fi
 
@@ -31,16 +31,16 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body_path: release-notes.md
+          body_path: changelog-latest.md
           generate_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Clean up release notes
         run: |
-          # 提交中移除 release-notes.md 文件
+          # 提交中移除 changelog-latest.md 文件
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git rm release-notes.md
-          git commit -m "chore: remove release-notes.md after release"
+          git rm changelog-latest.md
+          git commit -m "chore: remove changelog-latest.md after release"
           git push origin main
