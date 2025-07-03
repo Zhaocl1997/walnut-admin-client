@@ -2,7 +2,6 @@ import type { ValueOf } from 'easy-fns-ts'
 
 export const AppConstPersistKey = {
   ACCESS_TOKEN: 'ACCESS_TOKEN',
-  REFRESH_TOKEN: 'REFRESH_TOKEN',
   REMEMBER: 'REMEMBER',
 
   DARK_MODE: 'DARK_MODE',

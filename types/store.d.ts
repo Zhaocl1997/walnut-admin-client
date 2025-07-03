@@ -185,7 +185,6 @@ declare global {
    */
   interface IUserStoreAuth {
     accessToken?: RemovableRef<string>
-    refreshToken?: RemovableRef<string>
     remember?: RemovableRef<Omit<AppPayloadAuth.Password, 'rememberMe'>>
   }
 

@@ -12,7 +12,6 @@ import { store } from '../../pinia'
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): IUserStoreAuth => ({
     accessToken: useAppStorage(AppConstPersistKey.ACCESS_TOKEN, ''),
-    refreshToken: useAppStorage(AppConstPersistKey.REFRESH_TOKEN, ''),
     remember: useAppStorage(AppConstPersistKey.REMEMBER, {
       userName: '',
       password: '',
@@ -25,23 +24,19 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     setAccessToken(payload: string) {
       this.accessToken = payload
     },
-    setRefreshToken(payload: string) {
-      this.refreshToken = payload
-    },
     setRemember(payload: AppPayloadAuth.Password | undefined) {
       this.remember = payload
     },
 
     clearTokens() {
       this.setAccessToken('')
-      this.setRefreshToken('')
     },
 
     /**
      * @description get new access token use refresh token
      */
     async GetNewATWithRT(): Promise<string> {
-      const { accessToken } = await refreshTokenAPI({ refreshToken: this.refreshToken! })
+      const { accessToken } = await refreshTokenAPI()
 
       this.setAccessToken(accessToken)
 
@@ -58,19 +53,18 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       AppRouter.removeRoute(AppRootRoute.name!)
       AppRouter.addRoute(AppRootRoute)
 
-      await this.ExcuteCoreFnAfterAuth(accessToken, this.refreshToken!)
+      await this.ExcuteCoreFnAfterAuth(accessToken)
     },
 
     /**
      * @description core function after signin to excute
      */
-    async ExcuteCoreFnAfterAuth(at: string, rt: string) {
+    async ExcuteCoreFnAfterAuth(at: string) {
       const userProfile = useAppStoreUserProfile()
       const appMenu = useAppStoreMenu()
 
       // set tokens
       this.setAccessToken(at)
-      this.setRefreshToken(rt)
 
       // get user profile
       await userProfile.getProfile()
@@ -95,7 +89,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       })
 
       // excute core fn
-      await this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
+      await this.ExcuteCoreFnAfterAuth(res.accessToken)
 
       const { userName, password, rememberMe } = payload
 
@@ -113,7 +107,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const res = await authWithEmailAPI(payload)
 
       // excute core fn
-      await this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
+      await this.ExcuteCoreFnAfterAuth(res.accessToken)
     },
 
     /**
@@ -123,7 +117,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const res = await authWithPhoneNumberAPI(payload)
 
       // excute core fn
-      await this.ExcuteCoreFnAfterAuth(res.accessToken, res.refreshToken)
+      await this.ExcuteCoreFnAfterAuth(res.accessToken)
     },
 
     /**

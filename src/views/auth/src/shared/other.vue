@@ -84,7 +84,7 @@ async function onOAuth(type: string) {
       childWindow.close()
 
       useAppMsgSuccess(t('app.oauth.success'))
-      await userAuth.ExcuteCoreFnAfterAuth(res.data.accessToken, res.data.refreshToken)
+      await userAuth.ExcuteCoreFnAfterAuth(res.data.accessToken)
     }
 
     loading.value = false

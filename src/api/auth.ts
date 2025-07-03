@@ -38,12 +38,9 @@ export function signoutAPI() {
 /**
  * @description Refresh accessToken use refreshToken
  */
-export function refreshTokenAPI(data: { refreshToken: string }) {
-  return AppAxios.post<{
-    accessToken: string
-  }>({
+export function refreshTokenAPI() {
+  return AppAxios.post<{ accessToken: string }>({
     url: Auth.REFRESH_TOKEN,
-    data,
   })
 }
 
