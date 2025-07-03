@@ -16,6 +16,8 @@
     <a target="_blank" href="https://github.com/walnut-admin/walnut-admin-client/issues">Report a Bug</a>
     ·
     <a target="_blank" href="https://github.com/walnut-admin/walnut-admin-client/issues">Request a Feature</a>
+    ·
+    <a target="_blank" href="./README.zh_CN.md">中文</a>
   </p>
 
 </p>
