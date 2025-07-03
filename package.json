@@ -1,7 +1,7 @@
 {
   "name": "walnut-admin",
   "type": "module",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "An admin template, using `vue3`,`ts`,`vite`,`naive-ui`. Continuously updating...",
   "author": {
     "name": "Zhaocl1997",
