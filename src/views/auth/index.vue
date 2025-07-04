@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { UnTyper } from 'untyper'
-import AuthBg from './authBg.vue'
+import St21HoverGlareCard from './src/21st/hover-glare-card.vue'
+import St21LetterGlitch from './src/21st/letter-glitch.vue'
 import AuthFormTab from './src/index.vue'
 import { useDemonstrate } from './useDemonstrate'
 
@@ -50,31 +51,33 @@ watch(locale, () => {
         <h1 id="untyper1" class="text-left text-5xl text-gray-50 font-bold tracking-wide" />
         <p id="untyper2" class="my-4 text-3xl text-gray-50" />
       </div>
-      <AuthBg />
+      <St21LetterGlitch />
     </div>
 
     <div class="relative w-full flex items-center justify-center overflow-hidden bg-bodyColor text-center lg:w-1/2">
       <div>
         <div class="absolute inset-0 z-10 items-center bg-cover bg-no-repeat lg:hidden">
-          <AuthBg />
+          <St21LetterGlitch />
         </div>
 
-        <n-card style="z-index: 100" hoverable class="relative rounded-3xl light:shadow-2xl">
-          <div class="vstack items-center justify-center">
-            <h1 class="mb-4 hstack items-center justify-center">
-              <img src="/logo.png" :alt="envTitle" class="w-16">
-              <span class="ml-4 whitespace-nowrap text-2xl">
-                {{ envTitle }}
-              </span>
-            </h1>
+        <St21HoverGlareCard class="rounded-3xl">
+          <n-card hoverable class="relative rounded-3xl light:shadow-2xl">
+            <div class="vstack items-center justify-center">
+              <h1 class="mb-4 hstack items-center justify-center">
+                <img src="/logo.png" :alt="envTitle" class="w-16">
+                <span class="ml-4 whitespace-nowrap text-2xl">
+                  {{ envTitle }}
+                </span>
+              </h1>
 
-            <div class="w-full">
-              <WTransition transition-name="fade-right" appear :duration="500">
-                <AuthFormTab ref="signInRef" />
-              </WTransition>
+              <div class="w-full">
+                <WTransition transition-name="fade-right" appear :duration="500">
+                  <AuthFormTab ref="signInRef" />
+                </WTransition>
+              </div>
             </div>
-          </div>
-        </n-card>
+          </n-card>
+        </St21HoverGlareCard>
 
         <n-text class="absolute bottom-4 right-1/2 translate-x-1/2 cursor-pointer" @click="onClickBeian">
           黑ICP备2022002207号
