@@ -232,7 +232,7 @@ watch(
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .glitch-container {
   position: relative;
   width: 100%;
