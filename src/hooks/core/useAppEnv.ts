@@ -29,7 +29,6 @@ export function useAppEnvProxy() {
 export function useAppEnvBuild() {
   return {
     publicPath: import.meta.env.VITE_PUBLIC_PATH,
-    demo: import.meta.env.VITE_BUILD_DEMO,
   }
 }
 

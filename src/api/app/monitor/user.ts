@@ -1,7 +1,5 @@
 import { BaseAPI } from '../../base'
 
-const { demo } = useAppEnvBuild()
-
 export const monitorUserAPI = new BaseAPI<AppMonitorUserModel>({
   model: 'app',
   section: 'monitor/user',
@@ -10,6 +8,5 @@ export const monitorUserAPI = new BaseAPI<AppMonitorUserModel>({
 export function forceQuitAPI(id: string) {
   return AppAxios.delete({
     url: `/app/monitor/user/force-quit/${id}`,
-    _demonstrate: demo,
   })
 }

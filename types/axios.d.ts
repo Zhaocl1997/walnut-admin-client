@@ -14,11 +14,6 @@ declare module 'axios' {
     _timestamp?: boolean
 
     /**
-     * endpoints for demonstrate purpose which won't be sent for real
-     */
-    _demonstrate?: boolean
-
-    /**
      * send a request doomed to be failed
      */
     _error?: boolean

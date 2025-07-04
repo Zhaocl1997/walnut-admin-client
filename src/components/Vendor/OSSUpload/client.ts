@@ -3,8 +3,6 @@ import { getAliSTSTokenAPI } from '@/api/shared/ali'
 import OSS from 'ali-oss'
 import { omit } from 'lodash-es'
 
-const { demo } = useAppEnvBuild()
-
 export class AliOSSClient {
   private static _instance: AliOSSClient
 
@@ -57,10 +55,6 @@ export class AliOSSClient {
     data: UploadFileInfo,
     folder: string,
   ): Promise<{ id: string, value: string } | undefined> {
-    // demo mode, do not actually upload
-    if (demo)
-      return
-
     const headers = {
       // 指定该Object被下载时网页的缓存行为。
       // 'Cache-Control': 'no-cache',
@@ -107,9 +101,6 @@ export class AliOSSClient {
     folder: string,
     onProcessCallback: (e: { percent: number }) => void,
   ): Promise<{ id: string, value: string } | undefined> {
-    if (demo)
-      return
-
     const headers = {
       // 指定该Object被下载时网页的缓存行为。
       // 'Cache-Control': 'no-cache',

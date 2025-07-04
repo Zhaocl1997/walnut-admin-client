@@ -25,10 +25,6 @@ export const transform: WalnutAxiosTransform = {
       config.headers = {}
     }
 
-    // if for demo purpose, just return
-    if (config._demonstrate)
-      return Promise.reject(new Error('Demonstrate'))
-
     // custom headers
     config.headers['x-language'] = appLocale.locale
     config.headers['x-fingerprint'] = fpId.value

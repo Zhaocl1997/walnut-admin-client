@@ -40,9 +40,6 @@ const pool: Record<number, Fn> = {
   6: () => {
     _request({ _carryToken: false })
   },
-  7: () => {
-    _request({ _demonstrate: true })
-  },
   8: () => {
     _request({ _sleep: 2000 })
   },
@@ -133,9 +130,6 @@ const items = [
           </n-button>
           <n-button @click="onSend(6)">
             Send Request with not carry token
-          </n-button>
-          <n-button @click="onSend(7)">
-            Send Request for demonstrate purpose
           </n-button>
           <n-button @click="onSend(8)">
             Send Request with sleep miliseconds(endpoint support)
