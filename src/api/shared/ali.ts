@@ -1,3 +1,4 @@
+const { demo } = useAppEnvBuild()
 /**
  * @description get ali oss sts token from backend
  */
@@ -12,6 +13,7 @@ export function getAliSTSTokenAPI() {
     {
       url: '/shared/ali/sts',
       _autoDecryptResponseData: true,
+      _demonstrate: demo,
     },
   )
 }
