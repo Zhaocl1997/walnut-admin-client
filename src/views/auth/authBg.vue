@@ -1,6 +1,8 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 // https://21st.dev/davidhzdev/letter-glitch/default
-interface ComponentProps {
+import type { CSSProperties } from 'vue'
+
+interface Props {
   glitchColors?: string[]
   glitchSpeed?: number
   centerVignette?: boolean
@@ -8,7 +10,7 @@ interface ComponentProps {
   smooth?: boolean
 }
 
-const props = withDefaults(defineProps<ComponentProps>(), {
+const props = withDefaults(defineProps<Props>(), {
   glitchColors: () => ['#2b4539', '#61dca3', '#61b3dc'],
   glitchSpeed: 50,
   centerVignette: false,
@@ -16,22 +18,19 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   smooth: true,
 })
 
-const containerRef = shallowRef<HTMLDivElement | null>(null)
 const canvasRef = shallowRef<HTMLCanvasElement | null>(null)
-let animationId: number | null = null
-let resizeTimeout: ReturnType<typeof setTimeout> | null = null
-let lastGlitchTime = Date.now()
-
-interface LetterData {
+const animationRef = shallowRef<number | null>(null)
+const letters = ref<{
   char: string
   color: string
   targetColor: string
   colorProgress: number
-}
-
-const letters = ref<LetterData[]>([])
+}[]>([])
 const grid = ref({ columns: 0, rows: 0 })
-let context: CanvasRenderingContext2D | null = null
+const context = ref<CanvasRenderingContext2D | null>(null)
+const lastGlitchTime = ref(Date.now())
+
+let resizeTimeout: ReturnType<typeof setTimeout>
 
 const fontSize = 16
 const charWidth = 10
@@ -40,7 +39,9 @@ const charHeight = 20
 const lettersAndSymbols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-=_+[]{}<>,0123456789'.split('')
 
 function getRandomChar() {
-  return lettersAndSymbols[Math.floor(Math.random() * lettersAndSymbols.length)]
+  return lettersAndSymbols[
+    Math.floor(Math.random() * lettersAndSymbols.length)
+  ]
 }
 
 function getRandomColor() {
@@ -85,31 +86,35 @@ function initializeLetters(columns: number, rows: number) {
 }
 
 function drawLetters() {
-  const canvas = canvasRef.value
-  if (!canvas || !context || letters.value.length === 0)
+  if (!canvasRef.value || !context.value || letters.value.length === 0)
     return
 
+  const canvas = canvasRef.value
+  const ctx = context.value
   const { width, height } = canvas.getBoundingClientRect()
-  context.clearRect(0, 0, width, height)
-  context.font = `${fontSize}px monospace`
-  context.textBaseline = 'top'
+  ctx.clearRect(0, 0, width, height)
+  ctx.font = `${fontSize}px monospace`
+  ctx.textBaseline = 'top'
 
   for (let i = 0; i < letters.value.length; i++) {
     const letterData = letters.value[i]
     const x = (i % grid.value.columns) * charWidth
     const y = Math.floor(i / grid.value.columns) * charHeight
-    context.fillStyle = letterData.color
-    context.fillText(letterData.char, x, y)
+    ctx.fillStyle = letterData.color
+    ctx.fillText(letterData.char, x, y)
   }
 }
 
 function resizeCanvasAndDraw() {
+  if (!canvasRef.value)
+    return
   const canvas = canvasRef.value
-  if (!canvas || !containerRef.value)
+  const parent = canvas.parentElement
+  if (!parent)
     return
 
   const dpr = window.devicePixelRatio || 1
-  const rect = containerRef.value.getBoundingClientRect()
+  const rect = parent.getBoundingClientRect()
 
   canvas.width = rect.width * dpr
   canvas.height = rect.height * dpr
@@ -117,8 +122,8 @@ function resizeCanvasAndDraw() {
   canvas.style.width = `${rect.width}px`
   canvas.style.height = `${rect.height}px`
 
-  if (context) {
-    context.setTransform(dpr, 0, 0, dpr, 0, 0)
+  if (context.value) {
+    context.value.setTransform(dpr, 0, 0, dpr, 0, 0)
   }
 
   const { columns, rows } = calculateGrid(rect.width, rect.height)
@@ -168,102 +173,94 @@ function handleSmoothTransitions() {
 
 function animate() {
   const now = Date.now()
-  if (now - lastGlitchTime >= props.glitchSpeed) {
+  if (now - lastGlitchTime.value >= props.glitchSpeed) {
     updateLetters()
     drawLetters()
-    lastGlitchTime = now
+    lastGlitchTime.value = now
   }
   if (props.smooth) {
     handleSmoothTransitions()
   }
-  animationId = requestAnimationFrame(animate)
+  animationRef.value = requestAnimationFrame(animate)
+}
+
+function startAnimation() {
+  if (animationRef.value) {
+    cancelAnimationFrame(animationRef.value)
+  }
+  animationRef.value = requestAnimationFrame(animate)
 }
 
 function handleResize() {
-  if (resizeTimeout)
-    clearTimeout(resizeTimeout)
+  clearTimeout(resizeTimeout)
   resizeTimeout = setTimeout(() => {
-    if (animationId)
-      cancelAnimationFrame(animationId)
+    if (animationRef.value)
+      cancelAnimationFrame(animationRef.value)
     resizeCanvasAndDraw()
-    animationId = requestAnimationFrame(animate)
+    startAnimation()
   }, 100)
 }
 
 onMounted(() => {
-  const canvas = canvasRef.value
-  if (!canvas)
-    return
-
-  context = canvas.getContext('2d')
-
-  nextTick(() => {
+  if (canvasRef.value) {
+    context.value = canvasRef.value.getContext('2d')
     resizeCanvasAndDraw()
-    animationId = requestAnimationFrame(animate)
+    startAnimation()
     window.addEventListener('resize', handleResize)
-  })
+  }
 })
 
 onUnmounted(() => {
-  if (animationId)
-    cancelAnimationFrame(animationId)
+  if (animationRef.value) {
+    cancelAnimationFrame(animationRef.value)
+  }
   window.removeEventListener('resize', handleResize)
-  if (resizeTimeout)
-    clearTimeout(resizeTimeout)
+  clearTimeout(resizeTimeout)
 })
 
-watch(
-  () => [props.glitchSpeed, props.smooth, props.glitchColors],
-  () => {
-    if (animationId)
-      cancelAnimationFrame(animationId)
-    resizeCanvasAndDraw()
-    animationId = requestAnimationFrame(animate)
-  },
-  { deep: true },
-)
+watch(() => [props.glitchSpeed, props.smooth, props.glitchColors], () => {
+  startAnimation()
+})
+
+const containerStyle: CSSProperties = {
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  backgroundColor: '#000000',
+  overflow: 'hidden',
+}
+
+const canvasStyle: CSSProperties = {
+  display: 'block',
+  width: '100%',
+  height: '100%',
+}
+
+const outerVignetteStyle: CSSProperties = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  pointerEvents: 'none',
+  background: 'radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,1) 100%)',
+}
+
+const centerVignetteStyle: CSSProperties = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  pointerEvents: 'none',
+  background: 'radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%)',
+}
 </script>
 
 <template>
-  <div ref="containerRef" class="glitch-container">
-    <canvas ref="canvasRef" />
-    <div v-if="outerVignette" class="vignette-outer" />
-    <div v-if="centerVignette" class="vignette-center" />
+  <div :style="containerStyle">
+    <canvas ref="canvasRef" :style="canvasStyle" />
+    <div v-if="outerVignette" :style="outerVignetteStyle" />
+    <div v-if="centerVignette" :style="centerVignetteStyle" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.glitch-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: #000000;
-  overflow: hidden;
-}
-
-canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.vignette-outer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 1) 100%);
-}
-
-.vignette-center {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%);
-}
-</style>
