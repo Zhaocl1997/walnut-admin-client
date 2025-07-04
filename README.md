@@ -16,8 +16,6 @@
     <a target="_blank" href="https://github.com/walnut-admin/walnut-admin-client/issues">Report a Bug</a>
     ·
     <a target="_blank" href="https://github.com/walnut-admin/walnut-admin-client/issues">Request a Feature</a>
-    ·
-    <a target="_blank" href="./README.zh_CN.md">中文</a>
   </p>
 
 </p>
@@ -26,7 +24,7 @@
 
 Walnut Admin is an open-source and continuously optimized back-office management system template. The project focuses on the front end. The back end and database have a certain scale but are not well-structured. It is still in the development stage. The technology stack includes `Vue3`, `Vite4`, `NaiveUI`, `TypeScript`, `VueUse`, `pnpm`, `unocss`, etc., which is suitable for learning and communication!
 
-To run the project, you need the [backend][walnut-admin-server], which is a monolithic application framework of [NestJS][nestjs-url]. The database used is [MongoDB](https://www.mongodb.com/). For more information, please refer to the [documentation][walnut-admin-doc].
+To run the project, you need the [backend][walnut-admin-server], which is a monolithic application framework of [NestJS][nestjs-url]. The database used is [MongoDB][mongodb-url]. For more information, please refer to the [documentation][walnut-admin-doc].
 
 ## NOTICE
 
@@ -34,11 +32,11 @@ The domain name of the project preview address will not change. The server will 
 
 ## JOIN
 
-[discord](https://discord.gg/kfVuasVXs2)
+[DISCORD][discord-url]
 
 ## CHANGELOG
 
-Please read [CHANGELOG.md](./CHANGELOG.md) for the project's update log.
+Please read [CHANGELOG.md][changelog-url] for the project's update log.
 
 ## Author
 
@@ -56,3 +54,6 @@ This project is licensed under the MIT License. For details, please refer to [LI
 [walnut-admin-doc]: https://walnut-admin-doc.netlify.app/
 [license-url]: https://github.com/walnut-admin/walnut-admin-client/blob/main/LICENSE
 [nestjs-url]: https://docs.nestjs.com/
+[changelog-url]: https://github.com/walnut-admin/walnut-admin-client/blob/main/changelog-latest.md
+[mongodb-url]: https://www.mongodb.com/
+[discord-url]: https://discord.gg/kfVuasVXs2
