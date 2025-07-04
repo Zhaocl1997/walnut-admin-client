@@ -3,7 +3,7 @@ defineOptions({
   name: 'CropperDemo',
 })
 
-const srcValue = ref<string>('/assets/auth_bg.jpg')
+const srcValue = ref<string>('/logo.png')
 const cropperValue = ref<string>()
 </script>
 
