@@ -32,12 +32,7 @@ useAppTextSelection()
 useAppColorMode()
 useAppHijackF5()
 setupSocket()
-
-if (!isDev()) {
-  useTimeoutFn(() => {
-    useStarOnGithub()
-  }, 500)
-}
+useStarOnGithub()
 
 const mainRef = useTemplateRef('mainRef')
 function onBackToTop() {
