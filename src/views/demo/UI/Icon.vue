@@ -201,103 +201,115 @@ function onClick() {
           Advanced Icon (Button)
         </WTitle>
 
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '24',
-          }"
-          @click="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '24',
-          }"
-          :button-props="{
-            type: 'success',
-          }"
-          @click="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '24',
-          }"
-          :button-props="{
-            type: 'info',
-          }"
-          @click="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '24',
-          }"
-          :button-props="{
-            type: 'warning',
-          }"
-          @click="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '24',
-          }"
-          :button-props="{
-            type: 'error',
-          }"
-          @click="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '32',
-          }"
-          :button-props="{
-            disabled: true,
-            type: 'error',
-          }"
-          @click="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '32',
-          }"
-          :button-props="{
-            loading: true,
-            type: 'error',
-          }"
-          @click="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '32',
-          }"
-          tooltip
-          tooltip-msg="width/height will not work properly, cause the icon is put inside icon slot in n-button"
-          @click="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '32',
-          }"
-          confirm
-          @confirm="onClick"
-        />
-        <WIconButton
-          :icon-props="{
-            icon: 'ant-design:home-outlined',
-            width: '32',
-          }"
-          tooltip
-          tooltip-msg="tooltip & confirm icon button"
-          confirm
-          :pop-confirm-props="{ showArrow: false }"
-          @confirm="onClick"
-        />
+        <div class="flex flex-row flex-nowrap gap-x-2">
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '24',
+            }"
+            :button-props="{
+              onClick,
+            }"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '24',
+            }"
+            :button-props="{
+              type: 'success',
+              onClick,
+            }"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '24',
+            }"
+            :button-props="{
+              type: 'info',
+              onClick,
+            }"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '24',
+            }"
+            :button-props="{
+              type: 'warning',
+              onClick,
+            }"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '24',
+            }"
+            :button-props="{
+              type: 'error',
+              onClick,
+            }"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '32',
+            }"
+            :button-props="{
+              disabled: true,
+              type: 'error',
+              onClick,
+
+            }"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '32',
+            }"
+            :button-props="{
+              loading: true,
+              type: 'error',
+              onClick,
+
+            }"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '32',
+            }"
+            :button-props="{
+              onClick,
+            }"
+            tooltip
+            tooltip-msg="width/height will not work properly, cause the icon is put inside icon slot in n-button"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '32',
+            }"
+            confirm
+            :button-props="{
+              onClick,
+            }"
+          />
+          <WIconButton
+            :icon-props="{
+              icon: 'ant-design:home-outlined',
+              width: '32',
+            }"
+            tooltip
+            tooltip-msg="tooltip & confirm icon button"
+            confirm
+            :pop-confirm-props="{ showArrow: false }"
+            :button-props="{
+              onClick,
+            }"
+          />
+        </div>
       </n-list-item>
     </n-list>
   </WDemoCard>

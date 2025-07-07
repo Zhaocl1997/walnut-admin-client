@@ -112,6 +112,7 @@ watch(
         v-model:value="positionHorizontal"
         x-scrollable
         height="100px"
+        width="70vw"
         :x-step="100"
         :scrollbar="false"
       >

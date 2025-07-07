@@ -25,7 +25,7 @@ async function onBeforeCountdown() {
 </script>
 
 <template>
-  <WDemoCard title="SMS Input">
+  <WDemoCard title="Verify Code">
     <WJSON :value="state" height="200px" />
 
     <n-list>
