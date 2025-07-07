@@ -122,7 +122,7 @@ export const transform: WalnutAxiosTransform = {
         return Promise.reject(new Error('Device Not Allowed'))
       }
       else {
-        useAppNotiError(msg)
+        useAppMsgError(msg)
         return Promise.reject(new Error('Error'))
       }
     }
@@ -132,11 +132,6 @@ export const transform: WalnutAxiosTransform = {
   responseInterceptorsCatch: async (err: AxiosError) => {
     if (err.message === 'Network Error') {
       await useAppRouterPush({ name: '500' })
-      return Promise.reject(err)
-    }
-
-    if (err.message === 'Demonstrate') {
-      useAppNotiError(AppI18n().global.t('app.base.demonstrate'))
       return Promise.reject(err)
     }
 
