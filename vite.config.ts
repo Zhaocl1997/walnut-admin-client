@@ -122,6 +122,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       minify: 'esbuild',
       outDir: processedEnv.build.outDir,
       reportCompressedSize: false,
+      cssCodeSplit: false,
 
       chunkSizeWarningLimit: 600,
 
