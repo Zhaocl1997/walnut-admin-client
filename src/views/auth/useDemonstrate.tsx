@@ -1,22 +1,38 @@
 export function useDemonstrate() {
+  const { t } = useAppI18n()
   const naiveStore = useAppStoreNaive()
   const signInRef = useTemplateRef<{ setFormData: (n: string, p: string) => void }>('signInRef')
 
-  const onClick = () => {
-    signInRef.value?.setFormData('visitor', '2020')
+  const formData = {
+    account: 'visitor',
+    password: '2020',
+  }
+
+  function onClick() {
+    signInRef.value?.setFormData(formData.account, formData.password)
   }
 
   useAppNotiInfo('', {
     duration: 60000,
-    title: 'Demonstrate only',
+    title: t('app.base.demonstrate'),
     keepAliveOnHover: true,
     content: () => {
       return (
         <n-space vertical size="small">
-          <div>Account: visitor</div>
-          <div>Password: 2020</div>
+          <div>
+            {t('app.base.account')}
+            :
+            {' '}
+            {formData.account}
+          </div>
+          <div>
+            {(t('app.base.password'))}
+            :
+            {' '}
+            {formData.password}
+          </div>
           <n-button size="small" type="info" onClick={onClick}>
-            Fill the form
+            {t('app.base.fillForm')}
           </n-button>
         </n-space>
       )
