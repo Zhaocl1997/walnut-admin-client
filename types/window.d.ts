@@ -12,6 +12,7 @@ declare global {
 
     // capjs
     Cap: ICapInst
+    CAP_CUSTOM_WASM_URL: string
 
     // naive relative
     $loadingBar: LoadingBarApiInjection

@@ -20,8 +20,9 @@ const useAppStoreCapJSTokenInside = defineStore(StoreKeys.APP_CAPJS_TOKEN, {
 
       const { httpUrl } = useAppEnvProxy()
 
+      window.CAP_CUSTOM_WASM_URL = 'https://fastly.jsdelivr.net/npm/@cap.js/wasm@0.0.6/browser/cap_wasm.min.js'
       return new Promise((resolve) => {
-        useScriptTag(`${httpUrl}/static/js/cap/widget@0.1.21.js`, () => {
+        useScriptTag(`${httpUrl}/static/js/cap/widget@0.1.25.js`, () => {
           this.capJSInst = window.Cap
           resolve(this.capJSInst)
         })
