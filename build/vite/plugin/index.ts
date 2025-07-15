@@ -106,7 +106,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     // https://github.com/chengpeiquan/vite-plugin-banner
     env.build.banner && vitePlugins.push(createBannerPlugin(env.build.outDir))
 
-    // https://github.com/btd/rollup-plugin-visualizer
+    // https://github.com/nonzzz/vite-bundle-analyzer
     env.build.analyzer && vitePlugins.push(createVisualizerPlugin(env.title))
   }
 
