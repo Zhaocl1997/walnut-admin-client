@@ -1,63 +1,22 @@
 name: Create Release
 
-# 添加权限配置
-permissions:
-  contents: write # 允许创建 Release 和推送代码
-
 on:
   push:
     tags:
-      - 'v*' # 匹配所有以v开头的tag
+      - 'v*'
 
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # 获取完整提交历史
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Verify release notes
-        id: verify-notes
-        run: |
-          # 检查release-notes.md是否存在
-          if [ ! -f "release-notes.md" ]; then
-            echo "❌ 错误：未找到 release-notes.md 文件"
-            exit 1
-          fi
-
-          # 检查文件内容是否有效
-          NOTE_COUNT=$(wc -l < release-notes.md | tr -d ' ')
-          if [ $NOTE_COUNT -lt 3 ]; then
-            echo "⚠️ 警告：发布说明内容可能过短（只有 $NOTE_COUNT 行）"
-            echo "::warning::发布说明内容可能过短"
-          else
-            echo "✅ 发布说明验证通过（$NOTE_COUNT 行）"
-          fi
-
-          # 提取标签版本
-          TAG_VERSION=${GITHUB_REF#refs/tags/v}
-          echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_ENV
-
-          # 验证标签版本与package.json一致
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          if [ "$TAG_VERSION" != "$PACKAGE_VERSION" ]; then
-            echo "❌ 错误: 标签版本 ($TAG_VERSION) 与 package.json 版本 ($PACKAGE_VERSION) 不匹配"
-            exit 1
-          fi
-
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-          body_path: release-notes.md
+          name: ${{ github.ref_name }}
+          body_path: changelog-latest.md
           generate_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

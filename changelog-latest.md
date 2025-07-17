@@ -1,16 +1,18 @@
-## [1.0.1] - 2025-07-03
+## [1.0.0] - 2025-07-18
 
-### Added
-- 新功能描述test
+[Today Walnut Admin 1.0.0 Released!](https://walnut-admin-doc.netlify.app/announcement/v1.0.0)
+
+### Features
+-
 
 ### Changed
-- 现有功能改进
+-
 
 ### Fixed
-- 问题修复说明
+-
 
 ### Deprecated
-- 即将移除的功能
+-
 
 ### Removed
-- 已移除的功能
+-
