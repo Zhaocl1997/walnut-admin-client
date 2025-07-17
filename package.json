@@ -18,8 +18,8 @@
     "url": "https://github.com/walnut-admin/walnut-admin-client/issues"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "pnpm": ">=7.0.0"
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
   },
   "urls": {
     "doc": "https://walnut-admin-doc.netlify.app",

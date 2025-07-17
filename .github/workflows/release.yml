@@ -3,7 +3,7 @@ name: Create Release
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*.*.*'
 
 jobs:
   create-release:
@@ -11,6 +11,9 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
