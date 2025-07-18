@@ -13,7 +13,7 @@ const userAuth = useAppStoreUserAuth()
 const appAuthSettings = useAppStoreSettingBackend()
 const { loading } = useAuthContext()
 
-let childWindow: Window
+let childWindow: Window | null
 
 const iconArr = computed(() =>
   [
@@ -80,9 +80,6 @@ async function onOAuth(type: string) {
     const res = JSON.parse(data)
 
     if (res.event === `token:${type}`) {
-      // close the opened window
-      childWindow.close()
-
       useAppMsgSuccess(t('app.oauth.success'))
       await userAuth.ExcuteCoreFnAfterAuth(res.data.accessToken)
     }
@@ -90,14 +87,6 @@ async function onOAuth(type: string) {
     loading.value = false
     eventSource.close()
   }
-
-  const id = setInterval(() => {
-    if (childWindow.closed) {
-      loading.value = false
-      eventSource.close()
-      clearInterval(id)
-    }
-  }, 250)
 }
 
 async function onClick(key: string) {
