@@ -34,8 +34,11 @@ const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
     },
 
     destroyCurrentNotiInst() {
-      this.currentNotiInst?.destroy()
-      this.currentNotiInst = null
+      return new Promise((resolve) => {
+        this.currentNotiInst?.destroy()
+        this.currentNotiInst = null
+        resolve(true)
+      })
     },
 
     destroyAllNotiInst() {

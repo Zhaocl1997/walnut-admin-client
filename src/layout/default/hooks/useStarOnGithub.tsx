@@ -1,9 +1,10 @@
 // TODO 111
 import WIcon from '@/components/UI/Icon'
 
-export function useStarOnGithub() {
+export async function useStarOnGithub() {
   const { t } = useAppI18n()
   const appSetting = useAppStoreSetting()
+  const naiveStore = useAppStoreNaive()
 
   function onClick() {
     openExternalLink(__APP_INFO__.urls.github)
@@ -17,6 +18,8 @@ export function useStarOnGithub() {
 
   if (dontShow === 'true')
     return
+
+  await naiveStore.destroyCurrentNotiInst()
 
   useAppNotiInfo('', {
     duration: 30000,
