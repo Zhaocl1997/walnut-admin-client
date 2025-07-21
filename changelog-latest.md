@@ -1,16 +1,14 @@
-## [1.0.1] - 2025-07-18
+## [1.1.0] - 2025-07-21
 
 ### Features
 -
 
 ### Changed
-- [Back] Exclude release.ts in ts build config
-- [Back] Nodemailer instead of nestjs mailer
+- [Back] change express-session to cookie-session
+- [Back] use swc as nest builder
 
 ### Fixed
-- [Both] Remove public locale message device guard
-- [Both] GitHub/Gitee oauth callback window close not close
-- [Back] i18n ts import error after build
+-
 
 ### Deprecated
 -
