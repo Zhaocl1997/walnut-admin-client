@@ -129,7 +129,14 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       rollupOptions: {
         output: {
           format: 'es',
-          chunkFileNames: 'static/js/[name]-[hash].js',
+          // https://github.com/vitejs/vite-plugin-vue/issues/19#issuecomment-3087602546
+          chunkFileNames: (assetInfo: { name: string }) => {
+            const name = assetInfo.name.endsWith('.vue_vue_type_style_index_0_lang')
+              || assetInfo.name.endsWith('.vue_vue_type_script_setup_true_lang')
+              ? assetInfo.name.split('.')[0]
+              : assetInfo.name
+            return `static/js/${name}-[hash].js`
+          },
           entryFileNames: 'static/js/[name]-[hash].js',
           assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
 
