@@ -1,14 +1,13 @@
-## [1.1.1] - 2025-07-21
+## [1.1.2] - 2025-07-24
 
 ### Features
 -
 
 ### Changed
-- [Back] update deps to remove security warnings
-- [Front] build chunk file name optimise
+-
 
 ### Fixed
--
+- [Back] Send email fail on server
 
 ### Deprecated
 -
