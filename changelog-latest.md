@@ -1,4 +1,4 @@
-## [1.1.2] - 2025-07-24
+## [1.1.3] - 2025-07-25
 
 ### Features
 -
@@ -7,7 +7,10 @@
 -
 
 ### Fixed
-- [Back] Send email fail on server
+- [Back] fix cookie options for https env
+- [Back] fix log interceptor caused process exit
+- [Back] oauth callback should have device/cap guard
+- [Back] cors setting for https env
 
 ### Deprecated
 -
