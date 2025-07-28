@@ -97,6 +97,14 @@ const [
           multiple: 1,
           compare: 'default',
         },
+        ellipsis: {
+          tooltip: {
+            contentStyle: {
+              maxWidth: '800px',
+              maxHeight: '70vh',
+            },
+          },
+        },
       },
 
       {
