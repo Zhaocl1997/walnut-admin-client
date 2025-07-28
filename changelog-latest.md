@@ -1,16 +1,15 @@
-## [1.1.3] - 2025-07-25
+## [1.2.0] - 2025-07-28
 
 ### Features
 -
 
 ### Changed
--
+- [Back] update/reset password & forceQuit add mongoDB transaction
+- [Back] refresh token cookie behavior re-design
 
 ### Fixed
-- [Back] fix cookie options for https env
-- [Back] fix log interceptor caused process exit
-- [Back] oauth callback should have device/cap guard
-- [Back] cors setting for https env
+- [Front] gpu architecture error catch
+- [Back] clear cookie should carry options
 
 ### Deprecated
 -
