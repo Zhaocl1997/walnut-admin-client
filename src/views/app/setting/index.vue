@@ -114,7 +114,12 @@ const [
         key: 'settingValue',
         width: 120,
         ellipsis: {
-          tooltip: true,
+          tooltip: {
+            contentStyle: {
+              maxWidth: '800px',
+              maxHeight: '70vh',
+            },
+          },
         },
       },
 
