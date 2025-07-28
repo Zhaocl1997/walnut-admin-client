@@ -70,21 +70,27 @@ export function getMemoryGB() {
 
 // get cpu archittecture
 export async function getGPUArchitecture() {
-  if ('gpu' in navigator) {
+  try {
+    if ('gpu' in navigator) {
     // @ts-expect-error quite new API
-    const adapter = await navigator.gpu.requestAdapter()
+      const adapter = await navigator.gpu.requestAdapter()
 
-    if (!adapter) {
-      console.warn('webGPU adapter is not supported')
+      if (!adapter) {
+        console.warn('webGPU adapter is not supported')
+        return 'not supported'
+      }
+
+      const device = await adapter.requestDevice()
+
+      return device.adapterInfo.architecture
+    }
+    else {
+      console.warn('navigator.gpu is not supported')
       return 'not supported'
     }
-
-    const device = await adapter.requestDevice()
-
-    return device.adapterInfo.architecture
   }
-  else {
-    console.warn('navigator.gpu is not supported')
+  catch (error) {
+    console.error(error)
     return 'not supported'
   }
 }
