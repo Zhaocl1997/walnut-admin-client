@@ -9,7 +9,7 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
     locale: useAppStorage(
       AppConstPersistKey.LOCALE,
       preferredLanguages.value[0].replaceAll('-', '_') as ValueOfAppConstLocale,
-      { expire: Infinity },
+      { expire: Infinity, encrypt: false, usePresetKey: false },
     ),
   }),
 
