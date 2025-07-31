@@ -10,7 +10,7 @@ defineOptions({
 
 const { t } = useAppI18n()
 const userAuth = useAppStoreUserAuth()
-const appAuthSettings = useAppStoreSettingBackend()
+const appBackendSettings = useAppStoreSettingBackend()
 const { loading } = useAuthContext()
 
 let childWindow: Window | null
@@ -18,40 +18,16 @@ let childWindow: Window | null
 const iconArr = computed(() =>
   [
     {
-      key: 'wechat',
-      icon: 'ant-design:wechat-outlined',
-      title: t('app.auth.other.wechat'),
-      show: appAuthSettings.getWechatEnabled,
-    },
-    {
-      key: 'alipay',
-      icon: 'ant-design:alipay-circle-outlined',
-      title: t('app.auth.other.alipay'),
-      show: appAuthSettings.getAliPayEnabled,
-    },
-    {
-      key: 'qq',
-      icon: 'ant-design:qq-outlined',
-      title: t('app.auth.other.qq'),
-      show: appAuthSettings.getQQEnabled,
-    },
-    {
-      key: 'weibo',
-      icon: 'ant-design:weibo-outlined',
-      title: t('app.auth.other.weibo'),
-      show: appAuthSettings.getWeiboEnabled,
-    },
-    {
       key: 'github',
       icon: 'ant-design:github-outlined',
       title: t('app.auth.other.github'),
-      show: appAuthSettings.getGitHubEnabled,
+      show: appBackendSettings.getGitHubEnabled,
     },
     {
       key: 'gitee',
       icon: 'simple-icons:gitee',
       title: t('app.auth.other.gitee'),
-      show: appAuthSettings.getGiteeEnabled,
+      show: appBackendSettings.getGiteeEnabled,
     },
   ].filter(i => i.show ?? true),
 )
