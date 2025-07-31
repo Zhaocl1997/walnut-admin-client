@@ -13,6 +13,8 @@ defineOptions({
 const { t, locale } = useAppI18n()
 const { title: envTitle } = useAppEnvTitle()
 
+const appBackendSettings = useAppStoreSettingBackend()
+
 const { signInRef } = useDemonstrate()
 
 function onClickBeian() {
@@ -39,10 +41,10 @@ watch(locale, () => {
   <section class="min-h-screen flex items-stretch">
     <div class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4">
       <n-button text>
-        <WAppLocalePicker />
+        <WAppLocalePicker v-if="appBackendSettings.getLocaleEnabled" />
       </n-button>
       <n-button text>
-        <WAppDarkMode />
+        <WAppDarkMode v-if="appBackendSettings.getDarkEnabled" />
       </n-button>
     </div>
 

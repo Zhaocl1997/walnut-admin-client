@@ -22,12 +22,14 @@ export function setupRouter(app: App) {
 }
 
 export function useAppRoute() {
-  isInSetup()
   return useRoute()
 }
 
 export function useAppRouter() {
-  isInSetup()
+  if (!getCurrentInstance()) {
+    return AppRouter
+  }
+
   return useRouter()
 }
 

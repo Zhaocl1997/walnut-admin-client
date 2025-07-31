@@ -6,6 +6,7 @@ import HeaderDropdown from './dropdown.vue'
 const appSetting = useAppStoreSetting()
 const appAdapter = useAppStoreAdapter()
 const appMenu = useAppStoreMenu()
+const appBackendSettings = useAppStoreSettingBackend()
 
 const { title: AppTitle } = useAppEnvTitle()
 
@@ -56,7 +57,7 @@ function onShowAside() {
           ]"
         >
           <WAppFullScreen
-            v-if="!appAdapter.isMobile && appSetting.header.fullscreen"
+            v-if="appBackendSettings.getFullScreenEnabled && !appAdapter.isMobile && appSetting.header.fullscreen"
             id="walnut-fullscreen"
             :is-fullscreen="isFullscreen"
             :click-event="toggle"
@@ -65,13 +66,13 @@ function onShowAside() {
           <WAppLock v-if="appSetting.getLockStatus" id="walnut-lock" />
 
           <WAppSearch
-            v-if="appSetting.header.search"
+            v-if="appBackendSettings.getSearchEnabled && appSetting.header.search"
             id="walnut-search"
           />
 
-          <WAppLocalePicker id="walnut-locale" />
+          <WAppLocalePicker v-if="appBackendSettings.getLocaleEnabled" id="walnut-locale" />
 
-          <WAppDarkMode id="walnut-dark" />
+          <WAppDarkMode v-if="appBackendSettings.getDarkEnabled" id="walnut-dark" />
 
           <HeaderDropdown />
         </div>

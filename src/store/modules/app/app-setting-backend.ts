@@ -1,4 +1,5 @@
 import { getPublicSettingsAPI } from '@/api/app/setting'
+import { isEmpty } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
@@ -8,6 +9,7 @@ const useAppStoreSettingBackendInside = defineStore(
   {
     state: (): IAppStoreSettingBackend => ({
       auth: {},
+      frontend: {},
     }),
 
     getters: {
@@ -35,28 +37,30 @@ const useAppStoreSettingBackendInside = defineStore(
         return +state.auth.github! === 1
       },
 
-      getWeiboEnabled(state) {
-        return +state.auth.weibo! === 1
+      getFullScreenEnabled(state) {
+        return +state.frontend.fullScreen! === 1
       },
-
-      getQQEnabled(state) {
-        return +state.auth.qq! === 1
+      getSearchEnabled(state) {
+        return +state.frontend.search! === 1
       },
-
-      getAliPayEnabled(state) {
-        return +state.auth.alipay! === 1
+      getDarkEnabled(state) {
+        return +state.frontend.dark! === 1
       },
-
-      getWechatEnabled(state) {
-        return +state.auth.wechat! === 1
+      getLocaleEnabled(state) {
+        return +state.frontend.locale! === 1
       },
     },
 
     actions: {
-      async getAppAuthSettings() {
+      async onInitPublicSettings() {
+        if (!isEmpty(this.auth) || !isEmpty(this.frontend)) {
+          return
+        }
+
         const res = await getPublicSettingsAPI()
 
         this.auth = res.auth
+        this.frontend = res.frontend
       },
     },
   },

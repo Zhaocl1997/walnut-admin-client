@@ -19,12 +19,12 @@ const { t, locale } = useAppI18n()
 
 const tabsInstRef = ref<TabsInst>()
 const account = ref<{ setFormData: (n: string, p: string) => Record<string, never> }>()
-const appAuthSettings = useAppStoreSettingBackend()
+const appBackendSettings = useAppStoreSettingBackend()
 
 const loading = ref(false)
 
 watch(
-  () => [locale, appAuthSettings.auth],
+  () => [locale, appBackendSettings.auth],
   () => nextTick(() => tabsInstRef.value?.syncBarPosition()),
   {
     deep: true,
@@ -37,10 +37,6 @@ defineExpose({
 })
 
 setAuthContext({ loading })
-
-onMounted(async () => {
-  await appAuthSettings.getAppAuthSettings()
-})
 </script>
 
 <template>
@@ -55,7 +51,7 @@ onMounted(async () => {
       justify-content="space-around"
     >
       <n-tab-pane
-        v-if="appAuthSettings.getAccountEnabled"
+        v-if="appBackendSettings.getAccountEnabled"
         name="account"
         display-directive="show:lazy"
         :tab="t('form.app.auth.tab.account')"
@@ -67,7 +63,7 @@ onMounted(async () => {
       </n-tab-pane>
 
       <n-tab-pane
-        v-if="appAuthSettings.getPhoneEnabled"
+        v-if="appBackendSettings.getPhoneEnabled"
         name="SMS"
         display-directive="show:lazy"
         :tab="t('form.app.auth.tab.sms')"
@@ -76,7 +72,7 @@ onMounted(async () => {
       </n-tab-pane>
 
       <n-tab-pane
-        v-if="appAuthSettings.getEmailEnabled"
+        v-if="appBackendSettings.getEmailEnabled"
         name="email"
         display-directive="show:lazy"
         :tab="t('form.app.auth.tab.email')"
@@ -85,7 +81,7 @@ onMounted(async () => {
       </n-tab-pane>
 
       <n-tab-pane
-        v-if="appAuthSettings.getQrcodeEnabled"
+        v-if="appBackendSettings.getQrcodeEnabled"
         name="QR"
         display-directive="show:lazy"
         :tab="t('form.app.auth.tab.qr')"

@@ -128,6 +128,7 @@ declare global {
    */
   interface IAppStoreSettingBackend {
     auth: Partial<AppPublicSettings.AuthSettings>
+    frontend: Partial<AppPublicSettings.FrontendSettings>
   }
 
   /**

@@ -32,10 +32,13 @@ declare global {
       qrcode: number
       gitee: number
       github: number
-      weibo: number
-      qq: number
-      alipay: number
-      wechat: number
+    }
+
+    interface FrontendSettings {
+      fullScreen: number
+      search: number
+      dark: number
+      locale: number
     }
   }
 }
