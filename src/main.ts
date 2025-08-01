@@ -23,6 +23,8 @@ import './assets/styles/main.scss'
 (async () => {
   const app = createApp(App)
 
+  setupStorageMigrations()
+
   await setupApp(app)
 
   app.mount('#app')

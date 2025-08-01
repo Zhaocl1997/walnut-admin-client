@@ -12,65 +12,88 @@ interface IAppStorageOptions<T> {
   serializer?: Serializer<T>
 }
 
-export const getStorageKey = (key: string) => `${storagePrefix}__${key.replaceAll('-', '_').toLocaleUpperCase()}__`
+interface IAppStorageData<T> {
+  v: T // real value
+  _v: string // app version
+  e: number | null // expire time (milliseconds)，null means won't expire
+  enc: boolean // is encrypted
+}
+
+const { name, version } = __APP_INFO__
+
+export const getStorageKey = (key: string) => `${name.toLocaleUpperCase().slice(0, 1)}__${import.meta.env.MODE.slice(0, 3).toLocaleUpperCase()}__${key.replaceAll('-', '_').toLocaleUpperCase()}`
+
+export function getStorageRealKey(k: string, presetKey: boolean) {
+  return presetKey
+    ? getStorageKey(k)
+    : k
+}
 
 // app storage
 // default cache 7 days
 // defualt only encrypt in prod
 // map/set need to pass `serializer`, and no more expire nor encrypt
-export function useAppStorage<T>(key: string, initialValue: MaybeRef<T>, options: IAppStorageOptions<T> = {}) {
+export function useAppStorage<T>(originalKey: string, initialValue: MaybeRef<T>, options: IAppStorageOptions<T> = {}) {
   const { persist: persistSeconds } = useAppEnvSeconds()
   const { storage = localStorage, expire = persistSeconds, encrypt = isProd(), usePresetKey = true, serializer } = options
 
-  const getKey = usePresetKey
-    ? getStorageKey(key)
-    : key
+  const realKey = getStorageRealKey(originalKey, usePresetKey)
 
-  return useStorage<T>(getKey, initialValue, storage, {
+  return useStorage<T>(realKey, initialValue, storage, {
     serializer: serializer ?? {
-      read: (val) => {
+      read: (val): T => {
         if (!val)
-          return null
+          return unref(initialValue)
 
-        const decryptValue = JSON.parse(
+        const decryptValue: IAppStorageData<T> = JSON.parse(
           encrypt ? AppPersistEncryption.decrypt(val) : val,
         )
 
         if (!decryptValue) {
-          storage.removeItem(getKey)
-          return null
+          storage.removeItem(realKey)
+          return unref(initialValue)
         }
 
         const { v, e } = decryptValue
 
         // not expire yet
         // or exipre is Infinity
-        if (new Date().getTime() <= e || !e) {
+        if (!e || new Date().getTime() <= e) {
           return v
         }
         else {
-          storage.removeItem(getKey)
-          return null
+          storage.removeItem(realKey)
+          return unref(initialValue)
         }
       },
 
       write: (val) => {
-        let ex
+        let expireTime = 0
 
-        const target = storage.getItem(getKey)
+        const target = storage.getItem(realKey)
 
-        if (target) {
-          const d = encrypt ? AppPersistEncryption.decrypt(target) : target
-          ex = d.e
+        try {
+          const parsedData: IAppStorageData<T> = JSON.parse(encrypt ? AppPersistEncryption.decrypt(target) : target)
+
+          if (parsedData && parsedData.e) {
+            expireTime = parsedData.e
+          }
+        }
+        catch {
+          expireTime = new Date().getTime() + expire * 1000
         }
 
-        const str = JSON.stringify({
+        const data: IAppStorageData<T> = {
           v: val,
-          e: expire === Infinity ? null : ex ?? new Date().getTime() + expire * 1000,
-        })
+          _v: version,
+          e: expire === Infinity ? null : expireTime,
+          enc: encrypt,
+        }
 
+        const str = JSON.stringify(data)
         return encrypt ? AppPersistEncryption.encrypt(str)! : str
       },
     },
+
   })
 }
