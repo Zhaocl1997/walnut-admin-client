@@ -128,9 +128,6 @@ importers:
       vue-router:
         specifier: 4.5.0
         version: 4.5.0(vue@3.5.13(typescript@5.8.3))
-      web-vitals:
-        specifier: 4.2.4
-        version: 4.2.4
     devDependencies:
       '@antfu/eslint-config':
         specifier: 4.13.0
@@ -168,6 +165,9 @@ importers:
       '@types/crypto-js':
         specifier: 4.2.2
         version: 4.2.2
+      '@types/gtag.js':
+        specifier: 0.0.20
+        version: 0.0.20
       '@types/intro.js':
         specifier: 5.1.5
         version: 5.1.5
@@ -345,6 +345,9 @@ importers:
       vue-tsc:
         specifier: 2.2.10
         version: 2.2.10(typescript@5.8.3)
+      web-vitals:
+        specifier: 5.1.0
+        version: 5.1.0
       workbox-window:
         specifier: ^7.3.0
         version: 7.3.0
@@ -2095,6 +2098,9 @@ packages:
 
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
+
+  '@types/gtag.js@0.0.20':
+    resolution: {integrity: sha512-wwAbk3SA2QeU67unN7zPxjEHmPmlXwZXZvQEpbEUQuMCRGgKyE1m6XDuTUA9b6pCGb/GqJmdfMOY5LuDjJSbbg==}
 
   '@types/intro.js@5.1.5':
     resolution: {integrity: sha512-TT1d8ayz07svlBcoqh26sNpQaU6bBpdFcCC+IMZHp46NNX2mYAHAVefM3wCmQSd4UWhhObeMjFByw2IaPKOXlw==}
@@ -6799,8 +6805,8 @@ packages:
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
 
-  web-vitals@4.2.4:
-    resolution: {integrity: sha512-r4DIlprAGwJ7YM11VZp4R884m0Vmgr6EAKe3P+kO0PPj3Unqyvv59rczf6UiGcb9Z8QxZVcqKNwv/g0WNdWwsw==}
+  web-vitals@5.1.0:
+    resolution: {integrity: sha512-ArI3kx5jI0atlTtmV0fWU3fjpLmq/nD3Zr1iFFlJLaqa5wLBkUSzINwBPySCX/8jRyjlmy1Volw1kz1g9XE4Jg==}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -8900,6 +8906,8 @@ snapshots:
   '@types/estree@0.0.39': {}
 
   '@types/estree@1.0.7': {}
+
+  '@types/gtag.js@0.0.20': {}
 
   '@types/intro.js@5.1.5': {}
 
@@ -14339,7 +14347,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  web-vitals@4.2.4: {}
+  web-vitals@5.1.0: {}
 
   webidl-conversions@3.0.1: {}
 
