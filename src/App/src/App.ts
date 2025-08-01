@@ -30,8 +30,6 @@ export async function setupApp(app: App) {
 
   // setupErrorhandler(app)
 
-  useCleanLocalStroage()
-
   if (isDev())
     app.config.performance = true
 
